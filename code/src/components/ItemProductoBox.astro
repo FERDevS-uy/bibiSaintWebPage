@@ -1,0 +1,28 @@
+---
+import type Producto from "../types/producto";
+
+export interface Props {
+  producto: Producto;
+}
+
+const { producto: p } = Astro.props;
+---
+
+<article class="producto-card">
+  <a href={`/producto/${p.id}`}>
+    <img src={p.imagen} alt={p.producto} width="150" />
+    <h2>{p.producto}</h2>
+  </a>
+  <p>Precio: ${p.precio}</p>
+  <p>Categorías: {p.categorias.join(", ")}</p>
+</article>
+
+<style>
+  .producto-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    max-width: 300px;
+  }
+</style>

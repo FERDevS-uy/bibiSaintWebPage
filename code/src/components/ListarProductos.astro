@@ -1,0 +1,12 @@
+---
+import { cargarProductos } from "../utils/loadCSV";
+import ItemProductoBox from "./ItemProductoBox.astro";
+
+const productos = cargarProductos();
+---
+
+<section class="listaProductos">
+  <ul>
+    {productos.map((prod) => <ItemProductoBox producto={prod} />)}
+  </ul>
+</section>

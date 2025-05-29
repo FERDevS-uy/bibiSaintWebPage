@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "astro": "^5.8.1",
-    "astro-navbar": "^2.3.9"
+    "astro-navbar": "^2.3.9",
+    "papaparse": "^5.5.3"
+  },
+  "devDependencies": {
+    "@types/papaparse": "^5.3.16"
   }
 }

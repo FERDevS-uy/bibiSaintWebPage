@@ -1,0 +1,27 @@
+---
+import { cargarProductos } from "../../utils/loadCSV";
+import Layout from "../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+  const productos = cargarProductos();
+  return productos.map((p) => {
+    const { id, ...rest } = p;
+    return {
+      params: { id },
+      props: { ...rest },
+    };
+  });
+}
+
+const { producto, imagen, precio, categorias } = Astro.props;
+---
+
+<Layout>
+  <main>
+    <a href="/">← Volver</a>
+    <h2>{producto}</h2>
+    <img src={imagen} alt="" width="150px" />
+    <span>{precio}</span>
+    <p>{categorias.join(", ")}</p>
+  </main>
+</Layout>
