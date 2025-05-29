@@ -1,0 +1,50 @@
+---
+import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
+import config from "../config";
+---
+
+<header>
+  <Astronav closeOnClick>
+    <div class="headerContainer">
+      <div class="logoContainer">
+        <a href="/"> <h1>{config.pageTitle}</h1></a>
+      </div>
+
+      <div class="navMenu">
+        <MenuIcon class="menuIcon" />
+      </div>
+    </div>
+  </Astronav>
+
+  <MenuItems class="itemsBox hidden">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/about">Sobre nosotros</a></li>
+    </ul>
+  </MenuItems>
+</header>
+
+<style>
+  header {
+    padding-inline: 10px;
+    padding-block: 10px;
+  }
+
+  .headerContainer {
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+
+  .logoContainer h1 {
+    font-size: 1.5rem;
+  }
+</style>
+<style is:global>
+  #astronav-menu {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-image: none;
+    color: inherit;
+  }
+</style>
