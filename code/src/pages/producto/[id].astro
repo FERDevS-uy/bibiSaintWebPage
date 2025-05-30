@@ -1,7 +1,7 @@
 ---
 import { cargarProductos } from "../../utils/loadCSV";
 import Layout from "../../layouts/Layout.astro";
-import { config } from "../../../astro.config.mjs";
+import { config } from "../../config";
 
 export function getStaticPaths() {
   const productos = cargarProductos();
