@@ -7,5 +7,4 @@ const url = `https://ferdevs-uy.github.io${repositoryName}/`;
 // https://astro.build/config
 export default defineConfig({
   site: url,
-  base: repositoryName,
 });

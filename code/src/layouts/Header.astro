@@ -1,6 +1,8 @@
 ---
 import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
 import config from "../config";
+import { Image } from "astro:assets";
+import logoFD from "../assets/logoFD.svg";
 ---
 
 <header>
@@ -8,7 +10,7 @@ import config from "../config";
     <div class="headerContainer">
       <div class="logoContainer">
         <a href="/">
-          <img src={config.pageLogo} alt="" width="50px" />
+          <Image src={logoFD} alt="" width={50} />
           <h1>{config.pageTitle}</h1>
         </a>
       </div>
