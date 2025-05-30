@@ -4,4 +4,5 @@ export default interface Producto {
   precio: string;
   imagen: string;
   categorias: string[];
+  linkPago: string;
 }

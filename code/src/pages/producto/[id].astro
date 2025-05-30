@@ -13,7 +13,7 @@ export function getStaticPaths() {
   });
 }
 
-const { producto, imagen, precio, categorias } = Astro.props;
+const { producto, imagen, precio, categorias, linkPago } = Astro.props;
 ---
 
 <Layout>
@@ -21,7 +21,9 @@ const { producto, imagen, precio, categorias } = Astro.props;
     <a href="/">← Volver</a>
     <h2>{producto}</h2>
     <img src={imagen} alt="" width="150px" />
-    <span>{precio}</span>
+    <span>${precio}</span>
     <p>{categorias.join(", ")}</p>
+
+    <a href={linkPago} target="_blank" rel="noopener noreferrer">comprar</a>
   </main>
 </Layout>

@@ -13,10 +13,15 @@ export function cargarProductos(): Producto[] {
   });
 
   return (resultado.data as any[]).map((row) => ({
-    id: row.id,
-    producto: row.producto,
-    precio: row.precio,
-    imagen: row.imagen,
-    categorias: row.categorias?.split(" ").map((c: string) => c.trim()) || [],
+    id: row.id.trim(),
+    producto: row.producto.trim(),
+    precio: row.precio.trim(),
+    imagen: row.imagen.trim(),
+    categorias:
+      row.categorias
+        ?.trim()
+        .split(" ")
+        .map((c: string) => c.trim()) || [],
+    linkPago: row.linkPago.trim(),
   }));
 }
