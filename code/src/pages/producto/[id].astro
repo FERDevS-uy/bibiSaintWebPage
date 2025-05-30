@@ -1,6 +1,7 @@
 ---
 import { cargarProductos } from "../../utils/loadCSV";
 import Layout from "../../layouts/Layout.astro";
+import { config } from "../../../astro.config.mjs";
 
 export function getStaticPaths() {
   const productos = cargarProductos();
@@ -18,7 +19,7 @@ const { producto, imagen, precio, categorias, linkPago } = Astro.props;
 
 <Layout>
   <main>
-    <a href="/">← Volver</a>
+    <a href={config.base}>← Volver</a>
     <h2>{producto}</h2>
     <img src={imagen} alt="" width="150px" />
     <span>${precio}</span>
