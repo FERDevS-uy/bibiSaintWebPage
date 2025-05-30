@@ -16,13 +16,6 @@ Y una vez instaladas ejecutar el modo desarrollo
 npm run dev
 ```
 
-## Fork
-
-> [!WARNING]
-> Al forkear no incluir esto
-
-Para cada cliente se generará un Fork diferente con las especificaciones personales necesarias, dejando este repositorio para implementaciones más generales y cambios que se pueden incluir en todos los proyectos derivados.
-
 ## Despliegue
 
 Para el despliegue se utiliza el comando que genera el sitio estático:
