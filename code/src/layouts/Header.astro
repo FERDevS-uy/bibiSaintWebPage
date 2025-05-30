@@ -7,8 +7,10 @@ import config from "../config";
   <Astronav closeOnClick>
     <div class="headerContainer">
       <div class="logoContainer">
-        <img src={config.pageLogo} alt="" width="50px" />
-        <a href="/"> <h1>{config.pageTitle}</h1></a>
+        <a href="/">
+          <img src={config.pageLogo} alt="" width="50px" />
+          <h1>{config.pageTitle}</h1>
+        </a>
       </div>
 
       <div class="navMenu">
@@ -37,9 +39,11 @@ import config from "../config";
     align-items: center;
   }
 
-  .logoContainer {
+  .logoContainer a {
     display: flex;
     align-items: center;
+    gap: 5px;
+    width: max-content;
   }
   .logoContainer h1 {
     font-size: 1.5rem;

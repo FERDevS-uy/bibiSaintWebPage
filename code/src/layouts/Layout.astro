@@ -3,6 +3,8 @@ import GlobalStyles from "../components/GlobalStyles.astro";
 import config from "../config";
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
+
+const isDev = import.meta.env.tienda_DEV === "true";
 ---
 
 <!doctype html>
@@ -14,7 +16,7 @@ import Header from "./Header.astro";
     <meta name="generator" content={Astro.generator} />
     <title>{config.pageTitle}</title>
   </head>
-  <body>
+  <body id="body" class={isDev ? "dev" : ""}>
     <Header />
 
     <slot />
@@ -34,6 +36,19 @@ import Header from "./Header.astro";
   body {
     display: grid;
     grid-template-rows: auto 1fr auto;
+  }
+  body.dev::before {
+    content: "TEMPLATE";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 5rem;
+    color: rgba(255, 0, 0, 0.2); /* rojo con transparencia */
+    font-weight: bold;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 0;
   }
 </style>
 <GlobalStyles />
