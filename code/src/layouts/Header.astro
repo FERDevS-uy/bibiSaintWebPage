@@ -7,6 +7,7 @@ import config from "../config";
   <Astronav closeOnClick>
     <div class="headerContainer">
       <div class="logoContainer">
+        <img src={config.pageLogo} alt="" width="50px" />
         <a href="/"> <h1>{config.pageTitle}</h1></a>
       </div>
 
@@ -33,8 +34,13 @@ import config from "../config";
   .headerContainer {
     display: grid;
     grid-template-columns: 1fr auto;
+    align-items: center;
   }
 
+  .logoContainer {
+    display: flex;
+    align-items: center;
+  }
   .logoContainer h1 {
     font-size: 1.5rem;
   }
