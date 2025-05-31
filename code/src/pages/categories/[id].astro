@@ -1,0 +1,30 @@
+---
+import ListarProductos from "../../components/ListarProductos.astro";
+import RenderCategories from "../../components/RenderCategories.astro";
+import Layout from "../../layouts/Layout.astro";
+import { countCategories } from "../../utils/countCategories";
+import { cargarProductos } from "../../utils/loadCSV";
+
+/** Genera los archivos html por cada categoría */
+export const getStaticPaths = () => {
+  const products = cargarProductos();
+  const categories = countCategories(products);
+  return categories.map((c) => ({
+    params: { id: c.name },
+    props: { products, categories },
+  }));
+};
+
+const { id } = Astro.params;
+const { products, categories } = Astro.props;
+const filteredProducts = products.filter((p) =>
+  p.categories.some((cat) => cat === id)
+);
+---
+
+<Layout>
+  <main>
+    <RenderCategories categories={categories} />
+    <ListarProductos products={filteredProducts} />
+  </main>
+</Layout>

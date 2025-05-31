@@ -1,4 +1,5 @@
 ---
+import { config } from "../config";
 import type CategoryList from "../types/categoryList";
 
 interface Props {
@@ -8,12 +9,21 @@ interface Props {
 const { categories } = Astro.props as Props;
 ---
 
-<div>
+<div class="categoryBox">
   {
     categories.map((c) => (
-      <span>
+      <a href={`${config.base}/categories/${c.name}`}>
         {c.name} ({c.count})
-      </span>
+      </a>
     ))
   }
 </div>
+
+<style>
+  .categoryBox {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+</style>
