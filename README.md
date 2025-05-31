@@ -23,3 +23,9 @@ Para el despliegue se utiliza el comando que genera el sitio estático:
 ```sh
 npm run build
 ```
+
+## Forks
+
+Lista de implementaciones:
+
+- [Test static ecommerce](https://github.com/FERDevS-uy/Test-static-ecommerce)
