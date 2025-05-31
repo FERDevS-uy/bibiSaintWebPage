@@ -14,17 +14,17 @@ export function getStaticPaths() {
   });
 }
 
-const { producto, imagen, precio, categorias, linkPago } = Astro.props;
+const { name, img, price, categories, paymentLink } = Astro.props;
 ---
 
 <Layout>
   <main>
     <a href={config.base}>← Volver</a>
-    <h2>{producto}</h2>
-    <img src={imagen} alt="" width="150px" />
-    <span>${precio}</span>
-    <p>{categorias.join(", ")}</p>
+    <h2>{name}</h2>
+    <img src={img} alt="" width="150px" />
+    <span>${price}</span>
+    <p>{categories.join(", ")}</p>
 
-    <a href={linkPago} target="_blank" rel="noopener noreferrer">comprar</a>
+    <a href={paymentLink} target="_blank" rel="noopener noreferrer">comprar</a>
   </main>
 </Layout>

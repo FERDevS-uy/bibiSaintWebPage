@@ -1,9 +1,9 @@
 ---
-import type Producto from "../types/producto";
+import type Product from "../types/product";
 import { config } from "../config";
 
 export interface Props {
-  producto: Producto;
+  producto: Product;
 }
 
 const { producto: p } = Astro.props;
@@ -11,11 +11,11 @@ const { producto: p } = Astro.props;
 
 <article class="producto-card">
   <a href={`${config.base}/producto/${p.id}`}>
-    <img src={p.imagen} alt={p.producto} width="150" />
-    <h2>{p.producto}</h2>
+    <img src={p.img} alt={p.name} width="150" />
+    <h2>{p.name}</h2>
   </a>
-  <p>Precio: ${p.precio}</p>
-  <p>Categorías: {p.categorias.join(", ")}</p>
+  <p>Precio: ${p.price}</p>
+  <p>Categorías: {p.categories.join(", ")}</p>
 </article>
 
 <style>

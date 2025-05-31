@@ -1,10 +1,17 @@
 ---
 import ListarProductos from "../components/ListarProductos.astro";
+import RenderCategories from "../components/RenderCategories.astro";
 import Layout from "../layouts/Layout.astro";
+import { countCategories } from "../utils/countCategories";
+import { cargarProductos } from "../utils/loadCSV";
+
+const productos = cargarProductos();
+const categorías = countCategories(productos);
 ---
 
 <Layout>
   <main>
-    <ListarProductos />
+    <RenderCategories categories={categorías} />
+    <ListarProductos products={productos} />
   </main>
 </Layout>

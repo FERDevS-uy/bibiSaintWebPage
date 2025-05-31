@@ -1,0 +1,19 @@
+---
+import type CategoryList from "../types/categoryList";
+
+interface Props {
+  categories: CategoryList[];
+}
+
+const { categories } = Astro.props as Props;
+---
+
+<div>
+  {
+    categories.map((c) => (
+      <span>
+        {c.name} ({c.count})
+      </span>
+    ))
+  }
+</div>

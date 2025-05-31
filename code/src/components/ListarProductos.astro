@@ -1,8 +1,11 @@
 ---
-import { cargarProductos } from "../utils/loadCSV";
+import type Product from "../types/product";
 import ItemProductoBox from "./ItemProductoBox.astro";
 
-const productos = cargarProductos();
+interface Props {
+  products: Product[];
+}
+const { products: productos } = Astro.props as Props;
 ---
 
 <section class="listaProductos">

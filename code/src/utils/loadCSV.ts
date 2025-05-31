@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
 import Papa from "papaparse";
-import type Producto from "../types/producto";
+import type Product from "../types/product";
 
-export function cargarProductos(): Producto[] {
+export function cargarProductos(): Product[] {
   const csvPath = path.resolve("src/data/productos.csv");
   const file = fs.readFileSync(csvPath, "utf8");
 
@@ -14,14 +14,14 @@ export function cargarProductos(): Producto[] {
 
   return (resultado.data as any[]).map((row) => ({
     id: row.id.trim(),
-    producto: row.producto.trim(),
-    precio: row.precio.trim(),
-    imagen: row.imagen.trim(),
-    categorias:
+    name: row.producto.trim(),
+    price: row.precio.trim(),
+    img: row.imagen.trim(),
+    categories:
       row.categorias
         ?.trim()
         .split(" ")
         .map((c: string) => c.trim()) || [],
-    linkPago: row.linkPago.trim(),
+    paymentLink: row.linkPago.trim(),
   }));
 }
