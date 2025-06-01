@@ -18,13 +18,48 @@ const { name, img, price, categories, paymentLink } = Astro.props;
 ---
 
 <Layout>
-  <main>
-    <a href={config.base}>← Volver</a>
-    <h2>{name}</h2>
-    <img src={img} alt="" width="150px" />
-    <span>${price}</span>
-    <p>{categories.join(", ")}</p>
+  <section class="productContainer">
+    <div class="infoBox">
+      <h2>{name}</h2>
 
-    <a href={paymentLink} target="_blank" rel="noopener noreferrer">comprar</a>
-  </main>
+      <div class="categories">
+        {
+          categories.map((c) => (
+            <a href={`${config.base}/categories/${c}`} class="categoryTag">
+              {c}
+            </a>
+          ))
+        }
+      </div>
+
+      <span class="price">${price}</span>
+
+      <a
+        href={paymentLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="paymentLink"
+        id="paymentLink">comprar</a
+      >
+    </div>
+
+    <div class="imgContainer">
+      <img src={img} alt="" />
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .imgContainer {
+    max-width: 500px;
+  }
+  .imgContainer img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+  }
+
+  .price {
+    display: block;
+  }
+</style>

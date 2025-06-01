@@ -19,7 +19,9 @@ const isDev = import.meta.env.tienda_DEV === "true";
   <body id="body" class={isDev ? "dev" : ""}>
     <Header />
 
-    <slot />
+    <main>
+      <slot />
+    </main>
 
     <Footer />
   </body>
