@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import Papa from "papaparse";
 import type Product from "../types/product";
+import { parsePaymentMethodToObject } from "./parsePaymentMethodToObject";
 
 export function cargarProductos(): Product[] {
   const csvPath = path.resolve("src/data/productos.csv");
@@ -27,6 +28,9 @@ export function cargarProductos(): Product[] {
         ?.trim()
         .split(" ")
         .map((c: string) => c.trim()) || [],
-    paymentLink: row.linkPago?.trim(),
+    paymentLink: parsePaymentMethodToObject(
+      row.linkPago?.trim(),
+      row.producto?.trim()
+    ),
   }));
 }

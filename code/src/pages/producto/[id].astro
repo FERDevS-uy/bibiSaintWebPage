@@ -35,13 +35,21 @@ const { name, img, price, categories, paymentLink, description } = Astro.props;
 
       <span class="price">${price}</span>
 
-      <a
-        href={paymentLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="paymentLink"
-        id="paymentLink">comprar</a
-      >
+      <div class="paymentsMethods">
+        {
+          paymentLink.map((p) => (
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="paymentLink"
+              id="paymentLink"
+            >
+              {p.id}
+            </a>
+          ))
+        }
+      </div>
     </div>
 
     <div class="imgContainer">
@@ -61,6 +69,10 @@ const { name, img, price, categories, paymentLink, description } = Astro.props;
   }
 
   .price {
+    display: block;
+  }
+
+  .paymentLink {
     display: block;
   }
 </style>
