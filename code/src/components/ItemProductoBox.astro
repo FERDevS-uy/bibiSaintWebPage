@@ -11,7 +11,7 @@ const { producto: p } = Astro.props;
 
 <article class="producto_card">
   <a href={`${config.base}/producto/${p.id}`}>
-    <img src={p.img} alt={p.name} />
+    <img src={p.img[0]} alt={p.name} />
     <p>{p.name}</p>
   </a>
   <span class="price"><strong>${p.price}</strong></span>
