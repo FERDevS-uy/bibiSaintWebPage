@@ -4,7 +4,7 @@ const url = `https://ferdevs-uy.github.io${repositoryName}/`;
 const pageData = {
   site: url,
   base: repositoryName,
-  pageTitle: "Static Ecommerce title",
+  pageTitle: "Bibi's Ventasonline hogar & Deco",
 };
 
 export { pageData as config };

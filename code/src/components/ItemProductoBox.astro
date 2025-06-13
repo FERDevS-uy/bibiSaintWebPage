@@ -1,18 +1,20 @@
 ---
 import type Product from "../types/product";
 import { config } from "../config";
+import { mejorarNombreProducto } from "../utils/mejorarNombreProducto";
 
 export interface Props {
   producto: Product;
 }
 
 const { producto: p } = Astro.props;
+const nombreMejorad= await mejorarNombreProducto(p.name);
 ---
 
 <article class="producto_card">
   <a href={`${config.base}/producto/${p.id}`}>
     <img src={p.img[0]} alt={p.name} />
-    <p>{p.name}</p>
+    <p>{nombreMejorad ?? p.name}</p>
   </a>
   <span class="price"><strong>${p.price}</strong></span>
   <div class="categories">
@@ -27,16 +29,100 @@ const { producto: p } = Astro.props;
 </article>
 
 <style>
-  .producto_card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    max-width: 300px;
-  }
-  .producto_card img {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: contain;
-  }
+.producto_card {
+  border: none;
+  border-radius: 18px;
+  padding: 1.4rem;
+  background: #d9ceba;
+  box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.12), 0 1.5px 6px 0 rgba(163, 174, 214, 0.10);
+  transition: transform 0.18s, box-shadow 0.18s;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.producto_card:hover  {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 8px 32px 0 rgba(163, 174, 214, 0.18), 0 3px 12px 0 rgba(163, 174, 214, 0.14);
+}
+
+.producto_card img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #a7c7e733;
+  background: #fff;
+}
+.producto_card a {
+  color: #232946;
+  text-decoration: none;
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+  transition: color 0.15s;
+  text-align: center;
+  display: block;
+  letter-spacing: 0.5px;
+}
+.producto_card a:hover,
+.producto_card a:focus {
+  color: #c3aed6;
+  text-decoration: underline;
+}
+.producto_card p {
+  max-width: 200px;
+  margin: 0.2em auto 0.1em auto;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.producto_card:hover p{
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+.price {
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: italic;
+  background: rgb(173, 225, 173);
+  padding: 0.22em 1em;
+  border-radius: 10px;
+  margin: 0.3em 0;
+  letter-spacing: 0.5px;
+  box-shadow: 0 1px 4px #b7eac555;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  text-align: center;
+}
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.categoryTag {
+  background: #d9ceba
+  color: #232946;
+  border-radius: 8px;
+  padding: 0.18em 0.8em;
+  font-size: 0.98em;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  box-shadow: 0 1px 3px #a7c7e733;
+}
+.categoryTag:hover,
+.categoryTag:focus {
+  background: linear-gradient(90deg, #a7c7e7 40%, #fff5ba 100%);
+  color: #232946;
+}
 </style>

@@ -1,0 +1,258 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <section class="cartContainer">
+    <h1>🛒 Carrito de compras</h1>
+    <div id="cartList" class="cartList"></div>
+    <div class="cartActions">
+      <button id="copyBtn" class="cartBtn">Copiar pedido</button>
+      <a id="waBtn" class="cartBtn" target="_blank">Enviar por WhatsApp</a>
+      <button id="clearBtn" class="cartBtn danger">Vaciar carrito</button>
+    </div>
+  </section>
+  <script type="module">
+    function renderCart() {
+      const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+      const cartDiv = document.getElementById('cartList');
+      if (!carrito.length) {
+        cartDiv.innerHTML = `<div class="cartEmpty">El carrito está vacío.</div>`;
+        document.getElementById('copyBtn').style.display = 'none';
+        document.getElementById('waBtn').style.display = 'none';
+        document.getElementById('clearBtn').style.display = 'none';
+        return;
+      }
+      let total = 0;
+      // ...dentro de tu renderCart()
+      cartDiv.innerHTML = `
+  <div style="display:flex;flex-direction:column;gap:1.2em;">
+    ${carrito.map((p, idx) => {
+      total += Number(p.price) * p.cantidad;
+      return `
+        <div style="display:flex;align-items:center;background:#fff;border-radius:12px;box-shadow:0 2px 8px #a7c7e733;padding:12px 18px;gap:1.2em;justify-content:flex-start;">
+          <div style="flex:0 0 48px;display:flex;align-items:center;justify-content:center;">
+            <img 
+              src="${p.img || '/placeholder.png'}" 
+              alt="${p.name}" 
+              style="width:48px;height:48px;max-width:48px;max-height:48px;object-fit:cover;border-radius:10px;background:#f7cac9;box-shadow:0 1px 4px #c3aed633;"
+            />
+          </div>
+          <div style="flex:1;text-align:left;display:flex;flex-direction:column;gap:0.3em;">
+            <div style="font-size:1.1em;font-weight:700;color:#232946;">${p.name}</div>
+            <div style="color:#16a34a;font-weight:600;font-size:1em;background:#e0ffe7;border-radius:8px;padding:0.1em 0.7em;display:inline-block;margin-bottom:0.2em;">
+              $${p.price*p.cantidad}
+            </div>
+            <div style="display:flex;align-items:center;gap:0.7em;font-size:0.98em;">
+              <span>Cantidad: ${p.cantidad}</span>
+              <button 
+                class="removeBtn" 
+                data-idx="${idx}" 
+                title="Quitar uno"
+                style="background:#f7cac9;color:#232946;border:none;border-radius:50%;width:1.7em;height:1.7em;font-size:1em;margin-left:0.5em;cursor:pointer;transition:background 0.18s,color 0.18s,transform 0.15s;display:flex;align-items:center;justify-content:center;"
+              >✖</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('')}
+  </div>
+  <div style="margin-top:1.5em;font-size:1.2em;color:#232946;font-weight:700;text-align:right;">
+    <strong>Total: $${total}</strong>
+  </div>
+`;
+
+      // Botón quitar uno
+      cartDiv.querySelectorAll('.removeBtn').forEach(btn => {
+        btn.onclick = (e) => {
+          const idx = Number(btn.getAttribute('data-idx'));
+          if (carrito[idx].cantidad > 1) {
+            carrito[idx].cantidad -= 1;
+          } else {
+            carrito.splice(idx, 1);
+          }
+          localStorage.setItem('carrito', JSON.stringify(carrito));
+          renderCart();
+          window.updateCartCount && window.updateCartCount();
+        };
+      });
+
+      // Mensaje para copiar o enviar
+      const pedido = carrito.map(p => `${p.name} x${p.cantidad} ($${p.price})`).join(', ') + `. Total: $${total}`;
+      document.getElementById('copyBtn').onclick = () => {
+        navigator.clipboard.writeText(pedido);
+        document.getElementById('copyBtn').textContent = "¡Copiado!";
+        setTimeout(() => document.getElementById('copyBtn').textContent = "Copiar pedido", 1200);
+      };
+      document.getElementById('waBtn').href = `https://wa.me/59891361706?text=${encodeURIComponent("Hola, quiero pedir: " + pedido)}`;
+      document.getElementById('copyBtn').style.display = '';
+      document.getElementById('waBtn').style.display = '';
+      document.getElementById('clearBtn').style.display = '';
+    }
+
+    document.getElementById('clearBtn').onclick = () => {
+      localStorage.removeItem('carrito');
+      renderCart();
+      window.updateCartCount && window.updateCartCount();
+    };
+
+    renderCart();
+  </script>
+  <style>
+    .cartContainer {
+      background: linear-gradient(120deg, #fff5ba 60%, #a7c7e7 100%);
+      border-radius: 18px;
+      max-width: 700px;
+      margin: 32px auto;
+      padding: 32px 18px;
+      box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.10);
+      text-align: center;
+    }
+    .cartContainer h1 {
+      color: #232946;
+      margin-bottom: 1.5em;
+      font-size: 2rem;
+      font-weight: 800;
+    }
+    .cartList {
+      margin-bottom: 1.5em;
+    }
+    .cartTable {
+      display: flex;
+      flex-direction: row;
+      gap: 1.2em;
+    }
+    .cartRow {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #a7c7e733;
+      padding: 12px 18px;
+      gap: 1.2em;
+      justify-content: flex-start;
+    }
+
+    .cartImg {
+  width: 48px !important;
+  height: 48px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
+  object-fit: cover !important;
+  border-radius: 10px !important;
+  background: #f7cac9 !important;
+  box-shadow: 0 1px 4px #c3aed633 !important;
+}
+    .cartInfo {
+      flex: 1;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3em;
+    }
+    .cartName {
+      font-size: 1.1em;
+      font-weight: 700;
+      color: #232946;
+    }
+    .cartPrice {
+      color: #16a34a;
+      font-weight: 600;
+      font-size: 1em;
+      background: #e0ffe7;
+      border-radius: 8px;
+      padding: 0.1em 0.7em;
+      display: inline-block;
+      margin-bottom: 0.2em;
+    }
+    .cartQty {
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      font-size: 0.98em;
+    }
+    .removeBtn {
+      background: #f7cac9;
+      color: #232946;
+      border: none;
+      border-radius: 50%;
+      width: 1.7em;
+      height: 1.7em;
+      font-size: 1em;
+      margin-left: 0.5em;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .removeBtn:hover,
+    .removeBtn:focus {
+      background: #c3aed6;
+      color: #fff;
+      transform: scale(1.1);
+    }
+    .cartTotal {
+      margin-top: 1.5em;
+      font-size: 1.2em;
+      color: #232946;
+      font-weight: 700;
+      text-align: right;
+    }
+    .cartEmpty {
+      color: #232946;
+      font-size: 1.1em;
+      margin: 2em 0;
+      font-weight: 600;
+    }
+    .cartActions {
+      display: flex;
+      gap: 1em;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2em;
+    }
+    .cartBtn {
+      background: linear-gradient(90deg, #a7c7e7 40%, #b7eac5 100%);
+      color: #232946;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1em;
+      padding: 0.4em 1.2em;
+      border: none;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, transform 0.15s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cartBtn:hover,
+    .cartBtn:focus {
+      background: linear-gradient(90deg, #f7cac9 40%, #b7eac5 100%);
+      color: #232946;
+      transform: scale(1.04);
+    }
+    .cartBtn.danger {
+      background: linear-gradient(90deg, #f7cac9 40%, #c3aed6 100%);
+      color: #232946;
+    }
+    .cartBtn.danger:hover,
+    .cartBtn.danger:focus {
+      background: linear-gradient(90deg, #c3aed6 40%, #f7cac9 100%);
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      .cartRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5em;
+        padding: 10px 8px;
+      }
+      .cartImgBox {
+        margin-bottom: 0.5em;
+      }
+      .cartTotal {
+        text-align: center;
+      }
+    }
+  </style>
+</Layout>

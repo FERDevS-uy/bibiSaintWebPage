@@ -1,3 +1,103 @@
-<footer>
-  <h2>Footer</h2>
+---
+import { Icon } from "astro-icon/components";
+---
+
+<footer class="footer">
+  <h2>Contáctanos</h2>
+  <p>
+    Para consultas, pedidos o más información, contáctanos a través de nuestras
+    redes sociales o WhatsApp.
+  </p>
+  <ul>
+    <li>
+      <a
+        href="https://instagram.com/bibisventasonline"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="instagram" width="24" height="24" />
+      </a>
+      <li>
+        <a
+          href="https://facebook.com/bibicartanumerologica"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon name="facebook" width="24" height="24" />
+        </a>
+        <li>
+          <a
+            href="https://wa.me/+59891361706"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon name="whatsapp" width="24" height="24" />
+          </a>
+        </li>
+      </li>
+
+      <style>
+        .footer {
+          background-color: #d8d3ca;
+          padding: 15px;
+          text-align: center;
+          font-size: 0.9rem;
+          color: #6c757d;
+        }
+        .footer h2 {
+          margin: 0;
+          font-size: 1.2rem;
+          color: #343a40;
+        }
+        .footer a {
+          color: #007bff;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          transition:
+            background 0.2s,
+            transform 0.2s;
+          width: 40px;
+          height: 40px;
+        }
+        .footer a:hover {
+          text-decoration: none;
+          background: #f7cac9;
+          transform: scale(1.18) rotate(-8deg);
+          box-shadow: 0 2px 12px #c3aed6aa;
+        }
+        .footer a[href*="instagram"]:hover {
+          background: linear-gradient(135deg, #f7cac9 40%, #c3aed6 100%);
+        }
+        .footer a[href*="facebook"]:hover {
+          background: linear-gradient(135deg, #a7c7e7 40%, #fff5ba 100%);
+        }
+        .footer a[href*="wa.me"]:hover {
+          background: linear-gradient(135deg, #b7eac5 40%, #fff5ba 100%);
+        }
+        .footer ul {
+          list-style: none;
+          padding: 0;
+          margin: 10px 0;
+        }
+        .footer ul li {
+          display: inline;
+          margin: 0 10px;
+        }
+        .footer p {
+          margin: 10px 0;
+        }
+        @media (max-width: 600px) {
+          .footer {
+            font-size: 0.8rem;
+          }
+          .footer h2 {
+            font-size: 1rem;
+          }
+        }
+      </style>
+    </li>
+  </ul>
 </footer>

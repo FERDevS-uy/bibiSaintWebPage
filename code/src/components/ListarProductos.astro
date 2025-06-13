@@ -13,3 +13,17 @@ const { products: productos } = Astro.props as Props;
     {productos.map((prod) => <ItemProductoBox producto={prod} />)}
   </ul>
 </section>
+<style>
+   .listaProductos {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .listaProductos ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: contents; /* Para que los <article> sean hijos directos del grid */
+  }
+  </style>

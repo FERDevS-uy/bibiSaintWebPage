@@ -12,18 +12,65 @@ const { categories } = Astro.props as Props;
 <div class="categoryBox">
   {
     categories.map((c) => (
-      <a href={`${config.base}/categories/${c.name}`}>
-        {c.name} ({c.count})
+      <a href={`${config.base}/categories/${c.name}`} class="categoryLink">
+        {c.name} <span class="count">({c.count})</span>
       </a>
     ))
   }
 </div>
 
 <style>
+.categoryBox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+  margin: 24px auto 18px auto;
+  width: 100%;
+  max-width: 900px;
+}
+
+.categoryLink {
+  background: #d9ceba;
+  color: #232946;
+  border-radius: 8px;
+  padding: 0.4em 1.2em;
+  font-size: 1.08rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(163, 174, 214, 0.10);
+  transition: background 0.18s, color 0.18s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.categoryLink:hover,
+.categoryLink:focus {
+  background: linear-gradient(90deg, #a7c7e7 40%, #fff5ba 100%);
+  color: #232946;
+  transform: translateY(-2px) scale(1.04);
+}
+
+.count {
+  font-size: 0.98em;
+  color: #bd6f6f;
+  border-radius: 6px;
+  padding: 0.1em 0.6em;
+  margin-left: 2px;
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(163, 174, 214, 0.07);
+}
+
+@media (max-width: 600px) {
   .categoryBox {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 6px;
   }
+  .categoryLink {
+    font-size: 0.98rem;
+    padding: 0.35em 0.8em;
+  }
+}
 </style>

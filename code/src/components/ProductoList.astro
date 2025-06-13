@@ -1,0 +1,162 @@
+---
+// No necesitamos props
+---
+
+<div class="listaProductos">
+  <ul id="producto-list">
+    <!-- Productos se insertan aquí desde JS -->
+  </ul>
+
+  <div class="text-center mt-4">
+    <button id="load-more-button" class="load-more-btn">
+      Cargar más
+    </button>
+  </div>
+</div>
+
+<style>
+.listaProductos {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  background: #f8fafc;
+  border-radius: 18px;
+  margin-top: 18px;
+}
+.listaProductos ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: contents;
+}
+.producto_card {
+  border: none;
+  border-radius: 18px;
+  padding: 1.4rem;
+  background: linear-gradient(135deg, #fff5ba 60%, #a7c7e7 100%);
+  box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.12), 0 1.5px 6px 0 rgba(163, 174, 214, 0.10);
+  transition: transform 0.18s, box-shadow 0.18s;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0 auto;
+}
+.producto_card:hover {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 8px 32px 0 rgba(163, 174, 214, 0.18), 0 3px 12px 0 rgba(163, 174, 214, 0.14);
+}
+.producto_card img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #a7c7e733;
+  background: #fff;
+}
+.producto_card h2 {
+  color: #232946;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0.2rem 0 0.1rem 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.producto_card p {
+  margin: 0.1rem 0;
+  text-align: center;
+}
+.producto_card .price {
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #b7eac5 60%, #f7cac9 100%);
+  padding: 0.22em 1em;
+  border-radius: 10px;
+  margin: 0.3em 0;
+  letter-spacing: 0.5px;
+  box-shadow: 0 1px 4px #b7eac555;
+}
+.load-more-btn {
+  padding: 0.6em 1.4em;
+  background: linear-gradient(90deg, #a7c7e7 40%, #c3aed6 100%);
+  color: #232946;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, transform 0.15s;
+  margin-top: 10px;
+}
+.load-more-btn:hover,
+.load-more-btn:focus {
+  background: linear-gradient(90deg, #f7cac9 40%, #b7eac5 100%);
+  color: #232946;
+  transform: scale(1.04);
+}
+@media (min-width: 600px) {
+  .listaProductos {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+</style>
+
+<script type="module" client:load>
+  const BASE_URL = 'https://api.nuvex.uy/catalog/search/?category=null&ordering=-updated_at&page=';
+  let currentPage = 1;
+  let hasMore = true;
+
+  const listElement = document.getElementById('producto-list');
+  const loadMoreButton = document.getElementById('load-more-button');
+
+  async function fetchProductos(page) {
+    const res = await fetch(`${BASE_URL}${page}&s=`);
+    const data = await res.json();
+    return data.data || [];
+  }
+
+  function renderProducto(producto) {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <article class="producto_card">
+        <img src="${producto.image_1?.full_size || ''}" alt="${producto.name}" />
+        <h2>${producto.name}</h2>
+        <p>${producto.description || ''}</p>
+        <span class="price">$${producto.price}</span>
+      </article>
+    `;
+    return li;
+  }
+
+  async function loadProductos() {
+    if (!hasMore) return;
+
+    loadMoreButton.disabled = true;
+    loadMoreButton.textContent = 'Cargando...';
+
+    const nuevosProductos = await fetchProductos(currentPage);
+
+    if (nuevosProductos.length === 0) {
+      hasMore = false;
+      loadMoreButton.style.display = 'none';
+      return;
+    }
+
+    nuevosProductos.forEach(producto => {
+      const li = renderProducto(producto);
+      listElement.appendChild(li);
+    });
+
+    currentPage += 1;
+    loadMoreButton.disabled = false;
+    loadMoreButton.textContent = 'Cargar más';
+  }
+
+  loadMoreButton.addEventListener('click', loadProductos);
+
+  // Carga inicial
+  loadProductos();
+</script>

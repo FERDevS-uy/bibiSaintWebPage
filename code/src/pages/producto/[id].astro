@@ -9,7 +9,7 @@ export function getStaticPaths() {
     const { id, ...rest } = p;
     return {
       params: { id },
-      props: { ...rest },
+      props: { id,...rest },
     };
   });
 }
@@ -18,9 +18,10 @@ const { name, img, price, categories, paymentLink, description } = Astro.props;
 ---
 
 <Layout>
+  <a href="javascript:history.back()" class="backBtn">← Volver</a>
   <section class="productContainer">
     <div class="infoBox">
-      <h2>{name}</h2>
+      <h2 class="name">{name}</h2>
       <p>{description}</p>
 
       <div class="categories">
@@ -50,6 +51,20 @@ const { name, img, price, categories, paymentLink, description } = Astro.props;
           ))
         }
       </div>
+      <form id="addToCartForm" class="addToCartForm" on:submit="return false;">
+        <label>
+          Cantidad:
+          <input type="number" id="cartQty" min="1" value="1" />
+        </label>
+        <button
+          type="button"
+          id="addToCartBtn"
+          class="addCartBtn"
+          data-id={Astro.props.id}
+        >
+          Agregar al carrito 🛒
+        </button>
+      </form>
     </div>
 
     <div class="imgContainer">
@@ -59,20 +74,229 @@ const { name, img, price, categories, paymentLink, description } = Astro.props;
 </Layout>
 
 <style>
-  .imgContainer {
-    max-width: 500px;
+  .productContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: center;
+    align-items: flex-start;
+    background: linear-gradient(120deg, #d9ceba 60%, #a7c7e7 100%);
+    border-radius: 18px;
+    padding: 32px 18px;
+    margin: 24px auto;
+    max-width: 1100px;
+    box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.10);
   }
-  .imgContainer img {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: contain;
+
+  .infoBox {
+    flex: 1 1 320px;
+    min-width: 280px;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px 18px;
+    box-shadow: 0 2px 12px #c3aed633;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1em;
+  }
+
+  .infoBox h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #232946;
+    margin: 0 0 0.3em 0;
+    letter-spacing: 1px;
+  }
+
+  .infoBox p {
+    color: #343a40;
+    font-size: 1.08rem;
+    margin: 0 0 0.5em 0;
+  }
+
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-bottom: 0.7em;
+  }
+  .categoryTag {
+    background: linear-gradient(90deg, #d9ceba 40%, #b7eac5 100%);
+    color: #232946;
+    border-radius: 8px;
+    padding: 0.18em 0.8em;
+    font-size: 0.98em;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    box-shadow: 0 1px 3px #a7c7e733;
+  }
+  .categoryTag:hover,
+  .categoryTag:focus {
+    background: linear-gradient(90deg, #a7c7e7 40%, #d9ceba 100%);
+    color: #232946;
   }
 
   .price {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #b7eac5 60%, #f7cac9 100%);
+    padding: 0.22em 1em;
+    border-radius: 10px;
+    margin: 0.3em 0;
+    letter-spacing: 0.5px;
+    box-shadow: 0 1px 4px #b7eac555;
+    max-width: 160px;
+    text-align: center;
     display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .paymentLink {
-    display: block;
+  .paymentsMethods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-top: 0.7em;
   }
+  .paymentLink {
+    display: inline-block;
+    background: linear-gradient(90deg, #a7c7e7 40%, #c3aed6 100%);
+    color: #232946;
+    border-radius: 8px;
+    padding: 0.18em 0.8em;
+    font-size: 1em;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s, transform 0.15s;
+    box-shadow: 0 1px 3px #a7c7e733;
+  }
+  .paymentLink:hover,
+  .paymentLink:focus {
+    background: linear-gradient(90deg, #f7cac9 40%, #b7eac5 100%);
+    color: #232946;
+    transform: scale(1.05);
+  }
+
+  .imgContainer {
+    flex: 1 1 320px;
+    min-width: 260px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+  }
+  .imgContainer img {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 2px 8px #a7c7e733;
+  }
+
+  @media (max-width: 900px) {
+    .productContainer {
+      flex-direction: column;
+      align-items: center;
+      padding: 18px 6px;
+    }
+    .imgContainer, .infoBox {
+      max-width: 100%;
+      min-width: 0;
+    }
+  }
+
+  .backBtn {
+    display: inline-block;
+    margin: 24px 0 0 24px;
+    padding: 0.5em 1.2em;
+    background: linear-gradient(90deg, #a7c7e7 40%, #fff5ba 100%);
+    color: #232946;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 0 2px 8px #a7c7e733;
+    transition: background 0.18s, color 0.18s, transform 0.15s;
+    border: none;
+    cursor: pointer;
+  }
+  .backBtn:hover,
+  .backBtn:focus {
+    background: linear-gradient(90deg, #f7cac9 40%, #b7eac5 100%);
+    color: #232946;
+    transform: scale(1.04);
+    text-decoration: underline;
+  }
+  .addToCartForm {
+  display: flex;
+  gap: 0.7em;
+  align-items: center;
+  margin-top: 1em;
+}
+.addToCartForm input[type="number"] {
+  width: 60px;
+  padding: 0.2em 0.5em;
+  border-radius: 6px;
+  border: 1px solid #c3aed6;
+  font-size: 1em;
+}
+.addCartBtn {
+  background: linear-gradient(90deg, #b7eac5 40%, #a7c7e7 100%);
+  color: #232946;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1em;
+  padding: 0.3em 1em;
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, transform 0.15s;
+}
+.addCartBtn:hover,
+.addCartBtn:focus {
+  background: linear-gradient(90deg, #f7cac9 40%, #b7eac5 100%);
+  color: #232946;
+  transform: scale(1.04);
+}
 </style>
+<script type="module">
+
+  const addBtn = document.getElementById('addToCartBtn');
+  const qtyInput = document.getElementById('cartQty');
+  const price= document.querySelector('.price').innerText.replace('$', '').replace(',', '.');
+  const name = document.querySelector('.name').innerText;
+  const id = addBtn?.getAttribute('data-id');
+  const img = document.querySelector('.imgContainer img')?.src || '';
+  addBtn?.addEventListener('click', () => {
+    const qty = parseInt(qtyInput.value, 10) || 1;
+    const product = {
+      id: id,
+      name: name,
+      price: price,
+      cantidad: qty,
+      img: img
+    };
+    let carrito = [];
+    try {
+      carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+    } catch {}
+    // Si ya existe, suma cantidad
+    const idx = carrito.findIndex(p => p.id === product.id);
+    if (idx >= 0) {
+      carrito[idx].cantidad += qty;
+    } else {
+      carrito.push(product);
+    }
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    window.updateCartCount && window.updateCartCount();
+    addBtn.textContent = "¡Agregado!";
+    setTimeout(() => addBtn.textContent = "Agregar al carrito 🛒", 1200);
+  });
+</script>
