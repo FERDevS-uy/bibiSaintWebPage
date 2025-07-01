@@ -10,16 +10,14 @@ import logoFD from "../assets/logoFD.svg";
     <div class="headerContainer">
       <div class="logoContainer">
         <a href={config.base}>
-          <Image src={logoFD} alt="Logo" height={65} class="logoImg"/>
-          <h1>{config.pageTitle}</h1>
+          <Image src={logoFD} alt="Logo" class="logoImg" />
+          <h1>
+            {config.pageTitle}
+            <span class="hidden">{config.pagesSubTitle}</span>
+          </h1>
         </a>
       </div>
-      <nav class="mainNav">
-        <a href={`${config.base}/carrito`} class="navLink cartLink">
-          🛒 Carrito
-          <span id="cartCount" class="cartCount"></span>
-        </a>
-      </nav>
+
       <div class="navMenu">
         <MenuIcon class="menuIcon" />
       </div>
@@ -30,158 +28,239 @@ import logoFD from "../assets/logoFD.svg";
     <ul>
       <li><a href={config.base}>Inicio</a></li>
       <li><a href={`${config.base}/about`}>Sobre nosotros</a></li>
+      <li>
+        <a href={`${config.base}/carrito`} class="navLink cartLink">
+          🛒 Carrito
+          <span id="cartCount" class="cartCount"></span>
+        </a>
+      </li>
     </ul>
   </MenuItems>
 </header>
 
 <style>
-header {
-  background: #d9ceba;
-  box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.10);
-  border-radius: 0 0 18px 18px;
-  padding-inline: 24px;
-  padding-block: 18px 10px;
-  margin-bottom: 18px;
-}
+  header {
+    --background-color: var(--principal-background-color);
+    --background-color-dark: var(--principal-background-color-dark);
+    --background-color-light: var(--principal-background-color-light);
+    --text-color: var(--principal-text-color);
+    --menu-size: 3rem;
+    --header-icon-size: 65px;
 
-.headerContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
+    margin-bottom: 0.5rem;
+  }
 
-.logoContainer a {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  text-decoration: none;
-}
+  .headerContainer {
+    width: 100%;
+    padding: 0.5rem;
+    background: var(--background-color);
 
-.logoImg {
-  filter: drop-shadow(0 2px 8px #a7c7e7aa);
-  border-radius: 12px;
-  background: #fff5ba;
-  padding: 0px;
-}
+    box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.1);
+    border-radius: 0 0 18px 18px;
 
-.logoContainer h1 {
-  font-size: 2rem;
-  font-weight: 300;
-  color: #232946;
-  letter-spacing: 1px;
-  margin: 0;
-  text-shadow: 0 2px 8px #c3aed655;
-  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-}
+  .logoContainer a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
 
-.menuIcon {
-  font-size: 2.2rem;
-  color: #232946;
-  background: #fff5ba;
-  border-radius: 8px;
-  padding: 6px;
-  box-shadow: 0 2px 8px #a7c7e7aa;
-  transition: background 0.18s, color 0.18s;
-}
-.menuIcon:hover,
-.menuIcon:focus {
-  background: #c3aed6;
-  color: #fff;
-}
+  .logoImg {
+    width: var(--header-icon-size);
+    height: var(--header-icon-size);
 
-.itemsBox {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.10);
-  margin-top: 10px;
-  padding: 12px 24px;
-  min-width: 180px;
-  right: 24px;
-  position: absolute;
-  z-index: 100;
-}
+    filter: drop-shadow(0 2px 8px #a7c7e7aa);
+    border-radius: 12px;
+    background: var(--secondary-background-color);
+    padding: 0px;
+  }
 
-.itemsBox ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+  .logoContainer h1 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--text-color);
+    letter-spacing: 1px;
+    margin: 0;
+    text-shadow: 0 2px 8px #c3aed655;
+    font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+  }
 
-.itemsBox li a {
-  color: #232946;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 1.1rem;
-  border-radius: 6px;
-  padding: 6px 12px;
-  transition: background 0.15s, color 0.15s;
-  background: #f7cac9;
-}
-.itemsBox li a:hover,
-.itemsBox li a:focus {
-  background: #b7eac5;
-  color: #232946;
-}
+  .menuIcon {
+    width: var(--menu-size);
+    height: var(--menu-size);
+    font-size: 2.2rem;
+    color: #232946;
+    background: var(--secondary-background-color);
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: 0 2px 8px #a7c7e7aa;
+  }
+  .menuIcon:hover,
+  .menuIcon:focus {
+    background: var(--background-color-dark);
+    color: #fff;
+  }
 
-.mainNav {
-  display: flex;
-  gap: 1.2em;
-  align-items: center;
-}
-.navLink {
-  color: #232946;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.08em;
-  padding: 0.3em 1em;
-  border-radius: 8px;
-  transition: background 0.18s, color 0.18s;
-}
-.navLink:hover,
-.navLink:focus {
-  background: linear-gradient(90deg, #a7c7e7 40%, #fff5ba 100%);
-  color: #232946;
-}
-.cartLink {
-  position: relative;
-  background: linear-gradient(90deg, #b7eac5 40%, #a7c7e7 100%);
-}
-.cartCount {
-  position: absolute;
-  top: -8px;
-  right: -12px;
-  background: #f7cac9;
-  color: #232946;
-  border-radius: 50%;
-  font-size: 0.85em;
-  padding: 0.1em 0.5em;
-  font-weight: bold;
-  min-width: 1.5em;
-  text-align: center;
-  display: none;
-}
-</style>
-<style is:global>
-#astronav-menu {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  background-image: none;
-  color: inherit;
-}
+  :global(#astronav-menu) {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-image: none;
+    color: inherit;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .itemsBox {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffffc9;
+    box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.1);
+    padding-block: 0.5rem;
+
+    position: absolute;
+    right: 0;
+    z-index: 100;
+    transition: 0.5s;
+    overflow-x: hidden;
+  }
+  .itemsBox.hidden {
+    display: block;
+    width: 0;
+  }
+  .itemsBox ul {
+    list-style: none;
+    width: 80%;
+    max-width: 400px;
+
+    float: right;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: 1.5s;
+  }
+  .itemsBox.hidden ul {
+    width: 0;
+  }
+  .itemsBox li a {
+    display: block;
+    color: var(--background-color-light);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    padding: 1rem 2rem;
+    background: var(--background-color-dark);
+    overflow-x: hidden;
+    text-wrap: nowrap;
+  }
+  .itemsBox li a:hover,
+  .itemsBox li a:focus {
+    background: var(--background-color);
+    color: var(--text-color);
+  }
+
+  .mainNav {
+    display: flex;
+    gap: 1.2em;
+    align-items: center;
+  }
+  .navLink {
+    color: #232946;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.08em;
+    padding: 0.3em 1em;
+    border-radius: 8px;
+    transition:
+      background 0.18s,
+      color 0.18s;
+  }
+  .navLink:hover,
+  .navLink:focus {
+    /* background: linear-gradient(90deg, #a7c7e7 40%, #fff5ba 100%); */
+    background: var(--background-color);
+    color: #232946;
+  }
+  /* .cartLink {
+    position: relative;
+    background: linear-gradient(90deg, #b7eac5 40%, #a7c7e7 100%);
+  } */
+  .cartCount {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background: #f7cac9;
+    color: #232946;
+    border-radius: 50%;
+    font-size: 0.85em;
+    padding: 0.1em 0.5em;
+    font-weight: bold;
+    min-width: 1.5em;
+    text-align: center;
+    display: none;
+  }
+
+  @media screen and (min-width: 1000px) {
+    .headerContainer {
+      justify-content: center;
+      border-radius: 0;
+      padding: 2rem;
+    }
+
+    .logoContainer h1 .hidden {
+      display: initial;
+    }
+    .logoImg {
+      width: 7rem;
+      height: 7rem;
+    }
+
+    .navMenu {
+      display: none;
+    }
+
+    .itemsBox,
+    .itemsBox.hidden,
+    .itemsBox ul,
+    .itemsBox.hidden ul {
+      height: auto;
+      width: initial;
+      max-width: none;
+      position: relative;
+      padding-block: 0;
+      background-color: var(--background-color-dark);
+      box-shadow: none;
+      transition: none;
+
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+    }
+    .itemsBox li a {
+      border-radius: 0;
+      padding: 1rem;
+      color: var(--background-color-light);
+      background-color: transparent;
+    }
+  }
 </style>
 
 <script type="module">
   // Mostrar cantidad de productos en el carrito
-  window.updateCartCount = function() {
-    const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+  window.updateCartCount = function () {
+    const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
     const count = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
-    const cartCount = document.getElementById('cartCount');
+    const cartCount = document.getElementById("cartCount");
     if (cartCount) {
       if (count > 0) {
         cartCount.textContent = count;
@@ -196,7 +275,7 @@ header {
   window.updateCartCount();
 
   // Opcional: actualiza en tiempo real si el carrito cambia en otra pestaña
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'carrito') window.updateCartCount();
+  window.addEventListener("storage", (e) => {
+    if (e.key === "carrito") window.updateCartCount();
   });
 </script>
