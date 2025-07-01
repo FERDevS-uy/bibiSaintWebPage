@@ -5,25 +5,44 @@ import ItemProductoBox from "./ItemProductoBox.astro";
 interface Props {
   products: Product[];
 }
-const { products: productos } = Astro.props as Props;
+const { products: productos } = Astro.props;
+const emptyList = !productos || productos.length === 0;
 ---
 
-<section class="listaProductos">
-  <ul>
-    {productos.map((prod) => <ItemProductoBox producto={prod} />)}
-  </ul>
-</section>
-<style>
-   .listaProductos {
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
+<section class={`listaProductos${emptyList ? " centerBox" : ""}`}>
+  {emptyList && <h3 style="color: gray;">Sin Productos</h3>}
+
+  {
+    productos.length > 0 && (
+      <ul>
+        {productos.map((prod) => (
+          <ItemProductoBox producto={prod} />
+        ))}
+      </ul>
+    )
   }
+</section>
+
+<style>
+  section {
+    max-width: var(--max-width-container);
+    margin: auto;
+    margin-bottom: 5em;
+  }
+
   .listaProductos ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
-    display: contents; /* Para que los <article> sean hijos directos del grid */
+    /* display: contents; Para que los <article> sean hijos directos del grid */
+    padding: 0 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    justify-items: center;
+    gap: 15px;
   }
-  </style>
+
+  @media screen and (min-width: 1000px) {
+    section {
+      max-width: 1080px;
+    }
+  }
+</style>
