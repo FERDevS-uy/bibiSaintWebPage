@@ -11,7 +11,7 @@
     "scrap": "node src/utils/fetch_productos.js"
   },
   "dependencies": {
-    "astro": "^5.10.1",
+    "astro": "^5.11.1",
     "astro-icon": "^1.1.5",
     "astro-navbar": "^2.3.9",
     "json2csv": "^6.0.0-alpha.2",
