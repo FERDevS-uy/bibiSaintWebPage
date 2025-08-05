@@ -3,14 +3,12 @@
 
 import type Product from "../types/product";
 import { config } from "../config";
-import { mejorarNombreProducto } from "../utils/mejorarNombreProducto";
 
 export interface Props {
   producto: Product;
 }
 
 const { producto: p } = Astro.props;
-const nombreMejorad = await mejorarNombreProducto(p.name);
 ---
 
 <article class="producto_card">
@@ -18,7 +16,7 @@ const nombreMejorad = await mejorarNombreProducto(p.name);
     <img src={p.img[0]} alt={p.name} />
     <div class="img-info">
       <div class="info-inner">
-        <span class="p-name">{nombreMejorad ?? p.name}</span>
+        <span class="p-name">{p.name}</span>
         <span class="p-categories">
           {p.categories.join(" ")}
         </span>
@@ -46,6 +44,8 @@ const nombreMejorad = await mejorarNombreProducto(p.name);
     --background-color: var(--principal-background-color);
     --secondary-color: var(--principal-background-color-dark);
     --text-color: var(--principal-text-color);
+    --width: 312px;
+    --height: 378px;
   }
 
   article:hover .h-bg {
@@ -78,6 +78,7 @@ const nombreMejorad = await mejorarNombreProducto(p.name);
   .producto_card {
     width: 100%;
     padding: 15px;
+    margin-bottom: 1.5rem;
 
     border: none;
     border-radius: var(--radius-size);
@@ -249,5 +250,13 @@ const nombreMejorad = await mejorarNombreProducto(p.name);
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: 0.045em;
+  }
+
+  @media screen and (min-width: 1000px) {
+    .producto_card {
+      width: var(--width);
+      height: var(--height);
+      margin-bottom: 0;
+    }
   }
 </style>

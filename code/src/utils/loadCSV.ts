@@ -15,7 +15,7 @@ export function cargarProductos(): Product[] {
 
   return (resultado.data as any[]).map((row) => ({
     id: row.id?.trim(),
-    name: row.producto?.trim(),
+    name: row.name?.trim(),
     description: row.description?.trim(),
     price: row.precio?.trim(),
     img:
@@ -32,5 +32,6 @@ export function cargarProductos(): Product[] {
       row.linkPago?.trim(),
       row.producto?.trim()
     ),
+    relacionados: row.relacionados|| []
   }));
 }

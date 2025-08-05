@@ -32,17 +32,19 @@ const emptyList = !productos || productos.length === 0;
 
   .listaProductos ul {
     list-style: none;
-    /* display: contents; Para que los <article> sean hijos directos del grid */
     padding: 0 10px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    justify-items: center;
-    gap: 15px;
   }
 
   @media screen and (min-width: 1000px) {
     section {
-      max-width: 1080px;
+      max-width: 1000px;
+    }
+
+    .listaProductos ul {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      justify-content: start;
+      gap: 15px;
     }
   }
 </style>
