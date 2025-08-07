@@ -23,6 +23,6 @@ const filteredProducts = products.filter((p) =>
 ---
 
 <Layout>
-  <RenderCategories categories={categories} />
+  <RenderCategories categories={categories} selected={id}/>
   <ListarProductos products={filteredProducts} />
 </Layout>
