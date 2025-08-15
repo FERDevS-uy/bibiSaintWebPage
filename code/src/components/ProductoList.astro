@@ -71,45 +71,38 @@
 </script>
 
 <style>
-  .listaProductos {
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    background: #f8fafc;
-    border-radius: 18px;
-    margin-top: 18px;
-  }
-  .listaProductos ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: contents;
-  }
-  .producto_card {
-    border: none;
-    border-radius: 18px;
-    padding: 1.4rem;
-    background: linear-gradient(135deg, #fff5ba 60%, #a7c7e7 100%);
-    box-shadow:
-      0 4px 24px 0 rgba(163, 174, 214, 0.12),
-      0 1.5px 6px 0 rgba(163, 174, 214, 0.1);
-    transition:
-      transform 0.18s,
-      box-shadow 0.18s;
-    max-width: 340px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.9rem;
-    margin: 0 auto;
-  }
-  .producto_card:hover {
-    transform: translateY(-6px) scale(1.04);
-    box-shadow:
-      0 8px 32px 0 rgba(163, 174, 214, 0.18),
-      0 3px 12px 0 rgba(163, 174, 214, 0.14);
-  }
+.listaProductos {
+  max-width: var(--max-width-container);
+  margin: 0 auto;
+  padding: 40px 24px;
+  background: var(--principal-background-color-light);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.10);
+  margin-top: 24px;
+  /* Elimina display: grid y grid-template-columns */
+  /* display: block; (por defecto) */
+}
+
+.listaProductos ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2em;
+}
+.producto_card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px #c3aed633;
+  padding: 18px 12px;
+  margin: 18px;
+  transition: box-shadow 0.18s, transform 0.15s;
+}
+.producto_card:hover {
+  box-shadow: 0 6px 24px #a7c7e733;
+  transform: translateY(-4px) scale(1.03);
+}
   .producto_card img {
     width: 100%;
     aspect-ratio: 1/1;
@@ -130,6 +123,9 @@
     margin: 0.1rem 0;
     text-align: center;
   }
+  .listaProductos li {
+  margin: 0; /* El gap del grid ya separa */
+}
   .producto_card .price {
     color: #fff;
     font-size: 1.18rem;
@@ -163,8 +159,8 @@
     transform: scale(1.04);
   }
   @media (min-width: 600px) {
-    .listaProductos {
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    }
+  .listaProductos ul {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
+}
 </style>

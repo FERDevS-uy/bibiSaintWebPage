@@ -1,8 +1,20 @@
 ---
-import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
+// filepath: /Users/franccesco.giordano/Documents/proyectos personales/bibiSaintWebPage/code/src/layouts/Header.astro
+import {Astronav, MenuIcon, MenuItems} from "astro-navbar";
 import { config } from "../config";
 import { Image } from "astro:assets";
 import logoFD from "../assets/logoFD.svg";
+import cart from "../assets/cart.svg";
+import RenderCategories from "../components/RenderCategories.astro";
+import { countCategories } from "../utils/countCategories";
+import type Product from "../types/product";
+
+interface Props {
+  products: Product[];
+}
+const { products } = Astro.props;
+const categorías = countCategories(products);
+
 ---
 
 <header>
@@ -11,15 +23,15 @@ import logoFD from "../assets/logoFD.svg";
       <div class="logoContainer">
         <a href={config.base}>
           <Image src={logoFD} alt="Logo" class="logoImg" />
-          <h1>
-            {config.pageTitle}
-            <span class="hidden">{config.pagesSubTitle}</span>
-          </h1>
         </a>
       </div>
 
       <div class="navMenu">
-        <MenuIcon class="menuIcon" />
+        <a href={`${config.base}/carrito`} class="cartLink">
+          <Image src={cart} alt="cart" class="" width={40} />
+          <span id="cartCount" class="cartCount"></span>
+        </a>
+          <MenuIcon class="menuIcon" />
       </div>
     </div>
   </Astronav>
@@ -28,14 +40,10 @@ import logoFD from "../assets/logoFD.svg";
     <ul>
       <li><a href={config.base}>Inicio</a></li>
       <li><a href={`${config.base}/about`}>Sobre nosotros</a></li>
-      <li>
-        <a href={`${config.base}/carrito`} class="navLink cartLink">
-          Carrito
-          <span id="cartCount" class="cartCount"></span>
-        </a>
-      </li>
     </ul>
   </MenuItems>
+
+  <RenderCategories categories={categorías} selected="" />
 </header>
 
 <style>
@@ -45,7 +53,7 @@ import logoFD from "../assets/logoFD.svg";
     --background-color-light: var(--principal-background-color-light);
     --text-color: var(--principal-text-color);
     --menu-size: 3rem;
-    --header-icon-size: 65px;
+    --header-icon-size: 6rem;
 
     margin-bottom: 0.5rem;
   }
@@ -73,10 +81,8 @@ import logoFD from "../assets/logoFD.svg";
   .logoImg {
     width: var(--header-icon-size);
     height: var(--header-icon-size);
-
     filter: drop-shadow(0 2px 8px #a7c7e7aa);
     border-radius: 12px;
-    background: var(--secondary-background-color);
     padding: 0px;
   }
 
@@ -90,20 +96,24 @@ import logoFD from "../assets/logoFD.svg";
     font-family: "Poppins", "Segoe UI", Arial, sans-serif;
   }
 
+  .navMenu {
+    display: flex;
+    gap: 15px;
+  }
   .menuIcon {
     width: var(--menu-size);
     height: var(--menu-size);
     font-size: 2.2rem;
     color: #232946;
-    background: var(--secondary-background-color);
-    border-radius: 8px;
+    
+    /* border-radius: 8px; */
     padding: 6px;
-    box-shadow: 0 2px 8px #a7c7e7aa;
+    /* box-shadow: 0 2px 8px #a7c7e7aa; */
   }
   .menuIcon:hover,
   .menuIcon:focus {
-    background: var(--background-color-dark);
-    color: #fff;
+    /* background: var(--background-color-dark);
+    color: #fff; */
   }
 
   :global(#astronav-menu) {
@@ -144,7 +154,7 @@ import logoFD from "../assets/logoFD.svg";
     display: flex;
     flex-direction: column;
     gap: 5px;
-    transition: 1.5s;
+    /* transition: 1.5s; */
   }
   .itemsBox.hidden ul {
     width: 0;
@@ -189,10 +199,9 @@ import logoFD from "../assets/logoFD.svg";
     background: var(--background-color);
     color: #232946;
   }
-  /* .cartLink {
-    position: relative;
-    background: linear-gradient(90deg, #b7eac5 40%, #a7c7e7 100%);
-  } */
+  .cartLink img {
+    height: 100%;
+  }
   .cartCount {
     position: absolute;
     top: -8px;
@@ -223,7 +232,7 @@ import logoFD from "../assets/logoFD.svg";
       height: 7rem;
     }
 
-    .navMenu {
+    .navMenu .menuIcon{
       display: none;
     }
 

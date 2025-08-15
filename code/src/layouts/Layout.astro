@@ -3,7 +3,9 @@ import GlobalStyles from "./GlobalStyles.astro";
 import { config } from "../config";
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
+import { cargarProductos } from "../utils/loadCSV";
 
+const productos = cargarProductos();
 const isDev = import.meta.env.tienda_DEV === "true";
 ---
 
@@ -23,7 +25,7 @@ const isDev = import.meta.env.tienda_DEV === "true";
   </head>
 
   <body id="body" class={isDev ? "dev" : ""}>
-    <Header />
+    <Header products={productos}/>
 
     <main>
       <slot />
