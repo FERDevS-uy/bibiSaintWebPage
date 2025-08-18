@@ -3,6 +3,7 @@
 
 import type Product from "../types/product";
 import { config } from "../config";
+import AddToCartButton from "./AddToCartButton.astro";
 
 export interface Props {
   producto: Product;
@@ -29,17 +30,20 @@ const { producto: p } = Astro.props;
       <div class="h-bg-inner"></div>
     </div>
 
-    <a href={`${config.base}/producto/${p.id}`} class="cart">
+    <a
+      href={`${config.base}/producto/${p.id}`}
+      class="price-box"
+      title="Ir a comprar"
+    >
       <span class="price">${p.price}</span>
-      <span class="add-to-cart">
+      <span class="go-to-product">
         <span class="txt">Comprar</span>
       </span>
     </a>
-
   </div>
 
   <div class="cart-box">
-    <button class="addToCart" data-id={p.id} data-name={p.name} data-price={p.price} data-img={p.img}>🛒</button>
+    <AddToCartButton producto={p} />
   </div>
 </article>
 
@@ -64,10 +68,10 @@ const { producto: p } = Astro.props;
     transform: translateY(-50%);
     color: #818181;
   }
-  article:hover .add-to-cart {
+  article:hover .go-to-product {
     left: 50%;
   }
-  article:hover img {
+  article:hover .box-up img {
     webkit-filter: blur(7px);
     -o-filter: blur(7px);
     -ms-filter: blur(7px);
@@ -98,21 +102,12 @@ const { producto: p } = Astro.props;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
   }
-
   .cart-box {
-    width: 100%;
-    padding-top: 10px;
-  }
-  .addToCart {
-    float: right;
-    z-index: 2;
-    background: #fff;
-    border-radius: 50%;
-    border: none;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 25px;
   }
 
   /* BOX UP */
@@ -204,12 +199,12 @@ const { producto: p } = Astro.props;
     height: 100%;
     background-color: var(--principal-text-color);
   }
-  :global(button.cart) {
+  :global(button.price-box) {
     border: none;
     cursor: pointer;
     background: transparent;
   }
-  .cart {
+  .price-box {
     display: block;
     position: absolute;
     width: 100%;
@@ -221,7 +216,7 @@ const { producto: p } = Astro.props;
     text-decoration: none;
     color: var(--text-color);
   }
-  .cart .price {
+  .price-box .price {
     -webkit-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
     -moz-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
     -o-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
@@ -246,7 +241,7 @@ const { producto: p } = Astro.props;
     font-size: 16px;
     /* color: #252525; */
   }
-  .cart .add-to-cart {
+  .price-box .go-to-product {
     -webkit-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
     -moz-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
     -o-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
@@ -269,7 +264,7 @@ const { producto: p } = Astro.props;
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
   }
-  .cart .add-to-cart .txt {
+  .price-box .go-to-product .txt {
     color: var(--background-color);
     white-space: nowrap;
     text-transform: uppercase;
@@ -282,28 +277,10 @@ const { producto: p } = Astro.props;
       height: var(--height);
       margin-bottom: 0;
     }
-
+    .cart-box {
+      position: initial;
+      width: 100%;
+      padding-top: 10px;
+    }
   }
 </style>
-
-<script>
-  import addToCart from "../utils/addToCart";
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".addToCart").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const id = e.target.getAttribute("data-id");
-        const name = e.target.getAttribute("data-name");
-        const price = e.target.getAttribute("data-price");
-        const img = e.target.getAttribute("data-img");
-
-        addItem(id, name, price, img)
-      });
-    });
-  })
-
-  function addItem(id, name, price, img) {
-    addToCart(id, name, price, undefined, img);
-    alert("agregado")
-  }
-</script>
