@@ -3,6 +3,7 @@ import type Product from "../types/product";
 
 export function countCategories(productos: Product[]): CategoryList[] {
   const catCount: Record<string, number> = {};
+  if(!productos) return [];
   productos.forEach((p) => {
     p.categories.forEach((c) => {
       catCount[c] = (catCount[c] || 0) + 1;

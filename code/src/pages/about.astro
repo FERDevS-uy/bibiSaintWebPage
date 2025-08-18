@@ -6,20 +6,81 @@ import Layout from "../layouts/Layout.astro";
   <section class="about">
     <h2>Sobre nosotros</h2>
 
-    <p>Información de la tienda/comercio y redes sociales</p>
-
-    <br />
     <p>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum non
-      voluptatem molestiae ex aliquid error voluptas eum blanditiis cum
-      asperiores alias obcaecati dolorum ea magnam dolorem, ipsa, similique
-      delectus? Culpa.
+      ¡Bienvenido a <strong>Bibi Saint</strong>! Descubre una tienda online diferente, donde encontrarás productos para el hogar, vestimenta, accesorios y mucho más. Nos apasiona brindarte calidad, novedades y soluciones para tu día a día.
     </p>
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum,
-      reprehenderit deleniti. Ullam enim accusantium magni quod, assumenda quos
-      possimus. Accusantium ut maiores illum? At, earum exercitationem maiores
-      quasi dicta soluta.
+      ¿Buscas bienestar? Ofrecemos <strong>servicios holísticos personalizados</strong> para tu crecimiento personal. <a href="https://wa.me/59891361706?text=Hola,%20quiero%20consultar%20por%20un%20servicio%20holístico" target="_blank" rel="noopener" class="waLink">¡Consulta precios por WhatsApp!</a>
+    </p>
+    <p>
+      Síguenos en redes sociales para enterarte de todas las novedades y promociones.<br>
+      <span class="aboutThanks">¡Gracias por confiar en nosotros!</span>
     </p>
   </section>
+  <style>
+    .about {
+      max-width: 650px;
+      margin: 40px auto;
+      background: linear-gradient(120deg, #f8f8f8 70%, #d5c4a4 100%);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.13);
+      padding: 36px 28px;
+      color: #232946;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      font-size: 1.13em;
+      line-height: 1.7;
+      text-align: center;
+    }
+    .about h2 {
+      font-size: 2.1em;
+      font-weight: 800;
+      margin-bottom: 0.8em;
+      color: #232946;
+      letter-spacing: 1px;
+    }
+    .about p {
+      margin-bottom: 1.3em;
+      font-weight: 500;
+    }
+    .about strong {
+      color: #16a34a;
+      font-weight: 700;
+    }
+    .waLink {
+      color: #fff;
+      background: linear-gradient(90deg, #16a34a 60%, #a7c7e7 100%);
+      font-weight: 600;
+      text-decoration: none;
+      padding: 0.25em 1em;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px #c3aed633;
+      transition: background 0.18s, color 0.18s, transform 0.15s;
+      margin-left: 0.3em;
+      display: inline-block;
+    }
+    .waLink:hover,
+    .waLink:focus {
+      background: linear-gradient(90deg, #a7c7e7 60%, #16a34a 100%);
+      color: #fff;
+      transform: scale(1.05);
+      text-decoration: underline;
+    }
+    .aboutThanks {
+      display: inline-block;
+      margin-top: 0.7em;
+      font-size: 1.15em;
+      font-weight: 700;
+      color: #f7cac9;
+      letter-spacing: 1px;
+    }
+    @media (max-width: 700px) {
+      .about {
+        padding: 18px 8px;
+        font-size: 1em;
+      }
+      .about h2 {
+        font-size: 1.4em;
+      }
+    }
+  </style>
 </Layout>
