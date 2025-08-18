@@ -35,6 +35,11 @@ const { producto: p } = Astro.props;
         <span class="txt">Comprar</span>
       </span>
     </a>
+
+  </div>
+
+  <div class="cart-box">
+    <button class="addToCart" data-id={p.id} data-name={p.name} data-price={p.price} data-img={p.img}>🛒</button>
   </div>
 </article>
 
@@ -95,8 +100,22 @@ const { producto: p } = Astro.props;
     align-items: center;
   }
 
-  /* BOX UP */
+  .cart-box {
+    width: 100%;
+    padding-top: 10px;
+  }
+  .addToCart {
+    float: right;
+    z-index: 2;
+    background: #fff;
+    border-radius: 50%;
+    border: none;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
 
+  /* BOX UP */
   .box-up {
     width: 100%;
     position: relative;
@@ -185,6 +204,11 @@ const { producto: p } = Astro.props;
     height: 100%;
     background-color: var(--principal-text-color);
   }
+  :global(button.cart) {
+    border: none;
+    cursor: pointer;
+    background: transparent;
+  }
   .cart {
     display: block;
     position: absolute;
@@ -258,5 +282,28 @@ const { producto: p } = Astro.props;
       height: var(--height);
       margin-bottom: 0;
     }
+
   }
 </style>
+
+<script>
+  import addToCart from "../utils/addToCart";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".addToCart").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const id = e.target.getAttribute("data-id");
+        const name = e.target.getAttribute("data-name");
+        const price = e.target.getAttribute("data-price");
+        const img = e.target.getAttribute("data-img");
+
+        addItem(id, name, price, img)
+      });
+    });
+  })
+
+  function addItem(id, name, price, img) {
+    addToCart(id, name, price, undefined, img);
+    alert("agregado")
+  }
+</script>

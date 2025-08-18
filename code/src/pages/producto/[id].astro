@@ -323,7 +323,8 @@ const {
   }
 </style>
 
-<script type="module">
+<script >
+  import addToCart from "../../utils/addToCart";
   const addBtn = document.getElementById("addToCartBtn");
   const qtyInput = document.getElementById("cartQty");
   const price = document
@@ -333,29 +334,13 @@ const {
   const name = document.querySelector(".name").innerText;
   const id = addBtn?.getAttribute("data-id");
   const img = document.querySelector(".imgContainer img")?.src || "";
+  const qty = parseInt(qtyInput.value, 10) ;
+  
   addBtn?.addEventListener("click", () => {
-    const qty = parseInt(qtyInput.value, 10) || 1;
-    const product = {
-      id: id,
-      name: name,
-      price: price,
-      cantidad: qty,
-      img: img,
-    };
-    let carrito = [];
-    try {
-      carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
-    } catch {}
-    // Si ya existe, suma cantidad
-    const idx = carrito.findIndex((p) => p.id === product.id);
-    if (idx >= 0) {
-      carrito[idx].cantidad += qty;
-    } else {
-      carrito.push(product);
-    }
-    localStorage.setItem("carrito", JSON.stringify(carrito));
+    addToCart(id, name, price, qty, img)
+
     window.updateCartCount && window.updateCartCount();
     addBtn.textContent = "¡Agregado!";
     setTimeout(() => (addBtn.textContent = "Agregar al carrito 🛒"), 1200);
-  });
+  })
 </script>
