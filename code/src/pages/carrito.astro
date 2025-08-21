@@ -4,255 +4,382 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout>
   <section class="cartContainer">
-    <h1>🛒 Carrito de compras</h1>
-    <div id="cartList" class="cartList"></div>
-    <div class="cartActions">
+    <h1>Carrito de Compras</h1>
+
+    <!-- Tabla de productos -->
+    <table class="cartTable">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Precio</th>
+          <th>Cant.</th>
+          <th>Subtotal</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="cartList"></tbody>
+    </table>
+
+    <!-- Resumen -->
+    <div id="cartSummary" class="cartSummary" style="display:none;">
+      <h2>Resumen</h2>
+      <div class="cartSummaryRow">
+        <span>Subtotal</span>
+        <span id="subtotal">$0</span>
+      </div>
+      <div class="cartSummaryRow">
+        <span>Envío (Andreani - Retiro)</span>
+        <span>$0,00</span>
+      </div>
+      <div class="cartSummaryTotal">
+        <span>Total del pedido</span>
+        <span id="total">$0</span>
+      </div>
       <button id="copyBtn" class="cartBtn">Copiar pedido</button>
       <a id="waBtn" class="cartBtn" target="_blank">Enviar por WhatsApp</a>
       <button id="clearBtn" class="cartBtn danger">Vaciar carrito</button>
     </div>
+
+    <!-- Carrito vacío -->
+    <div id="cartEmpty" class="cartEmpty">El carrito está vacío.</div>
   </section>
+
   <script type="module">
     function renderCart() {
-      const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
-      const cartDiv = document.getElementById('cartList');
+      const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+      const cartList = document.getElementById("cartList");
+      const summary = document.getElementById("cartSummary");
+      const empty = document.getElementById("cartEmpty");
+
       if (!carrito.length) {
-        cartDiv.innerHTML = `<div class="cartEmpty">El carrito está vacío.</div>`;
-        document.getElementById('copyBtn').style.display = 'none';
-        document.getElementById('waBtn').style.display = 'none';
-        document.getElementById('clearBtn').style.display = 'none';
+        cartList.innerHTML = "";
+        summary.style.display = "none";
+        empty.style.display = "block";
         return;
       }
-      let total = 0;
-      // ...dentro de tu renderCart()
-      cartDiv.innerHTML = `
-  <div style="display:flex;flex-direction:column;gap:1.2em;">
-    ${carrito.map((p, idx) => {
-      total += Number(p.price) * p.cantidad;
-      return `
-        <div style="display:flex;align-items:center;background:#fff;border-radius:12px;box-shadow:0 2px 8px #a7c7e733;padding:12px 18px;gap:1.2em;justify-content:flex-start;">
-          <div style="flex:0 0 48px;display:flex;align-items:center;justify-content:center;">
-            <img 
-              src="${p.img || '/placeholder.png'}" 
-              alt="${p.name}" 
-              style="width:48px;height:48px;max-width:48px;max-height:48px;object-fit:cover;border-radius:10px;background:#f7cac9;box-shadow:0 1px 4px #c3aed633;"
-            />
-          </div>
-          <div style="flex:1;text-align:left;display:flex;flex-direction:column;gap:0.3em;">
-            <div style="font-size:1.1em;font-weight:700;color:#232946;">${p.name}</div>
-            <div style="color:#16a34a;font-weight:600;font-size:1em;background:#e0ffe7;border-radius:8px;padding:0.1em 0.7em;display:inline-block;margin-bottom:0.2em;">
-              $${p.price*p.cantidad}
-            </div>
-            <div style="display:flex;align-items:center;gap:0.7em;font-size:0.98em;">
-              <span>Cantidad: ${p.cantidad}</span>
-              <button 
-                class="removeBtn" 
-                data-idx="${idx}" 
-                title="Quitar uno"
-                style="background:#f7cac9;color:#232946;border:none;border-radius:50%;width:1.7em;height:1.7em;font-size:1em;margin-left:0.5em;cursor:pointer;transition:background 0.18s,color 0.18s,transform 0.15s;display:flex;align-items:center;justify-content:center;"
-              >✖</button>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join('')}
-  </div>
-  <div style="margin-top:1.5em;font-size:1.2em;color:#232946;font-weight:700;text-align:right;">
-    <strong>Total: $${total}</strong>
-  </div>
-`;
 
-      // Botón quitar uno
-      cartDiv.querySelectorAll('.removeBtn').forEach(btn => {
-        btn.onclick = (e) => {
-          const idx = Number(btn.getAttribute('data-idx'));
-          if (carrito[idx].cantidad > 1) {
-            carrito[idx].cantidad -= 1;
-          } else {
-            carrito.splice(idx, 1);
-          }
-          localStorage.setItem('carrito', JSON.stringify(carrito));
+      empty.style.display = "none";
+      summary.style.display = "block";
+
+      let total = 0;
+      cartList.innerHTML = carrito
+  .map((p, idx) => {
+    const subtotal = Number(p.price) * p.cantidad;
+    return `
+      <tr>
+        <td class="tdProduct">
+          <div class="cartItem">
+            <div class="cartTop">
+              <img src="${p.img || "/placeholder.png"}" alt="${p.name}" width="60" />
+              <div class="cartName">${p.name}</div>
+            </div>
+            <div class="cartBottom">
+              <div class="cartDetails">Color: ${p.color || "-"}</div>
+              <div class="cartDetails">Talle: ${p.talle || "-"}</div>
+            </div>
+          </div>
+        </td>
+        
+
+          <td data-label="Precio" data-th="precio" >$${p.price}</td>
+          <td class="cartQty" data-label="Cant.">${p.cantidad}</td>
+          <td data-label="Subtotal">$${subtotal}</td>
+          <td data-label=" "><button class="iconBtn removeBtn" data-idx="${idx}">🗑️</button></td>
+
+      </tr>
+    `;
+  })
+  .join("");
+
+      document.getElementById("subtotal").textContent = `$${total}`;
+      document.getElementById("total").textContent = `$${total}`;
+
+      // Quitar item
+      cartList.querySelectorAll(".removeBtn").forEach((btn) => {
+        btn.onclick = () => {
+          const idx = Number(btn.getAttribute("data-idx"));
+          carrito.splice(idx, 1);
+          localStorage.setItem("carrito", JSON.stringify(carrito));
           renderCart();
           window.updateCartCount && window.updateCartCount();
         };
       });
 
       // Mensaje para copiar o enviar
-      const pedido = carrito.map(p => `${p.name} x${p.cantidad} ($${p.price})`).join(', ') + `. Total: $${total}`;
-      document.getElementById('copyBtn').onclick = () => {
+      const pedido =
+        carrito
+          .map((p) => `${p.name} x${p.cantidad} ($${p.price})`)
+          .join(", ") + `. Total: $${total}`;
+      document.getElementById("copyBtn").onclick = () => {
         navigator.clipboard.writeText(pedido);
-        document.getElementById('copyBtn').textContent = "¡Copiado!";
-        setTimeout(() => document.getElementById('copyBtn').textContent = "Copiar pedido", 1200);
+        document.getElementById("copyBtn").textContent = "¡Copiado!";
+        setTimeout(
+          () => (document.getElementById("copyBtn").textContent = "Copiar pedido"),
+          1200
+        );
       };
-      document.getElementById('waBtn').href = `https://wa.me/59891361706?text=${encodeURIComponent("Hola, quiero pedir: " + pedido)}`;
-      document.getElementById('copyBtn').style.display = '';
-      document.getElementById('waBtn').style.display = '';
-      document.getElementById('clearBtn').style.display = '';
+      document.getElementById(
+        "waBtn"
+      ).href = `https://wa.me/59891361706?text=${encodeURIComponent(
+        "Hola, quiero pedir: " + pedido
+      )}`;
     }
 
-    document.getElementById('clearBtn').onclick = () => {
-      localStorage.removeItem('carrito');
+    document.getElementById("clearBtn").onclick = () => {
+      localStorage.removeItem("carrito");
       renderCart();
       window.updateCartCount && window.updateCartCount();
     };
 
     renderCart();
   </script>
+
   <style>
     .cartContainer {
-      background: linear-gradient(120deg, #fff5ba 60%, #a7c7e7 100%);
-      border-radius: 18px;
-      max-width: 700px;
-      margin: 32px auto;
-      padding: 32px 18px;
-      box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.10);
-      text-align: center;
-    }
-    .cartContainer h1 {
-      color: #232946;
-      margin-bottom: 1.5em;
-      font-size: 2rem;
-      font-weight: 800;
-    }
-    .cartList {
-      margin-bottom: 1.5em;
-    }
-    .cartTable {
-      display: flex;
-      flex-direction: row;
-      gap: 1.2em;
-    }
-    .cartRow {
-      display: flex;
-      align-items: center;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px #a7c7e733;
-      padding: 12px 18px;
-      gap: 1.2em;
-      justify-content: flex-start;
+      font-family: "Inter", Arial, sans-serif;
+      color: #222;
     }
 
-    .cartImg {
-  width: 48px !important;
-  height: 48px !important;
-  max-width: 48px !important;
-  max-height: 48px !important;
-  object-fit: cover !important;
-  border-radius: 10px !important;
-  background: #f7cac9 !important;
-  box-shadow: 0 1px 4px #c3aed633 !important;
-}
-    .cartInfo {
-      flex: 1;
+    .cartContainer h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5em;
       text-align: left;
+    }
+
+    .cartTable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2em;
+    }
+
+    .cartTable th {
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 8px;
+      border-bottom: 2px solid #eee;
+      color: #555;
+    }
+
+    .cartTable td {
+      padding: 14px 8px;
+      border-bottom: 1px solid #eee;
+      vertical-align: middle;
+      font-size: 0.95rem;
+    }
+
+    .cartTable img {
+      width: 70px;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .cartItem {
       display: flex;
       flex-direction: column;
-      gap: 0.3em;
+      gap: 6px;
+      width: 100%;
     }
+
+    .cartTop {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cartBottom {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+
     .cartName {
-      font-size: 1.1em;
-      font-weight: 700;
-      color: #232946;
+      font-weight: 500;
     }
-    .cartPrice {
-      color: #16a34a;
-      font-weight: 600;
-      font-size: 1em;
-      background: #e0ffe7;
-      border-radius: 8px;
-      padding: 0.1em 0.7em;
-      display: inline-block;
-      margin-bottom: 0.2em;
+
+    .cartDetails {
+      font-size: 0.85rem;
+      color: #666;
     }
+
     .cartQty {
-      display: flex;
-      align-items: center;
-      gap: 0.7em;
-      font-size: 0.98em;
+      text-align: center;
     }
-    .removeBtn {
-      background: #f7cac9;
-      color: #232946;
+
+    .iconBtn {
+      background: none;
       border: none;
-      border-radius: 50%;
-      width: 1.7em;
-      height: 1.7em;
-      font-size: 1em;
-      margin-left: 0.5em;
       cursor: pointer;
-      transition: background 0.18s, color 0.18s, transform 0.15s;
+      font-size: 1.1rem;
+      color: #444;
+      transition: color 0.2s;
+    }
+    .iconBtn:hover {
+      color: #000;
+    }
+
+    .cartSummary {
+      background: #f7f7f7;
+      padding: 18px;
+      border-radius: 6px;
+      max-width: 320px;
+      margin-left: auto;
+    }
+
+    .cartSummary h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1em;
+      color: #333;
+    }
+
+    .cartSummaryRow {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      margin-bottom: 0.7em;
+      font-size: 0.95rem;
     }
-    .removeBtn:hover,
-    .removeBtn:focus {
-      background: #c3aed6;
-      color: #fff;
-      transform: scale(1.1);
-    }
-    .cartTotal {
-      margin-top: 1.5em;
-      font-size: 1.2em;
-      color: #232946;
+
+    .cartSummaryTotal {
+      display: flex;
+      justify-content: space-between;
       font-weight: 700;
-      text-align: right;
+      font-size: 1.1rem;
+      margin-top: 1em;
+      border-top: 1px solid #ddd;
+      padding-top: 0.8em;
     }
+
+    .cartBtn {
+      display: block;
+      width: 100%;
+      margin-top: 1.2em;
+      padding: 12px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-align: center;
+      text-decoration: none;
+    }
+    .cartBtn:hover {
+      background: #333;
+    }
+
+    .cartBtn.danger {
+      background: #ef4444;
+    }
+    .cartBtn.danger:hover {
+      background: #dc2626;
+    }
+
     .cartEmpty {
-      color: #232946;
+      color: #555;
       font-size: 1.1em;
       margin: 2em 0;
       font-weight: 600;
+      text-align: center;
     }
-    .cartActions {
-      display: flex;
-      gap: 1em;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 2em;
-    }
-    .cartBtn {
-      background: linear-gradient(90deg, #a7c7e7 40%, #b7eac5 100%);
-      color: #232946;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1em;
-      padding: 0.4em 1.2em;
-      border: none;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s, transform 0.15s;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .cartBtn:hover,
-    .cartBtn:focus {
-      background: linear-gradient(90deg, #f7cac9 40%, #b7eac5 100%);
-      color: #232946;
-      transform: scale(1.04);
-    }
-    .cartBtn.danger {
-      background: linear-gradient(90deg, #f7cac9 40%, #c3aed6 100%);
-      color: #232946;
-    }
-    .cartBtn.danger:hover,
-    .cartBtn.danger:focus {
-      background: linear-gradient(90deg, #c3aed6 40%, #f7cac9 100%);
-      color: #fff;
-    }
+
+    
+
     @media (max-width: 600px) {
-      .cartRow {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5em;
-        padding: 10px 8px;
-      }
-      .cartImgBox {
-        margin-bottom: 0.5em;
-      }
-      .cartTotal {
-        text-align: center;
-      }
+  .cartTable {
+    border-collapse: separate;
+    border-spacing: 0 16px;
+  }
+  .cartTable tr {
+    display: block;
+    margin-bottom: 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #e0e0e0;
+    background: #fafbfc;
+  }
+  .cartTable td, .cartTable th {
+    border-bottom: none;
+    padding: 0;
+    background: none;
+    text-align: left;
+  }
+  .cartTable td:first-child {
+    display: block;
+    width: 100%;
+    background: #fafbfc;
+    border-radius: 10px 10px 0 0;
+    padding: 14px 10px 14px 10px;
+    box-shadow: none;
+  }
+  .cartTable .cartRowData {
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 8px #e0e0e0;
+    border-top: 1px solid #f0f0f0;
+    margin-top: -8px;
+    padding: 10px 0;
+    gap: 0;
+  }
+  .cartTable .cartRowData td {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    border-top: none;
+    margin: 0;
+    font-size: 0.97em;
+  }
+  .cartTable img {
+    width: 60px;
+    min-width: 60px;
+    margin-bottom: 4px;
+  }
+  .cartName {
+    width: 100%;
+    display: block;
+    font-size: 1em;
+    word-break: break-word;
+    text-align: left;
+    margin-top: 2px;
+  }
+  .cartTable thead {
+    display: none;
+  }
+  
+  :global(#cartList .tdProduct){
+    display: block;
+    position: relative;
+    width: 100%;
+    float: initial;
     }
+   :global(#cartList td) {
+      float: left;
+      width: 33%;
+    }
+}
+
+.cartTable td[data-label]::before {
+    content: attr(data-label) ": ";
+    display: block;
+    font-weight: 600;
+    color: #888;
+    font-size: 0.93em;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+  }
+  
   </style>
 </Layout>
