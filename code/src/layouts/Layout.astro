@@ -7,6 +7,12 @@ import { cargarProductos } from "../utils/loadCSV";
 
 const productos = cargarProductos();
 const isDev = import.meta.env.tienda_DEV === "true";
+
+interface Props {
+  categorySelected?: string;
+}
+
+const { categorySelected } = Astro.props;
 ---
 
 <!doctype html>
@@ -25,7 +31,7 @@ const isDev = import.meta.env.tienda_DEV === "true";
   </head>
 
   <body id="body" class={isDev ? "dev" : ""}>
-    <Header products={productos}/>
+    <Header products={productos} categorySelected={categorySelected} />
 
     <main>
       <slot />

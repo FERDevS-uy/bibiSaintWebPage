@@ -1,6 +1,5 @@
 ---
 import ListarProductos from "../../components/ListarProductos.astro";
-import RenderCategories from "../../components/RenderCategories.astro";
 import Layout from "../../layouts/Layout.astro";
 import { countCategories } from "../../utils/countCategories";
 import { cargarProductos } from "../../utils/loadCSV";
@@ -11,17 +10,17 @@ export const getStaticPaths = () => {
   const categories = countCategories(products);
   return categories.map((c) => ({
     params: { id: c.name },
-    props: { products, categories },
+    props: { products },
   }));
 };
 
 const { id } = Astro.params;
-const { products, categories } = Astro.props;
+const { products } = Astro.props;
 const filteredProducts = products.filter((p) =>
   p.categories.some((cat) => cat === id)
 );
 ---
 
-<Layout>
+<Layout categorySelected={id}>
   <ListarProductos products={filteredProducts} />
 </Layout>

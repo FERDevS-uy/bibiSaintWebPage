@@ -1,18 +1,19 @@
 ---
-// filepath: /Users/franccesco.giordano/Documents/proyectos personales/bibiSaintWebPage/code/src/layouts/Header.astro
 import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
 import { config } from "../config";
 import { Image } from "astro:assets";
 import logoFD from "../assets/logoFD.svg";
-import cart from "../assets/cart.svg";
-import RenderCategories from "../components/RenderCategories.astro";
 import { countCategories } from "../utils/countCategories";
 import type Product from "../types/product";
 
+const { default: cartSVG } = await import("../assets/cart.svg?raw");
+const { default: downSVG } = await import("../assets/down.svg?raw");
+
 interface Props {
   products: Product[];
+  categorySelected?: string;
 }
-const { products } = Astro.props;
+const { products, categorySelected } = Astro.props;
 const categorías = countCategories(products);
 ---
 
@@ -27,7 +28,7 @@ const categorías = countCategories(products);
 
       <div class="navMenu">
         <a href={`${config.base}/carrito`} class="cartLink">
-          <Image src={cart} alt="cart" class="" width={40} />
+          <Fragment set:html={cartSVG} />
           <span id="cartCount" class="cartCount"></span>
         </a>
         <MenuIcon class="menuIcon" />
@@ -36,13 +37,38 @@ const categorías = countCategories(products);
   </Astronav>
 
   <MenuItems class="itemsBox hidden">
-    <ul>
-      <li><a href={config.base}>Inicio</a></li>
-      <li><a href={`${config.base}/about`}>Sobre nosotros</a></li>
+    <ul class="mainNav">
+      <li><a class="navLink" href={config.base}>Inicio</a></li>
+      <li>
+        <a class="navLink" href={`${config.base}/about`}>Sobre nosotros</a>
+      </li>
+      <li class="hr"><hr /></li>
+    </ul>
+
+    <input
+      type="checkbox"
+      id="toggleCategories"
+      class="toggleCategories"
+      hidden
+    />
+    <label for="toggleCategories" id="toggleCategoriesBtn">
+      <Fragment set:html={downSVG} />
+    </label>
+    <ul class="categoryList">
+      {
+        categorías.map((c) => (
+          <li>
+            <a
+              href={`${config.base}/categories/${c.name}`}
+              class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""}`}
+            >
+              {c.name} <span class="count"> ({c.count})</span>
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </MenuItems>
-
-  <RenderCategories categories={categorías} selected="" />
 </header>
 
 <style>
@@ -50,9 +76,12 @@ const categorías = countCategories(products);
     --background-color: var(--principal-background-color);
     --background-color-dark: var(--principal-background-color-dark);
     --background-color-light: var(--principal-background-color-light);
-    --text-color: var(--principal-text-color);
+    --text-color: rgba(35, 41, 70, 0.98);
+    --itemBox-background-color: #d5c4a4;
     --menu-size: 3rem;
     --header-icon-size: 6rem;
+    --header-pc-icon-size: 7rem;
+    --header-pc-height: 130px;
 
     margin-bottom: 0.5rem;
   }
@@ -85,16 +114,6 @@ const categorías = countCategories(products);
     padding: 0px;
   }
 
-  .logoContainer h1 {
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: var(--text-color);
-    letter-spacing: 1px;
-    margin: 0;
-    text-shadow: 0 2px 8px #c3aed655;
-    font-family: "Poppins", "Segoe UI", Arial, sans-serif;
-  }
-
   .navMenu {
     display: flex;
     gap: 15px;
@@ -103,16 +122,8 @@ const categorías = countCategories(products);
     width: var(--menu-size);
     height: var(--menu-size);
     font-size: 2.2rem;
-    color: #232946;
 
-    /* border-radius: 8px; */
     padding: 6px;
-    /* box-shadow: 0 2px 8px #a7c7e7aa; */
-  }
-  .menuIcon:hover,
-  .menuIcon:focus {
-    /* background: var(--background-color-dark);
-    color: #fff; */
   }
 
   :global(#astronav-menu) {
@@ -127,91 +138,79 @@ const categorías = countCategories(products);
     justify-content: center;
   }
 
+  /* Items Box */
   .itemsBox {
     width: 100%;
     height: 100%;
-    background-color: #ffffffc9;
+    background-color: var(--itemBox-background-color);
     box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.1);
-    padding-block: 0.5rem;
+    padding-bottom: 10rem;
+    padding-inline: 1rem;
 
     position: absolute;
     right: 0;
-    z-index: 100;
+    z-index: 2;
     transition: 0.5s;
     overflow-x: hidden;
   }
   .itemsBox.hidden {
-    display: block;
+    display: initial;
     width: 0;
+    padding: 0;
   }
   .itemsBox ul {
     list-style: none;
-    width: 80%;
-    max-width: 400px;
+  }
+  .itemsBox hr {
+    border: 1px solid #fff;
+    margin: 10px 0;
+  }
 
-    float: right;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    /* transition: 1.5s; */
-  }
-  .itemsBox.hidden ul {
-    width: 0;
-  }
-  .itemsBox li a {
-    display: block;
-    color: var(--background-color-light);
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 1.1rem;
-    border-radius: 6px 0 0 6px;
-    padding: 1rem 2rem;
-    background: var(--background-color-dark);
+  .navLink {
+    color: #fff;
     overflow-x: hidden;
     text-wrap: nowrap;
-  }
-  .itemsBox li a:hover,
-  .itemsBox li a:focus {
-    background: var(--background-color);
-    color: var(--text-color);
-  }
-
-  .mainNav {
-    display: flex;
-    gap: 1.2em;
-    align-items: center;
-  }
-  .navLink {
-    color: #232946;
+    width: 100%;
+    display: block;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 1.08em;
-    padding: 0.3em 1em;
-    border-radius: 8px;
-    transition:
-      background 0.18s,
-      color 0.18s;
+    padding: 1rem;
+    font-weight: bold;
+  }
+  .itemsBox li:not(:first-of-type) .navLink {
+    border-top: 2px solid #ffffff5d;
   }
   .navLink:hover,
-  .navLink:focus {
-    /* background: linear-gradient(90deg, #a7c7e7 40%, #fff5ba 100%); */
-    background: var(--background-color);
-    color: #232946;
+  .navLink:focus,
+  .categoryLink.selected {
+    color: #ffffff9e;
+    transform: translateX(20px);
+  }
+
+  :global(.itemsBox svg),
+  :global(.itemsBox.hidden svg) {
+    display: none;
   }
 
   /* Cart */
   .cartLink {
     position: relative;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
   }
-  .cartLink img {
-    height: 100%;
+  :global(.cartLink svg) {
+    width: calc(var(--menu-size) - 10px);
+    height: calc(var(--menu-size) - 10px);
+  }
+  .cartLink:hover {
+    animation: shake 0.5s;
   }
   .cartCount {
     position: absolute;
     top: -8px;
     right: -12px;
     background: #f7cac9;
-    color: #232946;
+    color: var(--itemBox-background-color);
     border-radius: 50%;
     font-size: 0.85em;
     padding: 0.1em 0.5em;
@@ -221,47 +220,168 @@ const categorías = countCategories(products);
     display: none;
   }
 
+  @keyframes shake {
+    0% {
+      transform: translateY(0);
+    }
+    15% {
+      transform: translateY(-5px);
+    }
+    30% {
+      transform: translateY(5px);
+    }
+    45% {
+      transform: translateY(-5px);
+    }
+    60% {
+      transform: translateY(5px);
+    }
+    75% {
+      transform: translateY(-5px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
   @media screen and (min-width: 1000px) {
     .headerContainer {
       border-radius: 0;
+      align-items: flex-end;
+      height: var(--header-pc-height);
+      padding: 0.5rem 0;
     }
 
-    .logoContainer h1 .hidden {
-      display: initial;
+    .logoContainer img,
+    .navMenu {
+      z-index: 10;
     }
     .logoImg {
-      width: 7rem;
-      height: 7rem;
+      width: var(--header-pc-icon-size);
+      height: var(--header-pc-icon-size);
+    }
+    :global(.cartLink svg) {
+      margin-bottom: 5px;
     }
 
     .navMenu .menuIcon {
       display: none;
     }
 
+    /* ItemsBox */
     .itemsBox,
-    .itemsBox.hidden,
-    .itemsBox ul,
-    .itemsBox.hidden ul {
-      height: auto;
-      width: initial;
-      max-width: none;
-      position: relative;
-      padding-block: 0;
-      background-color: var(--background-color-dark);
+    .itemsBox.hidden {
+      width: auto;
+      height: var(--header-pc-height);
       box-shadow: none;
       transition: none;
+      background-color: transparent;
+      padding: 0;
+      padding-bottom: 5px;
 
+      top: 0;
+      left: var(--header-pc-icon-size);
+      /* right: 55px; */
+
+      display: grid;
+      align-items: start;
+      justify-items: end;
+      gap: 20px 10px;
+      /* grid-template-rows: 50px 1fr; */
+      grid-template-rows: 1fr 50px;
+      grid-template-columns: auto 25px 70px;
+      overflow: visible;
+    }
+
+    .itemsBox ul {
+      float: initial;
+    }
+
+    .navLink {
+      border-radius: 0;
+      padding: 0.7rem 1rem;
+    }
+    .navLink:hover,
+    .navLink:focus,
+    .categoryLink.selected {
+      background-color: #bbab8e;
+      transform: translateX(0);
+    }
+    .itemsBox li:not(:first-of-type) .navLink {
+      border-top: none;
+    }
+    li .navLink {
+      border: none;
+    }
+    .itemsBox hr,
+    .itemsBox li.hr {
+      display: none;
+    }
+
+    .itemsBox ul.mainNav,
+    .itemsBox.hidden ul.mainNav {
+      width: initial;
+      margin-inline: 10px;
+      background-color: var(--itemBox-background-color);
+
+      overflow: hidden;
+      border-end-end-radius: 10px;
+      border-end-start-radius: 10px;
+
+      grid-column: 1/4;
       display: flex;
       flex-direction: row;
       gap: 5px;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
     }
-    .itemsBox li a {
-      border-radius: 0;
-      padding: 1rem;
-      color: var(--background-color-light);
-      background-color: transparent;
+
+    /* Categories list */
+    .itemsBox .categoryList,
+    .itemsBox.hidden .categoryList {
+      grid-column: 1;
+      grid-row: 2;
+      width: initial;
+      max-width: 1000px;
+      background-color: var(--itemBox-background-color);
+
+      display: flex;
+      flex-direction: row-reverse;
+      align-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      transition: 0.3s;
+      border-radius: 10px;
+    }
+    .categoryList {
+      height: 45px;
+      overflow: hidden;
+      margin: 0 0.5rem 0 0.5rem;
+    }
+
+    .itemsBox #toggleCategoriesBtn {
+      grid-column: 2/3;
+      grid-row: 2/3;
+      user-select: none;
+      height: 45px;
+      display: flex;
+    }
+    :global(.itemsBox svg),
+    :global(.itemsBox.hidden svg) {
+      display: block;
+      width: 25px;
+      cursor: pointer;
+      transition: transform 0.3s;
+      /* color: var(--background-color-dark); */
+    }
+
+    :global(.toggleCategories:checked ~ .categoryList) {
+      height: 250px;
+      padding: 0 0.5rem 0.5rem 0.5rem;
+      box-shadow: 1px 5px 5px #bbbbbb;
+    }
+    :global(.toggleCategories:checked ~ label svg) {
+      transform: rotate(180deg);
     }
   }
 </style>
@@ -289,4 +409,27 @@ const categorías = countCategories(products);
   window.addEventListener("storage", (e) => {
     if (e.key === "carrito") window.updateCartCount();
   });
+
+  function checkCategoryListWidth() {
+    const categoryList = document.querySelector(".categoryList");
+    const toggleBtn = document.getElementById("toggleCategoriesBtn");
+
+    if (!categoryList || !toggleBtn) return;
+
+    // Solo en escritorio
+    if (window.innerWidth >= 1000) {
+      // Mostrar el botón solo si el ancho visible es exactamente 1000px
+      if (categoryList.offsetWidth >= 757) {
+        toggleBtn.style.display = "flex";
+      } else {
+        toggleBtn.style.display = "none";
+      }
+    } else {
+      toggleBtn.style.display = "none";
+    }
+  }
+
+  // Ejecutar al cargar y al redimensionar
+  window.addEventListener("DOMContentLoaded", checkCategoryListWidth);
+  window.addEventListener("resize", checkCategoryListWidth);
 </script>
