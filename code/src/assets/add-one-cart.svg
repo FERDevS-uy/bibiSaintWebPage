@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+  <g id="SVGRepo_iconCarrier">
+    <path d="M 21 5 L 19 12 L 7.377 12 M 20 16 L 8 16 L 6 3 L 3 3 M 9 20 C 9 20.552 8.552 21 8 21 C 7.448 21 7 20.552 7 20 C 7 19.448 7.448 19 8 19 C 8.552 19 9 19.448 9 20 Z M 20 20 C 20 20.552 19.552 21 19 21 C 18.448 21 18 20.552 18 20 C 18 19.448 18.448 19 19 19 C 19.552 19 20 19.448 20 20 Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: currentColor;"/>
+    <path d="M 9.443 5.969 L 10.915 5.969 L 10.915 4.492 L 11.916 4.492 L 11.916 5.969 L 13.396 5.969 L 13.396 6.969 L 11.916 6.969 L 11.916 8.438 L 10.915 8.438 L 10.915 6.969 L 9.443 6.969 Z M 16.509 3.143 L 16.509 9.783 L 14.852 9.783 L 14.852 6.223 Q 14.852 5.452 14.815 5.296 Q 14.778 5.14 14.612 5.06 Q 14.446 4.98 13.872 4.98 L 13.708 4.98 L 13.708 4.205 Q 14.909 3.946 15.533 3.143 Z" style="fill: currentColor; text-wrap-mode: nowrap;"/>
+  </g>
+</svg>

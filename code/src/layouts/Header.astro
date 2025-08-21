@@ -1,6 +1,6 @@
 ---
 // filepath: /Users/franccesco.giordano/Documents/proyectos personales/bibiSaintWebPage/code/src/layouts/Header.astro
-import {Astronav, MenuIcon, MenuItems} from "astro-navbar";
+import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
 import { config } from "../config";
 import { Image } from "astro:assets";
 import logoFD from "../assets/logoFD.svg";
@@ -14,7 +14,6 @@ interface Props {
 }
 const { products } = Astro.props;
 const categorías = countCategories(products);
-
 ---
 
 <header>
@@ -31,7 +30,7 @@ const categorías = countCategories(products);
           <Image src={cart} alt="cart" class="" width={40} />
           <span id="cartCount" class="cartCount"></span>
         </a>
-          <MenuIcon class="menuIcon" />
+        <MenuIcon class="menuIcon" />
       </div>
     </div>
   </Astronav>
@@ -105,7 +104,7 @@ const categorías = countCategories(products);
     height: var(--menu-size);
     font-size: 2.2rem;
     color: #232946;
-    
+
     /* border-radius: 8px; */
     padding: 6px;
     /* box-shadow: 0 2px 8px #a7c7e7aa; */
@@ -199,6 +198,11 @@ const categorías = countCategories(products);
     background: var(--background-color);
     color: #232946;
   }
+
+  /* Cart */
+  .cartLink {
+    position: relative;
+  }
   .cartLink img {
     height: 100%;
   }
@@ -219,9 +223,7 @@ const categorías = countCategories(products);
 
   @media screen and (min-width: 1000px) {
     .headerContainer {
-      justify-content: center;
       border-radius: 0;
-      padding: 2rem;
     }
 
     .logoContainer h1 .hidden {
@@ -232,7 +234,7 @@ const categorías = countCategories(products);
       height: 7rem;
     }
 
-    .navMenu .menuIcon{
+    .navMenu .menuIcon {
       display: none;
     }
 
