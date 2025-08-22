@@ -1,10 +1,9 @@
 ---
 import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
 import { config } from "src/config";
-import { Image } from "astro:assets";
-import logoFD from "@assets/logoFD.svg";
 import type CategoryList from "src/types/categoryList";
 
+const { default: logoSVG } = await import("@assets/logoFD.svg?raw");
 const { default: cartSVG } = await import("@assets/cart.svg?raw");
 const { default: downSVG } = await import("@assets/down.svg?raw");
 
@@ -20,7 +19,7 @@ const { categories, categorySelected } = Astro.props;
     <div class="headerContainer">
       <div class="logoContainer">
         <a href={config.base}>
-          <Image src={logoFD} alt="Logo" class="logoImg" />
+          <Fragment set:html={logoSVG} />
         </a>
       </div>
 
@@ -78,7 +77,7 @@ const { categories, categorySelected } = Astro.props;
     --text-color: rgba(35, 41, 70, 0.98);
     --itemBox-background-color: #d5c4a4;
     --menu-size: 3rem;
-    --header-icon-size: 6rem;
+    --header-icon-size: 10rem;
     --header-pc-icon-size: 7rem;
     --header-pc-height: 130px;
 
@@ -105,12 +104,10 @@ const { categories, categorySelected } = Astro.props;
     text-decoration: none;
   }
 
-  .logoImg {
+  :global(.logoContainer svg) {
+    color: var(--text-color);
     width: var(--header-icon-size);
-    height: var(--header-icon-size);
-    filter: drop-shadow(0 2px 8px #a7c7e7aa);
-    border-radius: 12px;
-    padding: 0px;
+    height: 100%;
   }
 
   .navMenu {
@@ -254,10 +251,13 @@ const { categories, categorySelected } = Astro.props;
     .navMenu {
       z-index: 10;
     }
-    .logoImg {
-      width: var(--header-pc-icon-size);
+
+    :global(.logoContainer svg) {
       height: var(--header-pc-icon-size);
+      min-width: auto;
+      width: 250px;
     }
+
     :global(.cartLink svg) {
       margin-bottom: 5px;
     }
@@ -278,14 +278,12 @@ const { categories, categorySelected } = Astro.props;
       padding-bottom: 5px;
 
       top: 0;
-      left: var(--header-pc-icon-size);
-      /* right: 55px; */
+      left: 250px;
 
       display: grid;
       align-items: start;
       justify-items: end;
       gap: 20px 10px;
-      /* grid-template-rows: 50px 1fr; */
       grid-template-rows: 1fr 50px;
       grid-template-columns: auto 25px 70px;
       overflow: visible;
