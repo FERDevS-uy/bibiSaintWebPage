@@ -1,20 +1,18 @@
 ---
 import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
-import { config } from "../config";
+import { config } from "src/config";
 import { Image } from "astro:assets";
-import logoFD from "../assets/logoFD.svg";
-import { countCategories } from "../utils/countCategories";
-import type Product from "../types/product";
+import logoFD from "@assets/logoFD.svg";
+import type CategoryList from "src/types/categoryList";
 
-const { default: cartSVG } = await import("../assets/cart.svg?raw");
-const { default: downSVG } = await import("../assets/down.svg?raw");
+const { default: cartSVG } = await import("@assets/cart.svg?raw");
+const { default: downSVG } = await import("@assets/down.svg?raw");
 
 interface Props {
-  products: Product[];
+  categories: CategoryList[];
   categorySelected?: string;
 }
-const { products, categorySelected } = Astro.props;
-const categorías = countCategories(products);
+const { categories, categorySelected } = Astro.props;
 ---
 
 <header>
@@ -56,16 +54,17 @@ const categorías = countCategories(products);
     </label>
     <ul class="categoryList">
       {
-        categorías.map((c) => (
-          <li>
-            <a
-              href={`${config.base}/categories/${c.name}`}
-              class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""}`}
-            >
-              {c.name} <span class="count"> ({c.count})</span>
-            </a>
-          </li>
-        ))
+        categories &&
+          categories.map((c) => (
+            <li>
+              <a
+                href={`${config.base}/categories/${c.name}`}
+                class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""}`}
+              >
+                {c.name} <span class="count"> ({c.count})</span>
+              </a>
+            </li>
+          ))
       }
     </ul>
   </MenuItems>
