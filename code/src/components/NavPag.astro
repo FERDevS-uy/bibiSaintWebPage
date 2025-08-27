@@ -1,0 +1,109 @@
+---
+import { config } from "src/config";
+
+const { default: prevArrow } = await import("@assets/prev-arrow.svg?raw");
+const { default: nextArrow } = await import("@assets/next-arrow.svg?raw");
+const { default: lastArrow } = await import("@assets/last-arrow.svg?raw");
+const { default: firstArrow } = await import("@assets/first-arrow.svg?raw");
+
+interface Props {
+  totalPages: number;
+  actualPage: number;
+  baseURL?: string;
+}
+
+const { totalPages, actualPage, baseURL = config.base } = Astro.props;
+---
+
+<nav class="pagination">
+  {
+    actualPage == 1 ? (
+      <>
+        <span class="button">
+          <Fragment set:html={firstArrow} />
+        </span>
+        <span class="button">
+          <Fragment set:html={prevArrow} />
+        </span>
+      </>
+    ) : (
+      <>
+        <a href={`${baseURL}/page/1`}>
+          <Fragment set:html={firstArrow} />
+        </a>
+        <a href={`${baseURL}/page/${actualPage - 1}`}>
+          <Fragment set:html={prevArrow} />
+        </a>
+      </>
+    )
+  }
+  <span
+    ><span id="actualPage">{actualPage}</span> / <span id="totalPages"
+      >{totalPages}</span
+    ></span
+  >
+  {
+    actualPage == totalPages ? (
+      <>
+        <span class="button">
+          <Fragment set:html={nextArrow} />
+        </span>
+        <span class="button">
+          <Fragment set:html={lastArrow} />
+        </span>
+      </>
+    ) : (
+      <>
+        <a href={`${baseURL}/page/${+actualPage + 1}`}>
+          <Fragment set:html={nextArrow} />
+        </a>
+        <a href={`${baseURL}/page/${totalPages}`}>
+          <Fragment set:html={lastArrow} />
+        </a>
+      </>
+    )
+  }
+</nav>
+
+<style>
+  :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pagination {
+    margin-top: 3rem;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  a,
+  span.button {
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+  }
+
+  a {
+    color: var(--principal-text-color);
+    text-decoration: none;
+    background-color: var(--principal-background-color);
+  }
+  a:hover {
+    background-color: var(--principal-background-color-dark);
+    color: var(--principal-text-color);
+  }
+
+  span.button {
+    color: #b1b1b1;
+    background-color: var(--principal-background-color-light);
+    user-select: none;
+  }
+</style>
