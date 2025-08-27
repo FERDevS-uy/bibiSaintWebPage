@@ -1,12 +1,20 @@
 ---
 import GlobalStyles from "./GlobalStyles.astro";
-import { config } from "../config";
+import { config } from "src/config";
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
-import { cargarProductos } from "../utils/loadCSV";
+import { cargarProductos } from "@utils/loadCSV";
+import { countCategories } from "@utils/countCategories";
 
 const productos = cargarProductos();
+const categories = countCategories(productos);
 const isDev = import.meta.env.tienda_DEV === "true";
+
+interface Props {
+  categorySelected?: string;
+}
+
+const { categorySelected } = Astro.props;
 ---
 
 <!doctype html>
@@ -25,7 +33,7 @@ const isDev = import.meta.env.tienda_DEV === "true";
   </head>
 
   <body id="body" class={isDev ? "dev" : ""}>
-    <Header products={productos}/>
+    <Header categories={categories} categorySelected={categorySelected} />
 
     <main>
       <slot />
