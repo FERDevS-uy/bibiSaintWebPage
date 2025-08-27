@@ -79,13 +79,22 @@ import Layout from "../layouts/Layout.astro";
             </div>
           </div>
         </td>
-        
-
-          <td data-label="Precio" data-th="precio" >$${p.price}</td>
-          <td class="cartQty" data-label="Cant.">${p.cantidad}</td>
-          <td data-label="Subtotal">$${subtotal}</td>
-          <td data-label=" "><button class="iconBtn removeBtn" data-idx="${idx}">🗑️</button></td>
-
+        <td>
+          <span style="color:#888;font-size:0.93em;margin-bottom:2px;letter-spacing:0.5px;display:block;font-weight:600;padding-bottom:10px;">Precio</span>
+          $${p.price}
+        </td>
+        <td class="cartQty">
+          <span style="color:#888;font-size:0.93em;margin-bottom:2px;letter-spacing:0.5px;display:block;font-weight:600;padding-bottom:10px;">Cant.</span>
+          ${p.cantidad}
+        </td>
+        <td>
+          <span style="color:#888;font-size:0.93em;margin-bottom:2px;letter-spacing:0.5px;display:block;font-weight:600;padding-bottom:10px;">Subtotal</span>
+          $${subtotal}
+        </td>
+        <td>
+          <span style="color:#888;font-size:0.93em;margin-bottom:2px;letter-spacing:0.5px;display:block;font-weight:600;padding-bottom:10px;">&nbsp;</span>
+          <button class="iconBtn removeBtn" data-idx="${idx}">🗑️</button>
+        </td>
       </tr>
     `;
   })
@@ -372,13 +381,14 @@ import Layout from "../layouts/Layout.astro";
 }
 
 .cartTable td[data-label]::before {
-    content: attr(data-label) ": ";
-    display: block;
-    font-weight: 600;
     color: #888;
     font-size: 0.93em;
     margin-bottom: 2px;
     letter-spacing: 0.5px;
+    content: attr(data-th);
+    display: block;
+    font-weight: 600;
+    padding-bottom: 10px;
   }
   
   </style>
