@@ -1,10 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import cart from "../assets/cart.svg";
+import { Image } from "astro:assets";
 ---
 
 <Layout>
   <section class="cartContainer">
-    <h1>🛒 Carrito de compras</h1>
+    <div class="divtitlecart">
+          <Image class="imgcarrito" src={cart} alt="cart" class="" width={40} />
+    <h1>Carrito de compras</h1>
+    </div>
     <div id="cartList" class="cartList"></div>
     <div class="cartActions">
       <button id="copyBtn" class="cartBtn">Copiar pedido</button>
@@ -12,28 +17,30 @@ import Layout from "../layouts/Layout.astro";
       <button id="clearBtn" class="cartBtn danger">Vaciar carrito</button>
     </div>
   </section>
+
   <script type="module">
     function renderCart() {
-      const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
-      const cartDiv = document.getElementById('cartList');
+      const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+      const cartDiv = document.getElementById("cartList");
       if (!carrito.length) {
         cartDiv.innerHTML = `<div class="cartEmpty">El carrito está vacío.</div>`;
-        document.getElementById('copyBtn').style.display = 'none';
-        document.getElementById('waBtn').style.display = 'none';
-        document.getElementById('clearBtn').style.display = 'none';
+        document.getElementById("copyBtn").style.display = "none";
+        document.getElementById("waBtn").style.display = "none";
+        document.getElementById("clearBtn").style.display = "none";
         return;
       }
       let total = 0;
       // ...dentro de tu renderCart()
       cartDiv.innerHTML = `
   <div style="display:flex;flex-direction:column;gap:1.2em;">
-    ${carrito.map((p, idx) => {
-      total += Number(p.price) * p.cantidad;
-      return `
+    ${carrito
+      .map((p, idx) => {
+        total += Number(p.price) * p.cantidad;
+        return `
         <div style="display:flex;align-items:center;background:#fff;border-radius:12px;box-shadow:0 2px 8px #a7c7e733;padding:12px 18px;gap:1.2em;justify-content:flex-start;">
           <div style="flex:0 0 48px;display:flex;align-items:center;justify-content:center;">
             <img 
-              src="${p.img || '/placeholder.png'}" 
+              src="${p.img || "/placeholder.png"}" 
               alt="${p.name}" 
               style="width:48px;height:48px;max-width:48px;max-height:48px;object-fit:cover;border-radius:10px;background:#f7cac9;box-shadow:0 1px 4px #c3aed633;"
             />
@@ -41,7 +48,7 @@ import Layout from "../layouts/Layout.astro";
           <div style="flex:1;text-align:left;display:flex;flex-direction:column;gap:0.3em;">
             <div style="font-size:1.1em;font-weight:700;color:#232946;">${p.name}</div>
             <div style="color:#16a34a;font-weight:600;font-size:1em;background:#e0ffe7;border-radius:8px;padding:0.1em 0.7em;display:inline-block;margin-bottom:0.2em;">
-              $${p.price*p.cantidad}
+              $${p.price * p.cantidad}
             </div>
             <div style="display:flex;align-items:center;gap:0.7em;font-size:0.98em;">
               <span>Cantidad: ${p.cantidad}</span>
@@ -51,11 +58,18 @@ import Layout from "../layouts/Layout.astro";
                 title="Quitar uno"
                 style="background:#f7cac9;color:#232946;border:none;border-radius:50%;width:1.7em;height:1.7em;font-size:1em;margin-left:0.5em;cursor:pointer;transition:background 0.18s,color 0.18s,transform 0.15s;display:flex;align-items:center;justify-content:center;"
               >✖</button>
+                <button 
+                  class="removeAllBtn" 
+                  data-id="${p.id}" 
+                  title="Eliminar todos"
+                  style="background:#232946;color:#fff;border:none;border-radius:50%;width:1.7em;height:1.7em;font-size:1em;margin-left:0.5em;cursor:pointer;transition:background 0.18s,color 0.18s,transform 0.15s;display:flex;align-items:center;justify-content:center;"
+                >🗑️</button>
             </div>
           </div>
         </div>
       `;
-    }).join('')}
+      })
+      .join("")}
   </div>
   <div style="margin-top:1.5em;font-size:1.2em;color:#232946;font-weight:700;text-align:right;">
     <strong>Total: $${total}</strong>
@@ -63,35 +77,54 @@ import Layout from "../layouts/Layout.astro";
 `;
 
       // Botón quitar uno
-      cartDiv.querySelectorAll('.removeBtn').forEach(btn => {
+      cartDiv.querySelectorAll(".removeBtn").forEach((btn) => {
         btn.onclick = (e) => {
-          const idx = Number(btn.getAttribute('data-idx'));
+          const idx = Number(btn.getAttribute("data-idx"));
           if (carrito[idx].cantidad > 1) {
             carrito[idx].cantidad -= 1;
           } else {
             carrito.splice(idx, 1);
           }
-          localStorage.setItem('carrito', JSON.stringify(carrito));
+          localStorage.setItem("carrito", JSON.stringify(carrito));
           renderCart();
           window.updateCartCount && window.updateCartCount();
         };
       });
 
+        // Botón eliminar todos los iguales
+        cartDiv.querySelectorAll(".removeAllBtn").forEach((btn) => {
+          btn.onclick = (e) => {
+            const id = btn.getAttribute("data-id");
+            const nuevoCarrito = carrito.filter((p) => p.id !== id);
+            localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+            renderCart();
+            window.updateCartCount && window.updateCartCount();
+          };
+        });
+
       // Mensaje para copiar o enviar
-      const pedido = carrito.map(p => `${p.name} x${p.cantidad} ($${p.price})`).join(', ') + `. Total: $${total}`;
-      document.getElementById('copyBtn').onclick = () => {
+      const pedido =
+        carrito
+          .map((p) => `${p.name} x${p.cantidad} ($${p.price})`)
+          .join(", ") + `. Total: $${total}`;
+      document.getElementById("copyBtn").onclick = () => {
         navigator.clipboard.writeText(pedido);
-        document.getElementById('copyBtn').textContent = "¡Copiado!";
-        setTimeout(() => document.getElementById('copyBtn').textContent = "Copiar pedido", 1200);
+        document.getElementById("copyBtn").textContent = "¡Copiado!";
+        setTimeout(
+          () =>
+            (document.getElementById("copyBtn").textContent = "Copiar pedido"),
+          1200
+        );
       };
-      document.getElementById('waBtn').href = `https://wa.me/59891361706?text=${encodeURIComponent("Hola, quiero pedir: " + pedido)}`;
-      document.getElementById('copyBtn').style.display = '';
-      document.getElementById('waBtn').style.display = '';
-      document.getElementById('clearBtn').style.display = '';
+      document.getElementById("waBtn").href =
+        `https://wa.me/59891361706?text=${encodeURIComponent("Hola, quiero pedir: " + pedido)}`;
+      document.getElementById("copyBtn").style.display = "";
+      document.getElementById("waBtn").style.display = "";
+      document.getElementById("clearBtn").style.display = "";
     }
 
-    document.getElementById('clearBtn').onclick = () => {
-      localStorage.removeItem('carrito');
+    document.getElementById("clearBtn").onclick = () => {
+      localStorage.removeItem("carrito");
       renderCart();
       window.updateCartCount && window.updateCartCount();
     };
@@ -99,23 +132,39 @@ import Layout from "../layouts/Layout.astro";
     renderCart();
   </script>
   <style>
+    .divtitlecart{
+    justify-content: center;
+      display: flex;
+      gap: 0.8em;
+    }
+    .imgcarrito{
+      margin-top: 6px;
+      display: none !important;
+    }
     .cartContainer {
-      background: linear-gradient(120deg, #fff5ba 60%, #a7c7e7 100%);
-      border-radius: 18px;
+      background: linear-gradient(120deg, #f7f6f2 100%, #f7f6f2 40%);
+      border-radius: 22px;
       max-width: 700px;
-      margin: 32px auto;
-      padding: 32px 18px;
-      box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.10);
+      margin: 36px auto;
+      padding: 36px 22px;
+      box-shadow: 0 6px 32px 0 rgba(163, 174, 214, 0.13);
       text-align: center;
+      border: 2px solid #f7cac9;
     }
     .cartContainer h1 {
-      color: #232946;
+      margin-top: -4px;
+      color: #eaccb1;
       margin-bottom: 1.5em;
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 800;
+      letter-spacing: 1px;
     }
     .cartList {
       margin-bottom: 1.5em;
+      background: #f7f6fd;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px #c3aed633;
+      padding: 10px 0;
     }
     .cartTable {
       display: flex;
@@ -125,24 +174,25 @@ import Layout from "../layouts/Layout.astro";
     .cartRow {
       display: flex;
       align-items: center;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px #a7c7e733;
-      padding: 12px 18px;
+      background: linear-gradient(90deg, #d5c4a4 10%, #fff5ba 90%);
+      border-radius: 16px;
+      box-shadow: 0 2px 12px #a7c7e733;
+      padding: 16px 22px;
       gap: 1.2em;
       justify-content: flex-start;
+      border: 1.5px solid #c3aed6;
     }
 
     .cartImg {
-  width: 48px !important;
-  height: 48px !important;
-  max-width: 48px !important;
-  max-height: 48px !important;
-  object-fit: cover !important;
-  border-radius: 10px !important;
-  background: #f7cac9 !important;
-  box-shadow: 0 1px 4px #c3aed633 !important;
-}
+      width: 48px !important;
+      height: 48px !important;
+      max-width: 48px !important;
+      max-height: 48px !important;
+      object-fit: cover !important;
+      border-radius: 10px !important;
+      background: #e7eaf6 !important;
+      box-shadow: 0 1px 8px #b7eac5 !important;
+    }
     .cartInfo {
       flex: 1;
       text-align: left;
@@ -153,17 +203,18 @@ import Layout from "../layouts/Layout.astro";
     .cartName {
       font-size: 1.1em;
       font-weight: 700;
-      color: #232946;
+      color: #c3aed6;
     }
     .cartPrice {
-      color: #16a34a;
+      color: #b7eac5;
       font-weight: 600;
       font-size: 1em;
-      background: #e0ffe7;
+      background: #f7f6fd;
       border-radius: 8px;
       padding: 0.1em 0.7em;
       display: inline-block;
       margin-bottom: 0.2em;
+      border: 1px solid #b7eac5;
     }
     .cartQty {
       display: flex;
@@ -172,35 +223,62 @@ import Layout from "../layouts/Layout.astro";
       font-size: 0.98em;
     }
     .removeBtn {
-      background: #f7cac9;
-      color: #232946;
-      border: none;
+      background: #e7eaf6;
+      color: #c3aed6;
+      border: 2px solid #f7cac9;
       border-radius: 50%;
       width: 1.7em;
       height: 1.7em;
       font-size: 1em;
       margin-left: 0.5em;
       cursor: pointer;
-      transition: background 0.18s, color 0.18s, transform 0.15s;
+      transition:
+        background 0.18s,
+        color 0.18s,
+        transform 0.15s;
       display: flex;
       align-items: center;
       justify-content: center;
     }
+      .removeAllBtn {
+        background: #232946;
+        color: #fff;
+        border: 2px solid #f7cac9;
+        border-radius: 50%;
+        width: 1.7em;
+        height: 1.7em;
+        font-size: 1em;
+        margin-left: 0.5em;
+        cursor: pointer;
+        transition:
+          background 0.18s,
+          color 0.18s,
+          transform 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     .removeBtn:hover,
     .removeBtn:focus {
-      background: #c3aed6;
+      background: #f7cac9; 
       color: #fff;
       transform: scale(1.1);
     }
+      .removeAllBtn:hover,
+      .removeAllBtn:focus {
+    background: #f7cac9;
+    filter: brightness(1.2);
+    transform: scale(1.1);
+      }
     .cartTotal {
       margin-top: 1.5em;
       font-size: 1.2em;
-      color: #232946;
+      color: #c3aed6;
       font-weight: 700;
       text-align: right;
     }
     .cartEmpty {
-      color: #232946;
+      color: #c3aed6;
       font-size: 1.1em;
       margin: 2em 0;
       font-weight: 600;
@@ -213,27 +291,31 @@ import Layout from "../layouts/Layout.astro";
       margin-top: 2em;
     }
     .cartBtn {
-      background: linear-gradient(90deg, #a7c7e7 40%, #b7eac5 100%);
-      color: #232946;
-      border-radius: 8px;
+      background: linear-gradient(90deg, #f7f6f2 40%, #fff5ba 100%);
+      color: var(--principal-text-color);
+      border-radius: 10px;
       font-weight: 600;
       font-size: 1em;
-      padding: 0.4em 1.2em;
-      border: none;
+      padding: 0.5em 1.4em;
+      border: 2px solid #232946;
       cursor: pointer;
-      transition: background 0.18s, color 0.18s, transform 0.15s;
+      transition:
+        background 0.18s,
+        color 0.18s,
+        transform 0.15s;
       text-decoration: none;
       display: inline-block;
     }
     .cartBtn:hover,
     .cartBtn:focus {
-      background: linear-gradient(90deg, #f7cac9 40%, #b7eac5 100%);
-      color: #232946;
+      background: linear-gradient(90deg, #e9e6b7 40%, #c3aed6 100%);
+      color: #fff;
       transform: scale(1.04);
     }
     .cartBtn.danger {
-      background: linear-gradient(90deg, #f7cac9 40%, #c3aed6 100%);
-      color: #232946;
+      background: linear-gradient(90deg, #f1a480 40%, #f5e9e0 100%);
+      color: white;
+      border: 2px solid #f7cac9;
     }
     .cartBtn.danger:hover,
     .cartBtn.danger:focus {
