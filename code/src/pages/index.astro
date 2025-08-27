@@ -1,11 +1,15 @@
 ---
-import ListarProductos from "../components/ListarProductos.astro";
-import Layout from "../layouts/Layout.astro";
-import { cargarProductos } from "../utils/loadCSV";
+import ListarProductos from "@components/ListarProductos.astro";
+import Layout from "@layouts/Layout.astro";
+import { cargarProductos } from "@utils/loadCSV";
+import { config } from "src/config";
 
+const CANT_PRODUCTOS = config.postPerPage;
 const productos = cargarProductos();
+const totalPages = Math.ceil(productos.length / CANT_PRODUCTOS);
+const showProducts = productos.slice(0, CANT_PRODUCTOS);
 ---
 
 <Layout>
-  <ListarProductos products={productos} />
+  <ListarProductos products={showProducts} totalPages={totalPages} />
 </Layout>

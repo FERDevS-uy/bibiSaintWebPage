@@ -1,11 +1,20 @@
 ---
-import type Product from "../types/product";
+import type Product from "src/types/product";
 import ItemProductoBox from "./ItemProductoBox.astro";
+import NavPag from "./NavPag.astro";
 
 interface Props {
   products: Product[];
+  totalPages: number;
+  actualPage?: number;
+  baseURL?: string;
 }
-const { products: productos } = Astro.props;
+const {
+  products: productos,
+  totalPages,
+  actualPage = 1,
+  baseURL,
+} = Astro.props;
 const emptyList = !productos || productos.length === 0;
 ---
 
@@ -14,11 +23,21 @@ const emptyList = !productos || productos.length === 0;
 
   {
     productos.length > 0 && (
-      <ul>
-        {productos.map((prod) => (
-          <ItemProductoBox producto={prod} />
-        ))}
-      </ul>
+      <>
+        <ul>
+          {productos.map((prod) => (
+            <ItemProductoBox producto={prod} />
+          ))}
+        </ul>
+
+        {totalPages != 1 && (
+          <NavPag
+            actualPage={actualPage}
+            totalPages={totalPages}
+            baseURL={baseURL}
+          />
+        )}
+      </>
     )
   }
 </section>
@@ -36,12 +55,11 @@ const emptyList = !productos || productos.length === 0;
   }
 
   @media screen and (min-width: 1000px) {
-
     .listaProductos ul {
       display: flex;
       flex-wrap: wrap;
       gap: 2em;
-      justify-content: space-between;
+      justify-content: center;
     }
   }
 </style>
