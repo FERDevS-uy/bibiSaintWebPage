@@ -7,7 +7,7 @@ import Layout from "../layouts/Layout.astro";
     <h1>Carrito de Compras</h1>
 
     <!-- Tabla de productos -->
-    <table class="cartTable">
+    <table class="cartTable hidden">
       <thead>
         <tr>
           <th>Item</th>
@@ -21,20 +21,17 @@ import Layout from "../layouts/Layout.astro";
     </table>
 
     <!-- Resumen -->
-    <div id="cartSummary" class="cartSummary" style="display:none;">
+    <div id="cartSummary" class="cartSummary hidden">
       <h2>Resumen</h2>
       <div class="cartSummaryRow">
         <span>Subtotal</span>
         <span id="subtotal">$0</span>
       </div>
-      <div class="cartSummaryRow">
-        <span>Envío (Andreani - Retiro)</span>
-        <span>$0,00</span>
-      </div>
       <div class="cartSummaryTotal">
         <span>Total del pedido</span>
         <span id="total">$0</span>
       </div>
+
       <button id="copyBtn" class="cartBtn">Copiar pedido</button>
       <a id="waBtn" class="cartBtn" target="_blank">Enviar por WhatsApp</a>
       <button id="clearBtn" class="cartBtn danger">Vaciar carrito</button>
@@ -43,343 +40,344 @@ import Layout from "../layouts/Layout.astro";
     <!-- Carrito vacío -->
     <div id="cartEmpty" class="cartEmpty">El carrito está vacío.</div>
   </section>
+</Layout>
 
-  <script type="module">
-    function renderCart() {
-      const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
-      const cartList = document.getElementById("cartList");
-      const summary = document.getElementById("cartSummary");
-      const empty = document.getElementById("cartEmpty");
-
-      if (!carrito.length) {
-        cartList.innerHTML = "";
-        summary.style.display = "none";
-        empty.style.display = "block";
-        return;
-      }
-
-      empty.style.display = "none";
-      summary.style.display = "block";
-
-      let total = 0;
-      cartList.innerHTML = carrito
-  .map((p, idx) => {
-    const subtotal = Number(p.price) * p.cantidad;
-    return `
-      <tr>
-        <td class="tdProduct">
-          <div class="cartItem">
-            <div class="cartTop">
-              <img src="${p.img || "/placeholder.png"}" alt="${p.name}" width="60" />
-              <div class="cartName">${p.name}</div>
-            </div>
-            <div class="cartBottom">
-              <div class="cartDetails">Color: ${p.color || "-"}</div>
-              <div class="cartDetails">Talle: ${p.talle || "-"}</div>
-            </div>
-          </div>
-        </td>
-        
-
-          <td data-label="Precio" data-th="precio" >$${p.price}</td>
-          <td class="cartQty" data-label="Cant.">${p.cantidad}</td>
-          <td data-label="Subtotal">$${subtotal}</td>
-          <td data-label=" "><button class="iconBtn removeBtn" data-idx="${idx}">🗑️</button></td>
-
-      </tr>
-    `;
-  })
-  .join("");
-
-      document.getElementById("subtotal").textContent = `$${total}`;
-      document.getElementById("total").textContent = `$${total}`;
-
-      // Quitar item
-      cartList.querySelectorAll(".removeBtn").forEach((btn) => {
-        btn.onclick = () => {
-          const idx = Number(btn.getAttribute("data-idx"));
-          carrito.splice(idx, 1);
-          localStorage.setItem("carrito", JSON.stringify(carrito));
-          renderCart();
-          window.updateCartCount && window.updateCartCount();
-        };
-      });
-
-      // Mensaje para copiar o enviar
-      const pedido =
-        carrito
-          .map((p) => `${p.name} x${p.cantidad} ($${p.price})`)
-          .join(", ") + `. Total: $${total}`;
-      document.getElementById("copyBtn").onclick = () => {
-        navigator.clipboard.writeText(pedido);
-        document.getElementById("copyBtn").textContent = "¡Copiado!";
-        setTimeout(
-          () => (document.getElementById("copyBtn").textContent = "Copiar pedido"),
-          1200
-        );
-      };
-      document.getElementById(
-        "waBtn"
-      ).href = `https://wa.me/59891361706?text=${encodeURIComponent(
-        "Hola, quiero pedir: " + pedido
-      )}`;
-    }
-
-    document.getElementById("clearBtn").onclick = () => {
-      localStorage.removeItem("carrito");
-      renderCart();
-      window.updateCartCount && window.updateCartCount();
-    };
-
-    renderCart();
-  </script>
-
-  <style>
-    .cartContainer {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #fff;
-      font-family: "Inter", Arial, sans-serif;
-      color: #222;
-    }
-
-    .cartContainer h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 1.5em;
-      text-align: left;
-    }
-
-    .cartTable {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 2em;
-    }
-
-    .cartTable th {
-      text-align: left;
-      font-weight: 600;
-      font-size: 0.95rem;
-      padding: 12px 8px;
-      border-bottom: 2px solid #eee;
-      color: #555;
-    }
-
-    .cartTable td {
-      padding: 14px 8px;
-      border-bottom: 1px solid #eee;
-      vertical-align: middle;
-      font-size: 0.95rem;
-    }
-
-    .cartTable img {
-      width: 70px;
-      height: auto;
-      border-radius: 4px;
-    }
-
-    .cartItem {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      width: 100%;
-    }
-
-    .cartTop {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .cartBottom {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      font-size: 0.85rem;
-    }
-
-    .cartName {
-      font-weight: 500;
-    }
-
-    .cartDetails {
-      font-size: 0.85rem;
-      color: #666;
-    }
-
-    .cartQty {
-      text-align: center;
-    }
-
-    .iconBtn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.1rem;
-      color: #444;
-      transition: color 0.2s;
-    }
-    .iconBtn:hover {
-      color: #000;
-    }
-
-    .cartSummary {
-      background: #f7f7f7;
-      padding: 18px;
-      border-radius: 6px;
-      max-width: 320px;
-      margin-left: auto;
-    }
-
-    .cartSummary h2 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 1em;
-      color: #333;
-    }
-
-    .cartSummaryRow {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.7em;
-      font-size: 0.95rem;
-    }
-
-    .cartSummaryTotal {
-      display: flex;
-      justify-content: space-between;
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin-top: 1em;
-      border-top: 1px solid #ddd;
-      padding-top: 0.8em;
-    }
-
-    .cartBtn {
-      display: block;
-      width: 100%;
-      margin-top: 1.2em;
-      padding: 12px;
-      background: #000;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s;
-      text-align: center;
-      text-decoration: none;
-    }
-    .cartBtn:hover {
-      background: #333;
-    }
-
-    .cartBtn.danger {
-      background: #ef4444;
-    }
-    .cartBtn.danger:hover {
-      background: #dc2626;
-    }
-
-    .cartEmpty {
-      color: #555;
-      font-size: 1.1em;
-      margin: 2em 0;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    
-
-    @media (max-width: 600px) {
-  .cartTable {
-    border-collapse: separate;
-    border-spacing: 0 16px;
-  }
-  .cartTable tr {
-    display: block;
-    margin-bottom: 18px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px #e0e0e0;
-    background: #fafbfc;
-  }
-  .cartTable td, .cartTable th {
-    border-bottom: none;
-    padding: 0;
-    background: none;
-    text-align: left;
-  }
-  .cartTable td:first-child {
-    display: block;
-    width: 100%;
-    background: #fafbfc;
-    border-radius: 10px 10px 0 0;
-    padding: 14px 10px 14px 10px;
-    box-shadow: none;
-  }
-  .cartTable .cartRowData {
-    display: flex;
-    flex-direction: row;
+<style>
+  .cartContainer {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
     background: #fff;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 2px 8px #e0e0e0;
-    border-top: 1px solid #f0f0f0;
-    margin-top: -8px;
-    padding: 10px 0;
-    gap: 0;
+    font-family: "Inter", Arial, sans-serif;
+    color: #222;
+
+    display: grid;
+    gap: 1rem 2rem;
   }
-  .cartTable .cartRowData td {
-    flex: 1 1 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 0;
-    background: none;
-    border-radius: 0;
-    box-shadow: none;
-    border-top: none;
-    margin: 0;
-    font-size: 0.97em;
-  }
-  .cartTable img {
-    width: 60px;
-    min-width: 60px;
-    margin-bottom: 4px;
-  }
-  .cartName {
-    width: 100%;
-    display: block;
-    font-size: 1em;
-    word-break: break-word;
+
+  .cartContainer h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
     text-align: left;
-    margin-top: 2px;
   }
+
+  .cartTable {
+    border-collapse: collapse;
+    margin-bottom: 2em;
+  }
+
+  .cartTable th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px 8px;
+    border-bottom: 2px solid #eee;
+    color: #555;
+  }
+
   .cartTable thead {
     display: none;
   }
-  
-  :global(#cartList .tdProduct){
-    display: block;
-    position: relative;
-    width: 100%;
-    float: initial;
-    }
-   :global(#cartList td) {
-      float: left;
-      width: 33%;
-    }
-}
 
-.cartTable td[data-label]::before {
-    content: attr(data-label) ": ";
-    display: block;
+  .cartItem {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .cartTop {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cartBottom {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+  }
+
+  .cartName {
+    font-weight: 500;
+  }
+
+  .cartDetails {
+    font-size: 0.85rem;
+    color: #666;
+  }
+
+  .cartQty {
+    text-align: center;
+  }
+
+  .iconBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #444;
+    transition: color 0.2s;
+  }
+  .iconBtn:hover {
+    color: #000;
+  }
+
+  .cartSummary {
+    background: #f7f7f7;
+    padding: 18px;
+    border-radius: 6px;
+    /* margin-left: auto; */
+  }
+
+  .cartSummary h2 {
+    font-size: 1.2rem;
     font-weight: 600;
+    margin-bottom: 1em;
+    color: #333;
+  }
+
+  .cartSummaryRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.7em;
+    font-size: 0.95rem;
+  }
+
+  .cartSummaryTotal {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 1em;
+    border-top: 1px solid #ddd;
+    padding-top: 0.8em;
+  }
+
+  .cartBtn {
+    display: block;
+    width: 100%;
+    margin-top: 1.2em;
+    padding: 12px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: center;
+    text-decoration: none;
+  }
+  .cartBtn:hover {
+    background: #333;
+  }
+
+  .cartBtn.danger {
+    background: #ef4444;
+  }
+  .cartBtn.danger:hover {
+    background: #dc2626;
+  }
+
+  .cartEmpty {
+    color: #555;
+    font-size: 1.1em;
+    margin: 2em 0;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 1000px) {
+    .cartContainer {
+      grid-template-columns: 1fr 320px;
+    }
+
+    .cartSummary {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .cartContainer h1 {
+      grid-column: 1 / 3;
+    }
+
+    .cartTable thead {
+      display: table-header-group;
+    }
+
+    .cartEmpty {
+      grid-column: 1 / 3;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cartTable {
+      border-collapse: separate;
+      border-spacing: 0 16px;
+    }
+    .cartTable tr {
+      display: block;
+      margin-bottom: 18px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #e0e0e0;
+      background: #fafbfc;
+    }
+    .cartTable td,
+    .cartTable th {
+      border-bottom: none;
+      padding: 0;
+      background: none;
+      text-align: left;
+    }
+    .cartTable td:first-child {
+      display: block;
+      width: 100%;
+      background: #fafbfc;
+      border-radius: 10px 10px 0 0;
+      padding: 14px 10px 14px 10px;
+      box-shadow: none;
+    }
+    .cartTable .cartRowData {
+      display: flex;
+      flex-direction: row;
+      background: #fff;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 2px 8px #e0e0e0;
+      border-top: 1px solid #f0f0f0;
+      margin-top: -8px;
+      padding: 10px 0;
+      gap: 0;
+    }
+    .cartTable .cartRowData td {
+      flex: 1 1 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+      border-top: none;
+      margin: 0;
+      font-size: 0.97em;
+    }
+    .cartTable img {
+      width: 60px;
+      min-width: 60px;
+      margin-bottom: 4px;
+    }
+    .cartName {
+      width: 100%;
+      display: block;
+      font-size: 1em;
+      word-break: break-word;
+      text-align: left;
+      margin-top: 2px;
+    }
+  }
+</style>
+
+<!-- Todo lo que se renderice usando renderCart.ts va acá -->
+<style is:global>
+  .cartTable td {
+    padding: 14px 8px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    font-size: 0.95rem;
+  }
+
+  .cartTable td[data-label]::before {
     color: #888;
     font-size: 0.93em;
     margin-bottom: 2px;
     letter-spacing: 0.5px;
+    content: attr(data-th);
+    display: block;
+    font-weight: 600;
+    padding-bottom: 10px;
   }
-  
-  </style>
-</Layout>
+
+  #cartList .tdProduct {
+    grid-column: 1 / 4;
+  }
+
+  .cartTable img {
+    width: 70px;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  #cartList tr {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+  }
+  #cartList tr:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  #cartList .colTitle {
+    color: #555;
+    display: block;
+    font-size: 0.93em;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    padding-bottom: 10px;
+  }
+
+  #cartList .tdActions {
+    grid-column: 1 / 4;
+  }
+  #cartList .tdActions div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 20px 8px;
+  }
+  #cartList .tdActions button {
+    flex: 1 0 2rem;
+
+    cursor: pointer;
+    border: none;
+    background-color: #eee;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  #cartList .tdActions button:hover {
+    background-color: var(--principal-text-color);
+    color: #fff;
+  }
+  #cartList .tdActions button svg {
+    height: 30px;
+  }
+
+  .removeOnce {
+    font-size: 2rem;
+  }
+
+  @media screen and (min-width: 1000px) {
+    #cartList .colTitle.hidden {
+      display: none;
+    }
+
+    #cartList tr {
+      display: table-row;
+    }
+  }
+</style>
+
+<script type="module">
+  import renderCart from "./src/utils/renderCart";
+
+  document.getElementById("clearBtn").onclick = () => {
+    localStorage.removeItem("carrito");
+    renderCart_mal();
+    window.updateCartCount && window.updateCartCount();
+  };
+
+  renderCart();
+</script>
