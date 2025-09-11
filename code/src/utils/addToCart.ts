@@ -1,10 +1,4 @@
-interface Producto {
-  id: String;
-  name: String;
-  price: String;
-  cantidad: Number;
-  img: String;
-}
+import type ProductInCart from "src/types/productInCart";
 
 function addToCart(
   id: string,
@@ -13,9 +7,7 @@ function addToCart(
   qty: number = 1,
   img: string
 ) {
-  console.log(qty);
-
-  const product: Producto = {
+  const product: ProductInCart = {
     id,
     name,
     price,
@@ -26,9 +18,9 @@ function addToCart(
 
   try {
     carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
-  } catch {}
+  } catch { }
   // Si ya existe, suma cantidad
-  const idx = carrito.findIndex((p: Producto) => p.id === product.id);
+  const idx = carrito.findIndex((p: ProductInCart) => p.id === product.id);
 
   if (idx >= 0) {
     const productoEnCarrito = carrito[idx];
