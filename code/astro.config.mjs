@@ -1,4 +1,5 @@
 // @ts-check
+import node from '@astrojs/node';
 import { defineConfig } from "astro/config";
 import icon from 'astro-icon';
 const repositoryName = "/template-static-ecommerce";
