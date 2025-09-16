@@ -11,11 +11,13 @@
     "scrap": "node src/utils/fetch_productos.js"
   },
   "dependencies": {
+    "@astrojs/node": "^9.4.3",
     "astro": "5.11.1",
     "astro-icon": "1.1.5",
     "astro-navbar": "2.3.9",
     "json2csv": "6.0.0-alpha.2",
     "papaparse": "5.5.3",
+    "resend": "^6.1.0",
     "sharp": "0.34.2",
     "string-similarity-js": "2.1.4"
   },
