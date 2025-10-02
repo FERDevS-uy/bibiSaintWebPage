@@ -1,19 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { config } from "../config";
 ---
 
-<Layout>
+<Layout pageTitle={`${config.pageTitle} - Sobre nosotros`}>
   <section class="about">
     <h2>Sobre nosotros</h2>
 
     <p>
-      ¡Bienvenido a <strong>Bibi Saint</strong>! Descubre una tienda online diferente, donde encontrarás productos para el hogar, vestimenta, accesorios y mucho más. Nos apasiona brindarte calidad, novedades y soluciones para tu día a día.
+      ¡Bienvenido a <strong>Bibi Saint</strong>! Descubre una tienda online
+      diferente, donde encontrarás productos para el hogar, vestimenta,
+      accesorios y mucho más. Nos apasiona brindarte calidad, novedades y
+      soluciones para tu día a día.
     </p>
     <p>
-      ¿Buscas bienestar? Ofrecemos <strong>servicios holísticos personalizados</strong> para tu crecimiento personal. <a href="https://wa.me/59891361706?text=Hola,%20quiero%20consultar%20por%20un%20servicio%20holístico" target="_blank" rel="noopener" class="waLink">¡Consulta precios por WhatsApp!</a>
+      ¿Buscas bienestar? Ofrecemos <strong
+        >servicios holísticos personalizados</strong
+      > para tu crecimiento personal. <a
+        href="https://wa.me/59891361706?text=Hola,%20quiero%20consultar%20por%20un%20servicio%20holístico"
+        target="_blank"
+        rel="noopener"
+        class="waLink">¡Consulta precios por WhatsApp!</a
+      >
     </p>
     <p>
-      Síguenos en redes sociales para enterarte de todas las novedades y promociones.<br>
+      Síguenos en redes sociales para enterarte de todas las novedades y
+      promociones.<br />
       <span class="aboutThanks">¡Gracias por confiar en nosotros!</span>
     </p>
   </section>
@@ -26,7 +38,7 @@ import Layout from "../layouts/Layout.astro";
       box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.13);
       padding: 36px 28px;
       color: #232946;
-      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
       font-size: 1.13em;
       line-height: 1.7;
       text-align: center;
@@ -54,7 +66,10 @@ import Layout from "../layouts/Layout.astro";
       padding: 0.25em 1em;
       border-radius: 8px;
       box-shadow: 0 1px 4px #c3aed633;
-      transition: background 0.18s, color 0.18s, transform 0.15s;
+      transition:
+        background 0.18s,
+        color 0.18s,
+        transform 0.15s;
       margin-left: 0.3em;
       display: inline-block;
     }

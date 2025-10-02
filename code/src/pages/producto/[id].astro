@@ -32,8 +32,11 @@ const {
 } = Astro.props;
 ---
 
-<Layout>
-  <!-- <a href="javascript:history.back()" class="backBtn">← Volver</a> -->
+<Layout
+  pageTitle={`${config.pageTitle} - ${name}`}
+  description={description}
+  pageImage={img[0]}
+>
   <section class="productContainer">
     <div class="product_main">
       <div class="imgContainer">
@@ -73,8 +76,6 @@ const {
           }
         </div>
 
-        <!-- TODO: fix this -->
-        <!-- <form id="addToCartForm" class="addToCartForm" on:submit="return false;"> -->
         <form id="addToCartForm" class="addToCartForm">
           <label>
             Cantidad:
@@ -118,7 +119,6 @@ const {
 
 <style>
   .productContainer {
-    /* width: fit-content; */
     max-width: 1100px;
 
     padding: 2rem;

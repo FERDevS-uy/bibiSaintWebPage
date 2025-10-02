@@ -29,7 +29,7 @@ const totalPages = Math.ceil(products.length / CANT_PRODUCTOS);
 const baseUrl = `${config.base}/categories/${id}`;
 ---
 
-<Layout categorySelected={id}>
+<Layout categorySelected={id} pageTitle={`${config.pageTitle} - ${id}`}>
   <ListarProductos
     products={products}
     totalPages={totalPages}
