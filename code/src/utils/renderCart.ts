@@ -1,6 +1,8 @@
 import type ProductInCart from "src/types/productInCart";
 import removeToCart from "./removeToCart";
 import trash from "../assets/trash.svg?raw";
+import { decryptIDs, encryptIDs } from "./encription";
+import { config } from "src/config";
 
 export default function renderCart() {
   const storage = JSON.parse(localStorage.getItem("carrito") || "[]");
@@ -69,10 +71,13 @@ export default function renderCart() {
     window.updateCartCount && window.updateCartCount();
   };
 
+
+  const encryption = encryptIDs(storage.map((p: ProductInCart) => `${p.id}-${p.cantidad}`), "elias")
+
   // Mensaje para copiar o enviar
   const pedido = storage.map((p: ProductInCart) => `
   - ${p.name} x${p.cantidad} ($${p.price})`)
-    .join(" ") + `\nTotal: $${totalValue}`;
+    .join(" ") + `\nTotal: $${totalValue}\n${config.site}pedido?id=${encryption}`;
 
   copyBtn.title = `Copiar: ${pedido}`
   copyBtn.onclick = () => {
