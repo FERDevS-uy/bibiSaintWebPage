@@ -79,7 +79,7 @@ const {
   }
   body.dev::before {
     content: "TEMPLATE";
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-45deg);
@@ -88,7 +88,7 @@ const {
     font-weight: bold;
     pointer-events: none;
     white-space: nowrap;
-    z-index: 0;
+    z-index: 1000;
   }
   /* Quita el scroll del body cuando se abre el menu */
   body:not(:has(header > .itemsBox.hidden)) {
