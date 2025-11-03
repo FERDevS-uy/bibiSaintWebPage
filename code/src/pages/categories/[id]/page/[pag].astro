@@ -36,7 +36,10 @@ const { products, totalPages } = Astro.props;
 const baseUrl = `${config.base}/categories/${id}`;
 ---
 
-<Layout categorySelected={id}>
+<Layout
+  categorySelected={id}
+  pageTitle={`${config.pageTitle} - ${id} / page ${pag}`}
+>
   <ListarProductos
     products={products}
     totalPages={totalPages}
