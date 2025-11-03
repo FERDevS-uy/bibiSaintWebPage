@@ -1,0 +1,87 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { config } from "src/config";
+---
+
+<Layout pageTitle=`${config.pageTitle} - Pedido`>
+  <h2>Pedido</h2>
+  <pre id="result"></pre>
+
+  <div id="result__container" style="padding-inline: 2rem;"></div>
+</Layout>
+
+<script>
+  import { decryptIDs } from "@utils/encription";
+  import type Product from "src/types/product";
+  const result = document.getElementById("result") as HTMLPreElement;
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  interface ProductosDePedido extends Product {
+    cantidad: number;
+  }
+
+  window.addEventListener("DOMContentLoaded", async () => {
+    if (id) {
+      const decrypted = decryptIDs(id, "elias");
+      const lista = decrypted.map((item) => {
+        const [id, cantidad] = item.split("-");
+        return { id: id, cantidad: Number(cantidad) };
+      });
+
+      try {
+        const data = await fetch("productos.json");
+        if (!data.ok) {
+          throw new Error("Something went wrong... try again");
+        }
+        const allProductos = (await data.json()) as Product[];
+
+        const ids = new Set(lista.map((i) => i.id));
+        const productos: ProductosDePedido[] = allProductos
+          .filter((i) => ids.has(i.id))
+          .map((item) => {
+            const cantidad = lista.find((a) => a.id === item.id)?.cantidad ?? 0;
+            return { ...item, cantidad };
+          });
+
+        // result.textContent = JSON.stringify(productos, null, 4);
+        renderProducts(productos);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  });
+
+  function renderProducts(productos: ProductosDePedido[]): void {
+    const container = document.getElementById(
+      "result__container"
+    ) as HTMLDivElement;
+
+    const total = productos.reduce(
+      (acc, item) => acc + Number(item.price) * item.cantidad,
+      0
+    );
+
+    container.innerHTML =
+      productos
+        .map((p: ProductosDePedido) => {
+          return `<div class="producto" id="${p.id}" >
+  <h2>${p.name}</h2>
+  <img src="${p.img[0]}" alt="${p.name}" width="200" />
+  <ul>
+    <li><strong>id:</strong> <span>${p.id}</span></p>
+    <li><strong>Descripción:</strong> <span>${p.description}</span></p>
+    <li><strong>Precio:</strong> <span>$${p.price} c/u</span></p>
+    <li><strong>cantidad:</strong> <span>${p.cantidad}</span></p>
+  </ul>
+</div>`;
+        })
+        .join("") +
+      `
+<br />
+  <h2>Total</h2>
+  <p><span>$${total}</span></p>
+      `;
+  }
+</script>
