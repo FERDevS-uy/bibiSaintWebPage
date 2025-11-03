@@ -391,12 +391,13 @@ import Layout from "../layouts/Layout.astro";
   }
 </style>
 
-<script type="module">
-  import renderCart from "./src/utils/renderCart";
+<script>
+  import renderCart from "@utils/renderCart";
 
-  document.getElementById("clearBtn").onclick = () => {
+  const clearBtn = document.getElementById("clearBtn") as HTMLButtonElement;
+
+  clearBtn.onclick = () => {
     localStorage.removeItem("carrito");
-    renderCart_mal();
     window.updateCartCount && window.updateCartCount();
   };
   document.getElementById('mailBtn').onclick = async () => {
