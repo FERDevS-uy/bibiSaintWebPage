@@ -6,7 +6,8 @@ const pageData = {
   base: repositoryName,
   pageTitle: "Bibi's Ventasonline",
   pagesSubTitle: "Hogar & Deco",
-  postPerPage: 10
+  postPerPage: 10,
+  description: "Descripción temporal"
 };
 
 export { pageData as config };
