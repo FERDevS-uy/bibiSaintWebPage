@@ -12,7 +12,6 @@ export function cargarProductos(): Product[] {
     header: true,
     skipEmptyLines: true,
   });
-
   return (resultado.data as any[]).map((row) => ({
     id: row.id?.trim(),
     name: row.name?.trim(),
@@ -27,6 +26,11 @@ export function cargarProductos(): Product[] {
       ? row.categorias.trim()
         .split(/\s+/)
         .filter((i: string) => i.length > 0) : [],
+    subcategories: row.subcategorias ?
+      row.subcategorias.trim()
+        .split(/\s+/)
+        .filter((s: string) => s.length > 0)
+      : [],
     paymentLink: parsePaymentMethodToObject(
       row.linkPago?.trim(),
       row.producto?.trim()

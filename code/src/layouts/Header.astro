@@ -51,17 +51,41 @@ const { categories, categorySelected } = Astro.props;
     <label for="toggleCategories" id="toggleCategoriesBtn">
       <Fragment set:html={downSVG} />
     </label>
+    <div class="searchContainer">
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Buscar productos..."
+        autocomplete="off"
+        class="searchInput"
+      />
+      <ul id="searchResults" class="searchResults"></ul>
+    </div>
     <ul class="categoryList">
       {
         categories &&
           categories.map((c) => (
-            <li>
+            <li class="categoryItem">
               <a
                 href={`${config.base}/categories/${c.name}`}
                 class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""}`}
               >
                 {c.name} <span class="count"> ({c.count})</span>
               </a>
+              {c.subcategories && c.subcategories.length > 0 && (
+                <ul class="subcategoryList">
+                  {c.subcategories.map((sub) => (
+                    <li>
+                      <a
+                        href={`${config.base}/categories/${c.name}/${sub.name}`}
+                        class="navLink subcategoryLink"
+                      >
+                        {sub.name} <span class="count"> ({sub.count})</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))
       }
@@ -69,7 +93,88 @@ const { categories, categorySelected } = Astro.props;
   </MenuItems>
 </header>
 
+<style is:global>
+  .searchResultItem {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      box-shadow 0.2s;
+    border-bottom: 1px solid #eee;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .searchResultItem:last-child {
+    border-bottom: none;
+  }
+
+  .searchResultItem:hover,
+  .searchResultItem:focus {
+    background: #bbab8e;
+    color: #fff;
+    box-shadow: 0 2px 8px #bbab8e44;
+  }
+  .searchResultImg {
+    width: 10px;
+    height: 10px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #f3f3f3;
+    flex-shrink: 0;
+  }
+  .searchResultName {
+    font-weight: 500;
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .searchResultPrice {
+    font-size: 0.95em;
+    color: #7a6d4d;
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+  }
+  .searchInput {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  .searchResults {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    color: #222;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+    max-height: 300px;
+    overflow-y: auto;
+    list-style: none;
+    margin: 0;
+    padding: 0.2rem 0;
+    display: none;
+  }
+</style>
+
 <style>
+  .searchContainer {
+    position: absolute;
+    margin: 0 1rem;
+    width: 250px;
+    align-self: center;
+    z-index: 20;
+    left: 0;
+    top: 4rem;
+  }
+
   header {
     --background-color: var(--principal-background-color);
     --background-color-dark: var(--principal-background-color-dark);
@@ -288,7 +393,40 @@ const { categories, categorySelected } = Astro.props;
       grid-template-columns: auto 25px 70px;
       overflow: visible;
     }
+    .categoryItem {
+      position: relative;
+    }
 
+    .subcategoryList {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 100%;
+      background: var(--itemBox-background-color);
+      min-width: 180px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      z-index: 10;
+      border-radius: 0 0 10px 10px;
+      padding: 0;
+    }
+
+    .categoryItem:hover .subcategoryList {
+      display: block;
+    }
+
+    .subcategoryLink {
+      padding: 0.7rem 1rem;
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      font-weight: normal;
+    }
+
+    .subcategoryLink:hover,
+    .subcategoryLink:focus {
+      background: #bbab8e;
+      color: #ffffff9e;
+    }
     .itemsBox ul {
       float: initial;
     }
@@ -350,8 +488,6 @@ const { categories, categorySelected } = Astro.props;
       border-radius: 10px;
     }
     .categoryList {
-      height: 45px;
-      overflow: hidden;
       margin: 0 0.5rem 0 0.5rem;
     }
 
@@ -424,7 +560,59 @@ const { categories, categorySelected } = Astro.props;
       toggleBtn.style.display = "none";
     }
   }
+  // ...existing code...
 
+  let productosCache = null;
+
+  async function fetchProductos() {
+    if (productosCache) return productosCache;
+    const res = await fetch("/productos.json");
+    productosCache = await res.json();
+    return productosCache;
+  }
+
+  const searchInput = document.getElementById("searchInput");
+  const searchResults = document.getElementById("searchResults");
+
+  if (searchInput && searchResults) {
+    searchInput.addEventListener("input", async (e) => {
+      const query = e.target.value.trim().toLowerCase();
+      if (!query) {
+        searchResults.style.display = "none";
+        searchResults.innerHTML = "";
+        return;
+      }
+      const productos = await fetchProductos();
+      const resultados = productos
+        .filter((p) => p.name.toLowerCase().includes(query))
+        .slice(0, 10); // máximo 10 resultados
+
+      if (resultados.length === 0) {
+        searchResults.innerHTML = "<li>No se encontraron productos</li>";
+      } else {
+        searchResults.innerHTML = resultados
+          .map(
+            (p) =>
+              `<li class="searchResultItem" onclick="window.location.href='/template-static-ecommerce/producto/${p.id}'">
+    <span class="searchResultName">${p.name}</span>
+    <span class="searchResultPrice">$${p.price || p.precio || ""}</span>
+  </li>`
+          )
+          .join("");
+      }
+      searchResults.style.display = "block";
+    });
+
+    // Ocultar resultados al perder foco
+    searchInput.addEventListener("blur", () => {
+      setTimeout(() => {
+        searchResults.style.display = "none";
+      }, 200);
+    });
+    searchInput.addEventListener("focus", () => {
+      if (searchResults.innerHTML) searchResults.style.display = "block";
+    });
+  }
   // Ejecutar al cargar y al redimensionar
   window.addEventListener("DOMContentLoaded", checkCategoryListWidth);
   window.addEventListener("resize", checkCategoryListWidth);
