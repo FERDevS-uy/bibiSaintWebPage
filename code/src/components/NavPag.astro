@@ -13,6 +13,11 @@ interface Props {
 }
 
 const { totalPages, actualPage, baseURL = config.base } = Astro.props;
+
+const nextUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${+actualPage + 1}`) : `${baseURL}/page/${+actualPage + 1}`;
+const prevUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${+actualPage - 1}`) : `${baseURL}/page/${+actualPage - 1}`;
+const lastUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${totalPages}`) : `${baseURL}/page/${totalPages}`;
+const firstUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/1`) : `${baseURL}/page/1`;
 ---
 
 <nav class="pagination">
@@ -28,10 +33,10 @@ const { totalPages, actualPage, baseURL = config.base } = Astro.props;
       </>
     ) : (
       <>
-        <a href={`${baseURL}/page/1`}>
+        <a href={firstUrl}>
           <Fragment set:html={firstArrow} />
         </a>
-        <a href={`${baseURL}/page/${actualPage - 1}`}>
+        <a href={prevUrl}>
           <Fragment set:html={prevArrow} />
         </a>
       </>
@@ -54,10 +59,10 @@ const { totalPages, actualPage, baseURL = config.base } = Astro.props;
       </>
     ) : (
       <>
-        <a href={`${baseURL}/page/${+actualPage + 1}`}>
+        <a href={nextUrl}>
           <Fragment set:html={nextArrow} />
         </a>
-        <a href={`${baseURL}/page/${totalPages}`}>
+        <a href={lastUrl}>
           <Fragment set:html={lastArrow} />
         </a>
       </>
