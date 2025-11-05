@@ -34,7 +34,6 @@ import Layout from "../layouts/Layout.astro";
 
       <button id="copyBtn" class="cartBtn">Copiar pedido</button>
       <a id="waBtn" class="cartBtn" target="_blank">Enviar por WhatsApp</a>
-      <button id="mailBtn" class="cartBtn">Enviar por Email</button>
       <button id="clearBtn" class="cartBtn danger">Vaciar carrito</button>
     </div>
 
@@ -400,22 +399,5 @@ import Layout from "../layouts/Layout.astro";
     localStorage.removeItem("carrito");
     window.updateCartCount && window.updateCartCount();
   };
-  document.getElementById('mailBtn').onclick = async () => {
-  const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
-  const total = carrito.reduce((acc, p) => acc + (p.price * p.cantidad), 0);
-
-  const res = await fetch('/template-static-ecommerce/api/send-cart-email', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ cart: carrito, total })
-  });
-
-  const result = await res.json();
-  if (result.ok) {
-    alert('¡Pedido enviado por email!');
-  } else {
-    alert('Error al enviar el email: ' + result.error);
-  }
-};
   renderCart();
 </script>
