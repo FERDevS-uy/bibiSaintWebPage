@@ -8,5 +8,6 @@ export default interface Product {
   img: string[]; // [<imageLink>]
   categories: string[]; // [<category>]
   paymentLink: PaymentMethod[]; // [<id>=<link>] (ej: ws="https://wa.me/..." mp="https://mpago...")
-  relacionados: string[]
+  relacionados: string[],
+  enOferta: Boolean
 }
