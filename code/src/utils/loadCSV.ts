@@ -34,6 +34,10 @@ export function cargarProductos(): Product[] {
     relacionados: row.relacionados
       ? row.relacionados.trim()
         .split(/\s+/)
-        .filter((i: string) => i.length > 0) : []
+        .filter((i: string) => i.length > 0) : [],
+    enOferta:
+      row.oferta?.trim().toLowerCase() === "true"
+        ? true
+        : false
   }));
 }

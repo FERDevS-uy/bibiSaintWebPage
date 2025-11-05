@@ -13,7 +13,6 @@ import { config } from "src/config";
 <script>
   import { decryptIDs } from "@utils/encription";
   import type Product from "src/types/product";
-  const result = document.getElementById("result") as HTMLPreElement;
 
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
