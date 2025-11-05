@@ -1,0 +1,87 @@
+---
+import ListarProductos from "@components/ListarProductos.astro";
+import Layout from "@layouts/Layout.astro";
+import { cargarProductos } from "@utils/loadCSV";
+import { config } from "src/config";
+
+// --- BLOQUE SSG: Generación de Rutas Base ---
+// ESTO ES LO ÚNICO QUE PUEDE HACER getStaticPaths PARA LA BÚSQUEDA.
+// Calcula la cantidad de páginas necesarias para listar *TODOS* los productos
+// y genera una ruta para cada una (ej: /search/page/1, /search/page/2).
+export const getStaticPaths = () => {
+  const allProducts = cargarProductos();
+  const CANT_PRODUCTOS = config.postPerPage;
+  // Calcula el total de páginas si no hubiera ningún filtro.
+  const totalPages = Math.max(1, Math.ceil(allProducts.length / CANT_PRODUCTOS));
+
+  // Genera los parámetros de ruta.
+  return Array.from({ length: totalPages }, (_, i) => {
+    return { 
+      params: { pag: (i + 1).toString() },
+    };
+  });
+};
+
+// --- LÓGICA DINÁMICA: Filtrado y Paginación en Tiempo de Ejecución (En Vivo) ---
+
+// 1. Obtiene la página actual de la RUTA (del parámetro [pag])
+const { pag } = Astro.params;
+const page = Math.max(1, parseInt(pag || "1")); 
+
+// 2. Obtiene el término de búsqueda "q" del query string (?q=...)
+// Esta línea solo se ejecuta CUANDO EL USUARIO VISITA la página.
+const query = Astro.url.searchParams.get("q")?.toLowerCase() || ""; 
+
+const allProducts = cargarProductos();
+
+// 3. Filtrado de Productos
+const filtered = query
+  ? allProducts.filter(
+      (p) =>
+        p.name.toLowerCase().includes(query)
+    )
+  : allProducts; // Muestra TODOS si la consulta está vacía.
+
+// 4. Cálculo de Paginación REAL (Basado en los productos FILTRADOS)
+const CANT_PRODUCTOS = config.postPerPage;
+const totalPages = Math.max(1, Math.ceil(filtered.length / CANT_PRODUCTOS));
+
+const products = filtered.slice(
+    (page - 1) * CANT_PRODUCTOS, 
+    page * CANT_PRODUCTOS
+);
+
+// 5. URL base para los enlaces de paginación
+const baseUrl = `/search/page/1`;
+// La URL base para ListarProductos debe ser: /search/page/[PAG]?q=TÉRMINO
+const basePaginationUrl = `/template-static-ecommerce${baseUrl}?q=${encodeURIComponent(query)}`;
+
+---
+
+<Layout pageTitle={`Resultados de búsqueda: "${query}"`}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <h1 class="text-3xl font-extrabold text-gray-900 mb-6">
+      Resultados para: <b class="text-indigo-600">"{query || 'Consulta Vacía'}"</b>
+    </h1>
+    
+    {/* Mostrar mensaje si hay una búsqueda, pero no resultados */}
+    {query && products.length === 0 && (
+      <p class="text-lg text-gray-500 my-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        No encontramos productos que coincidan con la búsqueda: <strong>"{query}"</strong>. 
+        Intenta con un término diferente.
+      </p>
+    )}
+
+    <ListarProductos
+      products={products}
+      totalPages={totalPages}
+      actualPage={page}
+      baseURL={basePaginationUrl}
+    />
+  </div>
+</Layout>
+
+<script>
+
+</script>
