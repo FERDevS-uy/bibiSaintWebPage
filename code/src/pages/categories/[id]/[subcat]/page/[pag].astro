@@ -1,0 +1,55 @@
+---
+import ListarProductos from "@components/ListarProductos.astro";
+import Layout from "@layouts/Layout.astro";
+import { cargarProductos } from "@utils/loadCSV";
+import { countCategories } from "@utils/countCategories";
+import { config } from "src/config";
+
+/** Genera los archivos html por cada subcategoría */
+export const getStaticPaths = () => {
+  const CANT_PRODUCTOS = config.postPerPage;
+  const products = cargarProductos();
+  const categories = countCategories(products);
+
+  return categories.flatMap((c) =>
+    (c.subcategories || []).flatMap((sub) => {
+      const filtered = products.filter(
+        (p) =>
+          p.categories.includes(c.name) &&
+          p.subcategories &&
+          p.subcategories.includes(sub.name)
+      );
+      const totalPages = Math.ceil(filtered.length / CANT_PRODUCTOS);
+
+      return Array.from({ length: totalPages }, (_, i) => {
+        const start = i * CANT_PRODUCTOS;
+        const end = start + CANT_PRODUCTOS;
+
+        return {
+          params: { id: c.name, subcat: sub.name, pag: i + 1 },
+          props: {
+            products: filtered.slice(start, end),
+            totalPages,
+          },
+        };
+      });
+    })
+  );
+};
+
+const { id, subcat, pag } = Astro.params;
+const { products, totalPages } = Astro.props;
+const baseUrl = `${config.base}/categories/${id}/${subcat}`;
+---
+
+<Layout
+  categorySelected={id}
+  pageTitle={`${config.pageTitle} - ${id} / ${subcat} / page ${pag}`}
+>
+  <ListarProductos
+    products={products}
+    totalPages={totalPages}
+    actualPage={pag}
+    baseURL={baseUrl}
+  />
+</Layout>
