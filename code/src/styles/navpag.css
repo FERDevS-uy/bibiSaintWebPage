@@ -1,0 +1,41 @@
+svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .pagination {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  a,
+  span.button {
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+  }
+  
+  .pagination a {
+    color: var(--principal-text-color);
+    text-decoration: none;
+    background-color: var(--principal-background-color);
+  }
+  
+ .pagination a:hover {
+    background-color: var(--principal-background-color-dark);
+    color: var(--principal-text-color);
+  }
+  
+ .button {
+    color: #b1b1b1;
+    background-color: var(--principal-background-color-light);
+    user-select: none;
+  }
+  
