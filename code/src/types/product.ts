@@ -9,4 +9,5 @@ export default interface Product {
   categories: string[]; // [<category>]
   paymentLink: PaymentMethod[]; // [<id>=<link>] (ej: ws="https://wa.me/..." mp="https://mpago...")
   relacionados: string[]
+  subcategories?: string[];
 }
