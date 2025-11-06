@@ -3,6 +3,7 @@ svg {
     height: 20px;
   }
   
+  /* Container del nav */
   .pagination {
     margin-top: 3rem;
     display: flex;
@@ -13,29 +14,39 @@ svg {
     gap: 10px;
   }
   
-  a,
+  /* ✅ Antes afectaba a "a" y "span.button"
+     Ahora afecta a button y span.button */
+  button.button,
   span.button {
     padding: 0.5em 1em;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-items: center;
+    border: none;
   }
   
-  .pagination a {
+  /* ✅ clickable = funcional, reemplaza <a> */
+  button.button.clickable {
+    cursor: pointer;
     color: var(--principal-text-color);
-    text-decoration: none;
     background-color: var(--principal-background-color);
   }
   
- .pagination a:hover {
+  button.button.clickable:hover {
     background-color: var(--principal-background-color-dark);
     color: var(--principal-text-color);
   }
   
- .button {
+  /* ✅ disabled = era <span class="button"> en Astro */
+  .button.disabled {
     color: #b1b1b1;
     background-color: var(--principal-background-color-light);
     user-select: none;
+    cursor: default;
+  }
+  
+  .pages {
+    padding: 0 0.5rem;
   }
   
