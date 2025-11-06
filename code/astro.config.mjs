@@ -1,11 +1,11 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import icon from 'astro-icon';
+import icon from "astro-icon";
 import react from "@astrojs/react";
-const repositoryName = "/template-static-ecommerce";
+
+const repositoryName = "/bibiSaintWebPage";
 const url = `https://ferdevs-uy.github.io${repositoryName}/`;
 
-// https://astro.build/config
 export default defineConfig({
   site: url,
   base: repositoryName,
