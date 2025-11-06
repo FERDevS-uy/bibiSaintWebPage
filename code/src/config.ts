@@ -1,4 +1,4 @@
-const repositoryName = "/template-static-ecommerce";
+const repositoryName = "/bibiSaintWebPage";
 const url = `https://ferdevs-uy.github.io${repositoryName}/`;
 
 const pageData = {
