@@ -1,0 +1,183 @@
+article {
+    --radius-size: 0.2rem;
+    --background-color: var(--principal-background-color);
+    --secondary-color: var(--principal-background-color-dark);
+    --text-color: var(--principal-text-color);
+    --width: 500px;
+    --height: 500px;
+  }
+  
+  article:hover .h-bg {
+    left: 0px;
+  }
+  article:hover .price {
+    left: 20px;
+    transform: translateY(-50%);
+    color: #818181;
+  }
+  article:hover .go-to-product {
+    left: 50%;
+  }
+  article:hover .box-up img {
+    filter: blur(7px);
+    opacity: 0.4;
+  }
+  article:hover .info-inner {
+    bottom: 155px;
+    background-color: transparent;
+  }
+  
+  .producto_card {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 1.5rem;
+    border: none;
+    border-radius: var(--radius-size);
+    background: var(--background-color);
+    box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.12),
+      0 1.5px 6px 0 rgba(163, 174, 214, 0.1);
+    transition: transform 0.18s, box-shadow 0.18s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  
+  .cart-box {
+    position: absolute;
+    right: 30px;
+    top: 25px;
+  }
+  
+  .box-up {
+    width: 100%;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: var(--radius-size) var(--radius-size) 0 0;
+    transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
+  }
+  
+  .info-inner {
+    transition: all 400ms cubic-bezier(0, 0, 0.18, 1);
+    position: absolute;
+    width: 100%;
+    bottom: 25px;
+    background-color: rgb(255 255 255 / 40%);
+  }
+  .info-inner * {
+    display: block;
+  }
+  .info-inner .p-categories {
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #8c8c8c;
+  }
+  
+  .box-down {
+    width: 100%;
+    height: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .h-bg {
+    transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
+    width: 660px;
+    height: 100%;
+    background-color: var(--secondary-color);
+    position: absolute;
+    left: -659px;
+  }
+  
+  .h-bg .h-bg-inner {
+    width: 50%;
+    height: 100%;
+    background-color: var(--principal-text-color);
+  }
+  
+  .price-box {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+  
+  .price-box .price {
+    transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
+    transition-delay: 100ms;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+  }
+  .price-box .go-to-product {
+    transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
+    transition-delay: 100ms;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 110%;
+    transform: translate(-50%, -50%);
+  }
+  .price-box .go-to-product .txt {
+    color: var(--background-color);
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+  }
+  
+  @media screen and (min-width: 1000px) {
+    .producto_card {
+      width: var(--width);
+      height: var(--height);
+      margin-bottom: 0;
+    }
+    .cart-box {
+      position: initial;
+      width: 100%;
+      padding-top: 10px;
+    }
+
+    .addToCart {
+        float: right;
+        background-color: var(--principal-background-color-dark);
+        border-radius: 50%;
+        border: none;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+      
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .addToCart:hover {
+        background-color: #479030;
+      }
+      
+      .addToCart * {
+        color: #fff;
+      }
+      
+      .addToCart svg {
+        width: 80%;
+        height: 80%;
+      }
+      
+  }
+  

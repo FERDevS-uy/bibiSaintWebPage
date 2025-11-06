@@ -1,0 +1,213 @@
+---
+// basado en https://www.w3schools.com/howto/howto_js_slideshow.asp
+---
+
+<div id="banner">
+  <div class="slideshow___container" id="banner___container">
+    <h2>Banner</h2>
+
+    <a class="prev" id="prev_btn" type="button" data-id={Astro.props.id}>
+      &#10094;
+    </a>
+    <a class="next" id="next_btn" type="button" data-id={Astro.props.id}>
+      &#10095;
+    </a>
+  </div>
+
+  <div class="dot___container" id="dot_container"></div>
+</div>
+
+<style>
+  #banner {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #cecece;
+  }
+
+  .slideshow___container {
+    /* max-width: 1000px; */
+    position: relative;
+    margin: auto;
+  }
+
+  .prev,
+  .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+  }
+
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .prev:hover,
+  .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+  }
+
+  .dot___container {
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0.4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
+
+<style is:global>
+  #banner .mySlides {
+    display: none;
+  }
+
+  #banner .slide__content {
+    display: flex;
+    flex-wrap: wrap;
+    margin-inline: 4rem;
+    text-decoration: none;
+    color: #000;
+  }
+
+  #banner .slide__content img {
+    object-fit: contain;
+  }
+
+  #banner .dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+
+  #banner .active,
+  #banner .dot:hover {
+    background-color: #717171;
+  }
+</style>
+
+<script>
+  import type Product from "src/types/product";
+  import { config } from "src/config";
+  const banner = document.getElementById(
+    "banner___container"
+  ) as HTMLDivElement;
+  const dot_container = document.getElementById(
+    "dot_container"
+  ) as HTMLDivElement;
+  let slideIndex = 1;
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    try {
+      const data = await fetch("productos.json");
+      if (!data) return Promise.reject(data);
+      const allProductos: Product[] = await data.json();
+      // filtra los productos en oferta
+      const productosEnOferta = allProductos
+        .filter((i: Product) => i.enOferta)
+        .slice(0, 4);
+
+      // si no hay productos en oferta oculta el banner
+      if (productosEnOferta.length === 0) {
+        banner.style.display = "none";
+      }
+
+      // Agrega la cantidad de dots según la cantidad de productos
+      productosEnOferta.forEach((p: Product, index: number) => {
+        // dot_container.innerHTML += `<span class="dot"></span>`;
+        const dot = document.createElement("span");
+        dot.classList.add("dot");
+        dot.addEventListener("click", () => {
+          currentSlide(index + 1);
+        });
+        dot_container.appendChild(dot);
+      });
+
+      productosEnOferta.forEach((p: Product) => {
+        banner.appendChild(createSlide(p));
+      });
+
+      showSlides(slideIndex);
+    } catch (e) {
+      console.error(e);
+    }
+
+    // navegación del Banner
+    const next_btn = document.getElementById("next_btn") as HTMLAnchorElement;
+    const prev_btn = document.getElementById("prev_btn") as HTMLAnchorElement;
+    next_btn.addEventListener("click", () => plusSlides(1));
+    prev_btn.addEventListener("click", () => plusSlides(-1));
+  });
+
+  function createSlide(producto: Product) {
+    const slide = document.createElement("div");
+    slide.classList.add("mySlides");
+    slide.classList.add("fade");
+
+    slide.innerHTML = `
+    <a class="slide__content" href="${config.base}/producto/${producto.id}" >
+        <img src="${producto.img}" alt="${producto.name} width="300px" height="300px" />
+        <span>${producto.name}</span>
+    </a>
+`;
+
+    return slide;
+  }
+
+  function plusSlides(n: number) {
+    showSlides((slideIndex += n));
+  }
+
+  function currentSlide(n: number) {
+    showSlides((slideIndex = n));
+  }
+
+  function showSlides(n: number) {
+    let i;
+    let slides = document.getElementsByClassName(
+      "mySlides"
+    ) as HTMLCollectionOf<HTMLDivElement>;
+    let dots = document.getElementsByClassName(
+      "dot"
+    ) as HTMLCollectionOf<HTMLSpanElement>;
+
+    if (slides.length === 0 || dots.length === 0) return;
+
+    if (n > slides.length) slideIndex = 1;
+    if (n < 1) slideIndex = slides.length;
+
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+    }
+
+    slides[slideIndex - 1].style.display = "block";
+    dots[slideIndex - 1].className += " active";
+  }
+</script>

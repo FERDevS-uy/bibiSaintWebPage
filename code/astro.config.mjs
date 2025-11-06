@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import icon from 'astro-icon';
+import react from "@astrojs/react";
 const repositoryName = "/template-static-ecommerce";
 const url = `https://ferdevs-uy.github.io${repositoryName}/`;
 
@@ -8,5 +9,5 @@ const url = `https://ferdevs-uy.github.io${repositoryName}/`;
 export default defineConfig({
   site: url,
   base: repositoryName,
-  integrations: [icon()],
+  integrations: [icon(), react()],
 });
