@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ItemProductoBox from "./ItemProductBox.jsx";
 import NavPag from "./NavPag.jsx";
 
-
 export default function ListarProductos({ pageSize = 10 }) {
   const [productos, setProductos] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -58,7 +57,7 @@ export default function ListarProductos({ pageSize = 10 }) {
             <NavPag
               actualPage={page}
               totalPages={totalPages}
-              baseURL={`/template-static-ecommerce/search/page`}
+              onChangePage={(newPage) => setPage(newPage)}
             />
           )}
         </>
