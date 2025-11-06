@@ -1,5 +1,6 @@
 ---
 import ListarProductos from "@components/ListarProductos.astro";
+import OfertasBanner from "@components/OfertasBanner.astro";
 import Layout from "@layouts/Layout.astro";
 import { cargarProductos } from "@utils/loadCSV";
 import { config } from "src/config";
@@ -11,5 +12,6 @@ const showProducts = productos.slice(0, CANT_PRODUCTOS);
 ---
 
 <Layout>
+  <OfertasBanner />
   <ListarProductos products={showProducts} totalPages={totalPages} />
 </Layout>

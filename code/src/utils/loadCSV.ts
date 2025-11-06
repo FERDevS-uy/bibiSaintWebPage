@@ -12,7 +12,6 @@ export function cargarProductos(): Product[] {
     header: true,
     skipEmptyLines: true,
   });
-
   return (resultado.data as any[]).map((row) => ({
     id: row.id?.trim(),
     name: row.name?.trim(),
@@ -20,18 +19,29 @@ export function cargarProductos(): Product[] {
     price: row.precio?.trim(),
     img:
       row.imagen
-        ?.trim()
-        .split(" ")
-        .map((i: string) => i.trim()) || [],
-    categories:
-      row.categorias
-        ?.trim()
-        .split(" ")
-        .map((c: string) => c.trim()) || [],
+        ? row.imagen.trim()
+          .split(/\s+/)
+          .filter((i: string) => i.length > 0) : [],
+    categories: row.categorias
+      ? row.categorias.trim()
+        .split(/\s+/)
+        .filter((i: string) => i.length > 0) : [],
+    subcategories: row.subcategorias ?
+      row.subcategorias.trim()
+        .split(/\s+/)
+        .filter((s: string) => s.length > 0)
+      : [],
     paymentLink: parsePaymentMethodToObject(
       row.linkPago?.trim(),
       row.producto?.trim()
     ),
-    relacionados: row.relacionados|| []
+    relacionados: row.relacionados
+      ? row.relacionados.trim()
+        .split(/\s+/)
+        .filter((i: string) => i.length > 0) : [],
+    enOferta:
+      row.oferta?.trim().toLowerCase() === "true"
+        ? true
+        : false
   }));
 }
