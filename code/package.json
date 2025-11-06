@@ -11,13 +11,11 @@
     "scrap": "node src/utils/fetch_productos.js"
   },
   "dependencies": {
-    "@astrojs/node": "^9.4.3",
-    "@astrojs/react": "^4.4.1",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "astro": "5.11.1",
+    "@astrojs/react": "^4.4.2",
+    "astro": "5.15.3",
     "astro-icon": "1.1.5",
     "astro-navbar": "2.3.9",
+    "dompurify": "^3.3.0",
     "json2csv": "6.0.0-alpha.2",
     "papaparse": "5.5.3",
     "react": "^19.2.0",
