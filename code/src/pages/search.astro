@@ -1,0 +1,132 @@
+---
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout>
+  <h2>
+    Busqueda: <span id="query"></span> (<span id="cantidadResultados">0</span>)
+  </h2>
+  <section class="listaProductos">
+    <ul id="result"></ul>
+  </section>
+</Layout>
+
+<script>
+  import DOMPurify from "dompurify";
+  import type Product from "src/types/product";
+  const section = document.querySelector(
+    "section.listaProductos"
+  ) as HTMLDivElement;
+
+  const resultRen = document.getElementById("result") as HTMLDivElement;
+  const spanQuery = document.getElementById("query") as HTMLSpanElement;
+  const spanCantidad = document.getElementById(
+    "cantidadResultados"
+  ) as HTMLSpanElement;
+
+  const PRODUCTOS_POR_PAGINA = 5;
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const url = new URLSearchParams(window.location.search);
+
+    const searchValue = url.get("q") || "vacío";
+    const pageValue = url.get("p") || "1";
+    if (!url || !searchValue || resultRen === null) return;
+    spanQuery.textContent = `"${searchValue}"`;
+
+    const urlParams = DOMPurify.sanitize(searchValue);
+    const urlPage = Number(DOMPurify.sanitize(pageValue));
+
+    fetchSearchResult(urlParams, urlPage);
+  });
+
+  async function fetchSearchResult(
+    search: string,
+    pageValue: number
+  ): Promise<void> {
+    if (search.length === 0) return;
+
+    try {
+      const res = await fetch("/productos.json");
+      if (!res.ok) throw new Error("Algo salio mal");
+
+      const data = (await res.json()) as Product[];
+
+      const result = data.filter((d) =>
+        d.name.toLocaleLowerCase().includes(search)
+      );
+
+      spanCantidad.textContent = `${result.length}`;
+      const paginas = Math.ceil(result.length / PRODUCTOS_POR_PAGINA);
+
+      // --- paginar ---
+      const inicio = (pageValue - 1) * PRODUCTOS_POR_PAGINA;
+      const fin = inicio + PRODUCTOS_POR_PAGINA;
+      result.slice(inicio, fin).map(renderComponent);
+
+      if (paginas > 1) agregarPaginacion(paginas, pageValue);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function renderComponent(item: Product): void {
+    const article = document.createElement("article") as HTMLDivElement;
+    article.classList.add("producto_card");
+
+    const img = document.createElement("img") as HTMLImageElement;
+    img.src = item.img[0];
+    img.width = 200;
+    img.height = 200;
+
+    const span = document.createElement("span");
+    span.textContent = item.name;
+
+    article.appendChild(img);
+    article.appendChild(span);
+
+    resultRen.appendChild(article);
+  }
+
+  function agregarPaginacion(cantidadDePaginas: number, pagina: number): void {
+    const url = new URLSearchParams(window.location.search);
+    const paginador = document.createElement("div");
+    paginador.classList.add("paginador");
+
+    const actualizarURL = (nuevaPagina: number) => {
+      if (nuevaPagina < 1) nuevaPagina = 1;
+      if (nuevaPagina > cantidadDePaginas) nuevaPagina = cantidadDePaginas;
+
+      url.set("p", nuevaPagina.toString());
+      window.location.search = url.toString();
+    };
+
+    const btnPrimero = document.createElement("button");
+    btnPrimero.textContent = "<<";
+    if (pagina <= 1) btnPrimero.disabled = true;
+    btnPrimero.title = "Primero";
+    btnPrimero.onclick = () => actualizarURL(1);
+
+    const btnAnterior = document.createElement("button");
+    btnAnterior.textContent = "<";
+    if (pagina <= 1) btnAnterior.disabled = true;
+    btnAnterior.title = "Anterior";
+    btnAnterior.onclick = () => actualizarURL(pagina - 1);
+
+    const btnSiguiente = document.createElement("button");
+    btnSiguiente.textContent = ">";
+    if (pagina >= cantidadDePaginas) btnSiguiente.disabled = true;
+    btnSiguiente.title = "Siguiente";
+    btnSiguiente.onclick = () => actualizarURL(pagina + 1);
+
+    const btnUltimo = document.createElement("button");
+    btnUltimo.textContent = ">>";
+    if (pagina >= cantidadDePaginas) btnUltimo.disabled = true;
+    btnUltimo.title = "Último";
+    btnUltimo.onclick = () => actualizarURL(cantidadDePaginas);
+
+    // Agregar los botones al div
+    paginador.append(btnPrimero, btnAnterior, btnSiguiente, btnUltimo);
+    section.append(paginador);
+  }
+</script>

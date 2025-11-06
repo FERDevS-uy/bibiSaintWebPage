@@ -51,20 +51,21 @@ const { categories, categorySelected } = Astro.props;
     <label for="toggleCategories" id="toggleCategoriesBtn">
       <Fragment set:html={downSVG} />
     </label>
-    <div class="searchContainer">
+    <form class="searchContainer">
       <input
         id="searchInput"
         type="text"
         placeholder="Buscar productos..."
         autocomplete="off"
         class="searchInput"
+        name="search"
       />
       <ul id="searchResults" class="searchResults"></ul>
-    </div>
+    </form>
     <ul class="categoryList">
       {
         categories &&
-          categories.map((c) => (
+          categories.map((c: CategoryList) => (
             <li class="categoryItem">
               <a
                 href={`${config.base}/categories/${c.name}`}
@@ -517,6 +518,28 @@ const { categories, categorySelected } = Astro.props;
     }
   }
 </style>
+
+<script>
+  import DOMPurify from "dompurify";
+  import { config } from "src/config";
+  const searchContainerForm = document.querySelector(
+    "form.searchContainer"
+  ) as HTMLFormElement;
+
+  searchContainerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(searchContainerForm).get("search");
+    if (!formData) return;
+    const searchTerm = DOMPurify.sanitize(formData.toString().toLowerCase());
+
+    if (!searchTerm || searchTerm.length < 3) return;
+
+    const url = new URL(config.base + "/search", window.location.origin);
+    url.searchParams.set("q", searchTerm);
+    window.location.assign(url.toString());
+  });
+</script>
 
 <script type="module">
   // Mostrar cantidad de productos en el carrito
