@@ -2,6 +2,7 @@
 import type Product from "src/types/product";
 import ItemProductoBox from "./ItemProductoBox.astro";
 import NavPag from "./NavPag.astro";
+import { getColors } from "../utils/getColors.js"; // tu función actual
 
 interface Props {
   products: Product[];
@@ -15,51 +16,111 @@ const {
   actualPage = 1,
   baseURL,
 } = Astro.props;
+
 const emptyList = !productos || productos.length === 0;
 ---
 
-<section class={`listaProductos${emptyList ? " centerBox" : ""}`}>
-  {emptyList && <h3 style="color: gray;">Sin Productos</h3>}
+<section>
+  <div class={`listaProductos${emptyList ? " centerBox" : ""}`}>
+    {emptyList && <h3 style="color: gray;">Sin Productos</h3>}
 
-  {
-    productos.length > 0 && (
-      <>
-        <ul>
-          {productos.map((prod) => (
-            <ItemProductoBox producto={prod} />
-          ))}
-        </ul>
+    {
+      productos.length > 0 && (
+        <>
+          <ul>
+            {productos.map((prod) => (
+              <ItemProductoBox producto={prod} />
+            ))}
+          </ul>
 
-        {totalPages != 1 && (
-          <NavPag
-            actualPage={actualPage}
-            totalPages={totalPages}
-            baseURL={baseURL}
-          />
-        )}
-      </>
-    )
-  }
+          {totalPages != 1 && (
+            <NavPag
+              actualPage={actualPage}
+              totalPages={totalPages}
+              baseURL={baseURL}
+            />
+          )}
+        </>
+      )
+    }
+  </div>
 </section>
 
+<!-- SCRIPT -->
+<script type="module">
+  import { getColors } from "/src/utils/getColors.js";
+
+  const listItems = [...document.querySelectorAll(".producto_card")];
+  const checkboxes = document.querySelectorAll(
+    '.filter input[type="checkbox"]'
+  );
+  const params = new URLSearchParams(window.location.search);
+
+  function applyFilters(fromURL = false) {
+    if (fromURL) {
+    checkboxes.forEach((cb) => {
+      const urlColors = params.getAll("color").map((c) => c.toLowerCase());
+      console.log(urlColors)
+      const colorValue = cb.dataset.color.toLowerCase();
+      if (urlColors.includes(colorValue)) {
+        cb.checked = true;
+      } else {
+        cb.checked = false; 
+      }
+    });
+  }
+    const selected = [...checkboxes]
+      .filter((c) => c.checked)
+      .map((c) => c.dataset.color.toLowerCase());
+    listItems.forEach((li) => {
+      const name = li.children[0].innerText.toLowerCase();
+      const colors = getColors(name).map((c) => c.toLowerCase());
+      if (selected.length === 0 || selected.some((c) => colors.includes(c))) {
+        li.style.display = "flex";
+      } else {
+        li.style.display = "none";
+      }
+    });
+  }
+
+  // Aplicar si hay filtros en la URL
+  applyFilters(true);
+
+  // eventos
+  function updateFiltersInURL() {
+    const selected = [...checkboxes]
+      .filter((c) => c.checked)
+      .map((c) => c.dataset.color);
+console.log(selected)
+    const newParams = new URLSearchParams(window.location.search);
+    newParams.delete("color");
+    selected.forEach((c) => newParams.append("color", c));
+
+    history.replaceState({}, "", `${location.pathname}?${newParams}`);
+  
+    applyFilters();
+  }
+
+  checkboxes.forEach((cb) => cb.addEventListener("change", updateFiltersInURL));
+</script>
+
 <style>
-  section {
-    max-width: var(--max-width-container);
-    margin: auto;
-    margin-bottom: 5em;
+  #color-filters {
+    padding: 1em;
+    margin-bottom: 1.5em;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+  #color-filters label {
+    margin-right: 1em;
+    cursor: pointer;
   }
 
-  .listaProductos ul {
-    list-style: none;
-    padding: 0 10px;
-  }
-
-  @media screen and (min-width: 1000px) {
-    .listaProductos ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2em;
-      justify-content: center;
-    }
+  * {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    justify-self: start;
   }
 </style>
