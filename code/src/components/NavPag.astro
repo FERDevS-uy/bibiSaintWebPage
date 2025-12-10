@@ -1,5 +1,6 @@
 ---
 import { config } from "src/config";
+import styles from "../styles/components/NavPag.module.css";
 
 const { default: prevArrow } = await import("@assets/prev-arrow.svg?raw");
 const { default: nextArrow } = await import("@assets/next-arrow.svg?raw");
@@ -20,23 +21,23 @@ const lastUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/
 const firstUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/1`) : `${baseURL}/page/1`;
 ---
 
-<nav class="pagination">
+<nav class={styles.pagination}>
   {
     actualPage == 1 ? (
       <>
-        <span class="button">
+        <span class={styles.button}>
           <Fragment set:html={firstArrow} />
         </span>
-        <span class="button">
+        <span class={styles.button}>
           <Fragment set:html={prevArrow} />
         </span>
       </>
     ) : (
       <>
-        <a href={firstUrl}>
+        <a href={firstUrl} class={styles.link}>
           <Fragment set:html={firstArrow} />
         </a>
-        <a href={prevUrl}>
+        <a href={prevUrl} class={styles.link}>
           <Fragment set:html={prevArrow} />
         </a>
       </>
@@ -50,65 +51,22 @@ const firstUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page
   {
     actualPage == totalPages ? (
       <>
-        <span class="button">
+        <span class={styles.button}>
           <Fragment set:html={nextArrow} />
         </span>
-        <span class="button">
+        <span class={styles.button}>
           <Fragment set:html={lastArrow} />
         </span>
       </>
     ) : (
       <>
-        <a href={nextUrl}>
+        <a href={nextUrl} class={styles.link}>
           <Fragment set:html={nextArrow} />
         </a>
-        <a href={lastUrl}>
+        <a href={lastUrl} class={styles.link}>
           <Fragment set:html={lastArrow} />
         </a>
       </>
     )
   }
 </nav>
-
-<style>
-  :global(svg) {
-    width: 20px;
-    height: 20px;
-  }
-
-  .pagination {
-    margin-top: 3rem;
-
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-
-  a,
-  span.button {
-    padding: 0.5em 1em;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-items: center;
-  }
-
-  a {
-    color: var(--principal-text-color);
-    text-decoration: none;
-    background-color: var(--principal-background-color);
-  }
-  a:hover {
-    background-color: var(--principal-background-color-dark);
-    color: var(--principal-text-color);
-  }
-
-  span.button {
-    color: #b1b1b1;
-    background-color: var(--principal-background-color-light);
-    user-select: none;
-  }
-</style>

@@ -1,0 +1,27 @@
+.listaProductos {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-self: start;
+}
+
+.centerBox {
+  justify-content: center;
+}
+
+.listaProductos > h3 {
+  color: gray;
+}
+
+.listaProductos ul {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-self: start;
+  padding: 0;
+  margin: 0;
+  list-style: none; /* Removed default list style if any */
+  gap: 1rem; /* Added gap for better spacing if needed, though card controls margins */
+}

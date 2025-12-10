@@ -1,0 +1,144 @@
+---
+interface Props {
+  name?: string;
+  id?: string;
+  initialValue?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+}
+
+const { 
+  name = "quantity", 
+  id, 
+  initialValue = 1, 
+  min = 0, 
+  max = 99, 
+  step = 1 
+} = Astro.props;
+
+const uniqueId = id || `number-input-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class="number-control" data-id={uniqueId}>
+  <button type="button" class="control-btn minus">-</button>
+  
+  <input 
+    type="number" 
+    id={uniqueId} 
+    name={name} 
+    value={initialValue} 
+    min={min} 
+    max={max} 
+    step={step}
+  />
+  
+  <button type="button" class="control-btn plus">+</button>
+</div>
+
+<style>
+  .number-control {
+    display: flex;
+    align-items: center;
+    border: 2px solid #aaa;
+    border-radius: 50px;
+    width: 100px;
+    height: 50px;
+    overflow: hidden;
+    font-family: sans-serif;
+    background: white;
+  }
+
+  /* Input Numérico */
+  input[type="number"] {
+    flex-grow: 1;
+    text-align: center;
+    border: none;
+    font-size: 24px;
+    font-weight: 500;
+    height: 100%;
+    outline: none;
+    color: #000;
+    appearance: textfield; /* Firefox */
+    -moz-appearance: textfield;
+    width: 100%; /* Asegura que ocupe espacio si flex falla */
+  }
+
+  /* Resetear flechas nativas */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Botones + y - */
+  .control-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px; /* Un poco más ancho para click fácil */
+    height: 100%;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    font-weight: 295;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: #000;
+    padding: 0;
+  }
+
+  .control-btn:hover {
+    background-color: #f0f0f0;
+  }
+
+  .control-btn:active {
+    background-color: #e0e0e0;
+  }
+
+  /* Bordes internos */
+  .minus {
+    border-right: 2px solid #aaa;
+  }
+
+  .plus {
+    border-left: 2px solid #aaa;
+  }
+</style>
+
+<script>
+  // Script que se ejecuta en el cliente
+  // Usamos una función para inicializar por si usas ViewTransitions
+  function initNumberInputs() {
+    const containers = document.querySelectorAll('.number-control');
+
+    containers.forEach(container => {
+      const input = container.querySelector('input');
+      const minusBtn = container.querySelector('.minus');
+      const plusBtn = container.querySelector('.plus');
+
+      if (!input || !minusBtn || !plusBtn) return;
+
+      // Limpiar eventos previos para evitar duplicados si se re-ejecuta
+      // (Una técnica simple es clonar y reemplazar el nodo, pero aquí usaremos lógica directa)
+      
+      const updateValue = (increment) => {
+        if (increment) input.stepUp();
+        else input.stepDown();
+        
+        // Disparar evento 'change' para que otros scripts sepan que cambió
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      };
+
+      // Usamos onclick directo para evitar acumulación de eventListeners
+      minusBtn.onclick = () => updateValue(false);
+      plusBtn.onclick = () => updateValue(true);
+    });
+  }
+
+  // Ejecutar al cargar
+  initNumberInputs();
+
+  // Si usas Astro View Transitions, descomenta la siguiente línea:
+  // document.addEventListener('astro:page-load', initNumberInputs);
+</script>

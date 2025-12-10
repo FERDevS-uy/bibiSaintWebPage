@@ -1,13 +1,8 @@
 ---
 import type Product from "src/types/product";
-import ItemProductoBox from "./ItemProductoBox.astro";
-import NavPag from "./NavPag.astro";
-import ProductoList from "./ProductoList.astro";
-import  getColors  from "@utils/getColors";
 import { capitalize } from "@utils/capitalizeString";
-
-
-
+import getColors from "@utils/getColors";
+import styles from "../styles/components/SideBarCategories.module.css";
 
 interface Props {
   categoryFather: string;
@@ -21,8 +16,8 @@ const productColors = products?.flatMap(p => getColors(p.name));
 const uniqueColors = [...new Set(productColors)];
 ---
 
-<section class="sideBarCategories">
-  <div class="subcategories">
+<section class={styles.sideBarCategories}>
+  <div class={styles.subcategories}>
     <strong>Inicio - {categoryFather}</strong>
     <ul>
       {
@@ -39,7 +34,7 @@ const uniqueColors = [...new Set(productColors)];
     </ul>
   </div>
   <strong>Filtrar por</strong>
-  <div class="filter">
+  <div class={styles.filter} data-filter-section>
     <strong>Color</strong>
     <ul>
       {uniqueColors.map(color => (
@@ -51,7 +46,7 @@ const uniqueColors = [...new Set(productColors)];
       ))}
     </ul>
   </div>  
-  <div class="subcategories">
+  <div class={styles.subcategories}>
     <strong>Marca</strong>
     <ul>
       {
@@ -67,7 +62,7 @@ const uniqueColors = [...new Set(productColors)];
       }
     </ul>
   </div>
-  <div class="subcategories">
+  <div class={styles.subcategories}>
     <strong>Modelo</strong>
     <ul>
       {
@@ -84,105 +79,3 @@ const uniqueColors = [...new Set(productColors)];
     </ul>
   </div>
 </section>
-
-<style>
-.sideBarCategories {
-  width: 500px;
-  padding: 70px;
-  border-right: 1px solid #151515;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  font-family: sans-serif;
-}
-
-/* --- Subcategorías --- */
-.subcategories strong {
-    display: block;
-  font-size: 1.7rem;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-
-.subcategories ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.subcategories li {
-  margin-bottom: 12px;
-  font-size: 1.4rem;
-}
-
-.subcategories a {
-  text-decoration: none;
-  color: #000;
-  transition: 0.2s;
-}
-
-.subcategories a:hover {
-  opacity: 0.6;
-}
-
-/* --- Título "Filtrar por" --- */
-.sideBarCategories > strong {
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-top: 10px;
-}
-
-
-/* --- Sección de filtros --- */
-
-.filter strong {
-  display: block;
-  font-size: 1.7rem;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-
-.filter ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.filter li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.4rem;
-  margin-bottom: 14px;
-}
-
-/* Checkboxes estilo moderno */
-.filter input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  appearance: none;
-  border: 2px solid #555;
-  border-radius: 6px;
-  transition: 0.2s;
-}
-
-.filter input[type="checkbox"]:checked {
-  background-color: #000;
-  border-color: #000;
-}
-
-/* Centrado del texto y checkbox */
-.filter label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  cursor: pointer;
-}
-.filter label {
-  flex-direction: row-reverse;
-}
-
-
-</style>

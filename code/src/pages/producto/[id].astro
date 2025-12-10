@@ -2,6 +2,7 @@
 import { cargarProductos } from "../../utils/loadCSV";
 import Layout from "../../layouts/Layout.astro";
 import { config } from "../../config";
+import NumberInput from "@components/NumberInput.astro";
 
 export function getStaticPaths() {
   const productos = cargarProductos();
@@ -30,6 +31,7 @@ const {
   description,
   productosRelacionados: relacionados,
 } = Astro.props;
+console.log(categories)
 ---
 
 <Layout
@@ -37,290 +39,266 @@ const {
   description={description}
   pageImage={img[0]}
 >
-  <section class="productContainer">
-    <div class="product_main">
-      <div class="imgContainer">
-        {img.map((i) => <img src={i} alt="" />)}
-      </div>
+<section class="productContainer">
 
-      <div class="infoBox">
-        <h2 class="name">{name}</h2>
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="/">{categories}</a> /
+    <a href="/">Accesorios</a> /
+    <span>Gorros</span>
+  </div>
 
-        <div class="categories">
-          {
-            categories.map((c) => (
-              <a href={`${config.base}/categories/${c}`} class="categoryTag">
-                {c}
-              </a>
-            ))
-          }
-        </div>
+  <div class="product_layout">
 
-        <p class="description">{description}</p>
+    <!-- LEFT IMAGE SECTION -->
+    <div class="gallery">
+      <img class="mainImg" src={img[0]} alt={name} />
 
-        <span class="price">${price}</span>
-
-        <div class="paymentsMethods">
-          {
-            paymentLink.map((p) => (
-              <a
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="paymentLink"
-                id="paymentLink"
-              >
-                {p.id}
-              </a>
-            ))
-          }
-        </div>
-
-        <form id="addToCartForm" class="addToCartForm">
-          <label>
-            Cantidad:
-            <input type="number" id="cartQty" min="1" value="1" />
-          </label>
-          <button
-            type="button"
-            id="addToCartBtn"
-            class="addCartBtn"
-            data-id={Astro.props.id}
-          >
-            Agregar al carrito 🛒
-          </button>
-        </form>
+      <div class="thumbs">
+        {img.map(i => (
+          <img src={i} alt="" class="thumb"/>
+        ))}
       </div>
     </div>
 
-    {
-      relacionados.length > 0 && (
-        <div class="relacionados">
-          <h2>Relacionados</h2>
-          <div class="relacionados_lista">
-            {relacionados.map((p) => (
-              <div class="producto">
-                <a href={`${config.base}/producto/${p.id}`} class="cart">
-                  {p.img.map((i) => (
-                    <>
-                      <img src={i} alt="" />
-                      <span>{p.name}</span>
-                    </>
-                  ))}
-                </a>
-              </div>
-            ))}
+    <!-- RIGHT INFO -->
+    <div class="infoBox">
+      <span class="stock">En Stock</span>
+      <h1 class="name">{name}</h1>
+
+      <div class="meta">
+        <p><strong>ID:</strong> {id}</p>
+        <p><strong>Marca:</strong> {categories[0]}</p>
+      </div>
+      <strong>Descripción del Producto:</strong>
+      <p class="description"> {description}</p>
+      <strong>Talle:</strong>
+      <div class="sizes">
+      
+        <button class="size">S</button>
+        <button class="size">M</button>
+        <button class="size">L</button>
+        <button class="size">XL</button>
+      </div>
+
+      <div class="priceRow">
+        <span class="price">${price}</span>
+        <NumberInput 
+        id="cartQty"
+        name="pasajeros" 
+        initialValue={2} 
+        min={1} 
+        max={10} 
+        />
+          <button
+            type="button"
+            id="addToCartBtn"
+            class="buyBtn"
+            data-id={Astro.props.id}
+          >
+            Comprar
+          </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATED PRODUCTS -->
+ 
+  {relacionados && relacionados.length > 0 && (
+    <div class="related">
+      <h2>Productos Relacionados:</h2>
+  
+      <div class="relatedList">
+        {relacionados.map((prod) => (
+          <div class="card">
+            <div class="cardImg">
+              <img  class="cardImg" src={prod.img[0]} alt={prod.name} />
+            </div>
+            <span class="cardTitle">{prod.name}</span>
+            <span class="cardPrice">${prod.price}</span>
+            <button class="cardBtn">Ver Producto</button>
           </div>
-        </div>
-      )
-    }
-  </section>
+        ))}
+      </div>
+    </div>
+  )}
+</section>
+
 </Layout>
 
 <style>
-  .productContainer {
-    max-width: 1100px;
+.productContainer {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 1rem;
+}
 
-    padding: 2rem;
-    margin: 24px auto;
-    background-color: var(--principal-background-color);
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+/**** Breadcrumb *****/
+.breadcrumb {
+  font-size: 22px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+.breadcrumb a {
+  text-decoration: none;
+  color: #555;
+}
 
-  .product_main {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: flex-start;
-    margin-bottom: 2rem;
-  }
+/**** Layout *****/
+.product_layout {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  border-top: 1px solid  grey;
+}
 
-  .imgContainer {
-    flex: 1;
-    height: 100%;
-    display: flex;
-    min-width: 300px;
-  }
-  .imgContainer img {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: contain;
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: 0 2px 8px #a7c7e733;
-  }
+/**** Gallery *****/
+.gallery {
+  flex: 2;
+}
+.mainImg {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: contain;
+  background: #fff;
+  height: 400px;
+}
+.thumbs {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+.thumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: pointer;
+  background: white;
+  box-shadow: 0 2px 4px #aaa;
+}
 
-  .infoBox {
-    border-radius: 0 0 14px 14px;
-    padding: 24px 18px;
-    box-shadow: 0 2px 12px #c3aed633;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .infoBox h2 {
-    font-weight: 800;
-    letter-spacing: 1px;
-  }
-  .infoBox .description {
-    text-transform: lowercase;
-    font-size: 1.08rem;
-  }
+/**** Info box *****/
+.infoBox {
+  flex: 1;
+  padding: 18px;
+}
+.stock {
+  background: #53b467;
+  padding: 4px 10px;
+  color: white;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.name {
+  margin: 10px 0;
+  font-size: 22px;
+  font-weight: bold;
+}
 
-  .categories {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-  }
-  .categoryTag {
-    background-color: var(--principal-background-color-light);
-    color: inherit;
-    border-radius: 5px;
-    padding: 0.18em 0.8em;
-    font-size: 0.98em;
-    font-weight: 500;
-    text-decoration: none;
-    transition: 0.3s ease;
-  }
-  .categoryTag:hover,
-  .categoryTag:focus {
-    background-color: var(--principal-background-color-dark);
-    color: #fff;
-  }
+.meta p {
+  margin: 4px 0;
+  font-size: 14px;
+}
 
-  .price {
-    font-size: 1.25rem;
-    font-weight: bold;
-    border-radius: 10px;
-    letter-spacing: 0.5px;
-  }
+.description {
+  margin: 10px 0;
+}
 
-  .paymentsMethods {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-    margin-top: 0.7em;
-  }
-  .paymentLink {
-    display: inline-block;
-    background: linear-gradient(90deg, #a7c7e7 40%, #c3aed6 100%);
-    color: #232946;
-    border-radius: 8px;
-    padding: 0.18em 0.8em;
-    font-size: 1em;
-    font-weight: 600;
-    text-decoration: none;
-    transition:
-      background 0.15s,
-      color 0.15s,
-      transform 0.15s;
-    box-shadow: 0 1px 3px #a7c7e733;
-  }
-  .paymentLink:hover,
-  .paymentLink:focus {
-    background: linear-gradient(90deg, #f7cac9 40%, #b7eac5 100%);
-    color: #232946;
-    transform: scale(1.05);
-  }
+/**** Sizes *****/
+.sizes {
+  margin: 10px 0;
+}
+.size {
+  background: white;
+  border: 1px solid #aaa;
+  padding: 0 0;
+  cursor: pointer;
+  font-size: 32px;
+  width: 50px;
+  margin-left: 6px;
+}
 
-  .backBtn {
-    display: inline-block;
-    margin: 24px 0 0 24px;
-    padding: 0.5em 1.2em;
-    background: linear-gradient(90deg, #a7c7e7 40%, #fff5ba 100%);
-    color: #232946;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    box-shadow: 0 2px 8px #a7c7e733;
-    transition:
-      background 0.18s,
-      color 0.18s,
-      transform 0.15s;
-    border: none;
-    cursor: pointer;
-  }
-  .backBtn:hover,
-  .backBtn:focus {
-    background: linear-gradient(90deg, #f7cac9 40%, #b7eac5 100%);
-    color: #232946;
-    transform: scale(1.04);
-    text-decoration: underline;
-  }
-  .addToCartForm {
-    display: flex;
-    gap: 0.7em;
-    align-items: center;
-    margin-top: 1em;
-  }
-  .addToCartForm input[type="number"] {
-    width: 60px;
-    padding: 0.2em 0.5em;
-    border-radius: 6px;
-    border: 1px solid #c3aed6;
-    font-size: 1em;
-  }
-  .addCartBtn {
-    background-color: var(--principal-background-color-dark);
-    color: #fff;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1em;
-    padding: 0.75rem 2em;
-    border: none;
-    cursor: pointer;
-    transition:
-      color 0.18s,
-      transform 0.15s;
-  }
-  .addCartBtn:hover,
-  .addCartBtn:focus {
-    background-color: var(--principal-text-color);
-  }
+/**** Price & Actions *****/
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
 
-  .relacionados_lista {
-    display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    padding-inline: 0.5rem;
-    padding-bottom: 0.5rem;
-  }
-  .relacionados_lista .producto {
-    width: 200px;
-    flex-shrink: 0;
-    padding: 1rem;
-    background-color: var(--principal-background-color-light);
-    border-radius: 12px;
-  }
-  .relacionados_lista .producto img {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: contain;
-    height: 120px;
-  }
-  .relacionados_lista .producto a {
-    text-decoration: none;
-    color: inherit;
-  }
-  .relacionados_lista .producto span {
-    white-space: wrap;
-    display: block;
-  }
+.price {
+  font-size: 26px;
+  font-weight: bold;
+}
 
-  @media screen and (min-width: 1000px) {
-    .infoBox {
-      width: 35%;
-      height: 100%;
-    }
-    .relacionados_lista {
-      padding-inline: 0;
-    }
-    .relacionados_lista .producto {
-      width: 250px;
-    }
-  }
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.qty input {
+  width: 40px;
+  text-align: center;
+}
+.qtyBtn {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.buyBtn {
+  background: var(--orange-color);
+  padding: 10px 10px;
+  border-radius: 8px;
+
+  font-size: 1.4rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+
+/**** Related Products *****/
+.related {
+  margin-top: 40px;
+}
+
+.relatedList {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+}
+
+.card {
+  min-width: 180px;
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+}
+.cardImg {
+  height: 150px;
+  border-radius: 8px;
+}
+.cardTitle {
+  font-size: 15px;
+  margin-top: 10px;
+}
+.cardPrice {
+  font-weight: bold;
+  display: block;
+  margin-top: 6px;
+}
+.cardBtn {
+  background: black;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 6px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
 </style>
 
 <script>
@@ -332,7 +310,7 @@ const {
     const price = document.querySelector(".price") as HTMLSpanElement;
     const name = document.querySelector(".name") as HTMLHeadingElement;
     const id = addBtn?.getAttribute("data-id") ?? "";
-    const img = document.querySelector(".imgContainer img") as HTMLImageElement;
+    const img = document.querySelector(".thumbs img") as HTMLImageElement;
 
     const qty = parseInt(qtyInput.value, 10);
 
@@ -347,6 +325,6 @@ const {
     // llama a una funcion declarada en header que actualiza el contador del carrito
     window.updateCartCount && window.updateCartCount();
     addBtn.textContent = "¡Agregado!";
-    setTimeout(() => (addBtn.textContent = "Agregar al carrito 🛒"), 1200);
+    setTimeout(() => (addBtn.textContent = "Agregar al carrito"), 1200);
   });
 </script>

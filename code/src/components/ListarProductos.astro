@@ -2,7 +2,8 @@
 import type Product from "src/types/product";
 import ItemProductoBox from "./ItemProductoBox.astro";
 import NavPag from "./NavPag.astro";
-import { getColors } from "../utils/getColors.js"; // tu función actual
+
+import styles from "../styles/components/ListarProductos.module.css";
 
 interface Props {
   products: Product[];
@@ -21,8 +22,8 @@ const emptyList = !productos || productos.length === 0;
 ---
 
 <section>
-  <div class={`listaProductos${emptyList ? " centerBox" : ""}`}>
-    {emptyList && <h3 style="color: gray;">Sin Productos</h3>}
+  <div class={`${styles.listaProductos} ${emptyList ? styles.centerBox : ""}`}>
+    {emptyList && <h3>Sin Productos</h3>}
 
     {
       productos.length > 0 && (
@@ -46,81 +47,12 @@ const emptyList = !productos || productos.length === 0;
   </div>
 </section>
 
-<!-- SCRIPT -->
-<script type="module">
-  import { getColors } from "/src/utils/getColors.js";
-
-  const listItems = [...document.querySelectorAll(".producto_card")];
-  const checkboxes = document.querySelectorAll(
-    '.filter input[type="checkbox"]'
-  );
-  const params = new URLSearchParams(window.location.search);
-
-  function applyFilters(fromURL = false) {
-    if (fromURL) {
-    checkboxes.forEach((cb) => {
-      const urlColors = params.getAll("color").map((c) => c.toLowerCase());
-      console.log(urlColors)
-      const colorValue = cb.dataset.color.toLowerCase();
-      if (urlColors.includes(colorValue)) {
-        cb.checked = true;
-      } else {
-        cb.checked = false; 
-      }
-    });
-  }
-    const selected = [...checkboxes]
-      .filter((c) => c.checked)
-      .map((c) => c.dataset.color.toLowerCase());
-    listItems.forEach((li) => {
-      const name = li.children[0].innerText.toLowerCase();
-      const colors = getColors(name).map((c) => c.toLowerCase());
-      if (selected.length === 0 || selected.some((c) => colors.includes(c))) {
-        li.style.display = "flex";
-      } else {
-        li.style.display = "none";
-      }
-    });
-  }
-
-  // Aplicar si hay filtros en la URL
-  applyFilters(true);
-
-  // eventos
-  function updateFiltersInURL() {
-    const selected = [...checkboxes]
-      .filter((c) => c.checked)
-      .map((c) => c.dataset.color);
-console.log(selected)
-    const newParams = new URLSearchParams(window.location.search);
-    newParams.delete("color");
-    selected.forEach((c) => newParams.append("color", c));
-
-    history.replaceState({}, "", `${location.pathname}?${newParams}`);
+<script>
+  import { initProductFilters } from "../scripts/components/ListarProductos";
   
-    applyFilters();
-  }
-
-  checkboxes.forEach((cb) => cb.addEventListener("change", updateFiltersInURL));
+  initProductFilters();
+  
+  document.addEventListener('astro:page-load', () => {
+    initProductFilters();
+  });
 </script>
-
-<style>
-  #color-filters {
-    padding: 1em;
-    margin-bottom: 1.5em;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-  }
-  #color-filters label {
-    margin-right: 1em;
-    cursor: pointer;
-  }
-
-  * {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    align-items: center;
-    justify-self: start;
-  }
-</style>

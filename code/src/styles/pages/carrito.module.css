@@ -1,0 +1,235 @@
+.cartContainer {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  font-family: "Poppins", Arial, sans-serif;
+  color: #222;
+
+  display: grid;
+  gap: 1rem 2rem;
+}
+
+.cartContainer h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.cartTable {
+  border-collapse: collapse;
+  margin-bottom: 2em;
+}
+
+.cartTable th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 12px 8px;
+  border-bottom: 2px solid #eee;
+  color: #555;
+}
+
+.cartTable thead {
+  display: none;
+}
+
+
+
+
+
+.cartBottom {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+}
+
+
+
+.cartDetails {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+
+
+
+
+.cartSummary {
+  background: #f7f7f7;
+  padding: 18px;
+  border-radius: 6px;
+  /* margin-left: auto; */
+}
+
+.cartSummary h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1em;
+  color: #333;
+}
+
+.cartSummaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.7em;
+  font-size: 0.95rem;
+}
+
+.cartSummaryTotal {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 1em;
+  border-top: 1px solid #ddd;
+  padding-top: 0.8em;
+}
+
+.cartBtn {
+  display: block;
+  width: 100%;
+  margin-top: 1.2em;
+  padding: 12px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+  text-decoration: none;
+}
+
+.cartBtn:hover {
+  background: #333;
+}
+
+.cartBtn.danger {
+  background: #ef4444;
+}
+
+.cartBtn.danger:hover {
+  background: #dc2626;
+}
+
+.cartEmpty {
+  color: #555;
+  font-size: 1.1em;
+  margin: 2em 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media screen and (min-width: 1000px) {
+  .cartContainer {
+    grid-template-columns: 1fr 320px;
+  }
+
+  .cartSummary {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .cartContainer h1 {
+    grid-column: 1 / 3;
+  }
+
+  .cartTable thead {
+    display: table-header-group;
+  }
+
+  .cartEmpty {
+    grid-column: 1 / 3;
+  }
+}
+
+@media (max-width: 600px) {
+  .cartTable {
+    border-collapse: separate;
+    border-spacing: 0 16px;
+  }
+
+  .cartTable tr {
+    display: block;
+    margin-bottom: 18px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #e0e0e0;
+    background: #fafbfc;
+  }
+
+  .cartTable td,
+  .cartTable th {
+    border-bottom: none;
+    padding: 0;
+    background: none;
+    text-align: left;
+  }
+
+  .cartTable td:first-child {
+    display: block;
+    width: 100%;
+    background: #fafbfc;
+    border-radius: 10px 10px 0 0;
+    padding: 14px 10px 14px 10px;
+    box-shadow: none;
+  }
+
+  .cartTable .cartRowData {
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 8px #e0e0e0;
+    border-top: 1px solid #f0f0f0;
+    margin-top: -8px;
+    padding: 10px 0;
+    gap: 0;
+  }
+
+  .cartTable .cartRowData td {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    border-top: none;
+    margin: 0;
+    font-size: 0.97em;
+  }
+
+  .cartTable img {
+    width: 60px;
+    min-width: 60px;
+    margin-bottom: 4px;
+  }
+
+  .cartName {
+    font-family: "Poppins", Arial, sans-serif;
+    width: 100%;
+    display: block;
+    font-size: 1em;
+    word-break: break-word;
+    text-align: left;
+    margin-top: 2px;
+  }
+}
+
+/* Global styles for dynamic content */
+/* Since these are used by renderCart which injects HTML, we might need :global if we keep them here.
+   Or we can put them in global.css or similar. 
+   But since user asked modular, let's try to keep them scoped but accessible.
+   For now, I will keep the dynamic styles in a separate global css file or block?
+   The user said "css apply modular".
+   If `renderCart` generates HTML with specific classes, those classes need to be global OR `renderCart` needs to be updated to use the module classes.
+   Updating `renderCart` to use hashed classes is hard because it's a utility function.
+   So for dynamic content from `renderCart`, we should probably use global styles or a clean utility CSS.
+   
+   However, the original file had `<style is:global>` for the renderCart part.
+   I will extract that part to a separate css file `src/styles/components/CartDynamic.css` (not module) and import it.
+*/

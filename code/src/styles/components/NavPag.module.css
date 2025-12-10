@@ -1,0 +1,50 @@
+.pagination {
+  margin-top: 3rem;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.button,
+.link { /* Added .link class for anchor tags */
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.link {
+  color: var(--principal-text-color);
+  text-decoration: none;
+  background-color: var(--principal-background-color);
+}
+
+.link:hover {
+  background-color: var(--principal-background-color-dark);
+  color: var(--principal-text-color);
+}
+
+.button {
+  color: #b1b1b1;
+  background-color: var(--principal-background-color-light);
+  user-select: none;
+}
+
+/* Global SVG styles if needed, but better to scope if possible or leave global. 
+   Original had :global(svg) { width: 20px; height: 20px; }
+   This affects ALL SVGs in the component. 
+   We can apply a class to the svg or wrapper. 
+   Here the SVGs are injected via Fragment. 
+   We can target them via .button svg, .link svg
+*/
+
+.button svg,
+.link svg {
+  width: 20px;
+  height: 20px;
+}
