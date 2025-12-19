@@ -24,9 +24,23 @@ const { categories, categorySelected } = Astro.props;
       </div>
 
       <div class="navMenu">
+        <form class="searchContainer">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Buscar productos..."
+            autocomplete="off"
+            class="searchInput"
+            name="search"
+          />
+          <ul id="searchResults" class="searchResults"></ul>
+        </form>
+
         <a href={`${config.base}/carrito`} class="cartLink">
           <Fragment set:html={cartSVG} />
-          <span id="cartCount" class="cartCount"></span>
+          <div id="cartCount" class="cartCount hidden">
+            <span></span>
+          </div>
         </a>
         <MenuIcon class="menuIcon" />
       </div>
@@ -37,9 +51,8 @@ const { categories, categorySelected } = Astro.props;
     <ul class="mainNav">
       <li><a class="navLink" href={config.base}>Inicio</a></li>
       <li>
-        <a class="navLink" href={`${config.base}/about`}>Sobre nosotros</a>
+        <a class="navLink" href={`${config.base}/about`}>Quienes somos</a>
       </li>
-      <li class="hr"><hr /></li>
     </ul>
 
     <input
@@ -48,20 +61,11 @@ const { categories, categorySelected } = Astro.props;
       class="toggleCategories"
       hidden
     />
+
     <label for="toggleCategories" id="toggleCategoriesBtn">
       <Fragment set:html={downSVG} />
     </label>
-    <form class="searchContainer">
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="Buscar productos..."
-        autocomplete="off"
-        class="searchInput"
-        name="search"
-      />
-      <ul id="searchResults" class="searchResults"></ul>
-    </form>
+
     <ul class="categoryList">
       {
         categories &&
@@ -71,7 +75,10 @@ const { categories, categorySelected } = Astro.props;
                 href={`${config.base}/categories/${c.name}`}
                 class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""}`}
               >
-                {c.name} <span class="count"> ({c.count})</span>
+                {c.name}
+                {c.subcategories && c.subcategories.length > 0 && (
+                  <span>▾</span>
+                )}
               </a>
               {c.subcategories && c.subcategories.length > 0 && (
                 <ul class="subcategoryList">
@@ -81,7 +88,7 @@ const { categories, categorySelected } = Astro.props;
                         href={`${config.base}/categories/${c.name}/${sub.name}`}
                         class="navLink subcategoryLink"
                       >
-                        {sub.name} <span class="count"> ({sub.count})</span>
+                        {sub.name}
                       </a>
                     </li>
                   ))}
@@ -93,431 +100,6 @@ const { categories, categorySelected } = Astro.props;
     </ul>
   </MenuItems>
 </header>
-
-<style is:global>
-  .searchResultItem {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition:
-      background 0.2s,
-      box-shadow 0.2s;
-    border-bottom: 1px solid #eee;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  .searchResultItem:last-child {
-    border-bottom: none;
-  }
-
-  .searchResultItem:hover,
-  .searchResultItem:focus {
-    background: #bbab8e;
-    color: #fff;
-    box-shadow: 0 2px 8px #bbab8e44;
-  }
-  .searchResultImg {
-    width: 10px;
-    height: 10px;
-    object-fit: cover;
-    border-radius: 6px;
-    background: #f3f3f3;
-    flex-shrink: 0;
-  }
-  .searchResultName {
-    font-weight: 500;
-    flex: 1 1 auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .searchResultPrice {
-    font-size: 0.95em;
-    color: #7a6d4d;
-    margin-left: 0.5rem;
-    flex-shrink: 0;
-  }
-  .searchInput {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-  }
-  .searchResults {
-    position: absolute;
-    top: 110%;
-    left: 0;
-    right: 0;
-    background: #fff;
-    color: #222;
-    border-radius: 0 0 8px 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    z-index: 100;
-    max-height: 300px;
-    overflow-y: auto;
-    list-style: none;
-    margin: 0;
-    padding: 0.2rem 0;
-    display: none;
-  }
-</style>
-
-<style>
-  .searchContainer {
-    position: absolute;
-    margin: 0 1rem;
-    width: 250px;
-    align-self: center;
-    z-index: 20;
-    left: 0;
-    top: 4rem;
-  }
-
-  header {
-    --background-color: var(--principal-background-color);
-    --background-color-dark: var(--principal-background-color-dark);
-    --background-color-light: var(--principal-background-color-light);
-    --text-color: rgba(35, 41, 70, 0.98);
-    --itemBox-background-color: #d5c4a4;
-    --menu-size: 3rem;
-    --header-icon-size: 10rem;
-    --header-pc-icon-size: 7rem;
-    --header-pc-height: 130px;
-
-    margin-bottom: 0.5rem;
-  }
-
-  .headerContainer {
-    width: 100%;
-    padding: 0.5rem;
-    background: var(--background-color);
-
-    box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.1);
-    border-radius: 0 0 18px 18px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .logoContainer a {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    text-decoration: none;
-  }
-
-  :global(.logoContainer svg) {
-    color: var(--text-color);
-    width: var(--header-icon-size);
-    height: 100%;
-  }
-
-  .navMenu {
-    display: flex;
-    gap: 15px;
-  }
-  .menuIcon {
-    width: var(--menu-size);
-    height: var(--menu-size);
-    font-size: 2.2rem;
-
-    padding: 6px;
-  }
-
-  :global(#astronav-menu) {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    background-image: none;
-    color: inherit;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Items Box */
-  .itemsBox {
-    width: 100%;
-    height: 100%;
-    background-color: var(--itemBox-background-color);
-    box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.1);
-    padding-bottom: 10rem;
-    padding-inline: 1rem;
-
-    position: absolute;
-    right: 0;
-    z-index: 2;
-    transition: 0.5s;
-    overflow-x: hidden;
-  }
-  .itemsBox.hidden {
-    display: initial;
-    width: 0;
-    padding: 0;
-  }
-  .itemsBox ul {
-    list-style: none;
-  }
-  .itemsBox hr {
-    border: 1px solid #fff;
-    margin: 10px 0;
-  }
-
-  .navLink {
-    color: #fff;
-    overflow-x: hidden;
-    text-wrap: nowrap;
-    width: 100%;
-    display: block;
-    text-decoration: none;
-    padding: 1rem;
-    font-weight: bold;
-  }
-  .itemsBox li:not(:first-of-type) .navLink {
-    border-top: 2px solid #ffffff5d;
-  }
-  .navLink:hover,
-  .navLink:focus,
-  .categoryLink.selected {
-    color: #ffffff9e;
-    transform: translateX(20px);
-  }
-
-  :global(.itemsBox svg),
-  :global(.itemsBox.hidden svg) {
-    display: none;
-  }
-
-  /* Cart */
-  .cartLink {
-    position: relative;
-    display: flex;
-    align-items: center;
-    color: var(--text-color);
-  }
-  :global(.cartLink svg) {
-    width: calc(var(--menu-size) - 10px);
-    height: calc(var(--menu-size) - 10px);
-  }
-  .cartLink:hover {
-    animation: shake 0.5s infinite;
-  }
-  .cartCount {
-    position: absolute;
-    top: -8px;
-    right: -12px;
-    background: #f7cac9;
-    border-radius: 50%;
-    font-size: 0.85em;
-    padding: 0.1em 0.5em;
-    font-weight: bold;
-    min-width: 1.5em;
-    text-align: center;
-    display: none;
-  }
-
-  @keyframes shake {
-    0% {
-      transform: translateY(0);
-    }
-    15% {
-      transform: translateY(-5px);
-    }
-    30% {
-      transform: translateY(5px);
-    }
-    45% {
-      transform: translateY(-5px);
-    }
-    60% {
-      transform: translateY(5px);
-    }
-    75% {
-      transform: translateY(-5px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-
-  @media screen and (min-width: 1000px) {
-    .headerContainer {
-      border-radius: 0;
-      align-items: flex-end;
-      height: var(--header-pc-height);
-      padding: 0.5rem 0;
-    }
-
-    .logoContainer img,
-    .navMenu {
-      z-index: 10;
-    }
-
-    :global(.logoContainer svg) {
-      height: var(--header-pc-icon-size);
-      min-width: auto;
-      width: 250px;
-    }
-
-    :global(.cartLink svg) {
-      margin-bottom: 5px;
-    }
-
-    .navMenu .menuIcon {
-      display: none;
-    }
-
-    /* ItemsBox */
-    .itemsBox,
-    .itemsBox.hidden {
-      width: auto;
-      height: var(--header-pc-height);
-      box-shadow: none;
-      transition: none;
-      background-color: transparent;
-      padding: 0;
-      padding-bottom: 5px;
-
-      top: 0;
-      left: 250px;
-
-      display: grid;
-      align-items: start;
-      justify-items: end;
-      gap: 20px 10px;
-      grid-template-rows: 1fr 50px;
-      grid-template-columns: auto 25px 70px;
-      overflow: visible;
-    }
-    .categoryItem {
-      position: relative;
-    }
-
-    .subcategoryList {
-      display: none;
-      position: absolute;
-      left: 0;
-      top: 100%;
-      background: var(--itemBox-background-color);
-      min-width: 180px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      z-index: 10;
-      border-radius: 0 0 10px 10px;
-      padding: 0;
-    }
-
-    .categoryItem:hover .subcategoryList {
-      display: block;
-    }
-
-    .subcategoryLink {
-      padding: 0.7rem 1rem;
-      color: #fff;
-      text-decoration: none;
-      display: block;
-      font-weight: normal;
-    }
-
-    .subcategoryLink:hover,
-    .subcategoryLink:focus {
-      background: #bbab8e;
-      color: #ffffff9e;
-    }
-    .itemsBox ul {
-      float: initial;
-    }
-
-    .navLink {
-      border-radius: 0;
-      padding: 0.7rem 1rem;
-    }
-    .navLink:hover,
-    .navLink:focus,
-    .categoryLink.selected {
-      background-color: #bbab8e;
-      transform: translateX(0);
-    }
-    .itemsBox li:not(:first-of-type) .navLink {
-      border-top: none;
-    }
-    li .navLink {
-      border: none;
-    }
-    .itemsBox hr,
-    .itemsBox li.hr {
-      display: none;
-    }
-
-    .itemsBox ul.mainNav,
-    .itemsBox.hidden ul.mainNav {
-      width: initial;
-      margin-inline: 10px;
-      background-color: var(--itemBox-background-color);
-
-      overflow: hidden;
-      border-end-end-radius: 10px;
-      border-end-start-radius: 10px;
-
-      grid-column: 1/4;
-      display: flex;
-      flex-direction: row;
-      gap: 5px;
-      align-items: center;
-      justify-content: flex-end;
-    }
-
-    /* Categories list */
-    .itemsBox .categoryList,
-    .itemsBox.hidden .categoryList {
-      grid-column: 1;
-      grid-row: 2;
-      width: initial;
-      max-width: 1000px;
-      background-color: var(--itemBox-background-color);
-
-      display: flex;
-      flex-direction: row-reverse;
-      align-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      transition: 0.3s;
-      border-radius: 10px;
-    }
-    .categoryList {
-      margin: 0 0.5rem 0 0.5rem;
-    }
-
-    .itemsBox #toggleCategoriesBtn {
-      grid-column: 2/3;
-      grid-row: 2/3;
-      user-select: none;
-      height: 45px;
-      display: flex;
-    }
-    :global(.itemsBox svg),
-    :global(.itemsBox.hidden svg) {
-      display: block;
-      width: 25px;
-      cursor: pointer;
-      transition: transform 0.3s;
-      /* color: var(--background-color-dark); */
-    }
-
-    :global(.toggleCategories:checked ~ .categoryList) {
-      height: 250px;
-      padding: 0 0.5rem 0.5rem 0.5rem;
-      box-shadow: 1px 5px 5px #bbbbbb;
-    }
-    :global(.toggleCategories:checked ~ label svg) {
-      transform: rotate(180deg);
-    }
-  }
-</style>
 
 <script>
   import DOMPurify from "dompurify";
@@ -544,15 +126,18 @@ const { categories, categorySelected } = Astro.props;
 <script type="module">
   // Mostrar cantidad de productos en el carrito
   window.updateCartCount = function () {
+    const cartCount = document.getElementById("cartCount");
+    const cartCountSpan = document.querySelector("#cartCount span");
+
     const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
     const count = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
-    const cartCount = document.getElementById("cartCount");
+
     if (cartCount) {
       if (count > 0) {
-        cartCount.textContent = count;
-        cartCount.style.display = "inline-block";
+        cartCountSpan.textContent = count;
+        cartCount.classList.remove("hidden");
       } else {
-        cartCount.style.display = "none";
+        cartCount.classList.add("hidden");
       }
     }
   };
@@ -640,3 +225,200 @@ const { categories, categorySelected } = Astro.props;
   window.addEventListener("DOMContentLoaded", checkCategoryListWidth);
   window.addEventListener("resize", checkCategoryListWidth);
 </script>
+
+<style>
+  header {
+    --background-color: #c11010;
+    --line-color: #f0b13e;
+    --text-color: #fff;
+    --menu-size: 3rem;
+    --header-icon-size: 10rem;
+
+    margin-bottom: 0.5rem;
+    background-color: var(--background-color);
+  }
+
+  .headerContainer {
+    color: var(--text-color);
+    margin: auto;
+    max-width: 1000px;
+    height: 75px;
+
+    display: flex;
+    flex-direction: row;
+  }
+
+  /* --- SEARCH FORM --- */
+  .navMenu {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+  }
+  .navMenu form {
+    flex: 1;
+    padding-inline: 5rem;
+    padding-block: 1.5rem;
+  }
+  .navMenu form input {
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 1px solid var(--line-color);
+  }
+
+  /* --- CART --- */
+  .cartLink {
+    color: var(--text-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  .cartLink:hover {
+    animation: shake 0.5s infinite;
+  }
+  .cartCount span {
+    background-color: var(--line-color);
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* --- ITEMS BOX --- */
+  .itemsBox {
+  }
+  .itemsBox ul {
+    list-style: none;
+  }
+  .navLink {
+    color: var(--text-color);
+    text-decoration: none;
+  }
+  .navLink:hover,
+  .navLink.focus,
+  .categoryLink.selected {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+
+  /* TAMAÑO PC */
+  @media screen and (min-width: 1000px) {
+    header {
+      --header-icon-size: 7rem;
+    }
+    /* --- MENU ICON --- */
+    .navMenu .menuIcon {
+      display: none;
+    }
+
+    /* --- CART --- */
+    .cartLink {
+      position: relative;
+      width: 50px;
+      height: 75px;
+    }
+    .cartCount span {
+      position: absolute;
+      right: 5px;
+      top: 15px;
+    }
+
+    /* --- ITEMS BOX --- */
+    .itemsBox,
+    .itemsBox.hidden {
+      border-top: 2px solid var(--line-color);
+
+      box-shadow: none;
+      transition: none;
+      background-color: transparent;
+
+      display: flex;
+      justify-content: center;
+      margin: auto;
+      flex-direction: row-reverse;
+    }
+    .itemsBox > ul {
+      display: flex;
+    }
+    .itemsBox ul.mainNav {
+      margin-left: 20px;
+    }
+
+    .navLink {
+      color: var(--text-color);
+      overflow-x: hidden;
+      text-wrap: nowrap;
+      width: 100%;
+      display: block;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+    }
+    .subcategoryList {
+      display: none;
+      position: absolute;
+      /* left: 0; */
+      /* top: 100%; */
+      background: var(--background-color);
+      min-width: 180px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      z-index: 10;
+      border-radius: 0 0 10px 10px;
+    }
+    .categoryItem:hover .subcategoryList {
+      display: block;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateY(0);
+      }
+      15% {
+        transform: translateY(-5px);
+      }
+      30% {
+        transform: translateY(5px);
+      }
+      45% {
+        transform: translateY(-5px);
+      }
+      60% {
+        transform: translateY(5px);
+      }
+      75% {
+        transform: translateY(-5px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+  }
+</style>
+
+<style is:global>
+  header .logoContainer svg {
+    color: var(--text-color);
+    width: var(--header-icon-size);
+    height: 100%;
+  }
+
+  /* --- CART --- */
+  header .cartLink svg {
+    width: calc(var(--menu-size) - 10px);
+    height: calc(var(--menu-size) - 10px);
+    position: absolute;
+    top: 22px;
+  }
+
+  /* --- MENU ICON --- */
+  #astronav-menu {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-image: none;
+    color: inherit;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
