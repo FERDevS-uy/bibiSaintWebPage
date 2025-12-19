@@ -9,9 +9,11 @@ import { Icon } from "astro-icon/components";
     <div class="contact-info">
       <h2>Contacto</h2>
       <hr />
-      
+
       <p class="intro-text">
-        Te invitamos a completar el formulario de contacto si tienes alguna duda, consulta o buscas algún Producto o Servicio particular, a la brevedad nos pondremos en contacto.
+        Te invitamos a completar el formulario de contacto si tienes alguna
+        duda, consulta o buscas algún Producto o Servicio particular, a la
+        brevedad nos pondremos en contacto.
       </p>
 
       <div class="services-list">
@@ -38,29 +40,58 @@ import { Icon } from "astro-icon/components";
         </div>
 
         <div class="detail-item">
-            <div class="icon-wrapper pin">
-             <Icon name="location" width="24" height="24" />
-            </div>
-            <div class="detail-text">
-             <span>Dirección: Baltasar Brum 1154, 60000 Paysandú, Departamento de Paysandú, Uruguay</span>
-            </div>
+          <div class="icon-wrapper pin">
+            <Icon name="location" width="24" height="24" />
+          </div>
+          <div class="detail-text">
+            <span
+              >Dirección: Dr. Baltasar Brum 1154, 60000 Paysandú, Departamento
+              de Paysandú, Uruguay</span
+            >
+          </div>
         </div>
       </div>
-      
-      <hr class="separator"/>
+
+      <hr class="separator" />
 
       <div class="social-links">
-        <a href="https://facebook.com/bibicartanumerologica" target="_blank" rel="noopener noreferrer">
-            <Icon name="facebook" width="32" height="32" class="social-icon facebook" />
+        <a
+          href="https://facebook.com/bibicartanumerologica"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon
+            name="facebook"
+            width="32"
+            height="32"
+            class="social-icon facebook"
+          />
         </a>
-        <a href="https://instagram.com/bibisventasonline" target="_blank" rel="noopener noreferrer">
-            <Icon name="instagram" width="32" height="32" class="social-icon instagram" />
+        <a
+          href="https://instagram.com/bibisventasonline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon
+            name="instagram"
+            width="32"
+            height="32"
+            class="social-icon instagram"
+          />
         </a>
-        <a href="https://wa.me/+59891361706" target="_blank" rel="noopener noreferrer">
-            <Icon name="whatsapp" width="32" height="32" class="social-icon whatsapp" />
+        <a
+          href="https://wa.me/+59891361706"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon
+            name="whatsapp"
+            width="32"
+            height="32"
+            class="social-icon whatsapp"
+          />
         </a>
       </div>
-
     </div>
 
     <div class="contact-form-wrapper">
@@ -82,7 +113,7 @@ import { Icon } from "astro-icon/components";
     padding: 0 20px;
     display: flex;
     gap: 4rem;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     color: #232946;
   }
 
@@ -102,8 +133,8 @@ import { Icon } from "astro-icon/components";
     border-top: 1px solid #e0e0e0;
     margin-bottom: 2rem;
   }
-  
-  hr.separator{
+
+  hr.separator {
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
@@ -118,10 +149,10 @@ import { Icon } from "astro-icon/components";
     margin-bottom: 2rem;
     font-size: 0.95rem;
   }
-  
+
   .services-list strong {
-      display: block;
-      margin-bottom: 0.2rem;
+    display: block;
+    margin-bottom: 0.2rem;
   }
 
   .services-list ul {
@@ -130,8 +161,8 @@ import { Icon } from "astro-icon/components";
   }
 
   .cta-text {
-      margin-bottom: 2rem;
-      font-size: 0.95rem;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
   }
 
   .contact-details {
@@ -147,32 +178,31 @@ import { Icon } from "astro-icon/components";
   }
 
   .icon-wrapper {
-      min-width: 40px; /* Fixed width for icon container to align text */
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      padding-top: 2px;
-  }
-  
-  .icon-wrapper svg {
-       color: #999; /* Example gray color */
-       width: 32px;
-       height: 32px;
-       stroke-width: 1.5;
-  }
-  .icon-wrapper.mobile svg{
-      /* Adjust specific icon styles if needed */
-       height: 48px; /* Phone icon in design looks simpler/outline */
-       width: 40px;
-        opacity: 0.4;
-  }
-    .icon-wrapper.pin svg{
-      /* Adjust specific icon styles if needed */
-        height: 48px;
-         width: 40px;
-         opacity: 0.4;
+    min-width: 40px; /* Fixed width for icon container to align text */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 2px;
   }
 
+  .icon-wrapper svg {
+    color: #999; /* Example gray color */
+    width: 32px;
+    height: 32px;
+    stroke-width: 1.5;
+  }
+  .icon-wrapper.mobile svg {
+    /* Adjust specific icon styles if needed */
+    height: 48px; /* Phone icon in design looks simpler/outline */
+    width: 40px;
+    opacity: 0.4;
+  }
+  .icon-wrapper.pin svg {
+    /* Adjust specific icon styles if needed */
+    height: 48px;
+    width: 40px;
+    opacity: 0.4;
+  }
 
   .detail-text {
     display: flex;
@@ -187,12 +217,18 @@ import { Icon } from "astro-icon/components";
   }
 
   .social-icon {
-      /* Base styles handled by global styles or reset here if needed */
-      color: #3b5998; /* Default for facebook-ish */
+    /* Base styles handled by global styles or reset here if needed */
+    color: #3b5998; /* Default for facebook-ish */
   }
-    .social-icon.facebook { color: #3b5998; }
-    .social-icon.instagram { color: #8a3ab9; /* approx gradient fallback */ }
-    .social-icon.whatsapp { color: #25d366; }
+  .social-icon.facebook {
+    color: #3b5998;
+  }
+  .social-icon.instagram {
+    color: #8a3ab9; /* approx gradient fallback */
+  }
+  .social-icon.whatsapp {
+    color: #25d366;
+  }
 
   /* Right Column - Form */
   .contact-form-wrapper {
@@ -206,7 +242,8 @@ import { Icon } from "astro-icon/components";
     gap: 1.5rem;
   }
 
-  input, textarea {
+  input,
+  textarea {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #777;
@@ -217,13 +254,14 @@ import { Icon } from "astro-icon/components";
     outline: none;
     font-family: inherit;
   }
-  
+
   textarea {
-      border-radius: 20px; /* Less rounded for textarea usually, but image shows rounded corners */
-      resize: vertical;
+    border-radius: 20px; /* Less rounded for textarea usually, but image shows rounded corners */
+    resize: vertical;
   }
 
-  input::placeholder, textarea::placeholder {
+  input::placeholder,
+  textarea::placeholder {
     color: #888;
   }
 
@@ -249,9 +287,9 @@ import { Icon } from "astro-icon/components";
       flex-direction: column;
       gap: 2rem;
     }
-    
+
     .contact-form-wrapper {
-        padding-top: 0;
+      padding-top: 0;
     }
   }
 </style>

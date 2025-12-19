@@ -11,7 +11,7 @@ export function getStaticPaths() {
     const { id, relacionados, ...rest } = p;
 
     const productosRelacionados = productos.filter((p) =>
-      relacionados.includes(p.id)
+      relacionados.includes(p.id),
     );
 
     return {
@@ -31,7 +31,7 @@ const {
   description,
   productosRelacionados: relacionados,
 } = Astro.props;
-console.log(categories)
+console.log(categories);
 ---
 
 <Layout
@@ -39,57 +39,52 @@ console.log(categories)
   description={description}
   pageImage={img[0]}
 >
-<section class="productContainer">
-
-  <!-- BREADCRUMB -->
-  <div class="breadcrumb">
-    <a href="/">{categories}</a> /
-    <a href="/">Accesorios</a> /
-    <span>Gorros</span>
-  </div>
-
-  <div class="product_layout">
-
-    <!-- LEFT IMAGE SECTION -->
-    <div class="gallery">
-      <img class="mainImg" src={img[0]} alt={name} />
-
-      <div class="thumbs">
-        {img.map(i => (
-          <img src={i} alt="" class="thumb"/>
-        ))}
-      </div>
+  <section class="productContainer">
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      <a href="/">{categories}</a> /
+      <a href="/">Accesorios</a> /
+      <span>Gorros</span>
     </div>
 
-    <!-- RIGHT INFO -->
-    <div class="infoBox">
-      <span class="stock">En Stock</span>
-      <h1 class="name">{name}</h1>
+    <div class="product_layout">
+      <!-- LEFT IMAGE SECTION -->
+      <div class="gallery">
+        <img class="mainImg" src={img[0]} alt={name} />
 
-      <div class="meta">
-        <p><strong>ID:</strong> {id}</p>
-        <p><strong>Marca:</strong> {categories[0]}</p>
-      </div>
-      <strong>Descripción del Producto:</strong>
-      <p class="description"> {description}</p>
-      <strong>Talle:</strong>
-      <div class="sizes">
-      
-        <button class="size">S</button>
-        <button class="size">M</button>
-        <button class="size">L</button>
-        <button class="size">XL</button>
+        <div class="thumbs">
+          {img.map((i) => <img src={i} alt="" class="thumb" />)}
+        </div>
       </div>
 
-      <div class="priceRow">
-        <span class="price">${price}</span>
-        <NumberInput 
-        id="cartQty"
-        name="pasajeros" 
-        initialValue={2} 
-        min={1} 
-        max={10} 
-        />
+      <!-- RIGHT INFO -->
+      <div class="infoBox">
+        <span class="stock">En Stock</span>
+        <h1 class="name">{name}</h1>
+
+        <div class="meta">
+          <p><strong>ID:</strong> {id}</p>
+          <p><strong>Marca:</strong> {categories[0]}</p>
+        </div>
+        <strong>Descripción del Producto:</strong>
+        <p class="description">{description}</p>
+        <strong>Talle:</strong>
+        <div class="sizes">
+          <button class="size">S</button>
+          <button class="size">M</button>
+          <button class="size">L</button>
+          <button class="size">XL</button>
+        </div>
+
+        <div class="priceRow">
+          <span class="price">${price}</span>
+          <NumberInput
+            id="cartQty"
+            name="pasajeros"
+            initialValue={2}
+            min={1}
+            max={10}
+          />
           <button
             type="button"
             id="addToCartBtn"
@@ -98,207 +93,207 @@ console.log(categories)
           >
             Comprar
           </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- RELATED PRODUCTS -->
- 
-  {relacionados && relacionados.length > 0 && (
-    <div class="related">
-      <h2>Productos Relacionados:</h2>
-  
-      <div class="relatedList">
-        {relacionados.map((prod) => (
-          <div class="card">
-            <div class="cardImg">
-              <img  class="cardImg" src={prod.img[0]} alt={prod.name} />
-            </div>
-            <span class="cardTitle">{prod.name}</span>
-            <span class="cardPrice">${prod.price}</span>
-            <button class="cardBtn">Ver Producto</button>
+    <!-- RELATED PRODUCTS -->
+
+    {
+      relacionados && relacionados.length > 0 && (
+        <div class="related">
+          <h2>Productos Relacionados:</h2>
+
+          <div class="relatedList">
+            {relacionados.map((prod) => (
+              <div class="card">
+                <div class="cardImg">
+                  <img class="cardImg" src={prod.img[0]} alt={prod.name} />
+                </div>
+                <span class="cardTitle">{prod.name}</span>
+                <span class="cardPrice">${prod.price}</span>
+                <button class="cardBtn">Ver Producto</button>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-  )}
-</section>
-
+        </div>
+      )
+    }
+  </section>
 </Layout>
 
 <style>
-.productContainer {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 1rem;
-}
+  .productContainer {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 1rem;
+  }
 
-/**** Breadcrumb *****/
-.breadcrumb {
-  font-size: 22px;
-  margin-bottom: 20px;
-  font-weight: bold;
-}
-.breadcrumb a {
-  text-decoration: none;
-  color: #555;
-}
+  /**** Breadcrumb *****/
+  .breadcrumb {
+    font-size: 22px;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  .breadcrumb a {
+    text-decoration: none;
+    color: #555;
+  }
 
-/**** Layout *****/
-.product_layout {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-  border-top: 1px solid  grey;
-}
+  /**** Layout *****/
+  .product_layout {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    border-top: 1px solid grey;
+  }
 
-/**** Gallery *****/
-.gallery {
-  flex: 2;
-}
-.mainImg {
-  width: 100%;
-  border-radius: 12px;
-  object-fit: contain;
-  background: #fff;
-  height: 400px;
-}
-.thumbs {
-  display: flex;
-  gap: 5px;
-  margin-top: 10px;
-}
-.thumb {
-  width: 70px;
-  height: 70px;
-  border-radius: 8px;
-  object-fit: cover;
-  cursor: pointer;
-  background: white;
-  box-shadow: 0 2px 4px #aaa;
-}
+  /**** Gallery *****/
+  .gallery {
+    flex: 2;
+  }
+  .mainImg {
+    width: 100%;
+    border-radius: 12px;
+    object-fit: contain;
+    background: #fff;
+    height: 400px;
+  }
+  .thumbs {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  .thumb {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    object-fit: cover;
+    cursor: pointer;
+    background: white;
+    box-shadow: 0 2px 4px #aaa;
+  }
 
-/**** Info box *****/
-.infoBox {
-  flex: 1;
-  padding: 18px;
-}
-.stock {
-  background: #53b467;
-  padding: 4px 10px;
-  color: white;
-  border-radius: 6px;
-  font-size: 14px;
-}
-.name {
-  margin: 10px 0;
-  font-size: 22px;
-  font-weight: bold;
-}
+  /**** Info box *****/
+  .infoBox {
+    flex: 1;
+    padding: 18px;
+  }
+  .stock {
+    background: #53b467;
+    padding: 4px 10px;
+    color: white;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .name {
+    margin: 10px 0;
+    font-size: 22px;
+    font-weight: bold;
+  }
 
-.meta p {
-  margin: 4px 0;
-  font-size: 14px;
-}
+  .meta p {
+    margin: 4px 0;
+    font-size: 14px;
+  }
 
-.description {
-  margin: 10px 0;
-}
+  .description {
+    margin: 10px 0;
+  }
 
-/**** Sizes *****/
-.sizes {
-  margin: 10px 0;
-}
-.size {
-  background: white;
-  border: 1px solid #aaa;
-  padding: 0 0;
-  cursor: pointer;
-  font-size: 32px;
-  width: 50px;
-  margin-left: 6px;
-}
+  /**** Sizes *****/
+  .sizes {
+    margin: 10px 0;
+  }
+  .size {
+    background: white;
+    border: 1px solid #aaa;
+    padding: 0 0;
+    cursor: pointer;
+    font-size: 20px;
+    width: 40px;
+    margin-left: 6px;
+  }
 
-/**** Price & Actions *****/
-.priceRow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 12px;
-}
+  /**** Price & Actions *****/
+  .priceRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+  }
 
-.price {
-  font-size: 26px;
-  font-weight: bold;
-}
+  .price {
+    font-size: 26px;
+    font-weight: bold;
+  }
 
-.qty {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.qty input {
-  width: 40px;
-  text-align: center;
-}
-.qtyBtn {
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-}
+  .qty {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .qty input {
+    width: 40px;
+    text-align: center;
+  }
+  .qtyBtn {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+  }
 
-.buyBtn {
-  background: var(--orange-color);
-  padding: 10px 10px;
-  border-radius: 8px;
+  .buyBtn {
+    background: var(--orange-color);
+    padding: 10px 10px;
+    border-radius: 8px;
 
-  font-size: 1.4rem;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-}
+    font-size: 1.4rem;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+  }
 
-/**** Related Products *****/
-.related {
-  margin-top: 40px;
-}
+  /**** Related Products *****/
+  .related {
+    margin-top: 40px;
+  }
 
-.relatedList {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-}
+  .relatedList {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+  }
 
-.card {
-  min-width: 180px;
-  background: white;
-  padding: 12px;
-  border-radius: 12px;
-  text-align: center;
-}
-.cardImg {
-  height: 150px;
-  border-radius: 8px;
-}
-.cardTitle {
-  font-size: 15px;
-  margin-top: 10px;
-}
-.cardPrice {
-  font-weight: bold;
-  display: block;
-  margin-top: 6px;
-}
-.cardBtn {
-  background: black;
-  color: white;
-  padding: 6px 14px;
-  border-radius: 6px;
-  margin-top: 8px;
-  cursor: pointer;
-}
-
+  .card {
+    min-width: 180px;
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .cardImg {
+    height: 150px;
+    border-radius: 8px;
+  }
+  .cardTitle {
+    font-size: 15px;
+    margin-top: 10px;
+  }
+  .cardPrice {
+    font-weight: bold;
+    display: block;
+    margin-top: 6px;
+  }
+  .cardBtn {
+    background: black;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin-top: 8px;
+    cursor: pointer;
+  }
 </style>
 
 <script>
@@ -319,7 +314,7 @@ console.log(categories)
       name.innerText,
       price.innerText.replace("$", "").replace(",", "."),
       qty,
-      img.src
+      img.src,
     );
 
     // llama a una funcion declarada en header que actualiza el contador del carrito
