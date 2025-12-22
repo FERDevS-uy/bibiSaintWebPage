@@ -11,7 +11,7 @@ export function getStaticPaths() {
     const { id, relacionados, ...rest } = p;
 
     const productosRelacionados = productos.filter((p) =>
-      relacionados.includes(p.id),
+      relacionados.includes(p.id)
     );
 
     return {
@@ -31,7 +31,6 @@ const {
   description,
   productosRelacionados: relacionados,
 } = Astro.props;
-console.log(categories);
 ---
 
 <Layout
@@ -314,7 +313,7 @@ console.log(categories);
       name.innerText,
       price.innerText.replace("$", "").replace(",", "."),
       qty,
-      img.src,
+      img.src
     );
 
     // llama a una funcion declarada en header que actualiza el contador del carrito
