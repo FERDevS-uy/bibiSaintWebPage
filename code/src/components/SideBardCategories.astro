@@ -1,0 +1,81 @@
+---
+import type Product from "src/types/product";
+import { capitalize } from "@utils/capitalizeString";
+import getColors from "@utils/getColors";
+import styles from "../styles/components/SideBarCategories.module.css";
+
+interface Props {
+  categoryFather: string;
+  arrayCategorys: string[];
+  products?: Product[];
+}
+const { categoryFather, arrayCategorys, products } = Astro.props;
+
+
+const productColors = products?.flatMap(p => getColors(p.name));
+const uniqueColors = [...new Set(productColors)];
+---
+
+<section class={styles.sideBarCategories}>
+  <div class={styles.subcategories}>
+    <strong>Inicio - {categoryFather}</strong>
+    <ul>
+      {
+        arrayCategorys.map((subcat) => (
+          <li>
+            <a
+              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat}`}
+            >
+              {subcat}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <strong>Filtrar por</strong>
+  <div class={styles.filter} data-filter-section>
+    <strong>Color</strong>
+    <ul>
+      {uniqueColors.map(color => (
+        <li>
+          <label>
+            <input type="checkbox" data-color={color} /> {capitalize(color)}
+          </label>
+        </li>
+      ))}
+    </ul>
+  </div>  
+  <div class={styles.subcategories}>
+    <strong>Marca</strong>
+    <ul>
+      {
+        arrayCategorys.map((subcat) => (
+          <li>
+            <a
+              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat}`}
+            >
+              {subcat}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <div class={styles.subcategories}>
+    <strong>Modelo</strong>
+    <ul>
+      {
+        arrayCategorys.map((subcat) => (
+          <li>
+            <a
+              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat}`}
+            >
+              {subcat}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

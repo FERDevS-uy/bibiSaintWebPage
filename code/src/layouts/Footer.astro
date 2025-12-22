@@ -3,49 +3,49 @@ import { Icon } from "astro-icon/components";
 ---
 
 <footer class="footer">
-  <h2>Contáctanos</h2>
-  <p>
-    Para consultas, pedidos o más información, contáctanos a través de nuestras
-    redes sociales o WhatsApp.
-  </p>
-  <ul>
-    <li>
-      <a
-        href="https://instagram.com/bibisventasonline"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Icon name="instagram" width="24" height="24" />
-      </a>
+  <div class="footerContainer">
+    <ul>
       <li>
         <a
-          href="https://facebook.com/bibicartanumerologica"
+          href="https://instagram.com/bibisventasonline"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Icon name="facebook" width="24" height="24" />
+          <Icon name="instagram" width="24" height="24" />
         </a>
         <li>
           <a
-            href="https://wa.me/+59891361706"
+            href="https://facebook.com/bibicartanumerologica"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Icon name="whatsapp" width="24" height="24" />
+            <Icon name="facebook" width="24" height="24" />
           </a>
+          <li>
+            <a
+              href="https://wa.me/+59891361706"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="whatsapp" width="24" height="24" />
+            </a>
+          </li>
         </li>
       </li>
-    </li>
-  </ul>
+    </ul>
+  </div>
 </footer>
 
 <style>
   .footer {
-    background-color: var(--principal-background-color);
+    --background-color: #c11010;
+    --text-color: #fff;
+
+    background-color: var(--background-color);
     padding: 3rem 10px;
     text-align: center;
     font-size: 0.9rem;
-    color: #6c757d;
+    color: var(--text-color);
   }
   .footer h2 {
     margin: 0;

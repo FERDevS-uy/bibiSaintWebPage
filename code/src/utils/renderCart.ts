@@ -13,7 +13,7 @@ export default function renderCart() {
   const totalSpan = document.getElementById("total") as HTMLElement;
   const summary = document.getElementById("cartSummary") as HTMLElement;
   const empty = document.getElementById("cartEmpty") as HTMLElement;
-  const productTable = document.querySelector(".cartTable") as HTMLElement;
+  const productTable = document.getElementById("cartTable") as HTMLElement;
   const copyBtn = document.getElementById("copyBtn") as HTMLElement
   const waBtn = document.getElementById("waBtn") as HTMLLinkElement;
   const clearBtn = document.getElementById("clearBtn") as HTMLButtonElement

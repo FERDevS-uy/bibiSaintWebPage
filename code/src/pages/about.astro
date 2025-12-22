@@ -1,101 +1,295 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { config } from "../config";
+import { Icon } from "astro-icon/components";
 ---
 
 <Layout pageTitle={`${config.pageTitle} - Sobre nosotros`}>
-  <section class="about">
-    <h2>Sobre nosotros</h2>
+  <section class="contact-container">
+    <div class="contact-info">
+      <h2>Contacto</h2>
+      <hr />
 
-    <p>
-      ¡Bienvenido a <strong>Bibi Saint</strong>! Descubre una tienda online
-      diferente, donde encontrarás productos para el hogar, vestimenta,
-      accesorios y mucho más. Nos apasiona brindarte calidad, novedades y
-      soluciones para tu día a día.
-    </p>
-    <p>
-      ¿Buscas bienestar? Ofrecemos <strong
-        >servicios holísticos personalizados</strong
-      > para tu crecimiento personal. <a
-        href="https://wa.me/59891361706?text=Hola,%20quiero%20consultar%20por%20un%20servicio%20holístico"
-        target="_blank"
-        rel="noopener"
-        class="waLink">¡Consulta precios por WhatsApp!</a
-      >
-    </p>
-    <p>
-      Síguenos en redes sociales para enterarte de todas las novedades y
-      promociones.<br />
-      <span class="aboutThanks">¡Gracias por confiar en nosotros!</span>
-    </p>
+      <p class="intro-text">
+        Te invitamos a completar el formulario de contacto si tienes alguna
+        duda, consulta o buscas algún Producto o Servicio particular, a la
+        brevedad nos pondremos en contacto.
+      </p>
+
+      <div class="services-list">
+        <strong>Comercializamos los siguientes servicios:</strong>
+        <ul>
+          <li>- De Codificación Biológica por 80 dólares</li>
+          <li>- Carta Numerológica por 80 dólares.</li>
+        </ul>
+      </div>
+
+      <p class="cta-text">
+        No dudes en contactarnos para más detalles o para realizar tu consulta
+      </p>
+
+      <div class="contact-details">
+        <div class="detail-item">
+          <div class="icon-wrapper mobile">
+            <Icon name="phone" width="24" height="24" />
+          </div>
+          <div class="detail-text">
+            <span>Telefono: +598 91 361 706</span>
+            <span>Mail: bibisventasyserviciosonline@gmail.com</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="icon-wrapper pin">
+            <Icon name="location" width="24" height="24" />
+          </div>
+          <div class="detail-text">
+            <span
+              >Dirección: Dr. Baltasar Brum 1154, 60000 Paysandú, Departamento
+              de Paysandú, Uruguay</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <hr class="separator" />
+
+      <div class="social-links">
+        <a
+          href="https://facebook.com/bibicartanumerologica"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon
+            name="facebook"
+            width="32"
+            height="32"
+            class="social-icon facebook"
+          />
+        </a>
+        <a
+          href="https://instagram.com/bibisventasonline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon
+            name="instagram"
+            width="32"
+            height="32"
+            class="social-icon instagram"
+          />
+        </a>
+        <a
+          href="https://wa.me/+59891361706"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon
+            name="whatsapp"
+            width="32"
+            height="32"
+            class="social-icon whatsapp"
+          />
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form-wrapper">
+      <form class="contact-form">
+        <input type="text" placeholder="Nombre Completo" required />
+        <input type="tel" placeholder="Numero de Teléfono" required />
+        <input type="text" placeholder="Asunto" required />
+        <textarea placeholder="Tu Mensaje" rows="8" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
   </section>
-  <style>
-    .about {
-      max-width: 650px;
-      margin: 40px auto;
-      background: linear-gradient(120deg, #f8f8f8 70%, #d5c4a4 100%);
-      border-radius: 18px;
-      box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.13);
-      padding: 36px 28px;
-      color: #232946;
-      font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-      font-size: 1.13em;
-      line-height: 1.7;
-      text-align: center;
-    }
-    .about h2 {
-      font-size: 2.1em;
-      font-weight: 800;
-      margin-bottom: 0.8em;
-      color: #232946;
-      letter-spacing: 1px;
-    }
-    .about p {
-      margin-bottom: 1.3em;
-      font-weight: 500;
-    }
-    .about strong {
-      color: #16a34a;
-      font-weight: 700;
-    }
-    .waLink {
-      color: #fff;
-      background: linear-gradient(90deg, #16a34a 60%, #a7c7e7 100%);
-      font-weight: 600;
-      text-decoration: none;
-      padding: 0.25em 1em;
-      border-radius: 8px;
-      box-shadow: 0 1px 4px #c3aed633;
-      transition:
-        background 0.18s,
-        color 0.18s,
-        transform 0.15s;
-      margin-left: 0.3em;
-      display: inline-block;
-    }
-    .waLink:hover,
-    .waLink:focus {
-      background: linear-gradient(90deg, #a7c7e7 60%, #16a34a 100%);
-      color: #fff;
-      transform: scale(1.05);
-      text-decoration: underline;
-    }
-    .aboutThanks {
-      display: inline-block;
-      margin-top: 0.7em;
-      font-size: 1.15em;
-      font-weight: 700;
-      color: #f7cac9;
-      letter-spacing: 1px;
-    }
-    @media (max-width: 700px) {
-      .about {
-        padding: 18px 8px;
-        font-size: 1em;
-      }
-      .about h2 {
-        font-size: 1.4em;
-      }
-    }
-  </style>
 </Layout>
+
+<style>
+  .contact-container {
+    max-width: 1100px; /* var(--max-width-container) */
+    margin: 3rem auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 4rem;
+    font-family: "Poppins", sans-serif;
+    color: #232946;
+  }
+
+  /* Left Column */
+  .contact-info {
+    flex: 1;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid #e0e0e0;
+    margin-bottom: 2rem;
+  }
+
+  hr.separator {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .intro-text {
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .services-list {
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .services-list strong {
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .services-list ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .cta-text {
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .icon-wrapper {
+    min-width: 40px; /* Fixed width for icon container to align text */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 2px;
+  }
+
+  .icon-wrapper svg {
+    color: #999; /* Example gray color */
+    width: 32px;
+    height: 32px;
+    stroke-width: 1.5;
+  }
+  .icon-wrapper.mobile svg {
+    /* Adjust specific icon styles if needed */
+    height: 48px; /* Phone icon in design looks simpler/outline */
+    width: 40px;
+    opacity: 0.4;
+  }
+  .icon-wrapper.pin svg {
+    /* Adjust specific icon styles if needed */
+    height: 48px;
+    width: 40px;
+    opacity: 0.4;
+  }
+
+  .detail-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-icon {
+    /* Base styles handled by global styles or reset here if needed */
+    color: #3b5998; /* Default for facebook-ish */
+  }
+  .social-icon.facebook {
+    color: #3b5998;
+  }
+  .social-icon.instagram {
+    color: #8a3ab9; /* approx gradient fallback */
+  }
+  .social-icon.whatsapp {
+    color: #25d366;
+  }
+
+  /* Right Column - Form */
+  .contact-form-wrapper {
+    flex: 1;
+    padding-top: 3rem; /* Align with text start approximately */
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #777;
+    border-radius: 25px; /* Pill shape */
+    font-size: 1rem;
+    color: #555;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+  }
+
+  textarea {
+    border-radius: 20px; /* Less rounded for textarea usually, but image shows rounded corners */
+    resize: vertical;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #888;
+  }
+
+  button {
+    background-color: #e86c1a; /* Orange from design approx */
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.3s;
+  }
+
+  button:hover {
+    background-color: #d65a0f;
+  }
+
+  @media (max-width: 768px) {
+    .contact-container {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .contact-form-wrapper {
+      padding-top: 0;
+    }
+  }
+</style>

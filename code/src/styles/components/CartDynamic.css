@@ -1,0 +1,153 @@
+.cartTable td {
+  padding: 14px 8px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+.cartTable td[data-label]::before {
+  color: #888;
+  font-size: 0.93em;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+  content: attr(data-th);
+  display: block;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+#cartList .tdProduct {
+  grid-column: 1 / 4;
+}
+
+.cartTable img {
+  width: 70px;
+  height: auto;
+  border-radius: 4px;
+}
+
+#cartList tr {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+}
+#cartList tr:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
+#cartList .colTitle {
+  color: #555;
+  display: block;
+  font-size: 0.93em;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+#cartList .tdActions {
+  grid-column: 1 / 4;
+}
+#cartList .tdActions div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 20px 8px;
+}
+#cartList .tdActions button {
+  flex: 1 0 2rem;
+
+  cursor: pointer;
+  border: none;
+  background-color: #eee;
+  padding: 5px;
+  border-radius: 10px;
+}
+#cartList .tdActions button:hover {
+  background-color: var(--principal-text-color);
+  color: #fff;
+}
+#cartList .tdActions button svg {
+  height: 30px;
+}
+
+.removeOnce {
+  font-size: 2rem;
+}
+#mailBtn {
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  padding: 12px;
+  margin-top: 1.2em;
+  display: block;
+  width: 100%;
+}
+
+#mailBtn:hover {
+  background: #2563eb;
+}
+
+@media screen and (min-width: 1000px) {
+  #cartList .colTitle.hidden {
+    display: none;
+  }
+
+  #cartList tr {
+    display: table-row;
+  }
+}
+
+/* Dynamic content classes */
+.cartItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.cartTop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cartName {
+  font-weight: 500;
+}
+
+.cartQty {
+  text-align: center;
+}
+
+.iconBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: #444;
+  transition: color 0.2s;
+}
+
+.iconBtn:hover {
+  color: #000;
+}
+
+@media (max-width: 600px) {
+  .cartName {
+     font-family: "Poppins", Arial, sans-serif;
+     width: 100%;
+     display: block;
+     font-size: 1em;
+     word-break: break-word;
+     text-align: left;
+     margin-top: 2px;
+  }
+}

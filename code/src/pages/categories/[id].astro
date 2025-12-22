@@ -1,5 +1,6 @@
 ---
 import ListarProductos from "@components/ListarProductos.astro";
+import SideBardCategories from "@components/SideBardCategories.astro";
 import Layout from "@layouts/Layout.astro";
 import { countCategories } from "@utils/countCategories";
 import { cargarProductos } from "@utils/loadCSV";
@@ -14,22 +15,30 @@ export const getStaticPaths = () => {
     const prods = products.filter((p) =>
       p.categories.some((cat) => cat === c.name)
     );
+    const subCat = products.filter((p) =>
+      p.categories.some((cat) => cat === c.name)
+    ).map((p) => p.subcategories).flat();
     return {
       params: { id: c.name },
-      props: { products: prods },
+      props: { products: prods, subCat: Array.from(new Set(subCat)) },
     };
   });
 };
 
 const { id } = Astro.params;
-const { products } = Astro.props;
+const { products, subCat } = Astro.props;
 
 const CANT_PRODUCTOS = config.postPerPage;
 const totalPages = Math.ceil(products.length / CANT_PRODUCTOS);
 const baseUrl = `${config.base}/categories/${id}`;
 ---
 
-<Layout categorySelected={id} pageTitle={`${config.pageTitle} - ${id}`}>
+<Layout categorySelected={id} pageTitle={`${config.pageTitle} - ${id}`}> 
+  <SideBardCategories
+    categoryFather={id}
+    arrayCategorys={subCat}
+    products={products}
+  />
   <ListarProductos
     products={products}
     totalPages={totalPages}
