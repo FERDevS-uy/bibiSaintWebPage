@@ -2,8 +2,9 @@
 import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
 import { config } from "src/config";
 import type CategoryList from "src/types/categoryList";
+import { Image } from "astro:assets";
 
-const { default: logoSVG } = await import("@assets/logoFD.svg?raw");
+import logo from "@assets/logo_blanco.png";
 const { default: cartSVG } = await import("@assets/cart.svg?raw");
 const { default: downSVG } = await import("@assets/down.svg?raw");
 
@@ -19,7 +20,7 @@ const { categories, categorySelected } = Astro.props;
     <div class="headerContainer">
       <div class="logoContainer">
         <a href={config.base}>
-          <Fragment set:html={logoSVG} />
+          <Image src={logo} alt="logo blanco" />
         </a>
       </div>
 
@@ -104,7 +105,7 @@ const { categories, categorySelected } = Astro.props;
   import DOMPurify from "dompurify";
   import { config } from "src/config";
   const searchContainerForm = document.querySelector(
-    "form.searchContainer",
+    "form.searchContainer"
   ) as HTMLFormElement;
 
   searchContainerForm.addEventListener("submit", (e) => {
@@ -203,7 +204,7 @@ const { categories, categorySelected } = Astro.props;
               `<li class="searchResultItem" onclick="window.location.href='/template-static-ecommerce/producto/${p.id}'">
     <span class="searchResultName">${p.name}</span>
     <span class="searchResultPrice">$${p.price || p.precio || ""}</span>
-  </li>`,
+  </li>`
           )
           .join("");
       }
@@ -236,14 +237,13 @@ const { categories, categorySelected } = Astro.props;
 
 <style>
   header {
-    --background-color: #c11010;
-    --line-color: #f0b13e;
-    --text-color: #fff;
-    --menu-size: 3rem;
-    --header-icon-size: 10rem;
-
     margin-bottom: 0.5rem;
-    background-color: var(--background-color);
+    background: #c11010;
+    background: linear-gradient(
+      0deg,
+      var(--p-b-color) 0%,
+      var(--s-b-color) 100%
+    );
   }
 
   .headerContainer {
@@ -403,9 +403,9 @@ const { categories, categorySelected } = Astro.props;
 </style>
 
 <style is:global>
-  header .logoContainer svg {
+  header .logoContainer img {
     color: var(--text-color);
-    width: var(--header-icon-size);
+    width: auto;
     height: 100%;
   }
 

@@ -1,36 +1,89 @@
 ---
-import { Icon } from "astro-icon/components";
+import type CategoryList from "src/types/categoryList";
+import { Image } from "astro:assets";
+
+import logo from "@assets/logo_blanco.png";
+const { default: logoSVG } = await import("@assets/logoFD.svg?raw");
+const { default: facebookSVG } = await import("@assets/facebook.svg?raw");
+const { default: instagramSVG } = await import("@assets/instagram.svg?raw");
+const { default: whatsappSVG } = await import("@assets/whatsapp.svg?raw");
+const { default: mercadoPagoSVG } = await import("@assets/mercadoPago.svg?raw");
+const { default: bankSVG } = await import("@assets/bank.svg?raw");
+
+interface Props {
+  categories: CategoryList[];
+}
+const { categories } = Astro.props;
 ---
 
 <footer class="footer">
   <div class="footerContainer">
-    <ul>
+    <div class="col1">
+      <a href={import.meta.env.BASE_URL}>
+        <Image src={logo} alt="logo blanco" />
+      </a>
+      <p>Bibi's - Donde cada elección tiene alma</p>
+    </div>
+    <ul class="col2">
+      <h3>CATEGORÍAS</h3>
+      <ul>
+        {
+          categories &&
+            categories.length > 0 &&
+            categories
+              .map((cat) => (
+                <li>
+                  <a
+                    href={`${import.meta.env.BASE_URL}/categories/${cat.name}`}
+                  >
+                    {cat.name}
+                  </a>
+                </li>
+              ))
+              .slice(0, 5)
+        }
+      </ul>
+    </ul>
+    <ul class="col3">
+      <h3>MEDIOS DE PAGOS</h3>
+      <ul>
+        <li title="Transferencia"><Fragment set:html={bankSVG} /></li>
+        <li title="Mercado Pago"><Fragment set:html={mercadoPagoSVG} /></li>
+      </ul>
+    </ul>
+    <ul class="col4">
+      <h3>CONTACTO</h3>
       <li>
+        <a class="navLink" href={`${import.meta.env.BASE_URL}/about`}
+          >Quienes somos</a
+        >
+      </li>
+      <li title="Instagram">
         <a
           href="https://instagram.com/bibisventasonline"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Icon name="instagram" width="24" height="24" />
+          <Fragment set:html={instagramSVG} />
         </a>
-        <li>
-          <a
-            href="https://facebook.com/bibicartanumerologica"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon name="facebook" width="24" height="24" />
-          </a>
-          <li>
-            <a
-              href="https://wa.me/+59891361706"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon name="whatsapp" width="24" height="24" />
-            </a>
-          </li>
-        </li>
+      </li>
+      <li title="Facebook">
+        <a
+          href="https://facebook.com/bibicartanumerologica"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Fragment set:html={facebookSVG} />
+        </a>
+      </li>
+      <li title="Whatsapp">
+        <a
+          href="https://wa.me/+59891361706"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Fragment set:html={whatsappSVG} />
+        </a>
       </li>
     </ul>
   </div>
@@ -38,66 +91,88 @@ import { Icon } from "astro-icon/components";
 
 <style>
   .footer {
-    --background-color: #c11010;
-    --text-color: #fff;
-
-    background-color: var(--background-color);
+    background: #c11010;
+    background: linear-gradient(
+      0deg,
+      var(--p-b-color) 0%,
+      var(--s-b-color) 100%
+    );
     padding: 3rem 10px;
-    text-align: center;
     font-size: 0.9rem;
     color: var(--text-color);
   }
-  .footer h2 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #343a40;
+
+  .footer h3 {
+    text-wrap: nowrap;
+    margin-bottom: 0.5rem;
   }
-  .footer a {
-    color: #007bff;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition:
-      background 0.2s,
-      transform 0.2s;
-    width: 40px;
-    height: 40px;
-  }
-  .footer a:hover {
-    text-decoration: none;
-    background: #f7cac9;
-    transform: scale(1.18) rotate(-8deg);
-    box-shadow: 0 2px 12px #c3aed6aa;
-  }
-  .footer a[href*="instagram"]:hover {
-    background: linear-gradient(135deg, #f7cac9 40%, #c3aed6 100%);
-  }
-  .footer a[href*="facebook"]:hover {
-    background: linear-gradient(135deg, #a7c7e7 40%, #fff5ba 100%);
-  }
-  .footer a[href*="wa.me"]:hover {
-    background: linear-gradient(135deg, #b7eac5 40%, #fff5ba 100%);
-  }
+
   .footer ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0;
   }
-  .footer ul li {
-    display: inline;
-    margin: 0 10px;
+
+  .footerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem 5rem;
+    flex-wrap: wrap;
   }
-  .footer p {
-    margin: 10px 0;
+
+  .footerContainer > * {
+    width: 200px;
+    min-width: 100px;
+    padding-inline: 10px;
   }
+
+  .footerContainer a {
+    color: #fff;
+    text-decoration: none;
+    text-wrap: nowrap;
+  }
+
+  .col1 img {
+    width: 100%;
+    height: auto;
+  }
+  .col1 p {
+    text-wrap: auto;
+  }
+
+  .col2 li {
+    margin-bottom: 0.5rem;
+  }
+
+  a:hover {
+    opacity: 0.7;
+  }
+
+  .col3 ul {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .col4 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: flex-start;
+    align-content: flex-start;
+  }
+  .col4 li:first-of-type {
+    width: 100%;
+    /* text-align: start; */
+  }
+
+  :global(.col3 svg),
+  :global(.col4 svg) {
+    width: 30px;
+    height: 30px;
+  }
+
   @media (max-width: 600px) {
-    .footer {
-      font-size: 0.8rem;
-    }
-    .footer h2 {
-      font-size: 1rem;
-    }
   }
 </style>
