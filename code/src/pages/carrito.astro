@@ -6,17 +6,21 @@ import "../styles/components/CartDynamic.css";
 
 <Layout>
   <section class={styles.cartContainer}>
-    <h1>Carrito de Compras</h1>
+    <div class={styles.cartHeader}>
+      <h1>Mi Compra</h1>
+      <div class={styles.headerSeparator}></div>
+      <p>Productos en su carrito</p>
+    </div>
 
     <!-- Tabla de productos -->
     <table id="cartTable" class={`${styles.cartTable} hidden`}>
       <thead>
         <tr>
-          <th>Item</th>
-          <th>Precio</th>
-          <th>Cant.</th>
-          <th>Subtotal</th>
           <th></th>
+          <th>Producto</th>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
         </tr>
       </thead>
       <tbody id="cartList"></tbody>
@@ -24,19 +28,35 @@ import "../styles/components/CartDynamic.css";
 
     <!-- Resumen -->
     <div id="cartSummary" class={`${styles.cartSummary} hidden`}>
-      <h2>Resumen</h2>
-      <div class={styles.cartSummaryRow}>
-        <span>Subtotal</span>
-        <span id="subtotal">$0</span>
-      </div>
+      <h2>Resumen de su compra</h2>
+
+      <!-- Subtotal removed as requested -->
+
+      <button id="clearBtn" class={`${styles.cartBtn} ${styles.danger}`}
+        >Vaciar Carrito</button
+      >
+      <a href="/" class={`${styles.cartBtn} ${styles.secondary}`}
+        >Seguir Comprando</a
+      >
+
       <div class={styles.cartSummaryTotal}>
-        <span>Total del pedido</span>
+        <span>Total:</span>
         <span id="total">$0</span>
       </div>
 
-      <button id="copyBtn" class={styles.cartBtn}>Copiar pedido</button>
-      <a id="waBtn" class={styles.cartBtn} target="_blank">Enviar por WhatsApp</a>
-      <button id="clearBtn" class={`${styles.cartBtn} ${styles.danger}`}>Vaciar carrito</button>
+      <p class={styles.whatsAppHint}>
+        Finalize su compra enviando el pedido por WhatsApp
+      </p>
+
+      <a
+        id="waBtn"
+        class={`${styles.cartBtn} ${styles.whatsapp}`}
+        target="_blank"
+      >
+        <i class="fa-brands fa-whatsapp"></i> Finalizar Compra
+      </a>
+      <!-- Hidden copy button if needed for logic, but removing from UI -->
+      <button id="copyBtn" style="display:none;"></button>
     </div>
 
     <!-- Carrito vacío -->
@@ -46,12 +66,12 @@ import "../styles/components/CartDynamic.css";
 
 <script>
   import { initCartPage } from "../scripts/pages/carrito";
-  
+
   // Initialize on load
   initCartPage();
-  
+
   // Re-initialize for View Transitions
-  document.addEventListener('astro:page-load', () => {
+  document.addEventListener("astro:page-load", () => {
     initCartPage();
   });
 </script>
