@@ -1,235 +1,278 @@
 .cartContainer {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 40px auto;
   padding: 20px;
-  background: #fff;
   font-family: "Poppins", Arial, sans-serif;
   color: #222;
-
   display: grid;
-  gap: 1rem 2rem;
+  gap: 2rem;
 }
 
-.cartContainer h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  text-align: left;
+/* Header */
+.cartHeader h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  color: #000;
+  text-transform: capitalize;
 }
 
+.headerSeparator {
+  width: 100px;
+  height: 8px;
+  background-color: #d32f2f; /* Red from image */
+  margin: 10px 0;
+}
+
+.cartHeader p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Table */
 .cartTable {
+  width: 100%;
   border-collapse: collapse;
-  margin-bottom: 2em;
 }
 
 .cartTable th {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 15px;
+  border-bottom: 2px solid #d32f2f; /* Red underline for headers */
+  color: #000;
+}
+
+.cartTable td {
+  padding: 20px 10px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee;
+}
+
+/* Table Content - Scoped via :global because renderCart injects HTML */
+.cartTable :global(.tdImg img) {
+  width: 80px; /* Slightly larger as requested */
+  height: 80px; /* Fixed height to prevent row stretching */
+  object-fit: contain; /* compressed/contained within the box */
+  display: block;
+  margin: 0 auto;
+}
+
+.cartTable :global(.tdDesc) {
   text-align: left;
+  max-width: 250px;
+}
+
+.cartTable :global(.cartName) {
   font-weight: 600;
-  font-size: 0.95rem;
-  padding: 12px 8px;
-  border-bottom: 2px solid #eee;
-  color: #555;
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
-.cartTable thead {
-  display: none;
+/* Quantity Controls */
+.cartTable :global(.qtyControls) {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #999;
+  border-radius: 50px;
+  overflow: hidden;
+  height: 40px;
+  width: fit-content;
+  margin: 0 auto; /* Center in cell */
 }
 
-
-
-
-
-.cartBottom {
+.cartTable :global(.qtyBtn) {
+  background: none;
+  border: none;
+  width: 40px;
+  height: 100%;
+  font-size: 1.5rem;
+  font-weight: 400;
+  cursor: pointer;
+  color: #000;
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  font-size: 0.85rem;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4px;
+  transition: background-color 0.2s;
 }
 
-
-
-.cartDetails {
-  font-size: 0.85rem;
-  color: #666;
+.cartTable :global(.qtyBtn:hover) {
+  background-color: #f5f5f5;
 }
 
-
-
-
-
-.cartSummary {
-  background: #f7f7f7;
-  padding: 18px;
-  border-radius: 6px;
-  /* margin-left: auto; */
+.cartTable :global(.qtyValue) {
+  padding: 0 10px;
+  font-weight: 400;
+  font-size: 1.5rem;
+  min-width: 30px;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid #999;
+  border-right: 1px solid #999;
+  line-height: 1;
 }
 
-.cartSummary h2 {
-  font-size: 1.2rem;
+.cartTable :global(.removeBtn) {
+  background: none;
+  border: none; /* Removed border */
+  font-size: 1.5rem; /* Larger X */
+  color: #000;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.cartTable :global(.removeBtn:hover) {
+  color: #d32f2f; /* Red on hover */
+}
+
+.cartTable :global(.price) {
   font-weight: 600;
-  margin-bottom: 1em;
+  font-size: 1.1rem;
   color: #333;
 }
 
-.cartSummaryRow {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.7em;
-  font-size: 0.95rem;
+/* Summary - Right column on desktop */
+.cartSummary {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  height: fit-content;
+}
+
+.cartSummary h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #222;
 }
 
 .cartSummaryTotal {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-weight: 700;
-  font-size: 1.1rem;
-  margin-top: 1em;
-  border-top: 1px solid #ddd;
-  padding-top: 0.8em;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
 }
 
+.whatsAppHint {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Buttons */
 .cartBtn {
   display: block;
   width: 100%;
-  margin-top: 1.2em;
-  padding: 12px;
-  background: #000;
-  color: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
   border: none;
-  border-radius: 4px;
-  font-weight: 700;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s;
   text-align: center;
   text-decoration: none;
-}
-
-.cartBtn:hover {
-  background: #333;
+  transition: all 0.2s;
+  color: white;
 }
 
 .cartBtn.danger {
-  background: #ef4444;
+  background-color: #c0392b; /* Red */
 }
+.cartBtn.danger:hover { background-color: #a93226; }
 
-.cartBtn.danger:hover {
-  background: #dc2626;
+.cartBtn.secondary {
+  background-color: #e67e22; /* Orange */
 }
+.cartBtn.secondary:hover { background-color: #d35400; }
+
+.cartBtn.whatsapp {
+  background-color: #4CAF50; /* Green */
+  font-size: 1.1rem;
+}
+.cartBtn.whatsapp:hover { background-color: #45a049; }
 
 .cartEmpty {
-  color: #555;
-  font-size: 1.1em;
-  margin: 2em 0;
-  font-weight: 600;
   text-align: center;
+  grid-column: 1 / -1;
+  font-size: 1.2rem;
+  padding: 50px;
+  color: #777;
 }
 
+/* Responsive */
 @media screen and (min-width: 1000px) {
   .cartContainer {
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: 1fr 350px;
+  }
+  
+  .cartHeader {
+    grid-column: 1 / -1;
   }
 
   .cartSummary {
     grid-column: 2;
     grid-row: 2;
   }
-
-  .cartContainer h1 {
-    grid-column: 1 / 3;
-  }
-
-  .cartTable thead {
-    display: table-header-group;
-  }
-
-  .cartEmpty {
-    grid-column: 1 / 3;
-  }
 }
 
-@media (max-width: 600px) {
-  .cartTable {
-    border-collapse: separate;
-    border-spacing: 0 16px;
+@media (max-width: 768px) {
+  .cartTable thead {
+    display: none; 
   }
 
   .cartTable tr {
-    display: block;
-    margin-bottom: 18px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px #e0e0e0;
-    background: #fafbfc;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 8px;
+    position: relative;
+  }
+  
+  .cartTable td {
+    border: none;
+    padding: 5px;
   }
 
-  .cartTable td,
-  .cartTable th {
-    border-bottom: none;
-    padding: 0;
-    background: none;
+  .tdRemove {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+  }
+
+  .tdImg {
+    width: 100px;
+  }
+
+  .tdDesc {
+    width: calc(100% - 110px);
     text-align: left;
   }
 
-  .cartTable td:first-child {
-    display: block;
-    width: 100%;
-    background: #fafbfc;
-    border-radius: 10px 10px 0 0;
-    padding: 14px 10px 14px 10px;
-    box-shadow: none;
-  }
-
-  .cartTable .cartRowData {
-    display: flex;
-    flex-direction: row;
-    background: #fff;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 2px 8px #e0e0e0;
-    border-top: 1px solid #f0f0f0;
-    margin-top: -8px;
-    padding: 10px 0;
-    gap: 0;
-  }
-
-  .cartTable .cartRowData td {
-    flex: 1 1 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 0;
-    background: none;
-    border-radius: 0;
-    box-shadow: none;
-    border-top: none;
-    margin: 0;
-    font-size: 0.97em;
-  }
-
-  .cartTable img {
-    width: 60px;
-    min-width: 60px;
-    margin-bottom: 4px;
-  }
-
-  .cartName {
-    font-family: "Poppins", Arial, sans-serif;
-    width: 100%;
-    display: block;
-    font-size: 1em;
-    word-break: break-word;
-    text-align: left;
-    margin-top: 2px;
+  .tdQty, .tdSubtotal {
+    width: 50%;
+    text-align: center;
   }
 }
-
-/* Global styles for dynamic content */
-/* Since these are used by renderCart which injects HTML, we might need :global if we keep them here.
-   Or we can put them in global.css or similar. 
-   But since user asked modular, let's try to keep them scoped but accessible.
-   For now, I will keep the dynamic styles in a separate global css file or block?
-   The user said "css apply modular".
-   If `renderCart` generates HTML with specific classes, those classes need to be global OR `renderCart` needs to be updated to use the module classes.
-   Updating `renderCart` to use hashed classes is hard because it's a utility function.
-   So for dynamic content from `renderCart`, we should probably use global styles or a clean utility CSS.
-   
-   However, the original file had `<style is:global>` for the renderCart part.
-   I will extract that part to a separate css file `src/styles/components/CartDynamic.css` (not module) and import it.
-*/
