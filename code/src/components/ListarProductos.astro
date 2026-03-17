@@ -3,8 +3,6 @@ import type Product from "src/types/product";
 import ItemProductoBox from "./ItemProductoBox.astro";
 import NavPag from "./NavPag.astro";
 
-import styles from "../styles/components/ListarProductos.module.css";
-
 interface Props {
   products: Product[];
   totalPages: number;
@@ -22,7 +20,7 @@ const emptyList = !productos || productos.length === 0;
 ---
 
 <section>
-  <div class={`${styles.listaProductos} ${emptyList ? styles.centerBox : ""}`}>
+  <div class={`listaProductos ${emptyList ? " centerBox" : ""}`}>
     {emptyList && <h3>Sin Productos</h3>}
 
     {
@@ -47,12 +45,39 @@ const emptyList = !productos || productos.length === 0;
   </div>
 </section>
 
+<style>
+  section {
+    flex: 1;
+  }
+
+  .centerBox {
+    justify-content: center;
+  }
+
+  .listaProductos > h3 {
+    color: gray;
+  }
+
+  .listaProductos ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1000px;
+    margin-inline: auto;
+    align-items: center;
+    justify-self: start;
+    padding: 0;
+    list-style: none; /* Removed default list style if any */
+    gap: 1rem; /* Added gap for better spacing if needed, though card controls margins */
+  }
+</style>
+
 <script>
   import { initProductFilters } from "../scripts/components/ListarProductos";
-  
+
   initProductFilters();
-  
-  document.addEventListener('astro:page-load', () => {
+
+  document.addEventListener("astro:page-load", () => {
     initProductFilters();
   });
 </script>

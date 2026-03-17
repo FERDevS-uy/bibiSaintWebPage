@@ -105,7 +105,7 @@ const { categories, categorySelected } = Astro.props;
   import DOMPurify from "dompurify";
   import { config } from "src/config";
   const searchContainerForm = document.querySelector(
-    "form.searchContainer"
+    "form.searchContainer",
   ) as HTMLFormElement;
 
   searchContainerForm.addEventListener("submit", (e) => {
@@ -204,7 +204,7 @@ const { categories, categorySelected } = Astro.props;
               `<li class="searchResultItem" onclick="window.location.href='/template-static-ecommerce/producto/${p.id}'">
     <span class="searchResultName">${p.name}</span>
     <span class="searchResultPrice">$${p.price || p.precio || ""}</span>
-  </li>`
+  </li>`,
           )
           .join("");
       }
@@ -276,7 +276,7 @@ const { categories, categorySelected } = Astro.props;
 
   /* --- CART --- */
   .cartLink {
-    color: var(--text-color);
+    color: var(--secondary-text-color);
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -353,7 +353,7 @@ const { categories, categorySelected } = Astro.props;
     }
 
     .navLink {
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       overflow-x: hidden;
       text-wrap: nowrap;
       width: 100%;
@@ -369,6 +369,9 @@ const { categories, categorySelected } = Astro.props;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       z-index: 10;
       border-radius: 0 0 10px 10px;
+    }
+    .categoryItem {
+      color: var(--secondary-text-color);
     }
     .categoryItem:hover .subcategoryList {
       display: block;

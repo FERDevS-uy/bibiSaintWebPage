@@ -43,8 +43,20 @@ const {
     <div class="breadcrumb">
       <a href=`${import.meta.env.BASE_URL}/categories/${categories.name}`
         >{categories.name}</a
-      > /
-      <span>Gorros</span>
+      >
+
+      {
+        categories.subcategories.length > 0 && (
+          <>
+            /
+            <a
+              href={`${import.meta.env.BASE_URL}/categories/${categories.name}/${categories.subcategories[0].name}`}
+            >
+              {categories.subcategories[0].name}
+            </a>
+          </>
+        )
+      }
     </div>
 
     <div class="product_layout">
@@ -314,7 +326,7 @@ const {
       name.innerText,
       price.innerText.replace("$", "").replace(",", "."),
       qty,
-      img.src
+      img.src,
     );
 
     // llama a una funcion declarada en header que actualiza el contador del carrito
