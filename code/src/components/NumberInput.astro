@@ -8,31 +8,32 @@ interface Props {
   step?: number;
 }
 
-const { 
-  name = "quantity", 
-  id, 
-  initialValue = 1, 
-  min = 0, 
-  max = 99, 
-  step = 1 
+const {
+  name = "quantity",
+  id,
+  initialValue = 1,
+  min = 0,
+  max = 99,
+  step = 1,
 } = Astro.props;
 
-const uniqueId = id || `number-input-${Math.random().toString(36).substr(2, 9)}`;
+const uniqueId =
+  id || `number-input-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <div class="number-control" data-id={uniqueId}>
   <button type="button" class="control-btn minus">-</button>
-  
-  <input 
-    type="number" 
-    id={uniqueId} 
-    name={name} 
-    value={initialValue} 
-    min={min} 
-    max={max} 
+
+  <input
+    type="number"
+    id={uniqueId}
+    name={name}
+    value={initialValue}
+    min={min}
+    max={max}
     step={step}
   />
-  
+
   <button type="button" class="control-btn plus">+</button>
 </div>
 
@@ -110,29 +111,29 @@ const uniqueId = id || `number-input-${Math.random().toString(36).substr(2, 9)}`
   // Script que se ejecuta en el cliente
   // Usamos una función para inicializar por si usas ViewTransitions
   function initNumberInputs() {
-    const containers = document.querySelectorAll('.number-control');
+    const containers = document.querySelectorAll(".number-control");
 
-    containers.forEach(container => {
-      const input = container.querySelector('input');
-      const minusBtn = container.querySelector('.minus');
-      const plusBtn = container.querySelector('.plus');
+    containers.forEach((container) => {
+      const input = container.querySelector("input");
+      const minusBtn = container.querySelector(".minus");
+      const plusBtn = container.querySelector(".plus");
 
       if (!input || !minusBtn || !plusBtn) return;
 
       // Limpiar eventos previos para evitar duplicados si se re-ejecuta
       // (Una técnica simple es clonar y reemplazar el nodo, pero aquí usaremos lógica directa)
-      
-      const updateValue = (increment) => {
+
+      const updateValue = (increment: any) => {
         if (increment) input.stepUp();
         else input.stepDown();
-        
+
         // Disparar evento 'change' para que otros scripts sepan que cambió
-        input.dispatchEvent(new Event('change', { bubbles: true }));
+        input.dispatchEvent(new Event("change", { bubbles: true }));
       };
 
       // Usamos onclick directo para evitar acumulación de eventListeners
-      minusBtn.onclick = () => updateValue(false);
-      plusBtn.onclick = () => updateValue(true);
+      minusBtn.addEventListener("click", () => updateValue(false));
+      plusBtn.addEventListener("click", () => updateValue(true));
     });
   }
 

@@ -41,7 +41,7 @@ export function cargarProductos(): Product[] {
     enOferta: d.oferta.toLowerCase() === "true" ? true : false,
     relacionados: d.relacionados.split(/\s+/),
     categories: {
-      name: d.categorias,
+      name: d.categorias.split(/\s/)[0], // toma solo la primera categoría
       count: 0,
       subcategories: d.subcategorias.trim() != ""
         ? d.subcategorias.split(/\s+/)
