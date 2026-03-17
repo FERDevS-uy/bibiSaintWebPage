@@ -11,7 +11,7 @@ export function getStaticPaths() {
     const { id, relacionados, ...rest } = p;
 
     const productosRelacionados = productos.filter((p) =>
-      relacionados.includes(p.id)
+      relacionados.includes(p.id),
     );
 
     return {
@@ -41,8 +41,9 @@ const {
   <section class="productContainer">
     <!-- BREADCRUMB -->
     <div class="breadcrumb">
-      <a href="/">{categories}</a> /
-      <a href="/">Accesorios</a> /
+      <a href=`${import.meta.env.BASE_URL}/categories/${categories.name}`
+        >{categories.name}</a
+      > /
       <span>Gorros</span>
     </div>
 
@@ -63,7 +64,7 @@ const {
 
         <div class="meta">
           <p><strong>ID:</strong> {id}</p>
-          <p><strong>Marca:</strong> {categories[0]}</p>
+          <p><strong>Marca:</strong> {categories}</p>
         </div>
         <strong>Descripción del Producto:</strong>
         <p class="description">{description}</p>

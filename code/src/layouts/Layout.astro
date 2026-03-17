@@ -16,6 +16,7 @@ interface Props {
   pageTitle?: string;
   description?: string;
   pageImage?: string;
+  pageId?: string;
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   pageTitle = config.pageTitle,
   description = config.description,
   pageImage = `${url_href}favicon.svg`,
+  pageId,
 } = Astro.props;
 ---
 
@@ -69,7 +71,7 @@ const {
   <body id="body" class={isDev ? "dev" : ""}>
     <Header categories={categories} categorySelected={categorySelected} />
 
-    <main>
+    <main id={pageId}>
       <slot />
     </main>
 
@@ -87,6 +89,7 @@ const {
   main {
     display: flex;
     flex-direction: column;
+    flex: 1;
   }
   body {
     display: flex;
@@ -110,9 +113,5 @@ const {
   /* Quita el scroll del body cuando se abre el menu */
   body:not(:has(header > .itemsBox.hidden)) {
     overflow: hidden;
-  }
-
-  main {
-    flex: 1;
   }
 </style>

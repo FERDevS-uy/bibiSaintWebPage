@@ -11,7 +11,7 @@ const totalPages = Math.ceil(productos.length / CANT_PRODUCTOS);
 const showProducts = productos.slice(0, CANT_PRODUCTOS);
 ---
 
-<Layout>
+<Layout pageId="index">
   <OfertasBanner />
   <ListarProductos products={showProducts} totalPages={totalPages} />
 </Layout>
