@@ -2,76 +2,95 @@
 import type Product from "src/types/product";
 import { capitalize } from "@utils/capitalizeString";
 import getColors from "@utils/getColors";
-import styles from "../styles/components/SideBarCategories.module.css";
+import type { subCategory } from "src/types/categoryList";
 
 interface Props {
   categoryFather: string;
-  arrayCategorys: string[];
+  arrayCategorys: subCategory[];
   products?: Product[];
+  selected?: string;
 }
-const { categoryFather, arrayCategorys, products } = Astro.props;
+const { categoryFather, arrayCategorys, products, selected } = Astro.props;
 
-
-const productColors = products?.flatMap(p => getColors(p.name));
+const productColors = products?.flatMap((p) => getColors(p.name));
 const uniqueColors = [...new Set(productColors)];
 ---
 
-<section class={styles.sideBarCategories}>
-  <div class={styles.subcategories}>
-    <strong>Inicio - {categoryFather}</strong>
+<section>
+  <div>
+    <h2 class="title">Inicio - {categoryFather}</h2>
     <ul>
       {
         arrayCategorys.map((subcat) => (
           <li>
             <a
-              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat}`}
+              class={`option${selected === subcat.name ? " selected" : ""}`}
+              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
             >
-              {subcat}
+              {subcat.name}
             </a>
           </li>
         ))
       }
     </ul>
   </div>
-  <strong>Filtrar por</strong>
-  <div class={styles.filter} data-filter-section>
-    <strong>Color</strong>
-    <ul>
-      {uniqueColors.map(color => (
-        <li>
-          <label>
-            <input type="checkbox" data-color={color} /> {capitalize(color)}
-          </label>
-        </li>
-      ))}
-    </ul>
-  </div>  
-  <div class={styles.subcategories}>
-    <strong>Marca</strong>
+
+  <div>
+    <h2 class="title">Filtrar por</h2>
+    <div data-filter-section>
+      <h3>Color</h3>
+      <form>
+        <ul>
+          {
+            uniqueColors.map((color) => (
+              <li>
+                <label>
+                  <input
+                    type="checkbox"
+                    data-color={color}
+                    value={color}
+                    id={`color_${color}`}
+                    name="colors"
+                  />{" "}
+                  {capitalize(color)}
+                </label>
+              </li>
+            ))
+          }
+        </ul>
+      </form>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="title">Marca</h2>
     <ul>
       {
         arrayCategorys.map((subcat) => (
           <li>
             <a
-              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat}`}
+              class="option"
+              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
             >
-              {subcat}
+              {subcat.name}
             </a>
           </li>
         ))
       }
     </ul>
   </div>
-  <div class={styles.subcategories}>
-    <strong>Modelo</strong>
+
+  <div>
+    <h2 class="title">Modelo</h2>
     <ul>
       {
         arrayCategorys.map((subcat) => (
           <li>
             <a
-              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat}`}
+              class="option"
+              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
             >
-              {subcat}
+              {subcat.name}
             </a>
           </li>
         ))
@@ -79,3 +98,57 @@ const uniqueColors = [...new Set(productColors)];
     </ul>
   </div>
 </section>
+
+<style>
+  section {
+    padding: 1rem 3rem;
+    border-right: 1px solid #000;
+  }
+
+  section ul {
+    list-style: none;
+  }
+  section a {
+    text-decoration: none;
+    color: var(--principal-text-color);
+  }
+
+  section a:hover {
+    opacity: 0.5;
+  }
+
+  .title {
+    margin-top: 2rem;
+  }
+
+  ul li {
+    margin-bottom: 0.8rem;
+  }
+  ul li label {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+
+    user-select: none;
+    cursor: pointer;
+  }
+
+  ul input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid #555;
+    border-radius: 6px;
+    transition: 0.2s;
+  }
+  ul input[type="checkbox"]:checked {
+    background-color: #000;
+    border-color: #000;
+  }
+
+  .option.selected {
+    font-weight: bold;
+  }
+</style>
