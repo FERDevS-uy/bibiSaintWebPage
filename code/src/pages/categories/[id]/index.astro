@@ -24,6 +24,7 @@ export const getStaticPaths = () => {
     const productsPerCat = products.filter(
       (p) => p.categories.name === category.name,
     );
+
     const totalPages = Math.ceil(productsPerCat.length / CANT_PRODUCTOS);
 
     return {
@@ -39,7 +40,6 @@ export const getStaticPaths = () => {
 
 const { id } = Astro.params;
 const { products, subCat, totalPages } = Astro.props;
-
 const baseUrl = `${import.meta.env.BASE_URL}/categories/${id}`;
 ---
 
@@ -67,5 +67,6 @@ const baseUrl = `${import.meta.env.BASE_URL}/categories/${id}`;
   .categories__container {
     display: flex;
     flex-direction: row;
+    min-height: 100dvh;
   }
 </style>

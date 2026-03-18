@@ -45,17 +45,18 @@ const {
         >{categories.name}</a
       >
 
+      {categories.subcategories.length >= 1 && "/"}
       {
-        categories.subcategories.length > 0 && (
+        categories.subcategories.map((item, i) => (
           <>
-            /
             <a
-              href={`${import.meta.env.BASE_URL}/categories/${categories.name}/${categories.subcategories[0].name}`}
+              href={`${import.meta.env.BASE_URL}/categories/${categories.name}/${item.name}`}
             >
-              {categories.subcategories[0].name}
+              {item.name}
             </a>
+            {i < categories.subcategories.length - 1 && " - "}
           </>
-        )
+        ))
       }
     </div>
 

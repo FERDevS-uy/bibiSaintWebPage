@@ -33,7 +33,7 @@ export const getStaticPaths = () => {
       return {
         params: { id: c.name, pag: i + 1 },
         props: {
-          products: products.slice(start, end),
+          products: productsPerCat.slice(start, end),
           subCat: Array.from(subcategoryMap.values()),
           totalPages,
         },
@@ -71,5 +71,6 @@ const baseUrl = `${config.base}/categories/${id}`;
   .subCategories__container {
     display: flex;
     flex-direction: row;
+    min-height: 100dvh;
   }
 </style>
