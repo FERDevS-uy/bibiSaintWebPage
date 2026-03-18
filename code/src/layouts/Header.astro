@@ -3,6 +3,7 @@ import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
 import { config } from "src/config";
 import type CategoryList from "src/types/categoryList";
 import { Image } from "astro:assets";
+import SearchInput from "@components/SearchInput.astro";
 
 import logo from "@assets/logo_blanco.png";
 const { default: cartSVG } = await import("@assets/cart.svg?raw");
@@ -25,17 +26,7 @@ const { categories, categorySelected } = Astro.props;
       </div>
 
       <div class="navMenu">
-        <form class="searchContainer">
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Buscar productos..."
-            autocomplete="off"
-            class="searchInput"
-            name="search"
-          />
-          <ul id="searchResults" class="searchResults"></ul>
-        </form>
+        <SearchInput />
 
         <a href={`${config.base}/carrito`} class="cartLink">
           <Fragment set:html={cartSVG} />
@@ -101,28 +92,6 @@ const { categories, categorySelected } = Astro.props;
   </MenuItems>
 </header>
 
-<script>
-  import DOMPurify from "dompurify";
-  import { config } from "src/config";
-  const searchContainerForm = document.querySelector(
-    "form.searchContainer",
-  ) as HTMLFormElement;
-
-  searchContainerForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(searchContainerForm).get("search");
-    if (!formData) return;
-    const searchTerm = DOMPurify.sanitize(formData.toString().toLowerCase());
-
-    if (!searchTerm || searchTerm.length < 3) return;
-
-    const url = new URL(config.base + "/search", window.location.origin);
-    url.searchParams.set("q", searchTerm);
-    window.location.assign(url.toString());
-  });
-</script>
-
 <script type="module">
   // Mostrar cantidad de productos en el carrito
   window.updateCartCount = function () {
@@ -179,57 +148,6 @@ const { categories, categorySelected } = Astro.props;
     return productosCache;
   }
 
-  const searchInput = document.getElementById("searchInput");
-  const searchResults = document.getElementById("searchResults");
-
-  if (searchInput && searchResults) {
-    searchInput.addEventListener("input", async (e) => {
-      const query = e.target.value.trim().toLowerCase();
-      if (!query) {
-        searchResults.style.display = "none";
-        searchResults.innerHTML = "";
-        return;
-      }
-      const productos = await fetchProductos();
-      const resultados = productos
-        .filter((p) => p.name.toLowerCase().includes(query))
-        .slice(0, 10); // máximo 10 resultados
-
-      if (resultados.length === 0) {
-        searchResults.innerHTML = "<li>No se encontraron productos</li>";
-      } else {
-        searchResults.innerHTML = resultados
-          .map(
-            (p) =>
-              `<li class="searchResultItem" onclick="window.location.href='/template-static-ecommerce/producto/${p.id}'">
-    <span class="searchResultName">${p.name}</span>
-    <span class="searchResultPrice">$${p.price || p.precio || ""}</span>
-  </li>`,
-          )
-          .join("");
-      }
-      searchResults.style.display = "block";
-    });
-
-    // Ocultar resultados al perder foco
-    searchInput.addEventListener("blur", () => {
-      setTimeout(() => {
-        searchResults.style.display = "none";
-      }, 200);
-    });
-    searchInput.addEventListener("focus", () => {
-      if (searchResults.innerHTML) searchResults.style.display = "block";
-    });
-    searchInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        const query = searchInput.value.trim();
-
-        if (query) {
-          window.location.href = `/bibiSaintWebPage/search/page/1?q=${encodeURIComponent(query)}`;
-        }
-      }
-    });
-  }
   // Ejecutar al cargar y al redimensionar
   window.addEventListener("DOMContentLoaded", checkCategoryListWidth);
   window.addEventListener("resize", checkCategoryListWidth);
@@ -250,7 +168,7 @@ const { categories, categorySelected } = Astro.props;
     color: var(--text-color);
     margin: auto;
     max-width: 1000px;
-    height: 75px;
+    height: var(--header-height);
 
     display: flex;
     flex-direction: row;
@@ -261,17 +179,6 @@ const { categories, categorySelected } = Astro.props;
     flex: 1;
     display: flex;
     flex-direction: row;
-  }
-  .navMenu form {
-    flex: 1;
-    padding-inline: 5rem;
-    padding-block: 1.5rem;
-  }
-  .navMenu form input {
-    width: 100%;
-    border-radius: 5px;
-    padding: 5px 10px;
-    border: 1px solid var(--line-color);
   }
 
   /* --- CART --- */
@@ -312,7 +219,7 @@ const { categories, categorySelected } = Astro.props;
   /* TAMAÑO PC */
   @media screen and (min-width: 1000px) {
     header {
-      --header-icon-size: 7rem;
+      /* --header-icon-size: 7rem; */
     }
     /* --- MENU ICON --- */
     .navMenu .menuIcon {
@@ -367,7 +274,7 @@ const { categories, categorySelected } = Astro.props;
       background: var(--s-b-color);
       min-width: 180px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      z-index: 10;
+      z-index: 5;
       border-radius: 0 0 10px 10px;
     }
     .categoryItem {

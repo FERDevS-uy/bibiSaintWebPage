@@ -31,7 +31,7 @@ const { producto: p } = Astro.props;
     </div>
 
     <a
-      href={`${config.base}/producto/${p.id}`}
+      href={`${import.meta.env.BASE_URL}/producto/${p.id}`}
       class="price-box"
       title="Ir a comprar"
     >
@@ -54,7 +54,6 @@ const { producto: p } = Astro.props;
     --secondary-color: var(--principal-background-color-dark);
     --text-color: var(--principal-text-color);
     --width: 300px;
-    --height: 300px;
   }
 
   article:hover .h-bg {
@@ -80,7 +79,7 @@ const { producto: p } = Astro.props;
     opacity: 0.4;
   }
   article:hover .info-inner {
-    bottom: 155px;
+    bottom: 100px;
     background-color: transparent;
   }
 
@@ -274,7 +273,6 @@ const { producto: p } = Astro.props;
   @media screen and (min-width: 1000px) {
     .producto_card {
       width: var(--width);
-      height: var(--height);
       margin-bottom: 0;
     }
     .cart-box {
