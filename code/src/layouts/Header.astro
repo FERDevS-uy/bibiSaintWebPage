@@ -16,7 +16,7 @@ const { categories, categorySelected } = Astro.props;
 ---
 
 <header>
-  <Astronav closeOnClick>
+  <Astronav>
     <div class="headerContainer">
       <div class="logoContainer">
         <a href={config.base}>
@@ -49,11 +49,15 @@ const { categories, categorySelected } = Astro.props;
   </Astronav>
 
   <MenuItems class="itemsBox hidden">
+    <!-- Botón de Cerrar (Mobile) -->
+    <div class="mobileMenuHeader">
+      <button id="closeMenuBtn" class="closeMenuBtn">
+        <span style="font-weight: bold; font-size: 1.2rem;">&times;</span> Cerrar
+      </button>
+    </div>
+
     <ul class="mainNav">
       <li><a class="navLink" href={config.base}>Inicio</a></li>
-      <li>
-        <a class="navLink" href={`${config.base}/about`}>Quienes somos</a>
-      </li>
     </ul>
 
     <input
@@ -73,30 +77,60 @@ const { categories, categorySelected } = Astro.props;
             <li class="categoryItem">
               <a
                 href={`${config.base}/categories/${c.name}`}
-                class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""}`}
+                class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""} ${c.subcategories && c.subcategories.length > 0 ? "has-submenu" : ""}`}
+                data-submenu-target={`submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}`}
               >
                 {c.name}
                 {c.subcategories && c.subcategories.length > 0 && (
-                  <span>▾</span>
+                  <span class="submenu-indicator">›</span>
                 )}
               </a>
               {c.subcategories && c.subcategories.length > 0 && (
-                <ul class="subcategoryList">
-                  {c.subcategories.map((sub) => (
+                <div
+                  class="subcategoryList"
+                  id={`submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}`}
+                >
+                  <div class="submenuHeader">
+                    <span class="submenuTitle">{c.name}</span>
+                    <button
+                      class="backMenuBtn"
+                      data-submenu-close={`submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}`}
+                    >
+                      &larr;
+                    </button>
+                  </div>
+                  <ul>
                     <li>
                       <a
-                        href={`${config.base}/categories/${c.name}/${sub.name}`}
+                        href={`${config.base}/categories/${c.name}`}
                         class="navLink subcategoryLink"
+                        style="font-weight: bold;"
                       >
-                        {sub.name}
+                        Ver todos
                       </a>
                     </li>
-                  ))}
-                </ul>
+                    {c.subcategories.map((sub) => (
+                      <li>
+                        <a
+                          href={`${config.base}/categories/${c.name}/${sub.name}`}
+                          class="navLink subcategoryLink"
+                        >
+                          {sub.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </li>
           ))
       }
+    </ul>
+
+    <ul class="mainNav mainNavBottom">
+      <li>
+        <a class="navLink" href={`${config.base}/about`}>Quienes Somos</a>
+      </li>
     </ul>
   </MenuItems>
 </header>
@@ -105,7 +139,7 @@ const { categories, categorySelected } = Astro.props;
   import DOMPurify from "dompurify";
   import { config } from "src/config";
   const searchContainerForm = document.querySelector(
-    "form.searchContainer"
+    "form.searchContainer",
   ) as HTMLFormElement;
 
   searchContainerForm.addEventListener("submit", (e) => {
@@ -204,7 +238,7 @@ const { categories, categorySelected } = Astro.props;
               `<li class="searchResultItem" onclick="window.location.href='/template-static-ecommerce/producto/${p.id}'">
     <span class="searchResultName">${p.name}</span>
     <span class="searchResultPrice">$${p.price || p.precio || ""}</span>
-  </li>`
+  </li>`,
           )
           .join("");
       }
@@ -230,6 +264,59 @@ const { categories, categorySelected } = Astro.props;
       }
     });
   }
+  // --- Lógica del menú móvil ---
+  document.addEventListener("DOMContentLoaded", () => {
+    const isMobile = () => window.innerWidth < 1000;
+    // Abrir submenús
+    const hasSubmenuLinks = document.querySelectorAll(".has-submenu");
+    hasSubmenuLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        if (isMobile()) {
+          // Prevenir que el click se propague al componente Astronav y lo cierre
+          e.stopPropagation();
+          e.preventDefault();
+          const targetId = link.getAttribute("data-submenu-target");
+          if (targetId) {
+            const submenu = document.getElementById(targetId);
+            if (submenu) {
+              submenu.classList.add("open");
+            }
+          }
+        }
+      });
+    });
+
+    // Retroceder al menú principal
+    const backBtns = document.querySelectorAll(".backMenuBtn");
+    backBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = btn.getAttribute("data-submenu-close");
+        if (targetId) {
+          const submenu = document.getElementById(targetId);
+          if (submenu) {
+            submenu.classList.remove("open");
+          }
+        }
+      });
+    });
+
+    // Cerrar el panel móvil entero
+    const closeMenuBtn = document.getElementById("closeMenuBtn");
+    if (closeMenuBtn) {
+      closeMenuBtn.addEventListener("click", () => {
+        const itemsBox = document.querySelector(".itemsBox");
+        if (itemsBox) {
+          itemsBox.classList.add("hidden");
+          // Limpiar submenús abiertos
+          document.querySelectorAll(".subcategoryList.open").forEach((sub) => {
+            sub.classList.remove("open");
+          });
+        }
+      });
+    }
+  });
+
   // Ejecutar al cargar y al redimensionar
   window.addEventListener("DOMContentLoaded", checkCategoryListWidth);
   window.addEventListener("resize", checkCategoryListWidth);
@@ -266,6 +353,7 @@ const { categories, categorySelected } = Astro.props;
     flex: 1;
     padding-inline: 5rem;
     padding-block: 1.5rem;
+    display: none; /* Oculto en mobile */
   }
   .navMenu form input {
     width: 100%;
@@ -293,20 +381,128 @@ const { categories, categorySelected } = Astro.props;
     justify-content: center;
   }
 
-  /* --- ITEMS BOX --- */
+  /* --- ITEMS BOX (Mobile Drawer) --- */
   .itemsBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 85vw;
+    max-width: 400px;
+    height: 100vh;
+    background: #e63946;
+    background: linear-gradient(135deg, #e43f3f 0%, #b81c1c 100%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
   }
+  .itemsBox.hidden {
+    transform: translateX(-100%);
+    display: none;
+  }
+
+  .mobileMenuHeader {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .closeMenuBtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .itemsBox ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
   }
+
+  .itemsBox .mainNav li,
+  .itemsBox .categoryList > li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
   .navLink {
-    color: var(--text-color);
+    color: white;
     text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   .navLink:hover,
   .navLink.focus,
   .categoryLink.selected {
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .submenu-indicator {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  /* Submenu Drilldown */
+  .subcategoryList {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: #fafafa;
+    z-index: 10;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+  }
+  .subcategoryList.open {
+    transform: translateX(0);
+  }
+
+  .submenuHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ccc;
+    color: black;
+  }
+  .submenuTitle {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #333;
+  }
+  .backMenuBtn {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #555;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .subcategoryLink {
+    color: #333;
+    font-weight: normal;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #eee;
+  }
+  .subcategoryLink:hover {
+    background-color: rgba(0, 0, 0, 0.05);
   }
 
   /* TAMAÑO PC */
@@ -317,6 +513,10 @@ const { categories, categorySelected } = Astro.props;
     /* --- MENU ICON --- */
     .navMenu .menuIcon {
       display: none;
+    }
+    /* Mostrar barra de búsqueda en desktop */
+    .navMenu form {
+      display: block;
     }
 
     /* --- CART --- */
@@ -335,21 +535,37 @@ const { categories, categorySelected } = Astro.props;
     .itemsBox,
     .itemsBox.hidden {
       border-top: 2px solid var(--line-color);
-
       box-shadow: none;
       transition: none;
+      transform: none !important;
       background-color: transparent;
 
-      display: flex;
+      display: flex !important;
       justify-content: center;
       margin: auto;
       flex-direction: row-reverse;
+
+      position: static;
+      width: auto;
+      height: auto;
+      max-width: none;
+      overflow: visible;
     }
     .itemsBox > ul {
       display: flex;
     }
     .itemsBox ul.mainNav {
       margin-left: 20px;
+    }
+
+    .mobileMenuHeader {
+      display: none;
+    }
+
+    .itemsBox .mainNav li,
+    .itemsBox .categoryList > li {
+      border-bottom: none;
+      position: relative;
     }
 
     .navLink {
@@ -360,18 +576,43 @@ const { categories, categorySelected } = Astro.props;
       display: block;
       text-decoration: none;
       padding: 0.5rem 1rem;
+      font-weight: normal;
+      font-size: 1rem;
     }
+    .navLink:hover,
+    .navLink.focus,
+    .categoryLink.selected {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+    .submenu-indicator {
+      font-size: 1rem;
+      margin-left: 5px;
+    }
+
     .subcategoryList {
+      transition: none;
+      transform: none;
       display: none;
       position: absolute;
-      /* left: 0; */
-      /* top: 100%; */
       background: var(--background-color);
       min-width: 180px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       z-index: 10;
       border-radius: 0 0 10px 10px;
+      left: 0;
+      top: 100%;
     }
+
+    .submenuHeader {
+      display: none;
+    }
+
+    .subcategoryLink {
+      padding: 0.5rem 1rem;
+      border-bottom: none;
+      color: var(--text-color);
+    }
+
     .categoryItem:hover .subcategoryList {
       display: block;
     }
