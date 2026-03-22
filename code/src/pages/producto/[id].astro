@@ -11,7 +11,7 @@ export function getStaticPaths() {
     const { id, relacionados, ...rest } = p;
 
     const productosRelacionados = productos.filter((p) =>
-      relacionados.includes(p.id)
+      relacionados.includes(p.id),
     );
 
     return {
@@ -90,7 +90,7 @@ const {
             class="buyBtn"
             data-id={Astro.props.id}
           >
-            Comprar
+            Añadir al Carrito
           </button>
         </div>
       </div>
@@ -106,12 +106,13 @@ const {
           <div class="relatedList">
             {relacionados.map((prod) => (
               <div class="card">
-                <div class="cardImg">
-                  <img class="cardImg" src={prod.img[0]} alt={prod.name} />
-                </div>
-                <span class="cardTitle">{prod.name}</span>
-                <span class="cardPrice">${prod.price}</span>
-                <button class="cardBtn">Ver Producto</button>
+                <a href={`${import.meta.env.BASE_URL}/producto/${prod.id}`}>
+                  <div class="cardImg">
+                    <img class="cardImg" src={prod.img[0]} alt={prod.name} />
+                  </div>
+                  <span class="cardTitle">{prod.name}</span>
+                  <span class="cardPrice">${prod.price}</span>
+                </a>
               </div>
             ))}
           </div>
@@ -124,174 +125,281 @@ const {
 <style>
   .productContainer {
     max-width: 1200px;
-    margin: 40px auto;
-    padding: 1rem;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 3rem;
   }
 
   /**** Breadcrumb *****/
   .breadcrumb {
-    font-size: 22px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
     margin-bottom: 20px;
-    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000;
   }
   .breadcrumb a {
     text-decoration: none;
-    color: #555;
+    color: inherit;
+  }
+  .breadcrumb span {
+    color: #000;
   }
 
   /**** Layout *****/
   .product_layout {
     display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-    border-top: 1px solid grey;
+    flex-direction: column;
+    gap: 30px;
   }
 
   /**** Gallery *****/
   .gallery {
-    flex: 2;
+    width: 100%;
   }
+
   .mainImg {
     width: 100%;
-    border-radius: 12px;
-    object-fit: contain;
-    background: #fff;
-    height: 400px;
+    height: auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    background: #000; /* Placeholder placeholder color from image */
+    display: block;
+    margin-bottom: 10px;
   }
+
   .thumbs {
     display: flex;
-    gap: 5px;
-    margin-top: 10px;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px; /* For scrollbar if needed */
   }
+
   .thumb {
-    width: 70px;
-    height: 70px;
-    border-radius: 8px;
+    width: 60px;
+    height: 60px;
+    border-radius: 0;
     object-fit: cover;
     cursor: pointer;
-    background: white;
-    box-shadow: 0 2px 4px #aaa;
+    border: 1px solid #ddd;
   }
 
   /**** Info box *****/
   .infoBox {
-    flex: 1;
-    padding: 18px;
+    padding: 0;
   }
+
+  /* Badge style like "Por encargo" */
   .stock {
-    background: #53b467;
-    padding: 4px 10px;
+    display: inline-block;
+    background: #5cb85c; /* Green color */
     color: white;
-    border-radius: 6px;
+    font-weight: 700;
     font-size: 14px;
+    padding: 4px 8px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border-radius: 0;
   }
+
   .name {
-    margin: 10px 0;
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 15px 0;
+    color: #000;
+  }
+
+  .meta {
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 15px;
+    line-height: 1.6;
   }
 
   .meta p {
-    margin: 4px 0;
-    font-size: 14px;
+    margin: 2px 0;
+  }
+
+  .meta strong {
+    font-weight: 800;
   }
 
   .description {
-    margin: 10px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #000;
+  }
+
+  strong {
+    font-weight: 800;
   }
 
   /**** Sizes *****/
   .sizes {
-    margin: 10px 0;
+    display: flex;
+    gap: 5px;
+    margin: 10px 0 20px 0;
   }
+
   .size {
-    background: white;
-    border: 1px solid #aaa;
-    padding: 0 0;
-    cursor: pointer;
-    font-size: 20px;
     width: 40px;
-    margin-left: 6px;
+    height: 40px;
+    background: white;
+    border: 1px solid #000;
+    color: #000;
+    font-size: 32px;
+    font-weight: 250;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .size:hover {
+    background: #f0f0f0;
   }
 
   /**** Price & Actions *****/
   .priceRow {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-top: 12px;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
   }
 
-  .price {
-    font-size: 26px;
-    font-weight: bold;
+  .priceRow .price {
+    display: block;
+    height: 50px;
+    line-height: 160%;
+    font-size: 32px;
+    font-weight: 800;
+    color: #000;
+    margin-right: auto;
   }
 
-  .qty {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .qty input {
-    width: 40px;
-    text-align: center;
-  }
-  .qtyBtn {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-  }
+  /* Adjust NumberInput styling overlap if possible, otherwise wrapper */
+  /* Assuming NumberInput generates a wrapper, we might need to target it deep or adjacent */
 
   .buyBtn {
-    background: var(--orange-color);
-    padding: 10px 10px;
-    border-radius: 8px;
-
-    font-size: 1.4rem;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
+    background: #e67e22; /* Orange/Terra-cotta */
     color: white;
+    border: none;
+    padding: 0 20px;
+    height: 44px; /* Match typical touch target */
+    /*font-size: 16px;*/
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 4px;
+    flex: 1;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .buyBtn:hover {
+    background: #d35400;
   }
 
   /**** Related Products *****/
   .related {
-    margin-top: 40px;
+    margin-top: 50px;
+    border-top: 1px solid #000;
+    padding-top: 20px;
+  }
+
+  .related h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-align: center;
   }
 
   .relatedList {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
   }
 
   .card {
-    min-width: 180px;
     background: white;
-    padding: 12px;
-    border-radius: 12px;
     text-align: center;
   }
-  .cardImg {
-    height: 150px;
-    border-radius: 8px;
-  }
-  .cardTitle {
-    font-size: 15px;
-    margin-top: 10px;
-  }
-  .cardPrice {
-    font-weight: bold;
-    display: block;
-    margin-top: 6px;
-  }
-  .cardBtn {
-    background: black;
-    color: white;
-    padding: 6px 14px;
-    border-radius: 6px;
-    margin-top: 8px;
+
+  .card a {
+    text-decoration: none;
+    color: inherit;
     cursor: pointer;
+  }
+
+  .cardImg {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .cardTitle {
+    font-size: 14px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .cardPrice {
+    font-size: 16px;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .cardBtn {
+    background: transparent; /* Or keep black if desired, but reference focuses on main product */
+    color: #000;
+    text-decoration: underline;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  /**** Desktop Media Query *****/
+  @media (min-width: 768px) {
+    .product_layout {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .gallery {
+      flex: 1;
+      max-width: 50%;
+    }
+
+    .infoBox {
+      flex: 1;
+      padding-left: 20px;
+    }
+
+    .price {
+      width: auto;
+      margin-right: 20px;
+    }
+
+    .buyBtn {
+      flex: initial;
+      width: auto;
+    }
+
+    .relatedList {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 </style>
 
@@ -313,7 +421,7 @@ const {
       name.innerText,
       price.innerText.replace("$", "").replace(",", "."),
       qty,
-      img.src
+      img.src,
     );
 
     // llama a una funcion declarada en header que actualiza el contador del carrito
