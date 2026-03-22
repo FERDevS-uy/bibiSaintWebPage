@@ -336,11 +336,21 @@ const { categories, categorySelected } = Astro.props;
   .headerContainer {
     color: var(--text-color);
     margin: auto;
-    max-width: 1000px;
+    max-width: 1400px;
+    width: 100%;
     height: 75px;
 
     display: flex;
     flex-direction: row;
+    align-items: center;
+    padding-inline: 1rem;
+  }
+
+  .logoContainer {
+    flex: 0 0 auto;
+    height: 75px;
+    display: flex;
+    align-items: center;
   }
 
   /* --- SEARCH FORM --- */
@@ -348,10 +358,13 @@ const { categories, categorySelected } = Astro.props;
     flex: 1;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
   }
   .navMenu form {
     flex: 1;
-    padding-inline: 5rem;
+    padding-inline: 1rem;
     padding-block: 1.5rem;
     display: none; /* Oculto en mobile */
   }
@@ -368,6 +381,10 @@ const { categories, categorySelected } = Astro.props;
     text-decoration: none;
     display: flex;
     align-items: center;
+    position: relative; /* Necesario para contener el SVG absoluto en mobile */
+    width: 50px;
+    height: 75px;
+    flex-shrink: 0;
   }
   .cartLink:hover {
     animation: shake 0.5s infinite;
@@ -379,6 +396,10 @@ const { categories, categorySelected } = Astro.props;
     height: 1.5rem;
     display: flex;
     justify-content: center;
+    position: absolute;
+    right: 5px;
+    top: 15px;
+    z-index: 10;
   }
 
   /* --- ITEMS BOX (Mobile Drawer) --- */
@@ -460,7 +481,7 @@ const { categories, categorySelected } = Astro.props;
     left: 0;
     width: 100%;
     min-height: 100%;
-    background-color: #fafafa;
+    background-color: #c11010;
     z-index: 10;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
@@ -517,6 +538,7 @@ const { categories, categorySelected } = Astro.props;
     /* Mostrar barra de búsqueda en desktop */
     .navMenu form {
       display: block;
+      position: relative;
     }
 
     /* --- CART --- */
@@ -524,11 +546,6 @@ const { categories, categorySelected } = Astro.props;
       position: relative;
       width: 50px;
       height: 75px;
-    }
-    .cartCount span {
-      position: absolute;
-      right: 5px;
-      top: 15px;
     }
 
     /* --- ITEMS BOX --- */
@@ -645,9 +662,10 @@ const { categories, categorySelected } = Astro.props;
 
 <style is:global>
   header .logoContainer img {
-    color: var(--text-color);
+    height: 75px;
     width: auto;
-    height: 100%;
+    max-width: 200px;
+    display: block;
   }
 
   /* --- CART --- */
