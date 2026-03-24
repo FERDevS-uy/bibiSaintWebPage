@@ -1,29 +1,39 @@
-import type CategoryList from "../types/categoryList";
+import type Category from "../types/categoryList";
 import type Product from "../types/product";
 
-export function countCategories(productos: Product[]): CategoryList[] {
-  const catCount: Record<string, { count: number; subcategories: Record<string, number> }> = {};
+export function countCategories(productos: Product[]): Category[] {
   if (!productos) return [];
-  productos.forEach((p) => {
-    p.categories.forEach((c, idx) => {
-      if (!catCount[c]) catCount[c] = { count: 0, subcategories: {} };
-      catCount[c].count += 1;
 
-      // Si el producto tiene subcategorías, agrégalas
-      if (p.subcategories && p.subcategories.length > 0) {
-        p.subcategories.forEach((sub) => {
-          catCount[c].subcategories[sub] = (catCount[c].subcategories[sub] || 0) + 1;
-        });
-      }
-    });
-  });
+  const categoryMap = new Map<string, Category>();
+  productos.forEach(p => {
+    const catName = p.categories.name;
 
-  return Object.entries(catCount).map(([name, data]) => ({
-    name,
-    count: data.count,
-    subcategories: Object.entries(data.subcategories).map(([subName, count]) => ({
-      name: subName,
-      count,
-    })),
-  }));
+    if (!categoryMap.has(catName)) {
+      categoryMap.set(catName, {
+        name: catName,
+        count: 0,
+        subcategories: []
+      })
+    }
+
+    const category = categoryMap.get(catName)
+    if (category) category.count++;
+
+    if (p.categories.subcategories.length > 0) {
+      p.categories.subcategories.forEach(subP => {
+        let sp = category?.subcategories!.find(
+          s => s.name === subP.name
+        )
+
+        if (!sp) {
+          sp = { name: subP.name, count: 0 }
+          category?.subcategories!.push(sp)
+        }
+
+        sp.count++
+      })
+    }
+  })
+
+  return Array.from(categoryMap.values())
 }

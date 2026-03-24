@@ -41,9 +41,23 @@ const {
   <section class="productContainer">
     <!-- BREADCRUMB -->
     <div class="breadcrumb">
-      <a href="/">{categories}</a> /
-      <a href="/">Accesorios</a> /
-      <span>Gorros</span>
+      <a href=`${import.meta.env.BASE_URL}/categories/${categories.name}`
+        >{categories.name}</a
+      >
+
+      {categories.subcategories.length >= 1 && "/"}
+      {
+        categories.subcategories.map((item, i) => (
+          <>
+            <a
+              href={`${import.meta.env.BASE_URL}/categories/${categories.name}/${item.name}`}
+            >
+              {item.name}
+            </a>
+            {i < categories.subcategories.length - 1 && " / "}
+          </>
+        ))
+      }
     </div>
 
     <div class="product_layout">
@@ -63,7 +77,7 @@ const {
 
         <div class="meta">
           <p><strong>ID:</strong> {id}</p>
-          <p><strong>Marca:</strong> {categories[0]}</p>
+          <p><strong>Marca:</strong> {categories}</p>
         </div>
         <strong>Descripción del Producto:</strong>
         <p class="description">{description}</p>

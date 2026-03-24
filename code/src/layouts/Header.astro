@@ -3,6 +3,7 @@ import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
 import { config } from "src/config";
 import type CategoryList from "src/types/categoryList";
 import { Image } from "astro:assets";
+import SearchInput from "@components/SearchInput.astro";
 
 import logo from "@assets/logo_blanco.png";
 const { default: cartSVG } = await import("@assets/cart.svg?raw");
@@ -25,17 +26,7 @@ const { categories, categorySelected } = Astro.props;
       </div>
 
       <div class="navMenu">
-        <form class="searchContainer">
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Buscar productos..."
-            autocomplete="off"
-            class="searchInput"
-            name="search"
-          />
-          <ul id="searchResults" class="searchResults"></ul>
-        </form>
+        <SearchInput />
 
         <a href={`${config.base}/carrito`} class="cartLink">
           <Fragment set:html={cartSVG} />
@@ -336,9 +327,9 @@ const { categories, categorySelected } = Astro.props;
   .headerContainer {
     color: var(--text-color);
     margin: auto;
-    max-width: 1400px;
     width: 100%;
-    height: 75px;
+    max-width: 1000px;
+    height: var(--header-height);
 
     display: flex;
     flex-direction: row;
@@ -377,7 +368,7 @@ const { categories, categorySelected } = Astro.props;
 
   /* --- CART --- */
   .cartLink {
-    color: var(--text-color);
+    color: var(--secondary-text-color);
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -529,7 +520,7 @@ const { categories, categorySelected } = Astro.props;
   /* TAMAÑO PC */
   @media screen and (min-width: 1000px) {
     header {
-      --header-icon-size: 7rem;
+      /* --header-icon-size: 7rem; */
     }
     /* --- MENU ICON --- */
     .navMenu .menuIcon {
@@ -586,7 +577,7 @@ const { categories, categorySelected } = Astro.props;
     }
 
     .navLink {
-      color: var(--text-color);
+      color: var(--secondary-text-color);
       overflow-x: hidden;
       text-wrap: nowrap;
       width: 100%;
@@ -611,10 +602,10 @@ const { categories, categorySelected } = Astro.props;
       transform: none;
       display: none;
       position: absolute;
-      background: var(--background-color);
+      background: var(--s-b-color);
       min-width: 180px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      z-index: 10;
+      z-index: 5;
       border-radius: 0 0 10px 10px;
       left: 0;
       top: 100%;
@@ -630,6 +621,9 @@ const { categories, categorySelected } = Astro.props;
       color: var(--text-color);
     }
 
+    .categoryItem {
+      color: var(--secondary-text-color);
+    }
     .categoryItem:hover .subcategoryList {
       display: block;
     }
