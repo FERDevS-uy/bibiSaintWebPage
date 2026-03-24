@@ -325,7 +325,7 @@ const { categories, categorySelected } = Astro.props;
   }
 
   .headerContainer {
-    color: var(--text-color);
+    color: var(--secondary-text-color);
     margin: auto;
     width: 100%;
     max-width: 1000px;
@@ -401,8 +401,9 @@ const { categories, categorySelected } = Astro.props;
     width: 85vw;
     max-width: 400px;
     height: 100vh;
-    background: #e63946;
-    background: linear-gradient(135deg, #e43f3f 0%, #b81c1c 100%);
+    background: var(
+      --h-gradient
+    ); /* linear-gradient(135deg, #e43f3f 0%, #b81c1c 100%) */
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -419,7 +420,7 @@ const { categories, categorySelected } = Astro.props;
   .mobileMenuHeader {
     display: flex;
     justify-content: flex-end;
-    padding: 1rem;
+    padding: 1.4rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
   .closeMenuBtn {
@@ -441,7 +442,8 @@ const { categories, categorySelected } = Astro.props;
   }
 
   .itemsBox .mainNav li,
-  .itemsBox .categoryList > li {
+  .itemsBox .categoryList > li,
+  .subcategoryList ul > li {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
 
@@ -472,7 +474,7 @@ const { categories, categorySelected } = Astro.props;
     left: 0;
     width: 100%;
     min-height: 100%;
-    background-color: #c11010;
+    background: var(--h-gradient);
     z-index: 10;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
@@ -488,33 +490,24 @@ const { categories, categorySelected } = Astro.props;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
-    background-color: #ffffff;
     border-bottom: 1px solid #ccc;
     color: black;
   }
   .submenuTitle {
+    color: white;
+    text-decoration: none;
     font-size: 1.3rem;
     font-weight: bold;
-    color: #333;
+    display: flex;
   }
   .backMenuBtn {
     background: none;
     border: none;
-    font-size: 1.8rem;
-    color: #555;
+    font-size: 2rem;
+    color: #ffffff;
     cursor: pointer;
     display: flex;
     align-items: center;
-  }
-
-  .subcategoryLink {
-    color: #333;
-    font-weight: normal;
-    font-size: 1.1rem;
-    border-bottom: 1px solid #eee;
-  }
-  .subcategoryLink:hover {
-    background-color: rgba(0, 0, 0, 0.05);
   }
 
   /* TAMAÑO PC */
@@ -672,7 +665,6 @@ const { categories, categorySelected } = Astro.props;
 
   /* --- MENU ICON --- */
   #astronav-menu {
-    background-color: transparent;
     border: none;
     cursor: pointer;
     background-image: none;
