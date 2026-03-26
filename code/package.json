@@ -25,6 +25,8 @@
     "string-similarity-js": "2.1.4"
   },
   "devDependencies": {
-    "@types/papaparse": "5.3.16"
+    "@types/papaparse": "5.3.16",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1"
   }
 }
