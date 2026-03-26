@@ -19,6 +19,7 @@ const { categories, categorySelected } = Astro.props;
 <header>
   <Astronav>
     <div class="headerContainer">
+      <MenuIcon class="menuIcon" />
       <div class="logoContainer">
         <a href={config.base}>
           <Image src={logo} alt="logo blanco" />
@@ -34,7 +35,6 @@ const { categories, categorySelected } = Astro.props;
             <span></span>
           </div>
         </a>
-        <MenuIcon class="menuIcon" />
       </div>
     </div>
   </Astronav>
@@ -94,7 +94,7 @@ const { categories, categorySelected } = Astro.props;
                     <li>
                       <a
                         href={`${config.base}/categories/${c.name}`}
-                        class="navLink subcategoryLink"
+                        class="principal navLink subcategoryLink"
                         style="font-weight: bold;"
                       >
                         Ver todos
@@ -129,22 +129,67 @@ const { categories, categorySelected } = Astro.props;
 <script>
   import DOMPurify from "dompurify";
   import { config } from "src/config";
-  const searchContainerForm = document.querySelector(
-    "form.searchContainer",
-  ) as HTMLFormElement;
 
-  searchContainerForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchContainerForm = document.querySelector(
+      "form.searchContainer",
+    ) as HTMLFormElement;
+    const hasSubmenuLinks = document.querySelectorAll(".has-submenu");
+    const backBtns = document.querySelectorAll(".backMenuBtn");
+    const closeMenuBtn = document.getElementById(
+      "closeMenuBtn",
+    ) as HTMLButtonElement;
+    const astroNavMenu = document.getElementById(
+      "astronav-menu",
+    ) as HTMLButtonElement;
 
-    const formData = new FormData(searchContainerForm).get("search");
-    if (!formData) return;
-    const searchTerm = DOMPurify.sanitize(formData.toString().toLowerCase());
+    searchContainerForm.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    if (!searchTerm || searchTerm.length < 3) return;
+      const formData = new FormData(searchContainerForm).get("search");
+      if (!formData) return;
+      const searchTerm = DOMPurify.sanitize(formData.toString().toLowerCase());
 
-    const url = new URL(config.base + "/search", window.location.origin);
-    url.searchParams.set("q", searchTerm);
-    window.location.assign(url.toString());
+      if (!searchTerm || searchTerm.length < 3) return;
+
+      const url = new URL(config.base + "/search", window.location.origin);
+      url.searchParams.set("q", searchTerm);
+      window.location.assign(url.toString());
+    });
+
+    // Abrir submenús
+    hasSubmenuLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        const targetId = link.getAttribute("data-submenu-target");
+        if (targetId) {
+          const submenu = document.getElementById(targetId);
+          if (submenu) {
+            submenu.classList.add("open");
+          }
+        }
+      });
+    });
+
+    // Retroceder al menú principal
+    backBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = btn.getAttribute("data-submenu-close");
+        if (targetId) {
+          const submenu = document.getElementById(targetId);
+          if (submenu) {
+            submenu.classList.remove("open");
+          }
+        }
+      });
+    });
+
+    // Cerrar el panel móvil entero
+    closeMenuBtn.addEventListener("click", () => {
+      astroNavMenu.click();
+    });
   });
 </script>
 
@@ -255,58 +300,6 @@ const { categories, categorySelected } = Astro.props;
       }
     });
   }
-  // --- Lógica del menú móvil ---
-  document.addEventListener("DOMContentLoaded", () => {
-    const isMobile = () => window.innerWidth < 1000;
-    // Abrir submenús
-    const hasSubmenuLinks = document.querySelectorAll(".has-submenu");
-    hasSubmenuLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        if (isMobile()) {
-          // Prevenir que el click se propague al componente Astronav y lo cierre
-          e.stopPropagation();
-          e.preventDefault();
-          const targetId = link.getAttribute("data-submenu-target");
-          if (targetId) {
-            const submenu = document.getElementById(targetId);
-            if (submenu) {
-              submenu.classList.add("open");
-            }
-          }
-        }
-      });
-    });
-
-    // Retroceder al menú principal
-    const backBtns = document.querySelectorAll(".backMenuBtn");
-    backBtns.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const targetId = btn.getAttribute("data-submenu-close");
-        if (targetId) {
-          const submenu = document.getElementById(targetId);
-          if (submenu) {
-            submenu.classList.remove("open");
-          }
-        }
-      });
-    });
-
-    // Cerrar el panel móvil entero
-    const closeMenuBtn = document.getElementById("closeMenuBtn");
-    if (closeMenuBtn) {
-      closeMenuBtn.addEventListener("click", () => {
-        const itemsBox = document.querySelector(".itemsBox");
-        if (itemsBox) {
-          itemsBox.classList.add("hidden");
-          // Limpiar submenús abiertos
-          document.querySelectorAll(".subcategoryList.open").forEach((sub) => {
-            sub.classList.remove("open");
-          });
-        }
-      });
-    }
-  });
 
   // Ejecutar al cargar y al redimensionar
   window.addEventListener("DOMContentLoaded", checkCategoryListWidth);
@@ -338,15 +331,16 @@ const { categories, categorySelected } = Astro.props;
   }
 
   .logoContainer {
-    flex: 0 0 auto;
+    flex: 1;
     height: 75px;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   /* --- SEARCH FORM --- */
   .navMenu {
-    flex: 1;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -515,11 +509,19 @@ const { categories, categorySelected } = Astro.props;
     header {
       /* --header-icon-size: 7rem; */
     }
+
+    .logoContainer {
+      flex: 0 0 auto;
+    }
+
     /* --- MENU ICON --- */
-    .navMenu .menuIcon {
+    .headerContainer .menuIcon {
       display: none;
     }
     /* Mostrar barra de búsqueda en desktop */
+    .navMenu {
+      flex: 1;
+    }
     .navMenu form {
       display: block;
       position: relative;
@@ -579,6 +581,9 @@ const { categories, categorySelected } = Astro.props;
       padding: 0.5rem 1rem;
       font-weight: normal;
       font-size: 1rem;
+    }
+    .navLink.principal {
+      display: none;
     }
     .navLink:hover,
     .navLink.focus,
@@ -668,10 +673,15 @@ const { categories, categorySelected } = Astro.props;
     border: none;
     cursor: pointer;
     background-image: none;
+    background-color: transparent;
     color: inherit;
 
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  #astronav-menu svg {
+    width: calc(var(--menu-size) - 10px);
+    height: calc(var(--menu-size) - 10px);
   }
 </style>

@@ -19,6 +19,7 @@ const items = await cargarProductos();
 
 <style>
   form {
+    display: none;
     flex: 1;
     padding-inline: 5rem;
     padding-block: 1.5rem;
@@ -58,6 +59,12 @@ const items = await cargarProductos();
   :global(#searchContainer li a:hover) {
     color: var(--line-color);
     background-color: var(--p-b-color);
+  }
+
+  @media screen and (min-width: 1000px){
+    form {
+      display: inherit;
+    }
   }
 </style>
 
