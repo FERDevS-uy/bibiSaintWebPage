@@ -91,6 +91,9 @@
 
   #banner .slide__content img {
     object-fit: contain;
+    width: 100%;
+    max-height: 300px;
+    aspect-ratio: 1/1;
   }
 
   #banner .dot {
@@ -114,10 +117,10 @@
   import type Product from "src/types/product";
   import { config } from "src/config";
   const banner = document.getElementById(
-    "banner___container"
+    "banner___container",
   ) as HTMLDivElement;
   const dot_container = document.getElementById(
-    "dot_container"
+    "dot_container",
   ) as HTMLDivElement;
   let slideIndex = 1;
 
@@ -170,7 +173,7 @@
 
     slide.innerHTML = `
     <a class="slide__content" href="${config.base}/producto/${producto.id}" >
-        <img src="${producto.img}" alt="${producto.name} width="300px" height="300px" />
+        <img src="${producto.img}" alt="${producto.name}" />
         <span>${producto.name}</span>
     </a>
 `;
@@ -189,10 +192,10 @@
   function showSlides(n: number) {
     let i;
     let slides = document.getElementsByClassName(
-      "mySlides"
+      "mySlides",
     ) as HTMLCollectionOf<HTMLDivElement>;
     let dots = document.getElementsByClassName(
-      "dot"
+      "dot",
     ) as HTMLCollectionOf<HTMLSpanElement>;
 
     if (slides.length === 0 || dots.length === 0) return;
