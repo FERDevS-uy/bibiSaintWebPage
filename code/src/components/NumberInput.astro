@@ -123,7 +123,7 @@ const uniqueId =
       // Limpiar eventos previos para evitar duplicados si se re-ejecuta
       // (Una técnica simple es clonar y reemplazar el nodo, pero aquí usaremos lógica directa)
 
-      const updateValue = (increment: any) => {
+      const updateValue = (increment: boolean) => {
         if (increment) input.stepUp();
         else input.stepDown();
 
