@@ -4,25 +4,21 @@ import { cargarProductos } from "@utils/loadCSV";
 const items = await cargarProductos();
 ---
 
-<form id="searchContainer" class="searchContainer">
+<form class="searchForm">
   <input
-    id="searchInput"
     type="text"
     placeholder="Buscar productos..."
     autocomplete="off"
+    id="search"
     class="searchInput"
-    name="search"
   />
 
-  <ul id="searchResults" class="searchResults"></ul>
+  <ul class="searchResults"></ul>
 </form>
 
 <style>
   form {
-    display: none;
-    flex: 1;
-    padding-inline: 5rem;
-    padding-block: 1.5rem;
+    width: 100%;
     position: relative;
     z-index: 10;
   }
@@ -32,38 +28,37 @@ const items = await cargarProductos();
 
   input {
     width: 100%;
-    border-radius: 5px;
+    border-radius: 50px;
     padding: 5px 10px;
     border: 1px solid var(--line-color);
   }
 
   ul {
+    position: absolute;
     background: linear-gradient(
       0deg,
       var(--p-b-color) 0%,
       var(--s-b-color) 100%
     );
-    top: var(--header-height);
-    left: 5rem;
     list-style: none;
   }
 
-  :global(#searchContainer li) {
+  :global(.searchForm li) {
   }
-  :global(#searchContainer li a) {
+  :global(.searchForm li a) {
     display: block;
     padding: 10px 1rem;
     color: var(--secondary-text-color);
     text-decoration: none;
   }
-  :global(#searchContainer li a:hover) {
+  :global(.searchForm li a:hover) {
     color: var(--line-color);
     background-color: var(--p-b-color);
   }
 
-  @media screen and (min-width: 1000px){
-    form {
-      display: inherit;
+  @media screen and (min-width: 1000px) {
+    input {
+      border-radius: 5px;
     }
   }
 </style>
@@ -91,48 +86,48 @@ const items = await cargarProductos();
     threshold: 0.3,
   });
 
-  const input = document.querySelector("#searchInput") as HTMLInputElement;
-  const resultContainer = document.querySelector(
-    "#searchResults",
-  ) as HTMLElement;
-  const form = document.querySelector("#searchContainer") as HTMLFormElement;
+  // Inicializar cada instancia del formulario de forma independiente
+  document.querySelectorAll(".searchForm").forEach((form) => {
+    const input = form.querySelector(".searchInput") as HTMLInputElement;
+    const resultContainer = form.querySelector(".searchResults") as HTMLElement;
 
-  if (urlQuery) input.value = urlQuery;
+    if (urlQuery) input.value = urlQuery;
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    const query = input.value.trim();
+      const query = input.value.trim();
 
-    if (query)
-      window.location.href = `${BASE_URL}/search?q=${encodeURIComponent(query)}`;
-    else window.location.href = BASE_URL;
-  });
+      if (query)
+        window.location.href = `${BASE_URL}/search?q=${encodeURIComponent(query)}`;
+      else window.location.href = BASE_URL;
+    });
 
-  input.addEventListener("input", () => {
-    const query = input.value.trim();
+    input.addEventListener("input", () => {
+      const query = input.value.trim();
 
-    if (!query) {
-      resultContainer.innerHTML = "";
-      form.classList.remove("active");
-      return;
-    }
+      if (!query) {
+        resultContainer.innerHTML = "";
+        form.classList.remove("active");
+        return;
+      }
 
-    const results = fuse.search(query).slice(0, 5);
+      const results = fuse.search(query).slice(0, 5);
 
-    if (results.length === 0) form.classList.remove("active");
-    else form.classList.add("active");
+      if (results.length === 0) form.classList.remove("active");
+      else form.classList.add("active");
 
-    resultContainer.innerHTML = results
-      .map(
-        (r) => `
-      <li class="searchResultItem">
-        <a href="${import.meta.env.BASE_URL}/producto/${r.item.id}">
-        ${r.item.name}
-        </a>
-      </li>
-    `,
-      )
-      .join("");
+      resultContainer.innerHTML = results
+        .map(
+          (r) => `
+        <li class="searchResultItem">
+          <a href="${import.meta.env.BASE_URL}/producto/${r.item.id}">
+          ${r.item.name}
+          </a>
+        </li>
+      `,
+        )
+        .join("");
+    });
   });
 </script>

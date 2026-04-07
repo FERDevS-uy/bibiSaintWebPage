@@ -72,13 +72,3 @@ const emptyList = !productos || productos.length === 0;
     gap: 1rem; /* Added gap for better spacing if needed, though card controls margins */
   }
 </style>
-
-<script>
-  import { initProductFilters } from "../scripts/components/ListarProductos";
-
-  initProductFilters();
-
-  document.addEventListener("astro:page-load", () => {
-    initProductFilters();
-  });
-</script>
