@@ -151,3 +151,88 @@
      margin-top: 2px;
   }
 }
+
+/* === Mobile meta-rows inside tdDesc === */
+
+/* Hidden on desktop — shown only in mobile card layout */
+.cartMeta {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .cartMeta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  /* label izq, valor der */
+    padding: 7px 0;
+    border-bottom: 1px solid #eee;  /* separador entre filas */
+    font-size: 0.88rem;
+  }
+
+  /* Quitar línea al último cartMeta (Subtotal) */
+  .cartMeta:last-child {
+    border-bottom: none;
+  }
+
+  /* Nombre del producto: más peso visual, separado del bloque de filas */
+  .cartName {
+    font-weight: 700;
+    font-size: 0.92rem;
+    margin-bottom: 4px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #eee;
+    line-height: 1.3;
+  }
+
+  .metaLabel {
+    font-weight: 700;
+    color: #222;
+  }
+
+  .metaValue {
+    color: #333;
+  }
+
+  .subtotalValue {
+    color: #e67e22;
+    font-weight: 700;
+  }
+
+  /* Inline qty controls dentro del row meta */
+  .cartMeta .qtyControls {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #999;
+    border-radius: 50px;
+    height: 30px;
+    overflow: hidden;
+    width: fit-content;
+    margin: 0;
+  }
+
+  .cartMeta .qtyBtn {
+    background: none;
+    border: none;
+    width: 28px;
+    height: 100%;
+    font-size: 1.1rem;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cartMeta .qtyValue {
+    padding: 0 8px;
+    font-size: 0.95rem;
+    border-left: 1px solid #999;
+    border-right: 1px solid #999;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    min-width: 24px;
+    justify-content: center;
+  }
+}
+
