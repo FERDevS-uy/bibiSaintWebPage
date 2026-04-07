@@ -28,7 +28,8 @@
     /* max-width: 1000px; */
     position: relative;
     margin: auto;
-    aspect-ratio: 200/75;
+    /* aspect-ratio: 200/75; */
+    aspect-ratio: 90/80;
   }
 
   .prev,
@@ -65,6 +66,12 @@
   .fade {
     animation-name: fade;
     animation-duration: 1.5s;
+  }
+
+  @media screen and (min-width: 1000px) {
+    .slideshow___container {
+      aspect-ratio: 200/75;
+    }
   }
 
   @keyframes fade {
