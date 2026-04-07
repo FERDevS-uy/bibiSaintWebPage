@@ -27,7 +27,9 @@ const { categories, categorySelected } = Astro.props;
       </div>
 
       <div class="navMenu">
-        <SearchInput />
+        <div class="search__container">
+          <SearchInput />
+        </div>
 
         <a href={`${config.base}/carrito`} class="cartLink">
           <Fragment set:html={cartSVG} />
@@ -42,8 +44,11 @@ const { categories, categorySelected } = Astro.props;
   <MenuItems class="itemsBox hidden">
     <!-- Botón de Cerrar (Mobile) -->
     <div class="mobileMenuHeader">
+      <div class="search__container sideBar">
+        <SearchInput />
+      </div>
       <button id="closeMenuBtn" class="closeMenuBtn">
-        <span style="font-weight: bold; font-size: 1.2rem;">&times;</span> Cerrar
+        <span>&times;</span>
       </button>
     </div>
 
@@ -127,13 +132,7 @@ const { categories, categorySelected } = Astro.props;
 </header>
 
 <script>
-  import DOMPurify from "dompurify";
-  import { config } from "src/config";
-
   document.addEventListener("DOMContentLoaded", () => {
-    const searchContainerForm = document.querySelector(
-      "form.searchContainer",
-    ) as HTMLFormElement;
     const hasSubmenuLinks = document.querySelectorAll(".has-submenu");
     const backBtns = document.querySelectorAll(".backMenuBtn");
     const closeMenuBtn = document.getElementById(
@@ -142,20 +141,6 @@ const { categories, categorySelected } = Astro.props;
     const astroNavMenu = document.getElementById(
       "astronav-menu",
     ) as HTMLButtonElement;
-
-    searchContainerForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const formData = new FormData(searchContainerForm).get("search");
-      if (!formData) return;
-      const searchTerm = DOMPurify.sanitize(formData.toString().toLowerCase());
-
-      if (!searchTerm || searchTerm.length < 3) return;
-
-      const url = new URL(config.base + "/search", window.location.origin);
-      url.searchParams.set("q", searchTerm);
-      window.location.assign(url.toString());
-    });
 
     // Abrir submenús
     hasSubmenuLinks.forEach((link) => {
@@ -238,68 +223,6 @@ const { categories, categorySelected } = Astro.props;
       toggleBtn.style.display = "none";
     }
   }
-  // ...existing code...
-
-  let productosCache = null;
-
-  async function fetchProductos() {
-    if (productosCache) return productosCache;
-    const res = await fetch("/productos.json");
-    productosCache = await res.json();
-    return productosCache;
-  }
-
-  const searchInput = document.getElementById("searchInput");
-  const searchResults = document.getElementById("searchResults");
-
-  if (searchInput && searchResults) {
-    searchInput.addEventListener("input", async (e) => {
-      const query = e.target.value.trim().toLowerCase();
-      if (!query) {
-        searchResults.style.display = "none";
-        searchResults.innerHTML = "";
-        return;
-      }
-      const productos = await fetchProductos();
-      const resultados = productos
-        .filter((p) => p.name.toLowerCase().includes(query))
-        .slice(0, 10); // máximo 10 resultados
-
-      if (resultados.length === 0) {
-        searchResults.innerHTML = "<li>No se encontraron productos</li>";
-      } else {
-        searchResults.innerHTML = resultados
-          .map(
-            (p) =>
-              `<li class="searchResultItem" onclick="window.location.href='/template-static-ecommerce/producto/${p.id}'">
-    <span class="searchResultName">${p.name}</span>
-    <span class="searchResultPrice">$${p.price || p.precio || ""}</span>
-  </li>`,
-          )
-          .join("");
-      }
-      searchResults.style.display = "block";
-    });
-
-    // Ocultar resultados al perder foco
-    searchInput.addEventListener("blur", () => {
-      setTimeout(() => {
-        searchResults.style.display = "none";
-      }, 200);
-    });
-    searchInput.addEventListener("focus", () => {
-      if (searchResults.innerHTML) searchResults.style.display = "block";
-    });
-    searchInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        const query = searchInput.value.trim();
-
-        if (query) {
-          window.location.href = `/bibiSaintWebPage/search/page/1?q=${encodeURIComponent(query)}`;
-        }
-      }
-    });
-  }
 
   // Ejecutar al cargar y al redimensionar
   window.addEventListener("DOMContentLoaded", checkCategoryListWidth);
@@ -339,6 +262,16 @@ const { categories, categorySelected } = Astro.props;
   }
 
   /* --- SEARCH FORM --- */
+  .search__container {
+    display: none;
+    padding-inline: 5rem;
+    padding-block: 1.5rem;
+    flex: 1;
+  }
+  .search__container.sideBar {
+    display: inherit;
+    padding: 0;
+  }
   .navMenu {
     flex: 0 0 auto;
     display: flex;
@@ -412,9 +345,12 @@ const { categories, categorySelected } = Astro.props;
   }
 
   .mobileMenuHeader {
+    height: var(--header-height);
     display: flex;
-    justify-content: flex-end;
-    padding: 1.4rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5rem;
+    padding-inline: 1.4rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
   .closeMenuBtn {
@@ -427,6 +363,13 @@ const { categories, categorySelected } = Astro.props;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+  .closeMenuBtn span {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    font-weight: bold;
+    font-size: 2rem;
   }
 
   .itemsBox ul {
@@ -525,6 +468,10 @@ const { categories, categorySelected } = Astro.props;
     .navMenu form {
       display: block;
       position: relative;
+    }
+
+    .search__container {
+      display: inherit;
     }
 
     /* --- CART --- */
