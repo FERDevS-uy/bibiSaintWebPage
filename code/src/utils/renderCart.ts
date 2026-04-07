@@ -117,6 +117,22 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
 
         <td class="tdDesc">
            <div class="cartName">${p.name}</div>
+           <div class="cartMeta">
+             <span class="metaLabel">Precio</span>
+             <span class="metaValue">$${p.price}</span>
+           </div>
+           <div class="cartMeta cartMetaQty">
+             <span class="metaLabel">Cantidad</span>
+             <div class="qtyControls">
+               <button class="qtyBtn removeOnce" data-idx="${p.id}">-</button>
+               <span class="qtyValue">${p.cantidad}</span>
+               <button class="qtyBtn addOnce" data-idx="${p.id}">+</button>
+             </div>
+           </div>
+           <div class="cartMeta">
+             <span class="metaLabel">Subtotal</span>
+             <span class="metaValue subtotalValue">$${subtotal}</span>
+           </div>
         </td>
 
         <td class="tdQty">

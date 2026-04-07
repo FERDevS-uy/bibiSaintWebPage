@@ -181,7 +181,9 @@
 
 /* Buttons */
 .cartBtn {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   padding: 15px;
   margin-bottom: 15px;
@@ -194,6 +196,15 @@
   text-decoration: none;
   transition: all 0.2s;
   color: white;
+}
+
+/* Inner wrapper for WhatsApp button icon + text */
+.waBtnContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
 }
 
 .cartBtn.danger {
@@ -237,42 +248,61 @@
 }
 
 @media (max-width: 768px) {
+  /* Ocultar cabecera de tabla */
   .cartTable thead {
-    display: none; 
+    display: none;
   }
 
-  .cartTable tr {
+  /* Cada fila = tarjeta flex */
+  .cartTable :global(tr) {
     display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 12px;
     border: 1px solid #eee;
-    padding: 10px;
-    border-radius: 8px;
+    border-radius: 10px;
+    margin-bottom: 14px;
     position: relative;
   }
-  
-  .cartTable td {
-    border: none;
-    padding: 5px;
-  }
 
-  .tdRemove {
+  /* Botón X → esquina superior derecha */
+  .cartTable :global(.tdRemove) {
     position: absolute;
-    top: 5px;
-    left: 5px;
+    top: 10px;
+    right: 12px;
+    left: auto;
+    padding: 0;
   }
 
-  .tdImg {
-    width: 100px;
+  /* Imagen fija a la izquierda */
+  .cartTable :global(.tdImg) {
+    flex: 0 0 90px;
+    width: 90px;
+    padding: 0;
+    border: none;
   }
 
-  .tdDesc {
-    width: calc(100% - 110px);
+  .cartTable :global(.tdImg img) {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+  }
+
+  /* Descripción ocupa el resto */
+  .cartTable :global(.tdDesc) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0;
+    padding-right: 28px; /* espacio para el X */
+    border: none;
     text-align: left;
   }
 
-  .tdQty, .tdSubtotal {
-    width: 50%;
-    text-align: center;
+  /* Ocultar celdas de cantidad/subtotal (van embebidas en tdDesc) */
+  .cartTable :global(.tdQty),
+  .cartTable :global(.tdSubtotal) {
+    display: none;
   }
 }
