@@ -5,6 +5,7 @@
   font-family: "Poppins", Arial, sans-serif;
   color: #222;
   display: grid;
+  align-items: start;
   gap: 2rem;
 }
 
@@ -20,7 +21,8 @@
 .headerSeparator {
   width: 100px;
   height: 8px;
-  background-color: #d32f2f; /* Red from image */
+  background-color: #d32f2f;
+  /* Red from image */
   margin: 10px 0;
 }
 
@@ -41,7 +43,8 @@
   font-weight: 700;
   font-size: 1rem;
   padding: 15px;
-  border-bottom: 2px solid #d32f2f; /* Red underline for headers */
+  border-bottom: 2px solid #d32f2f;
+  /* Red underline for headers */
   color: #000;
 }
 
@@ -54,9 +57,12 @@
 
 /* Table Content - Scoped via :global because renderCart injects HTML */
 .cartTable :global(.tdImg img) {
-  width: 80px; /* Slightly larger as requested */
-  height: 80px; /* Fixed height to prevent row stretching */
-  object-fit: contain; /* compressed/contained within the box */
+  width: 80px;
+  /* Slightly larger as requested */
+  height: 80px;
+  /* Fixed height to prevent row stretching */
+  object-fit: contain;
+  /* compressed/contained within the box */
   display: block;
   margin: 0 auto;
 }
@@ -81,7 +87,8 @@
   overflow: hidden;
   height: 40px;
   width: fit-content;
-  margin: 0 auto; /* Center in cell */
+  margin: 0 auto;
+  /* Center in cell */
 }
 
 .cartTable :global(.qtyBtn) {
@@ -121,8 +128,10 @@
 
 .cartTable :global(.removeBtn) {
   background: none;
-  border: none; /* Removed border */
-  font-size: 1.5rem; /* Larger X */
+  border: none;
+  /* Removed border */
+  font-size: 1.5rem;
+  /* Larger X */
   color: #000;
   cursor: pointer;
   padding: 0;
@@ -135,7 +144,8 @@
 }
 
 .cartTable :global(.removeBtn:hover) {
-  color: #d32f2f; /* Red on hover */
+  color: #d32f2f;
+  /* Red on hover */
 }
 
 .cartTable :global(.price) {
@@ -150,7 +160,7 @@
   padding: 25px;
   border-radius: 12px;
   border: 1px solid #ddd;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   height: fit-content;
 }
 
@@ -208,20 +218,32 @@
 }
 
 .cartBtn.danger {
-  background-color: #c0392b; /* Red */
+  background-color: #c0392b;
+  /* Red */
 }
-.cartBtn.danger:hover { background-color: #a93226; }
+
+.cartBtn.danger:hover {
+  background-color: #a93226;
+}
 
 .cartBtn.secondary {
-  background-color: #e67e22; /* Orange */
+  background-color: #e67e22;
+  /* Orange */
 }
-.cartBtn.secondary:hover { background-color: #d35400; }
+
+.cartBtn.secondary:hover {
+  background-color: #d35400;
+}
 
 .cartBtn.whatsapp {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
+  /* Green */
   font-size: 1.1rem;
 }
-.cartBtn.whatsapp:hover { background-color: #45a049; }
+
+.cartBtn.whatsapp:hover {
+  background-color: #45a049;
+}
 
 .cartEmpty {
   text-align: center;
@@ -236,7 +258,7 @@
   .cartContainer {
     grid-template-columns: 1fr 350px;
   }
-  
+
   .cartHeader {
     grid-column: 1 / -1;
   }
@@ -248,6 +270,7 @@
 }
 
 @media (max-width: 768px) {
+
   /* Ocultar cabecera de tabla */
   .cartTable thead {
     display: none;
@@ -295,7 +318,8 @@
     flex-direction: column;
     gap: 5px;
     padding: 0;
-    padding-right: 28px; /* espacio para el X */
+    padding-right: 28px;
+    /* espacio para el X */
     border: none;
     text-align: left;
   }

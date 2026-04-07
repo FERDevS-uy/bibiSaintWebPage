@@ -30,6 +30,7 @@
   display: grid;
   grid-template-columns: repeat(3, auto);
 }
+
 #cartList tr:not(:last-child) {
   margin-bottom: 2rem;
 }
@@ -47,6 +48,7 @@
 #cartList .tdActions {
   grid-column: 1 / 4;
 }
+
 #cartList .tdActions div {
   display: flex;
   flex-wrap: wrap;
@@ -55,6 +57,7 @@
   flex-direction: row;
   gap: 20px 8px;
 }
+
 #cartList .tdActions button {
   flex: 1 0 2rem;
 
@@ -64,10 +67,12 @@
   padding: 5px;
   border-radius: 10px;
 }
+
 #cartList .tdActions button:hover {
   background-color: var(--principal-text-color);
   color: #fff;
 }
+
 #cartList .tdActions button svg {
   height: 30px;
 }
@@ -75,6 +80,7 @@
 .removeOnce {
   font-size: 2rem;
 }
+
 #mailBtn {
   background: #3b82f6;
   color: #fff;
@@ -142,13 +148,13 @@
 
 @media (max-width: 600px) {
   .cartName {
-     font-family: "Poppins", Arial, sans-serif;
-     width: 100%;
-     display: block;
-     font-size: 1em;
-     word-break: break-word;
-     text-align: left;
-     margin-top: 2px;
+    font-family: "Poppins", Arial, sans-serif;
+    width: 100%;
+    display: block;
+    font-size: 1em;
+    word-break: break-word;
+    text-align: left;
+    margin-top: 2px;
   }
 }
 
@@ -163,9 +169,11 @@
   .cartMeta {
     display: flex;
     align-items: center;
-    justify-content: space-between;  /* label izq, valor der */
+    justify-content: space-between;
+    /* label izq, valor der */
     padding: 7px 0;
-    border-bottom: 1px solid #eee;  /* separador entre filas */
+    border-bottom: 1px solid #eee;
+    /* separador entre filas */
     font-size: 0.88rem;
   }
 
@@ -235,4 +243,3 @@
     justify-content: center;
   }
 }
-
