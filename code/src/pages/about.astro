@@ -1,97 +1,38 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { config } from "../config";
-import { Icon } from "astro-icon/components";
 ---
 
 <Layout pageTitle={`${config.pageTitle} - Sobre nosotros`}>
   <section class="contact-container">
     <div class="contact-info">
-      <h2>Contacto</h2>
+      <h2>Quienes somos</h2>
       <hr />
 
       <p class="intro-text">
-        Te invitamos a completar el formulario de contacto si tienes alguna
-        duda, consulta o buscas algún Producto o Servicio particular, a la
-        brevedad nos pondremos en contacto.
+        Bibi Saint! Descubre una tienda online diferente, donde encontrarás
+        productos para eI hogar, vestimenta, accesorios y mucho más. Nos
+        apasiona brindarte calidad, novedades y soluciones para tu día a día.
+      </p>
+
+      <p class="intro-text">
+        ¿Buscas bienestar? Ofrecemos servicios holísticos personalizados para tu
+        crecimiento personal
       </p>
 
       <div class="services-list">
-        <strong>Comercializamos los siguientes servicios:</strong>
+        <strong> Comercializamos los siguientes servicios: </strong>
         <ul>
-          <li>- De Codificación Biológica por 80 dólares</li>
-          <li>- Carta Numerológica por 80 dólares.</li>
+          <li>De Codificación Biológica por 80 dólares.</li>
+          <li>Carta Numerológica por 80 dólares.</li>
         </ul>
       </div>
 
       <p class="cta-text">
-        No dudes en contactarnos para más detalles o para realizar tu consulta
+        Te invitamos a completar el formulario de contacto si tenes alguna duda,
+        consulta o buscas algún Producto o Servicio particular, a la brevedad
+        nos pondremos en contacto.
       </p>
-
-      <div class="contact-details">
-        <div class="detail-item">
-          <div class="icon-wrapper mobile">
-            <Icon name="phone" width="24" height="24" />
-          </div>
-          <div class="detail-text">
-            <span>Telefono: +598 91 361 706</span>
-            <span>Mail: bibisventasyserviciosonline@gmail.com</span>
-          </div>
-        </div>
-
-        <div class="detail-item">
-          <div class="icon-wrapper pin">
-            <Icon name="location" width="24" height="24" />
-          </div>
-          <div class="detail-text">
-            <span
-              >Dirección: Dr. Baltasar Brum 1154, 60000 Paysandú, Departamento
-              de Paysandú, Uruguay</span
-            >
-          </div>
-        </div>
-      </div>
-
-      <hr class="separator" />
-
-      <div class="social-links">
-        <a
-          href="https://facebook.com/bibicartanumerologica"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon
-            name="facebook"
-            width="32"
-            height="32"
-            class="social-icon facebook"
-          />
-        </a>
-        <a
-          href="https://instagram.com/bibisventasonline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon
-            name="instagram"
-            width="32"
-            height="32"
-            class="social-icon instagram"
-          />
-        </a>
-        <a
-          href="https://wa.me/+59891361706"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon
-            name="whatsapp"
-            width="32"
-            height="32"
-            class="social-icon whatsapp"
-          />
-        </a>
-      </div>
     </div>
 
     <div class="contact-form-wrapper">
@@ -108,7 +49,9 @@ import { Icon } from "astro-icon/components";
 
 <style>
   .contact-container {
+    width: 100%;
     max-width: 1100px; /* var(--max-width-container) */
+    overflow-x: hidden;
     margin: 3rem auto;
     padding: 0 20px;
     display: flex;
@@ -156,12 +99,10 @@ import { Icon } from "astro-icon/components";
   }
 
   .services-list ul {
-    list-style: none;
-    padding: 0;
+    padding-left: 20px;
   }
 
   .cta-text {
-    margin-bottom: 2rem;
     font-size: 0.95rem;
   }
 
@@ -169,12 +110,6 @@ import { Icon } from "astro-icon/components";
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-  }
-
-  .detail-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
   }
 
   .icon-wrapper {
@@ -267,10 +202,11 @@ import { Icon } from "astro-icon/components";
 
   button {
     background-color: #e86c1a; /* Orange from design approx */
+    width: 100%;
     color: white;
     border: none;
     padding: 10px 30px;
-    border-radius: 25px;
+    border-radius: 10px;
     font-weight: 700;
     font-size: 1.1rem;
     cursor: pointer;
@@ -290,6 +226,13 @@ import { Icon } from "astro-icon/components";
 
     .contact-form-wrapper {
       padding-top: 0;
+    }
+  }
+
+  @media screen and (min-width: 1000px) {
+    button {
+      width: auto;
+      border-radius: 25px;
     }
   }
 </style>
