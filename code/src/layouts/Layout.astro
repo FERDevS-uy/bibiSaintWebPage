@@ -9,7 +9,9 @@ import { countCategories } from "@utils/countCategories";
 const productos = cargarProductos();
 const categories = countCategories(productos);
 const isDev = import.meta.env.tienda_DEV === "true";
-const url_href = Astro.url.href;
+const url_href = Astro.url.href.endsWith("/")
+  ? Astro.url.href.slice(0, -1)
+  : Astro.url.href;
 
 interface Props {
   categorySelected?: string;
@@ -23,7 +25,7 @@ const {
   categorySelected,
   pageTitle = config.pageTitle,
   description = config.description,
-  pageImage = `${url_href}favicon.svg`,
+  pageImage = `${url_href}/favicon.svg`,
   pageId,
 } = Astro.props;
 ---
