@@ -3,7 +3,7 @@ import type CategoryList from "src/types/categoryList";
 import { Image } from "astro:assets";
 
 import logo from "@assets/logo_blanco.png";
-const { default: logoSVG } = await import("@assets/logoFD.svg?raw");
+import { Icon } from "astro-icon/components";
 const { default: facebookSVG } = await import("@assets/facebook.svg?raw");
 const { default: instagramSVG } = await import("@assets/instagram.svg?raw");
 const { default: whatsappSVG } = await import("@assets/whatsapp.svg?raw");
@@ -16,14 +16,80 @@ interface Props {
 const { categories } = Astro.props;
 ---
 
-<footer class="footer">
-  <div class="footerContainer">
+<footer>
+  <div class="footerContainer mobile">
+    <div class="contact-details">
+      <h2 class="title">Contacto</h2>
+
+      <div class="detail-item">
+        <div class="icon-wrapper mobile">
+          <Icon name="phone" width="24" height="24" />
+        </div>
+        <div class="detail-text">
+          <p>Telefono: +598 91 361 706</p>
+          <p>Mail: bibisventasyserviciosonline@gmail.com</p>
+        </div>
+      </div>
+
+      <div class="detail-item">
+        <div class="icon-wrapper pin">
+          <Icon name="location" width="24" height="24" />
+        </div>
+        <div class="detail-text">
+          <span
+            >Dirección: Dr. Baltasar Brum 1154, 60000 Paysandú, Departamento de
+            Paysandú, Uruguay</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="social_medias">
+      <Image src={logo} alt="logo blanco" class="logo" />
+
+      <ul>
+        <li>
+          <a
+            href="https://facebook.com/bibicartanumerologica"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Fragment set:html={facebookSVG} />
+          </a>
+        </li>
+
+        <li title="Instagram">
+          <a
+            href="https://instagram.com/bibisventasonline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Fragment set:html={instagramSVG} />
+          </a>
+        </li>
+        <li title="Whatsapp">
+          <a
+            href="https://wa.me/+59891361706"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Fragment set:html={whatsappSVG} />
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footerContainer desktop">
     <div class="col1">
       <a href={import.meta.env.BASE_URL}>
-        <Image src={logo} alt="logo blanco" />
+        <Image class="logo" src={logo} alt="logo blanco" />
       </a>
       <p>Bibi's - Donde cada elección tiene alma</p>
     </div>
+
     <ul class="col2">
       <h3>CATEGORÍAS</h3>
       <ul>
@@ -44,6 +110,7 @@ const { categories } = Astro.props;
         }
       </ul>
     </ul>
+
     <ul class="col3">
       <h3>MEDIOS DE PAGOS</h3>
       <ul>
@@ -51,92 +118,160 @@ const { categories } = Astro.props;
         <li title="Mercado Pago"><Fragment set:html={mercadoPagoSVG} /></li>
       </ul>
     </ul>
-    <ul class="col4">
+
+    <div class="col4 social_medias">
       <h3>CONTACTO</h3>
-      <li>
-        <a class="navLink" href={`${import.meta.env.BASE_URL}/about`}
-          >Quienes somos</a
-        >
-      </li>
-      <li title="Instagram">
-        <a
-          href="https://instagram.com/bibisventasonline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Fragment set:html={instagramSVG} />
-        </a>
-      </li>
-      <li title="Facebook">
-        <a
-          href="https://facebook.com/bibicartanumerologica"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Fragment set:html={facebookSVG} />
-        </a>
-      </li>
-      <li title="Whatsapp">
-        <a
-          href="https://wa.me/+59891361706"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Fragment set:html={whatsappSVG} />
-        </a>
-      </li>
-    </ul>
+      <a class="navLink" href={`${import.meta.env.BASE_URL}/about`}
+        >Quienes somos</a
+      >
+      <ul>
+        <li title="Instagram">
+          <a
+            href="https://instagram.com/bibisventasonline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Fragment set:html={instagramSVG} />
+          </a>
+        </li>
+        <li title="Facebook">
+          <a
+            href="https://facebook.com/bibicartanumerologica"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Fragment set:html={facebookSVG} />
+          </a>
+        </li>
+        <li title="Whatsapp">
+          <a
+            href="https://wa.me/+59891361706"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Fragment set:html={whatsappSVG} />
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </footer>
 
 <style>
-  .footer {
+  /* ------------------------- Global ------------------------- */
+  .separator {
+    margin-block: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  p {
+    word-break: break-all;
+  }
+
+  a {
+    text-decoration: none;
+    text-wrap: nowrap;
+    color: var(--secondary-text-color);
+  }
+  a:hover {
+    opacity: 0.7;
+  }
+
+  footer {
     background: #c11010;
     background: linear-gradient(
       0deg,
       var(--p-b-color) 0%,
       var(--s-b-color) 100%
     );
-    padding: 3rem 10px;
+    border-radius: 20px 20px 0 0;
+    padding: 10px;
     font-size: 0.9rem;
     color: var(--secondary-text-color);
   }
 
-  .footer h3 {
+  h3 {
     color: var(--secondary-text-color);
     text-wrap: nowrap;
     margin-bottom: 0.5rem;
   }
 
-  .footer ul {
+  ul {
     list-style: none;
     padding: 0;
   }
 
-  .footerContainer {
+  .title {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .logo {
+    width: 130px;
+    height: auto;
+  }
+
+  .social_medias {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .social_medias ul {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  /* ------------------------- Mobile ------------------------- */
+  .footerContainer.mobile {
+    margin-inline: auto;
+    width: 90%;
+  }
+
+  .footerContainer.mobile .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 15px;
+  }
+
+  .footerContainer.mobile .contact-details {
+    width: 80%;
+    margin-inline: auto;
+  }
+
+  .footerContainer.mobile .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media screen and (min-width: 1000px) {
+    .footerContainer.mobile {
+      display: none;
+    }
+  }
+
+  /* ------------------------- Desktop ------------------------- */
+
+  .footerContainer.desktop {
+    display: none;
+
+    padding: 10px;
     flex-direction: row;
     justify-content: center;
     gap: 3rem 5rem;
     flex-wrap: wrap;
   }
 
-  .footerContainer > * {
+  .footerContainer.desktop > * {
     width: 200px;
     min-width: 100px;
     padding-inline: 10px;
   }
 
-  .footerContainer a {
-    text-decoration: none;
-    text-wrap: nowrap;
-    color: var(--secondary-text-color);
-  }
-
-  .col1 img {
-    width: 100%;
-    height: auto;
-  }
   .col1 p {
     text-wrap: auto;
   }
@@ -145,35 +280,31 @@ const { categories } = Astro.props;
     margin-bottom: 0.5rem;
   }
 
-  a:hover {
-    opacity: 0.7;
-  }
-
   .col3 ul {
     display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .col4 {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 0.5rem;
     align-items: flex-start;
-    align-content: flex-start;
-  }
-  .col4 li:first-of-type {
-    width: 100%;
-    /* text-align: start; */
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 
-  :global(.col3 svg),
-  :global(.col4 svg) {
+  @media screen and (min-width: 1000px) {
+    .footerContainer.desktop {
+      display: flex;
+    }
+  }
+</style>
+
+<style is:global>
+  svg {
     width: 30px;
     height: 30px;
-  }
-
-  @media (max-width: 600px) {
   }
 </style>
