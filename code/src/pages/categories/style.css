@@ -1,0 +1,11 @@
+  .categories__container {
+      display: flex;
+      flex-direction: column;
+  }
+
+  @media screen and (min-width: 600px) {
+      .categories__container {
+          flex-direction: row;
+          min-height: 100dvh;
+      }
+  }

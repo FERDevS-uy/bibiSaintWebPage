@@ -6,6 +6,7 @@ import { countCategories } from "@utils/countCategories";
 import { config } from "src/config";
 import SideBardCategories from "@components/SideBardCategories.astro";
 import type { subCategory } from "src/types/categoryList";
+import "../../style.css";
 
 /** Genera los archivos html por cada subcategoría */
 export const getStaticPaths = () => {
@@ -49,7 +50,7 @@ const baseUrl = `${config.base}/categories/${id}/${subcat}`;
   categorySelected={id}
   pageTitle={`${config.pageTitle} - ${id} / ${subcat} / page ${pag}`}
 >
-  <div class="subCategories__container">
+  <div class="categories__container">
     <SideBardCategories
       categoryFather={id}
       arrayCategorys={subCats}
@@ -63,11 +64,3 @@ const baseUrl = `${config.base}/categories/${id}/${subcat}`;
     />
   </div>
 </Layout>
-
-<style>
-  .subCategories__container {
-    display: flex;
-    flex-direction: row;
-    min-height: 100dvh;
-  }
-</style>

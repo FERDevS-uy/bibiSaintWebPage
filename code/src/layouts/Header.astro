@@ -144,17 +144,19 @@ const { categories, categorySelected } = Astro.props;
 
     // Abrir submenús
     hasSubmenuLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        const targetId = link.getAttribute("data-submenu-target");
-        if (targetId) {
-          const submenu = document.getElementById(targetId);
-          if (submenu) {
-            submenu.classList.add("open");
+      if (window.innerWidth <= 600) {
+        link.addEventListener("click", (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          const targetId = link.getAttribute("data-submenu-target");
+          if (targetId) {
+            const submenu = document.getElementById(targetId);
+            if (submenu) {
+              submenu.classList.add("open");
+            }
           }
-        }
-      });
+        });
+      }
     });
 
     // Retroceder al menú principal
@@ -327,6 +329,7 @@ const { categories, categorySelected } = Astro.props;
     left: 0;
     width: 85vw;
     max-width: 400px;
+    min-width: 310px;
     height: 100vh;
     background: var(
       --h-gradient

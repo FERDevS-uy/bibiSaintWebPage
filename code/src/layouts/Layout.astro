@@ -61,11 +61,6 @@ const {
       href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href=`${import.meta.env.BASE_URL}/icono.svg`
-    />
     <meta name="generator" content={Astro.generator} />
     <title>{config.pageTitle}</title>
   </head>
@@ -97,6 +92,7 @@ const {
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
+    min-width: 350px;
     color: var(--principal-text-color);
   }
   body.dev::before {
