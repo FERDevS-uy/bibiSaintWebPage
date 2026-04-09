@@ -3,6 +3,7 @@ import type Product from "src/types/product";
 import { capitalize } from "@utils/capitalizeString";
 import getColors from "@utils/getColors";
 import type { subCategory } from "src/types/categoryList";
+const { default: filterSVG } = await import("../assets/filter.svg?raw");
 
 interface Props {
   categoryFather: string;
@@ -17,107 +18,141 @@ const uniqueColors = [...new Set(productColors)];
 ---
 
 <section>
-  <div>
-    <h2 class="title">Inicio - {categoryFather}</h2>
-    <ul>
-      {
-        arrayCategorys.map((subcat) => (
-          <li>
-            <a
-              class={`option${selected === subcat.name ? " selected" : ""}`}
-              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
-            >
-              {subcat.name}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+  <p>
+    Filtrar productos <button class="btn__toggle"
+      ><Fragment set:html={filterSVG} />
+    </button>
+  </p>
 
-  <div>
-    <h2 class="title">Filtrar por</h2>
-    <div data-filter-section>
-      <h3>Color</h3>
-      <form>
-        <ul>
-          {
-            uniqueColors.map((color) => (
-              <li>
-                <label>
-                  <input
-                    type="checkbox"
-                    data-color={color}
-                    value={color}
-                    id={`color_${color}`}
-                    name="colors"
-                  />{" "}
-                  {capitalize(color)}
-                </label>
-              </li>
-            ))
-          }
-        </ul>
-      </form>
+  <aside id="aside">
+    <div>
+      <h2 class="title">Inicio - {categoryFather}</h2>
+      <ul>
+        {
+          arrayCategorys.map((subcat) => (
+            <li>
+              <a
+                class={`option${selected === subcat.name ? " selected" : ""}`}
+                href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
+              >
+                {subcat.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
-  </div>
 
-  <div>
-    <h2 class="title">Marca</h2>
-    <ul>
-      {
-        arrayCategorys.map((subcat) => (
-          <li>
-            <a
-              class="option"
-              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
-            >
-              {subcat.name}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+    <div>
+      <h2 class="title">Filtrar por</h2>
+      <div data-filter-section>
+        <h3>Color</h3>
+        <form>
+          <ul>
+            {
+              uniqueColors.map((color) => (
+                <li>
+                  <label>
+                    <input
+                      type="checkbox"
+                      data-color={color}
+                      value={color}
+                      id={`color_${color}`}
+                      name="colors"
+                    />{" "}
+                    {capitalize(color)}
+                  </label>
+                </li>
+              ))
+            }
+          </ul>
+        </form>
+      </div>
+    </div>
 
-  <div>
-    <h2 class="title">Modelo</h2>
-    <ul>
-      {
-        arrayCategorys.map((subcat) => (
-          <li>
-            <a
-              class="option"
-              href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
-            >
-              {subcat.name}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+    <div>
+      <h2 class="title">Marca</h2>
+      <ul>
+        {
+          arrayCategorys.map((subcat) => (
+            <li>
+              <a
+                class="option"
+                href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
+              >
+                {subcat.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="title">Modelo</h2>
+      <ul>
+        {
+          arrayCategorys.map((subcat) => (
+            <li>
+              <a
+                class="option"
+                href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
+              >
+                {subcat.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </aside>
 </section>
 
 <style>
   section {
-    width: 0;
-    overflow-x: hidden;
-    border-right: 1px solid #000;
-  }
-  section.active {
-    padding: 1rem 3rem;
+    position: relative;
   }
 
-  section ul {
-    list-style: none;
+  p {
+    width: 80%;
+    height: 3rem;
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    padding-block: 5px;
   }
-  section a {
+
+  button {
+    background-color: transparent;
+    border: 0;
+    display: flex;
+    cursor: pointer;
+    height: auto;
+  }
+  button:hover {
+    opacity: 0.6;
+  }
+
+  aside {
+    width: 100%;
+    height: 0;
+    overflow-y: hidden;
+    background-color: #fff;
+  }
+
+  aside.active {
+    padding: 1rem 3rem;
+    height: auto;
+    border-bottom: 1px solid #000;
+  }
+
+  a {
     text-decoration: none;
     color: var(--principal-text-color);
   }
-
-  section a:hover {
+  a:hover {
     opacity: 0.5;
   }
 
@@ -125,6 +160,9 @@ const uniqueColors = [...new Set(productColors)];
     margin-top: 2rem;
   }
 
+  ul {
+    list-style: none;
+  }
   ul li {
     margin-bottom: 0.8rem;
   }
@@ -156,11 +194,31 @@ const uniqueColors = [...new Set(productColors)];
     font-weight: bold;
   }
 
-  @media screen and (min-width: 1000px) {
-    section,
-    section.active {
+  @media screen and (min-width: 600px) {
+    p {
+      display: none;
+    }
+
+    aside,
+    aside.active {
       width: auto;
+      height: 100%;
       padding: 1rem 3rem;
+      border-right: 1px solid #000;
+      border-bottom: none;
     }
   }
 </style>
+
+<script>
+  window.addEventListener("DOMContentLoaded", async () => {
+    const aside = document.getElementById("aside") as HTMLDivElement;
+    const btn_toggle = document.querySelector(
+      "button.btn__toggle",
+    ) as HTMLDivElement;
+
+    btn_toggle.addEventListener("click", () => {
+      aside.classList.toggle("active");
+    });
+  });
+</script>
