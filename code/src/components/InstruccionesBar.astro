@@ -1,0 +1,110 @@
+---
+// Barra de instrucciones de compra — visible en el home debajo del navbar
+---
+
+<div class="instrucciones-bar">
+  <div class="instrucciones-inner">
+    <div class="paso">
+      <span class="numero">1</span>
+      <p>Añadí al carrito todos los<br />productos que desees</p>
+    </div>
+    <div class="divisor"></div>
+    <div class="paso">
+      <span class="numero">2</span>
+      <p>Revisá tu compra y<br />finalizá tu pedido</p>
+    </div>
+    <div class="divisor"></div>
+    <div class="paso">
+      <span class="numero">3</span>
+      <p>Enviá por WhatsApp<br />tu pedido</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .instrucciones-bar {
+    background-color: #e8e8e8;
+    width: 100%;
+    padding: 14px 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .instrucciones-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .paso {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 20px;
+    flex: 1;
+    min-width: 200px;
+    justify-content: center;
+  }
+
+  .numero {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
+    background: transparent;
+  }
+
+  .paso p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  .divisor {
+    width: 1px;
+    height: 40px;
+    background-color: #bbb;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 999px) {
+    .instrucciones-bar {
+      margin-bottom: 0;
+      padding: 10px 0;
+      overflow-x: auto;
+      /* Hide scrollbar for a cleaner look */
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    .instrucciones-bar::-webkit-scrollbar {
+      display: none;
+    }
+    .instrucciones-inner {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 0;
+      width: max-content;
+      padding-inline: 10px;
+    }
+    .paso {
+      min-width: 250px;
+      padding: 4px 10px;
+    }
+    .divisor {
+      width: 1px;
+      height: 30px;
+    }
+  }
+</style>

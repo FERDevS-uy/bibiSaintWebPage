@@ -1,4 +1,5 @@
 ---
+import InstruccionesBar from "@components/InstruccionesBar.astro";
 import ListarProductos from "@components/ListarProductos.astro";
 import OfertasBanner from "@components/OfertasBanner.astro";
 import Layout from "@layouts/Layout.astro";
@@ -12,6 +13,7 @@ const showProducts = productos.slice(0, CANT_PRODUCTOS);
 ---
 
 <Layout pageId="index">
+  <InstruccionesBar />
   <OfertasBanner />
   <ListarProductos products={showProducts} totalPages={totalPages} />
 </Layout>

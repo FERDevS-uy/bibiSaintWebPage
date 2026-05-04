@@ -4,32 +4,45 @@ const { default: cartSVG } = await import("../assets/add-one-cart.svg?raw");
 
 interface Props {
   producto: Product;
+  variant?: "icon" | "full";
 }
 
-const { producto: p } = Astro.props;
+const { producto: p, variant = "icon" } = Astro.props;
 ---
 
-<button
-  class="addToCart"
-  title="Agregar uno al carrito"
-  data-id={p.id}
-  data-name={p.name}
-  data-price={p.price}
-  data-img={p.img}
->
-  <Fragment set:html={cartSVG} />
-</button>
+{variant === "full" ? (
+  <button
+    class="addToCart addToCartFull"
+    title="Agregar al carrito"
+    data-id={p.id}
+    data-name={p.name}
+    data-price={p.price}
+    data-img={p.img}
+  >
+    AÑADIR AL CARRITO
+  </button>
+) : (
+  <button
+    class="addToCart"
+    title="Agregar uno al carrito"
+    data-id={p.id}
+    data-name={p.name}
+    data-price={p.price}
+    data-img={p.img}
+  >
+    <Fragment set:html={cartSVG} />
+  </button>
+)}
 
 <style>
+  /* Icon variant (default) */
   .addToCart {
-    float: right;
     background-color: var(--principal-background-color-dark);
     border-radius: 50%;
     border: none;
     width: 50px;
     height: 50px;
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,7 +50,6 @@ const { producto: p } = Astro.props;
   .addToCart:hover {
     background-color: #479030;
   }
-
   .addToCart > span {
     font-size: 1rem;
   }
@@ -47,6 +59,31 @@ const { producto: p } = Astro.props;
   :global(.addToCart svg) {
     width: 80%;
     height: 80%;
+  }
+
+  /* Full-width red variant */
+  .addToCartFull {
+    width: 100%;
+    border-radius: 4px;
+    background-color: #d32f2f;
+    color: #fff !important;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 10px 8px;
+    height: auto;
+    border: 2px solid #d32f2f;
+    transition:
+      background-color 0.18s,
+      transform 0.12s;
+  }
+  .addToCartFull:hover {
+    background-color: #b71c1c;
+    border-color: #b71c1c;
+    transform: scale(1.02);
+  }
+  .addToCartFull:active {
+    transform: scale(0.98);
   }
 </style>
 
@@ -66,19 +103,34 @@ const { producto: p } = Astro.props;
 
         addToCart(id, name, price, undefined, img);
 
+        const isFull = target.classList.contains("addToCartFull");
         const originalContent = target.innerHTML;
-        // Cambia el botón de cart por un "+"
-        target.innerHTML = checkCart;
-        target.disabled = true;
-        target.style.backgroundColor = "#479030";
+        const originalText = target.textContent;
 
-        // reinicia el botón
-        setTimeout(() => {
-          target.innerHTML = originalContent;
-          target.disabled = false;
-          target.style.backgroundColor =
-            "var(--principal-background-color-dark)";
-        }, 1500);
+        if (isFull) {
+          target.textContent = "✓ AGREGADO";
+          target.disabled = true;
+          target.style.backgroundColor = "#388e3c";
+          target.style.borderColor = "#388e3c";
+
+          setTimeout(() => {
+            target.textContent = originalText;
+            target.disabled = false;
+            target.style.backgroundColor = "";
+            target.style.borderColor = "";
+          }, 1500);
+        } else {
+          target.innerHTML = checkCart;
+          target.disabled = true;
+          target.style.backgroundColor = "#479030";
+
+          setTimeout(() => {
+            target.innerHTML = originalContent;
+            target.disabled = false;
+            target.style.backgroundColor =
+              "var(--principal-background-color-dark)";
+          }, 1500);
+        }
       });
     });
   });

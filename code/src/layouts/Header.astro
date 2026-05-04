@@ -8,12 +8,19 @@ import SearchInput from "@components/SearchInput.astro";
 import logo from "@assets/logo_blanco.png";
 const { default: cartSVG } = await import("@assets/cart.svg?raw");
 const { default: downSVG } = await import("@assets/down.svg?raw");
+const { default: searchSVG } = await import("@assets/search.svg?raw").catch(() => ({ default: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' }));
 
 interface Props {
   categories: CategoryList[];
   categorySelected?: string;
 }
 const { categories, categorySelected } = Astro.props;
+
+// Detect current path for mobile active highlight
+const pathname = Astro.url.pathname;
+const base = config.base || "";
+const isHome = pathname === base + "/" || pathname === base || pathname === base + "/index";
+const isAbout = pathname.includes("/about");
 ---
 
 <header>
@@ -27,9 +34,15 @@ const { categories, categorySelected } = Astro.props;
       </div>
 
       <div class="navMenu">
-        <div class="search__container">
-          <SearchInput />
-        </div>
+        <SearchInput />
+
+        <!-- Search toggle button: mobile only -->
+        <button id="mobileSearchBtn" class="mobileSearchBtn" title="Buscar" aria-label="Abrir búsqueda">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
 
         <a href={`${config.base}/carrito`} class="cartLink">
           <Fragment set:html={cartSVG} />
@@ -53,7 +66,7 @@ const { categories, categorySelected } = Astro.props;
     </div>
 
     <ul class="mainNav">
-      <li><a class="navLink" href={config.base}>Inicio</a></li>
+      <li><a class={`navLink ${isHome ? "active-page" : ""}`} href={config.base}>Inicio</a></li>
     </ul>
 
     <input
@@ -125,7 +138,7 @@ const { categories, categorySelected } = Astro.props;
 
     <ul class="mainNav mainNavBottom">
       <li>
-        <a class="navLink" href={`${config.base}/about`}>Quienes Somos</a>
+        <a class={`navLink ${isAbout ? "active-page" : ""}`} href={`${config.base}/about`}>Quienes Somos</a>
       </li>
     </ul>
   </MenuItems>
@@ -141,6 +154,8 @@ const { categories, categorySelected } = Astro.props;
     const astroNavMenu = document.getElementById(
       "astronav-menu",
     ) as HTMLButtonElement;
+    const mobileSearchBtn = document.getElementById("mobileSearchBtn");
+    const searchForm = document.querySelector(".navMenu form");
 
     // Abrir submenús
     hasSubmenuLinks.forEach((link) => {
@@ -177,6 +192,27 @@ const { categories, categorySelected } = Astro.props;
     closeMenuBtn.addEventListener("click", () => {
       astroNavMenu.click();
     });
+
+    // Mobile search toggle: opens mobile drawer and focuses the search input inside it
+    if (mobileSearchBtn) {
+      mobileSearchBtn.addEventListener("click", () => {
+        // Only click the burger if the menu is hidden
+        if (astroNavMenu.getAttribute("aria-expanded") !== "true") {
+          astroNavMenu.click();
+        }
+        // Focus the search input inside the sidebar menu
+        setTimeout(() => {
+          const sidebarInput = document.querySelector(".search__container.sideBar input") as HTMLInputElement;
+          if (sidebarInput) {
+            sidebarInput.focus();
+            // Also move the cursor to the end if there's text
+            const val = sidebarInput.value;
+            sidebarInput.value = "";
+            sidebarInput.value = val;
+          }
+        }, 300); // Wait for CSS transition of menu opening
+      });
+    }
   });
 </script>
 
@@ -242,6 +278,16 @@ const { categories, categorySelected } = Astro.props;
     );
   }
 
+  /* Yellow bottom border & hiding elements on mobile */
+  @media screen and (max-width: 999px) {
+    header {
+      border-bottom: 3px solid var(--line-color);
+    }
+    .navMenu .searchForm {
+      display: none !important;
+    }
+  }
+
   .headerContainer {
     color: var(--secondary-text-color);
     margin: auto;
@@ -293,6 +339,28 @@ const { categories, categorySelected } = Astro.props;
     border-radius: 5px;
     padding: 5px 10px;
     border: 1px solid var(--line-color);
+  }
+
+  /* Mobile search button */
+  .mobileSearchBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    flex-shrink: 0;
+    color: #fff;
+  }
+  .mobileSearchBtn svg {
+    width: 20px;
+    height: 20px;
+  }
+  .mobileSearchBtn:hover {
+    background: rgba(255,255,255,0.35);
   }
 
   /* --- CART --- */
@@ -398,9 +466,14 @@ const { categories, categorySelected } = Astro.props;
     align-items: center;
   }
   .navLink:hover,
-  .navLink.focus,
-  .categoryLink.selected {
+  .navLink.focus {
     background-color: rgba(255, 255, 255, 0.1);
+  }
+  /* Active page highlight in mobile menu */
+  .navLink.active-page,
+  .categoryLink.selected {
+    color: var(--line-color) !important;
+    background-color: rgba(255, 255, 255, 0.08);
   }
   .submenu-indicator {
     font-size: 1.5rem;
@@ -633,5 +706,20 @@ const { categories, categorySelected } = Astro.props;
   #astronav-menu svg {
     width: calc(var(--menu-size) - 10px);
     height: calc(var(--menu-size) - 10px);
+  }
+  /* Yellow burger lines on mobile */
+  @media screen and (max-width: 999px) {
+    #astronav-menu svg line,
+    #astronav-menu svg rect,
+    #astronav-menu svg path {
+      stroke: var(--line-color);
+      fill: var(--line-color);
+    }
+    /* Hide mobile search button on desktop */
+  }
+  @media screen and (min-width: 1000px) {
+    header .mobileSearchBtn {
+      display: none;
+    }
   }
 </style>
