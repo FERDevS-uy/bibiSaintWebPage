@@ -6,7 +6,6 @@ import { Image } from "astro:assets";
 import SearchInput from "@components/SearchInput.astro";
 
 import logo from "@assets/logo_blanco.png";
-const { default: cartSVG } = await import("@assets/cart.svg?raw");
 const { default: downSVG } = await import("@assets/down.svg?raw");
 const { default: searchSVG } = await import("@assets/search.svg?raw").catch(() => ({ default: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' }));
 
@@ -15,6 +14,14 @@ interface Props {
   categorySelected?: string;
 }
 const { categories, categorySelected } = Astro.props;
+
+// Sort categories according to requested order
+const categoryOrder = ["Cama", "Ropa", "Baño", "Infantil", "Hogar"];
+const sortedCategories = categories.sort((a, b) => {
+  const indexA = categoryOrder.indexOf(a.name);
+  const indexB = categoryOrder.indexOf(b.name);
+  return (indexA === -1 ? 99 : indexA) - (indexB === -1 ? 99 : indexB);
+});
 
 // Detect current path for mobile active highlight
 const pathname = Astro.url.pathname;
@@ -34,9 +41,10 @@ const isAbout = pathname.includes("/about");
       </div>
 
       <div class="navMenu">
-        <SearchInput />
+        <div class="searchWrapperDesk">
+          <SearchInput />
+        </div>
 
-        <!-- Search toggle button: mobile only -->
         <button id="mobileSearchBtn" class="mobileSearchBtn" title="Buscar" aria-label="Abrir búsqueda">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"/>
@@ -45,7 +53,7 @@ const isAbout = pathname.includes("/about");
         </button>
 
         <a href={`${config.base}/carrito`} class="cartLink">
-          <Fragment set:html={cartSVG} />
+          <img src={`${config.base}/cart.png`} alt="Carrito" class="cart-icon" />
           <div id="cartCount" class="cartCount hidden">
             <span></span>
           </div>
@@ -65,10 +73,6 @@ const isAbout = pathname.includes("/about");
       </button>
     </div>
 
-    <ul class="mainNav">
-      <li><a class={`navLink ${isHome ? "active-page" : ""}`} href={config.base}>Inicio</a></li>
-    </ul>
-
     <input
       type="checkbox"
       id="toggleCategories"
@@ -81,8 +85,8 @@ const isAbout = pathname.includes("/about");
     </label>
     <ul class="categoryList">
       {
-        categories &&
-          categories.map((c) => (
+        sortedCategories &&
+          sortedCategories.map((c) => (
             <li class="categoryItem">
               <a
                 href={`${config.base}/categories/${c.name}`}
@@ -137,6 +141,7 @@ const isAbout = pathname.includes("/about");
     </ul>
 
     <ul class="mainNav mainNavBottom">
+      <li><a class={`navLink ${isHome ? "active-page" : ""}`} href={config.base}>Inicio</a></li>
       <li>
         <a class={`navLink ${isAbout ? "active-page" : ""}`} href={`${config.base}/about`}>Quienes Somos</a>
       </li>
@@ -284,6 +289,9 @@ const isAbout = pathname.includes("/about");
       border-bottom: 3px solid var(--line-color);
     }
     .navMenu .searchForm {
+      display: none !important;
+    }
+    .searchWrapperDesk {
       display: none !important;
     }
   }
@@ -537,13 +545,23 @@ const isAbout = pathname.includes("/about");
     .headerContainer .menuIcon {
       display: none;
     }
-    /* Mostrar barra de búsqueda en desktop */
+    /* Mostrar barra de búsqueda en desktop & centrar */
     .navMenu {
       flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .navMenu form {
+    .searchWrapperDesk {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    .searchWrapperDesk form {
       display: block;
       position: relative;
+      width: 100%;
+      max-width: 600px;
     }
 
     .search__container {
@@ -555,6 +573,14 @@ const isAbout = pathname.includes("/about");
       position: relative;
       width: 50px;
       height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cart-icon {
+      width: 32px;
+      height: auto;
+      object-fit: contain;
     }
 
     /* --- ITEMS BOX --- */
@@ -569,7 +595,7 @@ const isAbout = pathname.includes("/about");
       display: flex !important;
       justify-content: center;
       margin: auto;
-      flex-direction: row-reverse;
+      flex-direction: row;
 
       position: static;
       width: auto;
@@ -581,7 +607,10 @@ const isAbout = pathname.includes("/about");
       display: flex;
     }
     .itemsBox ul.mainNav {
-      margin-left: 20px;
+      margin-left: 0;
+    }
+    .mainNavBottom {
+      margin-left: 20px !important;
     }
 
     .mobileMenuHeader {

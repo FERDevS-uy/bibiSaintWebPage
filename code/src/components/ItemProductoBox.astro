@@ -43,13 +43,14 @@ const { producto: p } = Astro.props;
     position: relative;
   }
 
-  /* 3D lift on hover — desktop */
+  /* Hover: scale down whole card border essentially */
   @media (hover: hover) {
     .producto_card:hover {
-      transform: translateY(-6px) scale(1.02);
+      transform: scale(0.98);
       box-shadow:
-        0 12px 32px rgba(0, 0, 0, 0.14),
-        0 4px 10px rgba(0, 0, 0, 0.1);
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        0 2px 6px rgba(0, 0, 0, 0.08);
+      border: 1px solid #1a1a1a;
     }
 
     .producto_card:hover .add-btn-wrapper {
@@ -75,7 +76,7 @@ const { producto: p } = Astro.props;
   }
 
   .producto_card:hover img {
-    transform: scale(1.04);
+    /* No scale up inside doing shrink card */
   }
 
   /* Info section */
@@ -84,6 +85,8 @@ const { producto: p } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    text-align: center;
+    align-items: center;
   }
 
   .p-name {

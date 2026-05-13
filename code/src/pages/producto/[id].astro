@@ -77,10 +77,18 @@ const {
 
         <div class="meta">
           <p><strong>ID:</strong> {id}</p>
-          <p><strong>Marca:</strong> {categories}</p>
+          <p><strong>Marca:</strong> {categories?.name}</p>
         </div>
-        <strong>Descripción del Producto:</strong>
-        <p class="description">{description}</p>
+        
+        <div class="description-box">
+          <strong class="desc-title">Descripción del Producto:</strong>
+          <div class="desc-content">
+            {description.split('. ').map((sentence: string) => 
+               sentence.trim() ? <p>{sentence}.</p> : null
+            )}
+          </div>
+        </div>
+
         <strong>Talle:</strong>
         <div class="sizes">
           <button class="size">S</button>
@@ -115,10 +123,10 @@ const {
     {
       relacionados && relacionados.length > 0 && (
         <div class="related">
-          <h2>Productos Relacionados:</h2>
+          <h2>Productos Relacionados</h2>
 
           <div class="relatedList">
-            {relacionados.map((prod) => (
+            {relacionados.map((prod: any) => (
               <div class="card">
                 <a href={`${import.meta.env.BASE_URL}/producto/${prod.id}`}>
                   <div class="cardImg">
@@ -150,24 +158,25 @@ const {
   .breadcrumb {
     font-size: 14px;
     font-weight: 700;
-    color: #000;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #000;
+    color: #4a4a4a;
+    margin-bottom: 25px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eaeaea;
   }
   .breadcrumb a {
     text-decoration: none;
-    color: inherit;
+    color: #4a4a4a;
+    transition: color 0.2s;
   }
-  .breadcrumb span {
-    color: #000;
+  .breadcrumb a:hover {
+    color: #e67e22;
   }
 
   /**** Layout *****/
   .product_layout {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 40px;
   }
 
   /**** Gallery *****/
@@ -180,25 +189,31 @@ const {
     height: auto;
     aspect-ratio: 1/1;
     object-fit: cover;
-    background: #000; /* Placeholder placeholder color from image */
+    background: #fcfcfc;
+    border-radius: 12px;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
   }
 
   .thumbs {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     overflow-x: auto;
-    padding-bottom: 5px; /* For scrollbar if needed */
+    padding-bottom: 5px; 
   }
 
   .thumb {
-    width: 60px;
-    height: 60px;
-    border-radius: 0;
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
     object-fit: cover;
     cursor: pointer;
-    border: 1px solid #ddd;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .thumb:hover {
+    border-color: #e67e22;
   }
 
   /**** Info box *****/
@@ -206,47 +221,75 @@ const {
     padding: 0;
   }
 
-  /* Badge style like "Por encargo" */
   .stock {
     display: inline-block;
-    background: #5cb85c; /* Green color */
+    background: #27ae60;
     color: white;
     font-weight: 700;
-    font-size: 14px;
-    padding: 4px 8px;
+    font-size: 12px;
+    padding: 6px 12px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    margin-bottom: 10px;
-    border-radius: 0;
+    margin-bottom: 15px;
+    border-radius: 20px;
   }
 
   .name {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 800;
-    line-height: 1.2;
+    line-height: 1.25;
     margin: 0 0 15px 0;
-    color: #000;
+    color: #1a1a1a;
   }
 
   .meta {
     font-size: 14px;
-    color: #000;
-    margin-bottom: 15px;
+    color: #666;
+    margin-bottom: 20px;
     line-height: 1.6;
   }
 
   .meta p {
-    margin: 2px 0;
+    margin: 4px 0;
   }
 
   .meta strong {
-    font-weight: 800;
+    font-weight: 700;
+    color: #333;
   }
 
-  .description {
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    color: #000;
+  /* Description Box Estético */
+  .description-box {
+    background: #fafbfc;
+    border-left: 4px solid #e67e22;
+    padding: 20px 24px;
+    margin: 25px 0;
+    border-radius: 4px 12px 12px 4px;
+  }
+
+  .desc-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .desc-content p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: #4b5563;
+    margin: 0 0 8px 0;
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .desc-content p::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #e67e22;
+    font-weight: bold;
   }
 
   strong {
