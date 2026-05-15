@@ -1,5 +1,6 @@
 ---
 // basado en https://www.w3schools.com/howto/howto_js_slideshow.asp
+import MainBanner from "./MainBanner.astro"
 ---
 
 <div id="banner">
@@ -14,7 +15,9 @@
     </a>
   </div>
 
-  <div class="dot___container" id="dot_container"></div>
+  <div class="dot___container" id="dot_container">
+    <MainBanner />
+  </div>
 </div>
 
 <style>
@@ -57,7 +60,6 @@
   }
 
   .dot___container {
-    margin-top: 1rem;
     text-align: center;
   }
 
