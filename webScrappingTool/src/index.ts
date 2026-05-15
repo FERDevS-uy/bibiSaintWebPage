@@ -7,12 +7,14 @@ import { stringSimilarity } from 'string-similarity-js';
 import { wrapper } from 'axios-cookiejar-support';
 import { CookieJar } from 'tough-cookie';
 import FormData from 'form-data';
+import dotenv from "dotenv";
 
 const csvFilePath = path.resolve(__dirname, '../../code/src/data/productos.csv');
 const baseUrl = "https://nuvex.uy/index.php?route=common/home";
 const loginUrl = "https://nuvex.uy/index.php?route=account/login";
 const THRESHOLD = 0.7;
 
+dotenv.config();
 export default interface Product {
   id: string;
   relacionados: string | string[];
@@ -120,13 +122,13 @@ function searchSimilarity(productos: Product[]) {
 }
 
 const jar = new CookieJar();
-const client = wrapper(axios.create({ jar }));
+const client = wrapper(axios.create({ jar } as any));
 
 async function login(): Promise<boolean> {
   console.log("Iniciando sesión en la tienda...");
   const form = new FormData();
-  form.append('email', 'ddasdasdasdas@gmail.com');
-  form.append('password', 'manteca');
+  form.append('email', process.env.USER_EMAIL);
+  form.append('password', process.env.USER_PASS);
 
   try {
     const res = await client.post(loginUrl, form, {
@@ -253,17 +255,20 @@ async function scrapAllProducts() {
       const description = cleanDescription(htmlDesc);
 
       let rawPrice = $('.list-unstyled h2').first().text().trim() || $('.price-new').text().trim() || $('#content h2').first().text().trim();
+      console.log(rawPrice);
       let oferta = $('.price-old').length > 0 ? "true" : "";
 
       let precioFinal = "";
       if (rawPrice) {
         // Extraer precio solucionando el punto de miles (ej: 3.858,50 o 3.858)
-        let numStr = rawPrice.replace(/\./g, ''); // Quitar puntos de miles
-        numStr = numStr.replace(/,/g, '.');       // Reemplazar coma por punto decimal
+        let numStr = rawPrice.replace(/,/g, '');  // Reemplazar coma por punto decimal
         numStr = numStr.replace(/[^0-9.]/g, '');  // Dejar sólo números y punto
         const value = parseFloat(numStr);
+        console.log(value);
+
         if (!isNaN(value)) {
           precioFinal = Math.round(value * 1.4).toString();
+          console.log(precioFinal);
         }
       }
 
