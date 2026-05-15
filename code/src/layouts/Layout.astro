@@ -5,6 +5,7 @@ import Footer from "./Footer.astro";
 import Header from "./Header.astro";
 import { cargarProductos } from "@utils/loadCSV";
 import { countCategories } from "@utils/countCategories";
+import InstruccionesBar from "@components/InstruccionesBar.astro";
 
 const productos = cargarProductos();
 const categories = countCategories(productos);
@@ -69,6 +70,7 @@ const {
     <Header categories={categories} categorySelected={categorySelected} />
 
     <main id={pageId}>
+      <InstruccionesBar />
       <slot />
     </main>
 

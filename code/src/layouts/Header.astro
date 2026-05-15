@@ -6,8 +6,8 @@ import { Image } from "astro:assets";
 import SearchInput from "@components/SearchInput.astro";
 
 import logo from "@assets/logo_blanco.png";
+import cart from "@assets/cart.png"
 const { default: downSVG } = await import("@assets/down.svg?raw");
-const { default: searchSVG } = await import("@assets/search.svg?raw").catch(() => ({ default: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' }));
 
 interface Props {
   categories: CategoryList[];
@@ -53,7 +53,7 @@ const isAbout = pathname.includes("/about");
         </button>
 
         <a href={`${config.base}/carrito`} class="cartLink">
-          <img src={`${config.base}/cart.png`} alt="Carrito" class="cart-icon" />
+          <Image src={cart} alt="Carrito" class="cart-icon" />
           <div id="cartCount" class="cartCount hidden">
             <span></span>
           </div>
@@ -274,7 +274,6 @@ const isAbout = pathname.includes("/about");
 
 <style>
   header {
-    margin-bottom: 0.5rem;
     background: #c11010;
     background: linear-gradient(
       0deg,
@@ -385,6 +384,11 @@ const isAbout = pathname.includes("/about");
   .cartLink:hover {
     animation: shake 0.5s infinite;
   }
+  .cart-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
   .cartCount span {
     background-color: var(--line-color);
     border-radius: 50%;
@@ -393,8 +397,8 @@ const isAbout = pathname.includes("/about");
     display: flex;
     justify-content: center;
     position: absolute;
-    right: 5px;
-    top: 15px;
+    right: -5px;
+    top: 10px;
     z-index: 10;
   }
 
@@ -576,11 +580,6 @@ const isAbout = pathname.includes("/about");
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .cart-icon {
-      width: 32px;
-      height: auto;
-      object-fit: contain;
     }
 
     /* --- ITEMS BOX --- */
