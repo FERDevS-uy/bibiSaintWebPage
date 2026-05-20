@@ -1,4 +1,4 @@
-const repositoryName = "/template-static-ecommerce";
+const repositoryName = "/bibiSaintWebPage";
 const url = `https://ferdevs-uy.github.io${repositoryName}/`;
 
 const pageData = {
@@ -6,7 +6,8 @@ const pageData = {
   base: repositoryName,
   pageTitle: "Bibi's Ventasonline",
   pagesSubTitle: "Hogar & Deco",
-  postPerPage: 10
+  postPerPage: 10,
+  description: "Descripción temporal"
 };
 
 export { pageData as config };

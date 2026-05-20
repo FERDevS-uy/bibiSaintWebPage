@@ -2,36 +2,54 @@ import fs from "fs";
 import path from "path";
 import Papa from "papaparse";
 import type Product from "../types/product";
-import { parsePaymentMethodToObject } from "./parsePaymentMethodToObject";
+
+interface csvData {
+  id: string;
+  name: string;
+  description: string;
+  precio: string;
+  imagen: string;
+  categorias: string;
+  subcategorias: string
+  linkPago: string;
+  relacionados: string;
+  oferta: string,
+}
 
 export function cargarProductos(): Product[] {
   const csvPath = path.resolve("src/data/productos.csv");
   const file = fs.readFileSync(csvPath, "utf8");
 
-  const resultado = Papa.parse(file, {
+  const res = Papa.parse<csvData>(file, {
     header: true,
     skipEmptyLines: true,
-  });
+  })
 
-  return (resultado.data as any[]).map((row) => ({
-    id: row.id?.trim(),
-    name: row.name?.trim(),
-    description: row.description?.trim(),
-    price: row.precio?.trim(),
-    img:
-      row.imagen
-        ?.trim()
-        .split(" ")
-        .map((i: string) => i.trim()) || [],
-    categories:
-      row.categorias
-        ?.trim()
-        .split(" ")
-        .map((c: string) => c.trim()) || [],
-    paymentLink: parsePaymentMethodToObject(
-      row.linkPago?.trim(),
-      row.producto?.trim()
-    ),
-    relacionados: row.relacionados|| []
-  }));
+  if (res.errors.length > 0) {
+    console.error(res.errors);
+    throw new Error("Error al parsear CSV")
+  }
+
+  const data: Product[] = res.data.map(d => ({
+    id: d.id.trim(),
+    name: d.name.trim(),
+    description: d.description.trim(),
+    price: d.precio.trim(),
+    img: d.imagen.split(/\s+/),
+    paymentLink: d.linkPago.split(/\s+/)
+      .map((lp, i) => ({ id: `${i}`, url: lp })),
+    enOferta: d.oferta.toLowerCase() === "true" ? true : false,
+    relacionados: d.relacionados.split(/\s+/),
+    categories: {
+      name: d.categorias.split(/\s/)[0], // toma solo la primera categoría
+      count: 0,
+      subcategories: d.subcategorias.trim() != ""
+        ? d.subcategorias.split(/\s+/)
+          .map(subC => ({ name: subC, count: 0 }))
+        : []
+    }
+  }))
+
+
+  return data;
 }

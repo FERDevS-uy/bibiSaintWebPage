@@ -1,5 +1,8 @@
 ---
+import InstruccionesBar from "@components/InstruccionesBar.astro";
 import ListarProductos from "@components/ListarProductos.astro";
+import OfertasBanner from "@components/OfertasBanner.astro";
+import MainBanner from "@components/MainBanner.astro";
 import Layout from "@layouts/Layout.astro";
 import { cargarProductos } from "@utils/loadCSV";
 import { config } from "src/config";
@@ -10,6 +13,7 @@ const totalPages = Math.ceil(productos.length / CANT_PRODUCTOS);
 const showProducts = productos.slice(0, CANT_PRODUCTOS);
 ---
 
-<Layout>
+<Layout pageId="index">
+  <OfertasBanner />
   <ListarProductos products={showProducts} totalPages={totalPages} />
 </Layout>
