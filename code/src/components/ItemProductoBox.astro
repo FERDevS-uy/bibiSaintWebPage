@@ -1,6 +1,4 @@
 ---
-// Diseño del card: https://codepen.io/slicecrowd/pen/GWJEZB?editors=1100
-
 import type Product from "../types/product";
 import { config } from "../config";
 import AddToCartButton from "./AddToCartButton.astro";
@@ -13,274 +11,126 @@ const { producto: p } = Astro.props;
 ---
 
 <article class="producto_card">
-  <div class="box-up">
+  <a href={`${import.meta.env.BASE_URL}/producto/${p.id}`} class="card-img-link" title={p.name}>
     <img src={p.img[0]} alt={p.name} />
-    <div class="img-info">
-      <div class="info-inner">
-        <span class="p-name">{p.name}</span>
-        <span class="p-categories">
-          {p.categories.join(" ")}
-        </span>
-      </div>
+  </a>
+
+  <div class="card-info">
+    <span class="p-name">{p.name}</span>
+    <span class="p-price">${p.price}</span>
+    <div class="add-btn-wrapper">
+      <AddToCartButton producto={p} variant="full" />
     </div>
-  </div>
-
-  <div class="box-down">
-    <div class="h-bg">
-      <div class="h-bg-inner"></div>
-    </div>
-
-    <a
-      href={`${config.base}/producto/${p.id}`}
-      class="price-box"
-      title="Ir a comprar"
-    >
-      <span class="price">${p.price}</span>
-      <span class="go-to-product">
-        <span class="txt">Comprar</span>
-      </span>
-    </a>
-  </div>
-
-  <div class="cart-box">
-    <AddToCartButton producto={p} />
   </div>
 </article>
 
 <style>
-  article {
-    --radius-size: 0.2rem;
-    --background-color: var(--principal-background-color);
-    --secondary-color: var(--principal-background-color-dark);
-    --text-color: var(--principal-text-color);
-    --width: 500px;
-    --height: 500px;
-  }
-
-  article:hover .h-bg {
-    left: 0px;
-  }
-  article:hover .price {
-    left: 20px;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
-    color: #818181;
-  }
-  article:hover .go-to-product {
-    left: 50%;
-  }
-  article:hover .box-up img {
-    webkit-filter: blur(7px);
-    -o-filter: blur(7px);
-    -ms-filter: blur(7px);
-    filter: blur(7px);
-    filter: progid:DXImageTransform.Microsoft.Blur(pixelradius='7', shadowopacity='0.0');
-    opacity: 0.4;
-  }
-  article:hover .info-inner {
-    bottom: 155px;
-    background-color: transparent;
-  }
-
   .producto_card {
+    --radius: 8px;
     width: 100%;
-    padding: 15px;
-    margin-bottom: 1.5rem;
-
-    border: none;
-    border-radius: var(--radius-size);
-    background: var(--background-color);
+    background: #fff;
+    border-radius: var(--radius);
     box-shadow:
-      0 4px 24px 0 rgba(163, 174, 214, 0.12),
-      0 1.5px 6px 0 rgba(163, 174, 214, 0.1);
+      0 2px 8px rgba(0, 0, 0, 0.08),
+      0 1px 3px rgba(0, 0, 0, 0.06);
     transition:
-      transform 0.18s,
-      box-shadow 0.18s;
-
+      transform 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
     position: relative;
-  }
-  .cart-box {
-    position: absolute;
-    right: 30px;
-    top: 25px;
   }
 
-  /* BOX UP */
-  .box-up {
+  /* Hover: scale down whole card border essentially */
+  @media (hover: hover) {
+    .producto_card:hover {
+      transform: scale(0.98);
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        0 2px 6px rgba(0, 0, 0, 0.08);
+      border: 1px solid #1a1a1a;
+    }
+
+    .producto_card:hover .add-btn-wrapper {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+  }
+
+  /* Image */
+  .card-img-link {
+    display: block;
     width: 100%;
-    position: relative;
-    text-align: center;
     overflow: hidden;
   }
 
   img {
     width: 100%;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
-
-    border-radius: var(--radius-size) var(--radius-size) 0 0;
-
-    box-shadow: 0 2px 8px #a7c7e733;
-    background: #fff;
-
-    /* padding: 20px 0; */
-    -webkit-transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
-    -moz-transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
-    -o-transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
-    transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
-    /* ease-out */
-    -webkit-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    -moz-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    -o-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    /* ease-out */
-  }
-
-  .info-inner {
-    -webkit-transition: all 400ms cubic-bezier(0, 0, 0.18, 1);
-    -moz-transition: all 400ms cubic-bezier(0, 0, 0.18, 1);
-    -o-transition: all 400ms cubic-bezier(0, 0, 0.18, 1);
-    transition: all 400ms cubic-bezier(0, 0, 0.18, 1);
-    /* ease-out */
-    -webkit-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    -moz-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    -o-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    /* ease-out */
-    position: absolute;
-    width: 100%;
-    bottom: 25px;
-    background-color: rgb(255 255 255 / 40%);
-  }
-  .info-inner * {
     display: block;
-  }
-  .info-inner .p-name {
-    margin: 0 1rem;
-  }
-  .info-inner .p-categories {
-    text-transform: uppercase;
-    font-size: 12px;
-    color: #8c8c8c;
+    transition: transform 0.35s ease;
   }
 
-  /* BOX DOWN */
-  .box-down {
-    width: 100%;
-    height: 60px;
-    position: relative;
+  .producto_card:hover img {
+    /* No scale up inside doing shrink card */
+  }
+
+  /* Info section */
+  .card-info {
+    padding: 10px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .p-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  .h-bg {
-    -webkit-transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
-    -moz-transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
-    -o-transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
-    transition: all 800ms cubic-bezier(0, 0, 0.18, 1);
-    /* ease-out */
-    -webkit-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    -moz-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    -o-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    /* ease-out */
-    width: 660px;
-    height: 100%;
-    background-color: var(--secondary-color);
-    position: absolute;
-    left: -659px;
-  }
-  .h-bg .h-bg-inner {
-    width: 50%;
-    height: 100%;
-    background-color: var(--principal-text-color);
-  }
-  :global(button.price-box) {
-    border: none;
-    cursor: pointer;
-    background: transparent;
-  }
-  .price-box {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+  .p-price {
+    font-size: 1rem;
     font-weight: 700;
+    color: #1a1a1a;
+  }
 
-    text-decoration: none;
-    color: var(--text-color);
+  /* Add to cart button wrapper */
+  .add-btn-wrapper {
+    margin-top: 4px;
+    /* Mobile: always visible */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
   }
-  .price-box .price {
-    -webkit-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
-    -moz-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
-    -o-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
-    transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
-    /* ease-out */
-    -webkit-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    -moz-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    -o-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    /* ease-out */
-    -webkit-transition-delay: 100ms;
-    -o-transition-delay: 100ms;
-    transition-delay: 100ms;
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    font-size: 16px;
-    /* color: #252525; */
-  }
-  .price-box .go-to-product {
-    -webkit-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
-    -moz-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
-    -o-transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
-    transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
-    /* ease-out */
-    -webkit-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    -moz-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    -o-transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    transition-timing-function: cubic-bezier(0, 0, 0.18, 1);
-    /* ease-out */
-    -webkit-transition-delay: 100ms;
-    -o-transition-delay: 100ms;
-    transition-delay: 100ms;
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 110%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
-  .price-box .go-to-product .txt {
-    color: var(--background-color);
-    white-space: nowrap;
-    text-transform: uppercase;
-    letter-spacing: 0.045em;
+
+  /* Desktop: hidden until hover */
+  @media (hover: hover) and (min-width: 768px) {
+    .add-btn-wrapper {
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+    }
   }
 
   @media screen and (min-width: 1000px) {
     .producto_card {
-      width: var(--width);
-      height: var(--height);
+      width: 220px;
       margin-bottom: 0;
-    }
-    .cart-box {
-      position: initial;
-      width: 100%;
-      padding-top: 10px;
     }
   }
 </style>

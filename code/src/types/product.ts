@@ -1,3 +1,4 @@
+import type Category from "./categoryList";
 import type { PaymentMethod } from "./paymentMethod";
 
 export default interface Product {
@@ -6,7 +7,8 @@ export default interface Product {
   description: string;
   price: string;
   img: string[]; // [<imageLink>]
-  categories: string[]; // [<category>]
+  categories: Category; // [<category>]
   paymentLink: PaymentMethod[]; // [<id>=<link>] (ej: ws="https://wa.me/..." mp="https://mpago...")
-  relacionados: string[]
+  relacionados: string[],
+  enOferta: Boolean,
 }

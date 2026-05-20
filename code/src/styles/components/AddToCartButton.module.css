@@ -1,0 +1,36 @@
+.addToCart {
+  float: right;
+  background-color: var(--principal-background-color-dark);
+  border-radius: 50%;
+  border: none;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addToCart:hover {
+  background-color: #479030;
+}
+
+.addToCart > span {
+  font-size: 1rem;
+}
+
+/* Global styles scoped to this component wrapper if possible, 
+   but since :global was used, I'll keep the approach simple for now. 
+   However, with CSS modules we can use :global explicitly or just rely on class scoping.
+   The original code used :global(.addToCart *) which targets ALL children.
+   In CSS Modules we can just use .addToCart * since .addToCart is scoped.
+*/
+.addToCart * {
+  color: #fff;
+}
+
+.addToCart svg {
+  width: 80%;
+  height: 80%;
+}

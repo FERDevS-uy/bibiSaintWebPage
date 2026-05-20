@@ -4,32 +4,45 @@ const { default: cartSVG } = await import("../assets/add-one-cart.svg?raw");
 
 interface Props {
   producto: Product;
+  variant?: "icon" | "full";
 }
 
-const { producto: p } = Astro.props;
+const { producto: p, variant = "icon" } = Astro.props;
 ---
 
-<button
-  class="addToCart"
-  title="Agregar uno al carrito"
-  data-id={p.id}
-  data-name={p.name}
-  data-price={p.price}
-  data-img={p.img}
->
-  <Fragment set:html={cartSVG} />
-</button>
+{variant === "full" ? (
+  <button
+    class="addToCart addToCartFull"
+    title="Agregar al carrito"
+    data-id={p.id}
+    data-name={p.name}
+    data-price={p.price}
+    data-img={p.img}
+  >
+    AÑADIR AL CARRITO
+  </button>
+) : (
+  <button
+    class="addToCart"
+    title="Agregar uno al carrito"
+    data-id={p.id}
+    data-name={p.name}
+    data-price={p.price}
+    data-img={p.img}
+  >
+    <Fragment set:html={cartSVG} />
+  </button>
+)}
 
 <style>
+  /* Icon variant (default) */
   .addToCart {
-    float: right;
     background-color: var(--principal-background-color-dark);
     border-radius: 50%;
     border: none;
     width: 50px;
     height: 50px;
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,7 +50,6 @@ const { producto: p } = Astro.props;
   .addToCart:hover {
     background-color: #479030;
   }
-
   .addToCart > span {
     font-size: 1rem;
   }
@@ -48,10 +60,35 @@ const { producto: p } = Astro.props;
     width: 80%;
     height: 80%;
   }
+
+  /* Full-width red variant */
+  .addToCartFull {
+    width: 100%;
+    border-radius: 4px;
+    background-color: #d32f2f;
+    color: #fff !important;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 10px 8px;
+    height: auto;
+    border: 2px solid #d32f2f;
+    transition:
+      background-color 0.18s,
+      transform 0.12s;
+  }
+  .addToCartFull:hover {
+    background-color: #b71c1c;
+    border-color: #b71c1c;
+    transform: scale(1.02);
+  }
+  .addToCartFull:active {
+    transform: scale(0.98);
+  }
 </style>
 
 <script>
-  import addToCart from "../utils/addToCart";
+  import addToCart from "@utils/addToCart";
   const checkCart =
     "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'> <path d='M21 5L19 12H7.37671M20 16H8L6 3H3M11 6L13 8L17 4M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'></path> </g></svg>";
 
@@ -66,19 +103,34 @@ const { producto: p } = Astro.props;
 
         addToCart(id, name, price, undefined, img);
 
+        const isFull = target.classList.contains("addToCartFull");
         const originalContent = target.innerHTML;
-        // Cambia el botón de cart por un "+"
-        target.innerHTML = checkCart;
-        target.disabled = true;
-        target.style.backgroundColor = "#479030";
+        const originalText = target.textContent;
 
-        // reinicia el botón
-        setTimeout(() => {
-          target.innerHTML = originalContent;
-          target.disabled = false;
-          target.style.backgroundColor =
-            "var(--principal-background-color-dark)";
-        }, 1500);
+        if (isFull) {
+          target.textContent = "✓ AGREGADO";
+          target.disabled = true;
+          target.style.backgroundColor = "#388e3c";
+          target.style.borderColor = "#388e3c";
+
+          setTimeout(() => {
+            target.textContent = originalText;
+            target.disabled = false;
+            target.style.backgroundColor = "";
+            target.style.borderColor = "";
+          }, 1500);
+        } else {
+          target.innerHTML = checkCart;
+          target.disabled = true;
+          target.style.backgroundColor = "#479030";
+
+          setTimeout(() => {
+            target.innerHTML = originalContent;
+            target.disabled = false;
+            target.style.backgroundColor =
+              "var(--principal-background-color-dark)";
+          }, 1500);
+        }
       });
     });
   });

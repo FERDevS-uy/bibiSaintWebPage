@@ -1,17 +1,19 @@
 import type ProductInCart from "src/types/productInCart";
 import removeToCart from "./removeToCart";
+import addToCart from "./addToCart";
 import trash from "../assets/trash.svg?raw";
+import { decryptIDs, encryptIDs } from "./encription";
+import { config } from "src/config";
 
 export default function renderCart() {
   const storage = JSON.parse(localStorage.getItem("carrito") || "[]");
   let totalValue = 0;
 
   const cartList = document.getElementById("cartList") as HTMLElement;
-  const subTotalSpan = document.getElementById("subtotal") as HTMLElement;
   const totalSpan = document.getElementById("total") as HTMLElement;
   const summary = document.getElementById("cartSummary") as HTMLElement;
   const empty = document.getElementById("cartEmpty") as HTMLElement;
-  const productTable = document.querySelector(".cartTable") as HTMLElement;
+  const productTable = document.getElementById("cartTable") as HTMLElement;
   const copyBtn = document.getElementById("copyBtn") as HTMLElement
   const waBtn = document.getElementById("waBtn") as HTMLLinkElement;
   const clearBtn = document.getElementById("clearBtn") as HTMLButtonElement
@@ -40,7 +42,6 @@ export default function renderCart() {
     .join("");
 
   /* ----------------------- Muestra los precios totales ----------------------- */
-  subTotalSpan.textContent = `$${totalValue}`;
   totalSpan.textContent = `$${totalValue}`;
 
   /* ---------------------- Botones de cada fila de productos ---------------------- */
@@ -54,7 +55,22 @@ export default function renderCart() {
     };
   });
 
-  // Quitar item
+  // Botón agregar uno (+)
+  cartList.querySelectorAll<HTMLButtonElement>(".addOnce").forEach((btn) => {
+    btn.onclick = (e) => {
+      const idx = btn.getAttribute("data-idx");
+      if (idx) {
+        // Find product to get details for re-adding
+        const product = storage.find((p: ProductInCart) => p.id === idx);
+        if (product) {
+            addToCart(product.id, product.name, product.price, 1, product.img);
+            renderCart();
+        }
+      }
+    };
+  });
+
+  // Quitar item (X)
   cartList.querySelectorAll<HTMLButtonElement>(".removeBtn").forEach((btn) => {
     btn.onclick = () => {
       const idx = btn.getAttribute("data-idx");
@@ -69,22 +85,19 @@ export default function renderCart() {
     window.updateCartCount && window.updateCartCount();
   };
 
+
+  const encryption = encryptIDs(storage.map((p: ProductInCart) => `${p.id}-${p.cantidad}`), "elias")
+
   // Mensaje para copiar o enviar
   const pedido = storage.map((p: ProductInCart) => `
   - ${p.name} x${p.cantidad} ($${p.price})`)
-    .join(" ") + `\nTotal: $${totalValue}`;
+    .join(" ") + `\nTotal: $${totalValue}\n${config.site}pedido?id=${encryption}`;
 
+  // Copy func logic kept but button is hidden in UI
   copyBtn.title = `Copiar: ${pedido}`
   copyBtn.onclick = () => {
-
     if (navigator.clipboard) {
       navigator.clipboard.writeText(pedido);
-
-      copyBtn.textContent = "¡Copiado!";
-      setTimeout(
-        () => (copyBtn.textContent = "Copiar pedido"),
-        1200
-      );
     }
   };
 
@@ -94,50 +107,44 @@ export default function renderCart() {
 const productRow = (p: ProductInCart, subtotal: number): String => {
   return `
       <tr>
-        <td class="tdProduct">
-          <span class="colTitle hidden">Item</span>
-          <div class="cartItem">
-            <div class="cartTop">
-              <img src="${p.img || "/placeholder.png"}" alt="${p.name}" width="60" />
-              <div class="cartName">${p.name}</div>
-            </div>
-          </div>
+        <td class="tdRemove">
+           <button class="removeBtn" title="Quitar todo" data-idx="${p.id}">X</button>
         </td>
 
-        <td>
-          <span class="colTitle hidden">Precio</span>
-          $${p.price}
+        <td class="tdImg">
+           <img src="${p.img || "/placeholder.png"}" alt="${p.name}" width="60" />
         </td>
 
-        <td class="cartQty">
-          <span class="colTitle hidden">Cant.</span>
-          ${p.cantidad}
+        <td class="tdDesc">
+           <div class="cartName">${p.name}</div>
+           <div class="cartMeta">
+             <span class="metaLabel">Precio</span>
+             <span class="metaValue">$${p.price}</span>
+           </div>
+           <div class="cartMeta cartMetaQty">
+             <span class="metaLabel">Cantidad</span>
+             <div class="qtyControls">
+               <button class="qtyBtn removeOnce" data-idx="${p.id}">-</button>
+               <span class="qtyValue">${p.cantidad}</span>
+               <button class="qtyBtn addOnce" data-idx="${p.id}">+</button>
+             </div>
+           </div>
+           <div class="cartMeta">
+             <span class="metaLabel">Subtotal</span>
+             <span class="metaValue subtotalValue">$${subtotal}</span>
+           </div>
         </td>
 
-        <td>
-          <span class="colTitle hidden">Subtotal</span>
-          $${subtotal}
+        <td class="tdQty">
+           <div class="qtyControls">
+             <button class="qtyBtn removeOnce" data-idx="${p.id}">-</button>
+             <span class="qtyValue">${p.cantidad}</span>
+             <button class="qtyBtn addOnce" data-idx="${p.id}">+</button>
+           </div>
         </td>
 
-        <td class="tdActions">
-          <span class="colTitle hidden">Acciones</span>
-
-          <div>
-            <button
-              class="removeOnce"
-              data-idx="${p.id}"
-              title="Quitar uno"
-              style="">
-              -
-            </button>
-
-            <button
-              class="iconBtn removeBtn"
-              title="Quitar todo"
-              data-idx="${p.id}">
-              ${trash}
-            </button>
-          </div>
+        <td class="tdSubtotal">
+           <span class="price">$${subtotal}</span>
         </td>
       </tr>
     `;

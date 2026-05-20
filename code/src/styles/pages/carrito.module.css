@@ -1,0 +1,332 @@
+.cartContainer {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: "Poppins", Arial, sans-serif;
+  color: #222;
+  display: grid;
+  align-items: start;
+  gap: 2rem;
+}
+
+/* Header */
+.cartHeader h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  color: #000;
+  text-transform: capitalize;
+}
+
+.headerSeparator {
+  width: 100px;
+  height: 8px;
+  background-color: #d32f2f;
+  /* Red from image */
+  margin: 10px 0;
+}
+
+.cartHeader p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Table */
+.cartTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cartTable th {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 15px;
+  border-bottom: 2px solid #d32f2f;
+  /* Red underline for headers */
+  color: #000;
+}
+
+.cartTable td {
+  padding: 20px 10px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee;
+}
+
+/* Table Content - Scoped via :global because renderCart injects HTML */
+.cartTable :global(.tdImg img) {
+  width: 80px;
+  /* Slightly larger as requested */
+  height: 80px;
+  /* Fixed height to prevent row stretching */
+  object-fit: contain;
+  /* compressed/contained within the box */
+  display: block;
+  margin: 0 auto;
+}
+
+.cartTable :global(.tdDesc) {
+  text-align: left;
+  max-width: 250px;
+}
+
+.cartTable :global(.cartName) {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* Quantity Controls */
+.cartTable :global(.qtyControls) {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #999;
+  border-radius: 50px;
+  overflow: hidden;
+  height: 40px;
+  width: fit-content;
+  margin: 0 auto;
+  /* Center in cell */
+}
+
+.cartTable :global(.qtyBtn) {
+  background: none;
+  border: none;
+  width: 40px;
+  height: 100%;
+  font-size: 1.5rem;
+  font-weight: 400;
+  cursor: pointer;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4px;
+  transition: background-color 0.2s;
+}
+
+.cartTable :global(.qtyBtn:hover) {
+  background-color: #f5f5f5;
+}
+
+.cartTable :global(.qtyValue) {
+  padding: 0 10px;
+  font-weight: 400;
+  font-size: 1.5rem;
+  min-width: 30px;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid #999;
+  border-right: 1px solid #999;
+  line-height: 1;
+}
+
+.cartTable :global(.removeBtn) {
+  background: none;
+  border: none;
+  /* Removed border */
+  font-size: 1.5rem;
+  /* Larger X */
+  color: #000;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.cartTable :global(.removeBtn:hover) {
+  color: #d32f2f;
+  /* Red on hover */
+}
+
+.cartTable :global(.price) {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Summary - Right column on desktop */
+.cartSummary {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+}
+
+.cartSummary h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+
+.cartSummaryTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.whatsAppHint {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Buttons */
+.cartBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s;
+  color: white;
+}
+
+/* Inner wrapper for WhatsApp button icon + text */
+.waBtnContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.cartBtn.danger {
+  background-color: #c0392b;
+  /* Red */
+}
+
+.cartBtn.danger:hover {
+  background-color: #a93226;
+}
+
+.cartBtn.secondary {
+  background-color: #e67e22;
+  /* Orange */
+}
+
+.cartBtn.secondary:hover {
+  background-color: #d35400;
+}
+
+.cartBtn.whatsapp {
+  background-color: #4CAF50;
+  /* Green */
+  font-size: 1.1rem;
+}
+
+.cartBtn.whatsapp:hover {
+  background-color: #45a049;
+}
+
+.cartEmpty {
+  text-align: center;
+  grid-column: 1 / -1;
+  font-size: 1.2rem;
+  padding: 50px;
+  color: #777;
+}
+
+/* Responsive */
+@media screen and (min-width: 1000px) {
+  .cartContainer {
+    grid-template-columns: 1fr 350px;
+  }
+
+  .cartHeader {
+    grid-column: 1 / -1;
+  }
+
+  .cartSummary {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Ocultar cabecera de tabla */
+  .cartTable thead {
+    display: none;
+  }
+
+  /* Cada fila = tarjeta flex */
+  .cartTable :global(tr) {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 12px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  /* Botón X → esquina superior derecha */
+  .cartTable :global(.tdRemove) {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    left: auto;
+    padding: 0;
+  }
+
+  /* Imagen fija a la izquierda */
+  .cartTable :global(.tdImg) {
+    flex: 0 0 90px;
+    width: 90px;
+    padding: 0;
+    border: none;
+  }
+
+  .cartTable :global(.tdImg img) {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+  }
+
+  /* Descripción ocupa el resto */
+  .cartTable :global(.tdDesc) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0;
+    padding-right: 28px;
+    /* espacio para el X */
+    border: none;
+    text-align: left;
+  }
+
+  /* Ocultar celdas de cantidad/subtotal (van embebidas en tdDesc) */
+  .cartTable :global(.tdQty),
+  .cartTable :global(.tdSubtotal) {
+    display: none;
+  }
+}
