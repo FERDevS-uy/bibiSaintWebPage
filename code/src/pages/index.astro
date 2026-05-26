@@ -1,19 +1,30 @@
 ---
-import InstruccionesBar from "@components/InstruccionesBar.astro";
-import ListarProductos from "@components/ListarProductos.astro";
 import OfertasBanner from "@components/OfertasBanner.astro";
-import MainBanner from "@components/MainBanner.astro";
 import Layout from "@layouts/Layout.astro";
+import ProductCarousel from "@components/ProductCarousel.astro";
 import { cargarProductos } from "@utils/loadCSV";
-import { config } from "src/config";
 
-const CANT_PRODUCTOS = config.postPerPage;
-const productos = cargarProductos();
-const totalPages = Math.ceil(productos.length / CANT_PRODUCTOS);
-const showProducts = productos.slice(0, CANT_PRODUCTOS);
+const todosLosProductos = cargarProductos();
+
+// 1. ¡Novedades!: Los últimos 8 productos agregados en el CSV (en orden inverso, del más reciente al más antiguo)
+const novedades = [...todosLosProductos].reverse().slice(0, 8);
+
+// 2. ¡Destacados!: Los primeros 8 productos del catálogo (curados al inicio del CSV)
+const destacados = todosLosProductos.slice(0, 8);
+
+// 3. ¡Ofertas!: Productos marcados con enOferta = true, con fallback de seguridad
+let ofertas = todosLosProductos.filter(p => p.enOferta);
+if (ofertas.length < 4) {
+  const fallbacks = todosLosProductos.filter(p => !p.enOferta).slice(0, 8 - ofertas.length);
+  ofertas = [...ofertas, ...fallbacks];
+} else {
+  ofertas = ofertas.slice(0, 8);
+}
 ---
 
 <Layout pageId="index">
   <OfertasBanner />
-  <ListarProductos products={showProducts} totalPages={totalPages} />
+  <ProductCarousel products={novedades} title="¡Novedades!" id="novedades" />
+  <ProductCarousel products={destacados} title="¡Destacados!" id="destacados" />
+  <ProductCarousel products={ofertas} title="¡Ofertas!" id="ofertas" />
 </Layout>

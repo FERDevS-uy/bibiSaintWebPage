@@ -24,23 +24,20 @@ const { categories } = Astro.props;
 
       <div class="detail-item">
         <div class="icon-wrapper mobile">
-          <Icon name="phone" width="24" height="24" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="contact-svg"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
         </div>
         <div class="detail-text">
           <p>Telefono: +598 91 361 706</p>
-          <p>Mail: bibisventasyserviciosonline@gmail.com</p>
+          <p>Mail: bibisventasysserviciosonline@gmail.com</p>
         </div>
       </div>
 
       <div class="detail-item">
         <div class="icon-wrapper pin">
-          <Icon name="location" width="24" height="24" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="contact-svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
         </div>
         <div class="detail-text">
-          <span
-            >Dirección: Dr. Baltasar Brum 1154, 60000 Paysandú, Departamento de
-            Paysandú, Uruguay</span
-          >
+          <span>Dirección: Baltasar Brum 1154, 60000 Paysandú, Departamento de Paysandú, Uruguay</span>
         </div>
       </div>
     </div>
@@ -206,8 +203,8 @@ const { categories } = Astro.props;
       var(--p-b-color) 0%,
       var(--s-b-color) 100%
     );
-    border-radius: 20px 20px 0 0;
-    padding: 20px 10px;
+    border-radius: 30px 30px 0 0;
+    padding: 25px 10px;
     font-size: 0.9rem;
     color: var(--secondary-text-color);
   }
@@ -251,25 +248,127 @@ const { categories } = Astro.props;
   /* ------------------------- Mobile ------------------------- */
   .footerContainer.mobile {
     margin-inline: auto;
-    width: 90%;
+    width: 92%;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .footerContainer.mobile .contact-details {
+    width: 100%;
+    max-width: 500px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .footerContainer.mobile .title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+    color: #ffffff;
   }
 
   .footerContainer.mobile .detail-item {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 15px;
-  }
-
-  .footerContainer.mobile .contact-details {
-    width: 80%;
-    margin-inline: auto;
+    align-items: flex-start;
+    gap: 1.25rem;
   }
 
   .footerContainer.mobile .icon-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #ffffff;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .footerContainer.mobile .icon-wrapper svg {
+    stroke: #ffffff;
+    display: block;
+  }
+
+  .footerContainer.mobile .detail-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+  }
+
+  .footerContainer.mobile .detail-text p,
+  .footerContainer.mobile .detail-text span {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #ffffff;
+    word-break: break-word;
+  }
+
+  .footerContainer.mobile .separator {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.35);
+    margin-block: 1.75rem;
+    width: 100%;
+  }
+
+  .footerContainer.mobile .social_medias {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 500px;
+    margin-inline: auto;
+    gap: 1rem;
+  }
+
+  .footerContainer.mobile .logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .footerContainer.mobile .social-icons-list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footerContainer.mobile .social-icons-list li {
+    border: none !important; /* Quitar cualquier borde heredado */
+  }
+
+  .footerContainer.mobile .social-icons-list li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid #ffffff !important;
+    color: #ffffff;
+    background: transparent;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .footerContainer.mobile .social-icons-list li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+
+  .footerContainer.mobile .social-icons-list svg {
+    width: 18px;
+    height: 18px;
+    fill: #ffffff;
+    stroke: none;
   }
 
   @media screen and (min-width: 1000px) {

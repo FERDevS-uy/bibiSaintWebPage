@@ -5,62 +5,280 @@ const items = await cargarProductos();
 ---
 
 <form class="searchForm">
-  <input
-    type="text"
-    placeholder="Buscar productos..."
-    autocomplete="off"
-    id="search"
-    class="searchInput"
-  />
+  <div class="inputContainer">
+    <input
+      type="text"
+      placeholder="Buscar productos..."
+      autocomplete="off"
+      id="search"
+      class="searchInput"
+    />
+    <button type="button" class="clearBtn" aria-label="Limpiar búsqueda">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <span class="searchDivider"></span>
+    <button type="submit" class="searchBtn" aria-label="Buscar">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    </button>
+  </div>
 
-  <ul class="searchResults"></ul>
+  <div class="searchResultsContainer">
+    <ul class="searchResults"></ul>
+    <a href="#" class="viewAllBtn">VER TODOS LOS RESULTADOS</a>
+  </div>
 </form>
 
 <style>
   form {
     width: 100%;
     position: relative;
-    z-index: 10;
-  }
-  form.active input {
-    border-radius: 5px 5px 0 0;
+    z-index: 100;
   }
 
-  input {
-    width: 100%;
-    border-radius: 50px;
-    padding: 5px 10px;
+  .inputContainer {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
     border: 1px solid var(--line-color);
+    border-radius: 25px;
+    padding: 6px 16px;
+    transition: all 0.2s ease-in-out;
   }
 
-  ul {
-    position: absolute;
-    background: linear-gradient(
-      0deg,
-      var(--p-b-color) 0%,
-      var(--s-b-color) 100%
-    );
-    list-style: none;
+  form.active .inputContainer {
+    border-radius: 10px 10px 0 0;
   }
 
-  :global(.searchForm li) {
+  .searchInput {
+    flex: 1;
+    border: none !important;
+    background: transparent !important;
+    padding: 4px 0 !important;
+    font-size: 14px;
+    color: var(--principal-text-color);
+    outline: none !important;
+    width: 100%;
+    box-shadow: none !important;
   }
-  :global(.searchForm li a) {
-    display: block;
-    padding: 10px 1rem;
-    color: var(--secondary-text-color);
-    text-decoration: none;
+
+  .searchInput::placeholder {
+    color: #a0aec0;
   }
-  :global(.searchForm li a:hover) {
+
+  .clearBtn {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: #718096;
+    transition: color 0.15s ease;
+  }
+
+  form.has-text .clearBtn {
+    display: flex;
+  }
+
+  .clearBtn:hover {
+    color: #2d3748;
+  }
+
+  .clearBtn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .searchDivider {
+    width: 1px;
+    height: 20px;
+    background-color: #cbd5e0;
+    margin: 0 10px;
+  }
+
+  .searchBtn {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #718096;
+    transition: color 0.15s ease;
+  }
+
+  .searchBtn:hover {
     color: var(--line-color);
-    background-color: var(--p-b-color);
+  }
+
+  .searchBtn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .searchResultsContainer {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid var(--line-color);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    overflow: hidden;
+  }
+
+  form.active .searchResultsContainer {
+    display: block;
+  }
+
+  .searchResults {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.searchForm .searchResultItem) {
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  :global(.searchForm .searchResultItem a) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+  }
+
+  :global(.searchForm .searchResultItem a:hover) {
+    background-color: #f7fafc;
+  }
+
+  :global(.searchForm .searchResultImage) {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #000000;
+  }
+
+  :global(.searchForm .searchResultImage img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  :global(.searchForm .searchResultInfo) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+  }
+
+  :global(.searchForm .searchResultName) {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--principal-text-color);
+    line-height: 1.25;
+  }
+
+  :global(.searchForm .searchResultPrice) {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--p-b-color);
+  }
+
+  .viewAllBtn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--principal-text-color);
+    text-decoration: none;
+    background-color: #ffffff;
+    transition: all 0.15s ease;
+    border-top: 1px solid #e2e8f0;
+    letter-spacing: 0.5px;
+  }
+
+  .viewAllBtn:hover {
+    background-color: #f7fafc;
+    color: var(--p-b-color);
   }
 
   @media screen and (min-width: 1000px) {
-    input {
+    .inputContainer {
+      padding: 10px 24px;
       border-radius: 50px;
-      padding: 10px 20px;
-      outline: none;
+    }
+
+    form.active .inputContainer {
+      border-radius: 10px 10px 0 0;
+    }
+
+    .searchInput {
+      font-size: 16px;
+    }
+
+    .clearBtn svg, .searchBtn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .searchDivider {
+      height: 24px;
+    }
+
+    .searchResults {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    :global(.searchForm .searchResultItem) {
+      border-bottom: 1px solid #e2e8f0;
+      border-right: none;
+    }
+
+    :global(.searchForm .searchResultItem:nth-child(odd)) {
+      border-right: 1px solid #e2e8f0;
+    }
+
+    :global(.searchForm .searchResultItem a) {
+      padding: 20px 24px;
+      gap: 20px;
+    }
+
+    :global(.searchForm .searchResultImage) {
+      width: 100px;
+      height: 100px;
+      border-radius: 0;
+    }
+
+    :global(.searchForm .searchResultName) {
+      font-size: 16px;
+    }
+
+    :global(.searchForm .searchResultPrice) {
+      font-size: 16px;
+    }
+
+    .viewAllBtn {
+      padding: 16px;
+      font-size: 14px;
+      border-top: none;
     }
   }
 </style>
@@ -92,8 +310,22 @@ const items = await cargarProductos();
   document.querySelectorAll(".searchForm").forEach((form) => {
     const input = form.querySelector(".searchInput") as HTMLInputElement;
     const resultContainer = form.querySelector(".searchResults") as HTMLElement;
+    const viewAllBtn = form.querySelector(".viewAllBtn") as HTMLAnchorElement;
+    const clearBtn = form.querySelector(".clearBtn") as HTMLButtonElement;
 
-    if (urlQuery) input.value = urlQuery;
+    const updateInputState = () => {
+      const query = input.value.trim();
+      if (query) {
+        form.classList.add("has-text");
+      } else {
+        form.classList.remove("has-text");
+      }
+    };
+
+    if (urlQuery) {
+      input.value = urlQuery;
+      updateInputState();
+    }
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -105,8 +337,19 @@ const items = await cargarProductos();
       else window.location.href = BASE_URL;
     });
 
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        input.value = "";
+        resultContainer.innerHTML = "";
+        form.classList.remove("active");
+        form.classList.remove("has-text");
+        input.focus();
+      });
+    }
+
     input.addEventListener("input", () => {
       const query = input.value.trim();
+      updateInputState();
 
       if (!query) {
         resultContainer.innerHTML = "";
@@ -114,17 +357,27 @@ const items = await cargarProductos();
         return;
       }
 
-      const results = fuse.search(query).slice(0, 5);
+      const results = fuse.search(query).slice(0, 4);
 
       if (results.length === 0) form.classList.remove("active");
       else form.classList.add("active");
+
+      if (viewAllBtn) {
+        viewAllBtn.href = `${BASE_URL}/search?q=${encodeURIComponent(query)}`;
+      }
 
       resultContainer.innerHTML = results
         .map(
           (r) => `
         <li class="searchResultItem">
           <a href="${import.meta.env.BASE_URL}/producto/${r.item.id}">
-          ${r.item.name}
+            <div class="searchResultImage">
+              <img src="${r.item.img}" alt="${r.item.name}" />
+            </div>
+            <div class="searchResultInfo">
+              <span class="searchResultName">${r.item.name}</span>
+              <span class="searchResultPrice">$${r.item.price}</span>
+            </div>
           </a>
         </li>
       `,
