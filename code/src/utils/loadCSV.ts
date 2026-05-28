@@ -35,17 +35,16 @@ export function cargarProductos(): Product[] {
     name: d.name.trim(),
     description: d.description.trim(),
     price: d.precio.trim(),
-    img: d.imagen.split(/\s+/),
-    paymentLink: d.linkPago.split(/\s+/)
-      .map((lp, i) => ({ id: `${i}`, url: lp })),
+    img: d.imagen.trim() ? d.imagen.trim().split(/\s+/) : [],
+    paymentLink: d.linkPago.trim() ? d.linkPago.trim().split(/\s+/)
+      .map((lp, i) => ({ id: `${i}`, url: lp })) : [],
     enOferta: d.oferta.toLowerCase() === "true" ? true : false,
-    relacionados: d.relacionados.split(/\s+/),
+    relacionados: d.relacionados.trim() ? d.relacionados.split(/\s+/) : [],
     categories: {
-      name: d.categorias.split(/\s/)[0], // toma solo la primera categoría
+      name: d.categorias.trim(),
       count: 0,
-      subcategories: d.subcategorias.trim() != ""
-        ? d.subcategorias.split(/\s+/)
-          .map(subC => ({ name: subC, count: 0 }))
+      subcategories: d.subcategorias.trim() !== ""
+        ? d.subcategorias.split(/\|/).map(subC => ({ name: subC.trim(), count: 0 }))
         : []
     }
   }))

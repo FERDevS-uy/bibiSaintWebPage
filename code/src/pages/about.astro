@@ -10,7 +10,7 @@ import { config } from "../config";
       <hr />
 
       <p class="intro-text">
-        Bibi Saint! Descubre una tienda online diferente, donde encontrarás
+        Bibi´s Tienda & Bienestar! Descubre una tienda online diferente, donde encontrarás
         productos para eI hogar, vestimenta, accesorios y mucho más. Nos
         apasiona brindarte calidad, novedades y soluciones para tu día a día.
       </p>
@@ -25,6 +25,7 @@ import { config } from "../config";
         <ul>
           <li>De Codificación Biológica por 80 dólares.</li>
           <li>Carta Numerológica por 80 dólares.</li>
+          <li>Tutorías individuales ONLINE para estudiantes de EUTM | Medicina y Agronomia por 50 dólares la hora.</li>
         </ul>
       </div>
 
@@ -36,11 +37,18 @@ import { config } from "../config";
     </div>
 
     <div class="contact-form-wrapper">
-      <form class="contact-form">
-        <input type="text" placeholder="Nombre Completo" required />
-        <input type="tel" placeholder="Numero de Teléfono" required />
-        <input type="text" placeholder="Asunto" required />
-        <textarea placeholder="Tu Mensaje" rows="8" required></textarea>
+      <form
+        class="contact-form"
+        action="https://formspree.io/f/mwvzalvq"
+        method="POST"
+      >
+        <input type="hidden" name="_subject" value="Nuevo mensaje desde el formulario de contacto" />
+        <input type="hidden" name="_language" value="es" />
+        <input type="text" name="name" placeholder="Nombre Completo" required />
+        <input type="email" name="email" placeholder="Correo electrónico" required />
+        <input type="tel" name="phone" placeholder="Número de Teléfono" required />
+        <input type="text" name="subject" placeholder="Asunto" required />
+        <textarea name="message" placeholder="Tu Mensaje" rows="8" required></textarea>
         <button type="submit">Enviar</button>
       </form>
     </div>
@@ -216,6 +224,13 @@ import { config } from "../config";
 
   button:hover {
     background-color: #d65a0f;
+  }
+
+  .form-feedback {
+    color: #164f2c;
+    font-size: 0.95rem;
+    min-height: 1.3rem;
+    margin-top: -0.5rem;
   }
 
   @media (max-width: 768px) {

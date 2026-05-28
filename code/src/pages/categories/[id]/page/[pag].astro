@@ -3,6 +3,7 @@ import ListarProductos from "@components/ListarProductos.astro";
 import Layout from "@layouts/Layout.astro";
 import { cargarProductos } from "@utils/loadCSV";
 import { countCategories } from "@utils/countCategories";
+import { productMatchesCategory } from "@utils/categoryNormalization";
 import { config } from "src/config";
 import SideBardCategories from "@components/SideBardCategories.astro";
 import type { subCategory } from "src/types/categoryList";
@@ -23,7 +24,7 @@ export const getStaticPaths = () => {
       });
     }
 
-    const productsPerCat = products.filter((p) => p.categories.name === c.name);
+    const productsPerCat = products.filter((p) => productMatchesCategory(p, c.name));
 
     const totalPages = Math.ceil(productsPerCat.length / CANT_PRODUCTOS);
 

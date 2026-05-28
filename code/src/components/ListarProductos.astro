@@ -26,7 +26,35 @@ const emptyList = !productos || productos.length === 0;
     {
       productos.length > 0 && (
         <>
-          <ul>
+          <div class="products-toolbar" data-sort-root>
+            <button
+              id="products-sort-trigger"
+              class="products-sort-trigger"
+              type="button"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+              aria-controls="products-sort-menu"
+            >
+              <span class="products-sort-mobile-title">Filtrar productos</span>
+              <span id="products-sort-current" class="products-sort-current">Más Vendidos</span>
+              <svg class="products-sort-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M9 18L9 9" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+                <path d="M5.5 14.2L9 18L12.5 14.2" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 10L19 19" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+                <path d="M15.5 13.8L19 10L22.5 13.8" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <ul id="products-sort-menu" class="products-sort-menu" role="listbox" hidden>
+              <li><button type="button" class="products-sort-option" data-sort="default">Más Vendidos</button></li>
+              <li><button type="button" class="products-sort-option" data-sort="price-asc">Precio: menor a mayor</button></li>
+              <li><button type="button" class="products-sort-option" data-sort="price-desc">Precio: mayor a menor</button></li>
+              <li><button type="button" class="products-sort-option" data-sort="name-asc">Nombre: A - Z</button></li>
+              <li><button type="button" class="products-sort-option" data-sort="name-desc">Nombre: Z - A</button></li>
+            </ul>
+          </div>
+
+          <ul id="products-list-grid">
             {productos.map((prod) => (
               <ItemProductoBox producto={prod} />
             ))}
@@ -58,7 +86,98 @@ const emptyList = !productos || productos.length === 0;
     color: gray;
   }
 
-  .listaProductos ul {
+  .products-toolbar {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    padding-inline: 0.4rem;
+  }
+
+  .products-sort-trigger {
+    border: 2px solid #1f1f1f;
+    border-radius: 999px;
+    background: #f1f1f1;
+    color: #121212;
+    padding: 0.9rem 1.2rem 0.9rem 1.6rem;
+    min-width: 270px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.3rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .products-sort-trigger:hover {
+    background: #ececec;
+  }
+
+  .products-sort-trigger:focus-visible {
+    outline: 2px solid #d32f2f;
+    outline-offset: 2px;
+  }
+
+  .products-sort-current {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+
+  .products-sort-mobile-title {
+    display: none;
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #101010;
+  }
+
+  .products-sort-icon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .products-sort-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0.4rem;
+    width: min(100%, 320px);
+    background: #fff;
+    border: 1px solid #d7d7d7;
+    border-radius: 14px;
+    padding: 0.35rem;
+    margin: 0;
+    list-style: none;
+    z-index: 20;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+  }
+
+  .products-sort-option {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    padding: 0.55rem 0.7rem;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    color: #222;
+    cursor: pointer;
+  }
+
+  .products-sort-option:hover,
+  .products-sort-option:focus-visible {
+    background: #f0f0f0;
+    outline: none;
+  }
+
+  #products-list-grid {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
@@ -71,4 +190,196 @@ const emptyList = !productos || productos.length === 0;
     list-style: none; /* Removed default list style if any */
     gap: 1rem; /* Added gap for better spacing if needed, though card controls margins */
   }
+
+  #products-list-grid > li {
+    list-style: none;
+  }
+
+  @media (max-width: 600px) {
+    .products-toolbar {
+      justify-content: stretch;
+      margin-bottom: 0;
+      padding-inline: 0;
+      border-top: 2px solid #b7b7b7;
+      margin-top: 0.4rem;
+    }
+
+    .products-sort-trigger {
+      width: 100%;
+      min-width: 0;
+      padding: 1.6rem 0.35rem 1.3rem;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      justify-content: space-between;
+    }
+
+    .products-sort-trigger:hover {
+      background: transparent;
+    }
+
+    .products-sort-mobile-title {
+      display: inline;
+    }
+
+    .products-sort-current {
+      display: none;
+    }
+
+    .products-sort-icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .products-sort-menu {
+      right: 0;
+      left: 0;
+      transform: none;
+      width: 100%;
+      top: calc(100% - 0.3rem);
+      border-radius: 0 0 14px 14px;
+      border-top: 1px solid #d2d2d2;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .products-sort-option {
+      font-size: 1.9rem;
+      padding: 0.95rem 0.4rem;
+      text-align: center;
+    }
+  }
 </style>
+
+<script>
+  // @ts-nocheck
+  const SORT_LABELS = {
+    default: "Más Vendidos",
+    "price-asc": "Precio: menor a mayor",
+    "price-desc": "Precio: mayor a menor",
+    "name-asc": "Nombre: A - Z",
+    "name-desc": "Nombre: Z - A",
+  };
+
+  function getCardFromItem(item) {
+    if (!item) return null;
+    if (item.classList?.contains("producto_card")) return item;
+    return item.querySelector?.(".producto_card") ?? null;
+  }
+
+  function parsePrice(rawPrice) {
+    const clean = (rawPrice || "").replace(/[^\d.,-]/g, "").trim();
+    if (!clean) return 0;
+
+    const lastDot = clean.lastIndexOf(".");
+    const lastComma = clean.lastIndexOf(",");
+    const lastSeparator = Math.max(lastDot, lastComma);
+
+    if (lastSeparator === -1) {
+      return Number(clean) || 0;
+    }
+
+    const decimals = clean.length - lastSeparator - 1;
+
+    if (decimals === 2) {
+      const decimalSeparator = clean[lastSeparator];
+      const normalized = decimalSeparator === ","
+        ? clean.replace(/\./g, "").replace(",", ".")
+        : clean.replace(/,/g, "");
+      return Number(normalized) || 0;
+    }
+
+    return Number(clean.replace(/[.,]/g, "")) || 0;
+  }
+
+  function getNameFromItem(item) {
+    const card = getCardFromItem(item);
+    return (card?.dataset.name ?? "").toLowerCase().trim();
+  }
+
+  function getPriceFromItem(item) {
+    const card = getCardFromItem(item);
+    return parsePrice(card?.dataset.price ?? "0");
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const root = document.querySelector("[data-sort-root]");
+    const trigger = document.getElementById("products-sort-trigger");
+    const currentLabel = document.getElementById("products-sort-current");
+    const menu = document.getElementById("products-sort-menu");
+    const list = document.getElementById("products-list-grid");
+
+    if (!root || !trigger || !currentLabel || !menu || !list) return;
+
+    const originalItems = Array.from(
+      list.querySelectorAll(":scope > .producto_card, :scope > li")
+    );
+    const originalOrder = new Map(originalItems.map((item, idx) => [item, idx]));
+    const optionButtons = Array.from(menu.querySelectorAll(".products-sort-option"));
+    let currentSort = "default";
+
+    function applySort(value) {
+      const items = Array.from(
+        list.querySelectorAll(":scope > .producto_card, :scope > li")
+      );
+
+      items.sort((a, b) => {
+        if (value === "price-asc") return getPriceFromItem(a) - getPriceFromItem(b);
+        if (value === "price-desc") return getPriceFromItem(b) - getPriceFromItem(a);
+        if (value === "name-asc") return getNameFromItem(a).localeCompare(getNameFromItem(b), "es", { sensitivity: "base" });
+        if (value === "name-desc") return getNameFromItem(b).localeCompare(getNameFromItem(a), "es", { sensitivity: "base" });
+        return (originalOrder.get(a) ?? 0) - (originalOrder.get(b) ?? 0);
+      });
+
+      items.forEach((item) => list.appendChild(item));
+      currentSort = value;
+
+      const params = new URLSearchParams(window.location.search);
+      if (value === "default") {
+        params.delete("sort");
+      } else {
+        params.set("sort", value);
+      }
+      const query = params.toString();
+      const nextUrl = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
+      window.history.replaceState({}, "", nextUrl);
+    }
+
+    function closeMenu() {
+      menu.hidden = true;
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    trigger.addEventListener("click", () => {
+      const isHidden = menu.hidden;
+      menu.hidden = !isHidden;
+      trigger.setAttribute("aria-expanded", isHidden ? "true" : "false");
+    });
+
+    optionButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const value = btn.dataset.sort || "default";
+        currentLabel.textContent = SORT_LABELS[value] || SORT_LABELS.default;
+        applySort(value);
+        closeMenu();
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target instanceof Node ? event.target : null;
+      if (target && !root.contains(target) && !menu.hidden) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !menu.hidden) {
+        closeMenu();
+      }
+    });
+
+    const initialSort = new URLSearchParams(window.location.search).get("sort") || "default";
+    const validSort = SORT_LABELS[initialSort] ? initialSort : "default";
+    currentLabel.textContent = SORT_LABELS[validSort];
+    applySort(validSort);
+  });
+</script>

@@ -1,223 +1,170 @@
 ---
-// basado en https://www.w3schools.com/howto/howto_js_slideshow.asp
-import MainBanner from "./MainBanner.astro"
 ---
 
-<div id="banner">
-  <div class="slideshow___container" id="banner___container">
-    <h2>Banner</h2>
+<section id="banner" aria-label="Banner de ofertas destacadas">
+  <a class="hero-link" href={`${import.meta.env.BASE_URL}/categories`}>
+    <picture class="hero-media">
+      <source srcset={`${import.meta.env.BASE_URL}/ofertas-panorama.svg`} type="image/svg+xml" />
+      <img
+        src={`${import.meta.env.BASE_URL}/banner.jpeg`}
+        alt="Ofertas destacadas de Bibi's"
+        loading="lazy"
+        class="hero-image"
+      />
+    </picture>
 
-    <a class="prev" id="prev_btn" type="button" data-id={Astro.props.id}>
-      &#10094;
-    </a>
-    <a class="next" id="next_btn" type="button" data-id={Astro.props.id}>
-      &#10095;
-    </a>
-  </div>
+    <div class="hero-overlay"></div>
 
-  <div class="dot___container" id="dot_container">
-    <MainBanner />
-  </div>
-</div>
+    <div class="hero-content">
+      <span class="hero-pill">Promociones de temporada</span>
+      <h1>Tu casa pide cambio. Tus ofertas ya llegaron.</h1>
+      <p>
+        Diseno artesanal, texturas nobles y precios irresistibles para que
+        renueves tus espacios con personalidad.
+      </p>
+      <span class="hero-cta">Descubrir ofertas</span>
+    </div>
+  </a>
+</section>
 
 <style>
   #banner {
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #cecece;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-bottom: 2.8rem;
   }
 
-  .slideshow___container {
-    position: relative;
-    margin: auto;
-    aspect-ratio: 90/80;
-  }
-
-  .prev,
-  .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    margin-top: -22px;
-    padding: 16px;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-  }
-
-  .next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-  }
-
-  .prev:hover,
-  .next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-  }
-
-  .dot___container {
-    text-align: center;
-  }
-
-  .fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
-  }
-
-  @media screen and (min-width: 600px) {
-    .slideshow___container {
-      aspect-ratio: 200/75;
-    }
-  }
-
-  @keyframes fade {
-    from {
-      opacity: 0.4;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-</style>
-
-<style is:global>
-  #banner .mySlides {
-    display: none;
-  }
-
-  #banner .slide__content {
-    display: flex;
-    flex-wrap: wrap;
-    margin-inline: 4rem;
+  .hero-link {
     text-decoration: none;
-    color: #000;
+    color: inherit;
+    position: relative;
+    display: block;
+    isolation: isolate;
+    min-height: clamp(350px, 64vw, 620px);
+    overflow: clip;
+    background: #2d1f18;
   }
 
-  #banner .slide__content img {
-    object-fit: contain;
+  .hero-media {
+    display: block;
     width: 100%;
-    max-height: 300px;
+    height: 100%;
+    position: absolute;
+    inset: 0;
   }
 
-  #banner .dot {
-    cursor: pointer;
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.01);
+    transition: transform 0.7s ease;
   }
 
-  #banner .active,
-  #banner .dot:hover {
-    background-color: #717171;
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(97deg, rgba(14, 10, 7, 0.83) 0%, rgba(14, 10, 7, 0.5) 35%, rgba(14, 10, 7, 0.2) 62%, rgba(14, 10, 7, 0.14) 100%),
+      linear-gradient(180deg, rgba(14, 10, 7, 0.05) 0%, rgba(14, 10, 7, 0.4) 100%);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    min-height: clamp(350px, 64vw, 620px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: clamp(1.2rem, 3.2vw, 2.6rem);
+    text-wrap: pretty;
+  }
+
+  .hero-pill {
+    width: fit-content;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #ffe8c4;
+    font-weight: 800;
+    padding: 0.36rem 0.78rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 224, 178, 0.4);
+    background: rgba(74, 49, 34, 0.45);
+    backdrop-filter: blur(2px);
+  }
+
+  .hero-content h1 {
+    margin: 0;
+    color: #fff6e7;
+    text-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    font-size: clamp(1.9rem, 4.8vw, 4rem);
+    line-height: 1.03;
+    font-weight: 800;
+    max-width: 18ch;
+  }
+
+  .hero-content p {
+    margin: 0;
+    color: #f2dfc7;
+    max-width: 54ch;
+    line-height: 1.48;
+    font-size: clamp(0.95rem, 1.35vw, 1.2rem);
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  .hero-cta {
+    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0.8rem 1.35rem;
+    border: 1px solid rgba(254, 239, 213, 0.75);
+    color: #1f130c;
+    background: linear-gradient(135deg, #ffe4b8 0%, #ffcc8f 100%);
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+
+  .hero-link:hover .hero-image {
+    transform: scale(1.04);
+  }
+
+  .hero-link:hover .hero-cta {
+    transform: translateY(-2px);
+    filter: brightness(1.04);
+  }
+
+  @media screen and (max-width: 720px) {
+    .hero-link {
+      min-height: 440px;
+    }
+
+    .hero-content {
+      min-height: 440px;
+      gap: 0.85rem;
+      padding: 1.2rem 1rem 1.3rem;
+      justify-content: flex-end;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(1.55rem, 8vw, 2rem);
+      max-width: 100%;
+    }
+
+    .hero-content p {
+      font-size: 0.95rem;
+    }
   }
 </style>
-
-<script>
-  import type Product from "src/types/product";
-  import { config } from "src/config";
-  const banner = document.getElementById(
-    "banner___container",
-  ) as HTMLDivElement;
-  const dot_container = document.getElementById(
-    "dot_container",
-  ) as HTMLDivElement;
-  let slideIndex = 1;
-
-  document.addEventListener("DOMContentLoaded", async () => {
-    try {
-      const data = await fetch("productos.json");
-      if (!data) return Promise.reject(data);
-      const allProductos: Product[] = await data.json();
-      // filtra los productos en oferta
-      const productosEnOferta = allProductos
-        .filter((i: Product) => i.enOferta)
-        .slice(0, 4);
-
-      // si no hay productos en oferta oculta el banner
-      if (productosEnOferta.length === 0) {
-        banner.style.display = "none";
-      }
-
-      // Agrega la cantidad de dots según la cantidad de productos
-      productosEnOferta.forEach((p: Product, index: number) => {
-        // dot_container.innerHTML += `<span class="dot"></span>`;
-        const dot = document.createElement("span");
-        dot.classList.add("dot");
-        dot.addEventListener("click", () => {
-          currentSlide(index + 1);
-        });
-        dot_container.appendChild(dot);
-      });
-
-      productosEnOferta.forEach((p: Product) => {
-        banner.appendChild(createSlide(p));
-      });
-
-      showSlides(slideIndex);
-    } catch (e) {
-      console.error(e);
-    }
-
-    // navegación del Banner
-    const next_btn = document.getElementById("next_btn") as HTMLAnchorElement;
-    const prev_btn = document.getElementById("prev_btn") as HTMLAnchorElement;
-    next_btn.addEventListener("click", () => plusSlides(1));
-    prev_btn.addEventListener("click", () => plusSlides(-1));
-  });
-
-  function createSlide(producto: Product) {
-    const slide = document.createElement("div");
-    slide.classList.add("mySlides");
-    slide.classList.add("fade");
-
-    slide.innerHTML = `
-    <a class="slide__content" href="${config.base}/producto/${producto.id}" >
-        <img src="${producto.img}" alt="${producto.name}" />
-        <span>${producto.name}</span>
-    </a>
-`;
-
-    return slide;
-  }
-
-  function plusSlides(n: number) {
-    showSlides((slideIndex += n));
-  }
-
-  function currentSlide(n: number) {
-    showSlides((slideIndex = n));
-  }
-
-  function showSlides(n: number) {
-    let i;
-    let slides = document.getElementsByClassName(
-      "mySlides",
-    ) as HTMLCollectionOf<HTMLDivElement>;
-    let dots = document.getElementsByClassName(
-      "dot",
-    ) as HTMLCollectionOf<HTMLSpanElement>;
-
-    if (slides.length === 0 || dots.length === 0) return;
-
-    if (n > slides.length) slideIndex = 1;
-    if (n < 1) slideIndex = slides.length;
-
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-    }
-
-    slides[slideIndex - 1].style.display = "block";
-    dots[slideIndex - 1].className += " active";
-  }
-</script>

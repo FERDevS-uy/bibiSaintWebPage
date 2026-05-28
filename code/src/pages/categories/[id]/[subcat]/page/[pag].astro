@@ -3,6 +3,7 @@ import ListarProductos from "@components/ListarProductos.astro";
 import Layout from "@layouts/Layout.astro";
 import { cargarProductos } from "@utils/loadCSV";
 import { countCategories } from "@utils/countCategories";
+import { productMatchesSubcategory } from "@utils/categoryNormalization";
 import { config } from "src/config";
 import SideBardCategories from "@components/SideBardCategories.astro";
 import type { subCategory } from "src/types/categoryList";
@@ -17,9 +18,7 @@ export const getStaticPaths = () => {
   return categories.flatMap((category) => {
     return category.subcategories.flatMap((sub: subCategory) => {
       const productsPerSubCat = products.filter(
-        (p) =>
-          p.categories.name === category.name &&
-          p.categories.subcategories.find((s) => s.name === sub.name),
+        (p) => productMatchesSubcategory(p, category.name, sub.name),
       );
 
       const totalPages = Math.ceil(productsPerSubCat.length / CANT_PRODUCTOS);
