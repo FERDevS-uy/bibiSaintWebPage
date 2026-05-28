@@ -104,50 +104,66 @@ function appendColorsToName(name: string, colors: string[]): string {
 }
 
 function inferSubcategory(productName: string, categoria: string): string {
-  const lower = productName.toLowerCase();
+  const lower = (productName || '').toLowerCase();
+  // Infantil
   if (categoria === 'Infantil') {
-    if (lower.includes('botella')) return 'Botellas';
-    if (lower.includes('vaso')) return 'Vasos';
-    if (lower.includes('lunchera')) return 'Luncheras';
-    if (lower.includes('pote')) return 'Potes';
-    if (lower.includes('paraguas')) return 'Paraguas';
-    if (lower.includes('cubiertos')) return 'Cubiertos';
-    if (lower.includes('bata')) return 'Batas';
+    if (/\b(botella|biberon|mamadera)\b/.test(lower)) return 'Botellas';
+    if (/\b(vaso|taza)\b/.test(lower)) return 'Vasos';
+    if (/\b(lunchera|lonchera)\b/.test(lower)) return 'Luncheras';
+    if (/\b(pote|recipiente)\b/.test(lower)) return 'Potes';
+    if (/\b(paraguas|sombrilla)\b/.test(lower)) return 'Paraguas';
+    if (/\b(cubiertos|cuchar|tenedor|cuchillo)\b/.test(lower)) return 'Cubiertos';
+    if (/\b(bata|batita)\b/.test(lower)) return 'Batas';
   }
+
+  // Cama
   if (categoria === 'Cama') {
-    if (lower.includes('sábana') || lower.includes('sabana')) return 'Sábanas';
-    if (lower.includes('acolchado')) return 'Acolchados';
-    if (lower.includes('colcha')) return 'Colchas';
-    if (lower.includes('frazada')) return 'Frazadas';
-    if (lower.includes('protector')) return 'Protectores';
+    if (/\b(sábana|sabana|sabanas|sábana)\b/.test(lower)) return 'Sábanas';
+    if (/\b(acolchad|acolchado|n[oó]rdico|acolchad[oa]s)\b/.test(lower)) return 'Acolchados';
+    if (/\b(colcha|colchas)\b/.test(lower)) return 'Colchas';
+    if (/\b(frazada|fraza|franela)\b/.test(lower)) return 'Frazadas';
+    if (/\b(protector|protectores|funda|almohad)\b/.test(lower)) return 'Protectores';
   }
+
+  // Baño
   if (categoria === 'Baño' || categoria === 'BAÑO') {
-    if (lower.includes('toalla')) return 'Toallas';
-    if (lower.includes('alfombra')) return 'Alfombras';
-    if (lower.includes('bata')) return 'Batas';
+    if (/\b(toalla|toall[oó]n)\b/.test(lower)) return 'Toallas';
+    if (/\b(alfombra|tapete)\b/.test(lower)) return 'Alfombras';
+    if (/\b(bata|bata de ba[oó]o)\b/.test(lower)) return 'Batas';
   }
+
+  // Ropa
   if (categoria === 'Ropa') {
-    if (lower.includes('gorro')) return 'Gorros';
-    if (lower.includes('buzo')) return 'Buzos';
-    if (lower.includes('playera') || lower.includes('remera')) return 'Playeras';
-    if (lower.includes('media')) return 'Medias';
-    if (lower.includes('cuello')) return 'Cuellos';
-    if (lower.includes('pantalon') || lower.includes('pants') || lower.includes('jean')) return 'Pantalones';
-    if (lower.includes('camisa') || lower.includes('camiseta')) return 'Camisas';
-    if (lower.includes('vestido')) return 'Vestidos';
-    if (lower.includes('falda')) return 'Faldas';
+    if (/\b(gorro|gorros)\b/.test(lower)) return 'Gorros';
+    if (/\b(buzo|buzos|sweater|sudadera|cardigan|chaqueta|campera)\b/.test(lower)) return 'Buzos';
+    if (/\b(playera|remera|camiseta|t[- ]?shirt|polo)\b/.test(lower)) return 'Playeras';
+    if (/\b(media|medias|calcetin|calcetines)\b/.test(lower)) return 'Medias';
+    if (/\b(cuello|bufanda|pañuelo)\b/.test(lower)) return 'Cuellos';
+    if (/\b(pantalon|pants|jean|jeans|pantalones)\b/.test(lower)) return 'Pantalones';
+    if (/\b(camisa|camisas|blusa)\b/.test(lower)) return 'Camisas';
+    if (/\b(vestido|vestidos)\b/.test(lower)) return 'Vestidos';
+    if (/\b(falda|faldas)\b/.test(lower)) return 'Faldas';
   }
+
+  // Hogar
   if (categoria === 'Hogar') {
-    if (lower.includes('mesa')) return 'Mesa';
-    if (lower.includes('almohad') || lower.includes('almohada')) return 'Almohadas';
-    if (lower.includes('cojín') || lower.includes('cojin')) return 'Cojines';
-    if (lower.includes('cama')) return 'Cama';
-    if (lower.includes('utensilio') || lower.includes('espatula') || lower.includes('cuchar')) return 'Utensilios';
-    if (lower.includes('lámpara') || lower.includes('lampara')) return 'Lámparas';
-    if (lower.includes('silla')) return 'Sillas';
-    if (lower.includes('estanter')) return 'Estantes';
+    if (/\b(mesa|mesita|mesas)\b/.test(lower)) return 'Mesa';
+    if (/\b(almohad|almohada|almohadas)\b/.test(lower)) return 'Almohadas';
+    if (/\b(coj[ií]n|cojin|cojines)\b/.test(lower)) return 'Cojines';
+    if (/\b(cama|somier|colch[oó]n)\b/.test(lower)) return 'Cama';
+    if (/\b(utensili|espatula|cuchar|cuchara|tenedor|vajilla|vajill?a)\b/.test(lower)) return 'Utensilios';
+    if (/\b(l[áa]mpara|lampara|luz)\b/.test(lower)) return 'Lámparas';
+    if (/\b(silla|sillas|taburete)\b/.test(lower)) return 'Sillas';
+    if (/\b(estanter|estante|biblioteca)\b/.test(lower)) return 'Estantes';
   }
+
   return '';
+}
+
+function formatPriceNumber(n: number): string {
+  if (!isFinite(n)) return '';
+  const integerPart = Math.trunc(n);
+  return integerPart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
 function parsePrice(value: string | number): string {
@@ -156,15 +172,45 @@ function parsePrice(value: string | number): string {
   if (!raw) return '';
   let normalized = raw.replace(/\s+/g, '');
   normalized = normalized.replace(/[^0-9,.-]/g, '');
-  if (normalized.includes(',') && normalized.includes('.')) {
-    normalized = normalized.replace(/\./g, '');
+
+  const hasComma = normalized.includes(',');
+  const hasDot = normalized.includes('.');
+
+  if (hasComma && hasDot) {
+    const lastComma = normalized.lastIndexOf(',');
+    const lastDot = normalized.lastIndexOf('.');
+    if (lastDot > lastComma) {
+      // Ejemplo: 3,399.00 -> coma miles, punto decimal
+      normalized = normalized.replace(/,/g, '');
+      if (normalized.endsWith('.00')) normalized = normalized.slice(0, -3);
+    } else {
+      // Ejemplo: 3.399,00 -> punto miles, coma decimal
+      normalized = normalized.replace(/\./g, '');
+      normalized = normalized.replace(/,/g, '.');
+      if (normalized.endsWith('.00')) normalized = normalized.slice(0, -3);
+    }
+  } else if (hasComma) {
+    const commaIndex = normalized.lastIndexOf(',');
+    const decimals = normalized.length - commaIndex - 1;
+    if (decimals === 3) {
+      // 2,699 -> separador de miles
+      return normalized.replace(/,/g, '.');
+    }
     normalized = normalized.replace(/,/g, '.');
-  } else if (normalized.includes(',') && !normalized.includes('.')) {
-    normalized = normalized.replace(/,/g, '.');
+    if (normalized.endsWith('.00')) normalized = normalized.slice(0, -3);
+  } else if (hasDot) {
+    const dotIndex = normalized.lastIndexOf('.');
+    const decimals = normalized.length - dotIndex - 1;
+    if (decimals === 3) {
+      // 2.699 -> separador de miles
+      return normalized;
+    }
+    if (normalized.endsWith('.00')) normalized = normalized.slice(0, -3);
   }
+
   const valueNumber = parseFloat(normalized);
   if (Number.isNaN(valueNumber)) return '';
-  return Math.round(valueNumber).toString();
+  return formatPriceNumber(valueNumber);
 }
 
 function searchSimilarity(productos: Product[]) {
@@ -300,16 +346,7 @@ async function scrapNuvexProducts(): Promise<Product[]> {
       let oferta = $('.price-old').length > 0 ? 'true' : '';
       let precioFinal = '';
       if (rawPrice) {
-        let numStr = rawPrice.replace(/\s+/g, '');
-        numStr = numStr.replace(/[^0-9,.-]/g, '');
-        if (numStr.includes(',') && numStr.includes('.')) {
-          numStr = numStr.replace(/\./g, '');
-          numStr = numStr.replace(/,/g, '.');
-        } else if (numStr.includes(',') && !numStr.includes('.')) {
-          numStr = numStr.replace(/,/g, '.');
-        }
-        const value = parseFloat(numStr);
-        if (!Number.isNaN(value)) precioFinal = Math.round(value * 1.4).toString();
+        precioFinal = parsePrice(rawPrice);
       }
       let imagen = $('.thumbnails li:first-child a').attr('href') || $('.thumbnail').attr('href') || '';
       imagen = imagen.replace(/-\d+x\d+\.(jpg|jpeg|png|webp|gif)$/i, '.$1');

@@ -128,79 +128,84 @@ function appendColorsToName(name, colors) {
     return `${name} ${suffix}`.trim();
 }
 function inferSubcategory(productName, categoria) {
-    const lower = productName.toLowerCase();
+    const lower = (productName || '').toLowerCase();
+    // Infantil
     if (categoria === 'Infantil') {
-        if (lower.includes('botella'))
+        if (/\b(botella|biberon|mamadera)\b/.test(lower))
             return 'Botellas';
-        if (lower.includes('vaso'))
+        if (/\b(vaso|taza)\b/.test(lower))
             return 'Vasos';
-        if (lower.includes('lunchera'))
+        if (/\b(lunchera|lonchera)\b/.test(lower))
             return 'Luncheras';
-        if (lower.includes('pote'))
+        if (/\b(pote|recipiente)\b/.test(lower))
             return 'Potes';
-        if (lower.includes('paraguas'))
+        if (/\b(paraguas|sombrilla)\b/.test(lower))
             return 'Paraguas';
-        if (lower.includes('cubiertos'))
+        if (/\b(cubiertos|cuchar|tenedor|cuchillo)\b/.test(lower))
             return 'Cubiertos';
-        if (lower.includes('bata'))
+        if (/\b(bata|batita)\b/.test(lower))
             return 'Batas';
     }
+    // Cama
     if (categoria === 'Cama') {
-        if (lower.includes('sábana') || lower.includes('sabana'))
+        if (/\b(sábana|sabana|sabanas|sábana)\b/.test(lower))
             return 'Sábanas';
-        if (lower.includes('acolchado'))
+        if (/\b(acolchad|acolchado|n[oó]rdico|acolchad[oa]s)\b/.test(lower))
             return 'Acolchados';
-        if (lower.includes('colcha'))
+        if (/\b(colcha|colchas)\b/.test(lower))
             return 'Colchas';
-        if (lower.includes('frazada'))
+        if (/\b(frazada|fraza|franela)\b/.test(lower))
             return 'Frazadas';
-        if (lower.includes('protector'))
+        if (/\b(protector|protectores|funda|almohad)\b/.test(lower))
             return 'Protectores';
     }
+    // Baño
     if (categoria === 'Baño' || categoria === 'BAÑO') {
-        if (lower.includes('toalla'))
+        if (/\b(toalla|toall[oó]n)\b/.test(lower))
             return 'Toallas';
-        if (lower.includes('alfombra'))
+        if (/\b(alfombra|tapete)\b/.test(lower))
             return 'Alfombras';
-        if (lower.includes('bata'))
+        if (/\b(bata|bata de ba[oó]o)\b/.test(lower))
             return 'Batas';
     }
+    // Ropa
     if (categoria === 'Ropa') {
-        if (lower.includes('gorro'))
+        if (/\b(gorro|gorros)\b/.test(lower))
             return 'Gorros';
-        if (lower.includes('buzo'))
+        if (/\b(buzo|buzos|sweater|sudadera|cardigan|chaqueta|campera)\b/.test(lower))
             return 'Buzos';
-        if (lower.includes('playera') || lower.includes('remera'))
+        if (/\b(playera|remera|camiseta|t[- ]?shirt|polo)\b/.test(lower))
             return 'Playeras';
-        if (lower.includes('media'))
+        if (/\b(media|medias|calcetin|calcetines)\b/.test(lower))
             return 'Medias';
-        if (lower.includes('cuello'))
+        if (/\b(cuello|bufanda|pañuelo)\b/.test(lower))
             return 'Cuellos';
-        if (lower.includes('pantalon') || lower.includes('pants') || lower.includes('jean'))
+        if (/\b(pantalon|pants|jean|jeans|pantalones)\b/.test(lower))
             return 'Pantalones';
-        if (lower.includes('camisa') || lower.includes('camiseta'))
+        if (/\b(camisa|camisas|blusa)\b/.test(lower))
             return 'Camisas';
-        if (lower.includes('vestido'))
+        if (/\b(vestido|vestidos)\b/.test(lower))
             return 'Vestidos';
-        if (lower.includes('falda'))
+        if (/\b(falda|faldas)\b/.test(lower))
             return 'Faldas';
     }
+    // Hogar
     if (categoria === 'Hogar') {
-        if (lower.includes('mesa'))
+        if (/\b(mesa|mesita|mesas)\b/.test(lower))
             return 'Mesa';
-        if (lower.includes('almohad') || lower.includes('almohada'))
+        if (/\b(almohad|almohada|almohadas)\b/.test(lower))
             return 'Almohadas';
-        if (lower.includes('cojín') || lower.includes('cojin'))
+        if (/\b(coj[ií]n|cojin|cojines)\b/.test(lower))
             return 'Cojines';
-        if (lower.includes('cama'))
+        if (/\b(cama|somier|colch[oó]n)\b/.test(lower))
             return 'Cama';
-        if (lower.includes('utensilio') || lower.includes('espatula') || lower.includes('cuchar'))
+        if (/\b(utensili|espatula|cuchar|cuchara|tenedor|vajilla|vajill?a)\b/.test(lower))
             return 'Utensilios';
-        if (lower.includes('lámpara') || lower.includes('lampara'))
+        if (/\b(l[áa]mpara|lampara|luz)\b/.test(lower))
             return 'Lámparas';
-        if (lower.includes('silla'))
+        if (/\b(silla|sillas|taburete)\b/.test(lower))
             return 'Sillas';
-        if (lower.includes('estanter'))
+        if (/\b(estanter|estante|biblioteca)\b/.test(lower))
             return 'Estantes';
     }
     return '';
