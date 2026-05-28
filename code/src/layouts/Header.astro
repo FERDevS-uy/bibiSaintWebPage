@@ -15,6 +15,53 @@ interface Props {
 }
 const { categories, categorySelected } = Astro.props;
 
+interface GroupedSubcategory {
+  group: string;
+  items: string[];
+}
+
+function slugify(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+}
+
+function getGroupedSubcategories(category: CategoryList): GroupedSubcategory[] {
+  if (category.name !== "Ropa") return [];
+
+  const groups = new Map<string, string[]>();
+
+  category.subcategories.forEach((sub) => {
+    const rawName = sub.name.trim();
+    if (!rawName) return;
+
+    const [first, ...rest] = rawName.split(" - ");
+    const groupName = first === "Mujer" || first === "Hombre" ? first : "Otros";
+
+    if (!groups.has(groupName)) groups.set(groupName, []);
+
+    const list = groups.get(groupName)!;
+    if (rest.length > 0) {
+      if (!list.includes(rawName)) list.push(rawName);
+    }
+  });
+
+  ["Mujer", "Hombre"].forEach((groupName) => {
+    if (!groups.has(groupName)) groups.set(groupName, []);
+  });
+
+  return Array.from(groups.entries())
+    .map(([group, items]) => ({ group, items }))
+    .filter((entry) => entry.group !== "Otros" || entry.items.length > 0)
+    .sort((a, b) => {
+      const order = ["Mujer", "Hombre", "Otros"];
+      return order.indexOf(a.group) - order.indexOf(b.group);
+    });
+}
+
 // Sort categories according to requested order
 const categoryOrder = ["Cama", "Ropa", "Baño", "Infantil", "Hogar"];
 const sortedCategories = categories.sort((a, b) => {
@@ -87,7 +134,7 @@ const isAbout = pathname.includes("/about");
       {
         sortedCategories &&
           sortedCategories.map((c) => (
-            <li class="categoryItem">
+            <li class={`categoryItem ${categorySelected === c.name ? "is-current" : ""}`}>
               <a
                 href={`${config.base}/categories/${c.name}`}
                 class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""} ${c.subcategories && c.subcategories.length > 0 ? "has-submenu" : ""}`}
@@ -122,16 +169,72 @@ const isAbout = pathname.includes("/about");
                         Ver todos
                       </a>
                     </li>
-                    {c.subcategories.map((sub) => (
-                      <li>
-                        <a
-                          href={`${config.base}/categories/${c.name}/${sub.name}`}
-                          class="navLink subcategoryLink"
-                        >
-                          {sub.name}
-                        </a>
-                      </li>
-                    ))}
+                    {c.name !== "Ropa" &&
+                      c.subcategories.map((sub) => (
+                        <li>
+                          <a
+                            href={`${config.base}/categories/${c.name}/${sub.name}`}
+                            class="navLink subcategoryLink"
+                          >
+                            {sub.name}
+                          </a>
+                        </li>
+                      ))}
+
+                    {c.name === "Ropa" &&
+                      getGroupedSubcategories(c).map((groupData) => {
+                        const groupSlug = slugify(groupData.group);
+                        const nestedId = `submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}-${groupSlug}`;
+
+                        return (
+                          <li class="nestedCategoryItem">
+                            <a
+                              href={`${config.base}/categories/${c.name}/${groupData.group}`}
+                              class={`navLink subcategoryLink ${groupData.items.length > 0 ? "has-submenu-level2" : ""}`}
+                              data-submenu-target={groupData.items.length > 0 ? nestedId : undefined}
+                            >
+                              {groupData.group}
+                              {groupData.items.length > 0 && (
+                                <span class="submenu-indicator">›</span>
+                              )}
+                            </a>
+
+                            {groupData.items.length > 0 && (
+                              <div class="subcategoryList nestedSubcategoryList" id={nestedId}>
+                                <div class="submenuHeader">
+                                  <span class="submenuTitle">{groupData.group}</span>
+                                  <button class="backMenuBtn" data-submenu-close={nestedId}>
+                                    &larr;
+                                  </button>
+                                </div>
+
+                                <ul>
+                                  <li>
+                                    <a
+                                      href={`${config.base}/categories/${c.name}/${groupData.group}`}
+                                      class="principal navLink subcategoryLink"
+                                      style="font-weight: bold;"
+                                    >
+                                      Ver todo {groupData.group}
+                                    </a>
+                                  </li>
+
+                                  {groupData.items.map((subName) => (
+                                    <li>
+                                      <a
+                                        href={`${config.base}/categories/${c.name}/${subName}`}
+                                        class="navLink subcategoryLink"
+                                      >
+                                        {subName.replace(`${groupData.group} - `, "")}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </li>
+                        );
+                      })}
                   </ul>
                 </div>
               )}
@@ -151,7 +254,9 @@ const isAbout = pathname.includes("/about");
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const hasSubmenuLinks = document.querySelectorAll(".has-submenu");
+    const hasSubmenuLinks = document.querySelectorAll(
+      ".has-submenu, .has-submenu-level2",
+    );
     const backBtns = document.querySelectorAll(".backMenuBtn");
     const closeMenuBtn = document.getElementById(
       "closeMenuBtn",
@@ -164,7 +269,7 @@ const isAbout = pathname.includes("/about");
 
     // Abrir submenús
     hasSubmenuLinks.forEach((link) => {
-      if (window.innerWidth <= 600) {
+      if (window.innerWidth <= 999) {
         link.addEventListener("click", (e) => {
           e.stopPropagation();
           e.preventDefault();
@@ -506,6 +611,14 @@ const isAbout = pathname.includes("/about");
     display: flex;
     flex-direction: column;
   }
+
+  .nestedCategoryItem {
+    position: relative;
+  }
+
+  .nestedSubcategoryList {
+    z-index: 11;
+  }
   .subcategoryList.open {
     transform: translateX(0);
   }
@@ -630,6 +743,7 @@ const isAbout = pathname.includes("/about");
       display: block;
       text-decoration: none;
       padding: 0.5rem 1rem;
+      text-overflow: ellipsis;
       font-weight: normal;
       font-size: 1rem;
     }
@@ -660,6 +774,13 @@ const isAbout = pathname.includes("/about");
       top: 100%;
     }
 
+    .nestedSubcategoryList {
+      top: 0;
+      left: 100%;
+      border-radius: 0 10px 10px 10px;
+      min-width: 220px;
+    }
+
     .submenuHeader {
       display: none;
     }
@@ -673,7 +794,11 @@ const isAbout = pathname.includes("/about");
     .categoryItem {
       color: var(--secondary-text-color);
     }
-    .categoryItem:hover .subcategoryList {
+    .categoryItem:hover > .subcategoryList {
+      display: block;
+    }
+
+    .nestedCategoryItem:hover > .nestedSubcategoryList {
       display: block;
     }
 

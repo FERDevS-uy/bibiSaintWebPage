@@ -21,7 +21,7 @@ const lastUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/
 const firstUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/1`) : `${baseURL}/page/1`;
 ---
 
-<nav class={styles.pagination}>
+<nav class={styles.pagination} id="products-pagination">
   {
     actualPage == 1 ? (
       <>
@@ -70,3 +70,28 @@ const firstUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page
     )
   }
 </nav>
+
+<script>
+  // @ts-nocheck
+  window.addEventListener("DOMContentLoaded", () => {
+    const nav = document.getElementById("products-pagination");
+    if (!nav) return;
+
+    const currentParams = new URLSearchParams(window.location.search);
+    if (currentParams.toString().length === 0) return;
+
+    nav.querySelectorAll("a[href]").forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href) return;
+      const url = new URL(href, window.location.origin);
+      currentParams.forEach((value, key) => {
+        if (!url.searchParams.has(key)) {
+          url.searchParams.set(key, value);
+        }
+      });
+
+      const finalPath = `${url.pathname}${url.search}${url.hash}`;
+      link.setAttribute("href", finalPath);
+    });
+  });
+</script>

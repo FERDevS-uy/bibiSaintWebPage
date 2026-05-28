@@ -1,0 +1,43 @@
+<svg width="2200" height="900" viewBox="0 0 2200 900" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fondo panoramico de ofertas Bibi's">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="2200" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2B1F18"/>
+      <stop offset="0.42" stop-color="#6A4634"/>
+      <stop offset="1" stop-color="#C98C55"/>
+    </linearGradient>
+    <radialGradient id="spotA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(430 280) rotate(37) scale(720 430)">
+      <stop offset="0" stop-color="#F0D8A4" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#F0D8A4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="spotB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1710 630) rotate(168) scale(690 390)">
+      <stop offset="0" stop-color="#FFF0CF" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FFF0CF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8D7A9" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#F8D7A9" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <rect width="2200" height="900" fill="url(#bg)"/>
+  <rect width="2200" height="900" fill="url(#spotA)"/>
+  <rect width="2200" height="900" fill="url(#spotB)"/>
+
+  <path d="M156 744C363 593 583 590 812 642C1028 690 1248 790 1500 774C1708 760 1900 648 2080 480" stroke="url(#line)" stroke-width="3"/>
+  <path d="M60 520C230 410 449 362 687 385C951 410 1187 523 1438 563C1706 607 1944 551 2140 362" stroke="url(#line)" stroke-width="2"/>
+  <path d="M120 214C264 122 442 90 632 111C815 131 985 197 1168 258C1389 330 1632 393 1860 362C1996 343 2117 296 2194 232" stroke="url(#line)" stroke-width="2"/>
+
+  <circle cx="430" cy="650" r="165" fill="#E5BE8A" fill-opacity="0.16" filter="url(#soft)"/>
+  <circle cx="1728" cy="250" r="188" fill="#F2C48E" fill-opacity="0.19" filter="url(#soft)"/>
+  <circle cx="1988" cy="700" r="116" fill="#FFF1D6" fill-opacity="0.2" filter="url(#soft)"/>
+
+  <g opacity="0.34">
+    <path d="M248 821C332 781 412 736 492 676" stroke="#FCE5C4" stroke-width="9" stroke-linecap="round"/>
+    <path d="M390 844C505 790 620 706 708 600" stroke="#FCE5C4" stroke-width="8" stroke-linecap="round"/>
+    <path d="M1514 861C1648 790 1778 682 1864 552" stroke="#FCE5C4" stroke-width="8" stroke-linecap="round"/>
+    <path d="M1692 862C1820 783 1958 652 2060 498" stroke="#FCE5C4" stroke-width="9" stroke-linecap="round"/>
+  </g>
+</svg>

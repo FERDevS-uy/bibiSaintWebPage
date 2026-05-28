@@ -48,7 +48,7 @@ const { products, title, id } = Astro.props;
   .carousel-container {
     width: 100%;
     max-width: 1100px;
-    margin: 3rem auto;
+    margin: 1.5rem auto;
     padding-inline: 1rem;
     overflow: hidden;
   }
@@ -57,7 +57,7 @@ const { products, title, id } = Astro.props;
     text-align: center;
     font-size: 2.2rem;
     font-weight: 800;
-    margin-bottom: 2rem;
+    margin-bottom: 1.1rem;
     color: var(--principal-text-color);
   }
 
@@ -111,6 +111,7 @@ const { products, title, id } = Astro.props;
     aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 8px;
+    border: 1px solid transparent;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     background-color: #000000;
   }
@@ -226,12 +227,14 @@ const { products, title, id } = Astro.props;
 
     .carousel-img-link {
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      border: 1px solid transparent;
     }
 
     .carousel-img-link:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border-color: rgba(0, 0, 0, 0.7);
     }
 
     /* Mostrar flechas en Desktop */

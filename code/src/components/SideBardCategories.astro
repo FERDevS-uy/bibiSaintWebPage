@@ -13,212 +13,487 @@ interface Props {
 }
 const { categoryFather, arrayCategorys, products, selected } = Astro.props;
 
-const productColors = products?.flatMap((p) => getColors(p.name));
+// Build hierarchical tree: subcategories with " - " become parent → children
+interface TreeNode {
+  name: string;
+  href: string;
+  children: { name: string; label: string; href: string }[];
+}
+
+const BASE = import.meta.env.BASE_URL;
+const treeNodes: TreeNode[] = [];
+const parentMap = new Map<string, TreeNode>();
+
+arrayCategorys.forEach((subcat) => {
+  const sepIdx = subcat.name.indexOf(" - ");
+  if (sepIdx !== -1) {
+    const parentName = subcat.name.slice(0, sepIdx);
+    const childLabel = subcat.name.slice(sepIdx + 3);
+
+    if (!parentMap.has(parentName)) {
+      const node: TreeNode = {
+        name: parentName,
+        href: `${BASE}/categories/${categoryFather}/${parentName}`,
+        children: [],
+      };
+      parentMap.set(parentName, node);
+      treeNodes.push(node);
+    }
+    parentMap.get(parentName)!.children.push({
+      name: subcat.name,
+      label: childLabel,
+      href: `${BASE}/categories/${categoryFather}/${subcat.name}`,
+    });
+  } else {
+    if (!parentMap.has(subcat.name)) {
+      const node: TreeNode = {
+        name: subcat.name,
+        href: `${BASE}/categories/${categoryFather}/${subcat.name}`,
+        children: [],
+      };
+      parentMap.set(subcat.name, node);
+      treeNodes.push(node);
+    }
+  }
+});
+
+// Detect which parent accordion should be open
+const activeParent = selected
+  ? selected.includes(" - ")
+    ? selected.slice(0, selected.indexOf(" - "))
+    : selected
+  : null;
+
+// Colors
+const productColors = products?.flatMap((p) => getColors(p.name)) ?? [];
 const uniqueColors = [...new Set(productColors)];
+const colorCSS: Record<string, string> = {
+  rojo: "#d32f2f",
+  azul: "#1565c0",
+  negro: "#1a1a1a",
+  blanco: "#efefef",
+  verde: "#2e7d32",
+  amarillo: "#f9a825",
+};
 ---
 
-<section>
-  <p>
-    Filtrar productos <button class="btn__toggle"
-      ><Fragment set:html={filterSVG} />
-    </button>
-  </p>
+<nav class="sf-sidebar">
+  <!-- Mobile toggle -->
+  <button class="sf-toggle" id="sf-toggle" aria-expanded="false" aria-controls="sf-body">
+    <Fragment set:html={filterSVG} />
+    <span>Filtros y categorías</span>
+    <svg class="sf-chevron" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
-  <aside id="aside">
-    <div>
-      <h2 class="title">Inicio - {categoryFather}</h2>
-      <ul>
-        {
-          arrayCategorys.map((subcat) => (
-            <li>
-              <a
-                class={`option${selected === subcat.name ? " selected" : ""}`}
-                href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
-              >
-                {subcat.name}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+  <div id="sf-body" class="sf-body">
+
+    <!-- Back to category -->
+    <div class="sf-section sf-section--back">
+      <a href={`${BASE}/categories/${categoryFather}`} class="sf-back-link">
+        <svg viewBox="0 0 20 20" fill="none" width="14" height="14">
+          <path d="M13 4L7 10L13 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {categoryFather}
+      </a>
     </div>
 
-    <div>
-      <h2 class="title">Filtrar por</h2>
-      <div data-filter-section>
-        <h3>Color</h3>
-        <form>
-          <ul>
-            {
-              uniqueColors.map((color) => (
-                <li>
-                  <label>
-                    <input
-                      type="checkbox"
-                      data-color={color}
-                      value={color}
-                      id={`color_${color}`}
-                      name="colors"
-                    />{" "}
-                    {capitalize(color)}
-                  </label>
-                </li>
-              ))
-            }
-          </ul>
-        </form>
+    <!-- Categories tree -->
+    {treeNodes.length > 0 && (
+      <div class="sf-section">
+        <h3 class="sf-section-title">Categorías</h3>
+        <ul class="sf-list">
+          {treeNodes.map((node) => {
+            const isParentActive = activeParent === node.name;
+            const isExactSelected = selected === node.name;
+            return (
+              <li class="sf-item">
+                {node.children.length > 0 ? (
+                  <>
+                    <button
+                      class={`sf-parent-btn${isParentActive ? " is-active" : ""}`}
+                      data-expanded={isParentActive ? "true" : "false"}
+                      aria-expanded={isParentActive ? "true" : "false"}
+                    >
+                      {node.name}
+                      <svg class="sf-chevron-sm" viewBox="0 0 20 20" fill="none">
+                        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <ul class={`sf-children${isParentActive ? " is-open" : ""}`}>
+                      <li>
+                        <a
+                          href={node.href}
+                          class={`sf-child-link${isExactSelected ? " is-selected" : ""}`}
+                        >
+                          Ver todos
+                        </a>
+                      </li>
+                      {node.children.map((child) => (
+                        <li>
+                          <a
+                            href={child.href}
+                            class={`sf-child-link${selected === child.name ? " is-selected" : ""}`}
+                          >
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <a
+                    href={node.href}
+                    class={`sf-link${isExactSelected ? " is-selected" : ""}`}
+                  >
+                    {node.name}
+                  </a>
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </div>
-    </div>
+    )}
 
-    <div>
-      <h2 class="title">Marca</h2>
-      <ul>
-        {
-          arrayCategorys.map((subcat) => (
-            <li>
-              <a
-                class="option"
-                href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
-              >
-                {subcat.name}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+    <!-- Color filter -->
+    {uniqueColors.length > 0 && (
+      <div class="sf-section">
+        <h3 class="sf-section-title">Color</h3>
+        <div id="sf-color-filter" class="sf-colors">
+          {uniqueColors.map((color) => (
+            <label class="sf-color-chip">
+              <input
+                type="checkbox"
+                data-color={color}
+                name="colors"
+                class="sf-color-input"
+              />
+              <span
+                class="sf-color-swatch"
+                style={`background:${colorCSS[color] ?? "#ccc"}`}
+                aria-hidden="true"
+              ></span>
+              <span class="sf-color-label">{capitalize(color)}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+    )}
 
-    <div>
-      <h2 class="title">Modelo</h2>
-      <ul>
-        {
-          arrayCategorys.map((subcat) => (
-            <li>
-              <a
-                class="option"
-                href={`${import.meta.env.BASE_URL}/categories/${categoryFather}/${subcat.name}`}
-              >
-                {subcat.name}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </aside>
-</section>
+  </div>
+</nav>
 
 <style>
-  section {
-    position: relative;
+  .sf-sidebar {
+    font-family: "Poppins", Arial, sans-serif;
+    color: #222;
+    background: #fff;
   }
 
-  p {
-    width: 80%;
-    height: 3rem;
-    margin-inline: auto;
+  /* Mobile toggle */
+  .sf-toggle {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-weight: bold;
-    padding-block: 5px;
-  }
-
-  button {
-    background-color: transparent;
-    border: 0;
-    display: flex;
-    cursor: pointer;
-    height: auto;
-  }
-  button:hover {
-    opacity: 0.6;
-  }
-
-  aside {
+    gap: 10px;
     width: 100%;
-    height: 0;
-    overflow-y: hidden;
-    background-color: #fff;
-  }
-
-  aside.active {
-    padding: 1rem 3rem;
-    height: auto;
-    border-bottom: 1px solid #000;
-  }
-
-  a {
-    text-decoration: none;
-    color: var(--principal-text-color);
-  }
-  a:hover {
-    opacity: 0.5;
-  }
-
-  .title {
-    margin-top: 2rem;
-  }
-
-  ul {
-    list-style: none;
-  }
-  ul li {
-    margin-bottom: 0.8rem;
-  }
-  ul li label {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: center;
-
-    user-select: none;
+    padding: 14px 20px;
+    background: #fff;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
     cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: #222;
+    text-align: left;
+    transition: background 0.15s;
   }
+  .sf-toggle:hover { background: #fafafa; }
+  .sf-toggle :global(svg:first-child) { width: 20px; height: 20px; flex-shrink: 0; }
 
-  ul input[type="checkbox"] {
+  .sf-chevron {
     width: 18px;
     height: 18px;
+    margin-left: auto;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+  }
+  .sf-toggle[aria-expanded="true"] .sf-chevron { transform: rotate(180deg); }
+
+  /* Body */
+  .sf-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .sf-body.is-open {
+    max-height: 800px;
+    overflow-y: auto;
+  }
+
+  /* Section */
+  .sf-section {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  .sf-section:last-child { border-bottom: none; }
+  .sf-section--back { padding-bottom: 12px; }
+
+  .sf-section-title {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #aaa;
+    margin: 0 0 10px;
+  }
+
+  /* Back link */
+  .sf-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #d32f2f;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .sf-back-link:hover { opacity: 0.75; }
+
+  /* Category list */
+  .sf-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .sf-item { margin: 0; }
+
+  .sf-link {
+    display: block;
+    padding: 7px 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.92rem;
+    transition: background 0.15s, color 0.15s;
+  }
+  .sf-link:hover { background: #f5f5f5; }
+  .sf-link.is-selected {
+    background: #fdecea;
+    color: #d32f2f;
+    font-weight: 600;
+  }
+
+  /* Parent button */
+  .sf-parent-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: none;
+    border: none;
     cursor: pointer;
-    appearance: none;
-    border: 2px solid #555;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #333;
+    text-align: left;
+    transition: background 0.15s, color 0.15s;
+  }
+  .sf-parent-btn:hover { background: #f5f5f5; }
+  .sf-parent-btn.is-active {
+    color: #d32f2f;
+    font-weight: 700;
+    background: #fdecea;
+  }
+
+  .sf-chevron-sm {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+  .sf-parent-btn[aria-expanded="true"] .sf-chevron-sm { transform: rotate(180deg); }
+
+  /* Children list */
+  .sf-children {
+    list-style: none;
+    margin: 2px 0 4px 8px;
+    padding: 0 0 0 14px;
+    border-left: 2px solid #e8e8e8;
+    display: none;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .sf-children.is-open { display: flex; }
+
+  .sf-child-link {
+    display: block;
+    padding: 5px 8px;
     border-radius: 6px;
-    transition: 0.2s;
+    text-decoration: none;
+    color: #555;
+    font-size: 0.87rem;
+    transition: background 0.15s, color 0.15s;
   }
-  ul input[type="checkbox"]:checked {
-    background-color: #000;
-    border-color: #000;
+  .sf-child-link:hover { background: #f5f5f5; color: #222; }
+  .sf-child-link.is-selected {
+    background: #fdecea;
+    color: #d32f2f;
+    font-weight: 600;
   }
 
-  .option.selected {
-    font-weight: bold;
+  /* Color chips */
+  .sf-colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
+  .sf-color-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px 5px 7px;
+    border-radius: 20px;
+    border: 1.5px solid #e0e0e0;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+  }
+  .sf-color-chip:hover { border-color: #aaa; }
+  .sf-color-chip:has(.sf-color-input:checked) {
+    border-color: #d32f2f;
+    background: #fdecea;
+  }
+
+  .sf-color-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .sf-color-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0, 0, 0, 0.12);
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .sf-color-label {
+    color: #333;
+    font-family: inherit;
+    line-height: 1;
+  }
+
+  /* Desktop */
   @media screen and (min-width: 600px) {
-    p {
-      display: none;
+    .sf-toggle { display: none; }
+
+    .sf-body {
+      max-height: none !important;
+      overflow: visible;
+      border-bottom: none;
+      transition: none;
+      padding-top: 16px;
     }
 
-    aside,
-    aside.active {
-      width: auto;
-      height: 100%;
-      padding: 1rem 3rem;
-      border-right: 1px solid #000;
-      border-bottom: none;
+    .sf-sidebar {
+      width: 220px;
+      min-width: 220px;
+      flex-shrink: 0;
+      border-right: 1px solid #ebebeb;
+      min-height: 100dvh;
+      padding-bottom: 40px;
     }
+
+    .sf-section { padding: 10px 18px 14px; }
   }
 </style>
 
 <script>
-  window.addEventListener("DOMContentLoaded", async () => {
-    const aside = document.getElementById("aside") as HTMLDivElement;
-    const btn_toggle = document.querySelector(
-      "button.btn__toggle",
-    ) as HTMLDivElement;
+  // @ts-nocheck
+  window.addEventListener("DOMContentLoaded", () => {
+    // Mobile toggle
+    const toggle = document.getElementById("sf-toggle");
+    const body = document.getElementById("sf-body");
+    if (toggle && body) {
+      toggle.addEventListener("click", () => {
+        const isOpen = body.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    }
 
-    btn_toggle.addEventListener("click", () => {
-      aside.classList.toggle("active");
+    // Category accordion
+    document.querySelectorAll(".sf-parent-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        const children = btn.nextElementSibling;
+        btn.setAttribute("aria-expanded", expanded ? "false" : "true");
+        btn.classList.toggle("is-active", !expanded);
+        children?.classList.toggle("is-open", !expanded);
+      });
     });
+
+    // Color filter — reads data-colors from each .producto_card
+    const colorCheckboxes = document.querySelectorAll(".sf-color-input");
+    if (colorCheckboxes.length > 0) {
+      const params = new URLSearchParams(window.location.search);
+      const initialColors = (params.get("colors") || "")
+        .split(",")
+        .map((c) => c.trim().toLowerCase())
+        .filter(Boolean);
+
+      if (initialColors.length > 0) {
+        colorCheckboxes.forEach((cb) => {
+          const color = (cb.dataset.color || "").toLowerCase();
+          cb.checked = initialColors.includes(color);
+        });
+      }
+
+      const applyFilter = () => {
+        const checked = Array.from(colorCheckboxes)
+          .filter((cb) => cb.checked)
+          .map((cb) => cb.dataset.color ?? "");
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if (checked.length === 0) {
+          urlParams.delete("colors");
+        } else {
+          urlParams.set("colors", checked.join(","));
+        }
+
+        const query = urlParams.toString();
+        const nextUrl = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
+        window.history.replaceState({}, "", nextUrl);
+
+        document.querySelectorAll(".producto_card").forEach((card) => {
+          if (checked.length === 0) {
+            card.style.display = "";
+            return;
+          }
+          const cardColors = (card.dataset.colors ?? "").split(",").filter(Boolean);
+          card.style.display = checked.some((c) => cardColors.includes(c)) ? "" : "none";
+        });
+      };
+
+      colorCheckboxes.forEach((cb) => cb.addEventListener("change", applyFilter));
+      applyFilter();
+    }
   });
 </script>

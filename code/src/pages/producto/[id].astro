@@ -3,6 +3,11 @@ import { cargarProductos } from "../../utils/loadCSV";
 import Layout from "../../layouts/Layout.astro";
 import { config } from "../../config";
 import NumberInput from "@components/NumberInput.astro";
+import type Product from "../../types/product";
+import {
+  getDisplayCategoryName,
+  getDisplaySubcategories,
+} from "@utils/categoryNormalization";
 
 export function getStaticPaths() {
   const productos = cargarProductos();
@@ -31,6 +36,28 @@ const {
   description,
   productosRelacionados: relacionados,
 } = Astro.props;
+
+const productForCategoryPath: Product = {
+  id,
+  name,
+  description,
+  price,
+  img,
+  categories,
+  paymentLink,
+  enOferta: false,
+  relacionados: [],
+};
+
+const displayCategoryName = getDisplayCategoryName(productForCategoryPath);
+const displaySubcategories = getDisplaySubcategories(productForCategoryPath);
+const detailedSubcategory = displaySubcategories.find((sub) => sub.includes(" - "));
+const groupSubcategory = detailedSubcategory
+  ? detailedSubcategory.split(" - ")[0]
+  : displaySubcategories[0];
+const leafSubcategory = detailedSubcategory || displaySubcategories[0];
+
+const isRopa = displayCategoryName === "Ropa";
 ---
 
 <Layout
@@ -41,23 +68,27 @@ const {
   <section class="productContainer">
     <!-- BREADCRUMB -->
     <div class="breadcrumb">
-      <a href=`${import.meta.env.BASE_URL}/categories/${categories.name}`
-        >{categories.name}</a
+      <a href={`${import.meta.env.BASE_URL}/categories/${displayCategoryName}`}
+        >{displayCategoryName}</a
       >
 
-      {categories.subcategories.length >= 1 && "/"}
-      {
-        categories.subcategories.map((item, i) => (
-          <>
-            <a
-              href={`${import.meta.env.BASE_URL}/categories/${categories.name}/${item.name}`}
-            >
-              {item.name}
-            </a>
-            {i < categories.subcategories.length - 1 && " / "}
-          </>
-        ))
-      }
+      {groupSubcategory && (
+        <>
+          {" / "}
+          <a href={`${import.meta.env.BASE_URL}/categories/${displayCategoryName}/${groupSubcategory}`}>
+            {groupSubcategory}
+          </a>
+        </>
+      )}
+
+      {leafSubcategory && leafSubcategory !== groupSubcategory && (
+        <>
+          {" / "}
+          <a href={`${import.meta.env.BASE_URL}/categories/${displayCategoryName}/${leafSubcategory}`}>
+            {leafSubcategory.replace(`${groupSubcategory} - `, "")}
+          </a>
+        </>
+      )}
     </div>
 
     <div class="product_layout">
@@ -89,13 +120,20 @@ const {
           </div>
         </div>
 
-        <strong>Talle:</strong>
-        <div class="sizes">
-          <button class="size">S</button>
-          <button class="size">M</button>
-          <button class="size">L</button>
-          <button class="size">XL</button>
-        </div>
+        {
+          isRopa && (
+            <>
+              <strong>Talle:</strong>
+              <div class="sizes" id="sizesSelector">
+                <button type="button" class="size" data-size="S">S</button>
+                <button type="button" class="size" data-size="M">M</button>
+                <button type="button" class="size" data-size="L">L</button>
+                <button type="button" class="size" data-size="XL">XL</button>
+              </div>
+              <p id="sizeFeedback" class="size-feedback hidden">Selecciona un talle para continuar.</p>
+            </>
+          )
+        }
 
         <div class="priceRow">
           <span class="price">${price}</span>
@@ -265,6 +303,9 @@ const {
     padding: 20px 24px;
     margin: 25px 0;
     border-radius: 4px 12px 12px 4px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
   }
 
   .desc-title {
@@ -290,6 +331,20 @@ const {
     left: 0;
     color: #e67e22;
     font-weight: bold;
+  }
+
+  .desc-content {
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+
+  .desc-content::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .desc-content::-webkit-scrollbar-thumb {
+    background: #d0d0d0;
+    border-radius: 10px;
   }
 
   strong {
@@ -322,6 +377,20 @@ const {
     background: #f0f0f0;
   }
 
+  .size.selected {
+    background: var(--p-b-color);
+    border-color: var(--p-b-color);
+    color: #fff;
+  }
+
+  .size-feedback {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    color: var(--p-b-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
   /**** Price & Actions *****/
   .priceRow {
     display: flex;
@@ -345,7 +414,7 @@ const {
   /* Assuming NumberInput generates a wrapper, we might need to target it deep or adjacent */
 
   .buyBtn {
-    background: #e67e22; /* Orange/Terra-cotta */
+    background: var(--p-b-color);
     color: white;
     border: none;
     padding: 0 20px;
@@ -362,7 +431,7 @@ const {
   }
 
   .buyBtn:hover {
-    background: #d35400;
+    background: var(--s-b-color);
   }
 
   /**** Related Products *****/
@@ -462,28 +531,60 @@ const {
 
 <script>
   import addToCart from "../../utils/addToCart";
-  const addBtn = document.getElementById("addToCartBtn");
+  function initProductDetail() {
+    const addBtn = document.getElementById("addToCartBtn") as HTMLButtonElement | null;
+    if (!addBtn || addBtn.dataset.bound === "true") return;
 
-  addBtn?.addEventListener("click", () => {
-    const qtyInput = document.getElementById("cartQty") as HTMLInputElement;
-    const price = document.querySelector(".price") as HTMLSpanElement;
-    const name = document.querySelector(".name") as HTMLHeadingElement;
-    const id = addBtn?.getAttribute("data-id") ?? "";
-    const img = document.querySelector(".thumbs img") as HTMLImageElement;
+    addBtn.dataset.bound = "true";
+    const sizesSelector = document.getElementById("sizesSelector");
+    const sizeFeedback = document.getElementById("sizeFeedback");
+    let selectedSize = "";
 
-    const qty = parseInt(qtyInput.value, 10);
+    if (sizesSelector) {
+      const sizeButtons = sizesSelector.querySelectorAll<HTMLButtonElement>(".size");
+      sizeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          selectedSize = btn.dataset.size || "";
+          sizeButtons.forEach((item) => item.classList.remove("selected"));
+          btn.classList.add("selected");
+          sizeFeedback?.classList.add("hidden");
+        });
+      });
+    }
 
-    addToCart(
-      id,
-      name.innerText,
-      price.innerText.replace("$", "").replace(",", "."),
-      qty,
-      img.src,
-    );
+    addBtn.addEventListener("click", () => {
+      const qtyInput = document.getElementById("cartQty") as HTMLInputElement;
+      const price = document.querySelector(".price") as HTMLSpanElement;
+      const name = document.querySelector(".name") as HTMLHeadingElement;
+      const id = addBtn.getAttribute("data-id") ?? "";
+      const img = document.querySelector(".thumbs img") as HTMLImageElement;
+      const qty = parseInt(qtyInput.value, 10);
 
-    // llama a una funcion declarada en header que actualiza el contador del carrito
-    window.updateCartCount && window.updateCartCount();
-    addBtn.textContent = "¡Agregado!";
-    setTimeout(() => (addBtn.textContent = "Agregar al carrito"), 1200);
-  });
+      const isClothing = Boolean(sizesSelector);
+      if (isClothing && !selectedSize) {
+        sizeFeedback?.classList.remove("hidden");
+        return;
+      }
+
+      const idToCart = selectedSize ? `${id}__${selectedSize}` : id;
+      const nameToCart = selectedSize
+        ? `${name.innerText} (Talle ${selectedSize})`
+        : name.innerText;
+
+      addToCart(
+        idToCart,
+        nameToCart,
+        price.innerText.replace("$", "").replace(",", "."),
+        qty,
+        img.src,
+      );
+
+      window.updateCartCount && window.updateCartCount();
+      addBtn.textContent = "¡Agregado!";
+      setTimeout(() => (addBtn.textContent = "Agregar al carrito"), 1200);
+    });
+  }
+
+  initProductDetail();
+  document.addEventListener("astro:page-load", initProductDetail);
 </script>

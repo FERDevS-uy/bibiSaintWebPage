@@ -4,6 +4,7 @@ import addToCart from "./addToCart";
 import trash from "../assets/trash.svg?raw";
 import { decryptIDs, encryptIDs } from "./encription";
 import { config } from "src/config";
+import { formatPrice, parsePrice } from "./price";
 
 export default function renderCart() {
   const storage = JSON.parse(localStorage.getItem("carrito") || "[]");
@@ -35,14 +36,15 @@ export default function renderCart() {
   /* ------------------ Por cada producto renderiza una fila ------------------ */
   cartList.innerHTML = storage
     .map((p: ProductInCart) => {
-      const subtotal = Number(p.price) * +p.cantidad;
+      const unitPrice = parsePrice(p.price);
+      const subtotal = unitPrice * +p.cantidad;
       totalValue += subtotal;
       return productRow(p, subtotal);
     })
     .join("");
 
   /* ----------------------- Muestra los precios totales ----------------------- */
-  totalSpan.textContent = `$${totalValue}`;
+  totalSpan.textContent = `$${formatPrice(totalValue)}`;
 
   /* ---------------------- Botones de cada fila de productos ---------------------- */
 
@@ -87,11 +89,12 @@ export default function renderCart() {
 
 
   const encryption = encryptIDs(storage.map((p: ProductInCart) => `${p.id}-${p.cantidad}`), "elias")
+  localStorage.setItem("lastPedidoToken", encryption);
 
   // Mensaje para copiar o enviar
   const pedido = storage.map((p: ProductInCart) => `
-  - ${p.name} x${p.cantidad} ($${p.price})`)
-    .join(" ") + `\nTotal: $${totalValue}\n${config.site}pedido?id=${encryption}`;
+  - ${p.name} x${p.cantidad} ($${formatPrice(parsePrice(p.price))})`)
+    .join(" ") + `\nTotal: $${formatPrice(totalValue)}\n${config.site}pedido?id=${encryption}`;
 
   // Copy func logic kept but button is hidden in UI
   copyBtn.title = `Copiar: ${pedido}`
@@ -105,6 +108,9 @@ export default function renderCart() {
 }
 
 const productRow = (p: ProductInCart, subtotal: number): String => {
+  const formattedUnitPrice = formatPrice(parsePrice(p.price));
+  const formattedSubtotal = formatPrice(subtotal);
+
   return `
       <tr>
         <td class="tdRemove">
@@ -119,7 +125,7 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
            <div class="cartName">${p.name}</div>
            <div class="cartMeta">
              <span class="metaLabel">Precio</span>
-             <span class="metaValue">$${p.price}</span>
+             <span class="metaValue">$${formattedUnitPrice}</span>
            </div>
            <div class="cartMeta cartMetaQty">
              <span class="metaLabel">Cantidad</span>
@@ -131,7 +137,7 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
            </div>
            <div class="cartMeta">
              <span class="metaLabel">Subtotal</span>
-             <span class="metaValue subtotalValue">$${subtotal}</span>
+             <span class="metaValue subtotalValue">$${formattedSubtotal}</span>
            </div>
         </td>
 
@@ -144,7 +150,7 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
         </td>
 
         <td class="tdSubtotal">
-           <span class="price">$${subtotal}</span>
+           <span class="price">$${formattedSubtotal}</span>
         </td>
       </tr>
     `;
