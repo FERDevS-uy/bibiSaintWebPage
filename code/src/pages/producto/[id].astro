@@ -3,6 +3,7 @@ import { cargarProductos } from "../../utils/loadCSV";
 import Layout from "../../layouts/Layout.astro";
 import { config } from "../../config";
 import NumberInput from "@components/NumberInput.astro";
+import ProductGallery from "@components/ProductGallery.jsx";
 import type Product from "../../types/product";
 import {
   getDisplayCategoryName,
@@ -34,6 +35,7 @@ const {
   categories,
   paymentLink,
   description,
+  colors,
   productosRelacionados: relacionados,
 } = Astro.props;
 
@@ -99,14 +101,10 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     </div>
 
     <div class="product_layout">
-      <!-- LEFT IMAGE SECTION -->
-      <div class="gallery">
-        <img class="mainImg" src={img[0]} alt={name} />
-
-        <div class="thumbs">
-          {img.map((i) => <img src={i} alt="" class="thumb" />)}
-        </div>
-      </div>
+      <!-- LEFT IMAGE SECTION (isla React, carga lazy) -->
+      {/* Galería como isla React: carga lazy, marca producto como no disponible si fallan las imágenes */}
+      <ProductGallery images={img} name={name} client:visible />
+      <div id="productImagesData" data-images={JSON.stringify(img)} style="display:none"></div>
 
       <!-- RIGHT INFO -->
       <div class="infoBox">
@@ -130,6 +128,29 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         {
           isRopa && (
             <>
+              <div
+                id="colorsBlock"
+                class={`colors-block${colors && colors.length > 0 ? "" : " hidden"}`}
+              >
+                <strong>
+                  Color: <span id="colorName" class="color-name">{colors?.[0]?.name ?? ""}</span>
+                </strong>
+                <div class="colors" id="colorsSelector">
+                  {colors && colors.length > 0 && colors.map((c, i) => (
+                    <button
+                      type="button"
+                      class={`swatch${i === 0 ? " selected" : ""}`}
+                      style={`background-color:${c.hex || "#cccccc"}`}
+                      data-color-id={String(c.id)}
+                      data-color-name={c.name}
+                      data-color-images={JSON.stringify(c.images || [])}
+                      title={c.name}
+                      aria-label={c.name}
+                    ></button>
+                  ))}
+                </div>
+              </div>
+
               <strong>Talle:</strong>
               <div class="sizes" id="sizesSelector">
                 <button type="button" class="size" data-size="XS">XS</button>
@@ -139,7 +160,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
                 <button type="button" class="size" data-size="XL">XL</button>
                 <button type="button" class="size" data-size="XXL">XXL</button>
               </div>
-              <p id="sizeFeedback" class="size-feedback hidden">Selecciona un talle para continuar.</p>
+              <p id="sizeFeedback" class="size-feedback hidden">Selecciona un talle disponible para continuar.</p>
             </>
           )
         }
@@ -149,7 +170,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           <NumberInput
             id="cartQty"
             name="pasajeros"
-            initialValue={2}
+            initialValue={1}
             min={1}
             max={10}
           />
@@ -245,42 +266,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     gap: 40px;
   }
 
-  /**** Gallery *****/
-  .gallery {
-    width: 100%;
-  }
-
-  .mainImg {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    background: #fcfcfc;
-    border-radius: 12px;
-    display: block;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-  }
-
-  .thumbs {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 5px; 
-  }
-
-  .thumb {
-    width: 70px;
-    height: 70px;
-    border-radius: 8px;
-    object-fit: cover;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: border-color 0.2s;
-  }
-  .thumb:hover {
-    border-color: #e67e22;
-  }
+  /**** Gallery (estilos en src/styles/components/ProductGallery.css) *****/
 
   /**** Info box *****/
   .infoBox {
@@ -411,12 +397,93 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     color: #fff;
   }
 
+  .size.unavailable,
+  .size[disabled] {
+    background: #f3f3f3;
+    color: #b1b1b1;
+    border-color: #e0e0e0;
+    cursor: not-allowed;
+    position: relative;
+  }
+
+  .size.unavailable::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      #c9c9c9 calc(50% - 1px),
+      #c9c9c9 calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
+    pointer-events: none;
+  }
+
+  /**** Colors *****/
+  .colors-block {
+    margin: 10px 0 16px 0;
+  }
+  /* Global rules to cover dynamically-inserted .swatch buttons (client or server without scoped attr) */
+  :global(.swatch) {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #e5e5e5;
+    background: #ccc;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  :global(.swatch):hover {
+    transform: scale(1.1);
+  }
+  :global(.swatch).selected {
+    border-color: #111;
+    transform: scale(1.1);
+  }
+  .colors-block.hidden {
+    display: none;
+  }
+  .color-name {
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  .colors {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+  .swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #e5e5e5;
+    background: #ccc;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .swatch:hover {
+    transform: scale(1.1);
+  }
+  .swatch.selected {
+    border-color: #111;
+    transform: scale(1.1);
+  }
+
   .size-feedback {
     margin-top: -10px;
     margin-bottom: 10px;
     color: var(--p-b-color);
     font-size: 0.9rem;
     font-weight: 600;
+  }
+
+  .size-feedback.hidden,
+  .hidden {
+    display: none;
   }
 
   /**** Price & Actions *****/
@@ -569,11 +636,6 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
       align-items: flex-start;
     }
 
-    .gallery {
-      flex: 1;
-      max-width: 50%;
-    }
-
     .infoBox {
       flex: 1;
       padding-left: 20px;
@@ -606,11 +668,16 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     const sizeFeedback = document.getElementById("sizeFeedback");
     let selectedSize = "";
 
+    // Estado de talles/colores disponibles (compartido con el verificador de stock)
+    const availableSizesByColor = new Map<number, Set<string>>();
+    let selectedColorId: number | null = null;
+
     if (sizesSelector) {
       sizesSelector.addEventListener("click", (event) => {
         const target = event.target as HTMLElement;
         const button = target.closest(".size") as HTMLButtonElement | null;
         if (!button) return;
+        if (button.classList.contains("unavailable") || button.disabled) return;
 
         selectedSize = button.dataset.size || "";
         const sizeButtons = sizesSelector.querySelectorAll<HTMLButtonElement>(".size");
@@ -625,16 +692,38 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
       const price = document.querySelector(".price") as HTMLSpanElement;
       const name = document.querySelector(".name") as HTMLHeadingElement;
       const id = addBtn.getAttribute("data-id") ?? "";
-      const img = document.querySelector(".thumbs img") as HTMLImageElement;
+      const img = document.querySelector(".gallery .mainImg") as HTMLImageElement | null;
       const qty = parseInt(qtyInput.value, 10);
 
       const isClothing = Boolean(sizesSelector);
       if (isClothing && !selectedSize) {
-        sizeFeedback?.classList.remove("hidden");
+        if (sizeFeedback) {
+          sizeFeedback.textContent = "Selecciona un talle para continuar.";
+          sizeFeedback.classList.remove("hidden");
+        }
         return;
       }
 
-      const idToCart = selectedSize ? `${id}__${selectedSize}` : id;
+      // validar contra disponibilidad si ya conocemos el stock real
+      if (isClothing && availableSizesByColor.size > 0) {
+        const setForColor =
+          selectedColorId !== null
+            ? availableSizesByColor.get(selectedColorId)
+            : null;
+        if (setForColor && !setForColor.has(selectedSize)) {
+          if (sizeFeedback) {
+            sizeFeedback.textContent =
+              "Ese talle no está disponible para el color elegido.";
+            sizeFeedback.classList.remove("hidden");
+          }
+          return;
+        }
+      }
+
+      const variantSuffix = [selectedSize, selectedColorId !== null ? `c${selectedColorId}` : ""]
+        .filter(Boolean)
+        .join("_");
+      const idToCart = variantSuffix ? `${id}__${variantSuffix}` : id;
       const nameToCart = selectedSize
         ? `${name.innerText} (Talle ${selectedSize})`
         : name.innerText;
@@ -644,7 +733,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         nameToCart,
         price.innerText.replace("$", "").replace(",", "."),
         qty,
-        img.src,
+        img?.src ?? "",
       );
 
       window.updateCartCount && window.updateCartCount();
@@ -747,6 +836,169 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         selectedSize = "";
       };
 
+      // --- colores + talles disponibles ---
+      const colorsBlock = document.getElementById("colorsBlock");
+      const colorsSelector = document.getElementById("colorsSelector");
+      const colorNameEl = document.getElementById("colorName");
+
+      const markUnavailableSizes = (availableSet: Set<string>) => {
+        if (!sizesSelector) return;
+        sizesSelector
+          .querySelectorAll<HTMLButtonElement>(".size")
+          .forEach((btn) => {
+            const sz = btn.dataset.size || "";
+            const isAvailable = availableSet.has(sz);
+            btn.classList.toggle("unavailable", !isAvailable);
+            btn.disabled = !isAvailable;
+            if (!isAvailable) btn.classList.remove("selected");
+          });
+      };
+
+      const applyColorSelection = (colorId: number) => {
+        selectedColorId = colorId;
+        const set = availableSizesByColor.get(colorId) ?? new Set<string>();
+        markUnavailableSizes(set);
+        selectedSize = "";
+
+        // marcar swatch seleccionado y nombre
+        let selectedImages: string[] = [];
+        if (colorsSelector) {
+          colorsSelector
+            .querySelectorAll<HTMLButtonElement>(".swatch")
+            .forEach((sw) => {
+              const isMatch = Number(sw.dataset.colorId) === colorId;
+              sw.classList.toggle("selected", isMatch);
+              if (isMatch) {
+                if (colorNameEl) colorNameEl.textContent = sw.dataset.colorName || "";
+                try {
+                  const raw = sw.dataset.colorImages;
+                  if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed)) selectedImages = parsed.filter(Boolean);
+                  }
+                } catch {
+                  selectedImages = [];
+                }
+              }
+            });
+        }
+
+        // Cambiar la galería si tenemos imágenes del color seleccionado
+        if (selectedImages.length > 0) {
+          window.dispatchEvent(
+            new CustomEvent("product:image-set", {
+              detail: { images: selectedImages },
+            }),
+          );
+        }
+      };
+
+      const renderColors = (
+        colors: Array<{ id: number; hex: string; name: string }>,
+      ) => {
+        if (!colorsSelector || !colorsBlock) return;
+
+        // Indexar imágenes previas server-rendered (por id) para preservarlas
+        const prevImagesById = new Map<number, string>();
+        colorsSelector
+          .querySelectorAll<HTMLButtonElement>(".swatch")
+          .forEach((sw) => {
+            const cid = Number(sw.dataset.colorId);
+            const raw = sw.dataset.colorImages;
+            if (Number.isFinite(cid) && raw) prevImagesById.set(cid, raw);
+          });
+
+        colorsSelector.innerHTML = "";
+        colors.forEach((c) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "swatch";
+          btn.style.backgroundColor = c.hex || "#cccccc";
+          btn.dataset.colorId = String(c.id);
+          btn.dataset.colorName = c.name;
+          const imagesAttr = prevImagesById.get(c.id);
+          if (imagesAttr) btn.dataset.colorImages = imagesAttr;
+          btn.title = c.name;
+          btn.setAttribute("aria-label", c.name);
+          colorsSelector.appendChild(btn);
+        });
+        colorsBlock.classList.remove("hidden");
+      };
+
+      if (colorsSelector) {
+        colorsSelector.addEventListener("click", (event) => {
+          const target = event.target as HTMLElement;
+          const sw = target.closest(".swatch") as HTMLButtonElement | null;
+          if (!sw) return;
+          const colorId = Number(sw.dataset.colorId);
+          if (Number.isFinite(colorId)) applyColorSelection(colorId);
+        });
+
+        // Si hay swatches pre-renderizados desde el server (CSV), aplicar el primero
+        const firstSwatch = colorsSelector.querySelector<HTMLButtonElement>(".swatch");
+        if (firstSwatch) {
+          const cid = Number(firstSwatch.dataset.colorId);
+          if (Number.isFinite(cid)) {
+            selectedColorId = cid;
+            // dispara cambio de galería (sin marcar talles ya que no tenemos stock aún)
+            try {
+              const raw = firstSwatch.dataset.colorImages;
+              if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                  window.dispatchEvent(
+                    new CustomEvent("product:image-set", {
+                      detail: { images: parsed.filter(Boolean) },
+                    }),
+                  );
+                }
+              }
+            } catch {
+              /* noop */
+            }
+          }
+        }
+
+        // Si no hay swatches pre-renderizados y es producto Martina, intentar inferir colores desde las imágenes
+        if (!firstSwatch) {
+          try {
+            const addBtnEl = document.getElementById("addToCartBtn");
+            const productIdAttr = addBtnEl?.getAttribute("data-id") || '';
+            if (productIdAttr.toLowerCase().startsWith('mdt-')) {
+              const imagesDataEl = document.getElementById('productImagesData');
+              const raw = imagesDataEl?.getAttribute('data-images') || '[]';
+              const imgs = JSON.parse(raw);
+              const grouped = new Map();
+              imgs.forEach((u) => {
+                try {
+                  const fname = u.split('/').pop() || '';
+                  const m = fname.match(/^[0-9]+_(\d+)_\d+\.[a-zA-Z]{3,4}$/);
+                  const colorId = m ? Number(m[1]) : null;
+                  const key = colorId !== null && Number.isFinite(colorId) ? String(colorId) : '0';
+                  if (!grouped.has(key)) grouped.set(key, []);
+                  grouped.get(key).push(u);
+                } catch {
+                  // ignore
+                }
+              });
+
+              const inferredColors = Array.from(grouped.entries())
+                .filter(([k]) => k !== undefined)
+                .map(([k, arr]) => ({ id: Number(k), hex: '#cccccc', name: `Color ${k}`, images: arr }));
+
+              if (inferredColors.length > 0) {
+                renderColors(inferredColors);
+                const first = inferredColors[0];
+                selectedColorId = first.id;
+                applyColorSelection(first.id);
+              }
+            }
+          } catch (e) {
+            // noop
+          }
+        }
+      }
+
       const fetchMartinaLive = async (productId: string) => {
         const productIdNumber = productId.replace(/^mdt-/i, "");
         const endpoint = new URL("https://pol21.martinaditrento.com/mdt-services/resources/store/product");
@@ -770,25 +1022,68 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           }
 
           const payload = await response.json();
-          const product = payload?.data ?? payload;
+          const dataArray: any[] = Array.isArray(payload?.data) ? payload.data : [];
 
-          const rawSizesFromVariation =
-            Array.isArray(product?.variation?.variationValues)
-              ? product.variation.variationValues.map((item: any) => String(item?.description ?? "")).filter(Boolean)
-              : [];
+          // data vacío => sin stock disponible en el proveedor
+          if (dataArray.length === 0) {
+            return {
+              provider: "martina" as const,
+              price: "",
+              inStock: false,
+              colors: [] as Array<{ id: number; hex: string; name: string; sizes: string[]; rawSizes: string[] }>,
+              sizes: [] as string[],
+            };
+          }
 
-          const normalizedSizes = normalizeSizes(rawSizesFromVariation);
+          const colorMap = new Map<
+            number,
+            { id: number; hex: string; name: string; rawSizes: Set<string> }
+          >();
+
+          dataArray.forEach((entry) => {
+            const tipoVentas = entry?.variation?.variationValues ?? [];
+            tipoVentas.forEach((tv: any) => {
+              const colorVariations = tv?.variation?.variationValues ?? [];
+              colorVariations.forEach((color: any) => {
+                const colorId = Number(color?.id);
+                if (!Number.isFinite(colorId)) return;
+                if (!colorMap.has(colorId)) {
+                  colorMap.set(colorId, {
+                    id: colorId,
+                    hex: String(color?.colorHex ?? "#cccccc"),
+                    name: String(color?.description ?? "").trim(),
+                    rawSizes: new Set<string>(),
+                  });
+                }
+                const sizeVariations = color?.variation?.variationValues ?? [];
+                sizeVariations.forEach((sz: any) => {
+                  const desc = String(sz?.description ?? "").trim();
+                  if (desc) colorMap.get(colorId)!.rawSizes.add(desc);
+                });
+              });
+            });
+          });
+
+          const colors = Array.from(colorMap.values()).map((c) => ({
+            id: c.id,
+            hex: c.hex,
+            name: c.name,
+            rawSizes: Array.from(c.rawSizes),
+            sizes: normalizeSizes(Array.from(c.rawSizes)),
+          }));
+
+          const allSizes = normalizeSizes(
+            colors.flatMap((c) => c.rawSizes),
+          );
+
+          const firstEntry = dataArray[0] ?? {};
 
           return {
-            provider: "martina",
-            price: String(product?.price ?? "").trim(),
-            inStock:
-              typeof product?.inStock === "boolean"
-                ? product.inStock
-                : typeof product?.stock === "number"
-                  ? product.stock > 0
-                  : null,
-            sizes: normalizedSizes,
+            provider: "martina" as const,
+            price: String(firstEntry?.price ?? "").trim(),
+            inStock: colors.some((c) => c.sizes.length > 0),
+            colors,
+            sizes: allSizes,
           };
         } finally {
           window.clearTimeout(timeout);
@@ -891,21 +1186,43 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
               priceEl.textContent = `$${nextPrice}`;
             }
 
-            if (data?.inStock === true) {
-              stockBadge.textContent = "En Stock";
-              stockBadge.style.background = "#27ae60";
-            } else if (data?.inStock === false) {
+            // sin colores => producto sin stock disponible
+            if (!data || data.colors.length === 0) {
               stockBadge.textContent = "Sin stock";
               stockBadge.style.background = "#a33a3a";
+              availableSizesByColor.clear();
+              selectedColorId = null;
+              if (sizesSelector) {
+                sizesSelector
+                  .querySelectorAll<HTMLButtonElement>(".size")
+                  .forEach((btn) => {
+                    btn.classList.add("unavailable");
+                    btn.classList.remove("selected");
+                    btn.disabled = true;
+                  });
+              }
+              if (colorsBlock) colorsBlock.classList.add("hidden");
+              setStatus(
+                "Este producto puede no tener stock disponible en el proveedor.",
+                "error",
+              );
+              return;
             }
 
-            const normalizedSizes = Array.isArray(data?.sizes)
-              ? data.sizes.filter(Boolean)
-              : [];
+            stockBadge.textContent = "En Stock";
+            stockBadge.style.background = "#27ae60";
 
-            if (normalizedSizes.length > 0) {
-              renderNormalizedSizes(normalizedSizes);
-            }
+            availableSizesByColor.clear();
+            data.colors.forEach((c) => {
+              availableSizesByColor.set(c.id, new Set(c.sizes));
+            });
+
+            renderColors(data.colors);
+
+            // seleccionar primer color y aplicar sus talles
+            const firstColor = data.colors[0];
+            selectedColorId = firstColor.id;
+            applyColorSelection(firstColor.id);
 
             setStatus("Actualizado desde martina.", "ok");
           } else if (provider === "kaideco") {
@@ -930,6 +1247,10 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
 
             if (normalizedSizes.length > 0) {
               renderNormalizedSizes(normalizedSizes);
+              availableSizesByColor.clear();
+              availableSizesByColor.set(-1, new Set(normalizedSizes));
+              selectedColorId = -1;
+              markUnavailableSizes(new Set(normalizedSizes));
             }
 
             setStatus("Actualizado desde kaideco.", "ok");
@@ -946,9 +1267,50 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           checkStockBtn.textContent = originalText || "Verificar stock y precio";
         }
       });
+
+      // Auto-verificar al cargar la página (solo para productos con proveedor soportado)
+      const autoProvider = providerFrom(
+        checkStockBtn.dataset.productId ?? "",
+        providerLink,
+      );
+      if (autoProvider === "martina" || autoProvider === "kaideco") {
+        // requestIdleCallback si está disponible, sino timeout corto
+        const trigger = () => checkStockBtn.click();
+        const w = window as any;
+        if (typeof w.requestIdleCallback === "function") {
+          w.requestIdleCallback(trigger, { timeout: 1500 });
+        } else {
+          w.setTimeout(trigger, 300);
+        }
+      }
     }
   }
 
   initProductDetail();
+  // Enviar set inicial de imágenes a la isla ProductGallery (fallback si la isla recibió solo la principal)
+  try {
+    const imagesDataEl = document.getElementById('productImagesData');
+    if (imagesDataEl) {
+      const raw = imagesDataEl.getAttribute('data-images') || '[]';
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        window.dispatchEvent(new CustomEvent('product:image-set', { detail: { images: parsed.filter(Boolean) } }));
+      }
+    }
+  } catch (e) {
+    /* noop */
+  }
+  // reintento con retardo para cuando la isla React se hidrate más tarde
+  setTimeout(() => {
+    try {
+      const imagesDataEl = document.getElementById('productImagesData');
+      if (!imagesDataEl) return;
+      const raw = imagesDataEl.getAttribute('data-images') || '[]';
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        window.dispatchEvent(new CustomEvent('product:image-set', { detail: { images: parsed.filter(Boolean) } }));
+      }
+    } catch {}
+  }, 350);
   document.addEventListener("astro:page-load", initProductDetail);
 </script>

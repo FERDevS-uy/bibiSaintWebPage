@@ -2,11 +2,6 @@
 import { config } from "src/config";
 import styles from "../styles/components/NavPag.module.css";
 
-const { default: prevArrow } = await import("@assets/prev-arrow.svg?raw");
-const { default: nextArrow } = await import("@assets/next-arrow.svg?raw");
-const { default: lastArrow } = await import("@assets/last-arrow.svg?raw");
-const { default: firstArrow } = await import("@assets/first-arrow.svg?raw");
-
 interface Props {
   totalPages: number;
   actualPage: number;
@@ -17,56 +12,34 @@ const { totalPages, actualPage, baseURL = config.base } = Astro.props;
 
 const nextUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${+actualPage + 1}`) : `${baseURL}/page/${+actualPage + 1}`;
 const prevUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${+actualPage - 1}`) : `${baseURL}/page/${+actualPage - 1}`;
-const lastUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${totalPages}`) : `${baseURL}/page/${totalPages}`;
-const firstUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/1`) : `${baseURL}/page/1`;
 ---
 
-<nav class={styles.pagination} id="products-pagination">
+<nav class={styles.pagination} id="products-pagination" aria-label="Paginación">
   {
     actualPage == 1 ? (
-      <>
-        <span class={styles.button}>
-          <Fragment set:html={firstArrow} />
-        </span>
-        <span class={styles.button}>
-          <Fragment set:html={prevArrow} />
-        </span>
-      </>
+      <span class={`${styles.arrow} ${styles.disabled}`} aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+      </span>
     ) : (
-      <>
-        <a href={firstUrl} class={styles.link}>
-          <Fragment set:html={firstArrow} />
-        </a>
-        <a href={prevUrl} class={styles.link}>
-          <Fragment set:html={prevArrow} />
-        </a>
-      </>
+      <a href={prevUrl} class={styles.arrow} aria-label="Página anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+      </a>
     )
   }
-  <span
-    ><span id="actualPage">{actualPage}</span> / <span id="totalPages"
-      >{totalPages}</span
-    ></span
-  >
+
+  <span class={styles.info}>
+    <span id="actualPage">{actualPage}</span> de <span id="totalPages">{totalPages}</span>
+  </span>
+
   {
     actualPage == totalPages ? (
-      <>
-        <span class={styles.button}>
-          <Fragment set:html={nextArrow} />
-        </span>
-        <span class={styles.button}>
-          <Fragment set:html={lastArrow} />
-        </span>
-      </>
+      <span class={`${styles.arrow} ${styles.disabled}`} aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+      </span>
     ) : (
-      <>
-        <a href={nextUrl} class={styles.link}>
-          <Fragment set:html={nextArrow} />
-        </a>
-        <a href={lastUrl} class={styles.link}>
-          <Fragment set:html={lastArrow} />
-        </a>
-      </>
+      <a href={nextUrl} class={styles.arrow} aria-label="Página siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+      </a>
     )
   }
 </nav>

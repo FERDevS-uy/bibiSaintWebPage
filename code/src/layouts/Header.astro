@@ -515,7 +515,9 @@ const isAbout = pathname.includes("/about");
     width: 85vw;
     max-width: 400px;
     min-width: 310px;
-    height: 100vh;
+    /* Use dynamic viewport units and ensure full-bleed to bottom on mobile UI */
+    bottom: 0;
+    height: 100dvh;
     background: var(
       --h-gradient
     ); /* linear-gradient(135deg, #e43f3f 0%, #b81c1c 100%) */
@@ -524,6 +526,8 @@ const isAbout = pathname.includes("/about");
     flex-direction: column;
     overflow-x: hidden;
     overflow-y: auto;
+    box-sizing: border-box;
+    padding-bottom: env(safe-area-inset-bottom, 0);
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease;
   }

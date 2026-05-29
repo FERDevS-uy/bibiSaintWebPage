@@ -1,0 +1,64 @@
+name: Go/No-Go Release
+about: Registrar decision de salida a produccion con evidencia.
+title: "[Go-NoGo] Release <fecha o version>"
+labels:
+  - release
+  - go-no-go
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version o referencia
+      placeholder: "commit SHA, tag o fecha"
+    validations:
+      required: true
+
+  - type: input
+    id: run
+    attributes:
+      label: Run de CI/CD
+      placeholder: "URL del workflow"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: prechecks
+    attributes:
+      label: Prechecks obligatorios
+      options:
+        - label: CSV valido sin errores de parseo.
+          required: true
+        - label: Sin IDs duplicados.
+          required: true
+        - label: Cobertura por proveedor dentro del umbral.
+          required: true
+        - label: Build Astro exitoso.
+          required: true
+        - label: Orden/filtro/paginacion funcional.
+          required: true
+
+  - type: dropdown
+    id: decision
+    attributes:
+      label: Decision
+      options:
+        - GO
+        - NO-GO
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivo
+    attributes:
+      label: Motivo de la decision
+      placeholder: "Si NO-GO, describir bloqueo principal y accion."
+    validations:
+      required: true
+
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Plan de rollback
+      placeholder: "Snapshot o commit a restaurar, responsable y ETA."
+    validations:
+      required: true

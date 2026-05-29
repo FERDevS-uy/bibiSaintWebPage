@@ -9,44 +9,44 @@ svg {
   margin-bottom: 3rem;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 1.25rem;
   margin-inline: auto;
-
 }
 
-button.button,
-span.button {
-  padding: 0.5em 1em;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-items: center;
+.pag-arrow {
+  background: none;
   border: none;
-}
-
-/* ✅ clickable = funcional, reemplaza <a> */
-button.button.clickable {
+  padding: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
   cursor: pointer;
-  color: var(--principal-text-color);
-  background-color: var(--principal-background-color);
+  transition: color 0.15s ease, transform 0.15s ease;
 }
 
-button.button.clickable:hover {
-  background-color: var(--principal-background-color-dark);
-  color: var(--principal-text-color);
+.pag-arrow svg {
+  width: 28px;
+  height: 28px;
 }
 
-/* ✅ disabled = era <span class="button"> en Astro */
-.button.disabled {
+.pag-arrow:hover:not(.disabled) {
+  color: #000;
+  transform: scale(1.1);
+}
+
+.pag-arrow.disabled {
   color: #b1b1b1;
-  background-color: var(--principal-background-color-light);
-  user-select: none;
   cursor: default;
 }
 
-.pages {
-  padding: 0 0.5rem;
+.pag-info {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111;
+  min-width: 4.5rem;
+  text-align: center;
+  user-select: none;
 }
