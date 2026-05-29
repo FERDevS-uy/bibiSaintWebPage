@@ -6,9 +6,11 @@
     "dev": "astro dev",
     "start": "astro dev --host",
     "build": "astro build",
+    "build:with-sync": "pnpm run providers:sync && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "scrap": "node src/utils/fetch_productos.js"
+    "scrap": "node src/utils/fetch_productos.js",
+    "providers:sync": "pnpm --dir ../webScrappingTool run dev"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",

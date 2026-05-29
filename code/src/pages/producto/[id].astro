@@ -58,6 +58,13 @@ const groupSubcategory = detailedSubcategory
 const leafSubcategory = detailedSubcategory || displaySubcategories[0];
 
 const isRopa = displayCategoryName === "Ropa";
+const runtimeStockCheckEnabled = import.meta.env.PUBLIC_ENABLE_STOCK_CHECK !== "false";
+const primaryProviderLink = paymentLink?.[0]?.url ?? "";
+const martinaCode = import.meta.env.PUBLIC_MARTINA_CODE || "202605";
+const martinaCountryId = import.meta.env.PUBLIC_MARTINA_COUNTRY_ID || "598";
+const isMartinaProduct = String(id).toLowerCase().startsWith("mdt-");
+const isKaiProduct = String(id).toLowerCase().startsWith("kai-") || primaryProviderLink.includes("kaideco.uy/products/");
+const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || isKaiProduct);
 ---
 
 <Layout
@@ -103,7 +110,7 @@ const isRopa = displayCategoryName === "Ropa";
 
       <!-- RIGHT INFO -->
       <div class="infoBox">
-        <span class="stock">En Stock</span>
+        <span id="stockBadge" class="stock">En Stock</span>
         <h1 class="name">{name}</h1>
 
         <div class="meta">
@@ -125,10 +132,12 @@ const isRopa = displayCategoryName === "Ropa";
             <>
               <strong>Talle:</strong>
               <div class="sizes" id="sizesSelector">
+                <button type="button" class="size" data-size="XS">XS</button>
                 <button type="button" class="size" data-size="S">S</button>
                 <button type="button" class="size" data-size="M">M</button>
                 <button type="button" class="size" data-size="L">L</button>
                 <button type="button" class="size" data-size="XL">XL</button>
+                <button type="button" class="size" data-size="XXL">XXL</button>
               </div>
               <p id="sizeFeedback" class="size-feedback hidden">Selecciona un talle para continuar.</p>
             </>
@@ -136,7 +145,7 @@ const isRopa = displayCategoryName === "Ropa";
         }
 
         <div class="priceRow">
-          <span class="price">${price}</span>
+          <span id="productPrice" class="price">${price}</span>
           <NumberInput
             id="cartQty"
             name="pasajeros"
@@ -153,6 +162,25 @@ const isRopa = displayCategoryName === "Ropa";
             Añadir al Carrito
           </button>
         </div>
+
+        {
+          showRuntimeStockCheck && (
+            <div class="runtimeStockCheck" id="runtimeStockCheck">
+              <button
+                type="button"
+                id="checkStockBtn"
+                class="checkStockBtn"
+                data-product-id={id}
+                data-provider-link={primaryProviderLink}
+                data-martina-code={martinaCode}
+                data-martina-country-id={martinaCountryId}
+              >
+                Verificar stock y precio
+              </button>
+              <p id="stockCheckStatus" class="stockCheckStatus">Consulta en vivo desde proveedor.</p>
+            </div>
+          )
+        }
       </div>
     </div>
 
@@ -434,6 +462,44 @@ const isRopa = displayCategoryName === "Ropa";
     background: var(--s-b-color);
   }
 
+  .runtimeStockCheck {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .checkStockBtn {
+    width: fit-content;
+    max-width: 100%;
+    border: 1px solid #222;
+    background: #fff;
+    color: #222;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .checkStockBtn:hover {
+    background: #f4f4f4;
+  }
+
+  .checkStockStatus {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #5a5a5a;
+  }
+
+  .checkStockStatus.is-error {
+    color: #b42318;
+  }
+
+  .checkStockStatus.is-ok {
+    color: #157f3b;
+  }
+
   /**** Related Products *****/
   .related {
     margin-top: 50px;
@@ -541,14 +607,16 @@ const isRopa = displayCategoryName === "Ropa";
     let selectedSize = "";
 
     if (sizesSelector) {
-      const sizeButtons = sizesSelector.querySelectorAll<HTMLButtonElement>(".size");
-      sizeButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          selectedSize = btn.dataset.size || "";
-          sizeButtons.forEach((item) => item.classList.remove("selected"));
-          btn.classList.add("selected");
-          sizeFeedback?.classList.add("hidden");
-        });
+      sizesSelector.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement;
+        const button = target.closest(".size") as HTMLButtonElement | null;
+        if (!button) return;
+
+        selectedSize = button.dataset.size || "";
+        const sizeButtons = sizesSelector.querySelectorAll<HTMLButtonElement>(".size");
+        sizeButtons.forEach((item) => item.classList.remove("selected"));
+        button.classList.add("selected");
+        sizeFeedback?.classList.add("hidden");
       });
     }
 
@@ -583,6 +651,302 @@ const isRopa = displayCategoryName === "Ropa";
       addBtn.textContent = "¡Agregado!";
       setTimeout(() => (addBtn.textContent = "Agregar al carrito"), 1200);
     });
+
+    const checkStockBtn = document.getElementById("checkStockBtn") as HTMLButtonElement | null;
+    const statusEl = document.getElementById("stockCheckStatus") as HTMLParagraphElement | null;
+    const stockBadge = document.getElementById("stockBadge") as HTMLSpanElement | null;
+    const priceEl = document.getElementById("productPrice") as HTMLSpanElement | null;
+
+    if (checkStockBtn && statusEl && stockBadge && priceEl) {
+      const providerLink = checkStockBtn.dataset.providerLink ?? "";
+      const martinaCodeValue = checkStockBtn.dataset.martinaCode ?? "202605";
+      const martinaCountryIdValue = checkStockBtn.dataset.martinaCountryId ?? "598";
+
+      const normalizeSize = (rawSize: string): string | null => {
+        const map: Record<string, string> = {
+          "0": "XS",
+          "1": "S",
+          "2": "M",
+          "3": "L",
+          "4": "XL",
+          "5": "XXL",
+          "40": "S",
+          "42": "M",
+          "44": "L",
+          "46": "XL",
+          "48": "XXL",
+          "50": "XXXL",
+          XS: "XS",
+          S: "S",
+          M: "M",
+          L: "L",
+          XL: "XL",
+          XXL: "XXL",
+          XXXL: "XXXL",
+        };
+
+        const token = rawSize.toUpperCase().replace(/\s+/g, "").trim();
+        if (!token) return null;
+        if (map[token]) return map[token];
+
+        const parts = token.split("/");
+        for (const part of parts) {
+          if (map[part]) return map[part];
+        }
+
+        const matches = token.match(/(XXXL|XXL|XL|XS|S|M|L|50|48|46|44|42|40|[0-5])/g);
+        if (!matches) return null;
+        for (const match of matches) {
+          if (map[match]) return map[match];
+        }
+
+        return null;
+      };
+
+      const normalizeSizes = (rawSizes: string[]) => {
+        const canonicalOrder = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"];
+        const values = new Set<string>();
+
+        rawSizes.forEach((raw) => {
+          const normalized = normalizeSize(raw);
+          if (normalized) values.add(normalized);
+        });
+
+        return canonicalOrder.filter((size) => values.has(size));
+      };
+
+      const providerFrom = (id: string, link: string): "martina" | "nuvex" | "kaideco" | "unknown" => {
+        const idLower = id.toLowerCase();
+        const linkLower = link.toLowerCase();
+
+        if (idLower.startsWith("mdt-")) return "martina";
+        if (idLower.startsWith("kai-") || linkLower.includes("kaideco.uy")) return "kaideco";
+        if (linkLower.includes("nuvex.uy")) return "nuvex";
+        return "unknown";
+      };
+
+      const setStatus = (message: string, tone: "ok" | "error" | "neutral" = "neutral") => {
+        statusEl.textContent = message;
+        statusEl.classList.remove("is-ok", "is-error");
+        if (tone === "ok") statusEl.classList.add("is-ok");
+        if (tone === "error") statusEl.classList.add("is-error");
+      };
+
+      const renderNormalizedSizes = (sizes: string[]) => {
+        if (!sizesSelector || sizes.length === 0) return;
+
+        sizesSelector.innerHTML = "";
+        sizes.forEach((size) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "size";
+          button.dataset.size = size;
+          button.textContent = size;
+          sizesSelector.appendChild(button);
+        });
+        selectedSize = "";
+      };
+
+      const fetchMartinaLive = async (productId: string) => {
+        const productIdNumber = productId.replace(/^mdt-/i, "");
+        const endpoint = new URL("https://pol21.martinaditrento.com/mdt-services/resources/store/product");
+        endpoint.searchParams.set("productId", productIdNumber);
+        endpoint.searchParams.set("code", martinaCodeValue);
+        endpoint.searchParams.set("countryId", martinaCountryIdValue);
+
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 6000);
+        try {
+          const response = await fetch(endpoint.toString(), {
+            cache: "no-store",
+            signal: controller.signal,
+            headers: {
+              Accept: "application/json, text/plain, */*",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const payload = await response.json();
+          const product = payload?.data ?? payload;
+
+          const rawSizesFromVariation =
+            Array.isArray(product?.variation?.variationValues)
+              ? product.variation.variationValues.map((item: any) => String(item?.description ?? "")).filter(Boolean)
+              : [];
+
+          const normalizedSizes = normalizeSizes(rawSizesFromVariation);
+
+          return {
+            provider: "martina",
+            price: String(product?.price ?? "").trim(),
+            inStock:
+              typeof product?.inStock === "boolean"
+                ? product.inStock
+                : typeof product?.stock === "number"
+                  ? product.stock > 0
+                  : null,
+            sizes: normalizedSizes,
+          };
+        } finally {
+          window.clearTimeout(timeout);
+        }
+      };
+
+      const formatKaiPrice = (raw: unknown) => {
+        const value = Number(raw);
+        if (Number.isNaN(value)) return "";
+        const normalized = value >= 100 ? Math.trunc(value / 100) : Math.trunc(value);
+        return normalized.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      };
+
+      const extractKaiRawSizes = (product: any): string[] => {
+        const variants = Array.isArray(product?.variants) ? product.variants : [];
+        const options = Array.isArray(product?.options) ? product.options : [];
+        const sizeOptionIndex = options.findIndex((option: any) => {
+          const name = String(option?.name ?? "").toLowerCase();
+          return name.includes("talle") || name.includes("size");
+        });
+
+        const candidateValues: string[] = [];
+
+        variants.forEach((variant: any) => {
+          if (!variant?.available) return;
+
+          if (sizeOptionIndex >= 0) {
+            const optionValue = variant?.[`option${sizeOptionIndex + 1}`];
+            if (optionValue) candidateValues.push(String(optionValue));
+          }
+
+          if (variant?.title) {
+            candidateValues.push(String(variant.title));
+          }
+        });
+
+        return candidateValues;
+      };
+
+      const fetchKaiLive = async (providerUrl: string) => {
+        const productUrl = new URL(providerUrl);
+        const segments = productUrl.pathname.split("/").filter(Boolean);
+        const productsIndex = segments.findIndex((segment) => segment === "products");
+        const handle = productsIndex >= 0 ? segments[productsIndex + 1] : "";
+
+        if (!handle) {
+          throw new Error("No se pudo detectar handle de Kai");
+        }
+
+        const endpoint = `https://kaideco.uy/products/${handle}.js`;
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 6000);
+
+        try {
+          const response = await fetch(endpoint, {
+            cache: "no-store",
+            signal: controller.signal,
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const product = await response.json();
+          const variants = Array.isArray(product?.variants) ? product.variants : [];
+          const firstVariant = variants[0] ?? null;
+          const rawSizes = extractKaiRawSizes(product);
+
+          return {
+            provider: "kaideco",
+            price: formatKaiPrice(firstVariant?.price ?? product?.price),
+            inStock: variants.length > 0 ? variants.some((variant: any) => Boolean(variant?.available)) : null,
+            sizes: normalizeSizes(rawSizes),
+          };
+        } finally {
+          window.clearTimeout(timeout);
+        }
+      };
+
+      checkStockBtn.addEventListener("click", async () => {
+        const productId = checkStockBtn.dataset.productId ?? "";
+        if (!productId) return;
+
+        const originalText = checkStockBtn.textContent;
+        checkStockBtn.disabled = true;
+        checkStockBtn.textContent = "Verificando...";
+        setStatus("Consultando proveedor en vivo...");
+
+        try {
+          const provider = providerFrom(productId, providerLink);
+
+          if (provider === "martina") {
+            const data = await fetchMartinaLive(productId);
+
+            const nextPrice = String(data?.price ?? "").trim();
+            if (nextPrice) {
+              priceEl.textContent = `$${nextPrice}`;
+            }
+
+            if (data?.inStock === true) {
+              stockBadge.textContent = "En Stock";
+              stockBadge.style.background = "#27ae60";
+            } else if (data?.inStock === false) {
+              stockBadge.textContent = "Sin stock";
+              stockBadge.style.background = "#a33a3a";
+            }
+
+            const normalizedSizes = Array.isArray(data?.sizes)
+              ? data.sizes.filter(Boolean)
+              : [];
+
+            if (normalizedSizes.length > 0) {
+              renderNormalizedSizes(normalizedSizes);
+            }
+
+            setStatus("Actualizado desde martina.", "ok");
+          } else if (provider === "kaideco") {
+            const data = await fetchKaiLive(providerLink);
+
+            const nextPrice = String(data?.price ?? "").trim();
+            if (nextPrice) {
+              priceEl.textContent = `$${nextPrice}`;
+            }
+
+            if (data?.inStock === true) {
+              stockBadge.textContent = "En Stock";
+              stockBadge.style.background = "#27ae60";
+            } else if (data?.inStock === false) {
+              stockBadge.textContent = "Sin stock";
+              stockBadge.style.background = "#a33a3a";
+            }
+
+            const normalizedSizes = Array.isArray(data?.sizes)
+              ? data.sizes.filter(Boolean)
+              : [];
+
+            if (normalizedSizes.length > 0) {
+              renderNormalizedSizes(normalizedSizes);
+            }
+
+            setStatus("Actualizado desde kaideco.", "ok");
+          } else {
+            setStatus(
+              "Este proveedor no soporta verificacion en vivo desde esta pagina estatica.",
+              "error",
+            );
+          }
+        } catch (error) {
+          setStatus("No se pudo verificar ahora. Se mantiene informacion estatica.", "error");
+        } finally {
+          checkStockBtn.disabled = false;
+          checkStockBtn.textContent = originalText || "Verificar stock y precio";
+        }
+      });
+    }
   }
 
   initProductDetail();
