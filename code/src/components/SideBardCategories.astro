@@ -64,9 +64,11 @@ const activeParent = selected
     : selected
   : null;
 
-// Colors
-const productColors = products?.flatMap((p) => getColors(p.name)) ?? [];
-const uniqueColors = [...new Set(productColors)];
+// Colors: combinar el filtro heurístico por nombre (productos sin colors[] del proveedor)
+// con los colores provistos por el CSV (Martina). Cada color expone su nombre real + hex.
+type ColorChip = { key: string; label: string; hex: string };
+const colorChipsMap = new Map<string, ColorChip>();
+
 const colorCSS: Record<string, string> = {
   rojo: "#d32f2f",
   azul: "#1565c0",
@@ -75,6 +77,30 @@ const colorCSS: Record<string, string> = {
   verde: "#2e7d32",
   amarillo: "#f9a825",
 };
+
+(products ?? []).forEach((p) => {
+  // 1) Colores provistos directamente por el proveedor (CSV nueva columna `colores`).
+  if (Array.isArray(p.colors) && p.colors.length > 0) {
+    p.colors.forEach((c) => {
+      const label = (c.name || "").trim();
+      if (!label) return;
+      const key = label.toLowerCase();
+      if (!colorChipsMap.has(key)) {
+        colorChipsMap.set(key, { key, label, hex: c.hex || "#cccccc" });
+      }
+    });
+    return;
+  }
+  // 2) Fallback heurístico por nombre del producto.
+  getColors(p.name).forEach((c) => {
+    const key = c.toLowerCase();
+    if (!colorChipsMap.has(key)) {
+      colorChipsMap.set(key, { key, label: c, hex: colorCSS[key] ?? "#cccccc" });
+    }
+  });
+});
+
+const uniqueColors = Array.from(colorChipsMap.values());
 ---
 
 <nav class="sf-sidebar">
@@ -166,16 +192,16 @@ const colorCSS: Record<string, string> = {
             <label class="sf-color-chip">
               <input
                 type="checkbox"
-                data-color={color}
+                data-color={color.key}
                 name="colors"
                 class="sf-color-input"
               />
               <span
                 class="sf-color-swatch"
-                style={`background:${colorCSS[color] ?? "#ccc"}`}
+                style={`background:${color.hex}`}
                 aria-hidden="true"
               ></span>
-              <span class="sf-color-label">{capitalize(color)}</span>
+              <span class="sf-color-label">{capitalize(color.label)}</span>
             </label>
           ))}
         </div>

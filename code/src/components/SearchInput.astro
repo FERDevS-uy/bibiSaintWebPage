@@ -333,7 +333,7 @@ const items = await cargarProductos();
       const query = input.value.trim();
 
       if (query)
-        window.location.href = `${BASE_URL}/search?q=${encodeURIComponent(query)}`;
+        window.location.href = `${BASE_URL}/search/page/1/?q=${encodeURIComponent(query)}`;
       else window.location.href = BASE_URL;
     });
 
@@ -363,25 +363,27 @@ const items = await cargarProductos();
       else form.classList.add("active");
 
       if (viewAllBtn) {
-        viewAllBtn.href = `${BASE_URL}/search?q=${encodeURIComponent(query)}`;
+        viewAllBtn.href = `${BASE_URL}/search/page/1/?q=${encodeURIComponent(query)}`;
       }
 
       resultContainer.innerHTML = results
-        .map(
-          (r) => `
+        .map((r) => {
+          const src = Array.isArray(r.item.img) && r.item.img.length ? r.item.img[0] : '/assets/no-image.png';
+          const price = r.item.price || '';
+          return `
         <li class="searchResultItem">
           <a href="${import.meta.env.BASE_URL}/producto/${r.item.id}">
             <div class="searchResultImage">
-              <img src="${r.item.img}" alt="${r.item.name}" />
+              <img src="${src}" alt="${r.item.name}" />
             </div>
             <div class="searchResultInfo">
               <span class="searchResultName">${r.item.name}</span>
-              <span class="searchResultPrice">$${r.item.price}</span>
+              <span class="searchResultPrice">$${price}</span>
             </div>
           </a>
         </li>
-      `,
-        )
+      `;
+        })
         .join("");
     });
   });

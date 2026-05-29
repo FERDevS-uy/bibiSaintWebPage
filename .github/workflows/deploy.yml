@@ -4,25 +4,70 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      use_staging_csv:
+        description: "Usar CSV staging para este deploy (sin escribir en repo)"
+        required: false
+        default: false
+        type: boolean
+      staging_csv_path:
+        description: "Ruta del CSV staging"
+        required: false
+        default: "webScrappingTool/data/result.csv"
+        type: string
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
+concurrency:
+  group: pages-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  validate-data:
+    uses: ./.github/workflows/catalog-validate-reusable.yml
+    secrets: inherit
+    with:
+      catalog_drop_threshold_percent: 35
+      provider_drop_threshold_percent: 50
+      provider_drop_min_base_rows: 20
+      use_staging_csv: ${{ inputs.use_staging_csv || false }}
+      staging_csv_path: ${{ inputs.staging_csv_path || 'webScrappingTool/data/result.csv' }}
+      publish_validated_catalog_artifact: true
+
   build:
+    needs: validate-data
     runs-on: ubuntu-latest
+    environment: production
+    env:
+      USER_EMAIL: ${{ secrets.NUVEX_USER_EMAIL }}
+      USER_PASS: ${{ secrets.NUVEX_USER_PASS }}
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install, build, and upload your site
+      - name: Download validated catalog artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: validated-catalog-csv
+          path: _validated_catalog
+
+      - name: Inject validated catalog into build workspace
+        run: |
+          if [[ ! -f "_validated_catalog/productos.csv" ]]; then
+            echo "Validated catalog artifact is missing." >&2
+            exit 1
+          fi
+          cp _validated_catalog/productos.csv code/src/data/productos.csv
+
+      - name: Install, build, and upload site
         uses: withastro/action@v3
         with:
           package-manager: npm@latest
           node-version: 20
-          path: code  
+          path: code
 
   deploy:
     needs: build
@@ -32,6 +77,5 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
-      # 👇 no tocar esto
         id: deployment
         uses: actions/deploy-pages@v4

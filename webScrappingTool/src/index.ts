@@ -27,6 +27,8 @@ export default interface Product {
   linkPago: string;
   subcategorias: string;
   oferta: string;
+  /** JSON string con [{id, hex, name, images}] cuando el proveedor lo expone (Martina) */
+  colores?: string;
 }
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -234,16 +236,23 @@ const KAI_JSON_URL = 'https://kaideco.uy/products.json?limit=250';
 const MARTINA_PRODUCT_URL = 'https://pol21.martinaditrento.com/mdt-services/resources/store/product?countryId=598&code=202506';
 const MARTINA_IMAGE_BASE = 'https://pol21.martinaditrento.com/images/products/md/';
 
+function resolveNuvexCredentials() {
+  const email = process.env.USER_EMAIL || process.env.NUVEX_USER_EMAIL || '';
+  const password = process.env.USER_PASS || process.env.NUVEX_USER_PASS || '';
+  return { email, password };
+}
+
 async function login(): Promise<boolean> {
-  if (!process.env.USER_EMAIL || !process.env.USER_PASS) {
-    console.warn('Advertencia: USER_EMAIL o USER_PASS no encontrado en el entorno. Se omitirá el login de Nuvex.');
+  const { email, password } = resolveNuvexCredentials();
+  if (!email || !password) {
+    console.warn('Advertencia: faltan credenciales de Nuvex. Define USER_EMAIL/USER_PASS o NUVEX_USER_EMAIL/NUVEX_USER_PASS. Se omitirá el login de Nuvex.');
     return false;
   }
 
   console.log('Iniciando sesión en la tienda...');
   const form = new FormData();
-  form.append('email', process.env.USER_EMAIL);
-  form.append('password', process.env.USER_PASS);
+  form.append('email', email);
+  form.append('password', password);
 
   try {
     const res = await client.post(loginUrl, form, {
@@ -317,61 +326,67 @@ async function scrapNuvexProducts(): Promise<Product[]> {
         break;
       }
       page++;
-      await delay(200);
+      await delay(50);
     }
   }
   const uniqueQueue = Array.from(new Map(productQueue.map((item) => [item.url, item])).values());
   console.log(`=== Se recorrerán lentamente ${uniqueQueue.length} páginas de productos individuales de Nuvex ===`);
   const allProductsMap = new Map<string, Product>();
-  for (let i = 0; i < uniqueQueue.length; i++) {
-    const { url, catName } = uniqueQueue[i];
-    console.log(`[${i + 1}/${uniqueQueue.length}] Raspando Nuvex: ${url}`);
-    try {
-      const { data } = await client.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
-      const $ = cheerio.load(data);
-      let id = '';
-      const productMatchId = url.match(/product_id=(\d+)/);
-      if (productMatchId) id = productMatchId[1];
-      if (!id) {
-        const btnTxt = $('#button-cart').attr('onclick') || $('#button-cart').parent().html();
-        const matchBtn = btnTxt?.match(/cart\.add\('(\d+)'/);
-        if (matchBtn) id = matchBtn[1];
-        else id = String(Math.floor(Math.random() * 999999));
+  // Procesar productos en paralelo por lotes de 10
+  const BATCH_SIZE = 10;
+  for (let i = 0; i < uniqueQueue.length; i += BATCH_SIZE) {
+    const batch = uniqueQueue.slice(i, i + BATCH_SIZE);
+    await Promise.all(batch.map(async ({ url, catName }, j) => {
+      const idx = i + j;
+      console.log(`[${idx + 1}/${uniqueQueue.length}] Raspando Nuvex: ${url}`);
+      try {
+        const { data } = await client.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+        const $ = cheerio.load(data);
+        let id = '';
+        const productMatchId = url.match(/product_id=(\d+)/);
+        if (productMatchId) id = productMatchId[1];
+        if (!id) {
+          const btnTxt = $('#button-cart').attr('onclick') || $('#button-cart').parent().html();
+          const matchBtn = btnTxt?.match(/cart\.add\('(\d+)'/);
+          if (matchBtn) id = matchBtn[1];
+          else id = String(Math.floor(Math.random() * 999999));
+        }
+        const rawName = $('#content h1').text().trim() || '';
+        const name = normalizeText(rawName);
+        const htmlDesc = $('#tab-description').html() || '';
+        const description = cleanDescription(htmlDesc);
+        let rawPrice = $('.list-unstyled h2').first().text().trim() || $('.price-new').text().trim() || $('#content h2').first().text().trim();
+        let oferta = $('.price-old').length > 0 ? 'true' : '';
+        let precioFinal = '';
+        if (rawPrice) {
+          precioFinal = parsePrice(rawPrice);
+        }
+        let imagen = $('.thumbnails li:first-child a').attr('href') || $('.thumbnail').attr('href') || '';
+        imagen = imagen.replace(/-\d+x\d+\.(jpg|jpeg|png|webp|gif)$/i, '.$1');
+        imagen = imagen.replace('/image/cache/catalog/', '/image/catalog/');
+        const colors = getUniqueColors(name);
+        const finalName = appendColorsToName(name, colors);
+        const subcategorias = inferSubcategory(finalName, catName);
+        if (id && !allProductsMap.has(id)) {
+          allProductsMap.set(id, {
+            id,
+            relacionados: '',
+            name: finalName,
+            description,
+            precio: precioFinal,
+            imagen,
+            categorias: catName,
+            linkPago: url,
+            subcategorias,
+            oferta,
+          });
+        }
+      } catch (e: any) {
+        console.error(`Error al revisar producto id ${url}:`, e.message);
       }
-      const rawName = $('#content h1').text().trim() || '';
-      const name = normalizeText(rawName);
-      const htmlDesc = $('#tab-description').html() || '';
-      const description = cleanDescription(htmlDesc);
-      let rawPrice = $('.list-unstyled h2').first().text().trim() || $('.price-new').text().trim() || $('#content h2').first().text().trim();
-      let oferta = $('.price-old').length > 0 ? 'true' : '';
-      let precioFinal = '';
-      if (rawPrice) {
-        precioFinal = parsePrice(rawPrice);
-      }
-      let imagen = $('.thumbnails li:first-child a').attr('href') || $('.thumbnail').attr('href') || '';
-      imagen = imagen.replace(/-\d+x\d+\.(jpg|jpeg|png|webp|gif)$/i, '.$1');
-      imagen = imagen.replace('/image/cache/catalog/', '/image/catalog/');
-      const colors = getUniqueColors(name);
-      const finalName = appendColorsToName(name, colors);
-      const subcategorias = inferSubcategory(finalName, catName);
-      if (id && !allProductsMap.has(id)) {
-        allProductsMap.set(id, {
-          id,
-          relacionados: '',
-          name: finalName,
-          description,
-          precio: precioFinal,
-          imagen,
-          categorias: catName,
-          linkPago: url,
-          subcategorias,
-          oferta,
-        });
-      }
-    } catch (e: any) {
-      console.error(`Error al revisar producto id ${url}:`, e.message);
-    }
-    await delay(300);
+    }));
+    // Delay pequeño entre lotes para evitar bloqueo
+    await delay(80);
   }
   return Array.from(allProductsMap.values());
 }
@@ -430,6 +445,55 @@ function getMartinaColors(variation: any): string[] {
   return [];
 }
 
+/**
+ * Recorre el árbol de variation del API de Martina y extrae los nodos de tipo "color".
+ * Retorna [{id, hex, name, sizes: []}] por cada color encontrado.
+ */
+function extractMartinaColorNodes(
+  variation: any,
+): Array<{ id: number; hex: string; name: string; sizes: string[] }> {
+  if (!variation) return [];
+  if (variation.id === 'color' && Array.isArray(variation.variationValues)) {
+    return variation.variationValues.map((c: any) => {
+      const sizes: string[] = Array.isArray(c?.variation?.variationValues)
+        ? c.variation.variationValues
+            .map((sz: any) => String(sz?.description ?? '').trim())
+            .filter(Boolean)
+        : [];
+      return {
+        id: Number(c?.id),
+        hex: String(c?.colorHex ?? '').trim() || '#cccccc',
+        name: String(c?.description ?? '').trim(),
+        sizes,
+      };
+    });
+  }
+  if (Array.isArray(variation.variationValues)) {
+    return variation.variationValues.flatMap((item: any) =>
+      extractMartinaColorNodes(item.variation),
+    );
+  }
+  return [];
+}
+
+/**
+ * Agrupa filenames de images por colorId según el patrón "{code}_{colorId}_*".
+ */
+function groupMartinaImagesByColor(
+  images: string[],
+  code: string,
+): Record<string, string[]> {
+  const grouped: Record<string, string[]> = {};
+  images.forEach((filename) => {
+    const m = filename.match(new RegExp(`^${code}_(\\d+)_`));
+    if (!m) return;
+    const colorId = m[1];
+    if (!grouped[colorId]) grouped[colorId] = [];
+    grouped[colorId].push(`${MARTINA_IMAGE_BASE}${filename}`);
+  });
+  return grouped;
+}
+
 async function scrapMartinaDiTrento(): Promise<Product[]> {
   console.log('Iniciando scraping de Martina di Trento...');
   try {
@@ -443,32 +507,120 @@ async function scrapMartinaDiTrento(): Promise<Product[]> {
       timeout: 30000,
     });
     const products = data?.data ?? [];
-    console.log(`Martina di Trento: se encontraron ${products.length} productos.`);
-    return products.map((product: any) => {
-      const baseName = normalizeText(product.name || '');
-      const colorCandidates = [baseName, product.description, product.description2, product.description3].filter(Boolean).join(' ');
-      const variationColors = getMartinaColors(product.variation);
-      const colors = [...new Set([...getUniqueColors(colorCandidates), ...variationColors])];
-      const name = appendColorsToName(baseName, colors);
-      const description = cleanDescription([product.description, product.description2, product.description3].filter(Boolean).join(' '));
-      const precio = parsePrice(product.price ?? '');
-      const oferta = product.price1 && parseFloat(String(product.price1)) > parseFloat(String(product.price ?? 0)) ? 'true' : '';
-      const image = product.mainImage ? `${MARTINA_IMAGE_BASE}${product.mainImage}` : '';
-      const categoryName = String(product.productLine?.parent?.name || product.productLine?.name || 'Ropa');
-      const subcategoria = String(product.productLine?.name || '');
-      return {
-        id: `mdt-${product.id}`,
+    console.log(`Martina di Trento: se encontraron ${products.length} items (cada color cuenta separado).`);
+
+    // Agrupar por code (un mismo "Adriano Boxer" trae N items, uno por color)
+    const byCode = new Map<string, any[]>();
+    products.forEach((p: any) => {
+      const code = String(p?.code ?? p?.id ?? '').trim();
+      if (!code) return;
+      if (!byCode.has(code)) byCode.set(code, []);
+      byCode.get(code)!.push(p);
+    });
+
+    console.log(`Martina di Trento: ${byCode.size} productos únicos (agrupados por code).`);
+
+    const result: Product[] = [];
+
+    byCode.forEach((entries, code) => {
+      const first = entries[0];
+      const name = normalizeText(first?.name || '');
+      const description = cleanDescription(
+        [first?.description, first?.description2, first?.description3]
+          .filter(Boolean)
+          .join(' '),
+      );
+      const precio = parsePrice(first?.price ?? '');
+      const oferta =
+        first?.price1 && parseFloat(String(first.price1)) > parseFloat(String(first.price ?? 0))
+          ? 'true'
+          : '';
+
+      const categoryName = String(
+        first?.productLine?.parent?.name || first?.productLine?.name || 'Ropa',
+      );
+      const subcategoria = String(first?.productLine?.name || '');
+
+      // Unión de colores extraídos del árbol de variaciones de todos los items
+      const colorById = new Map<number, { id: number; hex: string; name: string; sizes: string[]; images: string[] }>();
+      entries.forEach((entry) => {
+        const colorNodes = extractMartinaColorNodes(entry?.variation);
+        const imagesByColor = groupMartinaImagesByColor(
+          Array.isArray(entry?.images) ? entry.images : [],
+          code,
+        );
+        colorNodes.forEach((c) => {
+          if (!Number.isFinite(c.id)) return;
+          if (!colorById.has(c.id)) {
+            colorById.set(c.id, { ...c, images: imagesByColor[String(c.id)] || [] });
+          } else {
+            const existing = colorById.get(c.id)!;
+            // mergear sizes
+            const merged = new Set([...existing.sizes, ...c.sizes]);
+            existing.sizes = Array.from(merged);
+            // mergear images
+            const extra = imagesByColor[String(c.id)] || [];
+            const seen = new Set(existing.images);
+            extra.forEach((img) => {
+              if (!seen.has(img)) {
+                existing.images.push(img);
+                seen.add(img);
+              }
+            });
+          }
+        });
+      });
+
+      const colors = Array.from(colorById.values());
+
+      // Lista plana de TODAS las imágenes (ordenadas: por color, en el orden del color array)
+      const allImages: string[] = [];
+      const seenImg = new Set<string>();
+      colors.forEach((c) => {
+        c.images.forEach((img) => {
+          if (!seenImg.has(img)) {
+            allImages.push(img);
+            seenImg.add(img);
+          }
+        });
+      });
+
+      // Si no encontramos imágenes por color (fallback), usar mainImage del primero
+      if (allImages.length === 0 && first?.mainImage) {
+        allImages.push(`${MARTINA_IMAGE_BASE}${first.mainImage}`);
+      }
+
+      // Colores con datos mínimos para el CSV (omito sizes/images pesados si quieres,
+      // pero el usuario pidió tener colores con sus fotos => incluimos todo).
+      const coloresSerialized = JSON.stringify(
+        colors.map((c) => ({
+          id: c.id,
+          hex: c.hex,
+          name: c.name,
+          images: c.images,
+        })),
+      );
+
+      const subcategorias = subcategoria && subcategoria !== categoryName ? subcategoria : '';
+
+      const providerId = String(first?.id ?? code).trim();
+
+      result.push({
+        id: `mdt-${providerId}`,
         relacionados: '',
-        name,
+        name, // limpio, sin sufijo de color
         description,
         precio,
-        imagen: image,
+        imagen: allImages.join(' '), // separado por espacio igual que el resto
         categorias: categoryName,
         linkPago: '',
-        subcategorias: subcategoria !== categoryName ? subcategoria : '',
+        subcategorias,
         oferta,
-      };
+        colores: coloresSerialized,
+      });
     });
+
+    return result;
   } catch (err: any) {
     console.error('Error al scrapear Martina di Trento:', err.message);
     return [];
@@ -487,7 +639,7 @@ async function scrapAllProducts() {
   const parsedProducts = searchSimilarity(allProducts);
   console.log(`Scraping finalizado. ${parsedProducts.length} productos generados.`);
   const finalCsv = Papa.unparse(parsedProducts, {
-    columns: ['id', 'relacionados', 'name', 'description', 'precio', 'imagen', 'categorias', 'linkPago', 'subcategorias', 'oferta'],
+    columns: ['id', 'relacionados', 'name', 'description', 'precio', 'imagen', 'categorias', 'linkPago', 'subcategorias', 'oferta', 'colores'],
   });
   await fs.writeFile(csvFilePath, finalCsv);
   console.log('¡Todo guardado correctamente en productos.csv!');

@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import Papa from "papaparse";
 import type Product from "../types/product";
+import type { ProductColor } from "../types/product";
 
 interface csvData {
   id: string;
@@ -14,6 +15,28 @@ interface csvData {
   linkPago: string;
   relacionados: string;
   oferta: string,
+  colores?: string,
+}
+
+function parseColors(raw: string | undefined): ProductColor[] | undefined {
+  if (!raw) return undefined;
+  const trimmed = raw.trim();
+  if (!trimmed) return undefined;
+  try {
+    const parsed = JSON.parse(trimmed);
+    if (!Array.isArray(parsed)) return undefined;
+    return parsed
+      .filter((c) => c && typeof c === "object")
+      .map((c: any) => ({
+        id: Number(c.id),
+        hex: String(c.hex ?? "#cccccc"),
+        name: String(c.name ?? ""),
+        images: Array.isArray(c.images) ? c.images.map((i: any) => String(i)) : [],
+      }))
+      .filter((c) => Number.isFinite(c.id) && c.name);
+  } catch {
+    return undefined;
+  }
 }
 
 export function cargarProductos(): Product[] {
@@ -46,7 +69,8 @@ export function cargarProductos(): Product[] {
       subcategories: d.subcategorias.trim() !== ""
         ? d.subcategorias.split(/\|/).map(subC => ({ name: subC.trim(), count: 0 }))
         : []
-    }
+    },
+    colors: parseColors(d.colores),
   }))
 
 

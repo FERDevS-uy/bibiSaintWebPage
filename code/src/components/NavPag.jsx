@@ -1,72 +1,63 @@
 import React from "react";
 
-import prevArrow from "@assets/prev-arrow.svg?raw";
-import nextArrow from "@assets/next-arrow.svg?raw";
-import lastArrow from "@assets/last-arrow.svg?raw";
-import firstArrow from "@assets/first-arrow.svg?raw";
-
 import "../styles/navpag.css";
 
+const Chevron = ({ direction = "left" }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    {direction === "left" ? (
+      <polyline points="15 18 9 12 15 6" />
+    ) : (
+      <polyline points="9 18 15 12 9 6" />
+    )}
+  </svg>
+);
+
 export default function NavPag({ actualPage, totalPages, onChangePage }) {
+  const isFirst = actualPage === 1;
+  const isLast = actualPage === totalPages;
+
   return (
-    <nav className="pagination">
-      {/* Primera + Anterior */}
-      {actualPage === 1 ? (
-        <>
-          <span
-            className="button disabled"
-            dangerouslySetInnerHTML={{ __html: firstArrow }}
-          />
-          <span
-            className="button disabled"
-            dangerouslySetInnerHTML={{ __html: prevArrow }}
-          />
-        </>
+    <nav className="pagination" aria-label="Paginación">
+      {isFirst ? (
+        <span className="pag-arrow disabled" aria-hidden="true">
+          <Chevron direction="left" />
+        </span>
       ) : (
-        <>
-          <button
-            className="button clickable"
-            onClick={() => onChangePage(1)}
-            dangerouslySetInnerHTML={{ __html: firstArrow }}
-          />
-          <button
-            className="button clickable"
-            onClick={() => onChangePage(actualPage - 1)}
-            dangerouslySetInnerHTML={{ __html: prevArrow }}
-          />
-        </>
+        <button
+          type="button"
+          className="pag-arrow"
+          onClick={() => onChangePage(actualPage - 1)}
+          aria-label="Página anterior"
+        >
+          <Chevron direction="left" />
+        </button>
       )}
 
-      {/* indicador */}
-      <span className="pages">
-        <span>{actualPage}</span> / <span>{totalPages}</span>
+      <span className="pag-info">
+        {actualPage} de {totalPages}
       </span>
 
-      {/* Siguiente + Última */}
-      {actualPage === totalPages ? (
-        <>
-          <span
-            className="button disabled"
-            dangerouslySetInnerHTML={{ __html: nextArrow }}
-          />
-          <span
-            className="button disabled"
-            dangerouslySetInnerHTML={{ __html: lastArrow }}
-          />
-        </>
+      {isLast ? (
+        <span className="pag-arrow disabled" aria-hidden="true">
+          <Chevron direction="right" />
+        </span>
       ) : (
-        <>
-          <button
-            className="button clickable"
-            onClick={() => onChangePage(actualPage + 1)}
-            dangerouslySetInnerHTML={{ __html: nextArrow }}
-          />
-          <button
-            className="button clickable"
-            onClick={() => onChangePage(totalPages)}
-            dangerouslySetInnerHTML={{ __html: lastArrow }}
-          />
-        </>
+        <button
+          type="button"
+          className="pag-arrow"
+          onClick={() => onChangePage(actualPage + 1)}
+          aria-label="Página siguiente"
+        >
+          <Chevron direction="right" />
+        </button>
       )}
     </nav>
   );

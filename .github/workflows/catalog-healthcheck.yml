@@ -1,0 +1,32 @@
+name: Catalog Healthcheck
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      use_staging_csv:
+        description: "Usar CSV staging para healthcheck"
+        required: false
+        default: false
+        type: boolean
+      staging_csv_path:
+        description: "Ruta del CSV staging"
+        required: false
+        default: "webScrappingTool/data/result.csv"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate-catalog:
+    uses: ./.github/workflows/catalog-validate-reusable.yml
+    secrets: inherit
+    with:
+      catalog_drop_threshold_percent: 35
+      provider_drop_threshold_percent: 50
+      provider_drop_min_base_rows: 20
+      use_staging_csv: ${{ inputs.use_staging_csv || false }}
+      staging_csv_path: ${{ inputs.staging_csv_path || 'webScrappingTool/data/result.csv' }}
+      publish_validated_catalog_artifact: false
