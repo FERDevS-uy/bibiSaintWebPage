@@ -45,6 +45,12 @@
                   "id": "size",
                   "variationValues": [
                     {
+                      "description": "44",
+                      "id": 54,
+                      "price": 570,
+                      "productForSaleId": 5753633
+                    },
+                    {
                       "description": "46",
                       "id": 55,
                       "price": 570,
@@ -73,6 +79,12 @@
                 "variation": {
                   "id": "size",
                   "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 570,
+                      "productForSaleId": 5753627
+                    },
                     {
                       "description": "46",
                       "id": 55,
@@ -148,6 +160,12 @@
                   "id": "size",
                   "variationValues": [
                     {
+                      "description": "44",
+                      "id": 54,
+                      "price": 570,
+                      "productForSaleId": 5753633
+                    },
+                    {
                       "description": "46",
                       "id": 55,
                       "price": 570,
@@ -176,6 +194,12 @@
                 "variation": {
                   "id": "size",
                   "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 570,
+                      "productForSaleId": 5753627
+                    },
                     {
                       "description": "46",
                       "id": 55,

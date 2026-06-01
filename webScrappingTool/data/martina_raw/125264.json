@@ -47,10 +47,10 @@
                   "id": "size",
                   "variationValues": [
                     {
-                      "description": "44",
-                      "id": 54,
+                      "description": "40",
+                      "id": 50,
                       "price": 1300,
-                      "productForSaleId": 5753985
+                      "productForSaleId": 5753983
                     }
                   ]
                 }

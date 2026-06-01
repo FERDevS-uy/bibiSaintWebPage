@@ -1,13 +1,13 @@
 {
-  "totalNew": 597,
+  "totalNew": 603,
   "totalCopy": 907,
-  "matched": 481,
-  "unmatchedNew": 116,
-  "missingInNew": 432,
+  "matched": 482,
+  "unmatchedNew": 121,
+  "missingInNew": 431,
   "unmatchedSample": [
     {
-      "id": "41",
-      "name": ""
+      "id": "399",
+      "name": "COMBO TECLADO Y MOUSE BLUETOOTH RECARGABLE"
     },
     {
       "id": "mdt-42370",
@@ -74,6 +74,10 @@
       "name": "ORIZA CAMISA"
     },
     {
+      "id": "mdt-42770",
+      "name": "BRITA REMERA M/LARGA"
+    },
+    {
       "id": "mdt-42769",
       "name": "AMOENA REMERA M/LARGA"
     },
@@ -120,20 +124,12 @@
     {
       "id": "mdt-42633",
       "name": "LUNA REMERA"
-    },
-    {
-      "id": "mdt-42632",
-      "name": "VICTORIA REMERA MANGA LARGA"
     }
   ],
   "missingSample": [
     {
       "id": "146",
       "name": "Cortina Dormitorio Dohler Rosane"
-    },
-    {
-      "id": "41",
-      "name": "Olla Electrica Multifuncion"
     },
     {
       "id": "293",
@@ -246,6 +242,10 @@
     {
       "id": "mdt-41018",
       "name": "LIDIA BABUCHA"
+    },
+    {
+      "id": "mdt-41013",
+      "name": "SHEILA CAMPERA"
     }
   ]
 }

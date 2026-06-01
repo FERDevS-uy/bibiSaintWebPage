@@ -5,118 +5,6 @@
       "name": "BRAND"
     },
     "code": "125168",
-    "colorId": 239,
-    "description": "Campera cuello alto y cierre delanteero con bolsillos.",
-    "description2": "Realizada en polar",
-    "description3": "Calce clásico",
-    "id": 40953,
-    "images": [
-      "125168_239_1.jpg",
-      "125168_239_2.jpg",
-      "125168_239_3.jpg",
-      "125168_239_4.jpg",
-      "125168_239_5.jpg",
-      "125168_2_1.jpg"
-    ],
-    "mainImage": "125168_239_1.jpg",
-    "name": "LUCAS CAMPERA",
-    "price": 2550,
-    "productLine": {
-      "id": 3358,
-      "name": "CAMPERAS",
-      "parent": {
-        "id": 3325,
-        "name": "HOMBRE"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 2550,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#7A4057",
-                "description": "BORGOÑA",
-                "id": 239,
-                "price": 2550,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 2550,
-                      "productForSaleId": 5756940
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 2550,
-                      "productForSaleId": 5756939
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 2550,
-                      "productForSaleId": 5756941
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 2550,
-                      "productForSaleId": 5756938
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 2550,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 2550,
-                      "productForSaleId": 5756944
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 2550,
-                      "productForSaleId": 5756942
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 2550,
-                      "productForSaleId": 5756943
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "LUCAS CAMPERA BORGOÑA",
-    "productLineId": "3325"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125168",
     "colorId": 2,
     "description": "Campera cuello alto y cierre delanteero con bolsillos.",
     "description2": "Realizada en polar",
@@ -221,6 +109,118 @@
       ]
     },
     "variationName": "LUCAS CAMPERA NEGRO",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125168",
+    "colorId": 239,
+    "description": "Campera cuello alto y cierre delanteero con bolsillos.",
+    "description2": "Realizada en polar",
+    "description3": "Calce clásico",
+    "id": 40953,
+    "images": [
+      "125168_239_1.jpg",
+      "125168_239_2.jpg",
+      "125168_239_3.jpg",
+      "125168_239_4.jpg",
+      "125168_239_5.jpg",
+      "125168_2_1.jpg"
+    ],
+    "mainImage": "125168_239_1.jpg",
+    "name": "LUCAS CAMPERA",
+    "price": 2550,
+    "productLine": {
+      "id": 3358,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2550,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#7A4057",
+                "description": "BORGOÑA",
+                "id": 239,
+                "price": 2550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 2550,
+                      "productForSaleId": 5756940
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 2550,
+                      "productForSaleId": 5756939
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 2550,
+                      "productForSaleId": 5756941
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 2550,
+                      "productForSaleId": 5756938
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 2550,
+                      "productForSaleId": 5756944
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 2550,
+                      "productForSaleId": 5756942
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 2550,
+                      "productForSaleId": 5756943
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LUCAS CAMPERA BORGOÑA",
     "productLineId": "3325"
   }
 ]

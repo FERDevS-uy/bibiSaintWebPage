@@ -4,23 +4,25 @@
       "id": 1,
       "name": "BRAND"
     },
-    "code": "125276",
+    "code": "126073",
     "colorId": 2,
-    "copy": "Remera manga larga con estampa Filadelfia",
-    "description": "Remera manga larga escote redondo con estampa en delantero.",
-    "description2": "Realizada en jersey melange",
+    "description": "Pantalón tiro medio con botón y cierre. Bolsillos delanteros y en traseros.\r\nPierna recta. ideal para levantar cualquier look.",
+    "description2": "Realizado en bengalina elastizada",
     "description3": "Calce clásico",
-    "id": 41064,
+    "id": 42261,
     "images": [
-      "125276_2_1.jpg"
+      "126073_2_1.jpg",
+      "126073_2_2.jpg",
+      "126073_2_3.jpg",
+      "126073_2_4.jpg"
     ],
-    "mainImage": "125276_2_1.jpg",
-    "name": "FILADELFIA REMERA",
-    "price": 1050,
-    "price1": 1550,
+    "mainImage": "126073_2_1.jpg",
+    "name": "TULUM PANTALON",
+    "price": 1460,
+    "price1": 1620,
     "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
       "parent": {
         "id": 3324,
         "name": "MUJER"
@@ -32,8 +34,8 @@
         {
           "description": "PRECIO REBAJADO",
           "id": 6,
-          "price": 1050,
-          "price1": 1550,
+          "price": 1460,
+          "price1": 1620,
           "variation": {
             "id": "color",
             "variationValues": [
@@ -41,31 +43,31 @@
                 "colorHex": "#000000",
                 "description": "NEGRO",
                 "id": 2,
-                "price": 1050,
-                "price1": 1550,
+                "price": 1460,
+                "price1": 1620,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "42",
                       "id": 52,
-                      "price": 1050,
-                      "price1": 1550,
-                      "productForSaleId": 5760627
+                      "price": 1460,
+                      "price1": 1620,
+                      "productForSaleId": 5753710
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 1050,
-                      "price1": 1550,
-                      "productForSaleId": 5760625
+                      "price": 1460,
+                      "price1": 1620,
+                      "productForSaleId": 5753712
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 1050,
-                      "price1": 1550,
-                      "productForSaleId": 5760624
+                      "price": 1460,
+                      "price1": 1620,
+                      "productForSaleId": 5753709
                     }
                   ]
                 }
@@ -75,7 +77,7 @@
         }
       ]
     },
-    "variationName": "FILADELFIA REMERA NEGRO",
+    "variationName": "TULUM PANTALON NEGRO",
     "productLineId": "3324"
   }
 ]

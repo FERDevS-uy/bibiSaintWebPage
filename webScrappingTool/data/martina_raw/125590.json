@@ -1,0 +1,77 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125590",
+    "colorId": 1344,
+    "copy": "Chaqueta de jean Amelia",
+    "description": "Chaqueta de jean con botones metálicos, canesú diagonal en delantero con bolsillos y canesú recto en espalda, con trabilla para colgar. Ruedo semiredondeado y lavado desgastado sectorizado. ",
+    "description2": "Realizada en denim",
+    "description3": "Calce clásico",
+    "id": 41554,
+    "images": [
+      "125590_1344_1.jpg",
+      "125590_1344_2.jpg",
+      "125590_1344_3.jpg",
+      "125590_1344_9.jpg"
+    ],
+    "mainImage": "125590_1344_1.jpg",
+    "name": "AMELIA CHAQUETA",
+    "price": 1985,
+    "price1": 2840,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1985,
+          "price1": 2840,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5E7288",
+                "description": "DENIM",
+                "id": 1344,
+                "price": 1985,
+                "price1": 2840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1985,
+                      "price1": 2840,
+                      "productForSaleId": 5760630
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 1985,
+                      "price1": 2840,
+                      "productForSaleId": 5760629
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AMELIA CHAQUETA DENIM",
+    "productLineId": "3324"
+  }
+]

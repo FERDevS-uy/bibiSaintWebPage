@@ -5,7 +5,7 @@
       "name": "BRAND"
     },
     "code": "125030",
-    "colorId": 74,
+    "colorId": 32,
     "copy": "Colaless básica Marcia",
     "description": "Colaless básica con elástico partido a tono.",
     "description2": "Realizado en algodón elastizado",
@@ -19,7 +19,7 @@
       "125030_74_1.jpg",
       "125030_74_2.jpg"
     ],
-    "mainImage": "125030_74_1.jpg",
+    "mainImage": "125030_32_1.jpg",
     "name": "MARCIA COLALESS",
     "price": 290,
     "productLine": {
@@ -179,7 +179,7 @@
         }
       ]
     },
-    "variationName": "MARCIA COLALESS CHOCOLATE",
+    "variationName": "MARCIA COLALESS GRIS MELANGE",
     "productLineId": "3324"
   },
   {
@@ -371,6 +371,189 @@
       "name": "BRAND"
     },
     "code": "125030",
+    "colorId": 74,
+    "copy": "Colaless básica Marcia",
+    "description": "Colaless básica con elástico partido a tono.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40725,
+    "images": [
+      "125030_1_1.jpg",
+      "125030_2_1.jpg",
+      "125030_32_1.jpg",
+      "125030_452_1.jpg",
+      "125030_74_1.jpg",
+      "125030_74_2.jpg"
+    ],
+    "mainImage": "125030_74_1.jpg",
+    "name": "MARCIA COLALESS",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757569
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757570
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757571
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757572
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#472007",
+                "description": "CHOCOLATE",
+                "id": 74,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757583
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757584
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757581
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757582
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757573
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757574
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757576
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757575
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757579
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757577
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757580
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MARCIA COLALESS CHOCOLATE",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125030",
     "colorId": 2,
     "copy": "Colaless básica Marcia",
     "description": "Colaless básica con elástico partido a tono.",
@@ -546,189 +729,6 @@
       ]
     },
     "variationName": "MARCIA COLALESS NEGRO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125030",
-    "colorId": 32,
-    "copy": "Colaless básica Marcia",
-    "description": "Colaless básica con elástico partido a tono.",
-    "description2": "Realizado en algodón elastizado",
-    "description3": "Calce al cuerpo",
-    "id": 40725,
-    "images": [
-      "125030_1_1.jpg",
-      "125030_2_1.jpg",
-      "125030_32_1.jpg",
-      "125030_452_1.jpg",
-      "125030_74_1.jpg",
-      "125030_74_2.jpg"
-    ],
-    "mainImage": "125030_32_1.jpg",
-    "name": "MARCIA COLALESS",
-    "price": 290,
-    "productLine": {
-      "id": 3352,
-      "name": "ROPA INTERIOR",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 290,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#FFFFFF",
-                "description": "BLANCO",
-                "id": 1,
-                "price": 290,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 290,
-                      "productForSaleId": 5757569
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 290,
-                      "productForSaleId": 5757570
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 290,
-                      "productForSaleId": 5757571
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 290,
-                      "productForSaleId": 5757572
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#472007",
-                "description": "CHOCOLATE",
-                "id": 74,
-                "price": 290,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 290,
-                      "productForSaleId": 5757583
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 290,
-                      "productForSaleId": 5757584
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 290,
-                      "productForSaleId": 5757581
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 290,
-                      "productForSaleId": 5757582
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#D2CECF",
-                "description": "GRIS MELANGE",
-                "id": 32,
-                "price": 290,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 290,
-                      "productForSaleId": 5757573
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 290,
-                      "productForSaleId": 5757574
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 290,
-                      "productForSaleId": 5757576
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 290,
-                      "productForSaleId": 5757575
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 290,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 290,
-                      "productForSaleId": 5757579
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 290,
-                      "productForSaleId": 5757577
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 290,
-                      "productForSaleId": 5757580
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "MARCIA COLALESS GRIS MELANGE",
     "productLineId": "3324"
   }
 ]
