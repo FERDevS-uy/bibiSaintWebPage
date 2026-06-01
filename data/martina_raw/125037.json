@@ -1,0 +1,95 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125037",
+    "colorId": 3,
+    "copy": "Remera larga con estampa Merry",
+    "description": "Remerón escote redondo con estampa en delantero.",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce amplio",
+    "id": 40742,
+    "images": [
+      "125037_3_1.jpg",
+      "125037_3_2.jpg"
+    ],
+    "mainImage": "125037_3_1.jpg",
+    "name": "MERRY REMERA",
+    "price": 750,
+    "price1": 1150,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 750,
+          "price1": 1150,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFF8EC",
+                "description": "NATURAL",
+                "id": 3,
+                "price": 750,
+                "price1": 1150,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 750,
+                      "price1": 1150,
+                      "productForSaleId": 5569740
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 750,
+                      "price1": 1150,
+                      "productForSaleId": 5569741
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 750,
+                      "price1": 1150,
+                      "productForSaleId": 5569742
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 750,
+                      "price1": 1150,
+                      "productForSaleId": 5569739
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 750,
+                      "price1": 1150,
+                      "productForSaleId": 5569738
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MERRY REMERA NATURAL"
+  }
+]

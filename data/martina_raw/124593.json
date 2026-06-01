@@ -1,0 +1,942 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124593",
+    "colorId": 7,
+    "copy": "Musculosa escote redondo Juana",
+    "description": "Musculosa básica, escote redondo. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40115,
+    "images": [
+      "124593_121_1.jpg",
+      "124593_22_1.jpg",
+      "124593_25_1.jpg",
+      "124593_7_1.jpg",
+      "124593_7_2.jpg"
+    ],
+    "mainImage": "124593_7_1.jpg",
+    "name": "JUANA MUSCULOSA",
+    "price": 390,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 390,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550635
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550632
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550633
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550634
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550631
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550623
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550645
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550642
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550643
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550644
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550641
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550624
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550640
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550637
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550638
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550639
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550636
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550625
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#BCC68A",
+                "description": "VERDE CLARO",
+                "id": 121,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550630
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550627
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550628
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550629
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550626
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550622
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JUANA MUSCULOSA AZUL"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124593",
+    "colorId": 22,
+    "copy": "Musculosa escote redondo Juana",
+    "description": "Musculosa básica, escote redondo. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40115,
+    "images": [
+      "124593_121_1.jpg",
+      "124593_22_1.jpg",
+      "124593_25_1.jpg",
+      "124593_7_1.jpg",
+      "124593_7_2.jpg"
+    ],
+    "mainImage": "124593_22_1.jpg",
+    "name": "JUANA MUSCULOSA",
+    "price": 390,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 390,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550635
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550632
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550633
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550634
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550631
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550623
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550645
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550642
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550643
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550644
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550641
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550624
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550640
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550637
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550638
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550639
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550636
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550625
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#BCC68A",
+                "description": "VERDE CLARO",
+                "id": 121,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550630
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550627
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550628
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550629
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550626
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550622
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JUANA MUSCULOSA FUCSIA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124593",
+    "colorId": 25,
+    "copy": "Musculosa escote redondo Juana",
+    "description": "Musculosa básica, escote redondo. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40115,
+    "images": [
+      "124593_121_1.jpg",
+      "124593_22_1.jpg",
+      "124593_25_1.jpg",
+      "124593_7_1.jpg",
+      "124593_7_2.jpg"
+    ],
+    "mainImage": "124593_25_1.jpg",
+    "name": "JUANA MUSCULOSA",
+    "price": 390,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 390,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550635
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550632
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550633
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550634
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550631
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550623
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550645
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550642
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550643
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550644
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550641
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550624
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550640
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550637
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550638
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550639
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550636
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550625
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#BCC68A",
+                "description": "VERDE CLARO",
+                "id": 121,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550630
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550627
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550628
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550629
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550626
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550622
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JUANA MUSCULOSA AMARILLO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124593",
+    "colorId": 121,
+    "copy": "Musculosa escote redondo Juana",
+    "description": "Musculosa básica, escote redondo. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40115,
+    "images": [
+      "124593_121_1.jpg",
+      "124593_22_1.jpg",
+      "124593_25_1.jpg",
+      "124593_7_1.jpg",
+      "124593_7_2.jpg"
+    ],
+    "mainImage": "124593_121_1.jpg",
+    "name": "JUANA MUSCULOSA",
+    "price": 390,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 390,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550635
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550632
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550633
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550634
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550631
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550623
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550645
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550642
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550643
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550644
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550641
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550624
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550640
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550637
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550638
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550639
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550636
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550625
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#BCC68A",
+                "description": "VERDE CLARO",
+                "id": 121,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 390,
+                      "productForSaleId": 5550630
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 390,
+                      "productForSaleId": 5550627
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 390,
+                      "productForSaleId": 5550628
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 390,
+                      "productForSaleId": 5550629
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 390,
+                      "productForSaleId": 5550626
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 390,
+                      "productForSaleId": 5550622
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JUANA MUSCULOSA VERDE CLARO"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125061",
+    "colorId": 2,
+    "copy": "Calza ciclista con detalle Rupertina",
+    "description": "Calza ciclista con novedoso diseño en cintura, no marca y se amolda al cuerpo. Recortes con bordador al tono.",
+    "description2": "Realizada en microfibra elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 40820,
+    "images": [
+      "125061_2_1.jpg",
+      "125061_2_2.jpg",
+      "125061_2_3.jpg",
+      "125061_2_4.jpg",
+      "125061_2_5.jpg"
+    ],
+    "mainImage": "125061_2_1.jpg",
+    "name": "RUPERTINA CALZA",
+    "price": 595,
+    "price1": 850,
+    "productLine": {
+      "id": 4736,
+      "name": "CALZAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 595,
+          "price1": 850,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 595,
+                "price1": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 595,
+                      "price1": 850,
+                      "productForSaleId": 5562164
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 595,
+                      "price1": 850,
+                      "productForSaleId": 5562165
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 595,
+                      "price1": 850,
+                      "productForSaleId": 5562166
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 595,
+                      "price1": 850,
+                      "productForSaleId": 5562163
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 595,
+                      "price1": 850,
+                      "productForSaleId": 5562162
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RUPERTINA CALZA NEGRO"
+  }
+]

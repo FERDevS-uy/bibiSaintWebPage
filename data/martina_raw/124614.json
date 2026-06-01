@@ -1,0 +1,754 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124614",
+    "colorId": 866,
+    "description": "Remera escote en v, de manga corta y largo clásico. Un básico infalible. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40136,
+    "images": [
+      "124614_10_1.jpg",
+      "124614_1118_1.jpg",
+      "124614_647_1.jpg",
+      "124614_647_2.jpg",
+      "124614_647_3.jpg",
+      "124614_866_1.jpg",
+      "124614_8_1.jpg"
+    ],
+    "mainImage": "124614_866_1.jpg",
+    "name": "ZURKO REMERA",
+    "price": 650,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 650,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5C5C5C",
+                "description": "GRIS OSCURO",
+                "id": 1118,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548426
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548423
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548424
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548425
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FAFDFA",
+                "description": "PERLA",
+                "id": 10,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548418
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548415
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548416
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548417
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F8DCEA",
+                "description": "ROSA VIEJO",
+                "id": 866,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548430
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548427
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548428
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548429
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548422
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548419
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548420
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548421
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ZURKO REMERA ROSA VIEJO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124614",
+    "colorId": 8,
+    "description": "Remera escote en v, de manga corta y largo clásico. Un básico infalible. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40136,
+    "images": [
+      "124614_10_1.jpg",
+      "124614_1118_1.jpg",
+      "124614_647_1.jpg",
+      "124614_647_2.jpg",
+      "124614_647_3.jpg",
+      "124614_866_1.jpg",
+      "124614_8_1.jpg"
+    ],
+    "mainImage": "124614_8_1.jpg",
+    "name": "ZURKO REMERA",
+    "price": 650,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 650,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5C5C5C",
+                "description": "GRIS OSCURO",
+                "id": 1118,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548426
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548423
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548424
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548425
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FAFDFA",
+                "description": "PERLA",
+                "id": 10,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548418
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548415
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548416
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548417
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F8DCEA",
+                "description": "ROSA VIEJO",
+                "id": 866,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548430
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548427
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548428
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548429
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548422
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548419
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548420
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548421
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ZURKO REMERA VERDE"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124614",
+    "colorId": 10,
+    "description": "Remera escote en v, de manga corta y largo clásico. Un básico infalible. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40136,
+    "images": [
+      "124614_10_1.jpg",
+      "124614_1118_1.jpg",
+      "124614_647_1.jpg",
+      "124614_647_2.jpg",
+      "124614_647_3.jpg",
+      "124614_866_1.jpg",
+      "124614_8_1.jpg"
+    ],
+    "mainImage": "124614_10_1.jpg",
+    "name": "ZURKO REMERA",
+    "price": 650,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 650,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5C5C5C",
+                "description": "GRIS OSCURO",
+                "id": 1118,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548426
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548423
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548424
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548425
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FAFDFA",
+                "description": "PERLA",
+                "id": 10,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548418
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548415
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548416
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548417
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F8DCEA",
+                "description": "ROSA VIEJO",
+                "id": 866,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548430
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548427
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548428
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548429
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548422
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548419
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548420
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548421
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ZURKO REMERA PERLA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124614",
+    "colorId": 1118,
+    "description": "Remera escote en v, de manga corta y largo clásico. Un básico infalible. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40136,
+    "images": [
+      "124614_10_1.jpg",
+      "124614_1118_1.jpg",
+      "124614_647_1.jpg",
+      "124614_647_2.jpg",
+      "124614_647_3.jpg",
+      "124614_866_1.jpg",
+      "124614_8_1.jpg"
+    ],
+    "mainImage": "124614_1118_1.jpg",
+    "name": "ZURKO REMERA",
+    "price": 650,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 650,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5C5C5C",
+                "description": "GRIS OSCURO",
+                "id": 1118,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548426
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548423
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548424
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548425
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FAFDFA",
+                "description": "PERLA",
+                "id": 10,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548418
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548415
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548416
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548417
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F8DCEA",
+                "description": "ROSA VIEJO",
+                "id": 866,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548430
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548427
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548428
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548429
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548422
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548419
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548420
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548421
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ZURKO REMERA GRIS OSCURO"
+  }
+]

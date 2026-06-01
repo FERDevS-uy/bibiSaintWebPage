@@ -1,0 +1,96 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124958",
+    "colorId": 332,
+    "copy": "Pantalon pijama estampado Leyla",
+    "description": "Pantalón tiro medio, de cintura elastizada y pierna recta, full estampado. ",
+    "description2": "Realizado en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40633,
+    "images": [
+      "124958_332_1.jpg",
+      "124958_332_2.jpg",
+      "124958_332_3.jpg"
+    ],
+    "mainImage": "124958_332_1.jpg",
+    "name": "LEYLA PANTALON",
+    "price": 750,
+    "price1": 1000,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 750,
+          "price1": 1000,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 750,
+                "price1": 1000,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 750,
+                      "price1": 1000,
+                      "productForSaleId": 5573810
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 750,
+                      "price1": 1000,
+                      "productForSaleId": 5573811
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 750,
+                      "price1": 1000,
+                      "productForSaleId": 5573812
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 750,
+                      "price1": 1000,
+                      "productForSaleId": 5573809
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 750,
+                      "price1": 1000,
+                      "productForSaleId": 5573808
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LEYLA PANTALON ESTAMPADO"
+  }
+]

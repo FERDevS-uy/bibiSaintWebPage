@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124601",
+    "colorId": 332,
+    "copy": "Pantalón de fibrana Sandy",
+    "description": "Pantalón tiro medio con cintura elastizada y bolsillos laterales. Pierna recta con detalle de ruedo redondeado.",
+    "description2": "Realizado en fibrana",
+    "description3": "Calce clásico",
+    "id": 40123,
+    "images": [
+      "124601_332_1.jpg",
+      "124601_332_2.jpg"
+    ],
+    "mainImage": "124601_332_1.jpg",
+    "name": "SANDY PANTALÓN",
+    "price": 1295,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1295,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 1295,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1295,
+                      "productForSaleId": 5550238
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1295,
+                      "productForSaleId": 5550235
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1295,
+                      "productForSaleId": 5550236
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1295,
+                      "productForSaleId": 5550237
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1295,
+                      "productForSaleId": 5550234
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SANDY PANTALÓN ESTAMPADO"
+  }
+]

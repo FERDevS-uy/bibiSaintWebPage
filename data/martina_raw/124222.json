@@ -1,0 +1,76 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124222",
+    "colorId": 1252,
+    "copy": "Vedetina de microtul elastizado Perla",
+    "description": "Bombacha vedetina con detalle de recorte en laterales, realizados en microtul elastizado ",
+    "description2": "Realizada en tricot y microtul elastizado ",
+    "description3": "Calce al cuerpo",
+    "id": 39520,
+    "images": [
+      "124222_1252_1.jpg",
+      "124222_1252_2.jpg",
+      "124222_1252_3.jpg"
+    ],
+    "mainImage": "124222_1252_1.jpg",
+    "name": "PERLA VEDETINA",
+    "price": 450,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 450,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#4D4D4D",
+                "description": "GRIS - NEGRO",
+                "id": 1252,
+                "price": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 450,
+                      "productForSaleId": 5549500
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 450,
+                      "productForSaleId": 5549498
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 450,
+                      "productForSaleId": 5549499
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PERLA VEDETINA GRIS - NEGRO"
+  }
+]

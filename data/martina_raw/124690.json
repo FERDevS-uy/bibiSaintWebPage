@@ -1,0 +1,1257 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124690",
+    "colorId": 1511,
+    "copy": "Blusa con volados Lene",
+    "description": "Blusa escote en V, con detalle de recortes y volados con pequeños frunces. Escote con vista interna para mejor calce. Una prenda romántica para tus outfits de verano.",
+    "description2": "Realizada en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40248,
+    "images": [
+      "124690_1_1.jpg",
+      "124690_1_2.jpg",
+      "124690_1_3.jpg",
+      "124690_22_1.jpg",
+      "124690_22_2.jpg",
+      "124690_22_3.jpg"
+    ],
+    "mainImage": "124690_1_1.jpg",
+    "name": "LENE BLUSA",
+    "price": 990,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548095
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548096
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548097
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548094
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548114
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548091
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548092
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548093
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548090
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548113
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "LILA ROSADO",
+                "id": 1511,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548112
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548109
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548110
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548111
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548108
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "MAIZ CLARO",
+                "id": 1512,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548102
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548099
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548100
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548101
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548098
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548107
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548104
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548105
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548106
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548103
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LENE BLUSA LILA ROSADO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124690",
+    "colorId": 1512,
+    "copy": "Blusa con volados Lene",
+    "description": "Blusa escote en V, con detalle de recortes y volados con pequeños frunces. Escote con vista interna para mejor calce. Una prenda romántica para tus outfits de verano.",
+    "description2": "Realizada en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40248,
+    "images": [
+      "124690_1_1.jpg",
+      "124690_1_2.jpg",
+      "124690_1_3.jpg",
+      "124690_22_1.jpg",
+      "124690_22_2.jpg",
+      "124690_22_3.jpg"
+    ],
+    "mainImage": "124690_1_1.jpg",
+    "name": "LENE BLUSA",
+    "price": 990,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548095
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548096
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548097
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548094
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548114
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548091
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548092
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548093
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548090
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548113
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "LILA ROSADO",
+                "id": 1511,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548112
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548109
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548110
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548111
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548108
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "MAIZ CLARO",
+                "id": 1512,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548102
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548099
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548100
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548101
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548098
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548107
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548104
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548105
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548106
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548103
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LENE BLUSA MAIZ CLARO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124690",
+    "colorId": 29,
+    "copy": "Blusa con volados Lene",
+    "description": "Blusa escote en V, con detalle de recortes y volados con pequeños frunces. Escote con vista interna para mejor calce. Una prenda romántica para tus outfits de verano.",
+    "description2": "Realizada en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40248,
+    "images": [
+      "124690_1_1.jpg",
+      "124690_1_2.jpg",
+      "124690_1_3.jpg",
+      "124690_22_1.jpg",
+      "124690_22_2.jpg",
+      "124690_22_3.jpg"
+    ],
+    "mainImage": "124690_1_1.jpg",
+    "name": "LENE BLUSA",
+    "price": 990,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548095
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548096
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548097
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548094
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548114
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548091
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548092
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548093
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548090
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548113
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "LILA ROSADO",
+                "id": 1511,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548112
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548109
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548110
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548111
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548108
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "MAIZ CLARO",
+                "id": 1512,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548102
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548099
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548100
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548101
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548098
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548107
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548104
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548105
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548106
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548103
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LENE BLUSA VERDE AGUA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124690",
+    "colorId": 1,
+    "copy": "Blusa con volados Lene",
+    "description": "Blusa escote en V, con detalle de recortes y volados con pequeños frunces. Escote con vista interna para mejor calce. Una prenda romántica para tus outfits de verano.",
+    "description2": "Realizada en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40248,
+    "images": [
+      "124690_1_1.jpg",
+      "124690_1_2.jpg",
+      "124690_1_3.jpg",
+      "124690_22_1.jpg",
+      "124690_22_2.jpg",
+      "124690_22_3.jpg"
+    ],
+    "mainImage": "124690_1_1.jpg",
+    "name": "LENE BLUSA",
+    "price": 990,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548095
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548096
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548097
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548094
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548114
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548091
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548092
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548093
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548090
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548113
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "LILA ROSADO",
+                "id": 1511,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548112
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548109
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548110
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548111
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548108
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "MAIZ CLARO",
+                "id": 1512,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548102
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548099
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548100
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548101
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548098
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548107
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548104
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548105
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548106
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548103
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LENE BLUSA BLANCO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124690",
+    "colorId": 22,
+    "copy": "Blusa con volados Lene",
+    "description": "Blusa escote en V, con detalle de recortes y volados con pequeños frunces. Escote con vista interna para mejor calce. Una prenda romántica para tus outfits de verano.",
+    "description2": "Realizada en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40248,
+    "images": [
+      "124690_1_1.jpg",
+      "124690_1_2.jpg",
+      "124690_1_3.jpg",
+      "124690_22_1.jpg",
+      "124690_22_2.jpg",
+      "124690_22_3.jpg"
+    ],
+    "mainImage": "124690_22_1.jpg",
+    "name": "LENE BLUSA",
+    "price": 990,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548095
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548096
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548097
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548094
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548114
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548091
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548092
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548093
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548090
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548113
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "LILA ROSADO",
+                "id": 1511,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548112
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548109
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548110
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548111
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548108
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "MAIZ CLARO",
+                "id": 1512,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548102
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548099
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548100
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548101
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548098
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548107
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548104
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548105
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548106
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548103
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LENE BLUSA FUCSIA"
+  }
+]

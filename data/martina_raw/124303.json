@@ -1,0 +1,90 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124303",
+    "colorId": 2,
+    "description": "Chaleco matelaseado, acceso central y bolsillos con cierre. Combina en un diseño la formalidad y practicidad, ideal para varios tipos de uso.",
+    "description2": "Realizado en matelase",
+    "description3": "Calce clásico",
+    "id": 39644,
+    "images": [
+      "124303_2_1.jpg",
+      "124303_2_2.jpg",
+      "124303_2_3.jpg",
+      "124303_2_4.jpg",
+      "124303_2_5.jpg"
+    ],
+    "mainImage": "124303_2_1.jpg",
+    "name": "GERARD CHALECO",
+    "price": 2065,
+    "price1": 2950,
+    "productLine": {
+      "id": 3358,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 2065,
+          "price1": 2950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2065,
+                "price1": 2950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 2065,
+                      "price1": 2950,
+                      "productForSaleId": 5562223
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 2065,
+                      "price1": 2950,
+                      "productForSaleId": 5562224
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 2065,
+                      "price1": 2950,
+                      "productForSaleId": 5562225
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 2065,
+                      "price1": 2950,
+                      "productForSaleId": 5562222
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GERARD CHALECO NEGRO"
+  }
+]

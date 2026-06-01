@@ -1,0 +1,706 @@
+{
+  "36759": {
+    "code": "123026",
+    "productLineId": "3324"
+  },
+  "36762": {
+    "code": "123029",
+    "productLineId": "3324"
+  },
+  "37664": {
+    "code": "123415",
+    "productLineId": "3324"
+  },
+  "37666": {
+    "code": "123417",
+    "productLineId": "3325"
+  },
+  "38851": {
+    "code": "123855",
+    "productLineId": "3324"
+  },
+  "38933": {
+    "code": "123909",
+    "productLineId": "3324"
+  },
+  "38934": {
+    "code": "123910",
+    "productLineId": "3324"
+  },
+  "39505": {
+    "code": "124207",
+    "productLineId": "3324"
+  },
+  "39506": {
+    "code": "124208",
+    "productLineId": "3324"
+  },
+  "39511": {
+    "code": "124213",
+    "productLineId": "3324"
+  },
+  "39609": {
+    "code": "124299",
+    "productLineId": "3324"
+  },
+  "39784": {
+    "code": "124393",
+    "productLineId": "3324"
+  },
+  "39949": {
+    "code": "124455",
+    "productLineId": "3325"
+  },
+  "40164": {
+    "code": "124630",
+    "productLineId": "3324"
+  },
+  "40215": {
+    "code": "124665",
+    "productLineId": "3324"
+  },
+  "40216": {
+    "code": "124666",
+    "productLineId": "3324"
+  },
+  "40223": {
+    "code": "124673",
+    "productLineId": "3325"
+  },
+  "40569": {
+    "code": "124894",
+    "productLineId": "3324"
+  },
+  "40576": {
+    "code": "124901",
+    "productLineId": "3324"
+  },
+  "40577": {
+    "code": "124902",
+    "productLineId": "3324"
+  },
+  "40584": {
+    "code": "124909",
+    "productLineId": "3324"
+  },
+  "40585": {
+    "code": "124910",
+    "productLineId": "3324"
+  },
+  "40586": {
+    "code": "124911",
+    "productLineId": "3324"
+  },
+  "40723": {
+    "code": "125028",
+    "productLineId": "3324"
+  },
+  "40724": {
+    "code": "125029",
+    "productLineId": "3324"
+  },
+  "40725": {
+    "code": "125030",
+    "productLineId": "3324"
+  },
+  "40813": {
+    "code": "125054",
+    "productLineId": "3324"
+  },
+  "40824": {
+    "code": "125065",
+    "productLineId": "3324"
+  },
+  "40841": {
+    "code": "125082",
+    "productLineId": "3325"
+  },
+  "40843": {
+    "code": "125084",
+    "productLineId": "3324"
+  },
+  "40850": {
+    "code": "125091",
+    "productLineId": "3324"
+  },
+  "40897": {
+    "code": "125129",
+    "productLineId": "3325"
+  },
+  "40899": {
+    "code": "125131",
+    "productLineId": "3325"
+  },
+  "40904": {
+    "code": "125136",
+    "productLineId": "3325"
+  },
+  "40949": {
+    "code": "125164",
+    "productLineId": "3325"
+  },
+  "40950": {
+    "code": "125165",
+    "productLineId": "3325"
+  },
+  "40953": {
+    "code": "125168",
+    "productLineId": "3325"
+  },
+  "40957": {
+    "code": "125172",
+    "productLineId": "3325"
+  },
+  "40976": {
+    "code": "125190",
+    "productLineId": "3325"
+  },
+  "40979": {
+    "code": "125193",
+    "productLineId": "3325"
+  },
+  "40983": {
+    "code": "125197",
+    "productLineId": "3325"
+  },
+  "40984": {
+    "code": "125198",
+    "productLineId": "3325"
+  },
+  "40989": {
+    "code": "125203",
+    "productLineId": "3325"
+  },
+  "40993": {
+    "code": "125207",
+    "productLineId": "3325"
+  },
+  "40995": {
+    "code": "125209",
+    "productLineId": "3324"
+  },
+  "41008": {
+    "code": "125222",
+    "productLineId": "3325"
+  },
+  "41016": {
+    "code": "125230",
+    "productLineId": "3324"
+  },
+  "41036": {
+    "code": "125250",
+    "productLineId": "3324"
+  },
+  "41040": {
+    "code": "125254",
+    "productLineId": "3324"
+  },
+  "41044": {
+    "code": "125258",
+    "productLineId": "3324"
+  },
+  "41050": {
+    "code": "125264",
+    "productLineId": "3324"
+  },
+  "41051": {
+    "code": "125265",
+    "productLineId": "3325"
+  },
+  "41064": {
+    "code": "125276",
+    "productLineId": "3324"
+  },
+  "41380": {
+    "code": "125460",
+    "productLineId": "3324"
+  },
+  "41429": {
+    "code": "125485",
+    "productLineId": "3324"
+  },
+  "41454": {
+    "code": "125510",
+    "productLineId": "3324"
+  },
+  "41500": {
+    "code": "125550",
+    "productLineId": "3324"
+  },
+  "41503": {
+    "code": "125553",
+    "productLineId": "3324"
+  },
+  "41650": {
+    "code": "125655",
+    "productLineId": "3325"
+  },
+  "41690": {
+    "code": "125681",
+    "productLineId": "3324"
+  },
+  "41770": {
+    "code": "125748",
+    "productLineId": "3324"
+  },
+  "41771": {
+    "code": "125749",
+    "productLineId": "3324"
+  },
+  "41780": {
+    "code": "125758",
+    "productLineId": "3324"
+  },
+  "42041": {
+    "code": "125914",
+    "productLineId": "3324"
+  },
+  "42044": {
+    "code": "125917",
+    "productLineId": "3324"
+  },
+  "42046": {
+    "code": "125919",
+    "productLineId": "3324"
+  },
+  "42104": {
+    "code": "125958",
+    "productLineId": "3324"
+  },
+  "42106": {
+    "code": "125960",
+    "productLineId": "3324"
+  },
+  "42143": {
+    "code": "125979",
+    "productLineId": "3324"
+  },
+  "42144": {
+    "code": "125980",
+    "productLineId": "3324"
+  },
+  "42145": {
+    "code": "125981",
+    "productLineId": "3324"
+  },
+  "42146": {
+    "code": "125982",
+    "productLineId": "3324"
+  },
+  "42147": {
+    "code": "125983",
+    "productLineId": "3324"
+  },
+  "42148": {
+    "code": "125984",
+    "productLineId": "3324"
+  },
+  "42149": {
+    "code": "125985",
+    "productLineId": "3324"
+  },
+  "42158": {
+    "code": "125988",
+    "productLineId": "3324"
+  },
+  "42159": {
+    "code": "125989",
+    "productLineId": "3324"
+  },
+  "42160": {
+    "code": "125990",
+    "productLineId": "3324"
+  },
+  "42161": {
+    "code": "125991",
+    "productLineId": "3325"
+  },
+  "42162": {
+    "code": "125992",
+    "productLineId": "3325"
+  },
+  "42163": {
+    "code": "125993",
+    "productLineId": "3324"
+  },
+  "42164": {
+    "code": "125994",
+    "productLineId": "3324"
+  },
+  "42165": {
+    "code": "125995",
+    "productLineId": "3324"
+  },
+  "42166": {
+    "code": "125996",
+    "productLineId": "3324"
+  },
+  "42167": {
+    "code": "125997",
+    "productLineId": "3324"
+  },
+  "42181": {
+    "code": "126012",
+    "productLineId": "3325"
+  },
+  "42197": {
+    "code": "126028",
+    "productLineId": "3324"
+  },
+  "42217": {
+    "code": "126029",
+    "productLineId": "3324"
+  },
+  "42235": {
+    "code": "126047",
+    "productLineId": "3324"
+  },
+  "42238": {
+    "code": "126050",
+    "productLineId": "3324"
+  },
+  "42247": {
+    "code": "126059",
+    "productLineId": "3324"
+  },
+  "42250": {
+    "code": "126062",
+    "productLineId": "3324"
+  },
+  "42252": {
+    "code": "126064",
+    "productLineId": "3324"
+  },
+  "42256": {
+    "code": "126068",
+    "productLineId": "3324"
+  },
+  "42257": {
+    "code": "126069",
+    "productLineId": "3324"
+  },
+  "42258": {
+    "code": "126070",
+    "productLineId": "3324"
+  },
+  "42259": {
+    "code": "126071",
+    "productLineId": "3324"
+  },
+  "42260": {
+    "code": "126072",
+    "productLineId": "3324"
+  },
+  "42269": {
+    "code": "126081",
+    "productLineId": "3324"
+  },
+  "42270": {
+    "code": "126082",
+    "productLineId": "3324"
+  },
+  "42281": {
+    "code": "126093",
+    "productLineId": "3324"
+  },
+  "42282": {
+    "code": "126094",
+    "productLineId": "3324"
+  },
+  "42283": {
+    "code": "126095",
+    "productLineId": "3324"
+  },
+  "42290": {
+    "code": "126102",
+    "productLineId": "3324"
+  },
+  "42291": {
+    "code": "126103",
+    "productLineId": "3324"
+  },
+  "42292": {
+    "code": "126104",
+    "productLineId": "3324"
+  },
+  "42297": {
+    "code": "126105",
+    "productLineId": "3324"
+  },
+  "42298": {
+    "code": "126106",
+    "productLineId": "3324"
+  },
+  "42299": {
+    "code": "126107",
+    "productLineId": "3324"
+  },
+  "42301": {
+    "code": "126109",
+    "productLineId": "3325"
+  },
+  "42302": {
+    "code": "126110",
+    "productLineId": "3325"
+  },
+  "42303": {
+    "code": "126111",
+    "productLineId": "3325"
+  },
+  "42304": {
+    "code": "126112",
+    "productLineId": "3325"
+  },
+  "42305": {
+    "code": "126113",
+    "productLineId": "3324"
+  },
+  "42306": {
+    "code": "126114",
+    "productLineId": "3324"
+  },
+  "42317": {
+    "code": "126116",
+    "productLineId": "3325"
+  },
+  "42319": {
+    "code": "126118",
+    "productLineId": "3324"
+  },
+  "42320": {
+    "code": "126119",
+    "productLineId": "3324"
+  },
+  "42323": {
+    "code": "126122",
+    "productLineId": "3324"
+  },
+  "42324": {
+    "code": "126123",
+    "productLineId": "3324"
+  },
+  "42325": {
+    "code": "126124",
+    "productLineId": "3324"
+  },
+  "42326": {
+    "code": "126125",
+    "productLineId": "3324"
+  },
+  "42327": {
+    "code": "126126",
+    "productLineId": "3324"
+  },
+  "42328": {
+    "code": "126127",
+    "productLineId": "3324"
+  },
+  "42360": {
+    "code": "126150",
+    "productLineId": "3324"
+  },
+  "42361": {
+    "code": "126151",
+    "productLineId": "3324"
+  },
+  "42362": {
+    "code": "126152",
+    "productLineId": "3324"
+  },
+  "42363": {
+    "code": "126153",
+    "productLineId": "3324"
+  },
+  "42365": {
+    "code": "126155",
+    "productLineId": "3324"
+  },
+  "42367": {
+    "code": "126157",
+    "productLineId": "3324"
+  },
+  "42370": {
+    "code": "126160",
+    "productLineId": "3325"
+  },
+  "42398": {
+    "code": "126184",
+    "productLineId": "3324"
+  },
+  "42403": {
+    "code": "126189",
+    "productLineId": "3324"
+  },
+  "42441": {
+    "code": "126204",
+    "productLineId": "3324"
+  },
+  "42442": {
+    "code": "126205",
+    "productLineId": "3324"
+  },
+  "42444": {
+    "code": "126207",
+    "productLineId": "3324"
+  },
+  "42445": {
+    "code": "126208",
+    "productLineId": "3324"
+  },
+  "42462": {
+    "code": "126225",
+    "productLineId": "3324"
+  },
+  "42464": {
+    "code": "126227",
+    "productLineId": "3324"
+  },
+  "42465": {
+    "code": "126228",
+    "productLineId": "3324"
+  },
+  "42466": {
+    "code": "126229",
+    "productLineId": "3324"
+  },
+  "42468": {
+    "code": "126231",
+    "productLineId": "3324"
+  },
+  "42469": {
+    "code": "126232",
+    "productLineId": "3324"
+  },
+  "42472": {
+    "code": "126235",
+    "productLineId": "3324"
+  },
+  "42473": {
+    "code": "126236",
+    "productLineId": "3324"
+  },
+  "42490": {
+    "code": "126253",
+    "productLineId": "3324"
+  },
+  "42532": {
+    "code": "126278",
+    "productLineId": "3324"
+  },
+  "42533": {
+    "code": "126279",
+    "productLineId": "3324"
+  },
+  "42537": {
+    "code": "126283",
+    "productLineId": "3324"
+  },
+  "42539": {
+    "code": "126285",
+    "productLineId": "3324"
+  },
+  "42542": {
+    "code": "126288",
+    "productLineId": "3324"
+  },
+  "42582": {
+    "code": "126328",
+    "productLineId": "3324"
+  },
+  "42583": {
+    "code": "126329",
+    "productLineId": "3324"
+  },
+  "42597": {
+    "code": "126330",
+    "productLineId": "3324"
+  },
+  "42630": {
+    "code": "126363",
+    "productLineId": "3324"
+  },
+  "42631": {
+    "code": "126364",
+    "productLineId": "3324"
+  },
+  "42632": {
+    "code": "126365",
+    "productLineId": "3324"
+  },
+  "42633": {
+    "code": "126366",
+    "productLineId": "3324"
+  },
+  "42635": {
+    "code": "126368",
+    "productLineId": "3324"
+  },
+  "42636": {
+    "code": "126369",
+    "productLineId": "3324"
+  },
+  "42637": {
+    "code": "126370",
+    "productLineId": "3324"
+  },
+  "42659": {
+    "code": "126373",
+    "productLineId": "3324"
+  },
+  "42668": {
+    "code": "126382",
+    "productLineId": "3324"
+  },
+  "42669": {
+    "code": "126383",
+    "productLineId": "3324"
+  },
+  "42684": {
+    "code": "126398",
+    "productLineId": "3324"
+  },
+  "42766": {
+    "code": "126468",
+    "productLineId": "3324"
+  },
+  "42767": {
+    "code": "126469",
+    "productLineId": "3324"
+  },
+  "42768": {
+    "code": "126470",
+    "productLineId": "3324"
+  },
+  "42769": {
+    "code": "126471",
+    "productLineId": "3324"
+  },
+  "42804": {
+    "code": "126482",
+    "productLineId": "3324"
+  },
+  "42805": {
+    "code": "126483",
+    "productLineId": "3324"
+  },
+  "42808": {
+    "code": "126486",
+    "productLineId": "3324"
+  },
+  "42809": {
+    "code": "126487",
+    "productLineId": "3324"
+  },
+  "42810": {
+    "code": "126488",
+    "productLineId": "3324"
+  },
+  "42811": {
+    "code": "126489",
+    "productLineId": "3324"
+  },
+  "42820": {
+    "code": "126498",
+    "productLineId": "3324"
+  }
+}

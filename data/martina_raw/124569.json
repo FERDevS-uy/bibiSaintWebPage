@@ -1,0 +1,89 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124569",
+    "colorId": 9,
+    "copy": "Vestido elegante Evelyn",
+    "description": "Vestido evasé, escote en v, con elástico bajo busto. Parte superior tipo musculosa con manga superpuesta que genera un estilo de capa. Recortes en falda con pequeños frunces. Un vestido soñado para estas fiestas.",
+    "description2": "Realizado en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40091,
+    "images": [
+      "124569_9_1.jpg",
+      "124569_9_2.jpg",
+      "124569_9_3.jpg",
+      "124569_9_4.jpg"
+    ],
+    "mainImage": "124569_9_1.jpg",
+    "name": "EVELYN VESTIDO",
+    "price": 2490,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2490,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 2490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2490,
+                      "productForSaleId": 5549780
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2490,
+                      "productForSaleId": 5549777
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2490,
+                      "productForSaleId": 5549778
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2490,
+                      "productForSaleId": 5549779
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2490,
+                      "productForSaleId": 5549776
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "EVELYN VESTIDO ROJO"
+  }
+]

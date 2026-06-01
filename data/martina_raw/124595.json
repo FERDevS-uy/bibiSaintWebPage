@@ -1,0 +1,563 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124595",
+    "colorId": 19,
+    "copy": "Vestido semi evase Chiara",
+    "description": "Vestido semi evasé, con recortes en delantero y espalda con sustracción. ",
+    "description2": "Realizado en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 40117,
+    "images": [
+      "124595_19_1.jpg",
+      "124595_2_1.jpg",
+      "124595_2_2.jpg",
+      "124595_70_1.jpg"
+    ],
+    "mainImage": "124595_19_1.jpg",
+    "name": "CHIARA VESTIDO",
+    "price": 625,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 625,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 625,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 625,
+                      "productForSaleId": 5550651
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 625,
+                      "productForSaleId": 5550647
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 625,
+                      "productForSaleId": 5550648
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 625,
+                      "productForSaleId": 5550649
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 625,
+                      "productForSaleId": 5550646
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 625,
+                      "productForSaleId": 5550650
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 625,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 625,
+                      "productForSaleId": 5550663
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 625,
+                      "productForSaleId": 5550659
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 625,
+                      "productForSaleId": 5550660
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 625,
+                      "productForSaleId": 5550661
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 625,
+                      "productForSaleId": 5550658
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 625,
+                      "productForSaleId": 5550662
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 625,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 625,
+                      "productForSaleId": 5550657
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 625,
+                      "productForSaleId": 5550653
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 625,
+                      "productForSaleId": 5550654
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 625,
+                      "productForSaleId": 5550655
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 625,
+                      "productForSaleId": 5550652
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 625,
+                      "productForSaleId": 5550656
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CHIARA VESTIDO VIOLETA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124595",
+    "colorId": 2,
+    "copy": "Vestido semi evase Chiara",
+    "description": "Vestido semi evasé, con recortes en delantero y espalda con sustracción. ",
+    "description2": "Realizado en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 40117,
+    "images": [
+      "124595_19_1.jpg",
+      "124595_2_1.jpg",
+      "124595_2_2.jpg",
+      "124595_70_1.jpg"
+    ],
+    "mainImage": "124595_2_1.jpg",
+    "name": "CHIARA VESTIDO",
+    "price": 625,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 625,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 625,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 625,
+                      "productForSaleId": 5550651
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 625,
+                      "productForSaleId": 5550647
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 625,
+                      "productForSaleId": 5550648
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 625,
+                      "productForSaleId": 5550649
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 625,
+                      "productForSaleId": 5550646
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 625,
+                      "productForSaleId": 5550650
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 625,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 625,
+                      "productForSaleId": 5550663
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 625,
+                      "productForSaleId": 5550659
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 625,
+                      "productForSaleId": 5550660
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 625,
+                      "productForSaleId": 5550661
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 625,
+                      "productForSaleId": 5550658
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 625,
+                      "productForSaleId": 5550662
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 625,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 625,
+                      "productForSaleId": 5550657
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 625,
+                      "productForSaleId": 5550653
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 625,
+                      "productForSaleId": 5550654
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 625,
+                      "productForSaleId": 5550655
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 625,
+                      "productForSaleId": 5550652
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 625,
+                      "productForSaleId": 5550656
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CHIARA VESTIDO NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124595",
+    "colorId": 70,
+    "copy": "Vestido semi evase Chiara",
+    "description": "Vestido semi evasé, con recortes en delantero y espalda con sustracción. ",
+    "description2": "Realizado en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 40117,
+    "images": [
+      "124595_19_1.jpg",
+      "124595_2_1.jpg",
+      "124595_2_2.jpg",
+      "124595_70_1.jpg"
+    ],
+    "mainImage": "124595_70_1.jpg",
+    "name": "CHIARA VESTIDO",
+    "price": 625,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 625,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 625,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 625,
+                      "productForSaleId": 5550651
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 625,
+                      "productForSaleId": 5550647
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 625,
+                      "productForSaleId": 5550648
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 625,
+                      "productForSaleId": 5550649
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 625,
+                      "productForSaleId": 5550646
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 625,
+                      "productForSaleId": 5550650
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 625,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 625,
+                      "productForSaleId": 5550663
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 625,
+                      "productForSaleId": 5550659
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 625,
+                      "productForSaleId": 5550660
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 625,
+                      "productForSaleId": 5550661
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 625,
+                      "productForSaleId": 5550658
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 625,
+                      "productForSaleId": 5550662
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 625,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 625,
+                      "productForSaleId": 5550657
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 625,
+                      "productForSaleId": 5550653
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 625,
+                      "productForSaleId": 5550654
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 625,
+                      "productForSaleId": 5550655
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 625,
+                      "productForSaleId": 5550652
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 625,
+                      "productForSaleId": 5550656
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CHIARA VESTIDO TURQUESA"
+  }
+]

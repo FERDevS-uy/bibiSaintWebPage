@@ -1,0 +1,79 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124617",
+    "colorId": 32,
+    "description": "Musculosa escote redondo con hombro caído. Estampa en el delantero.",
+    "description2": "Realizada en jersey melange",
+    "description3": "Calce clásico",
+    "id": 40139,
+    "images": [
+      "124617_32_1.jpg"
+    ],
+    "mainImage": "124617_32_1.jpg",
+    "name": "ANTEO MUSCULOSA",
+    "price": 650,
+    "productLine": {
+      "id": 4761,
+      "name": "MUSCULOSAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 650,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 650,
+                      "productForSaleId": 5548446
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 650,
+                      "productForSaleId": 5548443
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 650,
+                      "productForSaleId": 5548444
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 650,
+                      "productForSaleId": 5548445
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANTEO MUSCULOSA GRIS MELANGE"
+  }
+]

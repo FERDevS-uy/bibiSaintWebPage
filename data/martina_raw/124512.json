@@ -1,0 +1,77 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124512",
+    "colorId": 272,
+    "description": "Colaless con elástico partido a tono.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40034,
+    "images": [],
+    "mainImage": "124512.jpg",
+    "name": "LUMINA COLALESS",
+    "price": 320,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 320,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F5DCD8",
+                "description": "ROSA CLARO",
+                "id": 272,
+                "price": 320,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 320,
+                      "productForSaleId": 5550757
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 320,
+                      "productForSaleId": 5550754
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 320,
+                      "productForSaleId": 5550755
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 320,
+                      "productForSaleId": 5550756
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LUMINA COLALESS ROSA CLARO"
+  }
+]

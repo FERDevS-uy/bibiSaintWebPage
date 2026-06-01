@@ -1,0 +1,1988 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125001",
+    "colorId": 66,
+    "copy": "Remera Estrella",
+    "description": "Remera básica escote en V con detalle de mangas rebatidas.",
+    "description2": "Realizada en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40687,
+    "images": [
+      "125001_1_1.jpg",
+      "125001_25_1.jpg",
+      "125001_27_1.jpg",
+      "125001_2_1.jpg",
+      "125001_2_2.jpg",
+      "125001_66_1.jpg",
+      "125001_867_1.jpg"
+    ],
+    "mainImage": "125001_66_1.jpg",
+    "name": "ESTRELLA REMERA",
+    "price": 670,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 670,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549585
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549581
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549582
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549583
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549580
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549584
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549603
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549599
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549600
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549601
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549598
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549602
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F1B896",
+                "description": "DURAZNO",
+                "id": 66,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549609
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549606
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549607
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549608
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549605
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549604
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549597
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549593
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549594
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549595
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549592
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549596
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549579
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549575
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549576
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549577
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549574
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549578
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#3C7376",
+                "description": "VERDE OSCURO",
+                "id": 867,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549591
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549587
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549588
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549589
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549586
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549590
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ESTRELLA REMERA DURAZNO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125001",
+    "colorId": 25,
+    "copy": "Remera Estrella",
+    "description": "Remera básica escote en V con detalle de mangas rebatidas.",
+    "description2": "Realizada en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40687,
+    "images": [
+      "125001_1_1.jpg",
+      "125001_25_1.jpg",
+      "125001_27_1.jpg",
+      "125001_2_1.jpg",
+      "125001_2_2.jpg",
+      "125001_66_1.jpg",
+      "125001_867_1.jpg"
+    ],
+    "mainImage": "125001_25_1.jpg",
+    "name": "ESTRELLA REMERA",
+    "price": 670,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 670,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549585
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549581
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549582
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549583
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549580
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549584
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549603
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549599
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549600
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549601
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549598
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549602
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F1B896",
+                "description": "DURAZNO",
+                "id": 66,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549609
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549606
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549607
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549608
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549605
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549604
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549597
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549593
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549594
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549595
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549592
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549596
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549579
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549575
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549576
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549577
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549574
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549578
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#3C7376",
+                "description": "VERDE OSCURO",
+                "id": 867,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549591
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549587
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549588
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549589
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549586
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549590
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ESTRELLA REMERA AMARILLO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125001",
+    "colorId": 2,
+    "copy": "Remera Estrella",
+    "description": "Remera básica escote en V con detalle de mangas rebatidas.",
+    "description2": "Realizada en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40687,
+    "images": [
+      "125001_1_1.jpg",
+      "125001_25_1.jpg",
+      "125001_27_1.jpg",
+      "125001_2_1.jpg",
+      "125001_2_2.jpg",
+      "125001_66_1.jpg",
+      "125001_867_1.jpg"
+    ],
+    "mainImage": "125001_2_1.jpg",
+    "name": "ESTRELLA REMERA",
+    "price": 670,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 670,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549585
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549581
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549582
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549583
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549580
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549584
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549603
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549599
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549600
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549601
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549598
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549602
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F1B896",
+                "description": "DURAZNO",
+                "id": 66,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549609
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549606
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549607
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549608
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549605
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549604
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549597
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549593
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549594
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549595
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549592
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549596
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549579
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549575
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549576
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549577
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549574
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549578
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#3C7376",
+                "description": "VERDE OSCURO",
+                "id": 867,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549591
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549587
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549588
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549589
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549586
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549590
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ESTRELLA REMERA NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125001",
+    "colorId": 1,
+    "copy": "Remera Estrella",
+    "description": "Remera básica escote en V con detalle de mangas rebatidas.",
+    "description2": "Realizada en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40687,
+    "images": [
+      "125001_1_1.jpg",
+      "125001_25_1.jpg",
+      "125001_27_1.jpg",
+      "125001_2_1.jpg",
+      "125001_2_2.jpg",
+      "125001_66_1.jpg",
+      "125001_867_1.jpg"
+    ],
+    "mainImage": "125001_1_1.jpg",
+    "name": "ESTRELLA REMERA",
+    "price": 670,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 670,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549585
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549581
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549582
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549583
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549580
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549584
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549603
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549599
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549600
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549601
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549598
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549602
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F1B896",
+                "description": "DURAZNO",
+                "id": 66,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549609
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549606
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549607
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549608
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549605
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549604
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549597
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549593
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549594
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549595
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549592
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549596
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549579
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549575
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549576
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549577
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549574
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549578
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#3C7376",
+                "description": "VERDE OSCURO",
+                "id": 867,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549591
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549587
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549588
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549589
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549586
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549590
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ESTRELLA REMERA BLANCO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125001",
+    "colorId": 27,
+    "copy": "Remera Estrella",
+    "description": "Remera básica escote en V con detalle de mangas rebatidas.",
+    "description2": "Realizada en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40687,
+    "images": [
+      "125001_1_1.jpg",
+      "125001_25_1.jpg",
+      "125001_27_1.jpg",
+      "125001_2_1.jpg",
+      "125001_2_2.jpg",
+      "125001_66_1.jpg",
+      "125001_867_1.jpg"
+    ],
+    "mainImage": "125001_27_1.jpg",
+    "name": "ESTRELLA REMERA",
+    "price": 670,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 670,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549585
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549581
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549582
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549583
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549580
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549584
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549603
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549599
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549600
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549601
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549598
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549602
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F1B896",
+                "description": "DURAZNO",
+                "id": 66,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549609
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549606
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549607
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549608
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549605
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549604
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549597
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549593
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549594
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549595
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549592
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549596
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549579
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549575
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549576
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549577
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549574
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549578
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#3C7376",
+                "description": "VERDE OSCURO",
+                "id": 867,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549591
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549587
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549588
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549589
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549586
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549590
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ESTRELLA REMERA ROSA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125001",
+    "colorId": 867,
+    "copy": "Remera Estrella",
+    "description": "Remera básica escote en V con detalle de mangas rebatidas.",
+    "description2": "Realizada en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40687,
+    "images": [
+      "125001_1_1.jpg",
+      "125001_25_1.jpg",
+      "125001_27_1.jpg",
+      "125001_2_1.jpg",
+      "125001_2_2.jpg",
+      "125001_66_1.jpg",
+      "125001_867_1.jpg"
+    ],
+    "mainImage": "125001_867_1.jpg",
+    "name": "ESTRELLA REMERA",
+    "price": 670,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 670,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549585
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549581
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549582
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549583
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549580
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549584
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549603
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549599
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549600
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549601
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549598
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549602
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F1B896",
+                "description": "DURAZNO",
+                "id": 66,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549609
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549606
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549607
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549608
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549605
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549604
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549597
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549593
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549594
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549595
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549592
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549596
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549579
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549575
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549576
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549577
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549574
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549578
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#3C7376",
+                "description": "VERDE OSCURO",
+                "id": 867,
+                "price": 670,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 670,
+                      "productForSaleId": 5549591
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "productForSaleId": 5549587
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "productForSaleId": 5549588
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "productForSaleId": 5549589
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "productForSaleId": 5549586
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 670,
+                      "productForSaleId": 5549590
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ESTRELLA REMERA VERDE OSCURO"
+  }
+]

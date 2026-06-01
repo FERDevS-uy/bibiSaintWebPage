@@ -1,0 +1,86 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124820",
+    "colorId": 799,
+    "copy": "Remeron Denise",
+    "description": "Remerón cuello redondo y manga caída con estampa en delantero.",
+    "description2": "Realizado en jersey melange",
+    "description3": "Calce amplio",
+    "id": 40436,
+    "images": [
+      "124820_799_1.jpg"
+    ],
+    "mainImage": "124820_799_1.jpg",
+    "name": "DENISE REMERÓN",
+    "price": 1590,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#9A9194",
+                "description": "GRIS MELANGE OSCURO",
+                "id": 799,
+                "price": 1590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1590,
+                      "productForSaleId": 5549943
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1590,
+                      "productForSaleId": 5549940
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1590,
+                      "productForSaleId": 5549941
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1590,
+                      "productForSaleId": 5549942
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1590,
+                      "productForSaleId": 5549939
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DENISE REMERÓN GRIS MELANGE OSCURO"
+  }
+]

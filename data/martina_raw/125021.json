@@ -1,0 +1,86 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125021",
+    "colorId": 2,
+    "copy": "Musculosa escote redondo Graciela",
+    "description": "Musculosa escote redondo, con ruedo redondeado. ",
+    "description2": "Realizada en microset microfibra",
+    "description3": "Calce clásico",
+    "id": 40716,
+    "images": [
+      "125021_2_1.jpg"
+    ],
+    "mainImage": "125021_2_1.jpg",
+    "name": "GRACIELA MUSCULOSA",
+    "price": 500,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 500,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 500,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 500,
+                      "productForSaleId": 5549036
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 500,
+                      "productForSaleId": 5549033
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 500,
+                      "productForSaleId": 5549034
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 500,
+                      "productForSaleId": 5549035
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 500,
+                      "productForSaleId": 5549032
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GRACIELA MUSCULOSA NEGRO"
+  }
+]

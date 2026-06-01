@@ -1,0 +1,86 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125167",
+    "colorId": 32,
+    "description": "Remera cuello redondo, manga corta, con estampa en delantero. ",
+    "description2": "Realizada en jersey melange",
+    "description3": "Calce clásico",
+    "id": 40952,
+    "images": [
+      "125167_32_1.jpg"
+    ],
+    "mainImage": "125167_32_1.jpg",
+    "name": "FRANCO REMERA",
+    "price": 825,
+    "price1": 1100,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 825,
+          "price1": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 825,
+                "price1": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 825,
+                      "price1": 1100,
+                      "productForSaleId": 5569369
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 825,
+                      "price1": 1100,
+                      "productForSaleId": 5569370
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 825,
+                      "price1": 1100,
+                      "productForSaleId": 5569368
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 825,
+                      "price1": 1100,
+                      "productForSaleId": 5569367
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FRANCO REMERA GRIS MELANGE"
+  }
+]

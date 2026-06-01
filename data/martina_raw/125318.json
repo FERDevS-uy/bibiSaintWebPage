@@ -1,0 +1,94 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125318",
+    "colorId": 697,
+    "copy": "Remera con estampa Kyla",
+    "description": "Remera básica escote redondo con estampa en delantero.",
+    "description2": "Realizada en jersey",
+    "description3": "Calce clásico",
+    "id": 41156,
+    "images": [
+      "125318_697_1.jpg"
+    ],
+    "mainImage": "125318_697_1.jpg",
+    "name": "KYLA REMERA",
+    "price": 950,
+    "price1": 1900,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 950,
+          "price1": 1900,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#694A3B",
+                "description": "HABANO",
+                "id": 697,
+                "price": 950,
+                "price1": 1900,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "price1": 1900,
+                      "productForSaleId": 5551370
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "price1": 1900,
+                      "productForSaleId": 5551371
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "price1": 1900,
+                      "productForSaleId": 5551372
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "price1": 1900,
+                      "productForSaleId": 5551369
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "price1": 1900,
+                      "productForSaleId": 5551368
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "KYLA REMERA HABANO"
+  }
+]

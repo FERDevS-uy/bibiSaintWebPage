@@ -1,0 +1,282 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126487",
+    "colorId": 2,
+    "description": "Blazer con solapas y bolsillos, interior forrado y bolsilos.",
+    "description2": "Realizado en sastrero",
+    "description3": "Calce clásico",
+    "id": 42809,
+    "images": [
+      "126487_2_1.jpg",
+      "126487_2_2.jpg",
+      "126487_4_1.jpg",
+      "126487_4_2.jpg"
+    ],
+    "mainImage": "126487_2_1.jpg",
+    "name": "HILLS BLAZER",
+    "price": 2450,
+    "productLine": {
+      "id": 4760,
+      "name": "TAPADOS Y SACOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2450,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 2450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "38",
+                      "id": 44,
+                      "price": 2450,
+                      "productForSaleId": 5763180
+                    },
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2450,
+                      "productForSaleId": 5763181
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2450,
+                      "productForSaleId": 5763182
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2450,
+                      "productForSaleId": 5763183
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2450,
+                      "productForSaleId": 5763184
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2450,
+                      "productForSaleId": 5763185
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "38",
+                      "id": 44,
+                      "price": 2450,
+                      "productForSaleId": 5763174
+                    },
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2450,
+                      "productForSaleId": 5763175
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2450,
+                      "productForSaleId": 5763176
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2450,
+                      "productForSaleId": 5763177
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2450,
+                      "productForSaleId": 5763178
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2450,
+                      "productForSaleId": 5763179
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "HILLS BLAZER NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126487",
+    "colorId": 4,
+    "description": "Blazer con solapas y bolsillos, interior forrado y bolsilos.",
+    "description2": "Realizado en sastrero",
+    "description3": "Calce clásico",
+    "id": 42809,
+    "images": [
+      "126487_2_1.jpg",
+      "126487_2_2.jpg",
+      "126487_4_1.jpg",
+      "126487_4_2.jpg"
+    ],
+    "mainImage": "126487_4_1.jpg",
+    "name": "HILLS BLAZER",
+    "price": 2450,
+    "productLine": {
+      "id": 4760,
+      "name": "TAPADOS Y SACOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2450,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 2450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "38",
+                      "id": 44,
+                      "price": 2450,
+                      "productForSaleId": 5763180
+                    },
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2450,
+                      "productForSaleId": 5763181
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2450,
+                      "productForSaleId": 5763182
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2450,
+                      "productForSaleId": 5763183
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2450,
+                      "productForSaleId": 5763184
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2450,
+                      "productForSaleId": 5763185
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "38",
+                      "id": 44,
+                      "price": 2450,
+                      "productForSaleId": 5763174
+                    },
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2450,
+                      "productForSaleId": 5763175
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2450,
+                      "productForSaleId": 5763176
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2450,
+                      "productForSaleId": 5763177
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2450,
+                      "productForSaleId": 5763178
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2450,
+                      "productForSaleId": 5763179
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "HILLS BLAZER BORDO",
+    "productLineId": "3324"
+  }
+]

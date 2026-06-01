@@ -1,0 +1,70 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125082",
+    "colorId": 8,
+    "description": "Buzo 1/2 cierre con cuello alto y bolsillo delantero estilo canguro. Detalle de ruedo con vivo.",
+    "description2": "Realizado en polar",
+    "description3": "Calce clásico",
+    "id": 40841,
+    "images": [
+      "125082_8_1.jpg",
+      "125082_8_2.jpg",
+      "125082_8_3.jpg"
+    ],
+    "mainImage": "125082_8_1.jpg",
+    "name": "LORENZO BUZO",
+    "price": 1800,
+    "productLine": {
+      "id": 4762,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1800,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 1800,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1800,
+                      "productForSaleId": 5756907
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1800,
+                      "productForSaleId": 5756908
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LORENZO BUZO VERDE",
+    "productLineId": "3325"
+  }
+]

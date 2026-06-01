@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125917",
+    "colorId": 2,
+    "description": "Blusa escote en V con detalle de puntilla a tono. Manga corta con leves frunces. Ruedo semi evase.",
+    "description2": "Realizada en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 42044,
+    "images": [
+      "125917_2_1.jpg",
+      "125917_2_2.jpg"
+    ],
+    "mainImage": "125917_2_1.jpg",
+    "name": "MARELEN BLUSA",
+    "price": 680,
+    "price1": 975,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 680,
+          "price1": 975,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 680,
+                "price1": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 680,
+                      "price1": 975,
+                      "productForSaleId": 5760672
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 680,
+                      "price1": 975,
+                      "productForSaleId": 5760673
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 680,
+                      "price1": 975,
+                      "productForSaleId": 5760671
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MARELEN BLUSA NEGRO",
+    "productLineId": "3324"
+  }
+]

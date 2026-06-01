@@ -1,0 +1,93 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125232",
+    "colorId": 531,
+    "copy": "Babucha rústico Lidia",
+    "description": "Babucha tiro medio y cintura elastizada. Diseño cargo con bolsillos laterales y detalle de bordado logo en cintura.",
+    "description2": "Realizada en rustico",
+    "description3": "Calce clásico",
+    "id": 41018,
+    "images": [
+      "125232_531_1.jpg",
+      "125232_531_2.jpg"
+    ],
+    "mainImage": "125232_531_1.jpg",
+    "name": "LIDIA BABUCHA",
+    "price": 2300,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#A39488",
+                "description": "VISON",
+                "id": 531,
+                "price": 2300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2300,
+                      "productForSaleId": 5548905
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2300,
+                      "productForSaleId": 5548901
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2300,
+                      "productForSaleId": 5548902
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2300,
+                      "productForSaleId": 5548903
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2300,
+                      "productForSaleId": 5548900
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 2300,
+                      "productForSaleId": 5548904
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LIDIA BABUCHA VISON"
+  }
+]

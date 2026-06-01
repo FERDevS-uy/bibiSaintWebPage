@@ -1,0 +1,79 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125206",
+    "colorId": 531,
+    "description": "Remera escote a la base, con manga larga y estampa en delantero.",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40992,
+    "images": [
+      "125206_531_1.jpg"
+    ],
+    "mainImage": "125206_531_1.jpg",
+    "name": "BALBIN REMERA",
+    "price": 1110,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1110,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#A39488",
+                "description": "VISON",
+                "id": 531,
+                "price": 1110,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1110,
+                      "productForSaleId": 5548515
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1110,
+                      "productForSaleId": 5548512
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1110,
+                      "productForSaleId": 5548513
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1110,
+                      "productForSaleId": 5548514
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BALBIN REMERA VISON"
+  }
+]

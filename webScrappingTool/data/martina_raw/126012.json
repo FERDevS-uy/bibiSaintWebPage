@@ -1,0 +1,419 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126012",
+    "colorId": 32,
+    "description": "Remera basica escote redondo ancho.",
+    "description2": "Realizada en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 42181,
+    "images": [
+      "126012_1_1.jpg",
+      "126012_1_2.jpg",
+      "126012_2_1.jpg",
+      "126012_3_1.jpg"
+    ],
+    "mainImage": "126012_1_1.jpg",
+    "name": "ARLON REMERA",
+    "price": 850,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 850,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 850,
+                      "productForSaleId": 5757023
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 850,
+                      "productForSaleId": 5757026
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 850,
+                      "productForSaleId": 5757025
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 850,
+                      "productForSaleId": 5757024
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 850,
+                      "productForSaleId": 5757027
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 850,
+                      "productForSaleId": 5757030
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 850,
+                      "productForSaleId": 5757028
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 850,
+                      "productForSaleId": 5757029
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 850,
+                      "productForSaleId": 5757032
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 850,
+                      "productForSaleId": 5757034
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ARLON REMERA GRIS MELANGE",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126012",
+    "colorId": 2,
+    "description": "Remera basica escote redondo ancho.",
+    "description2": "Realizada en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 42181,
+    "images": [
+      "126012_1_1.jpg",
+      "126012_1_2.jpg",
+      "126012_2_1.jpg",
+      "126012_3_1.jpg"
+    ],
+    "mainImage": "126012_2_1.jpg",
+    "name": "ARLON REMERA",
+    "price": 850,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 850,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 850,
+                      "productForSaleId": 5757023
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 850,
+                      "productForSaleId": 5757026
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 850,
+                      "productForSaleId": 5757025
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 850,
+                      "productForSaleId": 5757024
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 850,
+                      "productForSaleId": 5757027
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 850,
+                      "productForSaleId": 5757030
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 850,
+                      "productForSaleId": 5757028
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 850,
+                      "productForSaleId": 5757029
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 850,
+                      "productForSaleId": 5757032
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 850,
+                      "productForSaleId": 5757034
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ARLON REMERA NEGRO",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126012",
+    "colorId": 1,
+    "description": "Remera basica escote redondo ancho.",
+    "description2": "Realizada en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 42181,
+    "images": [
+      "126012_1_1.jpg",
+      "126012_1_2.jpg",
+      "126012_2_1.jpg",
+      "126012_3_1.jpg"
+    ],
+    "mainImage": "126012_1_1.jpg",
+    "name": "ARLON REMERA",
+    "price": 850,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 850,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 850,
+                      "productForSaleId": 5757023
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 850,
+                      "productForSaleId": 5757026
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 850,
+                      "productForSaleId": 5757025
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 850,
+                      "productForSaleId": 5757024
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 850,
+                      "productForSaleId": 5757027
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 850,
+                      "productForSaleId": 5757030
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 850,
+                      "productForSaleId": 5757028
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 850,
+                      "productForSaleId": 5757029
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 850,
+                      "productForSaleId": 5757032
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 850,
+                      "productForSaleId": 5757034
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ARLON REMERA BLANCO",
+    "productLineId": "3325"
+  }
+]

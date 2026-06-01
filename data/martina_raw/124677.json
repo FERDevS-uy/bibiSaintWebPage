@@ -1,0 +1,62 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124677",
+    "colorId": 381,
+    "description": "Media tobillera con motivo de rayado y talón y puntera a contaratono",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40227,
+    "images": [
+      "124677_381_1.jpg",
+      "124677_381_2.jpg"
+    ],
+    "mainImage": "124677_381_1.jpg",
+    "name": "LORENA MEDIA",
+    "price": 200,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 200,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "RAYADO",
+                "id": 381,
+                "price": 200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 200,
+                      "productForSaleId": 5551255
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LORENA MEDIA RAYADO"
+  }
+]

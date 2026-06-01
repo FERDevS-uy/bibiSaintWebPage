@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125132",
+    "colorId": 2,
+    "copy": "Calza con detalle flare Malu",
+    "description": "Calza tiro medio alto, de cintura ancha con detalles de bordador a tono. Pierna de corte flare.",
+    "description2": "Realizada en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 40900,
+    "images": [
+      "125132_2_1.jpg",
+      "125132_2_2.jpg",
+      "125132_2_3.jpg"
+    ],
+    "mainImage": "125132_2_1.jpg",
+    "name": "MALU CALZA",
+    "price": 890,
+    "productLine": {
+      "id": 4736,
+      "name": "CALZAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 890,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 890,
+                      "productForSaleId": 5548031
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 890,
+                      "productForSaleId": 5548033
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 890,
+                      "productForSaleId": 5548034
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 890,
+                      "productForSaleId": 5548035
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 890,
+                      "productForSaleId": 5548032
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MALU CALZA NEGRO"
+  }
+]

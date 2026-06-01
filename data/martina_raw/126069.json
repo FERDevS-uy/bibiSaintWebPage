@@ -1,0 +1,80 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126069",
+    "colorId": 1345,
+    "description": "Pantalón en denim, semi Oxford, con bolsillos y alforzas en el delantero.",
+    "description2": "Realizado en denim",
+    "id": 42257,
+    "images": [
+      "126069_1345_1.jpg",
+      "126069_1345_2.jpg"
+    ],
+    "mainImage": "126069_1345_1.jpg",
+    "name": "MILENKA PANTALON",
+    "price": 2850,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2850,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5E7288",
+                "description": "DENIM",
+                "id": 1345,
+                "price": 2850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2850,
+                      "productForSaleId": 5754055
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2850,
+                      "productForSaleId": 5754056
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2850,
+                      "productForSaleId": 5754057
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2850,
+                      "productForSaleId": 5754054
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MILENKA PANTALON DENIM",
+    "productLineId": "3324"
+  }
+]

@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124993",
+    "colorId": 332,
+    "copy": "Bombacha vedetina full print Armina",
+    "description": "Vedetina clásica con elástico partido al tono. Full estampada en delantero y espalda. ",
+    "description2": "Realizada en microfibra",
+    "description3": "Calce clásico",
+    "id": 40680,
+    "images": [
+      "124993_332_1.jpg",
+      "124993_332_2.jpg"
+    ],
+    "mainImage": "124993_332_1.jpg",
+    "name": "ARMINA VEDETINA",
+    "price": 320,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 320,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 320,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 320,
+                      "productForSaleId": 5548630
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 320,
+                      "productForSaleId": 5548627
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 320,
+                      "productForSaleId": 5548628
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 320,
+                      "productForSaleId": 5548629
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ARMINA VEDETINA ESTAMPADO"
+  }
+]

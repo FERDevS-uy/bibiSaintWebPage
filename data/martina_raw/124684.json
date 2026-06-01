@@ -1,0 +1,158 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124684",
+    "colorId": 53,
+    "copy": "Nécessaire eco cuero Fenix",
+    "description": "Necessaire grande. Color: Beige. Realizado en: eco-cuero. Medidas: 22X19",
+    "description3": "Calce relax",
+    "id": 40234,
+    "images": [
+      "124684_1498_1.jpg",
+      "124684_53_1.jpg",
+      "124684_53_2.jpg",
+      "124684_53_3.jpg"
+    ],
+    "mainImage": "124684_53_1.jpg",
+    "name": "FENIX NECESSAIRE",
+    "price": 720,
+    "productLine": {
+      "id": 3350,
+      "name": "ACCESORIOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 720,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#ECDDCE",
+                "description": "BEIGE",
+                "id": 53,
+                "price": 720,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 720,
+                      "productForSaleId": 5548348
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "CHAROL",
+                "id": 1498,
+                "price": 720,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 720,
+                      "productForSaleId": 5548349
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FENIX NECESSAIRE BEIGE"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124684",
+    "colorId": 1498,
+    "copy": "Nécessaire eco cuero Fenix",
+    "description": "Necessaire grande. Color: Beige. Realizado en: eco-cuero. Medidas: 22X19",
+    "description3": "Calce relax",
+    "id": 40234,
+    "images": [
+      "124684_1498_1.jpg",
+      "124684_53_1.jpg",
+      "124684_53_2.jpg",
+      "124684_53_3.jpg"
+    ],
+    "mainImage": "124684_1498_1.jpg",
+    "name": "FENIX NECESSAIRE",
+    "price": 720,
+    "productLine": {
+      "id": 3350,
+      "name": "ACCESORIOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 720,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#ECDDCE",
+                "description": "BEIGE",
+                "id": 53,
+                "price": 720,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 720,
+                      "productForSaleId": 5548348
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "CHAROL",
+                "id": 1498,
+                "price": 720,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 720,
+                      "productForSaleId": 5548349
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FENIX NECESSAIRE CHAROL"
+  }
+]

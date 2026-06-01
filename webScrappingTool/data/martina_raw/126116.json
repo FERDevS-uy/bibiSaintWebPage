@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126116",
+    "colorId": 2,
+    "description": "Pantalon 5 bolsillos, tiro medio. Pierna recta.",
+    "description2": "Realizado en denim",
+    "description3": "Calce clásico",
+    "id": 42317,
+    "images": [
+      "126116_2_1.jpg",
+      "126116_2_2.jpg"
+    ],
+    "mainImage": "126116_2_1.jpg",
+    "name": "EZZARD PANTALON",
+    "price": 2550,
+    "productLine": {
+      "id": 3357,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2550,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2550,
+                      "productForSaleId": 5757062
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2550,
+                      "productForSaleId": 5757061
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2550,
+                      "productForSaleId": 5757063
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2550,
+                      "productForSaleId": 5757060
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 2550,
+                      "productForSaleId": 5757059
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "EZZARD PANTALON NEGRO",
+    "productLineId": "3325"
+  }
+]

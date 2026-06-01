@@ -1,0 +1,762 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124299",
+    "colorId": 452,
+    "copy": "Bombacha Tiro Corto Dolce",
+    "description": "Tiro corto con detalle de puntilla elastizada en delantero. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 39609,
+    "images": [
+      "124299_1_1.jpg",
+      "124299_1_2.jpg",
+      "124299_1_3.jpg",
+      "124299_1_4.jpg",
+      "124299_2_1.jpg",
+      "124299_452_1.jpg",
+      "124299_9_1.jpg"
+    ],
+    "mainImage": "124299_452_1.jpg",
+    "name": "DOLCE TIRO CORTO",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757707
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757708
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757705
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757706
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757696
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757694
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757695
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757693
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757698
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757697
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757699
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757700
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757704
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757701
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757702
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757703
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DOLCE TIRO CORTO AVELLANA",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124299",
+    "colorId": 9,
+    "copy": "Bombacha Tiro Corto Dolce",
+    "description": "Tiro corto con detalle de puntilla elastizada en delantero. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 39609,
+    "images": [
+      "124299_1_1.jpg",
+      "124299_1_2.jpg",
+      "124299_1_3.jpg",
+      "124299_1_4.jpg",
+      "124299_2_1.jpg",
+      "124299_452_1.jpg",
+      "124299_9_1.jpg"
+    ],
+    "mainImage": "124299_9_1.jpg",
+    "name": "DOLCE TIRO CORTO",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757707
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757708
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757705
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757706
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757696
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757694
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757695
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757693
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757698
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757697
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757699
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757700
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757704
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757701
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757702
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757703
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DOLCE TIRO CORTO ROJO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124299",
+    "colorId": 2,
+    "copy": "Bombacha Tiro Corto Dolce",
+    "description": "Tiro corto con detalle de puntilla elastizada en delantero. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 39609,
+    "images": [
+      "124299_1_1.jpg",
+      "124299_1_2.jpg",
+      "124299_1_3.jpg",
+      "124299_1_4.jpg",
+      "124299_2_1.jpg",
+      "124299_452_1.jpg",
+      "124299_9_1.jpg"
+    ],
+    "mainImage": "124299_2_1.jpg",
+    "name": "DOLCE TIRO CORTO",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757707
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757708
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757705
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757706
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757696
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757694
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757695
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757693
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757698
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757697
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757699
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757700
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757704
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757701
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757702
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757703
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DOLCE TIRO CORTO NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124299",
+    "colorId": 1,
+    "copy": "Bombacha Tiro Corto Dolce",
+    "description": "Tiro corto con detalle de puntilla elastizada en delantero. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 39609,
+    "images": [
+      "124299_1_1.jpg",
+      "124299_1_2.jpg",
+      "124299_1_3.jpg",
+      "124299_1_4.jpg",
+      "124299_2_1.jpg",
+      "124299_452_1.jpg",
+      "124299_9_1.jpg"
+    ],
+    "mainImage": "124299_1_1.jpg",
+    "name": "DOLCE TIRO CORTO",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757707
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757708
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757705
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757706
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757696
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757694
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757695
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757693
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757698
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757697
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757699
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757700
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757704
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757701
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757702
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757703
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DOLCE TIRO CORTO BLANCO",
+    "productLineId": "3324"
+  }
+]

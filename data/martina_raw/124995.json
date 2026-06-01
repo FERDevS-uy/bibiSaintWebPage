@@ -1,0 +1,74 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124995",
+    "colorId": 332,
+    "copy": "Top tipo deportivo estampado Kenza",
+    "description": "Top tipo deportivo estampado con cintura elastizada y elástico en cintura.",
+    "description2": "Realizado en microfibra",
+    "description3": "Calce clásico",
+    "id": 40682,
+    "images": [
+      "124995_332_1.jpg",
+      "124995_332_2.jpg"
+    ],
+    "mainImage": "124995_332_1.jpg",
+    "name": "KENZA TOP",
+    "price": 525,
+    "price1": 750,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 525,
+          "price1": 750,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 525,
+                "price1": 750,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 525,
+                      "price1": 750,
+                      "productForSaleId": 5566031
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 525,
+                      "price1": 750,
+                      "productForSaleId": 5566032
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "KENZA TOP ESTAMPADO"
+  }
+]

@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124330",
+    "colorId": 1063,
+    "description": "Remera escote redondo, manga corta con estampa en delantero.",
+    "description2": "Realizada en jersey flame",
+    "description3": "Calce clásico",
+    "id": 39671,
+    "images": [
+      "124330_1063_1.jpg",
+      "124330_1063_2.jpg",
+      "124330_1063_3.jpg"
+    ],
+    "mainImage": "124330_1063_1.jpg",
+    "name": "CLAUDE REMERA",
+    "price": 830,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 830,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#873444",
+                "description": "VINO",
+                "id": 1063,
+                "price": 830,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 830,
+                      "productForSaleId": 5548388
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 830,
+                      "productForSaleId": 5548385
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 830,
+                      "productForSaleId": 5548386
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 830,
+                      "productForSaleId": 5548387
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CLAUDE REMERA VINO"
+  }
+]

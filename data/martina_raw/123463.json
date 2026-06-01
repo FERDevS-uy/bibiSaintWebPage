@@ -1,0 +1,878 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123463",
+    "colorId": 1455,
+    "description": "Pack  2 pares de Media soquete, con compresión regulada y detalles a contratono.",
+    "description2": "Realizadas en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 38059,
+    "images": [
+      "123463_1_1.jpg",
+      "123463_2_1.jpg",
+      "123463_620_1.jpg"
+    ],
+    "mainImage": "123463_1_1.jpg",
+    "name": "ANACAPRI MEDIAS ",
+    "price": 395,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 395,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547371
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO-NEGRO",
+                "id": 97,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547369
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE-NEGRO",
+                "id": 620,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547374
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA-VERDE",
+                "id": 1455,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547373
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547372
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO-BLANCO",
+                "id": 99,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547370
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANACAPRI MEDIAS  NARANJA-VERDE"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123463",
+    "colorId": 99,
+    "description": "Pack  2 pares de Media soquete, con compresión regulada y detalles a contratono.",
+    "description2": "Realizadas en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 38059,
+    "images": [
+      "123463_1_1.jpg",
+      "123463_2_1.jpg",
+      "123463_620_1.jpg"
+    ],
+    "mainImage": "123463_1_1.jpg",
+    "name": "ANACAPRI MEDIAS ",
+    "price": 395,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 395,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547371
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO-NEGRO",
+                "id": 97,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547369
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE-NEGRO",
+                "id": 620,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547374
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA-VERDE",
+                "id": 1455,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547373
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547372
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO-BLANCO",
+                "id": 99,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547370
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANACAPRI MEDIAS  NEGRO-BLANCO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123463",
+    "colorId": 620,
+    "description": "Pack  2 pares de Media soquete, con compresión regulada y detalles a contratono.",
+    "description2": "Realizadas en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 38059,
+    "images": [
+      "123463_1_1.jpg",
+      "123463_2_1.jpg",
+      "123463_620_1.jpg"
+    ],
+    "mainImage": "123463_620_1.jpg",
+    "name": "ANACAPRI MEDIAS ",
+    "price": 395,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 395,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547371
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO-NEGRO",
+                "id": 97,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547369
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE-NEGRO",
+                "id": 620,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547374
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA-VERDE",
+                "id": 1455,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547373
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547372
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO-BLANCO",
+                "id": 99,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547370
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANACAPRI MEDIAS  GRIS MELANGE-NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123463",
+    "colorId": 2,
+    "description": "Pack  2 pares de Media soquete, con compresión regulada y detalles a contratono.",
+    "description2": "Realizadas en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 38059,
+    "images": [
+      "123463_1_1.jpg",
+      "123463_2_1.jpg",
+      "123463_620_1.jpg"
+    ],
+    "mainImage": "123463_2_1.jpg",
+    "name": "ANACAPRI MEDIAS ",
+    "price": 395,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 395,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547371
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO-NEGRO",
+                "id": 97,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547369
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE-NEGRO",
+                "id": 620,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547374
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA-VERDE",
+                "id": 1455,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547373
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547372
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO-BLANCO",
+                "id": 99,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547370
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANACAPRI MEDIAS  NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123463",
+    "colorId": 97,
+    "description": "Pack  2 pares de Media soquete, con compresión regulada y detalles a contratono.",
+    "description2": "Realizadas en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 38059,
+    "images": [
+      "123463_1_1.jpg",
+      "123463_2_1.jpg",
+      "123463_620_1.jpg"
+    ],
+    "mainImage": "123463_1_1.jpg",
+    "name": "ANACAPRI MEDIAS ",
+    "price": 395,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 395,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547371
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO-NEGRO",
+                "id": 97,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547369
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE-NEGRO",
+                "id": 620,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547374
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA-VERDE",
+                "id": 1455,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547373
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547372
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO-BLANCO",
+                "id": 99,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547370
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANACAPRI MEDIAS  BLANCO-NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123463",
+    "colorId": 1,
+    "description": "Pack  2 pares de Media soquete, con compresión regulada y detalles a contratono.",
+    "description2": "Realizadas en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 38059,
+    "images": [
+      "123463_1_1.jpg",
+      "123463_2_1.jpg",
+      "123463_620_1.jpg"
+    ],
+    "mainImage": "123463_1_1.jpg",
+    "name": "ANACAPRI MEDIAS ",
+    "price": 395,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 395,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547371
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO-NEGRO",
+                "id": 97,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547369
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE-NEGRO",
+                "id": 620,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547374
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA-VERDE",
+                "id": 1455,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547373
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547372
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO-BLANCO",
+                "id": 99,
+                "price": 395,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 395,
+                      "productForSaleId": 5547370
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANACAPRI MEDIAS  BLANCO"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124914",
+    "colorId": 51,
+    "copy": "Colaless con detalle Ciara",
+    "description": "Bombacha colaless con detalle de puntilla en delantero.",
+    "description2": "Realizado en algodon y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 40589,
+    "images": [
+      "124914_51_1.jpg",
+      "124914_51_2.jpg",
+      "124914_51_3.jpg"
+    ],
+    "mainImage": "124914_51_1.jpg",
+    "name": "CIARA COLALESS",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F6D3D9",
+                "description": "ROSA DIOR",
+                "id": 51,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5549102
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5549099
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5549100
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5549101
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CIARA COLALESS ROSA DIOR"
+  }
+]

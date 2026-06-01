@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126184",
+    "colorId": 18,
+    "description": "Blusa con detalle en escote y recortes de manga, de puntilla elastizada,manga larga. Una prenda super romantica y diferenciada.",
+    "description2": "Realizada en morley",
+    "description3": "Calce clásico",
+    "id": 42398,
+    "images": [
+      "126184_18_1.jpg",
+      "126184_18_2.jpg"
+    ],
+    "mainImage": "126184_18_1.jpg",
+    "name": "ALAIA BLUSA",
+    "price": 1540,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1540,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#E3DBCE",
+                "description": "ARENA",
+                "id": 18,
+                "price": 1540,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1540,
+                      "productForSaleId": 5754047
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1540,
+                      "productForSaleId": 5754048
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1540,
+                      "productForSaleId": 5754049
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1540,
+                      "productForSaleId": 5754046
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ALAIA BLUSA ARENA",
+    "productLineId": "3324"
+  }
+]

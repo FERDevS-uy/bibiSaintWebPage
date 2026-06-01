@@ -1,0 +1,95 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124485",
+    "colorId": 1491,
+    "copy": "Pantalón de microfibra Julene",
+    "description": "Pantalón estilo parachutes, tiro medio, con cintura elastizada y puños para regular. Bolsillos laterales y detalles a contratono.",
+    "description2": "Realizado en microfibra",
+    "description3": "Calce clásico",
+    "id": 40007,
+    "images": [
+      "124485_1491_1.jpg",
+      "124485_1491_2.jpg",
+      "124485_1491_3.jpg",
+      "124485_1491_4.jpg",
+      "124485_1491_5.jpg"
+    ],
+    "mainImage": "124485_1491_1.jpg",
+    "name": "JULENE PANTALON",
+    "price": 1495,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1495,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "VERDE Y BLANCO",
+                "id": 1491,
+                "price": 1495,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1495,
+                      "productForSaleId": 5547864
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1495,
+                      "productForSaleId": 5547861
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1495,
+                      "productForSaleId": 5547862
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1495,
+                      "productForSaleId": 5547863
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1495,
+                      "productForSaleId": 5547860
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 1495,
+                      "productForSaleId": 5547859
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JULENE PANTALON VERDE Y BLANCO"
+  }
+]

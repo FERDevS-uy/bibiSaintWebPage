@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124823",
+    "colorId": 28,
+    "copy": "Chaqueta con detalles Saona",
+    "description": "Chaqueta estilo jeanera con botones metálicos en acceso y puños. Amplios bolsillos delanteros. Realizada en denim con lentejuelas bordadas. Una prenda increíble y atemporal.",
+    "description2": "Realizada en denim",
+    "description3": "Calce clásico",
+    "id": 40439,
+    "images": [
+      "124823_28_1.jpg",
+      "124823_28_2.jpg",
+      "124823_28_3.jpg"
+    ],
+    "mainImage": "124823_28_1.jpg",
+    "name": "SAONA CHAQUETA ",
+    "price": 3200,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 3200,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 3200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 3200,
+                      "productForSaleId": 5548542
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 3200,
+                      "productForSaleId": 5548539
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 3200,
+                      "productForSaleId": 5548540
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 3200,
+                      "productForSaleId": 5548541
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 3200,
+                      "productForSaleId": 5548538
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SAONA CHAQUETA  CELESTE"
+  }
+]

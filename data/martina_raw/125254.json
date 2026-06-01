@@ -1,0 +1,76 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125254",
+    "colorId": 332,
+    "copy": "Polera estampada Felisa",
+    "description": "Polera básica de cuello alto full estampada.",
+    "description2": "Realizada en jersey elastizado ",
+    "description3": "Calce clásico",
+    "id": 41040,
+    "images": [
+      "125254_332_1.jpg",
+      "125254_332_2.jpg",
+      "125254_332_3.jpg"
+    ],
+    "mainImage": "125254_332_1.jpg",
+    "name": "FELISA POLERA",
+    "price": 1085,
+    "price1": 1550,
+    "productLine": {
+      "id": 4695,
+      "name": "POLERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1085,
+          "price1": 1550,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 1085,
+                "price1": 1550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1085,
+                      "price1": 1550,
+                      "productForSaleId": 5760622
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1085,
+                      "price1": 1550,
+                      "productForSaleId": 5760623
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FELISA POLERA ESTAMPADO",
+    "productLineId": "3324"
+  }
+]

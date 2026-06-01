@@ -1,0 +1,93 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124723",
+    "colorId": 28,
+    "copy": "Remera algodón mariposa Fresa",
+    "description": "Remera manga corta de hombros caídos y cuello redondo, con detalle de costuras a contratono y estampa en delantero.",
+    "description2": "Realizada en jersey",
+    "description3": "Calce clásico",
+    "id": 40308,
+    "images": [
+      "124723_28_1.jpg",
+      "124723_28_2.jpg"
+    ],
+    "mainImage": "124723_28_1.jpg",
+    "name": "FRESA REMERA",
+    "price": 950,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "productForSaleId": 5547966
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "productForSaleId": 5547963
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "productForSaleId": 5547964
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "productForSaleId": 5547965
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "productForSaleId": 5547962
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 950,
+                      "productForSaleId": 5547961
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FRESA REMERA CELESTE"
+  }
+]

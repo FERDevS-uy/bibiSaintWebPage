@@ -1,0 +1,96 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125053",
+    "colorId": 198,
+    "copy": "Enterito con capucha Yael",
+    "description": "Enterito con capucha, acceso con cierre en delantero, cintura espalda con elástico, bolsillos en laterales y pierna recta. ",
+    "description2": "Realizado en rustico denim",
+    "description3": "Calce clásico",
+    "id": 40812,
+    "images": [
+      "125053_198_1.jpg",
+      "125053_198_2.jpg",
+      "125053_198_3.jpg"
+    ],
+    "mainImage": "125053_198_1.jpg",
+    "name": "YAEL ENTERITO ",
+    "price": 1365,
+    "price1": 1950,
+    "productLine": {
+      "id": 5016,
+      "name": "ENTERITO",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1365,
+          "price1": 1950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#2A3959",
+                "description": "AZUL JEAN",
+                "id": 198,
+                "price": 1365,
+                "price1": 1950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1365,
+                      "price1": 1950,
+                      "productForSaleId": 5562168
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1365,
+                      "price1": 1950,
+                      "productForSaleId": 5562170
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1365,
+                      "price1": 1950,
+                      "productForSaleId": 5562167
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1365,
+                      "price1": 1950,
+                      "productForSaleId": 5562169
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1365,
+                      "price1": 1950,
+                      "productForSaleId": 5562171
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "YAEL ENTERITO  AZUL JEAN"
+  }
+]

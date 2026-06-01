@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126231",
+    "colorId": 5,
+    "description": "Chaleco cuello alto, con bolsillo superior con cierre. Largo tapa cola con ruedo redondeado.",
+    "description2": "Realizado en polar",
+    "description3": "Calce clásico",
+    "id": 42468,
+    "images": [
+      "126231_5_1.jpg",
+      "126231_5_2.jpg"
+    ],
+    "mainImage": "126231_5_1.jpg",
+    "name": "NERINA CHALECO",
+    "price": 1915,
+    "productLine": {
+      "id": 5055,
+      "name": "CHALECO",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1915,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#60636A",
+                "description": "GRIS",
+                "id": 5,
+                "price": 1915,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1915,
+                      "productForSaleId": 5754119
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1915,
+                      "productForSaleId": 5754120
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1915,
+                      "productForSaleId": 5754121
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1915,
+                      "productForSaleId": 5754118
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NERINA CHALECO GRIS",
+    "productLineId": "3324"
+  }
+]

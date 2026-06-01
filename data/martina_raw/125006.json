@@ -1,0 +1,254 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125006",
+    "colorId": 1508,
+    "copy": "Remera Raquel",
+    "description": "Remera escote redondo, manga entera con detalle de recortes a contracolor.",
+    "description2": "Realizada en jersey",
+    "description3": "Calce clásico",
+    "id": 40701,
+    "images": [
+      "125006_1508_1.jpg",
+      "125006_1508_2.jpg",
+      "125006_1508_3.jpg",
+      "125006_413_1.jpg"
+    ],
+    "mainImage": "125006_1508_1.jpg",
+    "name": "RAQUEL REMERA",
+    "price": 990,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "AMARILLO-ROSA-VINO",
+                "id": 1508,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548996
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548993
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548994
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548995
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5549002
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "FUSCIA-VERDE-DURAZNO",
+                "id": 1509,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5549001
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548998
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548999
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5549000
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548997
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RAQUEL REMERA AMARILLO-ROSA-VINO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125006",
+    "colorId": 1509,
+    "copy": "Remera Raquel",
+    "description": "Remera escote redondo, manga entera con detalle de recortes a contracolor.",
+    "description2": "Realizada en jersey",
+    "description3": "Calce clásico",
+    "id": 40701,
+    "images": [
+      "125006_1508_1.jpg",
+      "125006_1508_2.jpg",
+      "125006_1508_3.jpg",
+      "125006_413_1.jpg"
+    ],
+    "mainImage": "125006_1508_1.jpg",
+    "name": "RAQUEL REMERA",
+    "price": 990,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "AMARILLO-ROSA-VINO",
+                "id": 1508,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548996
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548993
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548994
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548995
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5549002
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "FUSCIA-VERDE-DURAZNO",
+                "id": 1509,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5549001
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548998
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548999
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5549000
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548997
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RAQUEL REMERA FUSCIA-VERDE-DURAZNO"
+  }
+]

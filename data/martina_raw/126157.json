@@ -1,0 +1,69 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126157",
+    "colorId": 74,
+    "description": "Blusa escote en V con aplique de puntilla elastizada y recorte con aplique de puntilla de algodon a contracolor. Ruedo evase y mangas acampanadas. De las prendas mas romanticas y bellas dentro de la colección.",
+    "description2": "Realizada en encaje elastizado",
+    "description3": "Calce clásico",
+    "id": 42367,
+    "images": [
+      "126157_74_1.jpg",
+      "126157_74_2.jpg"
+    ],
+    "mainImage": "126157_74_1.jpg",
+    "name": "CARLOTA BLUSA",
+    "price": 1335,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1335,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#472007",
+                "description": "CHOCOLATE",
+                "id": 74,
+                "price": 1335,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1335,
+                      "productForSaleId": 5754044
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1335,
+                      "productForSaleId": 5754045
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CARLOTA BLUSA CHOCOLATE",
+    "productLineId": "3324"
+  }
+]

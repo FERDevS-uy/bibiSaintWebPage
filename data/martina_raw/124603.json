@@ -1,0 +1,89 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124603",
+    "colorId": 1487,
+    "description": "Camisa manga larga con juego de rayas diferenciadas. Ruedo semi redondeado y botones en los laterales. Un ítem infaltable para el verano.",
+    "description2": "Realizada en poplin",
+    "description3": "Calce clásico",
+    "id": 40125,
+    "images": [
+      "124603_1487_1.jpg",
+      "124603_1487_2.jpg",
+      "124603_1487_3.jpg",
+      "124603_1487_4.jpg",
+      "124603_1487_5.jpg",
+      "124603_1487_6.jpg"
+    ],
+    "mainImage": "124603_1487_1.jpg",
+    "name": "ZUZANNA CAMISA",
+    "price": 2350,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "RAYADO BLANCO Y AZUL",
+                "id": 1487,
+                "price": 2350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2350,
+                      "productForSaleId": 5550673
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2350,
+                      "productForSaleId": 5550670
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2350,
+                      "productForSaleId": 5550671
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2350,
+                      "productForSaleId": 5550672
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2350,
+                      "productForSaleId": 5550669
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ZUZANNA CAMISA RAYADO BLANCO Y AZUL"
+  }
+]

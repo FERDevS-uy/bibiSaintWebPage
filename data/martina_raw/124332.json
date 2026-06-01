@@ -1,0 +1,86 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124332",
+    "colorId": 39,
+    "description": "Remera manga cuello redondo, manga corta con estampa en delantero.",
+    "description2": "Realizada en jersey flame",
+    "description3": "Calce clásico",
+    "id": 39673,
+    "images": [
+      "124332_39_1.jpg",
+      "124332_39_2.jpg"
+    ],
+    "mainImage": "124332_39_1.jpg",
+    "name": "GUILLAU REMERA",
+    "price": 820,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 820,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#0E1944",
+                "description": "AZUL MARINO",
+                "id": 39,
+                "price": 820,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 820,
+                      "productForSaleId": 5548393
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 820,
+                      "productForSaleId": 5548389
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 820,
+                      "productForSaleId": 5548390
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 820,
+                      "productForSaleId": 5548391
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 820,
+                      "productForSaleId": 5548392
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GUILLAU REMERA AZUL MARINO"
+  }
+]

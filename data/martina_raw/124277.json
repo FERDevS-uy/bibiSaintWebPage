@@ -1,0 +1,290 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124277",
+    "colorId": 79,
+    "copy": "Pantalón de cuero sintético Tamina",
+    "description": "Pantalón 5 bolsillos, tiro medio, pierna recta con recorte. Una prenda de alto impacto, ideal para usarla de día o de noche.",
+    "description2": "Realizado en cuero sintetico",
+    "description3": "Calce clásico",
+    "id": 39581,
+    "images": [
+      "124277_14_1.jpg",
+      "124277_14_2.jpg",
+      "124277_14_3.jpg",
+      "124277_14_4.jpg",
+      "124277_14_5.jpg",
+      "124277_14_6.jpg",
+      "124277_14_7.jpg",
+      "124277_79_1.jpg",
+      "124277_79_10.jpg",
+      "124277_79_11.jpg",
+      "124277_79_12.jpg",
+      "124277_79_13.jpg",
+      "124277_79_14.jpg",
+      "124277_79_2.jpg",
+      "124277_79_3.jpg",
+      "124277_79_4.jpg",
+      "124277_79_5.jpg",
+      "124277_79_6.jpg",
+      "124277_79_7.jpg",
+      "124277_79_8.jpg"
+    ],
+    "mainImage": "124277_79_1.jpg",
+    "name": "TAMINA PANTALON",
+    "price": 435,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 435,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#C7795B",
+                "description": "COBRE",
+                "id": 79,
+                "price": 435,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "productForSaleId": 5550510
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "productForSaleId": 5550507
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "productForSaleId": 5550508
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "productForSaleId": 5550509
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "productForSaleId": 5550506
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D7B84C",
+                "description": "DORADO",
+                "id": 14,
+                "price": 435,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "productForSaleId": 5550505
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "productForSaleId": 5550502
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "productForSaleId": 5550503
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "productForSaleId": 5550504
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "productForSaleId": 5550501
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "TAMINA PANTALON COBRE"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124277",
+    "colorId": 14,
+    "copy": "Pantalón de cuero sintético Tamina",
+    "description": "Pantalón 5 bolsillos, tiro medio, pierna recta con recorte. Una prenda de alto impacto, ideal para usarla de día o de noche.",
+    "description2": "Realizado en cuero sintetico",
+    "description3": "Calce clásico",
+    "id": 39581,
+    "images": [
+      "124277_14_1.jpg",
+      "124277_14_2.jpg",
+      "124277_14_3.jpg",
+      "124277_14_4.jpg",
+      "124277_14_5.jpg",
+      "124277_14_6.jpg",
+      "124277_14_7.jpg",
+      "124277_79_1.jpg",
+      "124277_79_10.jpg",
+      "124277_79_11.jpg",
+      "124277_79_12.jpg",
+      "124277_79_13.jpg",
+      "124277_79_14.jpg",
+      "124277_79_2.jpg",
+      "124277_79_3.jpg",
+      "124277_79_4.jpg",
+      "124277_79_5.jpg",
+      "124277_79_6.jpg",
+      "124277_79_7.jpg",
+      "124277_79_8.jpg"
+    ],
+    "mainImage": "124277_14_1.jpg",
+    "name": "TAMINA PANTALON",
+    "price": 435,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 435,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#C7795B",
+                "description": "COBRE",
+                "id": 79,
+                "price": 435,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "productForSaleId": 5550510
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "productForSaleId": 5550507
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "productForSaleId": 5550508
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "productForSaleId": 5550509
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "productForSaleId": 5550506
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D7B84C",
+                "description": "DORADO",
+                "id": 14,
+                "price": 435,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "productForSaleId": 5550505
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "productForSaleId": 5550502
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "productForSaleId": 5550503
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "productForSaleId": 5550504
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "productForSaleId": 5550501
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "TAMINA PANTALON DORADO"
+  }
+]

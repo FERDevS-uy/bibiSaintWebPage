@@ -1,0 +1,94 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124749",
+    "colorId": 3,
+    "copy": "Blusa de broderie de punto Venice",
+    "description": "Blusa escote en V que lleva puntilla de algodón, con detalle de canesú en espalda con leves frunces.",
+    "description2": "Realizada en broderie de punto",
+    "description3": "Calce clásico",
+    "id": 40334,
+    "images": [
+      "124749_3_1.jpg",
+      "124749_3_2.jpg",
+      "124749_3_3.jpg"
+    ],
+    "mainImage": "124749_3_1.jpg",
+    "name": "VENICE BLUSA",
+    "price": 1650,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1650,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFF8EC",
+                "description": "NATURAL",
+                "id": 3,
+                "price": 1650,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1650,
+                      "productForSaleId": 5550471
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1650,
+                      "productForSaleId": 5550467
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1650,
+                      "productForSaleId": 5550468
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1650,
+                      "productForSaleId": 5550469
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1650,
+                      "productForSaleId": 5550466
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 1650,
+                      "productForSaleId": 5550470
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "VENICE BLUSA NATURAL"
+  }
+]

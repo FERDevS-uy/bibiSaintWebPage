@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124554",
+    "colorId": 1,
+    "copy": "Blusa escote en v Atina",
+    "description": "Blusa con escote en v, hombros y mangas cortas con detalle de puntilla a contra tono. Estampa en delantero y ruedo amplio.",
+    "description2": "Realizada en jersey viscosa flame",
+    "description3": "Calce clásico",
+    "id": 40076,
+    "images": [
+      "124554_20_1.jpg",
+      "124554_20_2.jpg"
+    ],
+    "mainImage": "124554_20_1.jpg",
+    "name": "ATINA BLUSA",
+    "price": 1190,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1190,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 1190,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1190,
+                      "productForSaleId": 5550446
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1190,
+                      "productForSaleId": 5550443
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1190,
+                      "productForSaleId": 5550444
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1190,
+                      "productForSaleId": 5550445
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1190,
+                      "productForSaleId": 5550442
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ATINA BLUSA BLANCO"
+  }
+]

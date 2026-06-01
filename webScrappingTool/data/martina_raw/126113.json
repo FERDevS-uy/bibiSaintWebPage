@@ -1,0 +1,91 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126113",
+    "colorId": 2,
+    "description": "Calza tiro medio doble con cintura elastizada. Largo después de la rodilla con tajitos laterales. Un básico de la temporada que es súper versátil.",
+    "description2": "Realizado en microfibra elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 42305,
+    "images": [
+      "126113_2_1.jpg",
+      "126113_2_2.jpg",
+      "126113_2_3.jpg",
+      "126113_2_4.jpg",
+      "126113_2_5.jpg"
+    ],
+    "mainImage": "126113_2_1.jpg",
+    "name": "SAMIRA CALZA CAPRI",
+    "price": 780,
+    "price1": 1040,
+    "productLine": {
+      "id": 4736,
+      "name": "CALZAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 780,
+          "price1": 1040,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 780,
+                "price1": 1040,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 780,
+                      "price1": 1040,
+                      "productForSaleId": 5760583
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 780,
+                      "price1": 1040,
+                      "productForSaleId": 5760584
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 780,
+                      "price1": 1040,
+                      "productForSaleId": 5760585
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 780,
+                      "price1": 1040,
+                      "productForSaleId": 5760582
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SAMIRA CALZA CAPRI NEGRO",
+    "productLineId": "3324"
+  }
+]

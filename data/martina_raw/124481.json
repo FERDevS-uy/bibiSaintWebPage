@@ -1,0 +1,1808 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124481",
+    "colorId": 2,
+    "copy": "Short con bolsillos Calice",
+    "description": "Short con cintura elastizada. Lleva bolsillos laterales y ruedos anchos.",
+    "description2": "Realizado en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40003,
+    "images": [
+      "124481_16_1.jpg",
+      "124481_16_2.jpg",
+      "124481_16_3.jpg",
+      "124481_19_1.jpg",
+      "124481_19_2.jpg",
+      "124481_2_2.jpg",
+      "124481_3_1.jpg",
+      "124481_3_2.jpg",
+      "124481_70_1.jpg",
+      "124481_70_2.jpg",
+      "124481_879_1.jpg",
+      "124481_879_2.jpg",
+      "124481_879_3.jpg"
+    ],
+    "mainImage": "124481_2_2.jpg",
+    "name": "CALICE SHORT",
+    "price": 1100,
+    "productLine": {
+      "id": 4757,
+      "name": "BERMUDAS Y SHORTS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CA5F19",
+                "description": "CARAMELO",
+                "id": 879,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547813
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547810
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547811
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547812
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547809
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFF8EC",
+                "description": "NATURAL",
+                "id": 3,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547818
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547815
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547816
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547817
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547814
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547823
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547820
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547821
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547822
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547819
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547808
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547805
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547806
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547807
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547804
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547798
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547795
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547796
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547797
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547794
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547803
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547800
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547801
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547802
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547799
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CALICE SHORT NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124481",
+    "colorId": 19,
+    "copy": "Short con bolsillos Calice",
+    "description": "Short con cintura elastizada. Lleva bolsillos laterales y ruedos anchos.",
+    "description2": "Realizado en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40003,
+    "images": [
+      "124481_16_1.jpg",
+      "124481_16_2.jpg",
+      "124481_16_3.jpg",
+      "124481_19_1.jpg",
+      "124481_19_2.jpg",
+      "124481_2_2.jpg",
+      "124481_3_1.jpg",
+      "124481_3_2.jpg",
+      "124481_70_1.jpg",
+      "124481_70_2.jpg",
+      "124481_879_1.jpg",
+      "124481_879_2.jpg",
+      "124481_879_3.jpg"
+    ],
+    "mainImage": "124481_19_1.jpg",
+    "name": "CALICE SHORT",
+    "price": 1100,
+    "productLine": {
+      "id": 4757,
+      "name": "BERMUDAS Y SHORTS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CA5F19",
+                "description": "CARAMELO",
+                "id": 879,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547813
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547810
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547811
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547812
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547809
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFF8EC",
+                "description": "NATURAL",
+                "id": 3,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547818
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547815
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547816
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547817
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547814
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547823
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547820
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547821
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547822
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547819
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547808
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547805
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547806
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547807
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547804
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547798
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547795
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547796
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547797
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547794
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547803
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547800
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547801
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547802
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547799
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CALICE SHORT VIOLETA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124481",
+    "colorId": 879,
+    "copy": "Short con bolsillos Calice",
+    "description": "Short con cintura elastizada. Lleva bolsillos laterales y ruedos anchos.",
+    "description2": "Realizado en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40003,
+    "images": [
+      "124481_16_1.jpg",
+      "124481_16_2.jpg",
+      "124481_16_3.jpg",
+      "124481_19_1.jpg",
+      "124481_19_2.jpg",
+      "124481_2_2.jpg",
+      "124481_3_1.jpg",
+      "124481_3_2.jpg",
+      "124481_70_1.jpg",
+      "124481_70_2.jpg",
+      "124481_879_1.jpg",
+      "124481_879_2.jpg",
+      "124481_879_3.jpg"
+    ],
+    "mainImage": "124481_879_1.jpg",
+    "name": "CALICE SHORT",
+    "price": 1100,
+    "productLine": {
+      "id": 4757,
+      "name": "BERMUDAS Y SHORTS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CA5F19",
+                "description": "CARAMELO",
+                "id": 879,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547813
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547810
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547811
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547812
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547809
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFF8EC",
+                "description": "NATURAL",
+                "id": 3,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547818
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547815
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547816
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547817
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547814
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547823
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547820
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547821
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547822
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547819
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547808
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547805
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547806
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547807
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547804
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547798
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547795
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547796
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547797
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547794
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547803
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547800
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547801
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547802
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547799
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CALICE SHORT CARAMELO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124481",
+    "colorId": 16,
+    "copy": "Short con bolsillos Calice",
+    "description": "Short con cintura elastizada. Lleva bolsillos laterales y ruedos anchos.",
+    "description2": "Realizado en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40003,
+    "images": [
+      "124481_16_1.jpg",
+      "124481_16_2.jpg",
+      "124481_16_3.jpg",
+      "124481_19_1.jpg",
+      "124481_19_2.jpg",
+      "124481_2_2.jpg",
+      "124481_3_1.jpg",
+      "124481_3_2.jpg",
+      "124481_70_1.jpg",
+      "124481_70_2.jpg",
+      "124481_879_1.jpg",
+      "124481_879_2.jpg",
+      "124481_879_3.jpg"
+    ],
+    "mainImage": "124481_16_1.jpg",
+    "name": "CALICE SHORT",
+    "price": 1100,
+    "productLine": {
+      "id": 4757,
+      "name": "BERMUDAS Y SHORTS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CA5F19",
+                "description": "CARAMELO",
+                "id": 879,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547813
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547810
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547811
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547812
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547809
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFF8EC",
+                "description": "NATURAL",
+                "id": 3,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547818
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547815
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547816
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547817
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547814
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547823
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547820
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547821
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547822
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547819
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547808
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547805
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547806
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547807
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547804
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547798
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547795
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547796
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547797
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547794
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547803
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547800
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547801
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547802
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547799
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CALICE SHORT TOSTADO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124481",
+    "colorId": 70,
+    "copy": "Short con bolsillos Calice",
+    "description": "Short con cintura elastizada. Lleva bolsillos laterales y ruedos anchos.",
+    "description2": "Realizado en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40003,
+    "images": [
+      "124481_16_1.jpg",
+      "124481_16_2.jpg",
+      "124481_16_3.jpg",
+      "124481_19_1.jpg",
+      "124481_19_2.jpg",
+      "124481_2_2.jpg",
+      "124481_3_1.jpg",
+      "124481_3_2.jpg",
+      "124481_70_1.jpg",
+      "124481_70_2.jpg",
+      "124481_879_1.jpg",
+      "124481_879_2.jpg",
+      "124481_879_3.jpg"
+    ],
+    "mainImage": "124481_70_1.jpg",
+    "name": "CALICE SHORT",
+    "price": 1100,
+    "productLine": {
+      "id": 4757,
+      "name": "BERMUDAS Y SHORTS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CA5F19",
+                "description": "CARAMELO",
+                "id": 879,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547813
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547810
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547811
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547812
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547809
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFF8EC",
+                "description": "NATURAL",
+                "id": 3,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547818
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547815
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547816
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547817
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547814
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547823
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547820
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547821
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547822
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547819
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547808
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547805
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547806
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547807
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547804
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547798
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547795
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547796
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547797
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547794
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547803
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547800
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547801
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547802
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547799
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CALICE SHORT TURQUESA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124481",
+    "colorId": 3,
+    "copy": "Short con bolsillos Calice",
+    "description": "Short con cintura elastizada. Lleva bolsillos laterales y ruedos anchos.",
+    "description2": "Realizado en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40003,
+    "images": [
+      "124481_16_1.jpg",
+      "124481_16_2.jpg",
+      "124481_16_3.jpg",
+      "124481_19_1.jpg",
+      "124481_19_2.jpg",
+      "124481_2_2.jpg",
+      "124481_3_1.jpg",
+      "124481_3_2.jpg",
+      "124481_70_1.jpg",
+      "124481_70_2.jpg",
+      "124481_879_1.jpg",
+      "124481_879_2.jpg",
+      "124481_879_3.jpg"
+    ],
+    "mainImage": "124481_3_1.jpg",
+    "name": "CALICE SHORT",
+    "price": 1100,
+    "productLine": {
+      "id": 4757,
+      "name": "BERMUDAS Y SHORTS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CA5F19",
+                "description": "CARAMELO",
+                "id": 879,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547813
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547810
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547811
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547812
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547809
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFF8EC",
+                "description": "NATURAL",
+                "id": 3,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547818
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547815
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547816
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547817
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547814
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547823
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547820
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547821
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547822
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547819
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547808
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547805
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547806
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547807
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547804
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547798
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547795
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547796
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547797
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547794
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5547803
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5547800
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5547801
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5547802
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5547799
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CALICE SHORT NATURAL"
+  }
+]

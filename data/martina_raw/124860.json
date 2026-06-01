@@ -1,0 +1,96 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124860",
+    "colorId": 2,
+    "copy": "Buzo canguro Guadalupe",
+    "description": "Buzo con bolsillo canguro y  capucha forrada. Detalle a contra color en manga y cordón regulable.",
+    "description2": "Realizado en rustico algodon",
+    "description3": "Calce clásico",
+    "id": 40518,
+    "images": [
+      "124860_2_1.jpg",
+      "124860_2_2.jpg",
+      "124860_2_3.jpg"
+    ],
+    "mainImage": "124860_2_1.jpg",
+    "name": "GUADALUPE BUZO",
+    "price": 1240,
+    "price1": 2000,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1240,
+          "price1": 2000,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1240,
+                "price1": 2000,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1240,
+                      "price1": 2000,
+                      "productForSaleId": 5562154
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1240,
+                      "price1": 2000,
+                      "productForSaleId": 5562155
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1240,
+                      "price1": 2000,
+                      "productForSaleId": 5562156
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1240,
+                      "price1": 2000,
+                      "productForSaleId": 5562153
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1240,
+                      "price1": 2000,
+                      "productForSaleId": 5562152
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GUADALUPE BUZO NEGRO"
+  }
+]

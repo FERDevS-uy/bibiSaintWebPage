@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126285",
+    "colorId": 5,
+    "description": "Remeron con efecto deshilachado en la tela, con detalles contratono en escote y ruedos.",
+    "description2": "Realizado en jackquard fantasia",
+    "description3": "Calce amplio",
+    "id": 42539,
+    "images": [
+      "126285_1_1.jpg",
+      "126285_1_2.jpg"
+    ],
+    "mainImage": "126285_1_1.jpg",
+    "name": "BRANDI REMERON",
+    "price": 870,
+    "price1": 1245,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 870,
+          "price1": 1245,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#60636A",
+                "description": "GRIS",
+                "id": 5,
+                "price": 870,
+                "price1": 1245,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 870,
+                      "price1": 1245,
+                      "productForSaleId": 5760688
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 870,
+                      "price1": 1245,
+                      "productForSaleId": 5760689
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 870,
+                      "price1": 1245,
+                      "productForSaleId": 5760690
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BRANDI REMERON GRIS",
+    "productLineId": "3324"
+  }
+]

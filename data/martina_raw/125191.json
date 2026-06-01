@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125191",
+    "colorId": 8,
+    "copy": "Polera cuello alto Azalea",
+    "description": "Polera larga, cuello alto y con detalle de bordador en espalda. ",
+    "description2": "Realizada en lanilla",
+    "description3": "Calce clásico",
+    "id": 40977,
+    "images": [
+      "125191_8_1.jpg",
+      "125191_8_2.jpg"
+    ],
+    "mainImage": "125191_8_1.jpg",
+    "name": "AZALEA POLERA",
+    "price": 1750,
+    "productLine": {
+      "id": 4695,
+      "name": "POLERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1750,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 1750,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1750,
+                      "productForSaleId": 5550016
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1750,
+                      "productForSaleId": 5550013
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1750,
+                      "productForSaleId": 5550014
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1750,
+                      "productForSaleId": 5550015
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1750,
+                      "productForSaleId": 5550012
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AZALEA POLERA VERDE"
+  }
+]

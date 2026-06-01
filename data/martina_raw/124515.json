@@ -1,0 +1,77 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124515",
+    "colorId": 272,
+    "description": "Universal con elástico partido a tono",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40037,
+    "images": [],
+    "mainImage": "124515.jpg",
+    "name": "NICIA UNIVERSAL",
+    "price": 390,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 390,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F5DCD8",
+                "description": "ROSA CLARO",
+                "id": 272,
+                "price": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 390,
+                      "productForSaleId": 5550764
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 390,
+                      "productForSaleId": 5550765
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 390,
+                      "productForSaleId": 5550763
+                    },
+                    {
+                      "description": "7",
+                      "id": 61,
+                      "price": 390,
+                      "productForSaleId": 5550762
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NICIA UNIVERSAL ROSA CLARO"
+  }
+]

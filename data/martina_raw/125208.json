@@ -1,0 +1,94 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125208",
+    "colorId": 2,
+    "copy": "Remera manga larga Flavia",
+    "description": "Remera escote redondo con estampa en delantero y tajos laterales.",
+    "description2": "Realizada en crepe viscosa",
+    "description3": "Calce clásico",
+    "id": 40994,
+    "images": [
+      "125208_332_1.jpg"
+    ],
+    "mainImage": "125208_332_1.jpg",
+    "name": "FLAVIA REMERA",
+    "price": 1085,
+    "price1": 1550,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1085,
+          "price1": 1550,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1085,
+                "price1": 1550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1085,
+                      "price1": 1550,
+                      "productForSaleId": 5551444
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1085,
+                      "price1": 1550,
+                      "productForSaleId": 5551446
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1085,
+                      "price1": 1550,
+                      "productForSaleId": 5551443
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1085,
+                      "price1": 1550,
+                      "productForSaleId": 5551445
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1085,
+                      "price1": 1550,
+                      "productForSaleId": 5551447
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FLAVIA REMERA NEGRO"
+  }
+]

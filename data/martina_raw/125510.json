@@ -1,0 +1,750 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125510",
+    "colorId": 2,
+    "copy": "Bombacha culotte Neve",
+    "description": "Culotte básico con costura central.",
+    "description2": "Realizado en algodon elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 41454,
+    "images": [
+      "125510_1_1.jpg",
+      "125510_2_1.jpg",
+      "125510_32_1.jpg",
+      "125510_452_1.jpg"
+    ],
+    "mainImage": "125510_2_1.jpg",
+    "name": "NEVE CULOTTE",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757733
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757734
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757731
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757732
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757719
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757721
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757720
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757722
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757726
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757723
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757724
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757725
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757727
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757729
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757728
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757730
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NEVE CULOTTE NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125510",
+    "colorId": 1,
+    "copy": "Bombacha culotte Neve",
+    "description": "Culotte básico con costura central.",
+    "description2": "Realizado en algodon elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 41454,
+    "images": [
+      "125510_1_1.jpg",
+      "125510_2_1.jpg",
+      "125510_32_1.jpg",
+      "125510_452_1.jpg"
+    ],
+    "mainImage": "125510_1_1.jpg",
+    "name": "NEVE CULOTTE",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757733
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757734
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757731
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757732
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757719
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757721
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757720
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757722
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757726
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757723
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757724
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757725
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757727
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757729
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757728
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757730
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NEVE CULOTTE BLANCO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125510",
+    "colorId": 452,
+    "copy": "Bombacha culotte Neve",
+    "description": "Culotte básico con costura central.",
+    "description2": "Realizado en algodon elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 41454,
+    "images": [
+      "125510_1_1.jpg",
+      "125510_2_1.jpg",
+      "125510_32_1.jpg",
+      "125510_452_1.jpg"
+    ],
+    "mainImage": "125510_452_1.jpg",
+    "name": "NEVE CULOTTE",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757733
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757734
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757731
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757732
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757719
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757721
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757720
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757722
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757726
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757723
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757724
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757725
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757727
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757729
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757728
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757730
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NEVE CULOTTE AVELLANA",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125510",
+    "colorId": 32,
+    "copy": "Bombacha culotte Neve",
+    "description": "Culotte básico con costura central.",
+    "description2": "Realizado en algodon elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 41454,
+    "images": [
+      "125510_1_1.jpg",
+      "125510_2_1.jpg",
+      "125510_32_1.jpg",
+      "125510_452_1.jpg"
+    ],
+    "mainImage": "125510_32_1.jpg",
+    "name": "NEVE CULOTTE",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757733
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757734
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757731
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757732
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757719
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757721
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757720
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757722
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757726
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757723
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757724
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757725
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757727
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757729
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757728
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757730
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NEVE CULOTTE GRIS MELANGE",
+    "productLineId": "3324"
+  }
+]

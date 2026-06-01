@@ -1,0 +1,82 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126329",
+    "colorId": 59,
+    "description": "Blusa escote redondo con detalle de entredos en recorte bajo busto y mangas. Terminación de mangas con elastico.",
+    "description2": "Realizada en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 42583,
+    "images": [
+      "126329_59_1.jpg",
+      "126329_59_2.jpg",
+      "126329_59_3.jpg"
+    ],
+    "mainImage": "126329_59_1.jpg",
+    "name": "ZEMIRA BLUSA",
+    "price": 1490,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1490,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#DC6453",
+                "description": "LADRILLO",
+                "id": 59,
+                "price": 1490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1490,
+                      "productForSaleId": 5754198
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1490,
+                      "productForSaleId": 5754199
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1490,
+                      "productForSaleId": 5754200
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1490,
+                      "productForSaleId": 5754197
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ZEMIRA BLUSA LADRILLO",
+    "productLineId": "3324"
+  }
+]

@@ -1,0 +1,64 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124825",
+    "colorId": 6,
+    "copy": "Estuche Porta Lentes Sunny",
+    "description": "Moderno y práctico porta anteojos, con tira para colgar. Realizado en eco cuero",
+    "description3": "Calce clásico",
+    "id": 40441,
+    "images": [
+      "124825_6_1.jpg",
+      "124825_6_2.jpg",
+      "124825_6_3.jpg",
+      "aa.jpg"
+    ],
+    "mainImage": "124825_6_1.jpg",
+    "name": "SUNNY ESTUCHE PORTA LENTES",
+    "price": 360,
+    "productLine": {
+      "id": 3350,
+      "name": "ACCESORIOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 360,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#936B53",
+                "description": "MARRON",
+                "id": 6,
+                "price": 360,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 360,
+                      "productForSaleId": 5548992
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SUNNY ESTUCHE PORTA LENTES MARRON"
+  }
+]

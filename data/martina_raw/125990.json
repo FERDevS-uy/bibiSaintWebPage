@@ -1,0 +1,186 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125990",
+    "colorId": 531,
+    "description": "Bombacha colaless con recorte combinado.",
+    "description2": "Realizada en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 42160,
+    "images": [
+      "125990_1_1.jpg",
+      "125990_1_2.jpg",
+      "125990_531_1.jpg",
+      "125990_531_2.jpg"
+    ],
+    "mainImage": "125990_531_1.jpg",
+    "name": "AMON BOMBACHA",
+    "price": 250,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 250,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 250,
+                      "productForSaleId": 5757763
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#A39488",
+                "description": "VISON",
+                "id": 531,
+                "price": 250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 250,
+                      "productForSaleId": 5757765
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 250,
+                      "productForSaleId": 5757764
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 250,
+                      "productForSaleId": 5757766
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AMON BOMBACHA VISON",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125990",
+    "colorId": 1,
+    "description": "Bombacha colaless con recorte combinado.",
+    "description2": "Realizada en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 42160,
+    "images": [
+      "125990_1_1.jpg",
+      "125990_1_2.jpg",
+      "125990_531_1.jpg",
+      "125990_531_2.jpg"
+    ],
+    "mainImage": "125990_1_1.jpg",
+    "name": "AMON BOMBACHA",
+    "price": 250,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 250,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 250,
+                      "productForSaleId": 5757763
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#A39488",
+                "description": "VISON",
+                "id": 531,
+                "price": 250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 250,
+                      "productForSaleId": 5757765
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 250,
+                      "productForSaleId": 5757764
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 250,
+                      "productForSaleId": 5757766
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AMON BOMBACHA BLANCO",
+    "productLineId": "3324"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124506",
+    "colorId": 1221,
+    "copy": "Remera rayada Juliana",
+    "description": "Remera de motivo rayado, de escote redondo. Con detalle de cuello y puños a contratono.",
+    "description2": "Realizada en jersey rayado hilado color",
+    "description3": "Calce clásico",
+    "id": 40028,
+    "images": [
+      "124506_381_1.jpg",
+      "124506_381_2.jpg",
+      "124506_381_3.jpg",
+      "124506_381_4.jpg",
+      "124506_381_5.jpg"
+    ],
+    "mainImage": "124506_381_1.jpg",
+    "name": "JULIANA REMERA",
+    "price": 1100,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "RAYADO BLANCO Y NEGRO",
+                "id": 1221,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5549201
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5549202
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5549203
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5549200
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 1100,
+                      "productForSaleId": 5549204
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JULIANA REMERA RAYADO BLANCO Y NEGRO"
+  }
+]

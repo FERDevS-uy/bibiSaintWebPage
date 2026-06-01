@@ -1,0 +1,90 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124561",
+    "colorId": 1,
+    "copy": "Cardigan con botones Nancy",
+    "description": "Cardigan holgado manga corta, con detalle de puño rayado tejido en delantero y escote. Botones a contracolor de goma con logo y bolsillos delanteros. Centro espalda del revés de tela y doble costura.",
+    "description2": "Realizada en rustico liviano",
+    "description3": "Calce clásico",
+    "id": 40083,
+    "images": [
+      "124561_1_1.jpg",
+      "124561_1_2.jpg",
+      "124561_1_3.jpg",
+      "124561_1_4.jpg",
+      "124561_1_5.jpg"
+    ],
+    "mainImage": "124561_1_1.jpg",
+    "name": "NANCY CARDIGAN MANGA CORTA",
+    "price": 1850,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1850,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 1850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1850,
+                      "productForSaleId": 5550202
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1850,
+                      "productForSaleId": 5550199
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1850,
+                      "productForSaleId": 5550200
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1850,
+                      "productForSaleId": 5550201
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1850,
+                      "productForSaleId": 5550198
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NANCY CARDIGAN MANGA CORTA BLANCO"
+  }
+]

@@ -1,0 +1,89 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124727",
+    "colorId": 332,
+    "copy": "Vestido largo estampado Eloisa",
+    "description": "Vestido evasé, escote en V con breteles anchos y espalda  elastizada. ",
+    "description2": "Realizado en microfibra estampada",
+    "description3": "Calce clásico",
+    "id": 40312,
+    "images": [
+      "124727_332_1.jpg",
+      "124727_332_2.jpg",
+      "124727_332_3.jpg",
+      "124727_332_4.jpg"
+    ],
+    "mainImage": "124727_332_1.jpg",
+    "name": "ELOISA VESTIDO",
+    "price": 1085,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1085,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 1085,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1085,
+                      "productForSaleId": 5548961
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1085,
+                      "productForSaleId": 5548958
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1085,
+                      "productForSaleId": 5548959
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1085,
+                      "productForSaleId": 5548960
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1085,
+                      "productForSaleId": 5548957
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ELOISA VESTIDO ESTAMPADO"
+  }
+]

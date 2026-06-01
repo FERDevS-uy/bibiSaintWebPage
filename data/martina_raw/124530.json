@@ -1,0 +1,86 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124530",
+    "colorId": 381,
+    "copy": "Remera rayada Niceta",
+    "description": "Remera manga corta con combinación de dos motivos rayados y ruedo redondeado. Un ítem que va a resaltar en tu look!",
+    "description2": "Realizada en jersey hilado color",
+    "description3": "Calce clásico",
+    "id": 40052,
+    "images": [
+      "124530_381_1.jpg"
+    ],
+    "mainImage": "124530_381_1.jpg",
+    "name": "NICETA REMERA ",
+    "price": 890,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 890,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "RAYADO",
+                "id": 381,
+                "price": 890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 890,
+                      "productForSaleId": 5550851
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 890,
+                      "productForSaleId": 5550852
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 890,
+                      "productForSaleId": 5550853
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 890,
+                      "productForSaleId": 5550850
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 890,
+                      "productForSaleId": 5550854
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NICETA REMERA  RAYADO"
+  }
+]

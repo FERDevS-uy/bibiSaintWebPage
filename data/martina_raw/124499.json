@@ -1,0 +1,76 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124499",
+    "colorId": 332,
+    "copy": "Buzo con capucha de rústico Halley",
+    "description": "Buzo holgado, con capucha y cordón para ajustar. Estampado full y puños lisos a contratono.",
+    "description2": "Realizado en rustico liviano",
+    "description3": "Calce clásico",
+    "id": 40021,
+    "images": [
+      "124499_332_1.jpg",
+      "124499_332_2.jpg",
+      "124499_332_3.jpg"
+    ],
+    "mainImage": "124499_332_1.jpg",
+    "name": "HALLEY BUZO",
+    "price": 1890,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1890,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 1890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1890,
+                      "productForSaleId": 5549165
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1890,
+                      "productForSaleId": 5549166
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1890,
+                      "productForSaleId": 5549167
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "HALLEY BUZO ESTAMPADO"
+  }
+]

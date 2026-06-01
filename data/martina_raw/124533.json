@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124533",
+    "colorId": 799,
+    "copy": "Remera con estampa Luciana",
+    "description": "Remera cuello a la base, manga corta y estampa en delantero.",
+    "description2": "Realizada en jersey melange",
+    "description3": "Calce clásico",
+    "id": 40055,
+    "images": [
+      "124533_799_4.jpg",
+      "124533_799_5.jpg"
+    ],
+    "mainImage": "124533_799_4.jpg",
+    "name": "LUCIANA REMERA",
+    "price": 590,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#9A9194",
+                "description": "GRIS MELANGE OSCURO",
+                "id": 799,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5550284
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5550281
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5550282
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5550283
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5550280
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LUCIANA REMERA GRIS MELANGE OSCURO"
+  }
+]

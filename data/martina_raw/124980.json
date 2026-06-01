@@ -1,0 +1,96 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124980",
+    "colorId": 919,
+    "copy": "Remera pijama Duvan",
+    "description": "Remera con detalle en escote y botones. Recorte estampado en delantero, una combinación perfecta para completar tu look con el pantalón Sira.",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40667,
+    "images": [
+      "124980_1_1.jpg",
+      "124980_1_2.jpg",
+      "124980_1_3.jpg"
+    ],
+    "mainImage": "124980_1_1.jpg",
+    "name": "DUVAN REMERA",
+    "price": 555,
+    "price1": 795,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 555,
+          "price1": 795,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F4F3F1",
+                "description": "TIZA",
+                "id": 919,
+                "price": 555,
+                "price1": 795,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 555,
+                      "price1": 795,
+                      "productForSaleId": 5573815
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 555,
+                      "price1": 795,
+                      "productForSaleId": 5573816
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 555,
+                      "price1": 795,
+                      "productForSaleId": 5573817
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 555,
+                      "price1": 795,
+                      "productForSaleId": 5573814
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 555,
+                      "price1": 795,
+                      "productForSaleId": 5573813
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DUVAN REMERA TIZA"
+  }
+]

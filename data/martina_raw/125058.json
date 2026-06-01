@@ -1,0 +1,96 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125058",
+    "colorId": 99,
+    "copy": "Top escote cuadrado Melania",
+    "description": "Top combinado, escote cuadrado y recorte que genera mejor sostén. ",
+    "description2": "Realizado en microfibra elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 40817,
+    "images": [
+      "125058_1529_1.jpg",
+      "125058_1529_2.jpg",
+      "125058_1529_3.jpg"
+    ],
+    "mainImage": "125058_1529_1.jpg",
+    "name": "MELANIA TOP",
+    "price": 515,
+    "price1": 790,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 515,
+          "price1": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO-BLANCO",
+                "id": 99,
+                "price": 515,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 515,
+                      "price1": 790,
+                      "productForSaleId": 5562149
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 515,
+                      "price1": 790,
+                      "productForSaleId": 5562150
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 515,
+                      "price1": 790,
+                      "productForSaleId": 5562151
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 515,
+                      "price1": 790,
+                      "productForSaleId": 5562148
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 515,
+                      "price1": 790,
+                      "productForSaleId": 5562147
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MELANIA TOP NEGRO-BLANCO"
+  }
+]

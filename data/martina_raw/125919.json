@@ -1,0 +1,69 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125919",
+    "colorId": 2,
+    "description": "Body calce vedetina, con detalle de puntilla en delantero.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 42046,
+    "images": [
+      "125919_2_1.jpg",
+      "125919_2_2.jpg"
+    ],
+    "mainImage": "125919_2_1.jpg",
+    "name": "DIMA BODY",
+    "price": 1030,
+    "productLine": {
+      "id": 4976,
+      "name": "BODY",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1030,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1030,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1030,
+                      "productForSaleId": 5753548
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1030,
+                      "productForSaleId": 5753549
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DIMA BODY NEGRO",
+    "productLineId": "3324"
+  }
+]

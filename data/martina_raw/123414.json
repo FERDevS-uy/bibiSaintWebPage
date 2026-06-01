@@ -1,0 +1,78 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123414",
+    "colorId": 452,
+    "copy": "Colaless con puntilla elastizada Fele",
+    "description": "Colaless con puntilla elastizada en cintura.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 37663,
+    "images": [
+      "123414_2_1.jpg",
+      "123414_2_2.jpg",
+      "123414_2_3.jpg",
+      "123414_2_4.jpg",
+      "123414_2_5.jpg",
+      "123414_2_9.jpg",
+      "123414_452_1.jpg",
+      "123414_452_2.jpg",
+      "123414_452_3.jpg",
+      "123414_452_4.jpg",
+      "123414_452_5.jpg",
+      "123414_452_9.jpg",
+      "123414_45_1.jpg",
+      "123414_45_2.jpg",
+      "123414_45_3.jpg",
+      "123414_9_1.jpg",
+      "123414_9_2.jpg"
+    ],
+    "mainImage": "123414_452_1.jpg",
+    "name": "FELE COLALESS",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5547464
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FELE COLALESS AVELLANA"
+  }
+]

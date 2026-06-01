@@ -1,0 +1,230 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124618",
+    "colorId": 32,
+    "description": "Bermuda tiro medio, con cintura elastizada y cordón regulable. Bolsillos delanteros con detalle de costura en bordador a tono. Largo clásico.",
+    "description2": "Realizada en rustico liviano",
+    "description3": "Calce clásico",
+    "id": 40140,
+    "images": [
+      "124618_2_1.jpg",
+      "124618_32_1.jpg",
+      "124618_32_2.jpg"
+    ],
+    "mainImage": "124618_32_1.jpg",
+    "name": "MIRKO BERMUDA",
+    "price": 890,
+    "productLine": {
+      "id": 4764,
+      "name": "BERMUDAS Y SHORTS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 890,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 890,
+                      "productForSaleId": 5548454
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 890,
+                      "productForSaleId": 5548451
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 890,
+                      "productForSaleId": 5548452
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 890,
+                      "productForSaleId": 5548453
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 890,
+                      "productForSaleId": 5548450
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 890,
+                      "productForSaleId": 5548447
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 890,
+                      "productForSaleId": 5548448
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 890,
+                      "productForSaleId": 5548449
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MIRKO BERMUDA GRIS MELANGE"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124618",
+    "colorId": 2,
+    "description": "Bermuda tiro medio, con cintura elastizada y cordón regulable. Bolsillos delanteros con detalle de costura en bordador a tono. Largo clásico.",
+    "description2": "Realizada en rustico liviano",
+    "description3": "Calce clásico",
+    "id": 40140,
+    "images": [
+      "124618_2_1.jpg",
+      "124618_32_1.jpg",
+      "124618_32_2.jpg"
+    ],
+    "mainImage": "124618_2_1.jpg",
+    "name": "MIRKO BERMUDA",
+    "price": 890,
+    "productLine": {
+      "id": 4764,
+      "name": "BERMUDAS Y SHORTS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 890,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 890,
+                      "productForSaleId": 5548454
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 890,
+                      "productForSaleId": 5548451
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 890,
+                      "productForSaleId": 5548452
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 890,
+                      "productForSaleId": 5548453
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 890,
+                      "productForSaleId": 5548450
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 890,
+                      "productForSaleId": 5548447
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 890,
+                      "productForSaleId": 5548448
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 890,
+                      "productForSaleId": 5548449
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MIRKO BERMUDA NEGRO"
+  }
+]

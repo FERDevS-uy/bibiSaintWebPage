@@ -1,0 +1,236 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124208",
+    "colorId": 2,
+    "copy": "Vedetina de algodón y puntilla Apassionare",
+    "description": "Vedetina con detalle de puntilla.",
+    "description2": "Realizada en algodon y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 39506,
+    "images": [
+      "124208_1_1.jpg",
+      "124208_1_2.jpg",
+      "124208_2_1.jpg",
+      "124208_2_9.jpg"
+    ],
+    "mainImage": "124208_2_1.jpg",
+    "name": "APASSIONARE VEDETINA ",
+    "price": 250,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 250,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 250,
+                      "productForSaleId": 5757527
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 250,
+                      "productForSaleId": 5757526
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 250,
+                      "productForSaleId": 5757529
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 250,
+                      "productForSaleId": 5757525
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 250,
+                      "productForSaleId": 5757531
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 250,
+                      "productForSaleId": 5757533
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 250,
+                      "productForSaleId": 5757530
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 250,
+                      "productForSaleId": 5757532
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "APASSIONARE VEDETINA  NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124208",
+    "colorId": 1,
+    "copy": "Vedetina de algodón y puntilla Apassionare",
+    "description": "Vedetina con detalle de puntilla.",
+    "description2": "Realizada en algodon y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 39506,
+    "images": [
+      "124208_1_1.jpg",
+      "124208_1_2.jpg",
+      "124208_2_1.jpg",
+      "124208_2_9.jpg"
+    ],
+    "mainImage": "124208_1_1.jpg",
+    "name": "APASSIONARE VEDETINA ",
+    "price": 250,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 250,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 250,
+                      "productForSaleId": 5757527
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 250,
+                      "productForSaleId": 5757526
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 250,
+                      "productForSaleId": 5757529
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 250,
+                      "productForSaleId": 5757525
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 250,
+                      "productForSaleId": 5757531
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 250,
+                      "productForSaleId": 5757533
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 250,
+                      "productForSaleId": 5757530
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 250,
+                      "productForSaleId": 5757532
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "APASSIONARE VEDETINA  BLANCO",
+    "productLineId": "3324"
+  }
+]

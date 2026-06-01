@@ -1,0 +1,95 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124970",
+    "colorId": 16,
+    "copy": "Camisaco manga larga Afra",
+    "description": "Camisaco manga larga, con botones en puño y acceso delantero. Detalle de amplios bolsillos. Gabardina gamuzada para hacer una prenda única.",
+    "description2": "Realizado en gabardina",
+    "description3": "Calce clásico",
+    "id": 40651,
+    "images": [
+      "124970_16_1.jpg",
+      "124970_16_2.jpg"
+    ],
+    "mainImage": "124970_16_1.jpg",
+    "name": "AFRA CAMISACO",
+    "price": 1820,
+    "price1": 2800,
+    "productLine": {
+      "id": 4760,
+      "name": "TAPADOS Y SACOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1820,
+          "price1": 2800,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 1820,
+                "price1": 2800,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1820,
+                      "price1": 2800,
+                      "productForSaleId": 5562123
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1820,
+                      "price1": 2800,
+                      "productForSaleId": 5562124
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1820,
+                      "price1": 2800,
+                      "productForSaleId": 5562125
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1820,
+                      "price1": 2800,
+                      "productForSaleId": 5562122
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1820,
+                      "price1": 2800,
+                      "productForSaleId": 5562121
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AFRA CAMISACO TOSTADO"
+  }
+]

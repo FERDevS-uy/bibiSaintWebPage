@@ -1,0 +1,62 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125993",
+    "colorId": 142,
+    "description": "Media caña baja con diseño en empeine y combinación de colores.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 42163,
+    "images": [
+      "125993_142_1.jpg"
+    ],
+    "mainImage": "125993_142_1.jpg",
+    "name": "YUNA MEDIA ",
+    "price": 445,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 445,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO-CAMEL",
+                "id": 142,
+                "price": 445,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 445,
+                      "productForSaleId": 5761166
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "YUNA MEDIA  BLANCO-CAMEL",
+    "productLineId": "3324"
+  }
+]

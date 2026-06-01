@@ -1,0 +1,160 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124509",
+    "colorId": 2,
+    "copy": "Body de algodón elastizado Lisboa",
+    "description": "Body colaless, escote redondo con breteles.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40031,
+    "images": [
+      "124509_1_1.jpg",
+      "124509_2_1.jpg",
+      "124509_32_1.jpg"
+    ],
+    "mainImage": "124509_2_1.jpg",
+    "name": "LISBOA BODY",
+    "price": 590,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 590,
+                      "productForSaleId": 5550745
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 590,
+                      "productForSaleId": 5550733
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LISBOA BODY NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124509",
+    "colorId": 1,
+    "copy": "Body de algodón elastizado Lisboa",
+    "description": "Body colaless, escote redondo con breteles.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40031,
+    "images": [
+      "124509_1_1.jpg",
+      "124509_2_1.jpg",
+      "124509_32_1.jpg"
+    ],
+    "mainImage": "124509_1_1.jpg",
+    "name": "LISBOA BODY",
+    "price": 590,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 590,
+                      "productForSaleId": 5550745
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 590,
+                      "productForSaleId": 5550733
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LISBOA BODY BLANCO"
+  }
+]

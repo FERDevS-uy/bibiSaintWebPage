@@ -1,0 +1,258 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124726",
+    "colorId": 70,
+    "copy": "Short con pinzas Lupe",
+    "description": "Short tiro medio alto con cintura elastizada, presillas y lazo que forma un cinturón. Pinzas en el delantero y bolsillos laterales.",
+    "description2": "Realizado en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40311,
+    "images": [
+      "124726_262_1.jpg",
+      "124726_70_1.jpg",
+      "124726_70_2.jpg",
+      "124726_70_3.jpg"
+    ],
+    "mainImage": "124726_70_1.jpg",
+    "name": "LUPE SHORT",
+    "price": 1015,
+    "productLine": {
+      "id": 4757,
+      "name": "BERMUDAS Y SHORTS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1015,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 1015,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1015,
+                      "productForSaleId": 5548951
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1015,
+                      "productForSaleId": 5548948
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1015,
+                      "productForSaleId": 5548949
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1015,
+                      "productForSaleId": 5548950
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1015,
+                      "productForSaleId": 5548947
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#E0FF9C",
+                "description": "VERDE LIMA",
+                "id": 262,
+                "price": 1015,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1015,
+                      "productForSaleId": 5548956
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1015,
+                      "productForSaleId": 5548953
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1015,
+                      "productForSaleId": 5548954
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1015,
+                      "productForSaleId": 5548955
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1015,
+                      "productForSaleId": 5548952
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LUPE SHORT TURQUESA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124726",
+    "colorId": 262,
+    "copy": "Short con pinzas Lupe",
+    "description": "Short tiro medio alto con cintura elastizada, presillas y lazo que forma un cinturón. Pinzas en el delantero y bolsillos laterales.",
+    "description2": "Realizado en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 40311,
+    "images": [
+      "124726_262_1.jpg",
+      "124726_70_1.jpg",
+      "124726_70_2.jpg",
+      "124726_70_3.jpg"
+    ],
+    "mainImage": "124726_262_1.jpg",
+    "name": "LUPE SHORT",
+    "price": 1015,
+    "productLine": {
+      "id": 4757,
+      "name": "BERMUDAS Y SHORTS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1015,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 1015,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1015,
+                      "productForSaleId": 5548951
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1015,
+                      "productForSaleId": 5548948
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1015,
+                      "productForSaleId": 5548949
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1015,
+                      "productForSaleId": 5548950
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1015,
+                      "productForSaleId": 5548947
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#E0FF9C",
+                "description": "VERDE LIMA",
+                "id": 262,
+                "price": 1015,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1015,
+                      "productForSaleId": 5548956
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1015,
+                      "productForSaleId": 5548953
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1015,
+                      "productForSaleId": 5548954
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1015,
+                      "productForSaleId": 5548955
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1015,
+                      "productForSaleId": 5548952
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LUPE SHORT VERDE LIMA"
+  }
+]

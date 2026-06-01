@@ -1,0 +1,94 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125245",
+    "colorId": 39,
+    "copy": "Campera tipo deportiva Bosnia",
+    "description": "Campera con original diseño de bolsillos amplios delanteros y recorte con diferencia de largo en lateral. Capucha forrada.",
+    "description2": "Realizada en deportivo confort liviano",
+    "description3": "Calce clásico",
+    "id": 41031,
+    "images": [
+      "125245_39_1.jpg",
+      "125245_39_2.jpg",
+      "125245_39_3.jpg"
+    ],
+    "mainImage": "125245_39_1.jpg",
+    "name": "BOSNIA CAMPERA",
+    "price": 1850,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1850,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#0E1944",
+                "description": "AZUL MARINO",
+                "id": 39,
+                "price": 1850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1850,
+                      "productForSaleId": 5548916
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1850,
+                      "productForSaleId": 5548912
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1850,
+                      "productForSaleId": 5548913
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1850,
+                      "productForSaleId": 5548914
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1850,
+                      "productForSaleId": 5548911
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 1850,
+                      "productForSaleId": 5548915
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BOSNIA CAMPERA AZUL MARINO"
+  }
+]

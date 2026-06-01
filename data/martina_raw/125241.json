@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125241",
+    "colorId": 1118,
+    "copy": "Poleron largo Colome",
+    "description": "Poleron tapa cola, hombro caído, manga larga con puño doble en cintura y mangas en la misma tela. Una prenda muy abrigada.",
+    "description2": "Realizado en lanilla ultra soft",
+    "description3": "Calce clásico",
+    "id": 41027,
+    "images": [
+      "125241_1118_1.jpg",
+      "125241_1118_2.jpg"
+    ],
+    "mainImage": "125241_1118_1.jpg",
+    "name": "COLOME POLERON",
+    "price": 1500,
+    "productLine": {
+      "id": 4695,
+      "name": "POLERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1500,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5C5C5C",
+                "description": "GRIS OSCURO",
+                "id": 1118,
+                "price": 1500,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1500,
+                      "productForSaleId": 5548910
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1500,
+                      "productForSaleId": 5548907
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1500,
+                      "productForSaleId": 5548908
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1500,
+                      "productForSaleId": 5548909
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1500,
+                      "productForSaleId": 5548906
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "COLOME POLERON GRIS OSCURO"
+  }
+]

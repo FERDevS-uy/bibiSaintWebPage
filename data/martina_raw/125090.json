@@ -1,0 +1,286 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125090",
+    "colorId": 5,
+    "copy": "Campera polar Cuba",
+    "description": "Campera con cuello alto y cierre. Bolsillos delanteros. Un básico imperdible para esta colección de invierno.",
+    "description2": "Realizada en polar",
+    "description3": "Calce clásico",
+    "id": 40849,
+    "images": [
+      "125090_1269_1.jpg",
+      "125090_1269_2.jpg",
+      "125090_5_1.jpg",
+      "125090_5_2.jpg"
+    ],
+    "mainImage": "125090_5_1.jpg",
+    "name": "CUBA CAMPERA",
+    "price": 1560,
+    "price1": 2600,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1560,
+          "price1": 2600,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#60636A",
+                "description": "GRIS",
+                "id": 5,
+                "price": 1560,
+                "price1": 2600,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562184
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562186
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562183
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562185
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562187
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F03198",
+                "description": "MAGENTA",
+                "id": 1269,
+                "price": 1560,
+                "price1": 2600,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562180
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562181
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562179
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562182
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562178
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CUBA CAMPERA GRIS"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125090",
+    "colorId": 1269,
+    "copy": "Campera polar Cuba",
+    "description": "Campera con cuello alto y cierre. Bolsillos delanteros. Un básico imperdible para esta colección de invierno.",
+    "description2": "Realizada en polar",
+    "description3": "Calce clásico",
+    "id": 40849,
+    "images": [
+      "125090_1269_1.jpg",
+      "125090_1269_2.jpg",
+      "125090_5_1.jpg",
+      "125090_5_2.jpg"
+    ],
+    "mainImage": "125090_1269_1.jpg",
+    "name": "CUBA CAMPERA",
+    "price": 1560,
+    "price1": 2600,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1560,
+          "price1": 2600,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#60636A",
+                "description": "GRIS",
+                "id": 5,
+                "price": 1560,
+                "price1": 2600,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562184
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562186
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562183
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562185
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562187
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F03198",
+                "description": "MAGENTA",
+                "id": 1269,
+                "price": 1560,
+                "price1": 2600,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562180
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562181
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562179
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562182
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1560,
+                      "price1": 2600,
+                      "productForSaleId": 5562178
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CUBA CAMPERA MAGENTA"
+  }
+]

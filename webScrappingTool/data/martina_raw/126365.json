@@ -1,0 +1,75 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126365",
+    "colorId": 24,
+    "description": "Remera escote redondo a contracolor, con estampa en el delantero.",
+    "description2": "Realizada en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 42632,
+    "images": [
+      "126365_24_1.jpg",
+      "126365_24_2.jpg"
+    ],
+    "mainImage": "126365_24_1.jpg",
+    "name": "VICTORIA REMERA MANGA LARGA",
+    "price": 865,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 865,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D7C339",
+                "description": "MOSTAZA",
+                "id": 24,
+                "price": 865,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 865,
+                      "productForSaleId": 5754275
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 865,
+                      "productForSaleId": 5754276
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 865,
+                      "productForSaleId": 5754273
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "VICTORIA REMERA MANGA LARGA MOSTAZA",
+    "productLineId": "3324"
+  }
+]

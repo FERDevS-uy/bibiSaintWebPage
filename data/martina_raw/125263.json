@@ -1,0 +1,67 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125263",
+    "colorId": 1118,
+    "copy": "Remera manga larga con estampa Catania",
+    "description": "Remera manga larga escote redondo con estampa en delantero y tajos laterales.",
+    "description2": "Realizada en jersey flame algodon",
+    "description3": "Calce clásico",
+    "id": 41049,
+    "images": [
+      "125263_1118_1.jpg"
+    ],
+    "mainImage": "125263_1118_1.jpg",
+    "name": "CATANIA REMERA",
+    "price": 500,
+    "price1": 840,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 500,
+          "price1": 840,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5C5C5C",
+                "description": "GRIS OSCURO",
+                "id": 1118,
+                "price": 500,
+                "price1": 840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 500,
+                      "price1": 840,
+                      "productForSaleId": 5760546
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CATANIA REMERA GRIS OSCURO",
+    "productLineId": "3324"
+  }
+]

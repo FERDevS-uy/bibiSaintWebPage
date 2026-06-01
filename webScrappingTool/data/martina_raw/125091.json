@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125091",
+    "colorId": 1516,
+    "copy": "Buzo combinado de polar Reina",
+    "description": "Buzo estilo polo con cuello y 1/2 cierre. Recortes a contra color.",
+    "description2": "Realizado en polar",
+    "description3": "Calce clásico",
+    "id": 40850,
+    "images": [
+      "125091_1516_1.jpg",
+      "125091_1516_2.jpg"
+    ],
+    "mainImage": "125091_1516_1.jpg",
+    "name": "REINA BUZO",
+    "price": 1575,
+    "price1": 2100,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1575,
+          "price1": 2100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "BORGOÑA-NATURAL",
+                "id": 1516,
+                "price": 1575,
+                "price1": 2100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1575,
+                      "price1": 2100,
+                      "productForSaleId": 5760494
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1575,
+                      "price1": 2100,
+                      "productForSaleId": 5760491
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1575,
+                      "price1": 2100,
+                      "productForSaleId": 5760493
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1575,
+                      "price1": 2100,
+                      "productForSaleId": 5760495
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "REINA BUZO BORGOÑA-NATURAL",
+    "productLineId": "3324"
+  }
+]

@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124615",
+    "colorId": 198,
+    "description": "Bermuda tiro medio, cintura elastizada con cordón para regular, bolsillos laterales, pierna recta.",
+    "description2": "Realizada en rustico denim elastizado",
+    "description3": "Calce clásico",
+    "id": 40137,
+    "images": [
+      "124615_198_1.jpg",
+      "124615_198_2.jpg",
+      "124615_198_3.jpg"
+    ],
+    "mainImage": "124615_198_1.jpg",
+    "name": "IGOR BERMUDA",
+    "price": 780,
+    "productLine": {
+      "id": 4764,
+      "name": "BERMUDAS Y SHORTS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 780,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#2A3959",
+                "description": "AZUL JEAN",
+                "id": 198,
+                "price": 780,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 780,
+                      "productForSaleId": 5548434
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 780,
+                      "productForSaleId": 5548431
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 780,
+                      "productForSaleId": 5548432
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 780,
+                      "productForSaleId": 5548433
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "IGOR BERMUDA AZUL JEAN"
+  }
+]

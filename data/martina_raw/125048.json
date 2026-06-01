@@ -1,0 +1,68 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125048",
+    "colorId": 66,
+    "copy": "Remera en combinacion Lima",
+    "description": "Remera de calce relajado, escote en V de hombro caído y manga larga. Con original detalle de combinación con tejido waffle al tono para escote y puños. ",
+    "description2": "Realizada en jersey jaspeado",
+    "description3": "Calce clásico",
+    "id": 40807,
+    "images": [
+      "125048_45_1.jpg",
+      "125048_66_1.jpg",
+      "125048_66_2.jpg"
+    ],
+    "mainImage": "125048_66_1.jpg",
+    "name": "LIMA REMERA",
+    "price": 715,
+    "price1": 1300,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 715,
+          "price1": 1300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F1B896",
+                "description": "DURAZNO",
+                "id": 66,
+                "price": 715,
+                "price1": 1300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 715,
+                      "price1": 1300,
+                      "productForSaleId": 5551450
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LIMA REMERA DURAZNO"
+  }
+]

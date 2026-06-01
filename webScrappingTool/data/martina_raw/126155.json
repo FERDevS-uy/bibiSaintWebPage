@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126155",
+    "colorId": 1137,
+    "description": "Buzo de calce clasico con estampa y tachas aplicadas en delantero.",
+    "description2": "Realizado en frisa",
+    "description3": "Calce clásico",
+    "id": 42365,
+    "images": [
+      "126155_1137_1.jpg",
+      "126155_1137_2.jpg"
+    ],
+    "mainImage": "126155_1137_1.jpg",
+    "name": "NAIRA BUZO",
+    "price": 2025,
+    "price1": 2385,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 2025,
+          "price1": 2385,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#8B8D8D",
+                "description": "GRIS TOPO MELANGE",
+                "id": 1137,
+                "price": 2025,
+                "price1": 2385,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2025,
+                      "price1": 2385,
+                      "productForSaleId": 5753829
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2025,
+                      "price1": 2385,
+                      "productForSaleId": 5753830
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2025,
+                      "price1": 2385,
+                      "productForSaleId": 5753831
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2025,
+                      "price1": 2385,
+                      "productForSaleId": 5753828
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NAIRA BUZO GRIS TOPO MELANGE",
+    "productLineId": "3324"
+  }
+]

@@ -1,0 +1,63 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124782",
+    "colorId": 262,
+    "copy": "Bolso de eco cuero Lena",
+    "description": "Bolso con broche imantado y bolsillo interno con cierre. \r\nRealizado en eco-cuero Medidas: 36x36x10 cm",
+    "description2": "Realizado en pu 100%",
+    "description3": "Calce clásico",
+    "id": 40368,
+    "images": [
+      "124782_262_1.jpg",
+      "124782_262_2.jpg"
+    ],
+    "mainImage": "124782_262_1.jpg",
+    "name": "LENA BOLSO",
+    "price": 1550,
+    "productLine": {
+      "id": 3350,
+      "name": "ACCESORIOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1550,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#E0FF9C",
+                "description": "VERDE LIMA",
+                "id": 262,
+                "price": 1550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 1550,
+                      "productForSaleId": 5549138
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LENA BOLSO VERDE LIMA"
+  }
+]

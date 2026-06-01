@@ -1,0 +1,94 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125069",
+    "colorId": 919,
+    "copy": "Remera cuello redondo Elien",
+    "description": "Remera evasé escote redondo, mangas 3/4 con puño y estampa en el delantero.",
+    "description2": "Realizada en jersey snow",
+    "description3": "Calce clásico",
+    "id": 40828,
+    "images": [
+      "125069_919_1.jpg"
+    ],
+    "mainImage": "125069_919_1.jpg",
+    "name": "ELIEN REMERA",
+    "price": 600,
+    "price1": 1200,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 600,
+          "price1": 1200,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F4F3F1",
+                "description": "TIZA",
+                "id": 919,
+                "price": 600,
+                "price1": 1200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 600,
+                      "price1": 1200,
+                      "productForSaleId": 5551384
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 600,
+                      "price1": 1200,
+                      "productForSaleId": 5551386
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 600,
+                      "price1": 1200,
+                      "productForSaleId": 5551383
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 600,
+                      "price1": 1200,
+                      "productForSaleId": 5551385
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 600,
+                      "price1": 1200,
+                      "productForSaleId": 5551387
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ELIEN REMERA TIZA"
+  }
+]

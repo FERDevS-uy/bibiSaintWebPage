@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126373",
+    "colorId": 32,
+    "description": "Remera escote en V con bordado en delantero y detallesde bordador a contraton o en ruedos.",
+    "description2": "Realizada en jersey melange",
+    "description3": "Calce clásico",
+    "id": 42659,
+    "images": [
+      "126373_32_1.jpg",
+      "126373_32_2.jpg"
+    ],
+    "mainImage": "126373_32_1.jpg",
+    "name": "MAVINGA REMERA",
+    "price": 965,
+    "price1": 1380,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 965,
+          "price1": 1380,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 965,
+                "price1": 1380,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 965,
+                      "price1": 1380,
+                      "productForSaleId": 5760692
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 965,
+                      "price1": 1380,
+                      "productForSaleId": 5760693
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 965,
+                      "price1": 1380,
+                      "productForSaleId": 5760694
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 965,
+                      "price1": 1380,
+                      "productForSaleId": 5760691
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MAVINGA REMERA GRIS MELANGE",
+    "productLineId": "3324"
+  }
+]

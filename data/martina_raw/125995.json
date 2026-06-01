@@ -1,0 +1,62 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125995",
+    "colorId": 174,
+    "description": "Media soquete con toalla en su interior y comprensión en empeine para mejor agarre y comodidad.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 42165,
+    "images": [
+      "125995_174_1.jpg"
+    ],
+    "mainImage": "125995_174_1.jpg",
+    "name": "SOMI MEDIA CON TOALLA  MUJER",
+    "price": 380,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 380,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#936B53",
+                "description": "MARRON-CELESTE",
+                "id": 174,
+                "price": 380,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 380,
+                      "productForSaleId": 5761163
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SOMI MEDIA CON TOALLA  MUJER MARRON-CELESTE",
+    "productLineId": "3324"
+  }
+]

@@ -1,0 +1,170 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124228",
+    "colorId": 2,
+    "copy": "Tiro Corto Isa",
+    "description": "Bombacha con detalle de puntilla elastizada en laterales.",
+    "description2": "Realizado en microfibra  y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 39526,
+    "images": [
+      "124228_1_1.jpg",
+      "124228_2_1.jpg"
+    ],
+    "mainImage": "124228_2_1.jpg",
+    "name": "ISA TIRO CORTO",
+    "price": 340,
+    "price1": 490,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 340,
+          "price1": 490,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 340,
+                "price1": 490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 340,
+                      "price1": 490,
+                      "productForSaleId": 5565852
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 340,
+                "price1": 490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 340,
+                      "price1": 490,
+                      "productForSaleId": 5565854
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ISA TIRO CORTO NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124228",
+    "colorId": 1,
+    "copy": "Tiro Corto Isa",
+    "description": "Bombacha con detalle de puntilla elastizada en laterales.",
+    "description2": "Realizado en microfibra  y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 39526,
+    "images": [
+      "124228_1_1.jpg",
+      "124228_2_1.jpg"
+    ],
+    "mainImage": "124228_1_1.jpg",
+    "name": "ISA TIRO CORTO",
+    "price": 340,
+    "price1": 490,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 340,
+          "price1": 490,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 340,
+                "price1": 490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 340,
+                      "price1": 490,
+                      "productForSaleId": 5565852
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 340,
+                "price1": 490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 340,
+                      "price1": 490,
+                      "productForSaleId": 5565854
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ISA TIRO CORTO BLANCO"
+  }
+]

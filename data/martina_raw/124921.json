@@ -1,0 +1,258 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124921",
+    "colorId": 1,
+    "copy": "Corpiño sin aro Neva",
+    "description": "Corpiño sin aro con detalle de puntilla en escote y cintura delantera.",
+    "description2": "Realizado en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 40596,
+    "images": [
+      "124921_1_1.jpg",
+      "124921_452_1.jpg",
+      "124921_452_2.jpg",
+      "124921_452_3.jpg"
+    ],
+    "mainImage": "124921_1_1.jpg",
+    "name": "NEVA CORPIÑO SIN ARO ",
+    "price": 990,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5551291
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 990,
+                      "productForSaleId": 5551292
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 990,
+                      "productForSaleId": 5551293
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5551290
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5551289
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5551298
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 990,
+                      "productForSaleId": 5551294
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 990,
+                      "productForSaleId": 5551295
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5551297
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5551296
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NEVA CORPIÑO SIN ARO  BLANCO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124921",
+    "colorId": 452,
+    "copy": "Corpiño sin aro Neva",
+    "description": "Corpiño sin aro con detalle de puntilla en escote y cintura delantera.",
+    "description2": "Realizado en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 40596,
+    "images": [
+      "124921_1_1.jpg",
+      "124921_452_1.jpg",
+      "124921_452_2.jpg",
+      "124921_452_3.jpg"
+    ],
+    "mainImage": "124921_452_1.jpg",
+    "name": "NEVA CORPIÑO SIN ARO ",
+    "price": 990,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5551291
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 990,
+                      "productForSaleId": 5551292
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 990,
+                      "productForSaleId": 5551293
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5551290
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5551289
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5551298
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 990,
+                      "productForSaleId": 5551294
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 990,
+                      "productForSaleId": 5551295
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5551297
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5551296
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NEVA CORPIÑO SIN ARO  AVELLANA"
+  }
+]

@@ -1,0 +1,96 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125293",
+    "colorId": 332,
+    "copy": "Top deportivo estampado Ferdinanda",
+    "description": "Top deportivo con cintura elastizada y delantero estampado. ",
+    "description2": "Realizado en microfibra elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 41120,
+    "images": [
+      "125293_332_1.jpg",
+      "125293_332_2.jpg",
+      "125293_332_3.jpg"
+    ],
+    "mainImage": "125293_332_1.jpg",
+    "name": "FERDINANDA TOP",
+    "price": 755,
+    "price1": 890,
+    "productLine": {
+      "id": 4815,
+      "name": "TOPS Y BANDEAUX",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 755,
+          "price1": 890,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 755,
+                "price1": 890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 755,
+                      "price1": 890,
+                      "productForSaleId": 5569715
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 755,
+                      "price1": 890,
+                      "productForSaleId": 5569716
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 755,
+                      "price1": 890,
+                      "productForSaleId": 5569717
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 755,
+                      "price1": 890,
+                      "productForSaleId": 5569714
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 755,
+                      "price1": 890,
+                      "productForSaleId": 5569713
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FERDINANDA TOP ESTAMPADO"
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124983",
+    "colorId": 2,
+    "copy": "Pantalon pijama Temira",
+    "description": "Pantalón tiro medio, cintura elastizada con detalle en ruedo de tajo y puntilla elastizada.",
+    "description2": "Realizado en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40670,
+    "images": [
+      "124983_2_1.jpg",
+      "124983_2_2.jpg"
+    ],
+    "mainImage": "124983_2_1.jpg",
+    "name": "TEMIRA PANTALON",
+    "price": 560,
+    "price1": 750,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 560,
+          "price1": 750,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 560,
+                "price1": 750,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 560,
+                      "price1": 750,
+                      "productForSaleId": 5573830
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "TEMIRA PANTALON NEGRO"
+  }
+]

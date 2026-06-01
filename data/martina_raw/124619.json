@@ -1,0 +1,79 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124619",
+    "colorId": 32,
+    "description": "Remera escote redondo, con estampa en el delantero.",
+    "description2": "Realizada en jersey melange",
+    "description3": "Calce clásico",
+    "id": 40141,
+    "images": [
+      "124619_32_1.jpg"
+    ],
+    "mainImage": "124619_32_1.jpg",
+    "name": "YAMIR REMERA",
+    "price": 820,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 820,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 820,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 820,
+                      "productForSaleId": 5549374
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 820,
+                      "productForSaleId": 5549371
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 820,
+                      "productForSaleId": 5549372
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 820,
+                      "productForSaleId": 5549373
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "YAMIR REMERA GRIS MELANGE"
+  }
+]

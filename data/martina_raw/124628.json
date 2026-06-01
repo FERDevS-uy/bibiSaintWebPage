@@ -1,0 +1,80 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124628",
+    "colorId": 53,
+    "description": "Remera escote redondo manga corta, con detalle de estampa en frente.",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40150,
+    "images": [
+      "124628_53_1.jpg",
+      "124628_53_2.jpg"
+    ],
+    "mainImage": "124628_53_1.jpg",
+    "name": "BENY REMERA",
+    "price": 820,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 820,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#ECDDCE",
+                "description": "BEIGE",
+                "id": 53,
+                "price": 820,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 820,
+                      "productForSaleId": 5550693
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 820,
+                      "productForSaleId": 5550690
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 820,
+                      "productForSaleId": 5550691
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 820,
+                      "productForSaleId": 5550692
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BENY REMERA BEIGE"
+  }
+]

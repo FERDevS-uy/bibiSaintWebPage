@@ -1,0 +1,198 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125983",
+    "colorId": 2,
+    "description": "Bombacha colaless basica",
+    "description2": "Realizada en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 42147,
+    "images": [
+      "125983_1_1.jpg",
+      "125983_1_2.jpg",
+      "125983_2_1.jpg",
+      "125983_2_2.jpg"
+    ],
+    "mainImage": "125983_2_1.jpg",
+    "name": "OSIRIS BOMBACHA",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 290,
+                      "productForSaleId": 5757777
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757776
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757775
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 290,
+                      "productForSaleId": 5757779
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757778
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "OSIRIS BOMBACHA NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125983",
+    "colorId": 1,
+    "description": "Bombacha colaless basica",
+    "description2": "Realizada en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 42147,
+    "images": [
+      "125983_1_1.jpg",
+      "125983_1_2.jpg",
+      "125983_2_1.jpg",
+      "125983_2_2.jpg"
+    ],
+    "mainImage": "125983_1_1.jpg",
+    "name": "OSIRIS BOMBACHA",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 290,
+                      "productForSaleId": 5757777
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757776
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757775
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 290,
+                      "productForSaleId": 5757779
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757778
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "OSIRIS BOMBACHA BLANCO",
+    "productLineId": "3324"
+  }
+]

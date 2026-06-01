@@ -1,0 +1,89 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124560",
+    "colorId": 59,
+    "copy": "Vestido con estampa Susan",
+    "description": "Vestido evasé, escote redondo, manga corta. Estampa en delantero y tajos en laterales que aportan amplitud y movimiento.",
+    "description2": "Realizado en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 40082,
+    "images": [
+      "124560_59_1.jpg",
+      "124560_59_2.jpg",
+      "124560_59_4.jpg",
+      "124560_59_5.jpg"
+    ],
+    "mainImage": "124560_59_1.jpg",
+    "name": "SUSAN VESTIDO",
+    "price": 990,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#DC6453",
+                "description": "LADRILLO",
+                "id": 59,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5550548
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5550545
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5550546
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5550547
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5550544
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SUSAN VESTIDO LADRILLO"
+  }
+]

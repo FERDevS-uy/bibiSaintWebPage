@@ -1,0 +1,96 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123917",
+    "colorId": 2,
+    "copy": "Corpiño reductor sin aro Fiama",
+    "description": "Corpiño reductor sin aro, con breteles anchos para mejor confort, taza forrada en la parte de puntilla. Recortes que logran un mayor sostén y comodidad en tu dia.",
+    "description2": "Realizado en tricot y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 38941,
+    "images": [
+      "123917_2_1.jpg",
+      "123917_2_2.jpg",
+      "123917_2_3.jpg"
+    ],
+    "mainImage": "123917_2_1.jpg",
+    "name": "FIAMA CORPIÑO",
+    "price": 1120,
+    "price1": 1600,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1120,
+          "price1": 1600,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1120,
+                "price1": 1600,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 1120,
+                      "price1": 1600,
+                      "productForSaleId": 5565761
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 1120,
+                      "price1": 1600,
+                      "productForSaleId": 5565760
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 1120,
+                      "price1": 1600,
+                      "productForSaleId": 5565759
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 1120,
+                      "price1": 1600,
+                      "productForSaleId": 5565762
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 1120,
+                      "price1": 1600,
+                      "productForSaleId": 5565763
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FIAMA CORPIÑO NEGRO"
+  }
+]

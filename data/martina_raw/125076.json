@@ -1,0 +1,103 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125076",
+    "colorId": 1269,
+    "copy": "Remera manga larga con detalle Ofelia",
+    "description": "Remerón escote redondo con detalle de cuello en V. Mangas, recortes, espalda y bordador a contra color. Estampa en delantero.",
+    "description2": "Realizada en jersey flame algodon",
+    "description3": "Calce amplio",
+    "id": 40835,
+    "images": [
+      "125076_1269_1.jpg",
+      "125076_1269_2.jpg",
+      "125076_1269_3.jpg"
+    ],
+    "mainImage": "125076_1269_1.jpg",
+    "name": "OFELIA REMERA",
+    "price": 850,
+    "price1": 1550,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 850,
+          "price1": 1550,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F03198",
+                "description": "MAGENTA",
+                "id": 1269,
+                "price": 850,
+                "price1": 1550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 850,
+                      "price1": 1550,
+                      "productForSaleId": 5566264
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 850,
+                      "price1": 1550,
+                      "productForSaleId": 5566266
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 850,
+                      "price1": 1550,
+                      "productForSaleId": 5566265
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 850,
+                      "price1": 1550,
+                      "productForSaleId": 5566267
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 850,
+                      "price1": 1550,
+                      "productForSaleId": 5566263
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 850,
+                      "price1": 1550,
+                      "productForSaleId": 5566262
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "OFELIA REMERA MAGENTA"
+  }
+]

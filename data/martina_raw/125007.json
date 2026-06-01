@@ -1,0 +1,500 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125007",
+    "colorId": 1469,
+    "description": "Remera básica cuello redondo con detalle en escote.",
+    "description2": "Realizada en jersey",
+    "description3": "Calce clásico",
+    "id": 40702,
+    "images": [
+      "125007_1215_1.jpg",
+      "125007_1469_1.jpg",
+      "125007_1510_1.jpg",
+      "125007_1510_2.jpg",
+      "125007_44_1.jpg"
+    ],
+    "mainImage": "125007_1469_1.jpg",
+    "name": "EZEQUIEL REMERA",
+    "price": 760,
+    "price1": 950,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 760,
+          "price1": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "AQUA MELANGE",
+                "id": 1510,
+                "price": 760,
+                "price1": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562206
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562209
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562208
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562207
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#5A6A92",
+                "description": "AZUL MELANGE",
+                "id": 1215,
+                "price": 760,
+                "price1": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562198
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562199
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562200
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562201
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "BORDO MELANGE",
+                "id": 1469,
+                "price": 760,
+                "price1": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562203
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562204
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562202
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562205
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "EZEQUIEL REMERA BORDO MELANGE"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125007",
+    "colorId": 1510,
+    "description": "Remera básica cuello redondo con detalle en escote.",
+    "description2": "Realizada en jersey",
+    "description3": "Calce clásico",
+    "id": 40702,
+    "images": [
+      "125007_1215_1.jpg",
+      "125007_1469_1.jpg",
+      "125007_1510_1.jpg",
+      "125007_1510_2.jpg",
+      "125007_44_1.jpg"
+    ],
+    "mainImage": "125007_1510_1.jpg",
+    "name": "EZEQUIEL REMERA",
+    "price": 760,
+    "price1": 950,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 760,
+          "price1": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "AQUA MELANGE",
+                "id": 1510,
+                "price": 760,
+                "price1": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562206
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562209
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562208
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562207
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#5A6A92",
+                "description": "AZUL MELANGE",
+                "id": 1215,
+                "price": 760,
+                "price1": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562198
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562199
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562200
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562201
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "BORDO MELANGE",
+                "id": 1469,
+                "price": 760,
+                "price1": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562203
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562204
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562202
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562205
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "EZEQUIEL REMERA AQUA MELANGE"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125007",
+    "colorId": 1215,
+    "description": "Remera básica cuello redondo con detalle en escote.",
+    "description2": "Realizada en jersey",
+    "description3": "Calce clásico",
+    "id": 40702,
+    "images": [
+      "125007_1215_1.jpg",
+      "125007_1469_1.jpg",
+      "125007_1510_1.jpg",
+      "125007_1510_2.jpg",
+      "125007_44_1.jpg"
+    ],
+    "mainImage": "125007_1215_1.jpg",
+    "name": "EZEQUIEL REMERA",
+    "price": 760,
+    "price1": 950,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 760,
+          "price1": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "AQUA MELANGE",
+                "id": 1510,
+                "price": 760,
+                "price1": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562206
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562209
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562208
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562207
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#5A6A92",
+                "description": "AZUL MELANGE",
+                "id": 1215,
+                "price": 760,
+                "price1": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562198
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562199
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562200
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562201
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "BORDO MELANGE",
+                "id": 1469,
+                "price": 760,
+                "price1": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562203
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562204
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562202
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 760,
+                      "price1": 950,
+                      "productForSaleId": 5562205
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "EZEQUIEL REMERA AZUL MELANGE"
+  }
+]

@@ -1,0 +1,866 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124475",
+    "colorId": 29,
+    "copy": "Pantalón Tiro Medio De Twill Albba",
+    "description": "Pantalón tiro medio, cintura finita y elastizada. Pierna recta de ruedo amplio. ",
+    "description2": "Realizado en twill",
+    "description3": "Calce clásico",
+    "id": 39997,
+    "images": [
+      "124475_1511_1.jpg",
+      "124475_1511_2.jpg",
+      "124475_1512_1.jpg",
+      "124475_1512_2.jpg",
+      "124475_16_1.jpg",
+      "124475_16_2.jpg",
+      "124475_16_3.jpg",
+      "124475_16_4.jpg",
+      "124475_29_1.jpg",
+      "124475_2_1.jpg",
+      "124475_2_2.jpg",
+      "124475_2_3.jpg"
+    ],
+    "mainImage": "124475_29_1.jpg",
+    "name": "ALBBA PANTALON",
+    "price": 855,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 855,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "LILA ROSADO",
+                "id": 1511,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550182
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550179
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550180
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550181
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550178
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "MAIZ CLARO",
+                "id": 1512,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550177
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550174
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550175
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550176
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550173
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550197
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550194
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550195
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550196
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550193
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550187
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550184
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550185
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550186
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550183
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ALBBA PANTALON VERDE AGUA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124475",
+    "colorId": 1512,
+    "copy": "Pantalón Tiro Medio De Twill Albba",
+    "description": "Pantalón tiro medio, cintura finita y elastizada. Pierna recta de ruedo amplio. ",
+    "description2": "Realizado en twill",
+    "description3": "Calce clásico",
+    "id": 39997,
+    "images": [
+      "124475_1511_1.jpg",
+      "124475_1511_2.jpg",
+      "124475_1512_1.jpg",
+      "124475_1512_2.jpg",
+      "124475_16_1.jpg",
+      "124475_16_2.jpg",
+      "124475_16_3.jpg",
+      "124475_16_4.jpg",
+      "124475_29_1.jpg",
+      "124475_2_1.jpg",
+      "124475_2_2.jpg",
+      "124475_2_3.jpg"
+    ],
+    "mainImage": "124475_1512_1.jpg",
+    "name": "ALBBA PANTALON",
+    "price": 855,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 855,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "LILA ROSADO",
+                "id": 1511,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550182
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550179
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550180
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550181
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550178
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "MAIZ CLARO",
+                "id": 1512,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550177
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550174
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550175
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550176
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550173
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550197
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550194
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550195
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550196
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550193
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550187
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550184
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550185
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550186
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550183
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ALBBA PANTALON MAIZ CLARO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124475",
+    "colorId": 16,
+    "copy": "Pantalón Tiro Medio De Twill Albba",
+    "description": "Pantalón tiro medio, cintura finita y elastizada. Pierna recta de ruedo amplio. ",
+    "description2": "Realizado en twill",
+    "description3": "Calce clásico",
+    "id": 39997,
+    "images": [
+      "124475_1511_1.jpg",
+      "124475_1511_2.jpg",
+      "124475_1512_1.jpg",
+      "124475_1512_2.jpg",
+      "124475_16_1.jpg",
+      "124475_16_2.jpg",
+      "124475_16_3.jpg",
+      "124475_16_4.jpg",
+      "124475_29_1.jpg",
+      "124475_2_1.jpg",
+      "124475_2_2.jpg",
+      "124475_2_3.jpg"
+    ],
+    "mainImage": "124475_16_1.jpg",
+    "name": "ALBBA PANTALON",
+    "price": 855,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 855,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "LILA ROSADO",
+                "id": 1511,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550182
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550179
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550180
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550181
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550178
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "MAIZ CLARO",
+                "id": 1512,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550177
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550174
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550175
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550176
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550173
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550197
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550194
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550195
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550196
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550193
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550187
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550184
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550185
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550186
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550183
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ALBBA PANTALON TOSTADO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124475",
+    "colorId": 1511,
+    "copy": "Pantalón Tiro Medio De Twill Albba",
+    "description": "Pantalón tiro medio, cintura finita y elastizada. Pierna recta de ruedo amplio. ",
+    "description2": "Realizado en twill",
+    "description3": "Calce clásico",
+    "id": 39997,
+    "images": [
+      "124475_1511_1.jpg",
+      "124475_1511_2.jpg",
+      "124475_1512_1.jpg",
+      "124475_1512_2.jpg",
+      "124475_16_1.jpg",
+      "124475_16_2.jpg",
+      "124475_16_3.jpg",
+      "124475_16_4.jpg",
+      "124475_29_1.jpg",
+      "124475_2_1.jpg",
+      "124475_2_2.jpg",
+      "124475_2_3.jpg"
+    ],
+    "mainImage": "124475_1511_1.jpg",
+    "name": "ALBBA PANTALON",
+    "price": 855,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 855,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "LILA ROSADO",
+                "id": 1511,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550182
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550179
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550180
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550181
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550178
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "MAIZ CLARO",
+                "id": 1512,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550177
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550174
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550175
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550176
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550173
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550197
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550194
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550195
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550196
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550193
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 855,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 855,
+                      "productForSaleId": 5550187
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 855,
+                      "productForSaleId": 5550184
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 855,
+                      "productForSaleId": 5550185
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 855,
+                      "productForSaleId": 5550186
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 855,
+                      "productForSaleId": 5550183
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ALBBA PANTALON LILA ROSADO"
+  }
+]

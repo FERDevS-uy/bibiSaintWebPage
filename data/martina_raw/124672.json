@@ -1,0 +1,449 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124672",
+    "colorId": 9,
+    "copy": "Tiro corto de algodón Donatella",
+    "description": "Tiro corto con detalle de cintura ancha de puntilla ",
+    "description2": "Realizada en algodón elastizado y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 40222,
+    "images": [
+      "124672_2_1.jpg",
+      "124672_2_2.jpg",
+      "124672_2_3.jpg",
+      "124672_32_1.jpg",
+      "124672_32_2.jpg",
+      "124672_32_3.jpg"
+    ],
+    "mainImage": "124672_2_1.jpg",
+    "name": "DONATELLA BOMBACHA",
+    "price": 315,
+    "price1": 450,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 315,
+          "price1": 450,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 315,
+                "price1": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565885
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565884
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565886
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 315,
+                "price1": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565887
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565888
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565889
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 315,
+                "price1": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565891
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565890
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565892
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DONATELLA BOMBACHA ROJO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124672",
+    "colorId": 2,
+    "copy": "Tiro corto de algodón Donatella",
+    "description": "Tiro corto con detalle de cintura ancha de puntilla ",
+    "description2": "Realizada en algodón elastizado y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 40222,
+    "images": [
+      "124672_2_1.jpg",
+      "124672_2_2.jpg",
+      "124672_2_3.jpg",
+      "124672_32_1.jpg",
+      "124672_32_2.jpg",
+      "124672_32_3.jpg"
+    ],
+    "mainImage": "124672_2_1.jpg",
+    "name": "DONATELLA BOMBACHA",
+    "price": 315,
+    "price1": 450,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 315,
+          "price1": 450,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 315,
+                "price1": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565885
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565884
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565886
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 315,
+                "price1": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565887
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565888
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565889
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 315,
+                "price1": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565891
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565890
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565892
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DONATELLA BOMBACHA NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124672",
+    "colorId": 32,
+    "copy": "Tiro corto de algodón Donatella",
+    "description": "Tiro corto con detalle de cintura ancha de puntilla ",
+    "description2": "Realizada en algodón elastizado y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 40222,
+    "images": [
+      "124672_2_1.jpg",
+      "124672_2_2.jpg",
+      "124672_2_3.jpg",
+      "124672_32_1.jpg",
+      "124672_32_2.jpg",
+      "124672_32_3.jpg"
+    ],
+    "mainImage": "124672_32_1.jpg",
+    "name": "DONATELLA BOMBACHA",
+    "price": 315,
+    "price1": 450,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 315,
+          "price1": 450,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 315,
+                "price1": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565885
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565884
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565886
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 315,
+                "price1": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565887
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565888
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565889
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 315,
+                "price1": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565891
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565890
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 315,
+                      "price1": 450,
+                      "productForSaleId": 5565892
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DONATELLA BOMBACHA GRIS MELANGE"
+  }
+]

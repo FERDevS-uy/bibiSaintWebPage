@@ -1,0 +1,62 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125155",
+    "colorId": 2,
+    "copy": "Cartera de cuero croco sintetico Bimba",
+    "description": "Cartera con original diseño. Correa regulable de 110cm y manija para llevar de mano. Broche cerramiento.\r\nRealizado en cuero croco sintetico  \r\nMedida: 19cm x 17cm x 10cm.",
+    "description2": "Realizada en cuero sintetico",
+    "description3": "Calce clásico",
+    "id": 40940,
+    "images": [
+      "125155_2_1.jpg"
+    ],
+    "mainImage": "125155_2_1.jpg",
+    "name": "BIMBA CARTERA",
+    "price": 1800,
+    "productLine": {
+      "id": 3350,
+      "name": "ACCESORIOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1800,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1800,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 1800,
+                      "productForSaleId": 5549544
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BIMBA CARTERA NEGRO"
+  }
+]

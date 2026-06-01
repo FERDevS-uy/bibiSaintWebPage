@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126029",
+    "colorId": 1269,
+    "description": "Saco con capucha forrada. Acceso con botones y bolsillos delanteros. Largo tapa cola.",
+    "description2": "Realizado en polar",
+    "description3": "Calce clásico",
+    "id": 42217,
+    "images": [
+      "126029_1269_1.jpg",
+      "126029_1269_2.jpg"
+    ],
+    "mainImage": "126029_1269_1.jpg",
+    "name": "MELITA SACO",
+    "price": 3555,
+    "productLine": {
+      "id": 4760,
+      "name": "TAPADOS Y SACOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 3555,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F03198",
+                "description": "MAGENTA",
+                "id": 1269,
+                "price": 3555,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 3555,
+                      "productForSaleId": 5753785
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 3555,
+                      "productForSaleId": 5753786
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 3555,
+                      "productForSaleId": 5753787
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 3555,
+                      "productForSaleId": 5753784
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 3555,
+                      "productForSaleId": 5753783
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MELITA SACO MAGENTA",
+    "productLineId": "3324"
+  }
+]

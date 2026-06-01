@@ -1,0 +1,68 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124982",
+    "colorId": 2,
+    "copy": "Remera pijama Alibra",
+    "description": "Remera escote en v con puntilla elastizada y detalles de frunces en el delantero.",
+    "description2": "Realizada en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40669,
+    "images": [
+      "124982_2_1.jpg",
+      "124982_2_2.jpg",
+      "124982_2_3.jpg"
+    ],
+    "mainImage": "124982_2_1.jpg",
+    "name": "ALIBRA REMERA",
+    "price": 770,
+    "price1": 1100,
+    "productLine": {
+      "id": 4576,
+      "name": "PIJAMAS Y HOMEWEAR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 770,
+          "price1": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 770,
+                "price1": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 770,
+                      "price1": 1100,
+                      "productForSaleId": 5573825
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ALIBRA REMERA NEGRO"
+  }
+]

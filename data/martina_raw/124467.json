@@ -1,0 +1,1167 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124467",
+    "colorId": 9,
+    "copy": "Pantalón semi Oxford Mayra",
+    "description": "Pantalón tiro medio con cintura elastizada. Calce ajustado y pierna semi oxford.",
+    "description2": "Realizado en bengalina elastizada",
+    "description3": "Calce relax",
+    "id": 39989,
+    "images": [
+      "124467_1478_1.jpg",
+      "124467_1478_2.jpg",
+      "124467_1478_3.jpg",
+      "124467_2_1.jpg",
+      "124467_313_1.jpg",
+      "124467_313_2.jpg",
+      "124467_313_3.jpg",
+      "124467_67_1.jpg",
+      "124467_67_2.jpg",
+      "124467_67_3.jpg",
+      "124467_9_1.jpg"
+    ],
+    "mainImage": "124467_9_1.jpg",
+    "name": "MAYRA PANTALON",
+    "price": 975,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 975,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#C6A27A",
+                "description": "CAMEL",
+                "id": 67,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550124
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550121
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550122
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550123
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550120
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "DURAZNO FUERTE",
+                "id": 1478,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550129
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550126
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550127
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550128
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550125
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550138
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550119
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550116
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550117
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550118
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550115
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#978845",
+                "description": "VERDE SECO",
+                "id": 313,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550134
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550131
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550132
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550133
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550130
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MAYRA PANTALON ROJO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124467",
+    "colorId": 313,
+    "copy": "Pantalón semi Oxford Mayra",
+    "description": "Pantalón tiro medio con cintura elastizada. Calce ajustado y pierna semi oxford.",
+    "description2": "Realizado en bengalina elastizada",
+    "description3": "Calce relax",
+    "id": 39989,
+    "images": [
+      "124467_1478_1.jpg",
+      "124467_1478_2.jpg",
+      "124467_1478_3.jpg",
+      "124467_2_1.jpg",
+      "124467_313_1.jpg",
+      "124467_313_2.jpg",
+      "124467_313_3.jpg",
+      "124467_67_1.jpg",
+      "124467_67_2.jpg",
+      "124467_67_3.jpg",
+      "124467_9_1.jpg"
+    ],
+    "mainImage": "124467_313_1.jpg",
+    "name": "MAYRA PANTALON",
+    "price": 975,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 975,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#C6A27A",
+                "description": "CAMEL",
+                "id": 67,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550124
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550121
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550122
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550123
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550120
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "DURAZNO FUERTE",
+                "id": 1478,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550129
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550126
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550127
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550128
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550125
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550138
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550119
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550116
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550117
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550118
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550115
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#978845",
+                "description": "VERDE SECO",
+                "id": 313,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550134
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550131
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550132
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550133
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550130
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MAYRA PANTALON VERDE SECO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124467",
+    "colorId": 2,
+    "copy": "Pantalón semi Oxford Mayra",
+    "description": "Pantalón tiro medio con cintura elastizada. Calce ajustado y pierna semi oxford.",
+    "description2": "Realizado en bengalina elastizada",
+    "description3": "Calce relax",
+    "id": 39989,
+    "images": [
+      "124467_1478_1.jpg",
+      "124467_1478_2.jpg",
+      "124467_1478_3.jpg",
+      "124467_2_1.jpg",
+      "124467_313_1.jpg",
+      "124467_313_2.jpg",
+      "124467_313_3.jpg",
+      "124467_67_1.jpg",
+      "124467_67_2.jpg",
+      "124467_67_3.jpg",
+      "124467_9_1.jpg"
+    ],
+    "mainImage": "124467_2_1.jpg",
+    "name": "MAYRA PANTALON",
+    "price": 975,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 975,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#C6A27A",
+                "description": "CAMEL",
+                "id": 67,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550124
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550121
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550122
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550123
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550120
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "DURAZNO FUERTE",
+                "id": 1478,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550129
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550126
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550127
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550128
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550125
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550138
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550119
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550116
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550117
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550118
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550115
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#978845",
+                "description": "VERDE SECO",
+                "id": 313,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550134
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550131
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550132
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550133
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550130
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MAYRA PANTALON NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124467",
+    "colorId": 67,
+    "copy": "Pantalón semi Oxford Mayra",
+    "description": "Pantalón tiro medio con cintura elastizada. Calce ajustado y pierna semi oxford.",
+    "description2": "Realizado en bengalina elastizada",
+    "description3": "Calce relax",
+    "id": 39989,
+    "images": [
+      "124467_1478_1.jpg",
+      "124467_1478_2.jpg",
+      "124467_1478_3.jpg",
+      "124467_2_1.jpg",
+      "124467_313_1.jpg",
+      "124467_313_2.jpg",
+      "124467_313_3.jpg",
+      "124467_67_1.jpg",
+      "124467_67_2.jpg",
+      "124467_67_3.jpg",
+      "124467_9_1.jpg"
+    ],
+    "mainImage": "124467_67_1.jpg",
+    "name": "MAYRA PANTALON",
+    "price": 975,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 975,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#C6A27A",
+                "description": "CAMEL",
+                "id": 67,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550124
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550121
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550122
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550123
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550120
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "DURAZNO FUERTE",
+                "id": 1478,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550129
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550126
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550127
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550128
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550125
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550138
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550119
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550116
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550117
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550118
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550115
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#978845",
+                "description": "VERDE SECO",
+                "id": 313,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550134
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550131
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550132
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550133
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550130
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MAYRA PANTALON CAMEL"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124467",
+    "colorId": 1478,
+    "copy": "Pantalón semi Oxford Mayra",
+    "description": "Pantalón tiro medio con cintura elastizada. Calce ajustado y pierna semi oxford.",
+    "description2": "Realizado en bengalina elastizada",
+    "description3": "Calce relax",
+    "id": 39989,
+    "images": [
+      "124467_1478_1.jpg",
+      "124467_1478_2.jpg",
+      "124467_1478_3.jpg",
+      "124467_2_1.jpg",
+      "124467_313_1.jpg",
+      "124467_313_2.jpg",
+      "124467_313_3.jpg",
+      "124467_67_1.jpg",
+      "124467_67_2.jpg",
+      "124467_67_3.jpg",
+      "124467_9_1.jpg"
+    ],
+    "mainImage": "124467_1478_1.jpg",
+    "name": "MAYRA PANTALON",
+    "price": 975,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 975,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#C6A27A",
+                "description": "CAMEL",
+                "id": 67,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550124
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550121
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550122
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550123
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550120
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "DURAZNO FUERTE",
+                "id": 1478,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550129
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550126
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550127
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550128
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550125
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550138
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550119
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550116
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550117
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550118
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550115
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#978845",
+                "description": "VERDE SECO",
+                "id": 313,
+                "price": 975,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 975,
+                      "productForSaleId": 5550134
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 975,
+                      "productForSaleId": 5550131
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 975,
+                      "productForSaleId": 5550132
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 975,
+                      "productForSaleId": 5550133
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 975,
+                      "productForSaleId": 5550130
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MAYRA PANTALON DURAZNO FUERTE"
+  }
+]

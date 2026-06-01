@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126283",
+    "colorId": 7,
+    "description": "Pantalon tiro medio con cintura elastizada y bolsillos laterales. Pierna recta",
+    "description2": "Realizado en velvet",
+    "description3": "Calce clásico",
+    "id": 42537,
+    "images": [
+      "126283_7_1.jpg",
+      "126283_7_2.jpg"
+    ],
+    "mainImage": "126283_7_1.jpg",
+    "name": "DAKOTA PANTALON",
+    "price": 1140,
+    "price1": 1265,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1140,
+          "price1": 1265,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 1140,
+                "price1": 1265,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1140,
+                      "price1": 1265,
+                      "productForSaleId": 5760611
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1140,
+                      "price1": 1265,
+                      "productForSaleId": 5760612
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1140,
+                      "price1": 1265,
+                      "productForSaleId": 5760613
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1140,
+                      "price1": 1265,
+                      "productForSaleId": 5760610
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DAKOTA PANTALON AZUL",
+    "productLineId": "3324"
+  }
+]

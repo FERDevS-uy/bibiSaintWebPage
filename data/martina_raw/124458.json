@@ -1,0 +1,458 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124458",
+    "colorId": 2,
+    "copy": "Corpiño triángulo soft Malen",
+    "description": "Corpiño triangulo soft, con detalle de hebilla metálica en el centro.",
+    "description2": "Realizado en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 39965,
+    "images": [
+      "124458_1_1.jpg",
+      "124458_2_1.jpg",
+      "124458_4_1.jpg",
+      "124458_4_2.jpg",
+      "124458_4_3.jpg"
+    ],
+    "mainImage": "124458_2_1.jpg",
+    "name": "MALEN CORPIÑO ",
+    "price": 990,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5549807
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 990,
+                      "productForSaleId": 5549808
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5549806
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5549805
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5549799
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 990,
+                      "productForSaleId": 5549800
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5549798
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5549797
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5549803
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 990,
+                      "productForSaleId": 5549804
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5549802
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5549801
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MALEN CORPIÑO  NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124458",
+    "colorId": 4,
+    "copy": "Corpiño triángulo soft Malen",
+    "description": "Corpiño triangulo soft, con detalle de hebilla metálica en el centro.",
+    "description2": "Realizado en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 39965,
+    "images": [
+      "124458_1_1.jpg",
+      "124458_2_1.jpg",
+      "124458_4_1.jpg",
+      "124458_4_2.jpg",
+      "124458_4_3.jpg"
+    ],
+    "mainImage": "124458_4_1.jpg",
+    "name": "MALEN CORPIÑO ",
+    "price": 990,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5549807
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 990,
+                      "productForSaleId": 5549808
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5549806
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5549805
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5549799
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 990,
+                      "productForSaleId": 5549800
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5549798
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5549797
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5549803
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 990,
+                      "productForSaleId": 5549804
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5549802
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5549801
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MALEN CORPIÑO  BORDO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124458",
+    "colorId": 1,
+    "copy": "Corpiño triángulo soft Malen",
+    "description": "Corpiño triangulo soft, con detalle de hebilla metálica en el centro.",
+    "description2": "Realizado en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 39965,
+    "images": [
+      "124458_1_1.jpg",
+      "124458_2_1.jpg",
+      "124458_4_1.jpg",
+      "124458_4_2.jpg",
+      "124458_4_3.jpg"
+    ],
+    "mainImage": "124458_1_1.jpg",
+    "name": "MALEN CORPIÑO ",
+    "price": 990,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5549807
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 990,
+                      "productForSaleId": 5549808
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5549806
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5549805
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5549799
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 990,
+                      "productForSaleId": 5549800
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5549798
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5549797
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 990,
+                      "productForSaleId": 5549803
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 990,
+                      "productForSaleId": 5549804
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 990,
+                      "productForSaleId": 5549802
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 990,
+                      "productForSaleId": 5549801
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MALEN CORPIÑO  BLANCO"
+  }
+]

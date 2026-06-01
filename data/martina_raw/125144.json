@@ -1,0 +1,93 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125144",
+    "colorId": 2,
+    "copy": "Saco de micropolar con capucha Carmen",
+    "description": "Saco con capucha y abotonadura en delantero, detalles de bolsillos invisibles en laterales, y ruedo con desnivel. Un modelo indispensable para lograr outfits modernos.",
+    "description2": "Realizado en micropolar",
+    "description3": "Calce clásico",
+    "id": 40912,
+    "images": [
+      "125144_2_1.jpg",
+      "125144_2_2.jpg"
+    ],
+    "mainImage": "125144_2_1.jpg",
+    "name": "CARMEN SACO",
+    "price": 2500,
+    "productLine": {
+      "id": 4760,
+      "name": "TAPADOS Y SACOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2500,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2500,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2500,
+                      "productForSaleId": 5549266
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2500,
+                      "productForSaleId": 5549262
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2500,
+                      "productForSaleId": 5549263
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2500,
+                      "productForSaleId": 5549264
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2500,
+                      "productForSaleId": 5549261
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 2500,
+                      "productForSaleId": 5549265
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CARMEN SACO NEGRO"
+  }
+]

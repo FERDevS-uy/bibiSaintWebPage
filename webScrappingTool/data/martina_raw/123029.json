@@ -1,0 +1,488 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123029",
+    "colorId": 32,
+    "copy": "Bombacha tiro corto Fanny",
+    "description": "Tiro corto basica con elastico partido al tono. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 36762,
+    "images": [
+      "123029_1_1.jpg",
+      "123029_1_2.jpg",
+      "123029_2_1.jpg",
+      "123029_2_2.jpg",
+      "123029_2_3.jpg",
+      "123029_2_4.jpg",
+      "123029_32_1.jpg",
+      "123029_452_1.jpg",
+      "123029_452_2.jpg",
+      "123029_452_3.jpg",
+      "123029_452_4.jpg",
+      "123029_452_5.jpg",
+      "123029_9_1.jpg",
+      "123029_9_2.jpg"
+    ],
+    "mainImage": "123029_32_1.jpg",
+    "name": "FANNY TIRO CORTO",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757544
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757545
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757546
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757543
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757542
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757540
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757541
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757539
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757536
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757537
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757538
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757535
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FANNY TIRO CORTO GRIS MELANGE",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123029",
+    "colorId": 1,
+    "copy": "Bombacha tiro corto Fanny",
+    "description": "Tiro corto basica con elastico partido al tono. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 36762,
+    "images": [
+      "123029_1_1.jpg",
+      "123029_1_2.jpg",
+      "123029_2_1.jpg",
+      "123029_2_2.jpg",
+      "123029_2_3.jpg",
+      "123029_2_4.jpg",
+      "123029_32_1.jpg",
+      "123029_452_1.jpg",
+      "123029_452_2.jpg",
+      "123029_452_3.jpg",
+      "123029_452_4.jpg",
+      "123029_452_5.jpg",
+      "123029_9_1.jpg",
+      "123029_9_2.jpg"
+    ],
+    "mainImage": "123029_1_1.jpg",
+    "name": "FANNY TIRO CORTO",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757544
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757545
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757546
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757543
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757542
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757540
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757541
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757539
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757536
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757537
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757538
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757535
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FANNY TIRO CORTO BLANCO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123029",
+    "colorId": 2,
+    "copy": "Bombacha tiro corto Fanny",
+    "description": "Tiro corto basica con elastico partido al tono. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 36762,
+    "images": [
+      "123029_1_1.jpg",
+      "123029_1_2.jpg",
+      "123029_2_1.jpg",
+      "123029_2_2.jpg",
+      "123029_2_3.jpg",
+      "123029_2_4.jpg",
+      "123029_32_1.jpg",
+      "123029_452_1.jpg",
+      "123029_452_2.jpg",
+      "123029_452_3.jpg",
+      "123029_452_4.jpg",
+      "123029_452_5.jpg",
+      "123029_9_1.jpg",
+      "123029_9_2.jpg"
+    ],
+    "mainImage": "123029_2_1.jpg",
+    "name": "FANNY TIRO CORTO",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757544
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757545
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757546
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757543
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757542
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757540
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757541
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757539
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757536
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757537
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757538
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757535
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FANNY TIRO CORTO NEGRO",
+    "productLineId": "3324"
+  }
+]

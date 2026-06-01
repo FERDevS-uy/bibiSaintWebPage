@@ -1,0 +1,89 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124559",
+    "colorId": 213,
+    "copy": "Pantalón tiro medio Ethel",
+    "description": "Pantalón tiro medio, con cintura elastizada y lazo con puntera metálica. Bolsillos laterales. Recortes en ambas piernas a contra tono. Ruedo amplio y holgado. ",
+    "description2": "Realizado en viscosa elastizada",
+    "description3": "Calce amplio",
+    "id": 40081,
+    "images": [
+      "124559_213_1.jpg",
+      "124559_213_2.jpg",
+      "124559_213_3.jpg",
+      "124559_213_4.jpg"
+    ],
+    "mainImage": "124559_213_1.jpg",
+    "name": "ETHEL PANTALON",
+    "price": 860,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 860,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#60636A",
+                "description": "GRIS-TURQUESA",
+                "id": 213,
+                "price": 860,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 860,
+                      "productForSaleId": 5550543
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 860,
+                      "productForSaleId": 5550540
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 860,
+                      "productForSaleId": 5550541
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 860,
+                      "productForSaleId": 5550542
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 860,
+                      "productForSaleId": 5550539
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ETHEL PANTALON GRIS-TURQUESA"
+  }
+]

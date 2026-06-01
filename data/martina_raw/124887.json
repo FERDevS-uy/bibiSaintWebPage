@@ -1,0 +1,61 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124887",
+    "colorId": 1115,
+    "description": "Media tobillera con compresión en planta y empeine. Detalles y logo a contratono.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40562,
+    "images": [
+      "124887_1115_1.jpg"
+    ],
+    "mainImage": "124887_1115_1.jpg",
+    "name": "DANILO MEDIA",
+    "price": 230,
+    "productLine": {
+      "id": 3362,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 230,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO- GRIS MELANGE CLARO",
+                "id": 1115,
+                "price": 230,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 230,
+                      "productForSaleId": 5551019
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DANILO MEDIA NEGRO- GRIS MELANGE CLARO"
+  }
+]

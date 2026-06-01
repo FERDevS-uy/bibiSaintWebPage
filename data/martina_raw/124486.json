@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124486",
+    "colorId": 332,
+    "copy": "Top deportivo microfibra Amankai",
+    "description": "Top deportivo estampado con  cintura elastizada con elástico sublimado",
+    "description2": "Realizado en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 40008,
+    "images": [
+      "124486_332_1.jpg",
+      "124486_332_2.jpg"
+    ],
+    "mainImage": "124486_332_1.jpg",
+    "name": "AMANKAI TOP",
+    "price": 270,
+    "price1": 390,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 270,
+          "price1": 390,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 270,
+                "price1": 390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 270,
+                      "price1": 390,
+                      "productForSaleId": 5565974
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 270,
+                      "price1": 390,
+                      "productForSaleId": 5565975
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 270,
+                      "price1": 390,
+                      "productForSaleId": 5565976
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 270,
+                      "price1": 390,
+                      "productForSaleId": 5565973
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AMANKAI TOP ESTAMPADO"
+  }
+]
