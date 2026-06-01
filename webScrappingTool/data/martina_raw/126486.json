@@ -5,7 +5,7 @@
       "name": "BRAND"
     },
     "code": "126486",
-    "colorId": 74,
+    "colorId": 4,
     "description": "Campera bomber con broches en el delantero y bolsillos. Forrada en interior.",
     "description2": "Realizada en bucle",
     "description3": "Calce amplio",
@@ -21,7 +21,7 @@
       "126486_74_2.jpg",
       "126486_74_3.jpg"
     ],
-    "mainImage": "126486_74_1.jpg",
+    "mainImage": "126486_4_1.jpg",
     "name": "MOSA CHAQUETA",
     "price": 2700,
     "productLine": {
@@ -122,7 +122,7 @@
         }
       ]
     },
-    "variationName": "MOSA CHAQUETA CHOCOLATE",
+    "variationName": "MOSA CHAQUETA BORDO",
     "productLineId": "3324"
   },
   {
@@ -257,7 +257,7 @@
       "name": "BRAND"
     },
     "code": "126486",
-    "colorId": 4,
+    "colorId": 74,
     "description": "Campera bomber con broches en el delantero y bolsillos. Forrada en interior.",
     "description2": "Realizada en bucle",
     "description3": "Calce amplio",
@@ -273,7 +273,7 @@
       "126486_74_2.jpg",
       "126486_74_3.jpg"
     ],
-    "mainImage": "126486_4_1.jpg",
+    "mainImage": "126486_74_1.jpg",
     "name": "MOSA CHAQUETA",
     "price": 2700,
     "productLine": {
@@ -374,7 +374,7 @@
         }
       ]
     },
-    "variationName": "MOSA CHAQUETA BORDO",
+    "variationName": "MOSA CHAQUETA CHOCOLATE",
     "productLineId": "3324"
   }
 ]

@@ -1,10 +1,14 @@
 {
   "totalNew": 597,
   "totalCopy": 907,
-  "matched": 482,
-  "unmatchedNew": 115,
-  "missingInNew": 431,
+  "matched": 481,
+  "unmatchedNew": 116,
+  "missingInNew": 432,
   "unmatchedSample": [
+    {
+      "id": "41",
+      "name": ""
+    },
     {
       "id": "mdt-42370",
       "name": "VOLK REMERA M/LARGA"
@@ -120,16 +124,16 @@
     {
       "id": "mdt-42632",
       "name": "VICTORIA REMERA MANGA LARGA"
-    },
-    {
-      "id": "mdt-42631",
-      "name": "OLIVIA REMERA MANGA LARGA"
     }
   ],
   "missingSample": [
     {
       "id": "146",
       "name": "Cortina Dormitorio Dohler Rosane"
+    },
+    {
+      "id": "41",
+      "name": "Olla Electrica Multifuncion"
     },
     {
       "id": "293",
@@ -242,10 +246,6 @@
     {
       "id": "mdt-41018",
       "name": "LIDIA BABUCHA"
-    },
-    {
-      "id": "mdt-41013",
-      "name": "SHEILA CAMPERA"
     }
   ]
 }

@@ -5,86 +5,6 @@
       "name": "BRAND"
     },
     "code": "125136",
-    "colorId": 74,
-    "description": "Campera con capucha, acceso con cierre delantero y bolsillos tipo canguro al frente. ",
-    "description2": "Realizada en frisa",
-    "description3": "Calce clásico",
-    "id": 40904,
-    "images": [
-      "125136_1118_1.jpg",
-      "125136_74_1.jpg",
-      "125136_74_2.jpg",
-      "125136_74_3.jpg"
-    ],
-    "mainImage": "125136_74_1.jpg",
-    "name": "MIKE CAMPERA",
-    "price": 2400,
-    "productLine": {
-      "id": 3358,
-      "name": "CAMPERAS",
-      "parent": {
-        "id": 3325,
-        "name": "HOMBRE"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 2400,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#472007",
-                "description": "CHOCOLATE",
-                "id": 74,
-                "price": 2400,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 2400,
-                      "productForSaleId": 5756955
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#5C5C5C",
-                "description": "GRIS OSCURO",
-                "id": 1118,
-                "price": 2400,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 2400,
-                      "productForSaleId": 5756950
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "MIKE CAMPERA CHOCOLATE",
-    "productLineId": "3325"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125136",
     "colorId": 1118,
     "description": "Campera con capucha, acceso con cierre delantero y bolsillos tipo canguro al frente. ",
     "description2": "Realizada en frisa",
@@ -157,6 +77,86 @@
       ]
     },
     "variationName": "MIKE CAMPERA GRIS OSCURO",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125136",
+    "colorId": 74,
+    "description": "Campera con capucha, acceso con cierre delantero y bolsillos tipo canguro al frente. ",
+    "description2": "Realizada en frisa",
+    "description3": "Calce clásico",
+    "id": 40904,
+    "images": [
+      "125136_1118_1.jpg",
+      "125136_74_1.jpg",
+      "125136_74_2.jpg",
+      "125136_74_3.jpg"
+    ],
+    "mainImage": "125136_74_1.jpg",
+    "name": "MIKE CAMPERA",
+    "price": 2400,
+    "productLine": {
+      "id": 3358,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2400,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#472007",
+                "description": "CHOCOLATE",
+                "id": 74,
+                "price": 2400,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 2400,
+                      "productForSaleId": 5756955
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#5C5C5C",
+                "description": "GRIS OSCURO",
+                "id": 1118,
+                "price": 2400,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 2400,
+                      "productForSaleId": 5756950
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MIKE CAMPERA CHOCOLATE",
     "productLineId": "3325"
   }
 ]

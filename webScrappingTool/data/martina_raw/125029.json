@@ -5,6 +5,173 @@
       "name": "BRAND"
     },
     "code": "125029",
+    "colorId": 74,
+    "copy": "Vedetina básica Marcia",
+    "description": "Vedetina básica con elástico partido al tono. ",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40724,
+    "images": [
+      "125029_1_1.jpg",
+      "125029_1_2.jpg",
+      "125029_2_1.jpg",
+      "125029_32_1.jpg",
+      "125029_452_1.jpg",
+      "125029_74_1.jpg",
+      "125029_74_2.jpg",
+      "125029_74_3.jpg"
+    ],
+    "mainImage": "125029_74_1.jpg",
+    "name": "MARCIA VEDETINA",
+    "price": 290,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757585
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757587
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757588
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#472007",
+                "description": "CHOCOLATE",
+                "id": 74,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757599
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757598
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757589
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757592
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757591
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 290,
+                      "productForSaleId": 5757595
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 290,
+                      "productForSaleId": 5757594
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 290,
+                      "productForSaleId": 5757593
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 290,
+                      "productForSaleId": 5757596
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MARCIA VEDETINA CHOCOLATE",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125029",
     "colorId": 2,
     "copy": "Vedetina básica Marcia",
     "description": "Vedetina básica con elástico partido al tono. ",
@@ -164,173 +331,6 @@
       ]
     },
     "variationName": "MARCIA VEDETINA NEGRO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125029",
-    "colorId": 1,
-    "copy": "Vedetina básica Marcia",
-    "description": "Vedetina básica con elástico partido al tono. ",
-    "description2": "Realizada en algodón elastizado",
-    "description3": "Calce al cuerpo",
-    "id": 40724,
-    "images": [
-      "125029_1_1.jpg",
-      "125029_1_2.jpg",
-      "125029_2_1.jpg",
-      "125029_32_1.jpg",
-      "125029_452_1.jpg",
-      "125029_74_1.jpg",
-      "125029_74_2.jpg",
-      "125029_74_3.jpg"
-    ],
-    "mainImage": "125029_1_1.jpg",
-    "name": "MARCIA VEDETINA",
-    "price": 290,
-    "productLine": {
-      "id": 3352,
-      "name": "ROPA INTERIOR",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 290,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#FFFFFF",
-                "description": "BLANCO",
-                "id": 1,
-                "price": 290,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 290,
-                      "productForSaleId": 5757585
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 290,
-                      "productForSaleId": 5757587
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 290,
-                      "productForSaleId": 5757588
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#472007",
-                "description": "CHOCOLATE",
-                "id": 74,
-                "price": 290,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 290,
-                      "productForSaleId": 5757599
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 290,
-                      "productForSaleId": 5757598
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#D2CECF",
-                "description": "GRIS MELANGE",
-                "id": 32,
-                "price": 290,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 290,
-                      "productForSaleId": 5757589
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 290,
-                      "productForSaleId": 5757592
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 290,
-                      "productForSaleId": 5757591
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 290,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 290,
-                      "productForSaleId": 5757595
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 290,
-                      "productForSaleId": 5757594
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 290,
-                      "productForSaleId": 5757593
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 290,
-                      "productForSaleId": 5757596
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "MARCIA VEDETINA BLANCO",
     "productLineId": "3324"
   },
   {
@@ -506,7 +506,7 @@
       "name": "BRAND"
     },
     "code": "125029",
-    "colorId": 74,
+    "colorId": 1,
     "copy": "Vedetina básica Marcia",
     "description": "Vedetina básica con elástico partido al tono. ",
     "description2": "Realizada en algodón elastizado",
@@ -522,7 +522,7 @@
       "125029_74_2.jpg",
       "125029_74_3.jpg"
     ],
-    "mainImage": "125029_74_1.jpg",
+    "mainImage": "125029_1_1.jpg",
     "name": "MARCIA VEDETINA",
     "price": 290,
     "productLine": {
@@ -664,7 +664,7 @@
         }
       ]
     },
-    "variationName": "MARCIA VEDETINA CHOCOLATE",
+    "variationName": "MARCIA VEDETINA BLANCO",
     "productLineId": "3324"
   }
 ]
