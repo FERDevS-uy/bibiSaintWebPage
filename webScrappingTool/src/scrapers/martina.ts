@@ -36,8 +36,8 @@ function extractMartinaColorNodes(
     return variation.variationValues.map((c: any) => {
       const sizes: string[] = Array.isArray(c?.variation?.variationValues)
         ? c.variation.variationValues
-            .map((sz: any) => String(sz?.description ?? '').trim())
-            .filter(Boolean)
+          .map((sz: any) => String(sz?.description ?? '').trim())
+          .filter(Boolean)
         : [];
       return {
         id: Number(c?.id),
@@ -78,7 +78,7 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
   try {
     const headers = { accept: 'application/json, text/plain, */*', Referer: 'https://tienda.martinaditrento.com/' };
 
-    const countryId = process.env.MARTINA_COUNTRY_ID || '598';
+    const countryId = '598';
     // intentar descubrir códigos de campaña desde el endpoint de config
     async function fetchMartinaConfig(country: string): Promise<string[]> {
       try {
@@ -127,6 +127,7 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
 
     async function fetchStoreProductForCode(country: string, code: string): Promise<any[]> {
       const url = `${MARTINA_STORE_PRODUCT_BASE}?countryId=${country}&code=${encodeURIComponent(code)}`;
+      console.log(url);
       try {
         const { data } = await axios.get(url, { headers, httpsAgent, timeout: 30000 });
         // intentar varios lugares comunes del payload
@@ -236,6 +237,7 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
         results.forEach((arr, idx) => {
           if (!Array.isArray(arr)) return;
           // anotar code en cada item para referencia
+
           const code = batch[idx];
           arr.forEach((it) => {
             if (it && typeof it === 'object') it.code = it.code || code;
@@ -252,7 +254,7 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
       let productLines: { productLineId: string; category: string }[] = [];
       if (productLineEnv) {
         // formato esperado: '3325:HOMBRE,3324:MUJER'
-        productLines = productLineEnv.split(':').map((pair) => {
+        productLines = productLineEnv.split(',').map((pair) => {
           const [pl, cat] = pair.split(':').map((s) => s.trim());
           return { productLineId: pl || '', category: cat || '' };
         }).filter((p) => p.productLineId);
@@ -330,29 +332,8 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
               productMap[providerId].productLineId = String(entry.productLine.id);
           }
         }
-        // Intentar fusionar mappings desde archivos raw ya existentes para no perder providerIds
-        try {
-          const files = await fs.readdir(rawDir);
-          for (const fname of files) {
-            if (!/^[0-9]+\.json$/.test(fname)) continue;
-            const codeFromFile = fname.replace(/\.json$/, '');
-            try {
-              const content = await fs.readFile(path.resolve(rawDir, fname), 'utf-8');
-              const arr = JSON.parse(content || '[]');
-              if (!Array.isArray(arr)) continue;
-              for (const entry of arr) {
-                const candidateId = (entry && (entry.id ?? entry.productId ?? (entry.product && entry.product.id))) || '';
-                const providerId = String(candidateId || '').trim();
-                if (!providerId) continue;
-                if (!productMap[providerId]) productMap[providerId] = { code: codeFromFile };
-              }
-            } catch (err) {
-              // noop: si un archivo raw está corrupto lo saltamos
-            }
-          }
-        } catch (err: any) {
-          console.warn('No se pudo leer/mergear archivos raw existentes:', err.message || err);
-        }
+        // NOTA: No mergeamos archivos raw de runs anteriores porque introduce
+        //       productIds de campañas viejas/descontinuadas que ya no tienen stock.
 
         await fs.writeFile(path.resolve(rawDir, 'map.json'), JSON.stringify(productMap, null, 2));
       } catch (err: any) {
@@ -415,6 +396,13 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
 
       const colors = Array.from(colorById.values());
 
+      // Filtro anti-descontinuados: si no hay ningún color con variación registrada,
+      // el producto viene de una campaña vieja sin stock activo → omitir.
+      if (colors.length === 0) {
+        console.log(`Martina: omitiendo producto sin colores activos (posible descontinuado): code=${code}, id=${first?.id}`);
+        return;
+      }
+
       // Lista plana de TODAS las imágenes (ordenadas: por color, en el orden del color array)
       const allImages: string[] = [];
       const seenImg = new Set<string>();
@@ -432,8 +420,7 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
         allImages.push(`${MARTINA_IMAGE_BASE}${first.mainImage}`);
       }
 
-      // Colores con datos mínimos para el CSV (omito sizes/images pesados si quieres,
-      // pero el usuario pidió tener colores con sus fotos => incluimos todo).
+      // Colores con datos mínimos para el CSV
       const coloresSerialized = JSON.stringify(
         colors.map((c) => ({
           id: c.id,

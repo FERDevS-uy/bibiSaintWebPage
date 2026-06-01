@@ -5,6 +5,242 @@
       "name": "BRAND"
     },
     "code": "123417",
+    "colorId": 2,
+    "description": "Boxer realizado en algodón elastizado con detalle de elástico diferenciado en cintura.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 37666,
+    "images": [
+      "123417_299_1.jpg",
+      "123417_2_1.jpg",
+      "123417_2_2.jpg",
+      "123417_2_3.jpg",
+      "123417_32_1.jpg",
+      "123417_32_2.jpg",
+      "123417_32_3.jpg",
+      "123417_39_1.jpg",
+      "123417_39_2.jpg",
+      "123417_45_1.jpg",
+      "123417_4_1.jpg",
+      "123417_4_2.jpg",
+      "123417_5_1.jpg",
+      "123417_788_1.jpg",
+      "123417_7_1.jpg",
+      "123417_890_1.jpg",
+      "123417_8_1.jpg",
+      "123417_8_2.jpg",
+      "123417_9_1.jpg"
+    ],
+    "mainImage": "123417_2_1.jpg",
+    "name": "ADRIANO BOXER",
+    "price": 620,
+    "productLine": {
+      "id": 3361,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 620,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 620,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 620,
+                      "productForSaleId": 5756890
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 620,
+                      "productForSaleId": 5756888
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 620,
+                      "productForSaleId": 5756889
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 620,
+                      "productForSaleId": 5756891
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#0E1944",
+                "description": "AZUL MARINO",
+                "id": 39,
+                "price": 620,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 620,
+                      "productForSaleId": 5756878
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 620,
+                      "productForSaleId": 5756882
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 620,
+                      "productForSaleId": 5756881
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 620,
+                      "productForSaleId": 5756879
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#60636A",
+                "description": "GRIS",
+                "id": 5,
+                "price": 620,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 620,
+                      "productForSaleId": 5756895
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 620,
+                      "productForSaleId": 5756896
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 620,
+                      "productForSaleId": 5756894
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 620,
+                      "productForSaleId": 5756892
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 620,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 620,
+                      "productForSaleId": 5756866
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 620,
+                      "productForSaleId": 5756868
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 620,
+                      "productForSaleId": 5756865
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 620,
+                      "productForSaleId": 5756869
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 620,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 620,
+                      "productForSaleId": 5756887
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 620,
+                      "productForSaleId": 5756883
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 620,
+                      "productForSaleId": 5756884
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 620,
+                      "productForSaleId": 5756885
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ADRIANO BOXER NEGRO",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123417",
     "colorId": 39,
     "description": "Boxer realizado en algodón elastizado con detalle de elástico diferenciado en cintura.",
     "description2": "Realizado en algodón elastizado",
@@ -705,242 +941,6 @@
       ]
     },
     "variationName": "ADRIANO BOXER AZUL",
-    "productLineId": "3325"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "123417",
-    "colorId": 2,
-    "description": "Boxer realizado en algodón elastizado con detalle de elástico diferenciado en cintura.",
-    "description2": "Realizado en algodón elastizado",
-    "description3": "Calce al cuerpo",
-    "id": 37666,
-    "images": [
-      "123417_299_1.jpg",
-      "123417_2_1.jpg",
-      "123417_2_2.jpg",
-      "123417_2_3.jpg",
-      "123417_32_1.jpg",
-      "123417_32_2.jpg",
-      "123417_32_3.jpg",
-      "123417_39_1.jpg",
-      "123417_39_2.jpg",
-      "123417_45_1.jpg",
-      "123417_4_1.jpg",
-      "123417_4_2.jpg",
-      "123417_5_1.jpg",
-      "123417_788_1.jpg",
-      "123417_7_1.jpg",
-      "123417_890_1.jpg",
-      "123417_8_1.jpg",
-      "123417_8_2.jpg",
-      "123417_9_1.jpg"
-    ],
-    "mainImage": "123417_2_1.jpg",
-    "name": "ADRIANO BOXER",
-    "price": 620,
-    "productLine": {
-      "id": 3361,
-      "name": "ROPA INTERIOR",
-      "parent": {
-        "id": 3325,
-        "name": "HOMBRE"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 620,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#02247F",
-                "description": "AZUL",
-                "id": 7,
-                "price": 620,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 620,
-                      "productForSaleId": 5756890
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 620,
-                      "productForSaleId": 5756888
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 620,
-                      "productForSaleId": 5756889
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 620,
-                      "productForSaleId": 5756891
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#0E1944",
-                "description": "AZUL MARINO",
-                "id": 39,
-                "price": 620,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 620,
-                      "productForSaleId": 5756878
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 620,
-                      "productForSaleId": 5756882
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 620,
-                      "productForSaleId": 5756881
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 620,
-                      "productForSaleId": 5756879
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#60636A",
-                "description": "GRIS",
-                "id": 5,
-                "price": 620,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 620,
-                      "productForSaleId": 5756895
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 620,
-                      "productForSaleId": 5756896
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 620,
-                      "productForSaleId": 5756894
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 620,
-                      "productForSaleId": 5756892
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#D2CECF",
-                "description": "GRIS MELANGE",
-                "id": 32,
-                "price": 620,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 620,
-                      "productForSaleId": 5756866
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 620,
-                      "productForSaleId": 5756868
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 620,
-                      "productForSaleId": 5756865
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 620,
-                      "productForSaleId": 5756869
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 620,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 620,
-                      "productForSaleId": 5756887
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 620,
-                      "productForSaleId": 5756883
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 620,
-                      "productForSaleId": 5756884
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 620,
-                      "productForSaleId": 5756885
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "ADRIANO BOXER NEGRO",
     "productLineId": "3325"
   },
   {

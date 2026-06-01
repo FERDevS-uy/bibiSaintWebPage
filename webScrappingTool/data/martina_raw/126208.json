@@ -5,134 +5,6 @@
       "name": "BRAND"
     },
     "code": "126208",
-    "colorId": 19,
-    "description": "Remera escote redondo, manga larga. Ruedo con forma semiredondeado",
-    "description2": "Realizada en viscosa elastizada",
-    "description3": "Calce clásico",
-    "id": 42445,
-    "images": [
-      "126208_19_1.jpg",
-      "126208_19_2.jpg",
-      "126208_19_3.jpg",
-      "126208_45_1.jpg"
-    ],
-    "mainImage": "126208_19_1.jpg",
-    "name": "TRIANA REMERA M/LARGA",
-    "price": 810,
-    "price1": 955,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "PRECIO REBAJADO",
-          "id": 6,
-          "price": 810,
-          "price1": 955,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#5A5A3E",
-                "description": "VERDE MILITAR",
-                "id": 45,
-                "price": 810,
-                "price1": 955,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 810,
-                      "price1": 955,
-                      "productForSaleId": 5760607
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 810,
-                      "price1": 955,
-                      "productForSaleId": 5760606
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 810,
-                      "price1": 955,
-                      "productForSaleId": 5760609
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 810,
-                      "price1": 955,
-                      "productForSaleId": 5760608
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#4F44A2",
-                "description": "VIOLETA",
-                "id": 19,
-                "price": 810,
-                "price1": 955,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 810,
-                      "price1": 955,
-                      "productForSaleId": 5760602
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 810,
-                      "price1": 955,
-                      "productForSaleId": 5760604
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 810,
-                      "price1": 955,
-                      "productForSaleId": 5760603
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 810,
-                      "price1": 955,
-                      "productForSaleId": 5760605
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "TRIANA REMERA M/LARGA VIOLETA",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126208",
     "colorId": 45,
     "description": "Remera escote redondo, manga larga. Ruedo con forma semiredondeado",
     "description2": "Realizada en viscosa elastizada",
@@ -253,6 +125,134 @@
       ]
     },
     "variationName": "TRIANA REMERA M/LARGA VERDE MILITAR",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126208",
+    "colorId": 19,
+    "description": "Remera escote redondo, manga larga. Ruedo con forma semiredondeado",
+    "description2": "Realizada en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 42445,
+    "images": [
+      "126208_19_1.jpg",
+      "126208_19_2.jpg",
+      "126208_19_3.jpg",
+      "126208_45_1.jpg"
+    ],
+    "mainImage": "126208_19_1.jpg",
+    "name": "TRIANA REMERA M/LARGA",
+    "price": 810,
+    "price1": 955,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 810,
+          "price1": 955,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5A5A3E",
+                "description": "VERDE MILITAR",
+                "id": 45,
+                "price": 810,
+                "price1": 955,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 810,
+                      "price1": 955,
+                      "productForSaleId": 5760607
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 810,
+                      "price1": 955,
+                      "productForSaleId": 5760606
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 810,
+                      "price1": 955,
+                      "productForSaleId": 5760609
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 810,
+                      "price1": 955,
+                      "productForSaleId": 5760608
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 810,
+                "price1": 955,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 810,
+                      "price1": 955,
+                      "productForSaleId": 5760602
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 810,
+                      "price1": 955,
+                      "productForSaleId": 5760604
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 810,
+                      "price1": 955,
+                      "productForSaleId": 5760603
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 810,
+                      "price1": 955,
+                      "productForSaleId": 5760605
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "TRIANA REMERA M/LARGA VIOLETA",
     "productLineId": "3324"
   }
 ]

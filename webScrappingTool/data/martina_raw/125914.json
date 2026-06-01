@@ -5,156 +5,6 @@
       "name": "BRAND"
     },
     "code": "125914",
-    "colorId": 74,
-    "description": "Remera escote corazón, manga corta. Un basico imperdible.",
-    "description2": "Realizada en algodón elastizado",
-    "description3": "Calce clásico",
-    "id": 42041,
-    "images": [
-      "125914_45_1.jpg",
-      "125914_4_1.jpg",
-      "125914_4_2.jpg"
-    ],
-    "mainImage": "125914_45_1.jpg",
-    "name": "CALA REMERA",
-    "price": 690,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 690,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#791226",
-                "description": "BORDO",
-                "id": 4,
-                "price": 690,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 690,
-                      "productForSaleId": 5753650
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 690,
-                      "productForSaleId": 5753649
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 690,
-                      "productForSaleId": 5753651
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 690,
-                      "productForSaleId": 5753648
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#472007",
-                "description": "CHOCOLATE",
-                "id": 74,
-                "price": 690,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 690,
-                      "productForSaleId": 5753659
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 690,
-                      "productForSaleId": 5753657
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 690,
-                      "productForSaleId": 5753658
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 690,
-                      "productForSaleId": 5753656
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#5A5A3E",
-                "description": "VERDE MILITAR",
-                "id": 45,
-                "price": 690,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 690,
-                      "productForSaleId": 5753653
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 690,
-                      "productForSaleId": 5753652
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 690,
-                      "productForSaleId": 5753654
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 690,
-                      "productForSaleId": 5753655
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "CALA REMERA CHOCOLATE",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125914",
     "colorId": 45,
     "description": "Remera escote corazón, manga corta. Un basico imperdible.",
     "description2": "Realizada en algodón elastizado",
@@ -447,6 +297,156 @@
       ]
     },
     "variationName": "CALA REMERA BORDO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125914",
+    "colorId": 74,
+    "description": "Remera escote corazón, manga corta. Un basico imperdible.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce clásico",
+    "id": 42041,
+    "images": [
+      "125914_45_1.jpg",
+      "125914_4_1.jpg",
+      "125914_4_2.jpg"
+    ],
+    "mainImage": "125914_45_1.jpg",
+    "name": "CALA REMERA",
+    "price": 690,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 690,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 690,
+                      "productForSaleId": 5753650
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 690,
+                      "productForSaleId": 5753649
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 690,
+                      "productForSaleId": 5753651
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 690,
+                      "productForSaleId": 5753648
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#472007",
+                "description": "CHOCOLATE",
+                "id": 74,
+                "price": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 690,
+                      "productForSaleId": 5753659
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 690,
+                      "productForSaleId": 5753657
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 690,
+                      "productForSaleId": 5753658
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 690,
+                      "productForSaleId": 5753656
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#5A5A3E",
+                "description": "VERDE MILITAR",
+                "id": 45,
+                "price": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 690,
+                      "productForSaleId": 5753653
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 690,
+                      "productForSaleId": 5753652
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 690,
+                      "productForSaleId": 5753654
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 690,
+                      "productForSaleId": 5753655
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CALA REMERA CHOCOLATE",
     "productLineId": "3324"
   }
 ]

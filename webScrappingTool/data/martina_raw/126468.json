@@ -46,12 +46,6 @@
                   "id": "size",
                   "variationValues": [
                     {
-                      "description": "42",
-                      "id": 52,
-                      "price": 1725,
-                      "productForSaleId": 5754281
-                    },
-                    {
                       "description": "46",
                       "id": 55,
                       "price": 1725,
