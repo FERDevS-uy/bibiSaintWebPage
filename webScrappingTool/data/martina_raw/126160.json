@@ -5,6 +5,159 @@
       "name": "BRAND"
     },
     "code": "126160",
+    "colorId": 32,
+    "description": "Remera manga larga, escote redondo. El basico infaltable para el invierno!",
+    "description2": "Realizada en jersey melange",
+    "description3": "Calce clásico",
+    "id": 42370,
+    "images": [
+      "126160_1214_1.jpg",
+      "126160_1214_2.jpg",
+      "126160_32_1.jpg",
+      "126160_32_2.jpg",
+      "126160_44_1.jpg",
+      "126160_44_2.jpg"
+    ],
+    "mainImage": "126160_32_1.jpg",
+    "name": "VOLK REMERA M/LARGA",
+    "price": 1000,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1000,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5A6A92",
+                "description": "AZUL MELANGE",
+                "id": 44,
+                "price": 1000,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1000,
+                      "productForSaleId": 5758293
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1000,
+                      "productForSaleId": 5758292
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1000,
+                      "productForSaleId": 5758295
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1000,
+                      "productForSaleId": 5758294
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 1000,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1000,
+                      "productForSaleId": 5758284
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1000,
+                      "productForSaleId": 5758287
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1000,
+                      "productForSaleId": 5758286
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1000,
+                      "productForSaleId": 5758285
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C02230",
+                "description": "ROJO MELANGE",
+                "id": 1214,
+                "price": 1000,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1000,
+                      "productForSaleId": 5758288
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1000,
+                      "productForSaleId": 5758291
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1000,
+                      "productForSaleId": 5758289
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1000,
+                      "productForSaleId": 5758290
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "VOLK REMERA M/LARGA GRIS MELANGE",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126160",
     "colorId": 1214,
     "description": "Remera manga larga, escote redondo. El basico infaltable para el invierno!",
     "description2": "Realizada en jersey melange",
@@ -303,159 +456,6 @@
       ]
     },
     "variationName": "VOLK REMERA M/LARGA AZUL MELANGE",
-    "productLineId": "3325"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126160",
-    "colorId": 32,
-    "description": "Remera manga larga, escote redondo. El basico infaltable para el invierno!",
-    "description2": "Realizada en jersey melange",
-    "description3": "Calce clásico",
-    "id": 42370,
-    "images": [
-      "126160_1214_1.jpg",
-      "126160_1214_2.jpg",
-      "126160_32_1.jpg",
-      "126160_32_2.jpg",
-      "126160_44_1.jpg",
-      "126160_44_2.jpg"
-    ],
-    "mainImage": "126160_32_1.jpg",
-    "name": "VOLK REMERA M/LARGA",
-    "price": 1000,
-    "productLine": {
-      "id": 3355,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3325,
-        "name": "HOMBRE"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 1000,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#5A6A92",
-                "description": "AZUL MELANGE",
-                "id": 44,
-                "price": 1000,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 1000,
-                      "productForSaleId": 5758293
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 1000,
-                      "productForSaleId": 5758292
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 1000,
-                      "productForSaleId": 5758295
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 1000,
-                      "productForSaleId": 5758294
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#D2CECF",
-                "description": "GRIS MELANGE",
-                "id": 32,
-                "price": 1000,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 1000,
-                      "productForSaleId": 5758284
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 1000,
-                      "productForSaleId": 5758287
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 1000,
-                      "productForSaleId": 5758286
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 1000,
-                      "productForSaleId": 5758285
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#C02230",
-                "description": "ROJO MELANGE",
-                "id": 1214,
-                "price": 1000,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 1000,
-                      "productForSaleId": 5758288
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 1000,
-                      "productForSaleId": 5758291
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 1000,
-                      "productForSaleId": 5758289
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 1000,
-                      "productForSaleId": 5758290
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "VOLK REMERA M/LARGA GRIS MELANGE",
     "productLineId": "3325"
   }
 ]

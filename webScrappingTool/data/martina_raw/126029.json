@@ -16,7 +16,8 @@
     ],
     "mainImage": "126029_1269_1.jpg",
     "name": "MELITA SACO",
-    "price": 3555,
+    "price": 3020,
+    "price1": 3555,
     "productLine": {
       "id": 4760,
       "name": "TAPADOS Y SACOS",
@@ -29,9 +30,10 @@
       "id": "tipoVenta",
       "variationValues": [
         {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 3555,
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 3020,
+          "price1": 3555,
           "variation": {
             "id": "color",
             "variationValues": [
@@ -39,39 +41,45 @@
                 "colorHex": "#F03198",
                 "description": "MAGENTA",
                 "id": 1269,
-                "price": 3555,
+                "price": 3020,
+                "price1": 3555,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "42",
                       "id": 52,
-                      "price": 3555,
-                      "productForSaleId": 5753785
+                      "price": 3020,
+                      "price1": 3555,
+                      "productForSaleId": 5770277
                     },
                     {
                       "description": "44",
                       "id": 54,
-                      "price": 3555,
-                      "productForSaleId": 5753786
+                      "price": 3020,
+                      "price1": 3555,
+                      "productForSaleId": 5770278
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 3555,
-                      "productForSaleId": 5753787
+                      "price": 3020,
+                      "price1": 3555,
+                      "productForSaleId": 5770279
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 3555,
-                      "productForSaleId": 5753784
+                      "price": 3020,
+                      "price1": 3555,
+                      "productForSaleId": 5770276
                     },
                     {
                       "description": "50",
                       "id": 101,
-                      "price": 3555,
-                      "productForSaleId": 5753783
+                      "price": 3020,
+                      "price1": 3555,
+                      "productForSaleId": 5770275
                     }
                   ]
                 }

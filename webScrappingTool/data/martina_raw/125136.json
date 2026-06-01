@@ -50,6 +50,12 @@
                       "id": 20,
                       "price": 2400,
                       "productForSaleId": 5756955
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 2400,
+                      "productForSaleId": 5756954
                     }
                   ]
                 }
@@ -130,6 +136,12 @@
                       "id": 20,
                       "price": 2400,
                       "productForSaleId": 5756955
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 2400,
+                      "productForSaleId": 5756954
                     }
                   ]
                 }

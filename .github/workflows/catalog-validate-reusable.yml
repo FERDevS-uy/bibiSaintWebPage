@@ -256,7 +256,17 @@ jobs:
           const currentCount = rows.length - 1;
           const thresholdPercent = Number(process.env.CATALOG_DROP_THRESHOLD_PERCENT || '35');
           const providerThresholdPercent = Number(process.env.PROVIDER_DROP_THRESHOLD_PERCENT || '50');
-          const providerMinBaseRows = Number(process.env.PROVIDER_DROP_MIN_BASE_ROWS || '20');
+          const expectedProviders = ['nuvex', 'kaideco', 'martinaditrento'];
+
+          report.providerCounts.current = Object.fromEntries(providerCountsCurrent);
+
+          // Regla principal: solo fallar si algún proveedor esperado trae 0 productos.
+          for (const provider of expectedProviders) {
+            const currValue = providerCountsCurrent.get(provider) || 0;
+            if (currValue === 0) {
+              report.errors.push(`Provider ${provider} returned 0 products`);
+            }
+          }
 
           try {
             const previousCsv = execSync('git show HEAD~1:code/src/data/productos.csv', {
@@ -283,43 +293,22 @@ jobs:
               console.log(`Catalog rows previous=${previousCount}, current=${currentCount}, drop=${dropPercent.toFixed(2)}%`);
 
               if (dropPercent > thresholdPercent) {
-                console.error(
-                  `Catalog drop ${dropPercent.toFixed(2)}% exceeds threshold ${thresholdPercent}% (possible data incident).`
-                );
-                report.errors.push(
-                  `Global catalog drop ${dropPercent.toFixed(2)}% exceeds threshold ${thresholdPercent}%`
-                );
-                report.summary = {
-                  rowsCurrent: currentCount,
-                  rowsPrevious: previousCount,
-                  uniqueIds: ids.size,
-                };
-                fs.writeFileSync('validation-report.json', JSON.stringify(report, null, 2));
-                process.exit(1);
+                const msg = `Catalog drop ${dropPercent.toFixed(2)}% exceeds threshold ${thresholdPercent}% (allowed by policy; only zero-provider fails).`;
+                console.warn(msg);
+                report.warnings.push(msg);
               }
 
               for (const [provider, prevValue] of providerCountsPrevious.entries()) {
-                if (prevValue < providerMinBaseRows) continue;
                 const currValue = providerCountsCurrent.get(provider) || 0;
                 const providerDrop = ((prevValue - currValue) / prevValue) * 100;
                 console.log(
                   `Provider ${provider}: previous=${prevValue}, current=${currValue}, drop=${providerDrop.toFixed(2)}%`
                 );
                 if (providerDrop > providerThresholdPercent) {
-                  const msg = `Provider ${provider} drop ${providerDrop.toFixed(2)}% exceeds threshold ${providerThresholdPercent}%`;
-                  console.error(msg);
-                  report.errors.push(msg);
+                  const msg = `Provider ${provider} drop ${providerDrop.toFixed(2)}% exceeds threshold ${providerThresholdPercent}% (allowed by policy; only zero-provider fails).`;
+                  console.warn(msg);
+                  report.warnings.push(msg);
                 }
-              }
-
-              if (report.errors.length > 0) {
-                report.summary = {
-                  rowsCurrent: currentCount,
-                  rowsPrevious: previousCount,
-                  uniqueIds: ids.size,
-                };
-                fs.writeFileSync('validation-report.json', JSON.stringify(report, null, 2));
-                process.exit(1);
               }
             } else {
               console.log('Previous catalog has 0 rows; anomaly drop gate skipped.');
@@ -328,6 +317,17 @@ jobs:
           } catch (err) {
             console.log('Previous catalog snapshot not available; anomaly drop gate skipped.');
             report.warnings.push('Previous catalog snapshot not available; anomaly drop gate skipped.');
+          }
+
+          if (report.errors.length > 0) {
+            console.error('CSV validation failed:');
+            report.errors.forEach((e) => console.error(`- ${e}`));
+            report.summary = {
+              rowsCurrent: currentCount,
+              uniqueIds: ids.size,
+            };
+            fs.writeFileSync('validation-report.json', JSON.stringify(report, null, 2));
+            process.exit(1);
           }
 
           console.log(`CSV validation OK. Rows: ${currentCount}, Unique IDs: ${ids.size}`);

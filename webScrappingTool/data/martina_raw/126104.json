@@ -5,123 +5,6 @@
       "name": "BRAND"
     },
     "code": "126104",
-    "colorId": 24,
-    "description": "Remera escote redondo, con recortes y manga corta, puño en tela doble.",
-    "description2": "Realizada en jersey flame algodon",
-    "description3": "Calce clásico",
-    "id": 42292,
-    "images": [
-      "126104_24_1.jpg",
-      "126104_24_2.jpg",
-      "126104_8_1.jpg",
-      "126104_8_2.jpg",
-      "126104_8_3.jpg"
-    ],
-    "mainImage": "126104_24_1.jpg",
-    "name": "MAGDA REMERA",
-    "price": 810,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 810,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#D7C339",
-                "description": "MOSTAZA",
-                "id": 24,
-                "price": 810,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 810,
-                      "productForSaleId": 5753856
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 810,
-                      "productForSaleId": 5753857
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 810,
-                      "productForSaleId": 5753859
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 810,
-                      "productForSaleId": 5753858
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#00A23A",
-                "description": "VERDE",
-                "id": 8,
-                "price": 810,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 810,
-                      "productForSaleId": 5753862
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 810,
-                      "productForSaleId": 5753860
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 810,
-                      "productForSaleId": 5753863
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 810,
-                      "productForSaleId": 5753861
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "MAGDA REMERA MOSTAZA",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126104",
     "colorId": 8,
     "description": "Remera escote redondo, con recortes y manga corta, puño en tela doble.",
     "description2": "Realizada en jersey flame algodon",
@@ -231,6 +114,123 @@
       ]
     },
     "variationName": "MAGDA REMERA VERDE",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126104",
+    "colorId": 24,
+    "description": "Remera escote redondo, con recortes y manga corta, puño en tela doble.",
+    "description2": "Realizada en jersey flame algodon",
+    "description3": "Calce clásico",
+    "id": 42292,
+    "images": [
+      "126104_24_1.jpg",
+      "126104_24_2.jpg",
+      "126104_8_1.jpg",
+      "126104_8_2.jpg",
+      "126104_8_3.jpg"
+    ],
+    "mainImage": "126104_24_1.jpg",
+    "name": "MAGDA REMERA",
+    "price": 810,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 810,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D7C339",
+                "description": "MOSTAZA",
+                "id": 24,
+                "price": 810,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 810,
+                      "productForSaleId": 5753856
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 810,
+                      "productForSaleId": 5753857
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 810,
+                      "productForSaleId": 5753859
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 810,
+                      "productForSaleId": 5753858
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 810,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 810,
+                      "productForSaleId": 5753862
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 810,
+                      "productForSaleId": 5753860
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 810,
+                      "productForSaleId": 5753863
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 810,
+                      "productForSaleId": 5753861
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MAGDA REMERA MOSTAZA",
     "productLineId": "3324"
   }
 ]

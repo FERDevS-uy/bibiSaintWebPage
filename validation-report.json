@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-06-01T21:03:14.919Z",
+  "file": "/Users/franccesco.giordano/Documents/proyectos personales/bibiSaintWebPage/code/src/data/productos.csv",
+  "sourceKind": "active",
+  "summary": {
+    "rowsCurrent": 597,
+    "uniqueIds": 597
+  },
+  "providerCounts": {
+    "current": {
+      "nuvex": 387,
+      "kaideco": 34,
+      "martinaditrento": 176
+    },
+    "previous": {}
+  },
+  "warnings": [],
+  "errors": [
+    "Row 72: missing name",
+    "Row 72: missing precio",
+    "Row 72: missing imagen"
+  ]
+}

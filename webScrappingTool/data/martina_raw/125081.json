@@ -1,0 +1,68 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125081",
+    "colorId": 381,
+    "copy": "Remera manga larga rayada Elvira",
+    "description": "Remera escote redondo con detalles de botones fijos en el delantero.",
+    "description2": "Realizada en jersey rayado hilado color",
+    "description3": "Calce clásico",
+    "id": 40840,
+    "images": [
+      "125081_381_1.jpg",
+      "125081_381_2.jpg"
+    ],
+    "mainImage": "125081_381_1.jpg",
+    "name": "ELVIRA REMERA",
+    "price": 770,
+    "price1": 1100,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 770,
+          "price1": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "RAYADO",
+                "id": 381,
+                "price": 770,
+                "price1": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 770,
+                      "price1": 1100,
+                      "productForSaleId": 5760489
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ELVIRA REMERA RAYADO",
+    "productLineId": "3324"
+  }
+]

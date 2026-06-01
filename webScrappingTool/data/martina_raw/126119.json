@@ -5,134 +5,6 @@
       "name": "BRAND"
     },
     "code": "126119",
-    "colorId": 9,
-    "description": "Remera con detalle en escote delantero en V y pequeños frunces. Una prenda que se puede usar clásica o bajando apenas los hombros para un calce mas sexy.",
-    "description2": "Realizada en viscosa elastizada",
-    "description3": "Calce clásico",
-    "id": 42320,
-    "images": [
-      "126119_32_1.jpg",
-      "126119_32_2.jpg",
-      "126119_9_1.jpg",
-      "126119_9_2.jpg"
-    ],
-    "mainImage": "126119_9_1.jpg",
-    "name": "ETELVINA REMERA",
-    "price": 670,
-    "price1": 790,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "PRECIO REBAJADO",
-          "id": 6,
-          "price": 670,
-          "price1": 790,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#D2CECF",
-                "description": "GRIS MELANGE",
-                "id": 32,
-                "price": 670,
-                "price1": 790,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 670,
-                      "price1": 790,
-                      "productForSaleId": 5760586
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 670,
-                      "price1": 790,
-                      "productForSaleId": 5760588
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 670,
-                      "price1": 790,
-                      "productForSaleId": 5760587
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 670,
-                      "price1": 790,
-                      "productForSaleId": 5760589
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#EF1635",
-                "description": "ROJO",
-                "id": 9,
-                "price": 670,
-                "price1": 790,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 670,
-                      "price1": 790,
-                      "productForSaleId": 5760591
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 670,
-                      "price1": 790,
-                      "productForSaleId": 5760590
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 670,
-                      "price1": 790,
-                      "productForSaleId": 5760593
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 670,
-                      "price1": 790,
-                      "productForSaleId": 5760592
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "ETELVINA REMERA ROJO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126119",
     "colorId": 32,
     "description": "Remera con detalle en escote delantero en V y pequeños frunces. Una prenda que se puede usar clásica o bajando apenas los hombros para un calce mas sexy.",
     "description2": "Realizada en viscosa elastizada",
@@ -253,6 +125,134 @@
       ]
     },
     "variationName": "ETELVINA REMERA GRIS MELANGE",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126119",
+    "colorId": 9,
+    "description": "Remera con detalle en escote delantero en V y pequeños frunces. Una prenda que se puede usar clásica o bajando apenas los hombros para un calce mas sexy.",
+    "description2": "Realizada en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 42320,
+    "images": [
+      "126119_32_1.jpg",
+      "126119_32_2.jpg",
+      "126119_9_1.jpg",
+      "126119_9_2.jpg"
+    ],
+    "mainImage": "126119_9_1.jpg",
+    "name": "ETELVINA REMERA",
+    "price": 670,
+    "price1": 790,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 670,
+          "price1": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 670,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "price1": 790,
+                      "productForSaleId": 5760586
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "price1": 790,
+                      "productForSaleId": 5760588
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "price1": 790,
+                      "productForSaleId": 5760587
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "price1": 790,
+                      "productForSaleId": 5760589
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 670,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 670,
+                      "price1": 790,
+                      "productForSaleId": 5760591
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 670,
+                      "price1": 790,
+                      "productForSaleId": 5760590
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 670,
+                      "price1": 790,
+                      "productForSaleId": 5760593
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 670,
+                      "price1": 790,
+                      "productForSaleId": 5760592
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ETELVINA REMERA ROJO",
     "productLineId": "3324"
   }
 ]
