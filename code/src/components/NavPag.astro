@@ -1,10 +1,6 @@
 ---
 import { config } from "src/config";
-
-const { default: prevArrow } = await import("@assets/prev-arrow.svg?raw");
-const { default: nextArrow } = await import("@assets/next-arrow.svg?raw");
-const { default: lastArrow } = await import("@assets/last-arrow.svg?raw");
-const { default: firstArrow } = await import("@assets/first-arrow.svg?raw");
+import styles from "../styles/components/NavPag.module.css";
 
 interface Props {
   totalPages: number;
@@ -13,97 +9,62 @@ interface Props {
 }
 
 const { totalPages, actualPage, baseURL = config.base } = Astro.props;
+
+const nextUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${+actualPage + 1}`) : `${baseURL}/page/${+actualPage + 1}`;
+const prevUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${+actualPage - 1}`) : `${baseURL}/page/${+actualPage - 1}`;
 ---
 
-<nav class="pagination">
+<nav class={styles.pagination} id="products-pagination" aria-label="Paginación">
   {
     actualPage == 1 ? (
-      <>
-        <span class="button">
-          <Fragment set:html={firstArrow} />
-        </span>
-        <span class="button">
-          <Fragment set:html={prevArrow} />
-        </span>
-      </>
+      <span class={`${styles.arrow} ${styles.disabled}`} aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+      </span>
     ) : (
-      <>
-        <a href={`${baseURL}/page/1`}>
-          <Fragment set:html={firstArrow} />
-        </a>
-        <a href={`${baseURL}/page/${actualPage - 1}`}>
-          <Fragment set:html={prevArrow} />
-        </a>
-      </>
+      <a href={prevUrl} class={styles.arrow} aria-label="Página anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+      </a>
     )
   }
-  <span
-    ><span id="actualPage">{actualPage}</span> / <span id="totalPages"
-      >{totalPages}</span
-    ></span
-  >
+
+  <span class={styles.info}>
+    <span id="actualPage">{actualPage}</span> de <span id="totalPages">{totalPages}</span>
+  </span>
+
   {
     actualPage == totalPages ? (
-      <>
-        <span class="button">
-          <Fragment set:html={nextArrow} />
-        </span>
-        <span class="button">
-          <Fragment set:html={lastArrow} />
-        </span>
-      </>
+      <span class={`${styles.arrow} ${styles.disabled}`} aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+      </span>
     ) : (
-      <>
-        <a href={`${baseURL}/page/${+actualPage + 1}`}>
-          <Fragment set:html={nextArrow} />
-        </a>
-        <a href={`${baseURL}/page/${totalPages}`}>
-          <Fragment set:html={lastArrow} />
-        </a>
-      </>
+      <a href={nextUrl} class={styles.arrow} aria-label="Página siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+      </a>
     )
   }
 </nav>
 
-<style>
-  :global(svg) {
-    width: 20px;
-    height: 20px;
-  }
+<script>
+  // @ts-nocheck
+  window.addEventListener("DOMContentLoaded", () => {
+    const nav = document.getElementById("products-pagination");
+    if (!nav) return;
 
-  .pagination {
-    margin-top: 3rem;
+    const currentParams = new URLSearchParams(window.location.search);
+    if (currentParams.toString().length === 0) return;
 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
+    nav.querySelectorAll("a[href]").forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href) return;
+      const url = new URL(href, window.location.origin);
+      currentParams.forEach((value, key) => {
+        if (!url.searchParams.has(key)) {
+          url.searchParams.set(key, value);
+        }
+      });
 
-  a,
-  span.button {
-    padding: 0.5em 1em;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-items: center;
-  }
-
-  a {
-    color: var(--principal-text-color);
-    text-decoration: none;
-    background-color: var(--principal-background-color);
-  }
-  a:hover {
-    background-color: var(--principal-background-color-dark);
-    color: var(--principal-text-color);
-  }
-
-  span.button {
-    color: #b1b1b1;
-    background-color: var(--principal-background-color-light);
-    user-select: none;
-  }
-</style>
+      const finalPath = `${url.pathname}${url.search}${url.hash}`;
+      link.setAttribute("href", finalPath);
+    });
+  });
+</script>

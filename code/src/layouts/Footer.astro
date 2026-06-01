@@ -1,103 +1,435 @@
 ---
+import type CategoryList from "src/types/categoryList";
+import { Image } from "astro:assets";
+
+import logo from "@assets/logo_blanco.png";
 import { Icon } from "astro-icon/components";
+const { default: facebookSVG } = await import("@assets/facebook.svg?raw");
+const { default: instagramSVG } = await import("@assets/instagram.svg?raw");
+const { default: whatsappSVG } = await import("@assets/whatsapp.svg?raw");
+const { default: mercadoPagoSVG } = await import("@assets/mercadoPago.svg?raw");
+const { default: bankSVG } = await import("@assets/bank.svg?raw");
+const globeSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
+
+interface Props {
+  categories: CategoryList[];
+}
+const { categories } = Astro.props;
 ---
 
-<footer class="footer">
-  <h2>Contáctanos</h2>
-  <p>
-    Para consultas, pedidos o más información, contáctanos a través de nuestras
-    redes sociales o WhatsApp.
-  </p>
-  <ul>
-    <li>
-      <a
-        href="https://instagram.com/bibisventasonline"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Icon name="instagram" width="24" height="24" />
-      </a>
-      <li>
-        <a
-          href="https://facebook.com/bibicartanumerologica"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon name="facebook" width="24" height="24" />
-        </a>
+<footer>
+  <div class="footerContainer mobile">
+    <div class="contact-details">
+      <h2 class="title">Contacto</h2>
+
+      <div class="detail-item">
+        <div class="icon-wrapper mobile">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="contact-svg"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+        </div>
+        <div class="detail-text">
+          <p>Telefono: +598 91 361 706</p>
+          <p>Mail: bibisventasysserviciosonline@gmail.com</p>
+        </div>
+      </div>
+
+      <div class="detail-item">
+        <div class="icon-wrapper pin">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="contact-svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        </div>
+        <div class="detail-text">
+          <span>Dirección: Baltasar Brum 1154, 60000 Paysandú, Departamento de Paysandú, Uruguay</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="social_medias">
+      <Image src={logo} alt="logo blanco" class="logo" />
+
+      <ul class="social-icons-list">
+        <li>
+          <a
+            href="https://facebook.com/bibicartanumerologica"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Facebook"
+          >
+            <Fragment set:html={facebookSVG} />
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://instagram.com/bibisventasonline"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Instagram"
+          >
+            <Fragment set:html={instagramSVG} />
+          </a>
+        </li>
         <li>
           <a
             href="https://wa.me/+59891361706"
             target="_blank"
             rel="noopener noreferrer"
+            title="Whatsapp"
           >
-            <Icon name="whatsapp" width="24" height="24" />
+            <Fragment set:html={whatsappSVG} />
           </a>
         </li>
-      </li>
-    </li>
-  </ul>
+        <li>
+          <a
+            href="#"
+            title="Website"
+          >
+            <Fragment set:html={globeSVG} />
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footerContainer desktop">
+    <div class="col1">
+      <a href={import.meta.env.BASE_URL}>
+        <Image class="logo" src={logo} alt="logo blanco" />
+      </a>
+      <p>Bibi's - Donde cada </p>
+      <p>elección tiene alma</p>
+    </div>
+
+    <ul class="col2">
+      <h3>CATEGORÍAS</h3>
+      <ul class="cats-list">
+        {
+          categories &&
+            categories.length > 0 &&
+            categories
+              .map((cat) => (
+                <li>
+                  <a
+                    href={`${import.meta.env.BASE_URL}/categories/${cat.name}`}
+                  >
+                    {cat.name}
+                  </a>
+                </li>
+              ))
+              .slice(0, 5)
+        }
+      </ul>
+    </ul>
+
+    <ul class="col3">
+      <h3>MEDIOS DE PAGOS</h3>
+      <ul class="payments-list">
+        <li title="Transferencia"><Fragment set:html={bankSVG} /></li>
+        <li title="Mercado Pago"><Fragment set:html={mercadoPagoSVG} /></li>
+      </ul>
+    </ul>
+
+    <div class="col4 social_medias">
+      <h3>CONTACTO</h3>
+      <a class="navLink" href={`${import.meta.env.BASE_URL}/about`}
+        >Quienes somos</a
+      >
+      <ul class="social-icons-list">
+        <li>
+          <a
+            href="https://facebook.com/bibicartanumerologica"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Facebook"
+          >
+            <Fragment set:html={facebookSVG} />
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://instagram.com/bibisventasonline"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Instagram"
+          >
+            <Fragment set:html={instagramSVG} />
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://wa.me/+59891361706"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Whatsapp"
+          >
+            <Fragment set:html={whatsappSVG} />
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            title="Website"
+          >
+            <Fragment set:html={globeSVG} />
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </footer>
 
 <style>
-  .footer {
-    background-color: var(--principal-background-color);
-    padding: 3rem 10px;
-    text-align: center;
+  /* ------------------------- Global ------------------------- */
+  .separator {
+    margin-block: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  p {
+    word-break: break-word;
+  }
+
+  a {
+    text-decoration: none;
+    text-wrap: nowrap;
+    color: var(--secondary-text-color);
+  }
+  a:hover {
+    opacity: 0.7;
+  }
+
+  footer {
+    background: #c11010;
+    background: linear-gradient(
+      0deg,
+      var(--p-b-color) 0%,
+      var(--s-b-color) 100%
+    );
+    border-radius: 30px 30px 0 0;
+    padding: 25px 10px;
     font-size: 0.9rem;
-    color: #6c757d;
+    color: var(--secondary-text-color);
   }
-  .footer h2 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #343a40;
+
+  h3 {
+    color: var(--secondary-text-color);
+    text-wrap: nowrap;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
   }
-  .footer a {
-    color: #007bff;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition:
-      background 0.2s,
-      transform 0.2s;
-    width: 40px;
-    height: 40px;
-  }
-  .footer a:hover {
-    text-decoration: none;
-    background: #f7cac9;
-    transform: scale(1.18) rotate(-8deg);
-    box-shadow: 0 2px 12px #c3aed6aa;
-  }
-  .footer a[href*="instagram"]:hover {
-    background: linear-gradient(135deg, #f7cac9 40%, #c3aed6 100%);
-  }
-  .footer a[href*="facebook"]:hover {
-    background: linear-gradient(135deg, #a7c7e7 40%, #fff5ba 100%);
-  }
-  .footer a[href*="wa.me"]:hover {
-    background: linear-gradient(135deg, #b7eac5 40%, #fff5ba 100%);
-  }
-  .footer ul {
+
+  ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0;
   }
-  .footer ul li {
-    display: inline;
-    margin: 0 10px;
+
+  .title {
+    text-align: center;
+    margin-bottom: 1rem;
   }
-  .footer p {
-    margin: 10px 0;
+
+  .logo {
+    width: 200px;
+    height: auto;
   }
-  @media (max-width: 600px) {
-    .footer {
-      font-size: 0.8rem;
+
+  .social_medias {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .social-icons-list {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    margin-top: 5px;
+  }
+
+  /* ------------------------- Mobile ------------------------- */
+  .footerContainer.mobile {
+    margin-inline: auto;
+    width: 92%;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .footerContainer.mobile .contact-details {
+    width: 100%;
+    max-width: 500px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .footerContainer.mobile .title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+    color: #ffffff;
+  }
+
+  .footerContainer.mobile .detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .footerContainer.mobile .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .footerContainer.mobile .icon-wrapper svg {
+    stroke: #ffffff;
+    display: block;
+  }
+
+  .footerContainer.mobile .detail-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+  }
+
+  .footerContainer.mobile .detail-text p,
+  .footerContainer.mobile .detail-text span {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #ffffff;
+    word-break: break-word;
+  }
+
+  .footerContainer.mobile .separator {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.35);
+    margin-block: 1.75rem;
+    width: 100%;
+  }
+
+  .footerContainer.mobile .social_medias {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 500px;
+    margin-inline: auto;
+    gap: 1rem;
+  }
+
+  .footerContainer.mobile .logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .footerContainer.mobile .social-icons-list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footerContainer.mobile .social-icons-list li {
+    border: none !important; /* Quitar cualquier borde heredado */
+  }
+
+  .footerContainer.mobile .social-icons-list li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid #ffffff !important;
+    color: #ffffff;
+    background: transparent;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .footerContainer.mobile .social-icons-list li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+
+  .footerContainer.mobile .social-icons-list svg {
+    width: 18px;
+    height: 18px;
+    fill: #ffffff;
+    stroke: none;
+  }
+
+  @media screen and (min-width: 1000px) {
+    .footerContainer.mobile {
+      display: none;
     }
-    .footer h2 {
-      font-size: 1rem;
+  }
+
+  /* ------------------------- Desktop ------------------------- */
+
+  .footerContainer.desktop {
+    display: none;
+
+    padding: 10px;
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem 6rem;
+    flex-wrap: wrap;
+  }
+
+  .footerContainer.desktop > * {
+    width: 220px;
+    min-width: 200px;
+  }
+
+  .col1 p {
+    text-wrap: wrap;
+    text-align: center;
+    min-width: 250px;
+  }
+
+  .cats-list li {
+    margin-bottom: 0.2rem;
+  }
+
+  .payments-list {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  .col4 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  @media screen and (min-width: 1000px) {
+    .footerContainer.desktop {
+      display: flex;
     }
+  }
+</style>
+
+<style is:global>
+  /* Achicar redes sociales globales del footer */
+  .social-icons-list svg, .payments-list svg {
+    width: 22px;
+    height: 22px;
   }
 </style>

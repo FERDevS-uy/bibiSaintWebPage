@@ -1,0 +1,67 @@
+---
+import ListarProductos from "@components/ListarProductos.astro";
+import SideBardCategories from "@components/SideBardCategories.astro";
+import Layout from "@layouts/Layout.astro";
+import { countCategories } from "@utils/countCategories";
+import { productMatchesCategory } from "@utils/categoryNormalization";
+import { cargarProductos } from "@utils/loadCSV";
+import { config } from "src/config";
+import type { subCategory } from "src/types/categoryList";
+import '../style.css';
+
+export const getStaticPaths = () => {
+  const CANT_PRODUCTOS = config.postPerPage;
+  const products = cargarProductos();
+  const categories = countCategories(products);
+
+  return categories.map((category) => {
+    const subcategoryMap = new Map<string, subCategory>();
+    if (category.subcategories.length > 0) {
+      category.subcategories.forEach((subC) => {
+        if (!subcategoryMap.has(subC.name))
+          subcategoryMap.set(subC.name, { ...subC });
+      });
+    }
+
+    const productsPerCat = products.filter(
+      (p) => productMatchesCategory(p, category.name),
+    );
+
+    const totalPages = Math.ceil(productsPerCat.length / CANT_PRODUCTOS);
+
+    return {
+      params: { id: category.name },
+      props: {
+        products: productsPerCat.slice(0, CANT_PRODUCTOS),
+        subCat: Array.from(subcategoryMap.values()),
+        totalPages,
+      },
+    };
+  });
+};
+
+const { id } = Astro.params;
+const { products, subCat, totalPages } = Astro.props;
+const baseUrl = `${import.meta.env.BASE_URL}/categories/${id}`;
+---
+
+<Layout
+  categorySelected={id}
+  pageTitle={`${config.pageTitle} - ${id}`}
+  pageId="categories"
+>
+  <div class="categories__container">
+    <SideBardCategories
+      categoryFather={id}
+      arrayCategorys={subCat}
+      products={products}
+    />
+
+    <ListarProductos
+      products={products}
+      totalPages={totalPages}
+      baseURL={baseUrl}
+    />
+  </div>
+</Layout>
+

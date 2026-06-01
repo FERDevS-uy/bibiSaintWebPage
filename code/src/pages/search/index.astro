@@ -1,0 +1,8 @@
+---
+import Layout from "@layouts/Layout.astro";
+import ListarProductos from "@components/ListarProductos.jsx";
+---
+
+<Layout pageId="search">
+  <ListarProductos client:only="react" pageSize={10} />
+</Layout>

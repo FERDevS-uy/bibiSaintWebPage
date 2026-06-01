@@ -1,0 +1,13 @@
+  .categories__container {
+      display: flex;
+      flex-direction: column;
+      padding-top: 12px;
+  }
+
+  @media screen and (min-width: 600px) {
+      .categories__container {
+          flex-direction: row;
+          min-height: 100dvh;
+          padding-top: 16px;
+      }
+  }

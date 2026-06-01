@@ -3,7 +3,11 @@ import ListarProductos from "@components/ListarProductos.astro";
 import Layout from "@layouts/Layout.astro";
 import { cargarProductos } from "@utils/loadCSV";
 import { countCategories } from "@utils/countCategories";
+import { productMatchesCategory } from "@utils/categoryNormalization";
 import { config } from "src/config";
+import SideBardCategories from "@components/SideBardCategories.astro";
+import type { subCategory } from "src/types/categoryList";
+import "../../style.css";
 
 /** Genera los archivos html por cada categoría */
 export const getStaticPaths = () => {
@@ -12,7 +16,17 @@ export const getStaticPaths = () => {
   const categories = countCategories(products);
 
   return categories.flatMap((c) => {
-    const totalPages = Math.ceil(c.count / CANT_PRODUCTOS);
+    const subcategoryMap = new Map<string, subCategory>();
+    if (c.subcategories.length > 0) {
+      c.subcategories.forEach((subC) => {
+        if (!subcategoryMap.has(subC.name))
+          subcategoryMap.set(subC.name, { ...subC });
+      });
+    }
+
+    const productsPerCat = products.filter((p) => productMatchesCategory(p, c.name));
+
+    const totalPages = Math.ceil(productsPerCat.length / CANT_PRODUCTOS);
 
     return Array.from({ length: totalPages }, (_, i) => {
       const start = i * CANT_PRODUCTOS;
@@ -21,9 +35,8 @@ export const getStaticPaths = () => {
       return {
         params: { id: c.name, pag: i + 1 },
         props: {
-          products: products
-            .filter((p) => p.categories.some((cat) => cat === c.name))
-            .slice(start, end),
+          products: productsPerCat.slice(start, end),
+          subCat: Array.from(subcategoryMap.values()),
           totalPages,
         },
       };
@@ -32,15 +45,26 @@ export const getStaticPaths = () => {
 };
 
 const { id, pag } = Astro.params;
-const { products, totalPages } = Astro.props;
+const { products, totalPages, subCat } = Astro.props;
 const baseUrl = `${config.base}/categories/${id}`;
 ---
 
-<Layout categorySelected={id}>
-  <ListarProductos
-    products={products}
-    totalPages={totalPages}
-    actualPage={pag}
-    baseURL={baseUrl}
-  />
+<Layout
+  categorySelected={id}
+  pageTitle={`${config.pageTitle} - ${id} / page ${pag}`}
+  pageId="categories"
+>
+  <div class="categories__container">
+    <SideBardCategories
+      categoryFather={id}
+      arrayCategorys={subCat}
+      products={products}
+    />
+    <ListarProductos
+      products={products}
+      totalPages={totalPages}
+      actualPage={pag}
+      baseURL={baseUrl}
+    />
+  </div>
 </Layout>

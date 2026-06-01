@@ -27,7 +27,7 @@ const { pag } = Astro.params;
 const { products, totalPages } = Astro.props;
 ---
 
-<Layout>
+<Layout pageId="index">
   <ListarProductos
     products={products}
     totalPages={totalPages}

@@ -1,0 +1,74 @@
+name: Incidente de Datos
+about: Reportar caida de proveedor, CSV corrupto, inconsistencia de catalogo o error de integridad.
+title: "[Incidente Datos] <resumen>"
+labels:
+  - incident
+  - data
+body:
+  - type: dropdown
+    id: severidad
+    attributes:
+      label: Severidad
+      options:
+        - SEV-1
+        - SEV-2
+        - SEV-3
+    validations:
+      required: true
+
+  - type: textarea
+    id: impacto
+    attributes:
+      label: Impacto en negocio
+      description: Que flujo se rompio y para cuantos usuarios.
+      placeholder: "Ejemplo: Categoria Ropa sin productos, checkout no afectado."
+    validations:
+      required: true
+
+  - type: textarea
+    id: sintomas
+    attributes:
+      label: Sintomas observados
+      placeholder: "Errores, pantallas, comportamientos."
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: Evidencia tecnica
+      description: Logs, links a runs de GitHub Actions, hash de CSV, etc.
+      placeholder: "Run URL, mensaje de error, commit SHA."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: proveedor
+    attributes:
+      label: Proveedor afectado
+      options:
+        - Proveedor 1
+        - Proveedor 2
+        - Proveedor 3
+        - Multiples
+        - No aplica
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contencion
+    attributes:
+      label: Contencion aplicada
+      options:
+        - label: Se freno deploy nuevo.
+        - label: Se restauro snapshot anterior.
+        - label: Se ejecuto rollback de commit.
+        - label: Se verifico checklist postdeploy.
+
+  - type: textarea
+    id: plan
+    attributes:
+      label: Plan de recuperacion
+      placeholder: "Pasos concretos y ETA."
+    validations:
+      required: true

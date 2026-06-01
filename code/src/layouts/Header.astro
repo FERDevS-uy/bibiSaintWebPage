@@ -2,9 +2,11 @@
 import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
 import { config } from "src/config";
 import type CategoryList from "src/types/categoryList";
+import { Image } from "astro:assets";
+import SearchInput from "@components/SearchInput.astro";
 
-const { default: logoSVG } = await import("@assets/logoFD.svg?raw");
-const { default: cartSVG } = await import("@assets/cart.svg?raw");
+import logo from "@assets/logo_blanco.png";
+import cart from "@assets/cart.png"
 const { default: downSVG } = await import("@assets/down.svg?raw");
 
 interface Props {
@@ -12,35 +14,111 @@ interface Props {
   categorySelected?: string;
 }
 const { categories, categorySelected } = Astro.props;
+
+interface GroupedSubcategory {
+  group: string;
+  items: string[];
+}
+
+function slugify(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+}
+
+function getGroupedSubcategories(category: CategoryList): GroupedSubcategory[] {
+  if (category.name !== "Ropa") return [];
+
+  const groups = new Map<string, string[]>();
+
+  category.subcategories.forEach((sub) => {
+    const rawName = sub.name.trim();
+    if (!rawName) return;
+
+    const [first, ...rest] = rawName.split(" - ");
+    const groupName = first === "Mujer" || first === "Hombre" ? first : "Otros";
+
+    if (!groups.has(groupName)) groups.set(groupName, []);
+
+    const list = groups.get(groupName)!;
+    if (rest.length > 0) {
+      if (!list.includes(rawName)) list.push(rawName);
+    }
+  });
+
+  ["Mujer", "Hombre"].forEach((groupName) => {
+    if (!groups.has(groupName)) groups.set(groupName, []);
+  });
+
+  return Array.from(groups.entries())
+    .map(([group, items]) => ({ group, items }))
+    .filter((entry) => entry.group !== "Otros" || entry.items.length > 0)
+    .sort((a, b) => {
+      const order = ["Mujer", "Hombre", "Otros"];
+      return order.indexOf(a.group) - order.indexOf(b.group);
+    });
+}
+
+// Sort categories according to requested order
+const categoryOrder = ["Cama", "Ropa", "Baño", "Infantil", "Hogar"];
+const sortedCategories = categories.sort((a, b) => {
+  const indexA = categoryOrder.indexOf(a.name);
+  const indexB = categoryOrder.indexOf(b.name);
+  return (indexA === -1 ? 99 : indexA) - (indexB === -1 ? 99 : indexB);
+});
+
+// Detect current path for mobile active highlight
+const pathname = Astro.url.pathname;
+const base = config.base || "";
+const isHome = pathname === base + "/" || pathname === base || pathname === base + "/index";
+const isAbout = pathname.includes("/about");
 ---
 
 <header>
-  <Astronav closeOnClick>
+  <Astronav>
     <div class="headerContainer">
+      <MenuIcon class="menuIcon" />
       <div class="logoContainer">
         <a href={config.base}>
-          <Fragment set:html={logoSVG} />
+          <Image src={logo} alt="logo blanco" />
         </a>
       </div>
 
       <div class="navMenu">
+        <div class="searchWrapperDesk">
+          <SearchInput />
+        </div>
+
+        <button id="mobileSearchBtn" class="mobileSearchBtn" title="Buscar" aria-label="Abrir búsqueda">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+
         <a href={`${config.base}/carrito`} class="cartLink">
-          <Fragment set:html={cartSVG} />
-          <span id="cartCount" class="cartCount"></span>
+          <Image src={cart} alt="Carrito" class="cart-icon" />
+          <div id="cartCount" class="cartCount hidden">
+            <span></span>
+          </div>
         </a>
-        <MenuIcon class="menuIcon" />
       </div>
     </div>
   </Astronav>
 
   <MenuItems class="itemsBox hidden">
-    <ul class="mainNav">
-      <li><a class="navLink" href={config.base}>Inicio</a></li>
-      <li>
-        <a class="navLink" href={`${config.base}/about`}>Sobre nosotros</a>
-      </li>
-      <li class="hr"><hr /></li>
-    </ul>
+    <!-- Botón de Cerrar (Mobile) -->
+    <div class="mobileMenuHeader">
+      <div class="search__container sideBar">
+        <SearchInput />
+      </div>
+      <button id="closeMenuBtn" class="closeMenuBtn">
+        <span>&times;</span>
+      </button>
+    </div>
 
     <input
       type="checkbox"
@@ -48,352 +126,221 @@ const { categories, categorySelected } = Astro.props;
       class="toggleCategories"
       hidden
     />
+
     <label for="toggleCategories" id="toggleCategoriesBtn">
       <Fragment set:html={downSVG} />
     </label>
     <ul class="categoryList">
       {
-        categories &&
-          categories.map((c) => (
-            <li>
+        sortedCategories &&
+          sortedCategories.map((c) => (
+            <li class={`categoryItem ${categorySelected === c.name ? "is-current" : ""}`}>
               <a
                 href={`${config.base}/categories/${c.name}`}
-                class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""}`}
+                class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""} ${c.subcategories && c.subcategories.length > 0 ? "has-submenu" : ""}`}
+                data-submenu-target={`submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}`}
               >
-                {c.name} <span class="count"> ({c.count})</span>
+                {c.name}
+                {c.subcategories && c.subcategories.length > 0 && (
+                  <span class="submenu-indicator">›</span>
+                )}
               </a>
+              {c.subcategories && c.subcategories.length > 0 && (
+                <div
+                  class="subcategoryList"
+                  id={`submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}`}
+                >
+                  <div class="submenuHeader">
+                    <span class="submenuTitle">{c.name}</span>
+                    <button
+                      class="backMenuBtn"
+                      data-submenu-close={`submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}`}
+                    >
+                      &larr;
+                    </button>
+                  </div>
+                  <ul>
+                    <li>
+                      <a
+                        href={`${config.base}/categories/${c.name}`}
+                        class="principal navLink subcategoryLink"
+                        style="font-weight: bold;"
+                      >
+                        Ver todos
+                      </a>
+                    </li>
+                    {c.name !== "Ropa" &&
+                      c.subcategories.map((sub) => (
+                        <li>
+                          <a
+                            href={`${config.base}/categories/${c.name}/${sub.name}`}
+                            class="navLink subcategoryLink"
+                          >
+                            {sub.name}
+                          </a>
+                        </li>
+                      ))}
+
+                    {c.name === "Ropa" &&
+                      getGroupedSubcategories(c).map((groupData) => {
+                        const groupSlug = slugify(groupData.group);
+                        const nestedId = `submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}-${groupSlug}`;
+
+                        return (
+                          <li class="nestedCategoryItem">
+                            <a
+                              href={`${config.base}/categories/${c.name}/${groupData.group}`}
+                              class={`navLink subcategoryLink ${groupData.items.length > 0 ? "has-submenu-level2" : ""}`}
+                              data-submenu-target={groupData.items.length > 0 ? nestedId : undefined}
+                            >
+                              {groupData.group}
+                              {groupData.items.length > 0 && (
+                                <span class="submenu-indicator">›</span>
+                              )}
+                            </a>
+
+                            {groupData.items.length > 0 && (
+                              <div class="subcategoryList nestedSubcategoryList" id={nestedId}>
+                                <div class="submenuHeader">
+                                  <span class="submenuTitle">{groupData.group}</span>
+                                  <button class="backMenuBtn" data-submenu-close={nestedId}>
+                                    &larr;
+                                  </button>
+                                </div>
+
+                                <ul>
+                                  <li>
+                                    <a
+                                      href={`${config.base}/categories/${c.name}/${groupData.group}`}
+                                      class="principal navLink subcategoryLink"
+                                      style="font-weight: bold;"
+                                    >
+                                      Ver todo {groupData.group}
+                                    </a>
+                                  </li>
+
+                                  {groupData.items.map((subName) => (
+                                    <li>
+                                      <a
+                                        href={`${config.base}/categories/${c.name}/${subName}`}
+                                        class="navLink subcategoryLink"
+                                      >
+                                        {subName.replace(`${groupData.group} - `, "")}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </li>
+                        );
+                      })}
+                  </ul>
+                </div>
+              )}
             </li>
           ))
       }
     </ul>
+
+    <ul class="mainNav mainNavBottom">
+      <li><a class={`navLink ${isHome ? "active-page" : ""}`} href={config.base}>Inicio</a></li>
+      <li>
+        <a class={`navLink ${isAbout ? "active-page" : ""}`} href={`${config.base}/about`}>Quienes Somos</a>
+      </li>
+    </ul>
   </MenuItems>
 </header>
 
-<style>
-  header {
-    --background-color: var(--principal-background-color);
-    --background-color-dark: var(--principal-background-color-dark);
-    --background-color-light: var(--principal-background-color-light);
-    --text-color: rgba(35, 41, 70, 0.98);
-    --itemBox-background-color: #d5c4a4;
-    --menu-size: 3rem;
-    --header-icon-size: 10rem;
-    --header-pc-icon-size: 7rem;
-    --header-pc-height: 130px;
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const hasSubmenuLinks = document.querySelectorAll(
+      ".has-submenu, .has-submenu-level2",
+    );
+    const backBtns = document.querySelectorAll(".backMenuBtn");
+    const closeMenuBtn = document.getElementById(
+      "closeMenuBtn",
+    ) as HTMLButtonElement;
+    const astroNavMenu = document.getElementById(
+      "astronav-menu",
+    ) as HTMLButtonElement;
+    const mobileSearchBtn = document.getElementById("mobileSearchBtn");
+    const searchForm = document.querySelector(".navMenu form");
 
-    margin-bottom: 0.5rem;
-  }
+    // Abrir submenús
+    hasSubmenuLinks.forEach((link) => {
+      if (window.innerWidth <= 999) {
+        link.addEventListener("click", (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          const targetId = link.getAttribute("data-submenu-target");
+          if (targetId) {
+            const submenu = document.getElementById(targetId);
+            if (submenu) {
+              submenu.classList.add("open");
+            }
+          }
+        });
+      }
+    });
 
-  .headerContainer {
-    width: 100%;
-    padding: 0.5rem;
-    background: var(--background-color);
+    // Retroceder al menú principal
+    backBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = btn.getAttribute("data-submenu-close");
+        if (targetId) {
+          const submenu = document.getElementById(targetId);
+          if (submenu) {
+            submenu.classList.remove("open");
+          }
+        }
+      });
+    });
 
-    box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.1);
-    border-radius: 0 0 18px 18px;
+    // Cerrar el panel móvil entero
+    closeMenuBtn.addEventListener("click", () => {
+      astroNavMenu.click();
+    });
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .logoContainer a {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    text-decoration: none;
-  }
-
-  :global(.logoContainer svg) {
-    color: var(--text-color);
-    width: var(--header-icon-size);
-    height: 100%;
-  }
-
-  .navMenu {
-    display: flex;
-    gap: 15px;
-  }
-  .menuIcon {
-    width: var(--menu-size);
-    height: var(--menu-size);
-    font-size: 2.2rem;
-
-    padding: 6px;
-  }
-
-  :global(#astronav-menu) {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    background-image: none;
-    color: inherit;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Items Box */
-  .itemsBox {
-    width: 100%;
-    height: 100%;
-    background-color: var(--itemBox-background-color);
-    box-shadow: 0 4px 24px 0 rgba(163, 174, 214, 0.1);
-    padding-bottom: 10rem;
-    padding-inline: 1rem;
-
-    position: absolute;
-    right: 0;
-    z-index: 2;
-    transition: 0.5s;
-    overflow-x: hidden;
-  }
-  .itemsBox.hidden {
-    display: initial;
-    width: 0;
-    padding: 0;
-  }
-  .itemsBox ul {
-    list-style: none;
-  }
-  .itemsBox hr {
-    border: 1px solid #fff;
-    margin: 10px 0;
-  }
-
-  .navLink {
-    color: #fff;
-    overflow-x: hidden;
-    text-wrap: nowrap;
-    width: 100%;
-    display: block;
-    text-decoration: none;
-    padding: 1rem;
-    font-weight: bold;
-  }
-  .itemsBox li:not(:first-of-type) .navLink {
-    border-top: 2px solid #ffffff5d;
-  }
-  .navLink:hover,
-  .navLink:focus,
-  .categoryLink.selected {
-    color: #ffffff9e;
-    transform: translateX(20px);
-  }
-
-  :global(.itemsBox svg),
-  :global(.itemsBox.hidden svg) {
-    display: none;
-  }
-
-  /* Cart */
-  .cartLink {
-    position: relative;
-    display: flex;
-    align-items: center;
-    color: var(--text-color);
-  }
-  :global(.cartLink svg) {
-    width: calc(var(--menu-size) - 10px);
-    height: calc(var(--menu-size) - 10px);
-  }
-  .cartLink:hover {
-    animation: shake 0.5s infinite;
-  }
-  .cartCount {
-    position: absolute;
-    top: -8px;
-    right: -12px;
-    background: #f7cac9;
-    border-radius: 50%;
-    font-size: 0.85em;
-    padding: 0.1em 0.5em;
-    font-weight: bold;
-    min-width: 1.5em;
-    text-align: center;
-    display: none;
-  }
-
-  @keyframes shake {
-    0% {
-      transform: translateY(0);
+    // Mobile search toggle: opens mobile drawer and focuses the search input inside it
+    if (mobileSearchBtn) {
+      mobileSearchBtn.addEventListener("click", () => {
+        // Only click the burger if the menu is hidden
+        if (astroNavMenu.getAttribute("aria-expanded") !== "true") {
+          astroNavMenu.click();
+        }
+        // Focus the search input inside the sidebar menu
+        setTimeout(() => {
+          const sidebarInput = document.querySelector(".search__container.sideBar input") as HTMLInputElement;
+          if (sidebarInput) {
+            sidebarInput.focus();
+            // Also move the cursor to the end if there's text
+            const val = sidebarInput.value;
+            sidebarInput.value = "";
+            sidebarInput.value = val;
+          }
+        }, 300); // Wait for CSS transition of menu opening
+      });
     }
-    15% {
-      transform: translateY(-5px);
-    }
-    30% {
-      transform: translateY(5px);
-    }
-    45% {
-      transform: translateY(-5px);
-    }
-    60% {
-      transform: translateY(5px);
-    }
-    75% {
-      transform: translateY(-5px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-
-  @media screen and (min-width: 1000px) {
-    .headerContainer {
-      border-radius: 0;
-      align-items: flex-end;
-      height: var(--header-pc-height);
-      padding: 0.5rem 0;
-    }
-
-    .logoContainer img,
-    .navMenu {
-      z-index: 10;
-    }
-
-    :global(.logoContainer svg) {
-      height: var(--header-pc-icon-size);
-      min-width: auto;
-      width: 250px;
-    }
-
-    :global(.cartLink svg) {
-      margin-bottom: 5px;
-    }
-
-    .navMenu .menuIcon {
-      display: none;
-    }
-
-    /* ItemsBox */
-    .itemsBox,
-    .itemsBox.hidden {
-      width: auto;
-      height: var(--header-pc-height);
-      box-shadow: none;
-      transition: none;
-      background-color: transparent;
-      padding: 0;
-      padding-bottom: 5px;
-
-      top: 0;
-      left: 250px;
-
-      display: grid;
-      align-items: start;
-      justify-items: end;
-      gap: 20px 10px;
-      grid-template-rows: 1fr 50px;
-      grid-template-columns: auto 25px 70px;
-      overflow: visible;
-    }
-
-    .itemsBox ul {
-      float: initial;
-    }
-
-    .navLink {
-      border-radius: 0;
-      padding: 0.7rem 1rem;
-    }
-    .navLink:hover,
-    .navLink:focus,
-    .categoryLink.selected {
-      background-color: #bbab8e;
-      transform: translateX(0);
-    }
-    .itemsBox li:not(:first-of-type) .navLink {
-      border-top: none;
-    }
-    li .navLink {
-      border: none;
-    }
-    .itemsBox hr,
-    .itemsBox li.hr {
-      display: none;
-    }
-
-    .itemsBox ul.mainNav,
-    .itemsBox.hidden ul.mainNav {
-      width: initial;
-      margin-inline: 10px;
-      background-color: var(--itemBox-background-color);
-
-      overflow: hidden;
-      border-end-end-radius: 10px;
-      border-end-start-radius: 10px;
-
-      grid-column: 1/4;
-      display: flex;
-      flex-direction: row;
-      gap: 5px;
-      align-items: center;
-      justify-content: flex-end;
-    }
-
-    /* Categories list */
-    .itemsBox .categoryList,
-    .itemsBox.hidden .categoryList {
-      grid-column: 1;
-      grid-row: 2;
-      width: initial;
-      max-width: 1000px;
-      background-color: var(--itemBox-background-color);
-
-      display: flex;
-      flex-direction: row-reverse;
-      align-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      transition: 0.3s;
-      border-radius: 10px;
-    }
-    .categoryList {
-      height: 45px;
-      overflow: hidden;
-      margin: 0 0.5rem 0 0.5rem;
-    }
-
-    .itemsBox #toggleCategoriesBtn {
-      grid-column: 2/3;
-      grid-row: 2/3;
-      user-select: none;
-      height: 45px;
-      display: flex;
-    }
-    :global(.itemsBox svg),
-    :global(.itemsBox.hidden svg) {
-      display: block;
-      width: 25px;
-      cursor: pointer;
-      transition: transform 0.3s;
-      /* color: var(--background-color-dark); */
-    }
-
-    :global(.toggleCategories:checked ~ .categoryList) {
-      height: 250px;
-      padding: 0 0.5rem 0.5rem 0.5rem;
-      box-shadow: 1px 5px 5px #bbbbbb;
-    }
-    :global(.toggleCategories:checked ~ label svg) {
-      transform: rotate(180deg);
-    }
-  }
-</style>
+  });
+</script>
 
 <script type="module">
   // Mostrar cantidad de productos en el carrito
   window.updateCartCount = function () {
+    const cartCount = document.getElementById("cartCount");
+    const cartCountSpan = document.querySelector("#cartCount span");
+
     const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
     const count = carrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
-    const cartCount = document.getElementById("cartCount");
+
     if (cartCount) {
       if (count > 0) {
-        cartCount.textContent = count;
-        cartCount.style.display = "inline-block";
+        cartCountSpan.textContent = count;
+        cartCount.classList.remove("hidden");
       } else {
-        cartCount.style.display = "none";
+        cartCount.classList.add("hidden");
       }
     }
   };
@@ -429,3 +376,507 @@ const { categories, categorySelected } = Astro.props;
   window.addEventListener("DOMContentLoaded", checkCategoryListWidth);
   window.addEventListener("resize", checkCategoryListWidth);
 </script>
+
+<style>
+  header {
+    background: #c11010;
+    background: linear-gradient(
+      0deg,
+      var(--p-b-color) 0%,
+      var(--s-b-color) 100%
+    );
+  }
+
+  /* Yellow bottom border & hiding elements on mobile */
+  @media screen and (max-width: 999px) {
+    header {
+      border-bottom: 3px solid var(--line-color);
+    }
+    .navMenu .searchForm {
+      display: none !important;
+    }
+    .searchWrapperDesk {
+      display: none !important;
+    }
+  }
+
+  .headerContainer {
+    color: var(--secondary-text-color);
+    margin: auto;
+    width: 100%;
+    max-width: 1000px;
+    height: var(--header-height);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-inline: 1rem;
+  }
+
+  .logoContainer {
+    flex: 1;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* --- SEARCH FORM --- */
+  .search__container {
+    display: none;
+    padding-inline: 5rem;
+    padding-block: 1.5rem;
+    flex: 1;
+  }
+  .search__container.sideBar {
+    display: inherit;
+    padding: 0;
+  }
+  .navMenu {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  .navMenu form {
+    flex: 1;
+    padding-inline: 1rem;
+    padding-block: 1.5rem;
+    display: none; /* Oculto en mobile */
+  }
+  .navMenu form input {
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 1px solid var(--line-color);
+  }
+
+  /* Mobile search button */
+  .mobileSearchBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    flex-shrink: 0;
+    color: #fff;
+  }
+  .mobileSearchBtn svg {
+    width: 20px;
+    height: 20px;
+  }
+  .mobileSearchBtn:hover {
+    background: rgba(255,255,255,0.35);
+  }
+
+  /* --- CART --- */
+  .cartLink {
+    color: var(--secondary-text-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    position: relative; /* Necesario para contener el SVG absoluto en mobile */
+    width: 50px;
+    height: 75px;
+    flex-shrink: 0;
+  }
+  .cartLink:hover {
+    animation: shake 0.5s infinite;
+  }
+  .cart-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .cartCount span {
+    background-color: var(--line-color);
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: -5px;
+    top: 10px;
+    z-index: 10;
+  }
+
+  /* --- ITEMS BOX (Mobile Drawer) --- */
+  .itemsBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 85vw;
+    max-width: 400px;
+    min-width: 310px;
+    /* Use dynamic viewport units and ensure full-bleed to bottom on mobile UI */
+    bottom: 0;
+    height: 100dvh;
+    background: var(
+      --h-gradient
+    ); /* linear-gradient(135deg, #e43f3f 0%, #b81c1c 100%) */
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+  }
+  .itemsBox.hidden {
+    transform: translateX(-100%);
+    display: none;
+  }
+
+  .mobileMenuHeader {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5rem;
+    padding-inline: 1.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .closeMenuBtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .closeMenuBtn span {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    font-weight: bold;
+    font-size: 2rem;
+  }
+
+  .itemsBox ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .itemsBox .mainNav li,
+  .itemsBox .categoryList > li,
+  .subcategoryList ul > li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .navLink {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .navLink:hover,
+  .navLink.focus {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  /* Active page highlight in mobile menu */
+  .navLink.active-page,
+  .categoryLink.selected {
+    color: var(--line-color) !important;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  .submenu-indicator {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  /* Submenu Drilldown */
+  .subcategoryList {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background: var(--h-gradient);
+    z-index: 10;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nestedCategoryItem {
+    position: relative;
+  }
+
+  .nestedSubcategoryList {
+    z-index: 11;
+  }
+  .subcategoryList.open {
+    transform: translateX(0);
+  }
+
+  .submenuHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #ccc;
+    color: black;
+  }
+  .submenuTitle {
+    color: white;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+    display: flex;
+  }
+  .backMenuBtn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  /* TAMAÑO PC */
+  @media screen and (min-width: 1000px) {
+    header {
+      /* --header-icon-size: 7rem; */
+    }
+
+    .logoContainer {
+      flex: 0 0 auto;
+    }
+
+    /* --- MENU ICON --- */
+    .headerContainer .menuIcon {
+      display: none;
+    }
+    /* Mostrar barra de búsqueda en desktop & centrar */
+    .navMenu {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .searchWrapperDesk {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    .searchWrapperDesk form {
+      display: block;
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .search__container {
+      display: inherit;
+    }
+
+    /* --- CART --- */
+    .cartLink {
+      position: relative;
+      width: 50px;
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* --- ITEMS BOX --- */
+    .itemsBox,
+    .itemsBox.hidden {
+      border-top: 2px solid var(--line-color);
+      box-shadow: none;
+      transition: none;
+      transform: none !important;
+      background-color: transparent;
+
+      display: flex !important;
+      justify-content: center;
+      margin: auto;
+      flex-direction: row;
+
+      position: static;
+      width: auto;
+      height: auto;
+      max-width: none;
+      overflow: visible;
+    }
+    .itemsBox > ul {
+      display: flex;
+    }
+    .itemsBox ul.mainNav {
+      margin-left: 0;
+    }
+    .mainNavBottom {
+      margin-left: 20px !important;
+    }
+
+    .mobileMenuHeader {
+      display: none;
+    }
+
+    .itemsBox .mainNav li,
+    .itemsBox .categoryList > li {
+      border-bottom: none;
+      position: relative;
+    }
+
+    .navLink {
+      color: var(--secondary-text-color);
+      overflow-x: hidden;
+      text-wrap: nowrap;
+      width: 100%;
+      display: block;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      text-overflow: ellipsis;
+      font-weight: normal;
+      font-size: 1rem;
+    }
+    .navLink.principal {
+      display: none;
+    }
+    .navLink:hover,
+    .navLink.focus,
+    .categoryLink.selected {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+    .submenu-indicator {
+      font-size: 1rem;
+      margin-left: 5px;
+    }
+
+    .subcategoryList {
+      transition: none;
+      transform: none;
+      display: none;
+      position: absolute;
+      background: var(--s-b-color);
+      min-width: 180px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      z-index: 5;
+      border-radius: 0 0 10px 10px;
+      left: 0;
+      top: 100%;
+    }
+
+    .nestedSubcategoryList {
+      top: 0;
+      left: 100%;
+      border-radius: 0 10px 10px 10px;
+      min-width: 220px;
+    }
+
+    .submenuHeader {
+      display: none;
+    }
+
+    .subcategoryLink {
+      padding: 0.5rem 1rem;
+      border-bottom: none;
+      color: var(--text-color);
+    }
+
+    .categoryItem {
+      color: var(--secondary-text-color);
+    }
+    .categoryItem:hover > .subcategoryList {
+      display: block;
+    }
+
+    .nestedCategoryItem:hover > .nestedSubcategoryList {
+      display: block;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateY(0);
+      }
+      15% {
+        transform: translateY(-5px);
+      }
+      30% {
+        transform: translateY(5px);
+      }
+      45% {
+        transform: translateY(-5px);
+      }
+      60% {
+        transform: translateY(5px);
+      }
+      75% {
+        transform: translateY(-5px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+  }
+</style>
+
+<style is:global>
+  header .logoContainer img {
+    height: 75px;
+    width: auto;
+    max-width: 200px;
+    display: block;
+  }
+
+  /* --- CART --- */
+  header .cartLink svg {
+    width: calc(var(--menu-size) - 10px);
+    height: calc(var(--menu-size) - 10px);
+    position: absolute;
+    top: 22px;
+  }
+
+  /* --- MENU ICON --- */
+  #astronav-menu {
+    border: none;
+    cursor: pointer;
+    background-image: none;
+    background-color: transparent;
+    color: inherit;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #astronav-menu svg {
+    width: calc(var(--menu-size) - 10px);
+    height: calc(var(--menu-size) - 10px);
+  }
+  /* Yellow burger lines on mobile */
+  @media screen and (max-width: 999px) {
+    #astronav-menu svg line,
+    #astronav-menu svg rect,
+    #astronav-menu svg path {
+      stroke: var(--line-color);
+      fill: var(--line-color);
+    }
+    /* Hide mobile search button on desktop */
+  }
+  @media screen and (min-width: 1000px) {
+    header .mobileSearchBtn {
+      display: none;
+    }
+  }
+</style>

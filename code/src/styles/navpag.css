@@ -1,0 +1,52 @@
+svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Container del nav */
+.pagination {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  margin-inline: auto;
+}
+
+.pag-arrow {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.pag-arrow svg {
+  width: 28px;
+  height: 28px;
+}
+
+.pag-arrow:hover:not(.disabled) {
+  color: #000;
+  transform: scale(1.1);
+}
+
+.pag-arrow.disabled {
+  color: #b1b1b1;
+  cursor: default;
+}
+
+.pag-info {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111;
+  min-width: 4.5rem;
+  text-align: center;
+  user-select: none;
+}
