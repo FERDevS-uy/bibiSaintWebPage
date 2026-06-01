@@ -1,0 +1,404 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123910",
+    "colorId": 2,
+    "copy": "Corpiño con aro de algodón Pesci",
+    "description": "Corpiño con aro premoldeado, con reguladores metálicos. Nuestro básico mejorado para un calce confortable.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 38934,
+    "images": [
+      "123910_1_1.jpg",
+      "123910_1_2.jpg",
+      "123910_1_3.jpg",
+      "123910_2_1.jpg",
+      "123910_2_2.jpg",
+      "123910_2_3.jpg",
+      "123910_2_4.jpg",
+      "123910_452_1.jpg",
+      "123910_452_2.jpg",
+      "123910_452_3.jpg"
+    ],
+    "mainImage": "123910_2_1.jpg",
+    "name": "PESCI CON ARO",
+    "price": 520,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 520,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 520,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 520,
+                      "productForSaleId": 5757639
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 520,
+                      "productForSaleId": 5757640
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 520,
+                      "productForSaleId": 5757642
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 520,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 520,
+                      "productForSaleId": 5757633
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 520,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 520,
+                      "productForSaleId": 5757637
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 520,
+                      "productForSaleId": 5757636
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 520,
+                      "productForSaleId": 5757638
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 520,
+                      "productForSaleId": 5757635
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PESCI CON ARO NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123910",
+    "colorId": 452,
+    "copy": "Corpiño con aro de algodón Pesci",
+    "description": "Corpiño con aro premoldeado, con reguladores metálicos. Nuestro básico mejorado para un calce confortable.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 38934,
+    "images": [
+      "123910_1_1.jpg",
+      "123910_1_2.jpg",
+      "123910_1_3.jpg",
+      "123910_2_1.jpg",
+      "123910_2_2.jpg",
+      "123910_2_3.jpg",
+      "123910_2_4.jpg",
+      "123910_452_1.jpg",
+      "123910_452_2.jpg",
+      "123910_452_3.jpg"
+    ],
+    "mainImage": "123910_452_1.jpg",
+    "name": "PESCI CON ARO",
+    "price": 520,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 520,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 520,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 520,
+                      "productForSaleId": 5757639
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 520,
+                      "productForSaleId": 5757640
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 520,
+                      "productForSaleId": 5757642
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 520,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 520,
+                      "productForSaleId": 5757633
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 520,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 520,
+                      "productForSaleId": 5757637
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 520,
+                      "productForSaleId": 5757636
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 520,
+                      "productForSaleId": 5757638
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 520,
+                      "productForSaleId": 5757635
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PESCI CON ARO AVELLANA",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123910",
+    "colorId": 1,
+    "copy": "Corpiño con aro de algodón Pesci",
+    "description": "Corpiño con aro premoldeado, con reguladores metálicos. Nuestro básico mejorado para un calce confortable.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 38934,
+    "images": [
+      "123910_1_1.jpg",
+      "123910_1_2.jpg",
+      "123910_1_3.jpg",
+      "123910_2_1.jpg",
+      "123910_2_2.jpg",
+      "123910_2_3.jpg",
+      "123910_2_4.jpg",
+      "123910_452_1.jpg",
+      "123910_452_2.jpg",
+      "123910_452_3.jpg"
+    ],
+    "mainImage": "123910_1_1.jpg",
+    "name": "PESCI CON ARO",
+    "price": 520,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 520,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 520,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 520,
+                      "productForSaleId": 5757639
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 520,
+                      "productForSaleId": 5757640
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 520,
+                      "productForSaleId": 5757642
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 520,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 520,
+                      "productForSaleId": 5757633
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 520,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 520,
+                      "productForSaleId": 5757637
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 520,
+                      "productForSaleId": 5757636
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 520,
+                      "productForSaleId": 5757638
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 520,
+                      "productForSaleId": 5757635
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PESCI CON ARO BLANCO",
+    "productLineId": "3324"
+  }
+]

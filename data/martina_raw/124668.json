@@ -1,0 +1,156 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124668",
+    "colorId": 2,
+    "description": "Medias tobilleras de compresión, con detalle de logo en empeine.",
+    "description2": "Realizadas en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40218,
+    "images": [
+      "124668_1_1.jpg",
+      "124668_2_1.jpg"
+    ],
+    "mainImage": "124668_2_1.jpg",
+    "name": "JULIEN MEDIAS",
+    "price": 230,
+    "productLine": {
+      "id": 3362,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 230,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 230,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 230,
+                      "productForSaleId": 5551300
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 230,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 230,
+                      "productForSaleId": 5551299
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JULIEN MEDIAS NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124668",
+    "colorId": 1,
+    "description": "Medias tobilleras de compresión, con detalle de logo en empeine.",
+    "description2": "Realizadas en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40218,
+    "images": [
+      "124668_1_1.jpg",
+      "124668_2_1.jpg"
+    ],
+    "mainImage": "124668_1_1.jpg",
+    "name": "JULIEN MEDIAS",
+    "price": 230,
+    "productLine": {
+      "id": 3362,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 230,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 230,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 230,
+                      "productForSaleId": 5551300
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 230,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 230,
+                      "productForSaleId": 5551299
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JULIEN MEDIAS BLANCO"
+  }
+]

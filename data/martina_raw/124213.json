@@ -1,0 +1,216 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124213",
+    "colorId": 2,
+    "copy": "Corpiño con aro Anabelle",
+    "description": "Corpiño con aro y breteles anchos regulables para mejor sostén ",
+    "description2": "Realizado en algodon y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 39511,
+    "images": [
+      "124213_2_1.jpg",
+      "124213_2_2.jpg",
+      "124213_2_3.jpg",
+      "124213_452_1.jpg",
+      "124213_452_2.jpg",
+      "124213_452_3.jpg"
+    ],
+    "mainImage": "124213_2_1.jpg",
+    "name": "ANABELLE CORPIÑO",
+    "price": 620,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 620,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 620,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 620,
+                      "productForSaleId": 5757682
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 620,
+                      "productForSaleId": 5757679
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 620,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 620,
+                      "productForSaleId": 5757678
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 620,
+                      "productForSaleId": 5757677
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 620,
+                      "productForSaleId": 5757675
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 620,
+                      "productForSaleId": 5757676
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANABELLE CORPIÑO NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124213",
+    "colorId": 452,
+    "copy": "Corpiño con aro Anabelle",
+    "description": "Corpiño con aro y breteles anchos regulables para mejor sostén ",
+    "description2": "Realizado en algodon y puntilla elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 39511,
+    "images": [
+      "124213_2_1.jpg",
+      "124213_2_2.jpg",
+      "124213_2_3.jpg",
+      "124213_452_1.jpg",
+      "124213_452_2.jpg",
+      "124213_452_3.jpg"
+    ],
+    "mainImage": "124213_452_1.jpg",
+    "name": "ANABELLE CORPIÑO",
+    "price": 620,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 620,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 620,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 620,
+                      "productForSaleId": 5757682
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 620,
+                      "productForSaleId": 5757679
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 620,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 620,
+                      "productForSaleId": 5757678
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 620,
+                      "productForSaleId": 5757677
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 620,
+                      "productForSaleId": 5757675
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 620,
+                      "productForSaleId": 5757676
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANABELLE CORPIÑO AVELLANA",
+    "productLineId": "3324"
+  }
+]

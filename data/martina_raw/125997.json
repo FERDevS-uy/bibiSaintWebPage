@@ -1,0 +1,62 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125997",
+    "colorId": 1424,
+    "description": "Media caña alta con diseño combinado. Planta con compresión y empeine con comprensión calada para mejor agarre y comodidad.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 42167,
+    "images": [
+      "125997_1424_1.jpg"
+    ],
+    "mainImage": "125997_1424_1.jpg",
+    "name": "AILEE MEDIA ",
+    "price": 445,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 445,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F1DCE5",
+                "description": "ROSA-CELESTE",
+                "id": 1424,
+                "price": 445,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 445,
+                      "productForSaleId": 5761165
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AILEE MEDIA  ROSA-CELESTE",
+    "productLineId": "3324"
+  }
+]

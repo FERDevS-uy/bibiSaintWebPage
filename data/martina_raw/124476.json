@@ -1,0 +1,90 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124476",
+    "colorId": 1,
+    "copy": "Blusa broderie Shamil",
+    "description": "Blusa escote en V, con detalle de mangas cortas acampanadas. Espalda con detalle de pinza encontrada, que da más amplitud y comodidad.",
+    "description2": "Realizada en broderie",
+    "description3": "Calce amplio",
+    "id": 39998,
+    "images": [
+      "124476_1_1.jpg",
+      "124476_1_2.jpg",
+      "124476_1_3.jpg",
+      "124476_1_4.jpg",
+      "124476_1_5.jpg"
+    ],
+    "mainImage": "124476_1_1.jpg",
+    "name": "SHAMIL BLUSA",
+    "price": 1590,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 1590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1590,
+                      "productForSaleId": 5547770
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1590,
+                      "productForSaleId": 5547772
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1590,
+                      "productForSaleId": 5547773
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1590,
+                      "productForSaleId": 5547774
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1590,
+                      "productForSaleId": 5547771
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SHAMIL BLUSA BLANCO"
+  }
+]

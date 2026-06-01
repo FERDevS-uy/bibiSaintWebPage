@@ -1,0 +1,232 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124928",
+    "colorId": 1,
+    "copy": "Bombacha universal Evani",
+    "description": "Bombacha universal con detalle de puntilla en delantero.",
+    "description2": "Realizada en tricot y puntilla",
+    "description3": "Calce al cuerpo",
+    "id": 40603,
+    "images": [
+      "124928_1_1.jpg",
+      "124928_452_1.jpg",
+      "124928_452_2.jpg"
+    ],
+    "mainImage": "124928_1_1.jpg",
+    "name": "EVANI  BOMBACHA ",
+    "price": 790,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 790,
+                      "productForSaleId": 5549240
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 790,
+                      "productForSaleId": 5549237
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 790,
+                      "productForSaleId": 5549238
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 790,
+                      "productForSaleId": 5549239
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 790,
+                      "productForSaleId": 5549244
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 790,
+                      "productForSaleId": 5549241
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 790,
+                      "productForSaleId": 5549242
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 790,
+                      "productForSaleId": 5549243
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "EVANI  BOMBACHA  BLANCO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124928",
+    "colorId": 452,
+    "copy": "Bombacha universal Evani",
+    "description": "Bombacha universal con detalle de puntilla en delantero.",
+    "description2": "Realizada en tricot y puntilla",
+    "description3": "Calce al cuerpo",
+    "id": 40603,
+    "images": [
+      "124928_1_1.jpg",
+      "124928_452_1.jpg",
+      "124928_452_2.jpg"
+    ],
+    "mainImage": "124928_452_1.jpg",
+    "name": "EVANI  BOMBACHA ",
+    "price": 790,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 790,
+                      "productForSaleId": 5549240
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 790,
+                      "productForSaleId": 5549237
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 790,
+                      "productForSaleId": 5549238
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 790,
+                      "productForSaleId": 5549239
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 790,
+                      "productForSaleId": 5549244
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 790,
+                      "productForSaleId": 5549241
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 790,
+                      "productForSaleId": 5549242
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 790,
+                      "productForSaleId": 5549243
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "EVANI  BOMBACHA  AVELLANA"
+  }
+]

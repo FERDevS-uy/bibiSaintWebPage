@@ -1,0 +1,64 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126253",
+    "colorId": 890,
+    "description": "Polera sin mangas, basica.",
+    "description2": "Realizadas en morley",
+    "description3": "Calce clásico",
+    "id": 42490,
+    "images": [
+      "126253_1_1.jpg",
+      "126253_1_2.jpg",
+      "126253_890_1.jpg"
+    ],
+    "mainImage": "126253_890_1.jpg",
+    "name": "AINA POLERA S/MANGAS",
+    "price": 680,
+    "productLine": {
+      "id": 4695,
+      "name": "POLERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 680,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#96A0B3",
+                "description": "GRIS ACERO",
+                "id": 890,
+                "price": 680,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 680,
+                      "productForSaleId": 5754100
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AINA POLERA S/MANGAS GRIS ACERO",
+    "productLineId": "3324"
+  }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124608",
+    "colorId": 332,
+    "description": "Remera escote a la base, full estampada y manga corta.",
+    "description2": "Realizada en microset microfibra",
+    "description3": "Calce clásico",
+    "id": 40130,
+    "images": [
+      "124608_332_1.jpg",
+      "124608_332_5.jpg"
+    ],
+    "mainImage": "124608_332_1.jpg",
+    "name": "TIZIANO REMERA",
+    "price": 600,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 600,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 600,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 600,
+                      "productForSaleId": 5548414
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 600,
+                      "productForSaleId": 5548411
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 600,
+                      "productForSaleId": 5548412
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 600,
+                      "productForSaleId": 5548413
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "TIZIANO REMERA ESTAMPADO"
+  }
+]

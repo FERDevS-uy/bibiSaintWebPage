@@ -1,0 +1,282 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125249",
+    "colorId": 19,
+    "copy": "Remera manga larga escote redondo Teodora",
+    "description": "Remera manga larga, de escote redondo. Un básico infaltable.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce clásico",
+    "id": 41035,
+    "images": [
+      "125249_19_1.jpg",
+      "125249_670_1.jpg"
+    ],
+    "mainImage": "125249_19_1.jpg",
+    "name": "TEODORA REMERA",
+    "price": 935,
+    "price1": 1250,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 935,
+          "price1": 1250,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#C6D13F",
+                "description": "PISTACCHIO",
+                "id": 670,
+                "price": 935,
+                "price1": 1250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551464
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551466
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551463
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551465
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551467
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 935,
+                "price1": 1250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551460
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551461
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551459
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551462
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551458
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "TEODORA REMERA VIOLETA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125249",
+    "colorId": 670,
+    "copy": "Remera manga larga escote redondo Teodora",
+    "description": "Remera manga larga, de escote redondo. Un básico infaltable.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce clásico",
+    "id": 41035,
+    "images": [
+      "125249_19_1.jpg",
+      "125249_670_1.jpg"
+    ],
+    "mainImage": "125249_670_1.jpg",
+    "name": "TEODORA REMERA",
+    "price": 935,
+    "price1": 1250,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 935,
+          "price1": 1250,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#C6D13F",
+                "description": "PISTACCHIO",
+                "id": 670,
+                "price": 935,
+                "price1": 1250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551464
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551466
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551463
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551465
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551467
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 935,
+                "price1": 1250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551460
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551461
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551459
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551462
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 935,
+                      "price1": 1250,
+                      "productForSaleId": 5551458
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "TEODORA REMERA PISTACCHIO"
+  }
+]

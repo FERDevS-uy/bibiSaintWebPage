@@ -1,0 +1,77 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124513",
+    "colorId": 272,
+    "description": "Vedetina con elástico partido a tono.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40035,
+    "images": [],
+    "mainImage": "124513.jpg",
+    "name": "DEBRA VEDETINA",
+    "price": 350,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F5DCD8",
+                "description": "ROSA CLARO",
+                "id": 272,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 350,
+                      "productForSaleId": 5550761
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 350,
+                      "productForSaleId": 5550758
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 350,
+                      "productForSaleId": 5550759
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 350,
+                      "productForSaleId": 5550760
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DEBRA VEDETINA ROSA CLARO"
+  }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124527",
+    "colorId": 1118,
+    "copy": "Babucha tiro holgado Eleni",
+    "description": "Pantalón babucha de tiro holgado, cintura elastizada, con elástico en espalda. Recortes de canesú en delantero y espalda. Bolsillos laterales extra grandes. ",
+    "description2": "Realizada en rustico liviano",
+    "description3": "Calce relax",
+    "id": 40049,
+    "images": [
+      "124527_1118_1.jpg",
+      "124527_1118_2.jpg"
+    ],
+    "mainImage": "124527_1118_1.jpg",
+    "name": "ELENI BABUCHA",
+    "price": 890,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 890,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5C5C5C",
+                "description": "GRIS OSCURO",
+                "id": 1118,
+                "price": 890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 890,
+                      "productForSaleId": 5550849
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 890,
+                      "productForSaleId": 5550846
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 890,
+                      "productForSaleId": 5550847
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 890,
+                      "productForSaleId": 5550848
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 890,
+                      "productForSaleId": 5550845
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ELENI BABUCHA GRIS OSCURO"
+  }
+]

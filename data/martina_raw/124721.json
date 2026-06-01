@@ -1,0 +1,90 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124721",
+    "colorId": 1145,
+    "copy": "Musculosa de jersey Rochi",
+    "description": "Musculosa de hombros anchos, cuello redondo, con detalle de estampa en delantero.",
+    "description2": "Realizada en jersey melange",
+    "description3": "Calce clásico",
+    "id": 40306,
+    "images": [
+      "124721_1145_1.jpg",
+      "124721_1145_2.jpg",
+      "124721_1145_3.jpg",
+      "124721_1145_4.jpg",
+      "124721_1145_5.jpg"
+    ],
+    "mainImage": "124721_1145_1.jpg",
+    "name": "ROCHI MUSCULOSA",
+    "price": 900,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 900,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FAEDD9",
+                "description": "BEIGE MELANGE",
+                "id": 1145,
+                "price": 900,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 900,
+                      "productForSaleId": 5547955
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 900,
+                      "productForSaleId": 5547952
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 900,
+                      "productForSaleId": 5547953
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 900,
+                      "productForSaleId": 5547954
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 900,
+                      "productForSaleId": 5547951
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ROCHI MUSCULOSA BEIGE MELANGE"
+  }
+]

@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126278",
+    "colorId": 53,
+    "description": "Buzo con capucha forrada, hombro caidos, con detalle de tachas aplicadas color niquel.",
+    "description2": "Realizado en rustico",
+    "description3": "Calce amplio",
+    "id": 42532,
+    "images": [
+      "126278_53_1.jpg",
+      "126278_53_2.jpg"
+    ],
+    "mainImage": "126278_53_1.jpg",
+    "name": "MALU BUZO",
+    "price": 2695,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2695,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#ECDDCE",
+                "description": "BEIGE",
+                "id": 53,
+                "price": 2695,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2695,
+                      "productForSaleId": 5754190
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2695,
+                      "productForSaleId": 5754191
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2695,
+                      "productForSaleId": 5754192
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2695,
+                      "productForSaleId": 5754189
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MALU BUZO BEIGE",
+    "productLineId": "3324"
+  }
+]

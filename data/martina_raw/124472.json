@@ -1,0 +1,90 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124472",
+    "colorId": 1,
+    "copy": "Blazer broderie Gery",
+    "description": "Blazer con pequeña hombrera de corte sastrero, recto, con botones en delantero. Un ítem que le sube la apuesta a cualquier look.",
+    "description2": "Realizado en broderie",
+    "description3": "Calce clásico",
+    "id": 39994,
+    "images": [
+      "124472_1_1.jpg",
+      "124472_1_2.jpg",
+      "124472_1_3.jpg",
+      "124472_1_4.jpg",
+      "124472_1_5.jpg"
+    ],
+    "mainImage": "124472_1_1.jpg",
+    "name": "GERY BLAZER",
+    "price": 2450,
+    "productLine": {
+      "id": 4760,
+      "name": "TAPADOS Y SACOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2450,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 2450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2450,
+                      "productForSaleId": 5550167
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2450,
+                      "productForSaleId": 5550164
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2450,
+                      "productForSaleId": 5550165
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2450,
+                      "productForSaleId": 5550166
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2450,
+                      "productForSaleId": 5550163
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GERY BLAZER BLANCO"
+  }
+]

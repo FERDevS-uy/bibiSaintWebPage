@@ -1,0 +1,89 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124489",
+    "colorId": 89,
+    "copy": "Pantalón pijama rojo Prada",
+    "description": "Pantalon largo de pierna recta con cintura elastizada",
+    "description2": "Realizado en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40011,
+    "images": [
+      "124489_89_1.jpg",
+      "124489_89_2.jpg",
+      "124489_89_3.jpg",
+      "124489_89_4.jpg"
+    ],
+    "mainImage": "124489_89_1.jpg",
+    "name": "PRADA PANTALON",
+    "price": 700,
+    "productLine": {
+      "id": 4576,
+      "name": "PIJAMAS Y HOMEWEAR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 700,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FDA590",
+                "description": "SALMON",
+                "id": 89,
+                "price": 700,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 700,
+                      "productForSaleId": 5549896
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 700,
+                      "productForSaleId": 5549897
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 700,
+                      "productForSaleId": 5549898
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 700,
+                      "productForSaleId": 5549895
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 700,
+                      "productForSaleId": 5549899
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PRADA PANTALON SALMON"
+  }
+]

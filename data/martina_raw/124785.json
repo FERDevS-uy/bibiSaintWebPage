@@ -1,0 +1,254 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124785",
+    "colorId": 261,
+    "description": "Vestido evasé escote redondo, con bolsillos. Detalle de bordador a tono y tajos laterales.  ",
+    "description2": "Realizado en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 40371,
+    "images": [
+      "124785_261_1.jpg",
+      "124785_2_1.jpg",
+      "124785_2_2.jpg"
+    ],
+    "mainImage": "124785_261_1.jpg",
+    "name": "PARISIEN VESTIDO",
+    "price": 1350,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1350,
+                      "productForSaleId": 5549365
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1350,
+                      "productForSaleId": 5549362
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1350,
+                      "productForSaleId": 5549363
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1350,
+                      "productForSaleId": 5549364
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1350,
+                      "productForSaleId": 5549361
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1350,
+                      "productForSaleId": 5549370
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1350,
+                      "productForSaleId": 5549367
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1350,
+                      "productForSaleId": 5549368
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1350,
+                      "productForSaleId": 5549369
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1350,
+                      "productForSaleId": 5549366
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PARISIEN VESTIDO LIMA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124785",
+    "colorId": 2,
+    "description": "Vestido evasé escote redondo, con bolsillos. Detalle de bordador a tono y tajos laterales.  ",
+    "description2": "Realizado en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 40371,
+    "images": [
+      "124785_261_1.jpg",
+      "124785_2_1.jpg",
+      "124785_2_2.jpg"
+    ],
+    "mainImage": "124785_2_1.jpg",
+    "name": "PARISIEN VESTIDO",
+    "price": 1350,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1350,
+                      "productForSaleId": 5549365
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1350,
+                      "productForSaleId": 5549362
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1350,
+                      "productForSaleId": 5549363
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1350,
+                      "productForSaleId": 5549364
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1350,
+                      "productForSaleId": 5549361
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1350,
+                      "productForSaleId": 5549370
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1350,
+                      "productForSaleId": 5549367
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1350,
+                      "productForSaleId": 5549368
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1350,
+                      "productForSaleId": 5549369
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1350,
+                      "productForSaleId": 5549366
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PARISIEN VESTIDO NEGRO"
+  }
+]

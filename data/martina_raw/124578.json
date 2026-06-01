@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124578",
+    "colorId": 203,
+    "copy": "Enterito de jersey Roma",
+    "description": "Enterito escote redondo, de manga corta, cintura elastizada y bolsillos laterales. Detalle en espalda para anudar y facilitar el acceso.",
+    "description2": "Realizado en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 40100,
+    "images": [
+      "124578_203_1.jpg",
+      "124578_203_2.jpg",
+      "124578_203_3.jpg"
+    ],
+    "mainImage": "124578_203_1.jpg",
+    "name": "ROMA ENTERITO",
+    "price": 990,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#9A152D",
+                "description": "CEREZA",
+                "id": 203,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5547940
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5547937
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5547938
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5547939
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5547936
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ROMA ENTERITO CEREZA"
+  }
+]

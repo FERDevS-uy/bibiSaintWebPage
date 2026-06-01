@@ -1,0 +1,96 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124859",
+    "colorId": 2,
+    "copy": "Buzo cuello alto con detalle Armel",
+    "description": "Buzo cuello alto escote en V y detalle de argollas aplicadas en el delantero.",
+    "description2": "Realizado en rustico algodon",
+    "description3": "Calce clásico",
+    "id": 40517,
+    "images": [
+      "124859_2_1.jpg",
+      "124859_2_2.jpg",
+      "124859_2_3.jpg"
+    ],
+    "mainImage": "124859_2_1.jpg",
+    "name": "ARMEL BUZO",
+    "price": 1460,
+    "price1": 2250,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1460,
+          "price1": 2250,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1460,
+                "price1": 2250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1460,
+                      "price1": 2250,
+                      "productForSaleId": 5562128
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1460,
+                      "price1": 2250,
+                      "productForSaleId": 5562129
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1460,
+                      "price1": 2250,
+                      "productForSaleId": 5562130
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1460,
+                      "price1": 2250,
+                      "productForSaleId": 5562127
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1460,
+                      "price1": 2250,
+                      "productForSaleId": 5562126
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ARMEL BUZO NEGRO"
+  }
+]

@@ -1,0 +1,89 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124687",
+    "colorId": 20,
+    "copy": "Musculosa con detalles delantero Kady",
+    "description": "Musculosa escote en U, con detalles de strass metalizados en el delantero.",
+    "description2": "Realizada en jersey flame algodon",
+    "description3": "Calce clásico",
+    "id": 40245,
+    "images": [
+      "124687_20_1.jpg",
+      "124687_20_2.jpg",
+      "124687_20_3.jpg",
+      "124687_20_4.jpg"
+    ],
+    "mainImage": "124687_20_1.jpg",
+    "name": "KADY MUSCULOSA",
+    "price": 895,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 895,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFDE6",
+                "description": "CRUDO",
+                "id": 20,
+                "price": 895,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 895,
+                      "productForSaleId": 5548260
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 895,
+                      "productForSaleId": 5548257
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 895,
+                      "productForSaleId": 5548258
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 895,
+                      "productForSaleId": 5548259
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 895,
+                      "productForSaleId": 5548256
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "KADY MUSCULOSA CRUDO"
+  }
+]

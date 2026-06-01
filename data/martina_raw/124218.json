@@ -1,0 +1,551 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124218",
+    "colorId": 104,
+    "copy": "Corpiño de microtul elastizado en escote Paz",
+    "description": "Corpiño sin aro con recortes en microtul elastizado en escote y almohadilla en breteles regulables.",
+    "description2": "Realizado en tricot y microtul elastizado ",
+    "description3": "Calce al cuerpo",
+    "id": 39516,
+    "images": [
+      "124218_104_1.jpg",
+      "124218_104_2.jpg",
+      "124218_1252_1.jpg",
+      "124218_1252_2.jpg",
+      "124218_1_1.jpg",
+      "124218_2_1.jpg"
+    ],
+    "mainImage": "124218_104_1.jpg",
+    "name": "PAZ CORPIÑO",
+    "price": 950,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5549490
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5549492
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5549488
+                    },
+                    {
+                      "description": "115",
+                      "id": 123,
+                      "price": 950,
+                      "productForSaleId": 5549482
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5549489
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5549487
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#A6A6A6",
+                "description": "GRIS-NEGRO",
+                "id": 104,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5549497
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5549493
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5549495
+                    },
+                    {
+                      "description": "115",
+                      "id": 123,
+                      "price": 950,
+                      "productForSaleId": 5549496
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5549494
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5549486
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5549491
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5549484
+                    },
+                    {
+                      "description": "115",
+                      "id": 123,
+                      "price": 950,
+                      "productForSaleId": 5549481
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5549485
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5549483
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PAZ CORPIÑO GRIS-NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124218",
+    "colorId": 1,
+    "copy": "Corpiño de microtul elastizado en escote Paz",
+    "description": "Corpiño sin aro con recortes en microtul elastizado en escote y almohadilla en breteles regulables.",
+    "description2": "Realizado en tricot y microtul elastizado ",
+    "description3": "Calce al cuerpo",
+    "id": 39516,
+    "images": [
+      "124218_104_1.jpg",
+      "124218_104_2.jpg",
+      "124218_1252_1.jpg",
+      "124218_1252_2.jpg",
+      "124218_1_1.jpg",
+      "124218_2_1.jpg"
+    ],
+    "mainImage": "124218_1_1.jpg",
+    "name": "PAZ CORPIÑO",
+    "price": 950,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5549490
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5549492
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5549488
+                    },
+                    {
+                      "description": "115",
+                      "id": 123,
+                      "price": 950,
+                      "productForSaleId": 5549482
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5549489
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5549487
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#A6A6A6",
+                "description": "GRIS-NEGRO",
+                "id": 104,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5549497
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5549493
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5549495
+                    },
+                    {
+                      "description": "115",
+                      "id": 123,
+                      "price": 950,
+                      "productForSaleId": 5549496
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5549494
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5549486
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5549491
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5549484
+                    },
+                    {
+                      "description": "115",
+                      "id": 123,
+                      "price": 950,
+                      "productForSaleId": 5549481
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5549485
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5549483
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PAZ CORPIÑO BLANCO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124218",
+    "colorId": 2,
+    "copy": "Corpiño de microtul elastizado en escote Paz",
+    "description": "Corpiño sin aro con recortes en microtul elastizado en escote y almohadilla en breteles regulables.",
+    "description2": "Realizado en tricot y microtul elastizado ",
+    "description3": "Calce al cuerpo",
+    "id": 39516,
+    "images": [
+      "124218_104_1.jpg",
+      "124218_104_2.jpg",
+      "124218_1252_1.jpg",
+      "124218_1252_2.jpg",
+      "124218_1_1.jpg",
+      "124218_2_1.jpg"
+    ],
+    "mainImage": "124218_2_1.jpg",
+    "name": "PAZ CORPIÑO",
+    "price": 950,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5549490
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5549492
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5549488
+                    },
+                    {
+                      "description": "115",
+                      "id": 123,
+                      "price": 950,
+                      "productForSaleId": 5549482
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5549489
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5549487
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#A6A6A6",
+                "description": "GRIS-NEGRO",
+                "id": 104,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5549497
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5549493
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5549495
+                    },
+                    {
+                      "description": "115",
+                      "id": 123,
+                      "price": 950,
+                      "productForSaleId": 5549496
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5549494
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5549486
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5549491
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5549484
+                    },
+                    {
+                      "description": "115",
+                      "id": 123,
+                      "price": 950,
+                      "productForSaleId": 5549481
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5549485
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5549483
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PAZ CORPIÑO NEGRO"
+  }
+]

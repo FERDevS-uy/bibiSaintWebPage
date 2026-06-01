@@ -1,0 +1,90 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124722",
+    "colorId": 32,
+    "copy": "Buzo con capucha de rústico Risa",
+    "description": "Buzo con capucha forrada y cordones con puntera metálica. Lleva detalle de impactante estampa con strass en delantero y pequeños tajos en los laterales.",
+    "description2": "Realizado en rustico",
+    "description3": "Calce amplio",
+    "id": 40307,
+    "images": [
+      "124722_32_1.jpg",
+      "124722_32_2.jpg",
+      "124722_32_3.jpg",
+      "124722_32_4.jpg",
+      "124722_32_5.jpg"
+    ],
+    "mainImage": "124722_32_1.jpg",
+    "name": "RISA BUZO",
+    "price": 1850,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1850,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 1850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1850,
+                      "productForSaleId": 5547960
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1850,
+                      "productForSaleId": 5547957
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1850,
+                      "productForSaleId": 5547958
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1850,
+                      "productForSaleId": 5547959
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1850,
+                      "productForSaleId": 5547956
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RISA BUZO GRIS MELANGE"
+  }
+]

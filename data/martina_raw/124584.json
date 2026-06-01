@@ -1,0 +1,632 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124584",
+    "colorId": 261,
+    "copy": "Remera cuello redondo Bogotá",
+    "description": "Remera escote redondo, manga corta. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40106,
+    "images": [
+      "124584_1269_1.jpg",
+      "124584_261_1.jpg",
+      "124584_2_1.jpg",
+      "124584_2_2.jpg"
+    ],
+    "mainImage": "124584_261_1.jpg",
+    "name": "BOGOTA REMERA",
+    "price": 435,
+    "price1": 790,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 435,
+          "price1": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 435,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566131
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566132
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566133
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566128
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566129
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566130
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F03198",
+                "description": "MAGENTA",
+                "id": 1269,
+                "price": 435,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566123
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566127
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566122
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566124
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566125
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566126
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 435,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566135
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566136
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566137
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566139
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566134
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566138
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BOGOTA REMERA LIMA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124584",
+    "colorId": 2,
+    "copy": "Remera cuello redondo Bogotá",
+    "description": "Remera escote redondo, manga corta. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40106,
+    "images": [
+      "124584_1269_1.jpg",
+      "124584_261_1.jpg",
+      "124584_2_1.jpg",
+      "124584_2_2.jpg"
+    ],
+    "mainImage": "124584_2_1.jpg",
+    "name": "BOGOTA REMERA",
+    "price": 435,
+    "price1": 790,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 435,
+          "price1": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 435,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566131
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566132
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566133
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566128
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566129
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566130
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F03198",
+                "description": "MAGENTA",
+                "id": 1269,
+                "price": 435,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566123
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566127
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566122
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566124
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566125
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566126
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 435,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566135
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566136
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566137
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566139
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566134
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566138
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BOGOTA REMERA NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124584",
+    "colorId": 1269,
+    "copy": "Remera cuello redondo Bogotá",
+    "description": "Remera escote redondo, manga corta. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40106,
+    "images": [
+      "124584_1269_1.jpg",
+      "124584_261_1.jpg",
+      "124584_2_1.jpg",
+      "124584_2_2.jpg"
+    ],
+    "mainImage": "124584_1269_1.jpg",
+    "name": "BOGOTA REMERA",
+    "price": 435,
+    "price1": 790,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 435,
+          "price1": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 435,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566131
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566132
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566133
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566128
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566129
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566130
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F03198",
+                "description": "MAGENTA",
+                "id": 1269,
+                "price": 435,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566123
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566127
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566122
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566124
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566125
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566126
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 435,
+                "price1": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566135
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566136
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566137
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566139
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566134
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 435,
+                      "price1": 790,
+                      "productForSaleId": 5566138
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BOGOTA REMERA MAGENTA"
+  }
+]

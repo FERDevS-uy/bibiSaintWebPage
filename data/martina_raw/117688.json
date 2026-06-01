@@ -1,0 +1,584 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "117688",
+    "colorId": 1269,
+    "copy": "Remera manga larga Jorgelina",
+    "description": "Remera básica manga larga ",
+    "description2": "Realizada en algodon elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 25315,
+    "images": [
+      "117688_1269_1.jpg",
+      "117688_1269_2.jpg",
+      "117688_1383_1.jpg",
+      "117688_1383_2.jpg",
+      "117688_1383_3.jpg",
+      "117688_19_1.jpg",
+      "117688_19_9.jpg",
+      "117688_27_1.jpg",
+      "117688_27_2.jpg",
+      "117688_452_1.jpg",
+      "117688_8_1.jpg"
+    ],
+    "mainImage": "117688_1269_1.jpg",
+    "name": "JORGELINA REMERA M/LARGA",
+    "price": 950,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "productForSaleId": 5547588
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "productForSaleId": 5547585
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "productForSaleId": 5547586
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "productForSaleId": 5547587
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "productForSaleId": 5547584
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 950,
+                      "productForSaleId": 5547581
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F03198",
+                "description": "MAGENTA",
+                "id": 1269,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "productForSaleId": 5547580
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "productForSaleId": 5547577
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "productForSaleId": 5547578
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "productForSaleId": 5547579
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "productForSaleId": 5547576
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 950,
+                      "productForSaleId": 5547583
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "productForSaleId": 5547575
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "productForSaleId": 5547572
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "productForSaleId": 5547573
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "productForSaleId": 5547574
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "productForSaleId": 5547571
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 950,
+                      "productForSaleId": 5547582
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JORGELINA REMERA M/LARGA MAGENTA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "117688",
+    "colorId": 452,
+    "copy": "Remera manga larga Jorgelina",
+    "description": "Remera básica manga larga ",
+    "description2": "Realizada en algodon elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 25315,
+    "images": [
+      "117688_1269_1.jpg",
+      "117688_1269_2.jpg",
+      "117688_1383_1.jpg",
+      "117688_1383_2.jpg",
+      "117688_1383_3.jpg",
+      "117688_19_1.jpg",
+      "117688_19_9.jpg",
+      "117688_27_1.jpg",
+      "117688_27_2.jpg",
+      "117688_452_1.jpg",
+      "117688_8_1.jpg"
+    ],
+    "mainImage": "117688_452_1.jpg",
+    "name": "JORGELINA REMERA M/LARGA",
+    "price": 950,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "productForSaleId": 5547588
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "productForSaleId": 5547585
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "productForSaleId": 5547586
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "productForSaleId": 5547587
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "productForSaleId": 5547584
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 950,
+                      "productForSaleId": 5547581
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F03198",
+                "description": "MAGENTA",
+                "id": 1269,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "productForSaleId": 5547580
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "productForSaleId": 5547577
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "productForSaleId": 5547578
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "productForSaleId": 5547579
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "productForSaleId": 5547576
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 950,
+                      "productForSaleId": 5547583
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "productForSaleId": 5547575
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "productForSaleId": 5547572
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "productForSaleId": 5547573
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "productForSaleId": 5547574
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "productForSaleId": 5547571
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 950,
+                      "productForSaleId": 5547582
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JORGELINA REMERA M/LARGA AVELLANA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "117688",
+    "colorId": 8,
+    "copy": "Remera manga larga Jorgelina",
+    "description": "Remera básica manga larga ",
+    "description2": "Realizada en algodon elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 25315,
+    "images": [
+      "117688_1269_1.jpg",
+      "117688_1269_2.jpg",
+      "117688_1383_1.jpg",
+      "117688_1383_2.jpg",
+      "117688_1383_3.jpg",
+      "117688_19_1.jpg",
+      "117688_19_9.jpg",
+      "117688_27_1.jpg",
+      "117688_27_2.jpg",
+      "117688_452_1.jpg",
+      "117688_8_1.jpg"
+    ],
+    "mainImage": "117688_8_1.jpg",
+    "name": "JORGELINA REMERA M/LARGA",
+    "price": 950,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "productForSaleId": 5547588
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "productForSaleId": 5547585
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "productForSaleId": 5547586
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "productForSaleId": 5547587
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "productForSaleId": 5547584
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 950,
+                      "productForSaleId": 5547581
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F03198",
+                "description": "MAGENTA",
+                "id": 1269,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "productForSaleId": 5547580
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "productForSaleId": 5547577
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "productForSaleId": 5547578
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "productForSaleId": 5547579
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "productForSaleId": 5547576
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 950,
+                      "productForSaleId": 5547583
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 950,
+                      "productForSaleId": 5547575
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 950,
+                      "productForSaleId": 5547572
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 950,
+                      "productForSaleId": 5547573
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 950,
+                      "productForSaleId": 5547574
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 950,
+                      "productForSaleId": 5547571
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 950,
+                      "productForSaleId": 5547582
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JORGELINA REMERA M/LARGA VERDE"
+  }
+]

@@ -1,0 +1,461 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125028",
+    "colorId": 1,
+    "copy": "Culotte Básico Marcia",
+    "description": "Culotte básico con elástico partido al tono. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40723,
+    "images": [
+      "125028_1_1.jpg",
+      "125028_2_1.jpg",
+      "125028_32_1.jpg",
+      "125028_32_2.jpg",
+      "125028_452_1.jpg"
+    ],
+    "mainImage": "125028_1_1.jpg",
+    "name": "MARCIA CULOTTE",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757557
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757559
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757558
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757560
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757564
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757561
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757562
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757563
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757565
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757567
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757566
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757568
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MARCIA CULOTTE BLANCO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125028",
+    "colorId": 2,
+    "copy": "Culotte Básico Marcia",
+    "description": "Culotte básico con elástico partido al tono. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40723,
+    "images": [
+      "125028_1_1.jpg",
+      "125028_2_1.jpg",
+      "125028_32_1.jpg",
+      "125028_32_2.jpg",
+      "125028_452_1.jpg"
+    ],
+    "mainImage": "125028_2_1.jpg",
+    "name": "MARCIA CULOTTE",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757557
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757559
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757558
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757560
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757564
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757561
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757562
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757563
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757565
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757567
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757566
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757568
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MARCIA CULOTTE NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125028",
+    "colorId": 32,
+    "copy": "Culotte Básico Marcia",
+    "description": "Culotte básico con elástico partido al tono. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40723,
+    "images": [
+      "125028_1_1.jpg",
+      "125028_2_1.jpg",
+      "125028_32_1.jpg",
+      "125028_32_2.jpg",
+      "125028_452_1.jpg"
+    ],
+    "mainImage": "125028_32_1.jpg",
+    "name": "MARCIA CULOTTE",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757557
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757559
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757558
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757560
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757564
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757561
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757562
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757563
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5757565
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757567
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5757566
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5757568
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MARCIA CULOTTE GRIS MELANGE",
+    "productLineId": "3324"
+  }
+]

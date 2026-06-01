@@ -1,0 +1,95 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123669",
+    "colorId": 32,
+    "description": "Babucha tiro medio, cintura elastizada con cordón regulable y  bolsillos delantero y trasero. ",
+    "description2": "Realizada en rustico gamuzado",
+    "description3": "Calce clásico",
+    "id": 38490,
+    "images": [
+      "123669_2_1.jpg",
+      "123669_2_2.jpg",
+      "123669_2_3.jpg",
+      "123669_2_4.jpg",
+      "123669_2_5.jpg",
+      "123669_2_6.jpg",
+      "123669_2_7.jpg",
+      "123669_2_8.jpg",
+      "123669_32_1.jpg",
+      "123669_32_2.jpg",
+      "123669_32_3.jpg",
+      "123669_32_4.jpg",
+      "123669_32_5.jpg",
+      "123669_32_6.jpg",
+      "123669_32_7.jpg",
+      "123669_32_8.jpg",
+      "123669_5_1.jpg"
+    ],
+    "mainImage": "123669_32_1.jpg",
+    "name": "CALIGULA BABUCHA",
+    "price": 1390,
+    "productLine": {
+      "id": 3357,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1390,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 1390,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1390,
+                      "productForSaleId": 5547417
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1390,
+                      "productForSaleId": 5547414
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1390,
+                      "productForSaleId": 5547415
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1390,
+                      "productForSaleId": 5547416
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CALIGULA BABUCHA GRIS MELANGE"
+  }
+]

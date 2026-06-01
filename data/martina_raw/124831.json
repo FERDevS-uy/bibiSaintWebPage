@@ -1,0 +1,63 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124831",
+    "colorId": 2,
+    "copy": "Cartera sobre Gaona",
+    "description": "Cartera tipo sobre con manija de cadena y tira de cierre de pompón.",
+    "description2": "Realizado en cuero sintetico",
+    "description3": "Calce relax",
+    "id": 40465,
+    "images": [
+      "124831_1498_1.jpg",
+      "124831_2_1.jpg"
+    ],
+    "mainImage": "124831_2_1.jpg",
+    "name": "GAONA CARTERA SOBRE",
+    "price": 1490,
+    "productLine": {
+      "id": 3350,
+      "name": "ACCESORIOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1490,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 1490,
+                      "productForSaleId": 5548137
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GAONA CARTERA SOBRE NEGRO"
+  }
+]

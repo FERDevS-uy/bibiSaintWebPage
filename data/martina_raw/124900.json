@@ -1,0 +1,91 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124900",
+    "colorId": 1298,
+    "copy": "Musculosa escote cuadrado Soledad",
+    "description": "Musculosa escote cuadrado. Un básico novedoso para esta temporada.",
+    "description2": "Realizada en ribb",
+    "description3": "Calce clásico",
+    "id": 40575,
+    "images": [
+      "124900_0_1.jpg",
+      "124900_0_2.jpg",
+      "124900_0_3.jpg",
+      "124900_0_4.jpg",
+      "124900_1298_1.jpg",
+      "124900_1298_3.jpg"
+    ],
+    "mainImage": "124900_1298_1.jpg",
+    "name": "SOLEDAD MUSCULOSA",
+    "price": 590,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "Sin eleccion",
+                "id": 1298,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5548469
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5548466
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5548467
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5548468
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5548465
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SOLEDAD MUSCULOSA Sin eleccion"
+  }
+]

@@ -1,0 +1,218 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126229",
+    "colorId": 2,
+    "description": "Polera basica manga larga.",
+    "description2": "Realizada en ribb",
+    "description3": "Calce clásico",
+    "id": 42466,
+    "images": [
+      "126229_124_1.jpg",
+      "126229_124_2.jpg",
+      "126229_2_1.jpg",
+      "126229_2_2.jpg",
+      "126229_452_1.jpg",
+      "126229_452_2.jpg",
+      "126229_92_1.jpg",
+      "126229_92_2.jpg"
+    ],
+    "mainImage": "126229_2_1.jpg",
+    "name": "MALAK POLERA",
+    "price": 765,
+    "productLine": {
+      "id": 4695,
+      "name": "POLERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 765,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#111E45",
+                "description": "MARINO",
+                "id": 124,
+                "price": 765,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 765,
+                      "productForSaleId": 5754175
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 765,
+                      "productForSaleId": 5754176
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 765,
+                      "productForSaleId": 5754173
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 765,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 765,
+                      "productForSaleId": 5754177
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 765,
+                      "productForSaleId": 5754180
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 765,
+                      "productForSaleId": 5754179
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MALAK POLERA NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126229",
+    "colorId": 124,
+    "description": "Polera basica manga larga.",
+    "description2": "Realizada en ribb",
+    "description3": "Calce clásico",
+    "id": 42466,
+    "images": [
+      "126229_124_1.jpg",
+      "126229_124_2.jpg",
+      "126229_2_1.jpg",
+      "126229_2_2.jpg",
+      "126229_452_1.jpg",
+      "126229_452_2.jpg",
+      "126229_92_1.jpg",
+      "126229_92_2.jpg"
+    ],
+    "mainImage": "126229_124_1.jpg",
+    "name": "MALAK POLERA",
+    "price": 765,
+    "productLine": {
+      "id": 4695,
+      "name": "POLERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 765,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#111E45",
+                "description": "MARINO",
+                "id": 124,
+                "price": 765,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 765,
+                      "productForSaleId": 5754175
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 765,
+                      "productForSaleId": 5754176
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 765,
+                      "productForSaleId": 5754173
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 765,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 765,
+                      "productForSaleId": 5754177
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 765,
+                      "productForSaleId": 5754180
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 765,
+                      "productForSaleId": 5754179
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MALAK POLERA MARINO",
+    "productLineId": "3324"
+  }
+]

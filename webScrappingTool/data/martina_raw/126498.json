@@ -1,0 +1,62 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126498",
+    "colorId": 74,
+    "description": "Bufanda de piel corta, ideal para realzar tus look de invierno! Medida 2 mt x 20 cm",
+    "description2": "Realizada en piel sintetico",
+    "id": 42820,
+    "images": [
+      "126498_74_1.jpg",
+      "126498_74_2.jpg"
+    ],
+    "mainImage": "126498_74_1.jpg",
+    "name": "SIBERIA BUFANDA",
+    "price": 1000,
+    "productLine": {
+      "id": 3350,
+      "name": "ACCESORIOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1000,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#472007",
+                "description": "CHOCOLATE",
+                "id": 74,
+                "price": 1000,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 1000,
+                      "productForSaleId": 5763198
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SIBERIA BUFANDA CHOCOLATE",
+    "productLineId": "3324"
+  }
+]

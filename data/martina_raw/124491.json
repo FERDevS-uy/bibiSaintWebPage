@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124491",
+    "colorId": 1,
+    "copy": "Remera pijama Edith",
+    "description": "Remera cuello redondo, manga corta, con estampa en delantero.",
+    "description2": "Realizada en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 40013,
+    "images": [
+      "124491_1_1.jpg",
+      "124491_1_2.jpg"
+    ],
+    "mainImage": "124491_1_1.jpg",
+    "name": "EDITH REMERA",
+    "price": 680,
+    "productLine": {
+      "id": 4576,
+      "name": "PIJAMAS Y HOMEWEAR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 680,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 680,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 680,
+                      "productForSaleId": 5548199
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 680,
+                      "productForSaleId": 5548196
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 680,
+                      "productForSaleId": 5548197
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 680,
+                      "productForSaleId": 5548198
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 680,
+                      "productForSaleId": 5548195
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "EDITH REMERA BLANCO"
+  }
+]

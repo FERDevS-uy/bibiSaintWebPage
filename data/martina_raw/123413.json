@@ -1,0 +1,548 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123413",
+    "colorId": 45,
+    "copy": "Vedetina con puntilla elastizada Melfi",
+    "description": "Vedetina con puntilla elastizada en cintura.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 37662,
+    "images": [
+      "123413_2_1.jpg",
+      "123413_2_2.jpg",
+      "123413_2_3.jpg",
+      "123413_2_4.jpg",
+      "123413_2_5.jpg",
+      "123413_2_6.jpg",
+      "123413_452_1.jpg",
+      "123413_452_2.jpg",
+      "123413_452_3.jpg",
+      "123413_452_4.jpg",
+      "123413_45_1.jpg",
+      "123413_45_2.jpg",
+      "123413_9_1.jpg",
+      "123413_9_2.jpg",
+      "123413_9_3.jpg",
+      "123413_9_4.jpg",
+      "123413_9_5.jpg"
+    ],
+    "mainImage": "123413_45_1.jpg",
+    "name": "MELFI VEDETINA ",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5547448
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5547449
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5547446
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5547447
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5547430
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5547443
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5547444
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5547441
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5547442
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5547432
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#5A5A3E",
+                "description": "VERDE MILITAR",
+                "id": 45,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5547445
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5547436
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5547433
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5547434
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5547435
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MELFI VEDETINA  VERDE MILITAR"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123413",
+    "colorId": 452,
+    "copy": "Vedetina con puntilla elastizada Melfi",
+    "description": "Vedetina con puntilla elastizada en cintura.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 37662,
+    "images": [
+      "123413_2_1.jpg",
+      "123413_2_2.jpg",
+      "123413_2_3.jpg",
+      "123413_2_4.jpg",
+      "123413_2_5.jpg",
+      "123413_2_6.jpg",
+      "123413_452_1.jpg",
+      "123413_452_2.jpg",
+      "123413_452_3.jpg",
+      "123413_452_4.jpg",
+      "123413_45_1.jpg",
+      "123413_45_2.jpg",
+      "123413_9_1.jpg",
+      "123413_9_2.jpg",
+      "123413_9_3.jpg",
+      "123413_9_4.jpg",
+      "123413_9_5.jpg"
+    ],
+    "mainImage": "123413_452_1.jpg",
+    "name": "MELFI VEDETINA ",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5547448
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5547449
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5547446
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5547447
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5547430
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5547443
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5547444
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5547441
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5547442
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5547432
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#5A5A3E",
+                "description": "VERDE MILITAR",
+                "id": 45,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5547445
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5547436
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5547433
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5547434
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5547435
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MELFI VEDETINA  AVELLANA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123413",
+    "colorId": 2,
+    "copy": "Vedetina con puntilla elastizada Melfi",
+    "description": "Vedetina con puntilla elastizada en cintura.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 37662,
+    "images": [
+      "123413_2_1.jpg",
+      "123413_2_2.jpg",
+      "123413_2_3.jpg",
+      "123413_2_4.jpg",
+      "123413_2_5.jpg",
+      "123413_2_6.jpg",
+      "123413_452_1.jpg",
+      "123413_452_2.jpg",
+      "123413_452_3.jpg",
+      "123413_452_4.jpg",
+      "123413_45_1.jpg",
+      "123413_45_2.jpg",
+      "123413_9_1.jpg",
+      "123413_9_2.jpg",
+      "123413_9_3.jpg",
+      "123413_9_4.jpg",
+      "123413_9_5.jpg"
+    ],
+    "mainImage": "123413_2_1.jpg",
+    "name": "MELFI VEDETINA ",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5547448
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5547449
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5547446
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5547447
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5547430
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5547443
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5547444
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5547441
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5547442
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5547432
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#5A5A3E",
+                "description": "VERDE MILITAR",
+                "id": 45,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5547445
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5547436
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5547433
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5547434
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5547435
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MELFI VEDETINA  NEGRO"
+  }
+]

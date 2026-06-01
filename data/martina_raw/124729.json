@@ -1,0 +1,86 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124729",
+    "colorId": 1487,
+    "copy": "Short pijama Naxos",
+    "description": "Short tiro medio con cintura fina elastizada y cordón delantero. Pierna recta.",
+    "description2": "Realizado en poplin",
+    "description3": "Calce clásico",
+    "id": 40314,
+    "images": [
+      "124729_1487_1.jpg",
+      "124729_1487_2.jpg"
+    ],
+    "mainImage": "124729_1487_1.jpg",
+    "name": "NAXOS SHORT",
+    "price": 945,
+    "productLine": {
+      "id": 4757,
+      "name": "BERMUDAS Y SHORTS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 945,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "RAYADO BLANCO Y AZUL",
+                "id": 1487,
+                "price": 945,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 945,
+                      "productForSaleId": 5548966
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 945,
+                      "productForSaleId": 5548963
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 945,
+                      "productForSaleId": 5548964
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 945,
+                      "productForSaleId": 5548965
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 945,
+                      "productForSaleId": 5548962
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NAXOS SHORT RAYADO BLANCO Y AZUL"
+  }
+]

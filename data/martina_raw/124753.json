@@ -1,0 +1,86 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124753",
+    "colorId": 7,
+    "description": "Pantalón tiro medio, con cintura elastizada y presillas simil jean. Bolsillos delanteros aplicados, bolsillos laterales tipo cargo y bolsillos traseros. Largo clásico.",
+    "description2": "Realizado en denim elastizado",
+    "description3": "Calce clásico",
+    "id": 40338,
+    "images": [
+      "124753_7_1.jpg",
+      "124753_7_2.jpg"
+    ],
+    "mainImage": "124753_7_1.jpg",
+    "name": "CHARO PANTALON",
+    "price": 1290,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 1290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1290,
+                      "productForSaleId": 5547884
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1290,
+                      "productForSaleId": 5547881
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1290,
+                      "productForSaleId": 5547882
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1290,
+                      "productForSaleId": 5547883
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1290,
+                      "productForSaleId": 5547880
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CHARO PANTALON AZUL"
+  }
+]

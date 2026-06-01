@@ -1,0 +1,62 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124699",
+    "colorId": 1,
+    "description": "Medias con detalle de empeine en punto piqué y franjas a colores negro y rojo en laterales. Logo en elástico.",
+    "description2": "Realizada en algodón 100%",
+    "description3": "Calce al cuerpo",
+    "id": 40257,
+    "images": [
+      "124699_1_1.jpg",
+      "124699_1_2.jpg"
+    ],
+    "mainImage": "124699_1_1.jpg",
+    "name": "CARMIÑA MEDIA",
+    "price": 200,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 200,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 200,
+                      "productForSaleId": 5550698
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CARMIÑA MEDIA BLANCO"
+  }
+]

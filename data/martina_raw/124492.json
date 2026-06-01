@@ -1,0 +1,70 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124492",
+    "colorId": 332,
+    "copy": "Short estampado liviano Romana",
+    "description": "Short tiro medio con cintura elastizada.",
+    "description2": "Realizado en jersey liviano estampado",
+    "description3": "Calce clásico",
+    "id": 40014,
+    "images": [
+      "124492_332_1.jpg",
+      "124492_332_2.jpg",
+      "124492_332_3.jpg"
+    ],
+    "mainImage": "124492_332_1.jpg",
+    "name": "ROMANA SHORT",
+    "price": 850,
+    "productLine": {
+      "id": 4576,
+      "name": "PIJAMAS Y HOMEWEAR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 850,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 850,
+                      "productForSaleId": 5548204
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 850,
+                      "productForSaleId": 5548201
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ROMANA SHORT ESTAMPADO"
+  }
+]

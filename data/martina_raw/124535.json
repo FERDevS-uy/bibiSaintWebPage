@@ -1,0 +1,294 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124535",
+    "colorId": 2,
+    "copy": "Calza ciclista Rubi",
+    "description": "Calza ciclista, tiro medio con cintura elastizada. ",
+    "description2": "Realizada en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 40057,
+    "images": [
+      "124535_22_1.jpg",
+      "124535_22_2.jpg",
+      "124535_22_3.jpg",
+      "124535_22_4.jpg",
+      "124535_22_5.jpg",
+      "124535_2_1.jpg",
+      "124535_2_2.jpg",
+      "124535_2_3.jpg",
+      "124535_2_4.jpg",
+      "124535_2_5.jpg"
+    ],
+    "mainImage": "124535_2_1.jpg",
+    "name": "RUBI CALZA",
+    "price": 490,
+    "productLine": {
+      "id": 4736,
+      "name": "CALZAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 490,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 490,
+                      "productForSaleId": 5550296
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 490,
+                      "productForSaleId": 5550292
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 490,
+                      "productForSaleId": 5550293
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 490,
+                      "productForSaleId": 5550294
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 490,
+                      "productForSaleId": 5550291
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 490,
+                      "productForSaleId": 5550295
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 490,
+                      "productForSaleId": 5550302
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 490,
+                      "productForSaleId": 5550298
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 490,
+                      "productForSaleId": 5550299
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 490,
+                      "productForSaleId": 5550300
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 490,
+                      "productForSaleId": 5550297
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 490,
+                      "productForSaleId": 5550301
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RUBI CALZA NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124535",
+    "colorId": 22,
+    "copy": "Calza ciclista Rubi",
+    "description": "Calza ciclista, tiro medio con cintura elastizada. ",
+    "description2": "Realizada en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 40057,
+    "images": [
+      "124535_22_1.jpg",
+      "124535_22_2.jpg",
+      "124535_22_3.jpg",
+      "124535_22_4.jpg",
+      "124535_22_5.jpg",
+      "124535_2_1.jpg",
+      "124535_2_2.jpg",
+      "124535_2_3.jpg",
+      "124535_2_4.jpg",
+      "124535_2_5.jpg"
+    ],
+    "mainImage": "124535_22_1.jpg",
+    "name": "RUBI CALZA",
+    "price": 490,
+    "productLine": {
+      "id": 4736,
+      "name": "CALZAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 490,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 490,
+                      "productForSaleId": 5550296
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 490,
+                      "productForSaleId": 5550292
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 490,
+                      "productForSaleId": 5550293
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 490,
+                      "productForSaleId": 5550294
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 490,
+                      "productForSaleId": 5550291
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 490,
+                      "productForSaleId": 5550295
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 490,
+                      "productForSaleId": 5550302
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 490,
+                      "productForSaleId": 5550298
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 490,
+                      "productForSaleId": 5550299
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 490,
+                      "productForSaleId": 5550300
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 490,
+                      "productForSaleId": 5550297
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 490,
+                      "productForSaleId": 5550301
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RUBI CALZA FUCSIA"
+  }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124819",
+    "colorId": 1,
+    "copy": "Remera cuello redondo con estampa Martina",
+    "description": "Remera escote redondo con estampa en el delantero.",
+    "description2": "Realizada en jersey snow",
+    "description3": "Calce clásico",
+    "id": 40435,
+    "images": [
+      "124819_0_1.jpg",
+      "124819_1_1.jpg"
+    ],
+    "mainImage": "124819_1_1.jpg",
+    "name": "MARTINA REMERA",
+    "price": 1100,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5549909
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5549906
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5549907
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5549908
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5549905
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MARTINA REMERA BLANCO"
+  }
+]

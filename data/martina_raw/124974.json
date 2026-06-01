@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124974",
+    "colorId": 8,
+    "copy": "Remera pijama Lisandra",
+    "description": "Remera escote redondo, manga entera. Con estampa en delantero.",
+    "description2": "Realizada en jersey snow",
+    "description3": "Calce clásico",
+    "id": 40661,
+    "images": [
+      "124974_8_1.jpg",
+      "124974_8_2.jpg"
+    ],
+    "mainImage": "124974_8_1.jpg",
+    "name": "LISANDRA REMERA",
+    "price": 850,
+    "productLine": {
+      "id": 4576,
+      "name": "PIJAMAS Y HOMEWEAR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 850,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 850,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 850,
+                      "productForSaleId": 5548773
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 850,
+                      "productForSaleId": 5548770
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 850,
+                      "productForSaleId": 5548771
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 850,
+                      "productForSaleId": 5548772
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 850,
+                      "productForSaleId": 5548769
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LISANDRA REMERA VERDE"
+  }
+]

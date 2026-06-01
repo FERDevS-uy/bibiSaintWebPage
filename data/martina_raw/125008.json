@@ -1,0 +1,98 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125008",
+    "colorId": 1115,
+    "copy": "Buzo largo Libertad",
+    "description": "Buzo largo y holgado. Con cuello y ruedo tejido rayado. Medio cierre en el delantero y recortes a contracolor. Lateral con tajo y broches.",
+    "description2": "Realizado en rustico algodon",
+    "description3": "Calce clásico",
+    "id": 40703,
+    "images": [
+      "125008_1115_1.jpg",
+      "125008_1115_2.jpg",
+      "125008_1115_3.jpg",
+      "125008_1115_4.jpg",
+      "125008_1115_5.jpg"
+    ],
+    "mainImage": "125008_1115_1.jpg",
+    "name": "LIBERTAD BUZO",
+    "price": 1980,
+    "price1": 3300,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1980,
+          "price1": 3300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO- GRIS MELANGE CLARO",
+                "id": 1115,
+                "price": 1980,
+                "price1": 3300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1980,
+                      "price1": 3300,
+                      "productForSaleId": 5566254
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1980,
+                      "price1": 3300,
+                      "productForSaleId": 5566255
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1980,
+                      "price1": 3300,
+                      "productForSaleId": 5566256
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1980,
+                      "price1": 3300,
+                      "productForSaleId": 5566253
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1980,
+                      "price1": 3300,
+                      "productForSaleId": 5566252
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LIBERTAD BUZO NEGRO- GRIS MELANGE CLARO"
+  }
+]

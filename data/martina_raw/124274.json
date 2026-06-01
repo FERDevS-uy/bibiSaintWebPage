@@ -1,0 +1,272 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124274",
+    "colorId": 33,
+    "copy": "Pantalón simil lino Natale",
+    "description": "Pantalón tiro medio, cintura elastizada, bolsillos laterales y detalle de lazo para anudar. Pierna recta de calce relajado.",
+    "description2": "Realizado en simil lino",
+    "description3": "Calce clásico",
+    "id": 39578,
+    "images": [
+      "124274_33_3.jpg",
+      "124274_33_4.jpg",
+      "124274_33_5.jpg",
+      "124274_8_1.jpg",
+      "124274_8_2.jpg",
+      "124274_8_3.jpg",
+      "124274_8_4.jpg",
+      "124274_8_5.jpg",
+      "124274_8_6.jpg",
+      "124274_8_7.jpg",
+      "124274_8_8.jpg"
+    ],
+    "mainImage": "124274_33_3.jpg",
+    "name": "NATALE PANTALON",
+    "price": 540,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 540,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#0E3AB5",
+                "description": "AZUL FRANCIA",
+                "id": 33,
+                "price": 540,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 540,
+                      "productForSaleId": 5549933
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 540,
+                      "productForSaleId": 5549930
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 540,
+                      "productForSaleId": 5549931
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 540,
+                      "productForSaleId": 5549932
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 540,
+                      "productForSaleId": 5549929
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 540,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 540,
+                      "productForSaleId": 5549938
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 540,
+                      "productForSaleId": 5549935
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 540,
+                      "productForSaleId": 5549936
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 540,
+                      "productForSaleId": 5549937
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 540,
+                      "productForSaleId": 5549934
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NATALE PANTALON AZUL FRANCIA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124274",
+    "colorId": 8,
+    "copy": "Pantalón simil lino Natale",
+    "description": "Pantalón tiro medio, cintura elastizada, bolsillos laterales y detalle de lazo para anudar. Pierna recta de calce relajado.",
+    "description2": "Realizado en simil lino",
+    "description3": "Calce clásico",
+    "id": 39578,
+    "images": [
+      "124274_33_3.jpg",
+      "124274_33_4.jpg",
+      "124274_33_5.jpg",
+      "124274_8_1.jpg",
+      "124274_8_2.jpg",
+      "124274_8_3.jpg",
+      "124274_8_4.jpg",
+      "124274_8_5.jpg",
+      "124274_8_6.jpg",
+      "124274_8_7.jpg",
+      "124274_8_8.jpg"
+    ],
+    "mainImage": "124274_8_1.jpg",
+    "name": "NATALE PANTALON",
+    "price": 540,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 540,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#0E3AB5",
+                "description": "AZUL FRANCIA",
+                "id": 33,
+                "price": 540,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 540,
+                      "productForSaleId": 5549933
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 540,
+                      "productForSaleId": 5549930
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 540,
+                      "productForSaleId": 5549931
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 540,
+                      "productForSaleId": 5549932
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 540,
+                      "productForSaleId": 5549929
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 540,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 540,
+                      "productForSaleId": 5549938
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 540,
+                      "productForSaleId": 5549935
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 540,
+                      "productForSaleId": 5549936
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 540,
+                      "productForSaleId": 5549937
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 540,
+                      "productForSaleId": 5549934
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NATALE PANTALON VERDE"
+  }
+]

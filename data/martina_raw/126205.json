@@ -1,0 +1,188 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126205",
+    "colorId": 799,
+    "description": "Polera basica",
+    "description2": "Realizada en morley",
+    "description3": "Calce clásico",
+    "id": 42442,
+    "images": [
+      "126205_16_1.jpg",
+      "126205_16_2.jpg",
+      "126205_799_1.jpg",
+      "126205_799_2.jpg",
+      "126205_799_3.jpg"
+    ],
+    "mainImage": "126205_799_1.jpg",
+    "name": "AQUINA POLERA",
+    "price": 920,
+    "productLine": {
+      "id": 4695,
+      "name": "POLERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 920,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#9A9194",
+                "description": "GRIS MELANGE OSCURO",
+                "id": 799,
+                "price": 920,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 920,
+                      "productForSaleId": 5754074
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 920,
+                      "productForSaleId": 5754077
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 920,
+                      "productForSaleId": 5754076
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 920,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 920,
+                      "productForSaleId": 5754073
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AQUINA POLERA GRIS MELANGE OSCURO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126205",
+    "colorId": 16,
+    "description": "Polera basica",
+    "description2": "Realizada en morley",
+    "description3": "Calce clásico",
+    "id": 42442,
+    "images": [
+      "126205_16_1.jpg",
+      "126205_16_2.jpg",
+      "126205_799_1.jpg",
+      "126205_799_2.jpg",
+      "126205_799_3.jpg"
+    ],
+    "mainImage": "126205_16_1.jpg",
+    "name": "AQUINA POLERA",
+    "price": 920,
+    "productLine": {
+      "id": 4695,
+      "name": "POLERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 920,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#9A9194",
+                "description": "GRIS MELANGE OSCURO",
+                "id": 799,
+                "price": 920,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 920,
+                      "productForSaleId": 5754074
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 920,
+                      "productForSaleId": 5754077
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 920,
+                      "productForSaleId": 5754076
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#CAB49A",
+                "description": "TOSTADO",
+                "id": 16,
+                "price": 920,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 920,
+                      "productForSaleId": 5754073
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AQUINA POLERA TOSTADO",
+    "productLineId": "3324"
+  }
+]

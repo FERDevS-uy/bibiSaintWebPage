@@ -1,0 +1,234 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125222",
+    "colorId": 799,
+    "description": "Buzo escote redondo con detalle de cruce en cuello.",
+    "description2": "Realizado en frisa",
+    "description3": "Calce clásico",
+    "id": 41008,
+    "images": [
+      "125222_24_1.jpg",
+      "125222_24_2.jpg",
+      "125222_799_1.jpg",
+      "125222_799_2.jpg"
+    ],
+    "mainImage": "125222_799_1.jpg",
+    "name": "JULIO BUZO",
+    "price": 1990,
+    "productLine": {
+      "id": 4762,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#9A9194",
+                "description": "GRIS MELANGE OSCURO",
+                "id": 799,
+                "price": 1990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1990,
+                      "productForSaleId": 5756998
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1990,
+                      "productForSaleId": 5757000
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1990,
+                      "productForSaleId": 5756999
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1990,
+                      "productForSaleId": 5757001
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D7C339",
+                "description": "MOSTAZA",
+                "id": 24,
+                "price": 1990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1990,
+                      "productForSaleId": 5757002
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1990,
+                      "productForSaleId": 5757006
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1990,
+                      "productForSaleId": 5757004
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 1990,
+                      "productForSaleId": 5757005
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JULIO BUZO GRIS MELANGE OSCURO",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125222",
+    "colorId": 24,
+    "description": "Buzo escote redondo con detalle de cruce en cuello.",
+    "description2": "Realizado en frisa",
+    "description3": "Calce clásico",
+    "id": 41008,
+    "images": [
+      "125222_24_1.jpg",
+      "125222_24_2.jpg",
+      "125222_799_1.jpg",
+      "125222_799_2.jpg"
+    ],
+    "mainImage": "125222_24_1.jpg",
+    "name": "JULIO BUZO",
+    "price": 1990,
+    "productLine": {
+      "id": 4762,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#9A9194",
+                "description": "GRIS MELANGE OSCURO",
+                "id": 799,
+                "price": 1990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1990,
+                      "productForSaleId": 5756998
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1990,
+                      "productForSaleId": 5757000
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1990,
+                      "productForSaleId": 5756999
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1990,
+                      "productForSaleId": 5757001
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D7C339",
+                "description": "MOSTAZA",
+                "id": 24,
+                "price": 1990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1990,
+                      "productForSaleId": 5757002
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1990,
+                      "productForSaleId": 5757006
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1990,
+                      "productForSaleId": 5757004
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 1990,
+                      "productForSaleId": 5757005
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JULIO BUZO MOSTAZA",
+    "productLineId": "3325"
+  }
+]

@@ -1,0 +1,96 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124488",
+    "colorId": 89,
+    "copy": "Musculosa pijama Escote V Balbina",
+    "description": "Musculosa escote v, ruedo semi evase con detalle de frunce en centro de busto.",
+    "description2": "Realizada en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40010,
+    "images": [
+      "124488_89_1.jpg",
+      "124488_89_2.jpg",
+      "124488_89_3.jpg",
+      "124488_89_4.jpg",
+      "124488_89_5.jpg"
+    ],
+    "mainImage": "124488_89_1.jpg",
+    "name": "BALBINA MUSCULOSA",
+    "price": 450,
+    "productLine": {
+      "id": 4576,
+      "name": "PIJAMAS Y HOMEWEAR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 450,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FDA590",
+                "description": "SALMON",
+                "id": 89,
+                "price": 450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 450,
+                      "productForSaleId": 5549894
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 450,
+                      "productForSaleId": 5549890
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 450,
+                      "productForSaleId": 5549891
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 450,
+                      "productForSaleId": 5549892
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 450,
+                      "productForSaleId": 5549889
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 450,
+                      "productForSaleId": 5549893
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BALBINA MUSCULOSA SALMON"
+  }
+]

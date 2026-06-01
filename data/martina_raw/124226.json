@@ -1,0 +1,449 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124226",
+    "colorId": 452,
+    "copy": "Trusa de tricot Diva",
+    "description": "Trusa con cintura doble.",
+    "description2": "Realizada en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 39524,
+    "images": [
+      "124226_1_1.jpg",
+      "124226_2_1.jpg",
+      "124226_2_2.jpg",
+      "124226_2_3.jpg",
+      "124226_452_1.jpg",
+      "124226_452_2.jpg"
+    ],
+    "mainImage": "124226_452_1.jpg",
+    "name": "DIVA TRUSA",
+    "price": 480,
+    "price1": 690,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 480,
+          "price1": 690,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 480,
+                "price1": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565831
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565830
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565829
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 480,
+                "price1": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565834
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565832
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565833
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 480,
+                "price1": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565828
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565826
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565827
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DIVA TRUSA AVELLANA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124226",
+    "colorId": 2,
+    "copy": "Trusa de tricot Diva",
+    "description": "Trusa con cintura doble.",
+    "description2": "Realizada en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 39524,
+    "images": [
+      "124226_1_1.jpg",
+      "124226_2_1.jpg",
+      "124226_2_2.jpg",
+      "124226_2_3.jpg",
+      "124226_452_1.jpg",
+      "124226_452_2.jpg"
+    ],
+    "mainImage": "124226_2_1.jpg",
+    "name": "DIVA TRUSA",
+    "price": 480,
+    "price1": 690,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 480,
+          "price1": 690,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 480,
+                "price1": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565831
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565830
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565829
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 480,
+                "price1": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565834
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565832
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565833
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 480,
+                "price1": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565828
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565826
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565827
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DIVA TRUSA NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124226",
+    "colorId": 1,
+    "copy": "Trusa de tricot Diva",
+    "description": "Trusa con cintura doble.",
+    "description2": "Realizada en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 39524,
+    "images": [
+      "124226_1_1.jpg",
+      "124226_2_1.jpg",
+      "124226_2_2.jpg",
+      "124226_2_3.jpg",
+      "124226_452_1.jpg",
+      "124226_452_2.jpg"
+    ],
+    "mainImage": "124226_1_1.jpg",
+    "name": "DIVA TRUSA",
+    "price": 480,
+    "price1": 690,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 480,
+          "price1": 690,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 480,
+                "price1": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565831
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565830
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565829
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 480,
+                "price1": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565834
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565832
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565833
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 480,
+                "price1": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565828
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565826
+                    },
+                    {
+                      "description": "6",
+                      "id": 59,
+                      "price": 480,
+                      "price1": 690,
+                      "productForSaleId": 5565827
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DIVA TRUSA BLANCO"
+  }
+]

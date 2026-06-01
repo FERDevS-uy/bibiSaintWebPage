@@ -1,0 +1,407 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125165",
+    "colorId": 53,
+    "description": "Chomba básica con botones, manga corta.",
+    "description2": "Realizada en pique",
+    "description3": "Calce clásico",
+    "id": 40950,
+    "images": [
+      "125165_2_1.jpg",
+      "125165_39_1.jpg",
+      "125165_39_2.jpg",
+      "125165_53_1.jpg",
+      "125165_8_1.jpg",
+      "125165_8_2.jpg"
+    ],
+    "mainImage": "125165_53_1.jpg",
+    "name": "RAFAEL CHOMBA",
+    "price": 1350,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#0E1944",
+                "description": "AZUL MARINO",
+                "id": 39,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1350,
+                      "productForSaleId": 5756912
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#ECDDCE",
+                "description": "BEIGE",
+                "id": 53,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1350,
+                      "productForSaleId": 5756923
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1350,
+                      "productForSaleId": 5756922
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1350,
+                      "productForSaleId": 5756925
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1350,
+                      "productForSaleId": 5756924
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1350,
+                      "productForSaleId": 5756919
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1350,
+                      "productForSaleId": 5756920
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1350,
+                      "productForSaleId": 5756918
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1350,
+                      "productForSaleId": 5756921
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RAFAEL CHOMBA BEIGE",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125165",
+    "colorId": 2,
+    "description": "Chomba básica con botones, manga corta.",
+    "description2": "Realizada en pique",
+    "description3": "Calce clásico",
+    "id": 40950,
+    "images": [
+      "125165_2_1.jpg",
+      "125165_39_1.jpg",
+      "125165_39_2.jpg",
+      "125165_53_1.jpg",
+      "125165_8_1.jpg",
+      "125165_8_2.jpg"
+    ],
+    "mainImage": "125165_2_1.jpg",
+    "name": "RAFAEL CHOMBA",
+    "price": 1350,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#0E1944",
+                "description": "AZUL MARINO",
+                "id": 39,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1350,
+                      "productForSaleId": 5756912
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#ECDDCE",
+                "description": "BEIGE",
+                "id": 53,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1350,
+                      "productForSaleId": 5756923
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1350,
+                      "productForSaleId": 5756922
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1350,
+                      "productForSaleId": 5756925
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1350,
+                      "productForSaleId": 5756924
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1350,
+                      "productForSaleId": 5756919
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1350,
+                      "productForSaleId": 5756920
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1350,
+                      "productForSaleId": 5756918
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1350,
+                      "productForSaleId": 5756921
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RAFAEL CHOMBA NEGRO",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125165",
+    "colorId": 39,
+    "description": "Chomba básica con botones, manga corta.",
+    "description2": "Realizada en pique",
+    "description3": "Calce clásico",
+    "id": 40950,
+    "images": [
+      "125165_2_1.jpg",
+      "125165_39_1.jpg",
+      "125165_39_2.jpg",
+      "125165_53_1.jpg",
+      "125165_8_1.jpg",
+      "125165_8_2.jpg"
+    ],
+    "mainImage": "125165_39_1.jpg",
+    "name": "RAFAEL CHOMBA",
+    "price": 1350,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#0E1944",
+                "description": "AZUL MARINO",
+                "id": 39,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1350,
+                      "productForSaleId": 5756912
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#ECDDCE",
+                "description": "BEIGE",
+                "id": 53,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1350,
+                      "productForSaleId": 5756923
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1350,
+                      "productForSaleId": 5756922
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1350,
+                      "productForSaleId": 5756925
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1350,
+                      "productForSaleId": 5756924
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1350,
+                      "productForSaleId": 5756919
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1350,
+                      "productForSaleId": 5756920
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1350,
+                      "productForSaleId": 5756918
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1350,
+                      "productForSaleId": 5756921
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RAFAEL CHOMBA AZUL MARINO",
+    "productLineId": "3325"
+  }
+]

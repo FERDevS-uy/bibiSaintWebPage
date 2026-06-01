@@ -1,0 +1,258 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124813",
+    "colorId": 1,
+    "copy": "Remera de puntilla Paulina",
+    "description": "Rermera entallada escote redondo, con detalle de puntilla elastizada en delantero. ",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce clásico",
+    "id": 40429,
+    "images": [
+      "124813_1_1.jpg",
+      "124813_2_1.jpg",
+      "124813_2_2.jpg",
+      "124813_2_3.jpg"
+    ],
+    "mainImage": "124813_1_1.jpg",
+    "name": "PAULINA REMERA PUNTILLA ",
+    "price": 920,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 920,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 920,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 920,
+                      "productForSaleId": 5548748
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 920,
+                      "productForSaleId": 5548745
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 920,
+                      "productForSaleId": 5548746
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 920,
+                      "productForSaleId": 5548747
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 920,
+                      "productForSaleId": 5548744
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 920,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 920,
+                      "productForSaleId": 5548743
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 920,
+                      "productForSaleId": 5548740
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 920,
+                      "productForSaleId": 5548741
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 920,
+                      "productForSaleId": 5548742
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 920,
+                      "productForSaleId": 5548739
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PAULINA REMERA PUNTILLA  BLANCO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124813",
+    "colorId": 2,
+    "copy": "Remera de puntilla Paulina",
+    "description": "Rermera entallada escote redondo, con detalle de puntilla elastizada en delantero. ",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce clásico",
+    "id": 40429,
+    "images": [
+      "124813_1_1.jpg",
+      "124813_2_1.jpg",
+      "124813_2_2.jpg",
+      "124813_2_3.jpg"
+    ],
+    "mainImage": "124813_2_1.jpg",
+    "name": "PAULINA REMERA PUNTILLA ",
+    "price": 920,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 920,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 920,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 920,
+                      "productForSaleId": 5548748
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 920,
+                      "productForSaleId": 5548745
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 920,
+                      "productForSaleId": 5548746
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 920,
+                      "productForSaleId": 5548747
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 920,
+                      "productForSaleId": 5548744
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 920,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 920,
+                      "productForSaleId": 5548743
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 920,
+                      "productForSaleId": 5548740
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 920,
+                      "productForSaleId": 5548741
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 920,
+                      "productForSaleId": 5548742
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 920,
+                      "productForSaleId": 5548739
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PAULINA REMERA PUNTILLA  NEGRO"
+  }
+]

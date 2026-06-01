@@ -1,0 +1,60 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124886",
+    "colorId": 1499,
+    "description": "Media soquete con talonera y detalles a contratono.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40561,
+    "images": [
+      "124886_5_1.jpg"
+    ],
+    "mainImage": "124886_5_1.jpg",
+    "name": "ADONIS MEDIA",
+    "price": 200,
+    "productLine": {
+      "id": 3362,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 200,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "GRIS-AZUL-NARANJA",
+                "id": 1499,
+                "price": 200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 200,
+                      "productForSaleId": 5551018
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ADONIS MEDIA GRIS-AZUL-NARANJA"
+  }
+]

@@ -1,0 +1,246 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123911",
+    "colorId": 2,
+    "copy": "Corpiño tasa soft Julieta",
+    "description": "Corpiño tasa soft con breteles regulables. ",
+    "description2": "Realizado en microfibra elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 38935,
+    "images": [
+      "123911_2_1.jpg",
+      "123911_2_2.jpg",
+      "123911_2_3.jpg",
+      "123911_2_4.jpg",
+      "123911_2_5.jpg",
+      "123911_2_6.jpg",
+      "123911_2_7.jpg",
+      "123911_452_1.jpg",
+      "123911_452_2.jpg",
+      "123911_452_3.jpg"
+    ],
+    "mainImage": "123911_2_1.jpg",
+    "name": "JULIETA CORPIÑO",
+    "price": 1100,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 1100,
+                      "productForSaleId": 5550045
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 1100,
+                      "productForSaleId": 5550042
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 1100,
+                      "productForSaleId": 5550044
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 1100,
+                      "productForSaleId": 5550043
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 1100,
+                      "productForSaleId": 5550049
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 1100,
+                      "productForSaleId": 5550046
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 1100,
+                      "productForSaleId": 5550048
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 1100,
+                      "productForSaleId": 5550047
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JULIETA CORPIÑO NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123911",
+    "colorId": 452,
+    "copy": "Corpiño tasa soft Julieta",
+    "description": "Corpiño tasa soft con breteles regulables. ",
+    "description2": "Realizado en microfibra elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 38935,
+    "images": [
+      "123911_2_1.jpg",
+      "123911_2_2.jpg",
+      "123911_2_3.jpg",
+      "123911_2_4.jpg",
+      "123911_2_5.jpg",
+      "123911_2_6.jpg",
+      "123911_2_7.jpg",
+      "123911_452_1.jpg",
+      "123911_452_2.jpg",
+      "123911_452_3.jpg"
+    ],
+    "mainImage": "123911_452_1.jpg",
+    "name": "JULIETA CORPIÑO",
+    "price": 1100,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 1100,
+                      "productForSaleId": 5550045
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 1100,
+                      "productForSaleId": 5550042
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 1100,
+                      "productForSaleId": 5550044
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 1100,
+                      "productForSaleId": 5550043
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 1100,
+                      "productForSaleId": 5550049
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 1100,
+                      "productForSaleId": 5550046
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 1100,
+                      "productForSaleId": 5550048
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 1100,
+                      "productForSaleId": 5550047
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JULIETA CORPIÑO AVELLANA"
+  }
+]

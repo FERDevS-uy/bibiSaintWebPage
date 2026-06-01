@@ -1,0 +1,61 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124190",
+    "colorId": 28,
+    "description": "Necessaire con cierre y forro interior. Ideal para viaje y organizar tus cosmeticos.",
+    "description2": "Realizado en denim camisero",
+    "description3": "Calce clásico",
+    "id": 39488,
+    "images": [
+      "124190_28_1.jpg"
+    ],
+    "mainImage": "124190_28_1.jpg",
+    "name": "ELGA NECESSAIRE",
+    "price": 500,
+    "productLine": {
+      "id": 3350,
+      "name": "ACCESORIOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 500,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 500,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 500,
+                      "productForSaleId": 5550900
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ELGA NECESSAIRE CELESTE"
+  }
+]

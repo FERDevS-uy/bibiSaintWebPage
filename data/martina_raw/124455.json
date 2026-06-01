@@ -1,0 +1,62 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124455",
+    "colorId": 345,
+    "description": "Media media caña de compresión graduada. Tejido con goma lo cual otorga mayor elasticidad y mayor confort.",
+    "description2": "Realizado en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 39949,
+    "images": [
+      "124455_345_1.jpg"
+    ],
+    "mainImage": "124455_345_1.jpg",
+    "name": "BIZANCIO MEDIA COMPRESION",
+    "price": 445,
+    "productLine": {
+      "id": 3362,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 445,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#0E1944",
+                "description": "AZUL MARINO-GRIS",
+                "id": 345,
+                "price": 445,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 445,
+                      "productForSaleId": 5761186
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BIZANCIO MEDIA COMPRESION AZUL MARINO-GRIS",
+    "productLineId": "3325"
+  }
+]

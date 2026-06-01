@@ -1,0 +1,160 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124719",
+    "colorId": 19,
+    "description": "Medias tobilleras con motivo de colores en degradé y detalle de logo en empeine.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40304,
+    "images": [
+      "124719_19_2.jpg",
+      "124719_27_1.jpg",
+      "124719_606_1.jpg",
+      "124719_606_2.jpg"
+    ],
+    "mainImage": "124719_19_2.jpg",
+    "name": "SABRINA MEDIA",
+    "price": 200,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 200,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 200,
+                      "productForSaleId": 5551065
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 200,
+                      "productForSaleId": 5551066
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SABRINA MEDIA VIOLETA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124719",
+    "colorId": 27,
+    "description": "Medias tobilleras con motivo de colores en degradé y detalle de logo en empeine.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40304,
+    "images": [
+      "124719_19_2.jpg",
+      "124719_27_1.jpg",
+      "124719_606_1.jpg",
+      "124719_606_2.jpg"
+    ],
+    "mainImage": "124719_27_1.jpg",
+    "name": "SABRINA MEDIA",
+    "price": 200,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 200,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 200,
+                      "productForSaleId": 5551065
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 200,
+                      "productForSaleId": 5551066
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SABRINA MEDIA ROSA"
+  }
+]

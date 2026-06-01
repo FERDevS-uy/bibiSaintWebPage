@@ -1,0 +1,95 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125958",
+    "colorId": 2,
+    "description": "Pantalon tiro medio con cintura elastizada y lazo de fantasia en delantero. Pierna recta holgada. Detalle laterales que juega con partes opacas y brillosas. Un pantalón comodín de esta temporada, cómodo y con buena caída.",
+    "description2": "Realizado en seda",
+    "description3": "Calce clásico",
+    "id": 42104,
+    "images": [
+      "125958_2_1.jpg",
+      "125958_2_2.jpg"
+    ],
+    "mainImage": "125958_2_1.jpg",
+    "name": "ALELI PANTALON",
+    "price": 1015,
+    "price1": 1450,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1015,
+          "price1": 1450,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1015,
+                "price1": 1450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1015,
+                      "price1": 1450,
+                      "productForSaleId": 5760675
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1015,
+                      "price1": 1450,
+                      "productForSaleId": 5760674
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1015,
+                      "price1": 1450,
+                      "productForSaleId": 5760678
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1015,
+                      "price1": 1450,
+                      "productForSaleId": 5760676
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1015,
+                      "price1": 1450,
+                      "productForSaleId": 5760677
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ALELI PANTALON NEGRO",
+    "productLineId": "3324"
+  }
+]

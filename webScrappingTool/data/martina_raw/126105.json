@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126105",
+    "colorId": 866,
+    "description": "Remera escote redondo, manga corta por arriba del codo, con estampa en delantero.",
+    "description2": "Realizada en jersey flame algodon",
+    "description3": "Calce clásico",
+    "id": 42297,
+    "images": [
+      "126105_866_1.jpg",
+      "126105_866_2.jpg"
+    ],
+    "mainImage": "126105_866_1.jpg",
+    "name": "BRISA REMERA",
+    "price": 750,
+    "price1": 940,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 750,
+          "price1": 940,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F8DCEA",
+                "description": "ROSA VIEJO",
+                "id": 866,
+                "price": 750,
+                "price1": 940,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 750,
+                      "price1": 940,
+                      "productForSaleId": 5760563
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 750,
+                      "price1": 940,
+                      "productForSaleId": 5760564
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 750,
+                      "price1": 940,
+                      "productForSaleId": 5760565
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 750,
+                      "price1": 940,
+                      "productForSaleId": 5760562
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BRISA REMERA ROSA VIEJO",
+    "productLineId": "3324"
+  }
+]

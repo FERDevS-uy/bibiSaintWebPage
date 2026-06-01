@@ -1,0 +1,90 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124540",
+    "colorId": 7,
+    "copy": "Remera con capucha Camelia",
+    "description": "Remera manga corta, con capucha y cordón regulador. Recortes en combinación de colores en laterales.",
+    "description2": "Realizada en jersey viscosa",
+    "description3": "Calce clásico",
+    "id": 40062,
+    "images": [
+      "124540_7_1.jpg",
+      "124540_7_2.jpg",
+      "124540_7_3.jpg",
+      "124540_7_4.jpg",
+      "124540_7_5.jpg"
+    ],
+    "mainImage": "124540_7_1.jpg",
+    "name": "CAMELIA REMERA",
+    "price": 690,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 690,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 690,
+                      "productForSaleId": 5550344
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 690,
+                      "productForSaleId": 5550341
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 690,
+                      "productForSaleId": 5550342
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 690,
+                      "productForSaleId": 5550343
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 690,
+                      "productForSaleId": 5550340
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CAMELIA REMERA AZUL"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124525",
+    "colorId": 7,
+    "copy": "Short de denim elastizado Ludovica",
+    "description": "Short tiro medio con cintura elastizada y  bolsillos delanteros aplicados.",
+    "description2": "Realizado en denim elastizado",
+    "description3": "Calce clásico",
+    "id": 40047,
+    "images": [
+      "124525_7_1.jpg",
+      "124525_7_2.jpg",
+      "124525_7_3.jpg",
+      "124525_7_4.jpg",
+      "124525_7_5.jpg"
+    ],
+    "mainImage": "124525_7_1.jpg",
+    "name": "LUDOVICA SHORT",
+    "price": 690,
+    "productLine": {
+      "id": 4757,
+      "name": "BERMUDAS Y SHORTS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 690,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 690,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 690,
+                      "productForSaleId": 5550839
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 690,
+                      "productForSaleId": 5550836
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 690,
+                      "productForSaleId": 5550837
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 690,
+                      "productForSaleId": 5550838
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 690,
+                      "productForSaleId": 5550835
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LUDOVICA SHORT AZUL"
+  }
+]

@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124996",
+    "colorId": 332,
+    "copy": "Colaless full print Odessa",
+    "description": "Colaless básica con elástico partido al tono. Full estampado en delantero y espalda. ",
+    "description2": "Realizado en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 40683,
+    "images": [
+      "124996_332_1.jpg",
+      "124996_332_2.jpg"
+    ],
+    "mainImage": "124996_332_1.jpg",
+    "name": "ODESSA COLALESS",
+    "price": 175,
+    "price1": 250,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 175,
+          "price1": 250,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 175,
+                "price1": 250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 175,
+                      "price1": 250,
+                      "productForSaleId": 5566042
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 175,
+                      "price1": 250,
+                      "productForSaleId": 5566043
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 175,
+                      "price1": 250,
+                      "productForSaleId": 5566044
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 175,
+                      "price1": 250,
+                      "productForSaleId": 5566041
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ODESSA COLALESS ESTAMPADO"
+  }
+]

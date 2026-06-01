@@ -1,0 +1,850 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124992",
+    "colorId": 27,
+    "copy": "Colaless de algodon elastizado Anya",
+    "description": "Colaless con cintura doble que no marca, elástico embutido en piernas. Un nuevo básico que llego para quedarse. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce clásico",
+    "id": 40679,
+    "images": [
+      "124992_261_1.jpg",
+      "124992_261_2.jpg",
+      "124992_27_1.jpg",
+      "124992_27_2.jpg",
+      "124992_28_1.jpg",
+      "124992_28_2.jpg",
+      "124992_8_1.jpg",
+      "124992_8_2.jpg"
+    ],
+    "mainImage": "124992_27_1.jpg",
+    "name": "ANYA COLALESS",
+    "price": 210,
+    "price1": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 210,
+          "price1": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566027
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566028
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566025
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566026
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566016
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566014
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566015
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566013
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566024
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566021
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566022
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566023
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566018
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566017
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566019
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566020
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANYA COLALESS ROSA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124992",
+    "colorId": 28,
+    "copy": "Colaless de algodon elastizado Anya",
+    "description": "Colaless con cintura doble que no marca, elástico embutido en piernas. Un nuevo básico que llego para quedarse. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce clásico",
+    "id": 40679,
+    "images": [
+      "124992_261_1.jpg",
+      "124992_261_2.jpg",
+      "124992_27_1.jpg",
+      "124992_27_2.jpg",
+      "124992_28_1.jpg",
+      "124992_28_2.jpg",
+      "124992_8_1.jpg",
+      "124992_8_2.jpg"
+    ],
+    "mainImage": "124992_28_1.jpg",
+    "name": "ANYA COLALESS",
+    "price": 210,
+    "price1": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 210,
+          "price1": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566027
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566028
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566025
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566026
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566016
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566014
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566015
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566013
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566024
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566021
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566022
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566023
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566018
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566017
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566019
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566020
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANYA COLALESS CELESTE"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124992",
+    "colorId": 261,
+    "copy": "Colaless de algodon elastizado Anya",
+    "description": "Colaless con cintura doble que no marca, elástico embutido en piernas. Un nuevo básico que llego para quedarse. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce clásico",
+    "id": 40679,
+    "images": [
+      "124992_261_1.jpg",
+      "124992_261_2.jpg",
+      "124992_27_1.jpg",
+      "124992_27_2.jpg",
+      "124992_28_1.jpg",
+      "124992_28_2.jpg",
+      "124992_8_1.jpg",
+      "124992_8_2.jpg"
+    ],
+    "mainImage": "124992_261_1.jpg",
+    "name": "ANYA COLALESS",
+    "price": 210,
+    "price1": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 210,
+          "price1": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566027
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566028
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566025
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566026
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566016
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566014
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566015
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566013
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566024
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566021
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566022
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566023
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566018
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566017
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566019
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566020
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANYA COLALESS LIMA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124992",
+    "colorId": 8,
+    "copy": "Colaless de algodon elastizado Anya",
+    "description": "Colaless con cintura doble que no marca, elástico embutido en piernas. Un nuevo básico que llego para quedarse. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce clásico",
+    "id": 40679,
+    "images": [
+      "124992_261_1.jpg",
+      "124992_261_2.jpg",
+      "124992_27_1.jpg",
+      "124992_27_2.jpg",
+      "124992_28_1.jpg",
+      "124992_28_2.jpg",
+      "124992_8_1.jpg",
+      "124992_8_2.jpg"
+    ],
+    "mainImage": "124992_8_1.jpg",
+    "name": "ANYA COLALESS",
+    "price": 210,
+    "price1": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 210,
+          "price1": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566027
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566028
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566025
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566026
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566016
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566014
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566015
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566013
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566024
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566021
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566022
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566023
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 210,
+                "price1": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566018
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566017
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566019
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 210,
+                      "price1": 300,
+                      "productForSaleId": 5566020
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANYA COLALESS VERDE"
+  }
+]

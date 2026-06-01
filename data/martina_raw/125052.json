@@ -1,0 +1,91 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125052",
+    "colorId": 799,
+    "copy": "Pantalón combinado Sara",
+    "description": "Pantalón tiro medio, de cintura elastizada, con recortes a contra tono en dos colores en laterales y bolsillos, de pierna recta y ruedo clásico. ",
+    "description2": "Realizado en rustico algodon",
+    "description3": "Calce clásico",
+    "id": 40811,
+    "images": [
+      "125052_786_1.jpg",
+      "125052_786_2.jpg",
+      "125052_799_1.jpg",
+      "125052_799_2.jpg",
+      "125052_799_3.jpg",
+      "125052_799_4.jpg"
+    ],
+    "mainImage": "125052_799_1.jpg",
+    "name": "SARA PANTALON",
+    "price": 1250,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1250,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#9A9194",
+                "description": "GRIS MELANGE OSCURO",
+                "id": 799,
+                "price": 1250,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1250,
+                      "productForSaleId": 5549630
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1250,
+                      "productForSaleId": 5549627
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1250,
+                      "productForSaleId": 5549628
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1250,
+                      "productForSaleId": 5549629
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1250,
+                      "productForSaleId": 5549626
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SARA PANTALON GRIS MELANGE OSCURO"
+  }
+]

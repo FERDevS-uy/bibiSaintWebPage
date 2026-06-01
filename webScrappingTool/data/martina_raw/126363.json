@@ -1,0 +1,69 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126363",
+    "colorId": 332,
+    "description": "Remera escote redondo con estampado full.",
+    "description2": "Realizada en morley",
+    "description3": "Calce clásico",
+    "id": 42630,
+    "images": [
+      "126363_332_1.jpg",
+      "126363_332_2.jpg"
+    ],
+    "mainImage": "126363_332_1.jpg",
+    "name": "LULA REMERA MANGA LARGA",
+    "price": 1150,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1150,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 1150,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1150,
+                      "productForSaleId": 5754142
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1150,
+                      "productForSaleId": 5754143
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LULA REMERA MANGA LARGA ESTAMPADO",
+    "productLineId": "3324"
+  }
+]

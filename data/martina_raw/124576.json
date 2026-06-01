@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124576",
+    "colorId": 332,
+    "copy": "Remera estampada Alexa",
+    "description": "Remera cuello redondo, manga ranglan en combinación de estampa con frente y espalda. Ruedo recto y largo clásico.",
+    "description2": "Realizada en jersey liviano",
+    "description3": "Calce clásico",
+    "id": 40098,
+    "images": [
+      "124576_332_1.jpg",
+      "124576_332_2.jpg"
+    ],
+    "mainImage": "124576_332_1.jpg",
+    "name": "ALEXA REMERA",
+    "price": 530,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 530,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 530,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 530,
+                      "productForSaleId": 5547925
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 530,
+                      "productForSaleId": 5547922
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 530,
+                      "productForSaleId": 5547923
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 530,
+                      "productForSaleId": 5547924
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 530,
+                      "productForSaleId": 5547921
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ALEXA REMERA ESTAMPADO"
+  }
+]

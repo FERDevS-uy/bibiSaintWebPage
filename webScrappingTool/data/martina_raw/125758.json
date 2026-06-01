@@ -1,0 +1,89 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125758",
+    "colorId": 45,
+    "copy": "Musculosa con detalle Ximena",
+    "description": "Musculosa básica con detalle de strass en delantero. ",
+    "description2": "Realizada en viscosa elastizada",
+    "description3": "Calce al cuerpo",
+    "id": 41780,
+    "images": [
+      "125758_45_1.jpg",
+      "125758_45_2.jpg"
+    ],
+    "mainImage": "125758_45_1.jpg",
+    "name": "XIMENA MUSCULOSA",
+    "price": 840,
+    "price1": 1200,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 840,
+          "price1": 1200,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#5A5A3E",
+                "description": "VERDE MILITAR",
+                "id": 45,
+                "price": 840,
+                "price1": 1200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 840,
+                      "price1": 1200,
+                      "productForSaleId": 5760667
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 840,
+                      "price1": 1200,
+                      "productForSaleId": 5760668
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 840,
+                      "price1": 1200,
+                      "productForSaleId": 5760669
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 840,
+                      "price1": 1200,
+                      "productForSaleId": 5760666
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "XIMENA MUSCULOSA VERDE MILITAR",
+    "productLineId": "3324"
+  }
+]

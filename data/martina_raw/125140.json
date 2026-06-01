@@ -1,0 +1,98 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125140",
+    "colorId": 2,
+    "copy": "Calza fuso Roxana",
+    "description": "Calza fuso, tiro medio con cintura elastizada y detalle de elástico en ruedo. Una prenda que podes combinar con el Marion top. ",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40908,
+    "images": [
+      "125140_2_1.jpg",
+      "125140_2_2.jpg",
+      "125140_2_3.jpg",
+      "125140_2_4.jpg",
+      "125140_2_5.jpg"
+    ],
+    "mainImage": "125140_2_1.jpg",
+    "name": "ROXANA CALZA",
+    "price": 990,
+    "price1": 1100,
+    "productLine": {
+      "id": 4736,
+      "name": "CALZAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 990,
+          "price1": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 990,
+                "price1": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "price1": 1100,
+                      "productForSaleId": 5569677
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "price1": 1100,
+                      "productForSaleId": 5569678
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "price1": 1100,
+                      "productForSaleId": 5569679
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "price1": 1100,
+                      "productForSaleId": 5569676
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "price1": 1100,
+                      "productForSaleId": 5569675
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ROXANA CALZA NEGRO"
+  }
+]

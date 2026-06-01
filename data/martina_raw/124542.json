@@ -1,0 +1,90 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124542",
+    "colorId": 17,
+    "copy": "Calza Ciclista Antolina",
+    "description": "Calza ciclista tiro medio, con cintura elastizada. Con recorte en combinación sobre cintura que va del delantero a la espalda.",
+    "description2": "Realizada en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 40064,
+    "images": [
+      "124542_17_1.jpg",
+      "124542_17_2.jpg",
+      "124542_17_3.jpg",
+      "124542_17_4.jpg",
+      "124542_17_5.jpg"
+    ],
+    "mainImage": "124542_17_1.jpg",
+    "name": "ANTOLINA CALZA",
+    "price": 790,
+    "productLine": {
+      "id": 4736,
+      "name": "CALZAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA",
+                "id": 17,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 790,
+                      "productForSaleId": 5550355
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 790,
+                      "productForSaleId": 5550352
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 790,
+                      "productForSaleId": 5550353
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 790,
+                      "productForSaleId": 5550354
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 790,
+                      "productForSaleId": 5550351
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANTOLINA CALZA NARANJA"
+  }
+]

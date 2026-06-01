@@ -1,0 +1,232 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124930",
+    "colorId": 866,
+    "copy": "Bombacha universal Galana",
+    "description": "Bombacha universal con detalle de puntilla en delantero.",
+    "description2": "Realizada en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 40605,
+    "images": [
+      "124930_2_1.jpg",
+      "124930_866_1.jpg",
+      "124930_866_2.jpg"
+    ],
+    "mainImage": "124930_866_1.jpg",
+    "name": "GALANA BOMBACHA ",
+    "price": 590,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 590,
+                      "productForSaleId": 5551052
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 590,
+                      "productForSaleId": 5551049
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 590,
+                      "productForSaleId": 5551050
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 590,
+                      "productForSaleId": 5551051
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F8DCEA",
+                "description": "ROSA VIEJO",
+                "id": 866,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 590,
+                      "productForSaleId": 5551054
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 590,
+                      "productForSaleId": 5551053
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 590,
+                      "productForSaleId": 5551047
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 590,
+                      "productForSaleId": 5551048
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GALANA BOMBACHA  ROSA VIEJO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124930",
+    "colorId": 2,
+    "copy": "Bombacha universal Galana",
+    "description": "Bombacha universal con detalle de puntilla en delantero.",
+    "description2": "Realizada en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 40605,
+    "images": [
+      "124930_2_1.jpg",
+      "124930_866_1.jpg",
+      "124930_866_2.jpg"
+    ],
+    "mainImage": "124930_2_1.jpg",
+    "name": "GALANA BOMBACHA ",
+    "price": 590,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 590,
+                      "productForSaleId": 5551052
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 590,
+                      "productForSaleId": 5551049
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 590,
+                      "productForSaleId": 5551050
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 590,
+                      "productForSaleId": 5551051
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F8DCEA",
+                "description": "ROSA VIEJO",
+                "id": 866,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 590,
+                      "productForSaleId": 5551054
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 590,
+                      "productForSaleId": 5551053
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 590,
+                      "productForSaleId": 5551047
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 590,
+                      "productForSaleId": 5551048
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GALANA BOMBACHA  NEGRO"
+  }
+]

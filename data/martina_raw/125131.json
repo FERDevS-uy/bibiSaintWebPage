@@ -1,0 +1,69 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125131",
+    "colorId": 2,
+    "description": "Babucha tiro medio, de cintura elastizada. Un clásico que se adapta a cualquier ocasión. ",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40899,
+    "images": [
+      "125131_2_1.jpg",
+      "125131_2_2.jpg"
+    ],
+    "mainImage": "125131_2_1.jpg",
+    "name": "RAMIRO BABUCHA",
+    "price": 1100,
+    "productLine": {
+      "id": 3357,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1100,
+                      "productForSaleId": 5756931
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1100,
+                      "productForSaleId": 5756932
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RAMIRO BABUCHA NEGRO",
+    "productLineId": "3325"
+  }
+]

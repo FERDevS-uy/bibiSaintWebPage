@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124471",
+    "colorId": 332,
+    "copy": "Camisa estampada Angy",
+    "description": "Camisa manga larga de motivo batik-floreado, con puños anchos, botones en delantero y detalle de tabla encontrada en espalda, para mayor amplitud. Una prenda fresca y de colores vibrantes para sumar a tu look!",
+    "description2": "Realizada en fibrana estampada",
+    "description3": "Calce clásico",
+    "id": 39993,
+    "images": [
+      "124471_332_1.jpg",
+      "124471_332_2.jpg"
+    ],
+    "mainImage": "124471_332_1.jpg",
+    "name": "ANGY CAMISA",
+    "price": 1490,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1490,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 1490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1490,
+                      "productForSaleId": 5550162
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1490,
+                      "productForSaleId": 5550159
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1490,
+                      "productForSaleId": 5550160
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1490,
+                      "productForSaleId": 5550161
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1490,
+                      "productForSaleId": 5550158
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANGY CAMISA ESTAMPADO"
+  }
+]

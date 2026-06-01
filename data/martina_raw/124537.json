@@ -1,0 +1,611 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124537",
+    "colorId": 22,
+    "copy": "Remera de microfibra Lenola",
+    "description": "Remera manga corta, cuello redondo, ruedo irregular. Detalles de bordador a contratono sobre recortes y ruedos.",
+    "description2": "Realizada en microset microfibra",
+    "description3": "Calce clásico",
+    "id": 40059,
+    "images": [
+      "124537_19_1.jpg",
+      "124537_19_2.jpg",
+      "124537_19_3.jpg",
+      "124537_19_4.jpg",
+      "124537_19_5.jpg",
+      "124537_22_1.jpg",
+      "124537_22_2.jpg",
+      "124537_22_3.jpg",
+      "124537_22_4.jpg",
+      "124537_22_5.jpg",
+      "124537_70_1.jpg",
+      "124537_70_2.jpg",
+      "124537_70_3.jpg",
+      "124537_70_4.jpg",
+      "124537_70_5.jpg",
+      "124537_8_1.jpg",
+      "124537_8_2.jpg",
+      "124537_8_3.jpg",
+      "124537_8_4.jpg",
+      "124537_8_5.jpg"
+    ],
+    "mainImage": "124537_22_1.jpg",
+    "name": "LENOLA REMERA",
+    "price": 525,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 525,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 525,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 525,
+                      "productForSaleId": 5550324
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 525,
+                      "productForSaleId": 5550320
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 525,
+                      "productForSaleId": 5550321
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 525,
+                      "productForSaleId": 5550322
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 525,
+                      "productForSaleId": 5550319
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 525,
+                      "productForSaleId": 5550323
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 525,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 525,
+                      "productForSaleId": 5550330
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 525,
+                      "productForSaleId": 5550326
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 525,
+                      "productForSaleId": 5550327
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 525,
+                      "productForSaleId": 5550328
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 525,
+                      "productForSaleId": 5550325
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 525,
+                      "productForSaleId": 5550329
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 525,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 525,
+                      "productForSaleId": 5550318
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 525,
+                      "productForSaleId": 5550314
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 525,
+                      "productForSaleId": 5550315
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 525,
+                      "productForSaleId": 5550316
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 525,
+                      "productForSaleId": 5550313
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 525,
+                      "productForSaleId": 5550317
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LENOLA REMERA FUCSIA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124537",
+    "colorId": 8,
+    "copy": "Remera de microfibra Lenola",
+    "description": "Remera manga corta, cuello redondo, ruedo irregular. Detalles de bordador a contratono sobre recortes y ruedos.",
+    "description2": "Realizada en microset microfibra",
+    "description3": "Calce clásico",
+    "id": 40059,
+    "images": [
+      "124537_19_1.jpg",
+      "124537_19_2.jpg",
+      "124537_19_3.jpg",
+      "124537_19_4.jpg",
+      "124537_19_5.jpg",
+      "124537_22_1.jpg",
+      "124537_22_2.jpg",
+      "124537_22_3.jpg",
+      "124537_22_4.jpg",
+      "124537_22_5.jpg",
+      "124537_70_1.jpg",
+      "124537_70_2.jpg",
+      "124537_70_3.jpg",
+      "124537_70_4.jpg",
+      "124537_70_5.jpg",
+      "124537_8_1.jpg",
+      "124537_8_2.jpg",
+      "124537_8_3.jpg",
+      "124537_8_4.jpg",
+      "124537_8_5.jpg"
+    ],
+    "mainImage": "124537_8_1.jpg",
+    "name": "LENOLA REMERA",
+    "price": 525,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 525,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 525,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 525,
+                      "productForSaleId": 5550324
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 525,
+                      "productForSaleId": 5550320
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 525,
+                      "productForSaleId": 5550321
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 525,
+                      "productForSaleId": 5550322
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 525,
+                      "productForSaleId": 5550319
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 525,
+                      "productForSaleId": 5550323
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 525,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 525,
+                      "productForSaleId": 5550330
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 525,
+                      "productForSaleId": 5550326
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 525,
+                      "productForSaleId": 5550327
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 525,
+                      "productForSaleId": 5550328
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 525,
+                      "productForSaleId": 5550325
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 525,
+                      "productForSaleId": 5550329
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 525,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 525,
+                      "productForSaleId": 5550318
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 525,
+                      "productForSaleId": 5550314
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 525,
+                      "productForSaleId": 5550315
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 525,
+                      "productForSaleId": 5550316
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 525,
+                      "productForSaleId": 5550313
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 525,
+                      "productForSaleId": 5550317
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LENOLA REMERA VERDE"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124537",
+    "colorId": 70,
+    "copy": "Remera de microfibra Lenola",
+    "description": "Remera manga corta, cuello redondo, ruedo irregular. Detalles de bordador a contratono sobre recortes y ruedos.",
+    "description2": "Realizada en microset microfibra",
+    "description3": "Calce clásico",
+    "id": 40059,
+    "images": [
+      "124537_19_1.jpg",
+      "124537_19_2.jpg",
+      "124537_19_3.jpg",
+      "124537_19_4.jpg",
+      "124537_19_5.jpg",
+      "124537_22_1.jpg",
+      "124537_22_2.jpg",
+      "124537_22_3.jpg",
+      "124537_22_4.jpg",
+      "124537_22_5.jpg",
+      "124537_70_1.jpg",
+      "124537_70_2.jpg",
+      "124537_70_3.jpg",
+      "124537_70_4.jpg",
+      "124537_70_5.jpg",
+      "124537_8_1.jpg",
+      "124537_8_2.jpg",
+      "124537_8_3.jpg",
+      "124537_8_4.jpg",
+      "124537_8_5.jpg"
+    ],
+    "mainImage": "124537_70_1.jpg",
+    "name": "LENOLA REMERA",
+    "price": 525,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 525,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FF0080",
+                "description": "FUCSIA",
+                "id": 22,
+                "price": 525,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 525,
+                      "productForSaleId": 5550324
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 525,
+                      "productForSaleId": 5550320
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 525,
+                      "productForSaleId": 5550321
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 525,
+                      "productForSaleId": 5550322
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 525,
+                      "productForSaleId": 5550319
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 525,
+                      "productForSaleId": 5550323
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00C1EA",
+                "description": "TURQUESA",
+                "id": 70,
+                "price": 525,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 525,
+                      "productForSaleId": 5550330
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 525,
+                      "productForSaleId": 5550326
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 525,
+                      "productForSaleId": 5550327
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 525,
+                      "productForSaleId": 5550328
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 525,
+                      "productForSaleId": 5550325
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 525,
+                      "productForSaleId": 5550329
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 525,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 525,
+                      "productForSaleId": 5550318
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 525,
+                      "productForSaleId": 5550314
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 525,
+                      "productForSaleId": 5550315
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 525,
+                      "productForSaleId": 5550316
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 525,
+                      "productForSaleId": 5550313
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 525,
+                      "productForSaleId": 5550317
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LENOLA REMERA TURQUESA"
+  }
+]

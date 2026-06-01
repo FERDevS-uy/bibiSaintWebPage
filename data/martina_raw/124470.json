@@ -1,0 +1,262 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124470",
+    "colorId": 1252,
+    "copy": "Boxer de dama Arika",
+    "description": "Boxer de dama, envivado a contratono, cintura con elástico sublimado.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 39992,
+    "images": [
+      "124470_1461_1.jpg",
+      "124470_1461_2.jpg",
+      "124470_211_1.jpg",
+      "124470_211_2.jpg",
+      "124470_2_1.jpg",
+      "124470_2_2.jpg"
+    ],
+    "mainImage": "124470_1461_1.jpg",
+    "name": "ARIKA BOXER",
+    "price": 280,
+    "price1": 400,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 280,
+          "price1": 400,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#4D4D4D",
+                "description": "GRIS - NEGRO",
+                "id": 1252,
+                "price": 280,
+                "price1": 400,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565970
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565969
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565972
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565971
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO-GRIS",
+                "id": 211,
+                "price": 280,
+                "price1": 400,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565965
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565968
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565966
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565967
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ARIKA BOXER GRIS - NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124470",
+    "colorId": 211,
+    "copy": "Boxer de dama Arika",
+    "description": "Boxer de dama, envivado a contratono, cintura con elástico sublimado.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 39992,
+    "images": [
+      "124470_1461_1.jpg",
+      "124470_1461_2.jpg",
+      "124470_211_1.jpg",
+      "124470_211_2.jpg",
+      "124470_2_1.jpg",
+      "124470_2_2.jpg"
+    ],
+    "mainImage": "124470_211_1.jpg",
+    "name": "ARIKA BOXER",
+    "price": 280,
+    "price1": 400,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 280,
+          "price1": 400,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#4D4D4D",
+                "description": "GRIS - NEGRO",
+                "id": 1252,
+                "price": 280,
+                "price1": 400,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565970
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565969
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565972
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565971
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO-GRIS",
+                "id": 211,
+                "price": 280,
+                "price1": 400,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565965
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565968
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565966
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 280,
+                      "price1": 400,
+                      "productForSaleId": 5565967
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ARIKA BOXER NEGRO-GRIS"
+  }
+]

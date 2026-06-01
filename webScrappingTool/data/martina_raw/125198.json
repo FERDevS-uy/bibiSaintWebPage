@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125198",
+    "colorId": 2,
+    "description": "Boxer de piernas largas. Tiro medio con elástico en cintura. Una prenda ideal para usar debajo de pantalones, como primer piel para este invierno.",
+    "description2": "Realizado en algodon elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40984,
+    "images": [
+      "125198_2_1.jpg",
+      "125198_2_2.jpg"
+    ],
+    "mainImage": "125198_2_1.jpg",
+    "name": "GALVAN BOXER LARGO",
+    "price": 600,
+    "productLine": {
+      "id": 3357,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 600,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 600,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 600,
+                      "productForSaleId": 5757065
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 600,
+                      "productForSaleId": 5757066
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 600,
+                      "productForSaleId": 5757067
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 600,
+                      "productForSaleId": 5757064
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GALVAN BOXER LARGO NEGRO",
+    "productLineId": "3325"
+  }
+]

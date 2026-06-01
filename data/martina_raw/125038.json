@@ -1,0 +1,89 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125038",
+    "colorId": 32,
+    "copy": "Musculosa Korya",
+    "description": "Musculosa escote redondo con estampa en delantero.",
+    "description2": "Realizada en jersey melange",
+    "description3": "Calce clásico",
+    "id": 40743,
+    "images": [
+      "125038_32_1.jpg",
+      "125038_32_2.jpg",
+      "125038_32_3.jpg",
+      "125038_32_4.jpg"
+    ],
+    "mainImage": "125038_32_1.jpg",
+    "name": "KORYA MUSCULOSA",
+    "price": 900,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 900,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 900,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 900,
+                      "productForSaleId": 5548336
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 900,
+                      "productForSaleId": 5548333
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 900,
+                      "productForSaleId": 5548334
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 900,
+                      "productForSaleId": 5548335
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 900,
+                      "productForSaleId": 5548332
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "KORYA MUSCULOSA GRIS MELANGE"
+  }
+]

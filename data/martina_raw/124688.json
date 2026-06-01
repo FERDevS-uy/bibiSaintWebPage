@@ -1,0 +1,94 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124688",
+    "colorId": 1,
+    "copy": "Remera Estampada Aimara",
+    "description": "Remera de cuello redondo manga corta, con estampa en el delantero.",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40246,
+    "images": [
+      "124688_1_1.jpg",
+      "124688_1_2.jpg",
+      "124688_1_3.jpg"
+    ],
+    "mainImage": "124688_1_1.jpg",
+    "name": "AIMARA REMERA",
+    "price": 990,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 990,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 990,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 990,
+                      "productForSaleId": 5548265
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 990,
+                      "productForSaleId": 5548262
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 990,
+                      "productForSaleId": 5548263
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 990,
+                      "productForSaleId": 5548264
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 990,
+                      "productForSaleId": 5548261
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 990,
+                      "productForSaleId": 5548266
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AIMARA REMERA BLANCO"
+  }
+]

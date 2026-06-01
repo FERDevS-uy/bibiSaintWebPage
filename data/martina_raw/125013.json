@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125013",
+    "colorId": 32,
+    "copy": "Remera con estampa Monica",
+    "description": "Remera escote redondo manga corta con estampa en delantero.",
+    "description2": "Realizada en jersey snow",
+    "description3": "Calce clásico",
+    "id": 40708,
+    "images": [
+      "125013_32_1.jpg",
+      "125013_32_2.jpg"
+    ],
+    "mainImage": "125013_32_1.jpg",
+    "name": "MONICA REMERA",
+    "price": 1160,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1160,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 1160,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1160,
+                      "productForSaleId": 5549963
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1160,
+                      "productForSaleId": 5549960
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1160,
+                      "productForSaleId": 5549961
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1160,
+                      "productForSaleId": 5549962
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1160,
+                      "productForSaleId": 5549959
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MONICA REMERA GRIS MELANGE"
+  }
+]

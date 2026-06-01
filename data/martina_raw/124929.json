@@ -1,0 +1,260 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124929",
+    "colorId": 866,
+    "copy": "Corpiño sin aro Zeline",
+    "description": "Corpiño sin aro con breteles regulables y detalle de puntilla en escote.",
+    "description2": "Realizado en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 40604,
+    "images": [
+      "124929_2_1.jpg",
+      "124929_2_2.jpg",
+      "124929_866_1.jpg",
+      "124929_866_2.jpg",
+      "124929_866_3.jpg"
+    ],
+    "mainImage": "124929_866_1.jpg",
+    "name": "ZELINE CORPIÑO",
+    "price": 950,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5551046
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5551037
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5551044
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5551045
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5551043
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F8DCEA",
+                "description": "ROSA VIEJO",
+                "id": 866,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5551041
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5551038
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5551040
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5551042
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5551039
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ZELINE CORPIÑO ROSA VIEJO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124929",
+    "colorId": 2,
+    "copy": "Corpiño sin aro Zeline",
+    "description": "Corpiño sin aro con breteles regulables y detalle de puntilla en escote.",
+    "description2": "Realizado en tricot ",
+    "description3": "Calce al cuerpo",
+    "id": 40604,
+    "images": [
+      "124929_2_1.jpg",
+      "124929_2_2.jpg",
+      "124929_866_1.jpg",
+      "124929_866_2.jpg",
+      "124929_866_3.jpg"
+    ],
+    "mainImage": "124929_2_1.jpg",
+    "name": "ZELINE CORPIÑO",
+    "price": 950,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5551046
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5551037
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5551044
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5551045
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5551043
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F8DCEA",
+                "description": "ROSA VIEJO",
+                "id": 866,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5551041
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5551038
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 950,
+                      "productForSaleId": 5551040
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5551042
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5551039
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ZELINE CORPIÑO NEGRO"
+  }
+]

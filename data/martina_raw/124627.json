@@ -1,0 +1,80 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124627",
+    "colorId": 9,
+    "description": "Remera escote a la base, manga corta, con estampa en delantero.",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce clásico",
+    "id": 40149,
+    "images": [
+      "124627_9_1.jpg",
+      "124627_9_2.jpg"
+    ],
+    "mainImage": "124627_9_1.jpg",
+    "name": "JOE REMERA",
+    "price": 820,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 820,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 820,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 820,
+                      "productForSaleId": 5550689
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 820,
+                      "productForSaleId": 5550686
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 820,
+                      "productForSaleId": 5550687
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 820,
+                      "productForSaleId": 5550688
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JOE REMERA ROJO"
+  }
+]

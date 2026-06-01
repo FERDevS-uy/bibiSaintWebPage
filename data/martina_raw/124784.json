@@ -1,0 +1,256 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124784",
+    "colorId": 1290,
+    "copy": "Vestido escote en V Zara",
+    "description": "Vestido evasé holgado escote en v, con recorte elastizado que genera pequeños frunces. Un básico imperdible que te va a acompañar todo el verano.",
+    "description2": "Realizado en jersey liviano",
+    "description3": "Calce clásico",
+    "id": 40370,
+    "images": [
+      "124784_1290_1.jpg",
+      "124784_32_1.jpg",
+      "124784_32_2.jpg"
+    ],
+    "mainImage": "124784_1290_1.jpg",
+    "name": "ZARA VESTIDO",
+    "price": 790,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F1C196",
+                "description": "DURAZNO CLARO",
+                "id": 1290,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 790,
+                      "productForSaleId": 5549360
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 790,
+                      "productForSaleId": 5549357
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 790,
+                      "productForSaleId": 5549358
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 790,
+                      "productForSaleId": 5549359
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 790,
+                      "productForSaleId": 5549356
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 790,
+                      "productForSaleId": 5549355
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 790,
+                      "productForSaleId": 5549352
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 790,
+                      "productForSaleId": 5549353
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 790,
+                      "productForSaleId": 5549354
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 790,
+                      "productForSaleId": 5549351
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ZARA VESTIDO DURAZNO CLARO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124784",
+    "colorId": 32,
+    "copy": "Vestido escote en V Zara",
+    "description": "Vestido evasé holgado escote en v, con recorte elastizado que genera pequeños frunces. Un básico imperdible que te va a acompañar todo el verano.",
+    "description2": "Realizado en jersey liviano",
+    "description3": "Calce clásico",
+    "id": 40370,
+    "images": [
+      "124784_1290_1.jpg",
+      "124784_32_1.jpg",
+      "124784_32_2.jpg"
+    ],
+    "mainImage": "124784_32_1.jpg",
+    "name": "ZARA VESTIDO",
+    "price": 790,
+    "productLine": {
+      "id": 3327,
+      "name": "VESTIDOS ",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F1C196",
+                "description": "DURAZNO CLARO",
+                "id": 1290,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 790,
+                      "productForSaleId": 5549360
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 790,
+                      "productForSaleId": 5549357
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 790,
+                      "productForSaleId": 5549358
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 790,
+                      "productForSaleId": 5549359
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 790,
+                      "productForSaleId": 5549356
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 790,
+                      "productForSaleId": 5549355
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 790,
+                      "productForSaleId": 5549352
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 790,
+                      "productForSaleId": 5549353
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 790,
+                      "productForSaleId": 5549354
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 790,
+                      "productForSaleId": 5549351
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ZARA VESTIDO GRIS MELANGE"
+  }
+]

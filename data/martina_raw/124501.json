@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124501",
+    "colorId": 332,
+    "copy": "Babucha de viscosa elastizada Pandora",
+    "description": "Babucha cintura elastizada full estampado, de pierna clásica y ajustado en ruedo. Con bolsillos laterales. ",
+    "description2": "Realizada en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 40023,
+    "images": [
+      "124501_332_1.jpg",
+      "124501_332_2.jpg",
+      "124501_332_3.jpg"
+    ],
+    "mainImage": "124501_332_1.jpg",
+    "name": "PANDORA BABUCHA",
+    "price": 1100,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5549184
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5549181
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5549182
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5549183
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5549180
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PANDORA BABUCHA ESTAMPADO"
+  }
+]

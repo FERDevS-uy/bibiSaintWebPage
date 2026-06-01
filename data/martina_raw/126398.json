@@ -1,0 +1,75 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126398",
+    "colorId": 28,
+    "description": "Remera escote redondo,manga larga, con estampa en delantero.Ruedo semi redondeado.",
+    "description2": "Realizada en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 42684,
+    "images": [
+      "126398_28_1.jpg",
+      "126398_28_2.jpg"
+    ],
+    "mainImage": "126398_28_1.jpg",
+    "name": "NURIT REMERA",
+    "price": 865,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 865,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 865,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 865,
+                      "productForSaleId": 5754294
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 865,
+                      "productForSaleId": 5754295
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 865,
+                      "productForSaleId": 5754296
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NURIT REMERA CELESTE",
+    "productLineId": "3324"
+  }
+]

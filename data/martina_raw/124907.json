@@ -1,0 +1,61 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124907",
+    "colorId": 5,
+    "description": "Media caña alta con motivo de pequeñas franjas intercaladas.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40582,
+    "images": [
+      "124907_5_1.jpg"
+    ],
+    "mainImage": "124907_5_1.jpg",
+    "name": "BRANCA MEDIA",
+    "price": 365,
+    "productLine": {
+      "id": 3362,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 365,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#60636A",
+                "description": "GRIS",
+                "id": 5,
+                "price": 365,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 365,
+                      "productForSaleId": 5551104
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "BRANCA MEDIA GRIS"
+  }
+]

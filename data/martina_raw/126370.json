@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126370",
+    "colorId": 53,
+    "description": "Campera cuello alto que combina del derecho y el revés de tela. Bolsillos delanteros",
+    "description2": "Realizada en piel bifaz",
+    "description3": "Calce clásico",
+    "id": 42637,
+    "images": [
+      "126370_53_1.jpg",
+      "126370_53_2.jpg"
+    ],
+    "mainImage": "126370_53_1.jpg",
+    "name": "SOLANGE CAMPERA",
+    "price": 2200,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2200,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#ECDDCE",
+                "description": "BEIGE",
+                "id": 53,
+                "price": 2200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2200,
+                      "productForSaleId": 5754206
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2200,
+                      "productForSaleId": 5754205
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2200,
+                      "productForSaleId": 5754208
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2200,
+                      "productForSaleId": 5754207
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SOLANGE CAMPERA BEIGE",
+    "productLineId": "3324"
+  }
+]

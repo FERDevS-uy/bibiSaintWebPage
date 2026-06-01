@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126071",
+    "colorId": 6,
+    "description": "Campera bomber, escote redondo con cierre de acceso. Bolsillos delanteros y elastico que apoya en ruedo y mangas.\r\nRealizado en suede matelaseado y forrada en todo su interior.",
+    "description2": "Realizado en suede",
+    "description3": "Calce clásico",
+    "id": 42259,
+    "images": [
+      "126071_6_1.jpg",
+      "126071_6_2.jpg"
+    ],
+    "mainImage": "126071_6_1.jpg",
+    "name": "JAMAICA BOMBER",
+    "price": 2210,
+    "price1": 2760,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 2210,
+          "price1": 2760,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#936B53",
+                "description": "MARRON",
+                "id": 6,
+                "price": 2210,
+                "price1": 2760,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2210,
+                      "price1": 2760,
+                      "productForSaleId": 5760559
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2210,
+                      "price1": 2760,
+                      "productForSaleId": 5760560
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2210,
+                      "price1": 2760,
+                      "productForSaleId": 5760561
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2210,
+                      "price1": 2760,
+                      "productForSaleId": 5760558
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JAMAICA BOMBER MARRON",
+    "productLineId": "3324"
+  }
+]

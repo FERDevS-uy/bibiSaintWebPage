@@ -1,0 +1,518 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126153",
+    "colorId": 1211,
+    "description": "Pantalón tiro medio con cintura elastizada. Bolsillos laterales y recortes. Pierna recta.",
+    "description2": "Realizado en frisa",
+    "description3": "Calce clásico",
+    "id": 42363,
+    "images": [
+      "126153_1211_1.jpg",
+      "126153_1211_2.jpg",
+      "126153_1211_3.jpg",
+      "126153_1211_4.jpg",
+      "126153_1211_5.jpg",
+      "126153_879_1.jpg",
+      "126153_879_2.jpg",
+      "126153_879_3.jpg",
+      "126153_8_1.jpg"
+    ],
+    "mainImage": "126153_1211_1.jpg",
+    "name": "ROMAGNA PANTALON",
+    "price": 1840,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1470,
+          "price1": 1840,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CBCBCB",
+                "description": "GRIS MELANGE CLARO ",
+                "id": 1211,
+                "price": 1470,
+                "price1": 1840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760598
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760601
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760600
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760599
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1840,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CA5F19",
+                "description": "CARAMELO",
+                "id": 879,
+                "price": 1840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1840,
+                      "productForSaleId": 5754162
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1840,
+                      "productForSaleId": 5754161
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1840,
+                      "productForSaleId": 5754164
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1840,
+                      "productForSaleId": 5754163
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 1840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1840,
+                      "productForSaleId": 5754157
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1840,
+                      "productForSaleId": 5754160
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1840,
+                      "productForSaleId": 5754158
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1840,
+                      "productForSaleId": 5754159
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ROMAGNA PANTALON GRIS MELANGE CLARO ",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126153",
+    "colorId": 8,
+    "description": "Pantalón tiro medio con cintura elastizada. Bolsillos laterales y recortes. Pierna recta.",
+    "description2": "Realizado en frisa",
+    "description3": "Calce clásico",
+    "id": 42363,
+    "images": [
+      "126153_1211_1.jpg",
+      "126153_1211_2.jpg",
+      "126153_1211_3.jpg",
+      "126153_1211_4.jpg",
+      "126153_1211_5.jpg",
+      "126153_879_1.jpg",
+      "126153_879_2.jpg",
+      "126153_879_3.jpg",
+      "126153_8_1.jpg"
+    ],
+    "mainImage": "126153_8_1.jpg",
+    "name": "ROMAGNA PANTALON",
+    "price": 1840,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1470,
+          "price1": 1840,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CBCBCB",
+                "description": "GRIS MELANGE CLARO ",
+                "id": 1211,
+                "price": 1470,
+                "price1": 1840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760598
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760601
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760600
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760599
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1840,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CA5F19",
+                "description": "CARAMELO",
+                "id": 879,
+                "price": 1840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1840,
+                      "productForSaleId": 5754162
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1840,
+                      "productForSaleId": 5754161
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1840,
+                      "productForSaleId": 5754164
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1840,
+                      "productForSaleId": 5754163
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 1840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1840,
+                      "productForSaleId": 5754157
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1840,
+                      "productForSaleId": 5754160
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1840,
+                      "productForSaleId": 5754158
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1840,
+                      "productForSaleId": 5754159
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ROMAGNA PANTALON VERDE",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126153",
+    "colorId": 879,
+    "description": "Pantalón tiro medio con cintura elastizada. Bolsillos laterales y recortes. Pierna recta.",
+    "description2": "Realizado en frisa",
+    "description3": "Calce clásico",
+    "id": 42363,
+    "images": [
+      "126153_1211_1.jpg",
+      "126153_1211_2.jpg",
+      "126153_1211_3.jpg",
+      "126153_1211_4.jpg",
+      "126153_1211_5.jpg",
+      "126153_879_1.jpg",
+      "126153_879_2.jpg",
+      "126153_879_3.jpg",
+      "126153_8_1.jpg"
+    ],
+    "mainImage": "126153_879_1.jpg",
+    "name": "ROMAGNA PANTALON",
+    "price": 1840,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1470,
+          "price1": 1840,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CBCBCB",
+                "description": "GRIS MELANGE CLARO ",
+                "id": 1211,
+                "price": 1470,
+                "price1": 1840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760598
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760601
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760600
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1470,
+                      "price1": 1840,
+                      "productForSaleId": 5760599
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1840,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CA5F19",
+                "description": "CARAMELO",
+                "id": 879,
+                "price": 1840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1840,
+                      "productForSaleId": 5754162
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1840,
+                      "productForSaleId": 5754161
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1840,
+                      "productForSaleId": 5754164
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1840,
+                      "productForSaleId": 5754163
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 1840,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1840,
+                      "productForSaleId": 5754157
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1840,
+                      "productForSaleId": 5754160
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1840,
+                      "productForSaleId": 5754158
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1840,
+                      "productForSaleId": 5754159
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ROMAGNA PANTALON CARAMELO",
+    "productLineId": "3324"
+  }
+]

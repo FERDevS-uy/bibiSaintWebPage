@@ -1,0 +1,216 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126151",
+    "colorId": 32,
+    "description": "Buzo basico escote redondo con estampa flock (felpa) en delantero. Cada color con un diseño diferente.",
+    "description2": "Realizado en rustico algodon",
+    "description3": "Calce clásico",
+    "id": 42361,
+    "images": [
+      "126151_20_1.jpg",
+      "126151_20_2.jpg",
+      "126151_32_1.jpg",
+      "126151_32_2.jpg"
+    ],
+    "mainImage": "126151_32_1.jpg",
+    "name": "DAFNE BUZO",
+    "price": 1860,
+    "price1": 2190,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1860,
+          "price1": 2190,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFDE6",
+                "description": "CRUDO",
+                "id": 20,
+                "price": 1860,
+                "price1": 2190,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1860,
+                      "price1": 2190,
+                      "productForSaleId": 5753765
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1860,
+                      "price1": 2190,
+                      "productForSaleId": 5753766
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 1860,
+                "price1": 2190,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1860,
+                      "price1": 2190,
+                      "productForSaleId": 5753761
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1860,
+                      "price1": 2190,
+                      "productForSaleId": 5753762
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1860,
+                      "price1": 2190,
+                      "productForSaleId": 5753763
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DAFNE BUZO GRIS MELANGE",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126151",
+    "colorId": 20,
+    "description": "Buzo basico escote redondo con estampa flock (felpa) en delantero. Cada color con un diseño diferente.",
+    "description2": "Realizado en rustico algodon",
+    "description3": "Calce clásico",
+    "id": 42361,
+    "images": [
+      "126151_20_1.jpg",
+      "126151_20_2.jpg",
+      "126151_32_1.jpg",
+      "126151_32_2.jpg"
+    ],
+    "mainImage": "126151_20_1.jpg",
+    "name": "DAFNE BUZO",
+    "price": 1860,
+    "price1": 2190,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1860,
+          "price1": 2190,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFDE6",
+                "description": "CRUDO",
+                "id": 20,
+                "price": 1860,
+                "price1": 2190,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1860,
+                      "price1": 2190,
+                      "productForSaleId": 5753765
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1860,
+                      "price1": 2190,
+                      "productForSaleId": 5753766
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 1860,
+                "price1": 2190,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1860,
+                      "price1": 2190,
+                      "productForSaleId": 5753761
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1860,
+                      "price1": 2190,
+                      "productForSaleId": 5753762
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1860,
+                      "price1": 2190,
+                      "productForSaleId": 5753763
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DAFNE BUZO CRUDO",
+    "productLineId": "3324"
+  }
+]

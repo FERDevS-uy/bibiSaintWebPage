@@ -1,0 +1,102 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125075",
+    "colorId": 39,
+    "copy": "Remeron escote redondo Agata",
+    "description": "Remeron escote redondo, manga corta con estampa en delantero. ",
+    "description2": "Realizado en jersey algodon",
+    "description3": "Calce amplio",
+    "id": 40834,
+    "images": [
+      "125075_39_1.jpg",
+      "125075_39_2.jpg"
+    ],
+    "mainImage": "125075_39_1.jpg",
+    "name": "AGATA REMERON",
+    "price": 660,
+    "price1": 1100,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 660,
+          "price1": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#0E1944",
+                "description": "AZUL MARINO",
+                "id": 39,
+                "price": 660,
+                "price1": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 660,
+                      "price1": 1100,
+                      "productForSaleId": 5562138
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 660,
+                      "price1": 1100,
+                      "productForSaleId": 5562136
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 660,
+                      "price1": 1100,
+                      "productForSaleId": 5562137
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 660,
+                      "price1": 1100,
+                      "productForSaleId": 5562141
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 660,
+                      "price1": 1100,
+                      "productForSaleId": 5562139
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 660,
+                      "price1": 1100,
+                      "productForSaleId": 5562140
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AGATA REMERON AZUL MARINO"
+  }
+]

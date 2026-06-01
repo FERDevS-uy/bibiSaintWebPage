@@ -1,0 +1,234 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124999",
+    "colorId": 891,
+    "copy": "Colaless estampada Cirila",
+    "description": "Colaless con elástico aplicado en cintura y elástico partido en piernas. Full estampado en delantero y espalda. ",
+    "description2": "Realizado en microfibra estampada",
+    "description3": "Calce al cuerpo",
+    "id": 40686,
+    "images": [
+      "124999_184_1.jpg",
+      "124999_184_2.jpg",
+      "124999_891_1.jpg",
+      "124999_891_2.jpg"
+    ],
+    "mainImage": "124999_891_1.jpg",
+    "name": "CIRILA COLALESS",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "FLOREADO",
+                "id": 891,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5548654
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5548651
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5548652
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5548653
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "MULTICOLOR",
+                "id": 184,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5548658
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5548655
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5548656
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5548657
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CIRILA COLALESS FLOREADO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124999",
+    "colorId": 184,
+    "copy": "Colaless estampada Cirila",
+    "description": "Colaless con elástico aplicado en cintura y elástico partido en piernas. Full estampado en delantero y espalda. ",
+    "description2": "Realizado en microfibra estampada",
+    "description3": "Calce al cuerpo",
+    "id": 40686,
+    "images": [
+      "124999_184_1.jpg",
+      "124999_184_2.jpg",
+      "124999_891_1.jpg",
+      "124999_891_2.jpg"
+    ],
+    "mainImage": "124999_184_1.jpg",
+    "name": "CIRILA COLALESS",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "FLOREADO",
+                "id": 891,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5548654
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5548651
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5548652
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5548653
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFFFFF",
+                "description": "MULTICOLOR",
+                "id": 184,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 300,
+                      "productForSaleId": 5548658
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5548655
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 300,
+                      "productForSaleId": 5548656
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 300,
+                      "productForSaleId": 5548657
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CIRILA COLALESS MULTICOLOR"
+  }
+]

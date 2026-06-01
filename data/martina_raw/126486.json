@@ -1,0 +1,380 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126486",
+    "colorId": 2,
+    "description": "Campera bomber con broches en el delantero y bolsillos. Forrada en interior.",
+    "description2": "Realizada en bucle",
+    "description3": "Calce amplio",
+    "id": 42808,
+    "images": [
+      "126486_2_1.jpg",
+      "126486_2_2.jpg",
+      "126486_2_3.jpg",
+      "126486_4_1.jpg",
+      "126486_4_2.jpg",
+      "126486_4_3.jpg",
+      "126486_74_1.jpg",
+      "126486_74_2.jpg",
+      "126486_74_3.jpg"
+    ],
+    "mainImage": "126486_2_1.jpg",
+    "name": "MOSA CHAQUETA",
+    "price": 2700,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2700,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 2700,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2700,
+                      "productForSaleId": 5763147
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2700,
+                      "productForSaleId": 5763148
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2700,
+                      "productForSaleId": 5763149
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#472007",
+                "description": "CHOCOLATE",
+                "id": 74,
+                "price": 2700,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2700,
+                      "productForSaleId": 5763150
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2700,
+                      "productForSaleId": 5763151
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2700,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2700,
+                      "productForSaleId": 5763144
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2700,
+                      "productForSaleId": 5763145
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MOSA CHAQUETA NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126486",
+    "colorId": 74,
+    "description": "Campera bomber con broches en el delantero y bolsillos. Forrada en interior.",
+    "description2": "Realizada en bucle",
+    "description3": "Calce amplio",
+    "id": 42808,
+    "images": [
+      "126486_2_1.jpg",
+      "126486_2_2.jpg",
+      "126486_2_3.jpg",
+      "126486_4_1.jpg",
+      "126486_4_2.jpg",
+      "126486_4_3.jpg",
+      "126486_74_1.jpg",
+      "126486_74_2.jpg",
+      "126486_74_3.jpg"
+    ],
+    "mainImage": "126486_74_1.jpg",
+    "name": "MOSA CHAQUETA",
+    "price": 2700,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2700,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 2700,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2700,
+                      "productForSaleId": 5763147
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2700,
+                      "productForSaleId": 5763148
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2700,
+                      "productForSaleId": 5763149
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#472007",
+                "description": "CHOCOLATE",
+                "id": 74,
+                "price": 2700,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2700,
+                      "productForSaleId": 5763150
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2700,
+                      "productForSaleId": 5763151
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2700,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2700,
+                      "productForSaleId": 5763144
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2700,
+                      "productForSaleId": 5763145
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MOSA CHAQUETA CHOCOLATE",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126486",
+    "colorId": 4,
+    "description": "Campera bomber con broches en el delantero y bolsillos. Forrada en interior.",
+    "description2": "Realizada en bucle",
+    "description3": "Calce amplio",
+    "id": 42808,
+    "images": [
+      "126486_2_1.jpg",
+      "126486_2_2.jpg",
+      "126486_2_3.jpg",
+      "126486_4_1.jpg",
+      "126486_4_2.jpg",
+      "126486_4_3.jpg",
+      "126486_74_1.jpg",
+      "126486_74_2.jpg",
+      "126486_74_3.jpg"
+    ],
+    "mainImage": "126486_4_1.jpg",
+    "name": "MOSA CHAQUETA",
+    "price": 2700,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2700,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 2700,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2700,
+                      "productForSaleId": 5763147
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2700,
+                      "productForSaleId": 5763148
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2700,
+                      "productForSaleId": 5763149
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#472007",
+                "description": "CHOCOLATE",
+                "id": 74,
+                "price": 2700,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2700,
+                      "productForSaleId": 5763150
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2700,
+                      "productForSaleId": 5763151
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2700,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2700,
+                      "productForSaleId": 5763144
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2700,
+                      "productForSaleId": 5763145
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MOSA CHAQUETA BORDO",
+    "productLineId": "3324"
+  }
+]

@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124567",
+    "colorId": 2,
+    "copy": "Remera con estampa Gabina",
+    "description": "Remera manga corta, escote en v con estampa en el delantero.",
+    "description2": "Realizada en viscosa elastizada",
+    "description3": "Calce amplio",
+    "id": 40089,
+    "images": [
+      "124567_2_1.jpg",
+      "124567_2_2.jpg",
+      "124567_2_3.jpg"
+    ],
+    "mainImage": "124567_2_1.jpg",
+    "name": "GABINA REMERA",
+    "price": 1100,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1100,
+                      "productForSaleId": 5550563
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1100,
+                      "productForSaleId": 5550560
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1100,
+                      "productForSaleId": 5550561
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1100,
+                      "productForSaleId": 5550562
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1100,
+                      "productForSaleId": 5550559
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GABINA REMERA NEGRO"
+  }
+]

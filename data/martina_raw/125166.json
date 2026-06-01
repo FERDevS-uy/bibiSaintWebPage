@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125166",
+    "colorId": 4,
+    "description": "Remera escote redondeado. Hombro cído estilo relajado y estampa en delantero.",
+    "description2": "Realizada en jersey algodon",
+    "description3": "Calce amplio",
+    "id": 40951,
+    "images": [
+      "125166_4_1.jpg",
+      "125166_4_2.jpg"
+    ],
+    "mainImage": "125166_4_1.jpg",
+    "name": "HORACIO REMERA",
+    "price": 700,
+    "price1": 1000,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 700,
+          "price1": 1000,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 700,
+                "price1": 1000,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 700,
+                      "price1": 1000,
+                      "productForSaleId": 5562216
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 700,
+                      "price1": 1000,
+                      "productForSaleId": 5562217
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 700,
+                      "price1": 1000,
+                      "productForSaleId": 5562215
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 700,
+                      "price1": 1000,
+                      "productForSaleId": 5562214
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "HORACIO REMERA BORDO"
+  }
+]

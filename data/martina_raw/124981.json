@@ -1,0 +1,67 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124981",
+    "colorId": 332,
+    "copy": "Pantalon pijama de jersey Sira",
+    "description": "Pantalón tiro medio con  cintura elastizada.",
+    "description2": "Realizado en jersey",
+    "description3": "Calce clásico",
+    "id": 40668,
+    "images": [
+      "124981_332_1.jpg",
+      "124981_332_2.jpg"
+    ],
+    "mainImage": "124981_332_1.jpg",
+    "name": "SIRA PANTALON ",
+    "price": 555,
+    "price1": 795,
+    "productLine": {
+      "id": 3348,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 555,
+          "price1": 795,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 555,
+                "price1": 795,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 555,
+                      "price1": 795,
+                      "productForSaleId": 5573820
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SIRA PANTALON  ESTAMPADO"
+  }
+]

@@ -1,0 +1,94 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125162",
+    "colorId": 32,
+    "description": "Remera básica escote reondo con estampa en delantero.",
+    "description2": "Realizada en jersey melange",
+    "description3": "Calce clásico",
+    "id": 40947,
+    "images": [
+      "125162_32_1.jpg",
+      "125162_32_2.jpg"
+    ],
+    "mainImage": "125162_32_1.jpg",
+    "name": "CALVIN REMERA",
+    "price": 800,
+    "price1": 1000,
+    "productLine": {
+      "id": 3355,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 800,
+          "price1": 1000,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 800,
+                "price1": 1000,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 800,
+                      "price1": 1000,
+                      "productForSaleId": 5569364
+                    },
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 800,
+                      "price1": 1000,
+                      "productForSaleId": 5569365
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 800,
+                      "price1": 1000,
+                      "productForSaleId": 5569366
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 800,
+                      "price1": 1000,
+                      "productForSaleId": 5569363
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 800,
+                      "price1": 1000,
+                      "productForSaleId": 5569362
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CALVIN REMERA GRIS MELANGE"
+  }
+]

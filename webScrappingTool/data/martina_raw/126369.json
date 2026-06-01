@@ -1,0 +1,238 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126369",
+    "colorId": 27,
+    "description": "Buzo escote redondo con detalle de estampa en delantero y espalda.",
+    "description2": "Realizado en frisa",
+    "description3": "Calce clásico",
+    "id": 42636,
+    "images": [
+      "126369_27_1.jpg",
+      "126369_27_2.jpg",
+      "126369_27_3.jpg",
+      "126369_8_1.jpg",
+      "126369_8_2.jpg",
+      "126369_8_3.jpg"
+    ],
+    "mainImage": "126369_27_1.jpg",
+    "name": "LOLA BUZO",
+    "price": 1725,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1725,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 1725,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1725,
+                      "productForSaleId": 5754213
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1725,
+                      "productForSaleId": 5754215
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1725,
+                      "productForSaleId": 5754214
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1725,
+                      "productForSaleId": 5754216
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 1725,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1725,
+                      "productForSaleId": 5754211
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1725,
+                      "productForSaleId": 5754210
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1725,
+                      "productForSaleId": 5754209
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1725,
+                      "productForSaleId": 5754212
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LOLA BUZO ROSA",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126369",
+    "colorId": 8,
+    "description": "Buzo escote redondo con detalle de estampa en delantero y espalda.",
+    "description2": "Realizado en frisa",
+    "description3": "Calce clásico",
+    "id": 42636,
+    "images": [
+      "126369_27_1.jpg",
+      "126369_27_2.jpg",
+      "126369_27_3.jpg",
+      "126369_8_1.jpg",
+      "126369_8_2.jpg",
+      "126369_8_3.jpg"
+    ],
+    "mainImage": "126369_8_1.jpg",
+    "name": "LOLA BUZO",
+    "price": 1725,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1725,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 1725,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1725,
+                      "productForSaleId": 5754213
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1725,
+                      "productForSaleId": 5754215
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1725,
+                      "productForSaleId": 5754214
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1725,
+                      "productForSaleId": 5754216
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 1725,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1725,
+                      "productForSaleId": 5754211
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1725,
+                      "productForSaleId": 5754210
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1725,
+                      "productForSaleId": 5754209
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1725,
+                      "productForSaleId": 5754212
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LOLA BUZO VERDE",
+    "productLineId": "3324"
+  }
+]

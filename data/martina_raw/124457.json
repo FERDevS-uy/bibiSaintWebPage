@@ -1,0 +1,518 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124457",
+    "colorId": 104,
+    "copy": "Tiro Corto de Tricot Sayem",
+    "description": "Bombacha tiro corto con detalle de recortes en laterales.",
+    "description2": "Realizado en tricot y microtul elastizado ",
+    "description3": "Calce al cuerpo",
+    "id": 39964,
+    "images": [
+      "124457_107_1.jpg",
+      "124457_107_2.jpg",
+      "124457_1252_1.jpg",
+      "124457_1_1.jpg",
+      "124457_1_2.jpg",
+      "124457_2_1.jpg",
+      "124457_2_2.jpg",
+      "124457_2_3.jpg"
+    ],
+    "mainImage": "124457_107_1.jpg",
+    "name": "SAYEM TIRO CORTO",
+    "price": 385,
+    "price1": 550,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 385,
+          "price1": 550,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 385,
+                "price1": 550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565860
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565863
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565861
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565862
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#A6A6A6",
+                "description": "GRIS-NEGRO",
+                "id": 104,
+                "price": 385,
+                "price1": 550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565856
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565859
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565858
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565857
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 385,
+                "price1": 550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565865
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565864
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565867
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565866
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SAYEM TIRO CORTO GRIS-NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124457",
+    "colorId": 2,
+    "copy": "Tiro Corto de Tricot Sayem",
+    "description": "Bombacha tiro corto con detalle de recortes en laterales.",
+    "description2": "Realizado en tricot y microtul elastizado ",
+    "description3": "Calce al cuerpo",
+    "id": 39964,
+    "images": [
+      "124457_107_1.jpg",
+      "124457_107_2.jpg",
+      "124457_1252_1.jpg",
+      "124457_1_1.jpg",
+      "124457_1_2.jpg",
+      "124457_2_1.jpg",
+      "124457_2_2.jpg",
+      "124457_2_3.jpg"
+    ],
+    "mainImage": "124457_2_1.jpg",
+    "name": "SAYEM TIRO CORTO",
+    "price": 385,
+    "price1": 550,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 385,
+          "price1": 550,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 385,
+                "price1": 550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565860
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565863
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565861
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565862
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#A6A6A6",
+                "description": "GRIS-NEGRO",
+                "id": 104,
+                "price": 385,
+                "price1": 550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565856
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565859
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565858
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565857
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 385,
+                "price1": 550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565865
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565864
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565867
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565866
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SAYEM TIRO CORTO NEGRO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124457",
+    "colorId": 1,
+    "copy": "Tiro Corto de Tricot Sayem",
+    "description": "Bombacha tiro corto con detalle de recortes en laterales.",
+    "description2": "Realizado en tricot y microtul elastizado ",
+    "description3": "Calce al cuerpo",
+    "id": 39964,
+    "images": [
+      "124457_107_1.jpg",
+      "124457_107_2.jpg",
+      "124457_1252_1.jpg",
+      "124457_1_1.jpg",
+      "124457_1_2.jpg",
+      "124457_2_1.jpg",
+      "124457_2_2.jpg",
+      "124457_2_3.jpg"
+    ],
+    "mainImage": "124457_1_1.jpg",
+    "name": "SAYEM TIRO CORTO",
+    "price": 385,
+    "price1": 550,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 385,
+          "price1": 550,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 385,
+                "price1": 550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565860
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565863
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565861
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565862
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#A6A6A6",
+                "description": "GRIS-NEGRO",
+                "id": 104,
+                "price": 385,
+                "price1": 550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565856
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565859
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565858
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565857
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 385,
+                "price1": 550,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565865
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565864
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565867
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 385,
+                      "price1": 550,
+                      "productForSaleId": 5565866
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SAYEM TIRO CORTO BLANCO"
+  }
+]

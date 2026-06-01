@@ -1,0 +1,82 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125250",
+    "colorId": 20,
+    "copy": "Remera manga larga con detalle Stefani",
+    "description": "Remera manga larga, escote redondo con detalle de recorte y aplique plateado en hombros. ",
+    "description2": "Realizada en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 41036,
+    "images": [
+      "125250_20_1.jpg",
+      "125250_20_2.jpg"
+    ],
+    "mainImage": "125250_20_1.jpg",
+    "name": "STEFANI REMERA",
+    "price": 1050,
+    "price1": 1500,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1050,
+          "price1": 1500,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFDE6",
+                "description": "CRUDO",
+                "id": 20,
+                "price": 1050,
+                "price1": 1500,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1050,
+                      "price1": 1500,
+                      "productForSaleId": 5760618
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1050,
+                      "price1": 1500,
+                      "productForSaleId": 5760615
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1050,
+                      "price1": 1500,
+                      "productForSaleId": 5760614
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "STEFANI REMERA CRUDO",
+    "productLineId": "3324"
+  }
+]

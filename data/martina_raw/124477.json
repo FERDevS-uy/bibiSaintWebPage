@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124477",
+    "colorId": 879,
+    "copy": "Camisaco de rayón asargado Salma",
+    "description": "Camisaco manga larga, con botones en puño y acceso delantero. Detalle de amplios bolsillos y ruedo redondeado.",
+    "description2": "Realizado en rayon asargado",
+    "description3": "Calce clásico",
+    "id": 39999,
+    "images": [
+      "124477_879_1.jpg",
+      "124477_879_2.jpg"
+    ],
+    "mainImage": "124477_879_1.jpg",
+    "name": "SALMA CAMISACO",
+    "price": 2300,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CA5F19",
+                "description": "CARAMELO",
+                "id": 879,
+                "price": 2300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2300,
+                      "productForSaleId": 5547779
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2300,
+                      "productForSaleId": 5547776
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2300,
+                      "productForSaleId": 5547777
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2300,
+                      "productForSaleId": 5547778
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2300,
+                      "productForSaleId": 5547775
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SALMA CAMISACO CARAMELO"
+  }
+]

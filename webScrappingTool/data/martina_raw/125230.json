@@ -1,0 +1,174 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125230",
+    "colorId": 9,
+    "copy": "Remera basica manga larga Laila",
+    "description": "Remera básica manga larga con detalle de escote semi redondeado. Un básico infaltable. ",
+    "description2": "Realizada en jersey jaspeado",
+    "description3": "Calce clásico",
+    "id": 41016,
+    "images": [
+      "125230_261_1.jpg",
+      "125230_7_1.jpg",
+      "125230_9_1.jpg"
+    ],
+    "mainImage": "125230_9_1.jpg",
+    "name": "LAILA REMERA",
+    "price": 520,
+    "price1": 800,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 520,
+          "price1": 800,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 520,
+                "price1": 800,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 520,
+                      "price1": 800,
+                      "productForSaleId": 5760533
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 520,
+                "price1": 800,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 520,
+                      "price1": 800,
+                      "productForSaleId": 5760542
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LAILA REMERA ROJO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125230",
+    "colorId": 261,
+    "copy": "Remera basica manga larga Laila",
+    "description": "Remera básica manga larga con detalle de escote semi redondeado. Un básico infaltable. ",
+    "description2": "Realizada en jersey jaspeado",
+    "description3": "Calce clásico",
+    "id": 41016,
+    "images": [
+      "125230_261_1.jpg",
+      "125230_7_1.jpg",
+      "125230_9_1.jpg"
+    ],
+    "mainImage": "125230_261_1.jpg",
+    "name": "LAILA REMERA",
+    "price": 520,
+    "price1": 800,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 520,
+          "price1": 800,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#B6D243",
+                "description": "LIMA",
+                "id": 261,
+                "price": 520,
+                "price1": 800,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 520,
+                      "price1": 800,
+                      "productForSaleId": 5760533
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 520,
+                "price1": 800,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 520,
+                      "price1": 800,
+                      "productForSaleId": 5760542
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LAILA REMERA LIMA",
+    "productLineId": "3324"
+  }
+]

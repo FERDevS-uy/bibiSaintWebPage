@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126103",
+    "colorId": 381,
+    "description": "Remera basica, escote redondo, pero con un rayado alucinante para combinar. ",
+    "description2": "Realizada en morley rayado",
+    "description3": "Calce clásico",
+    "id": 42291,
+    "images": [
+      "126103_381_1.jpg",
+      "126103_381_2.jpg"
+    ],
+    "mainImage": "126103_381_1.jpg",
+    "name": "AFRICA REMERA M/LARGA",
+    "price": 1290,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1290,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "RAYADO",
+                "id": 381,
+                "price": 1290,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1290,
+                      "productForSaleId": 5753730
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1290,
+                      "productForSaleId": 5753731
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1290,
+                      "productForSaleId": 5753732
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1290,
+                      "productForSaleId": 5753729
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AFRICA REMERA M/LARGA RAYADO",
+    "productLineId": "3324"
+  }
+]

@@ -1,0 +1,64 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125190",
+    "colorId": 23,
+    "description": "Buzo 1/2 cierre con bolsillo delantero y cuello a contra tono.",
+    "description2": "Realizado en polar",
+    "description3": "Calce clásico",
+    "id": 40976,
+    "images": [
+      "125190_23_1.jpg",
+      "125190_23_2.jpg",
+      "125190_23_3.jpg"
+    ],
+    "mainImage": "125190_23_1.jpg",
+    "name": "SOTO BUZO",
+    "price": 1830,
+    "productLine": {
+      "id": 4762,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1830,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#B7B9BA",
+                "description": "CEMENTO",
+                "id": 23,
+                "price": 1830,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1830,
+                      "productForSaleId": 5756959
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SOTO BUZO CEMENTO",
+    "productLineId": "3325"
+  }
+]

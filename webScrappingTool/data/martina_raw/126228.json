@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126228",
+    "colorId": 671,
+    "description": "Remera evasé escote redondo y manga corta. Estampa en el delantero.",
+    "description2": "Realizada en jersey de lino",
+    "description3": "Calce clásico",
+    "id": 42465,
+    "images": [
+      "126228_671_1.jpg",
+      "126228_671_2.jpg"
+    ],
+    "mainImage": "126228_671_1.jpg",
+    "name": "PARADISE REMERA",
+    "price": 890,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 890,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#00926D",
+                "description": "VERDE ESMERALDA",
+                "id": 671,
+                "price": 890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 890,
+                      "productForSaleId": 5754103
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 890,
+                      "productForSaleId": 5754104
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 890,
+                      "productForSaleId": 5754105
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 890,
+                      "productForSaleId": 5754102
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PARADISE REMERA VERDE ESMERALDA",
+    "productLineId": "3324"
+  }
+]

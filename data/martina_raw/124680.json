@@ -1,0 +1,160 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124680",
+    "colorId": 1498,
+    "copy": "Billetera Porta Cel Gabi",
+    "description": "Billetera porta celular, billetes y porta lentes integrado desmontable, con tira haciendo juego. Color: Beige. Medidas: 20x10. Realizado en: eco-cuero.",
+    "description3": "Calce relax",
+    "id": 40230,
+    "images": [
+      "124680_1498_1.jpg",
+      "124680_53_1.jpg",
+      "124680_53_2.jpg",
+      "124680_53_3.jpg",
+      "124680_53_4.jpg"
+    ],
+    "mainImage": "124680_1498_1.jpg",
+    "name": "GABI BILLETERA PORTA CEL",
+    "price": 590,
+    "productLine": {
+      "id": 3350,
+      "name": "ACCESORIOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#ECDDCE",
+                "description": "BEIGE",
+                "id": 53,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 590,
+                      "productForSaleId": 5548342
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "CHAROL",
+                "id": 1498,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 590,
+                      "productForSaleId": 5548343
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GABI BILLETERA PORTA CEL CHAROL"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124680",
+    "colorId": 53,
+    "copy": "Billetera Porta Cel Gabi",
+    "description": "Billetera porta celular, billetes y porta lentes integrado desmontable, con tira haciendo juego. Color: Beige. Medidas: 20x10. Realizado en: eco-cuero.",
+    "description3": "Calce relax",
+    "id": 40230,
+    "images": [
+      "124680_1498_1.jpg",
+      "124680_53_1.jpg",
+      "124680_53_2.jpg",
+      "124680_53_3.jpg",
+      "124680_53_4.jpg"
+    ],
+    "mainImage": "124680_53_1.jpg",
+    "name": "GABI BILLETERA PORTA CEL",
+    "price": 590,
+    "productLine": {
+      "id": 3350,
+      "name": "ACCESORIOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#ECDDCE",
+                "description": "BEIGE",
+                "id": 53,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 590,
+                      "productForSaleId": 5548342
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "CHAROL",
+                "id": 1498,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 590,
+                      "productForSaleId": 5548343
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GABI BILLETERA PORTA CEL BEIGE"
+  }
+]

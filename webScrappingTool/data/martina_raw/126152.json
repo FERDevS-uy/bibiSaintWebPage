@@ -1,0 +1,81 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126152",
+    "colorId": 1461,
+    "description": "Campera con recortes combinada y capucha forrada. Detalle de cordones diferenciados. Bolsillos delanteros. ",
+    "description2": "Realizada en frisa",
+    "description3": "Calce clásico",
+    "id": 42362,
+    "images": [
+      "126152_1461_1.jpg",
+      "126152_1461_2.jpg"
+    ],
+    "mainImage": "126152_1461_1.jpg",
+    "name": "AGATHA CAMPERA",
+    "price": 2480,
+    "productLine": {
+      "id": 3349,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2480,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO-GRIS",
+                "id": 1461,
+                "price": 2480,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2480,
+                      "productForSaleId": 5754150
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2480,
+                      "productForSaleId": 5754151
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 2480,
+                      "productForSaleId": 5754152
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 2480,
+                      "productForSaleId": 5754149
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "AGATHA CAMPERA NEGRO-GRIS",
+    "productLineId": "3324"
+  }
+]

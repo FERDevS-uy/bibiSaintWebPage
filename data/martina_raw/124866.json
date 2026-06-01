@@ -1,0 +1,87 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124866",
+    "colorId": 332,
+    "copy": "Camisa de seda estampada Monet",
+    "description": "Camisa de seda estampada, con puños amplios y botones. Una prenda sofisticada, atemporal y suave a la piel.",
+    "description2": "Realizada en seda",
+    "description3": "Calce clásico",
+    "id": 40524,
+    "images": [
+      "124866_332_1.jpg",
+      "124866_332_2.jpg"
+    ],
+    "mainImage": "124866_332_1.jpg",
+    "name": "MONET CAMISA",
+    "price": 1890,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1890,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 1890,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 1890,
+                      "productForSaleId": 5551094
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1890,
+                      "productForSaleId": 5551091
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1890,
+                      "productForSaleId": 5551092
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1890,
+                      "productForSaleId": 5551093
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1890,
+                      "productForSaleId": 5551090
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MONET CAMISA ESTAMPADO"
+  }
+]

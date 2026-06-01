@@ -1,0 +1,1598 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124507",
+    "colorId": 7,
+    "copy": "Top algodón elastizado Yuri",
+    "description": "Top con elástico en la parte superior para mejor agarre de 1cm.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40029,
+    "images": [
+      "124507_17_1.jpg",
+      "124507_17_2.jpg",
+      "124507_1_1.jpg",
+      "124507_1_2.jpg",
+      "124507_29_1.jpg",
+      "124507_29_2.jpg",
+      "124507_2_1.jpg",
+      "124507_5_1.jpg",
+      "124507_5_2.jpg",
+      "124507_5_3.jpg",
+      "124507_5_4.jpg",
+      "124507_5_5.jpg",
+      "124507_788_1.jpg",
+      "124507_788_2.jpg",
+      "124507_788_3.jpg",
+      "124507_788_4.jpg",
+      "124507_788_5.jpg",
+      "124507_788_6.jpg",
+      "124507_788_7.jpg",
+      "124507_7_1.jpg",
+      "124507_890_1.jpg",
+      "124507_890_2.jpg",
+      "124507_890_3.jpg",
+      "124507_890_5.jpg",
+      "124507_9_1.jpg",
+      "124507_9_2.jpg"
+    ],
+    "mainImage": "124507_7_1.jpg",
+    "name": "YURI TOP",
+    "price": 350,
+    "productLine": {
+      "id": 4815,
+      "name": "TOPS Y BANDEAUX",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549224
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549221
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549222
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549223
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#96A0B3",
+                "description": "GRIS ACERO",
+                "id": 890,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549220
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549217
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549218
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549219
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#9A1D9A",
+                "description": "MORADO",
+                "id": 788,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549228
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549225
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549226
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA",
+                "id": 17,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549236
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549233
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549235
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549208
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549205
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549206
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549207
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549216
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549213
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549214
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549215
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "YURI TOP AZUL"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124507",
+    "colorId": 890,
+    "copy": "Top algodón elastizado Yuri",
+    "description": "Top con elástico en la parte superior para mejor agarre de 1cm.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40029,
+    "images": [
+      "124507_17_1.jpg",
+      "124507_17_2.jpg",
+      "124507_1_1.jpg",
+      "124507_1_2.jpg",
+      "124507_29_1.jpg",
+      "124507_29_2.jpg",
+      "124507_2_1.jpg",
+      "124507_5_1.jpg",
+      "124507_5_2.jpg",
+      "124507_5_3.jpg",
+      "124507_5_4.jpg",
+      "124507_5_5.jpg",
+      "124507_788_1.jpg",
+      "124507_788_2.jpg",
+      "124507_788_3.jpg",
+      "124507_788_4.jpg",
+      "124507_788_5.jpg",
+      "124507_788_6.jpg",
+      "124507_788_7.jpg",
+      "124507_7_1.jpg",
+      "124507_890_1.jpg",
+      "124507_890_2.jpg",
+      "124507_890_3.jpg",
+      "124507_890_5.jpg",
+      "124507_9_1.jpg",
+      "124507_9_2.jpg"
+    ],
+    "mainImage": "124507_890_1.jpg",
+    "name": "YURI TOP",
+    "price": 350,
+    "productLine": {
+      "id": 4815,
+      "name": "TOPS Y BANDEAUX",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549224
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549221
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549222
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549223
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#96A0B3",
+                "description": "GRIS ACERO",
+                "id": 890,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549220
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549217
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549218
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549219
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#9A1D9A",
+                "description": "MORADO",
+                "id": 788,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549228
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549225
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549226
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA",
+                "id": 17,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549236
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549233
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549235
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549208
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549205
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549206
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549207
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549216
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549213
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549214
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549215
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "YURI TOP GRIS ACERO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124507",
+    "colorId": 788,
+    "copy": "Top algodón elastizado Yuri",
+    "description": "Top con elástico en la parte superior para mejor agarre de 1cm.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40029,
+    "images": [
+      "124507_17_1.jpg",
+      "124507_17_2.jpg",
+      "124507_1_1.jpg",
+      "124507_1_2.jpg",
+      "124507_29_1.jpg",
+      "124507_29_2.jpg",
+      "124507_2_1.jpg",
+      "124507_5_1.jpg",
+      "124507_5_2.jpg",
+      "124507_5_3.jpg",
+      "124507_5_4.jpg",
+      "124507_5_5.jpg",
+      "124507_788_1.jpg",
+      "124507_788_2.jpg",
+      "124507_788_3.jpg",
+      "124507_788_4.jpg",
+      "124507_788_5.jpg",
+      "124507_788_6.jpg",
+      "124507_788_7.jpg",
+      "124507_7_1.jpg",
+      "124507_890_1.jpg",
+      "124507_890_2.jpg",
+      "124507_890_3.jpg",
+      "124507_890_5.jpg",
+      "124507_9_1.jpg",
+      "124507_9_2.jpg"
+    ],
+    "mainImage": "124507_788_1.jpg",
+    "name": "YURI TOP",
+    "price": 350,
+    "productLine": {
+      "id": 4815,
+      "name": "TOPS Y BANDEAUX",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549224
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549221
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549222
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549223
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#96A0B3",
+                "description": "GRIS ACERO",
+                "id": 890,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549220
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549217
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549218
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549219
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#9A1D9A",
+                "description": "MORADO",
+                "id": 788,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549228
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549225
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549226
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA",
+                "id": 17,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549236
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549233
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549235
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549208
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549205
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549206
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549207
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549216
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549213
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549214
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549215
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "YURI TOP MORADO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124507",
+    "colorId": 29,
+    "copy": "Top algodón elastizado Yuri",
+    "description": "Top con elástico en la parte superior para mejor agarre de 1cm.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40029,
+    "images": [
+      "124507_17_1.jpg",
+      "124507_17_2.jpg",
+      "124507_1_1.jpg",
+      "124507_1_2.jpg",
+      "124507_29_1.jpg",
+      "124507_29_2.jpg",
+      "124507_2_1.jpg",
+      "124507_5_1.jpg",
+      "124507_5_2.jpg",
+      "124507_5_3.jpg",
+      "124507_5_4.jpg",
+      "124507_5_5.jpg",
+      "124507_788_1.jpg",
+      "124507_788_2.jpg",
+      "124507_788_3.jpg",
+      "124507_788_4.jpg",
+      "124507_788_5.jpg",
+      "124507_788_6.jpg",
+      "124507_788_7.jpg",
+      "124507_7_1.jpg",
+      "124507_890_1.jpg",
+      "124507_890_2.jpg",
+      "124507_890_3.jpg",
+      "124507_890_5.jpg",
+      "124507_9_1.jpg",
+      "124507_9_2.jpg"
+    ],
+    "mainImage": "124507_29_1.jpg",
+    "name": "YURI TOP",
+    "price": 350,
+    "productLine": {
+      "id": 4815,
+      "name": "TOPS Y BANDEAUX",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549224
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549221
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549222
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549223
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#96A0B3",
+                "description": "GRIS ACERO",
+                "id": 890,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549220
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549217
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549218
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549219
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#9A1D9A",
+                "description": "MORADO",
+                "id": 788,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549228
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549225
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549226
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA",
+                "id": 17,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549236
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549233
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549235
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549208
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549205
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549206
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549207
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549216
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549213
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549214
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549215
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "YURI TOP VERDE AGUA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124507",
+    "colorId": 17,
+    "copy": "Top algodón elastizado Yuri",
+    "description": "Top con elástico en la parte superior para mejor agarre de 1cm.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40029,
+    "images": [
+      "124507_17_1.jpg",
+      "124507_17_2.jpg",
+      "124507_1_1.jpg",
+      "124507_1_2.jpg",
+      "124507_29_1.jpg",
+      "124507_29_2.jpg",
+      "124507_2_1.jpg",
+      "124507_5_1.jpg",
+      "124507_5_2.jpg",
+      "124507_5_3.jpg",
+      "124507_5_4.jpg",
+      "124507_5_5.jpg",
+      "124507_788_1.jpg",
+      "124507_788_2.jpg",
+      "124507_788_3.jpg",
+      "124507_788_4.jpg",
+      "124507_788_5.jpg",
+      "124507_788_6.jpg",
+      "124507_788_7.jpg",
+      "124507_7_1.jpg",
+      "124507_890_1.jpg",
+      "124507_890_2.jpg",
+      "124507_890_3.jpg",
+      "124507_890_5.jpg",
+      "124507_9_1.jpg",
+      "124507_9_2.jpg"
+    ],
+    "mainImage": "124507_17_1.jpg",
+    "name": "YURI TOP",
+    "price": 350,
+    "productLine": {
+      "id": 4815,
+      "name": "TOPS Y BANDEAUX",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549224
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549221
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549222
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549223
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#96A0B3",
+                "description": "GRIS ACERO",
+                "id": 890,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549220
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549217
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549218
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549219
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#9A1D9A",
+                "description": "MORADO",
+                "id": 788,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549228
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549225
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549226
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA",
+                "id": 17,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549236
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549233
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549235
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549208
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549205
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549206
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549207
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549216
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549213
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549214
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549215
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "YURI TOP NARANJA"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124507",
+    "colorId": 9,
+    "copy": "Top algodón elastizado Yuri",
+    "description": "Top con elástico en la parte superior para mejor agarre de 1cm.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 40029,
+    "images": [
+      "124507_17_1.jpg",
+      "124507_17_2.jpg",
+      "124507_1_1.jpg",
+      "124507_1_2.jpg",
+      "124507_29_1.jpg",
+      "124507_29_2.jpg",
+      "124507_2_1.jpg",
+      "124507_5_1.jpg",
+      "124507_5_2.jpg",
+      "124507_5_3.jpg",
+      "124507_5_4.jpg",
+      "124507_5_5.jpg",
+      "124507_788_1.jpg",
+      "124507_788_2.jpg",
+      "124507_788_3.jpg",
+      "124507_788_4.jpg",
+      "124507_788_5.jpg",
+      "124507_788_6.jpg",
+      "124507_788_7.jpg",
+      "124507_7_1.jpg",
+      "124507_890_1.jpg",
+      "124507_890_2.jpg",
+      "124507_890_3.jpg",
+      "124507_890_5.jpg",
+      "124507_9_1.jpg",
+      "124507_9_2.jpg"
+    ],
+    "mainImage": "124507_9_1.jpg",
+    "name": "YURI TOP",
+    "price": 350,
+    "productLine": {
+      "id": 4815,
+      "name": "TOPS Y BANDEAUX",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 350,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549224
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549221
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549222
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549223
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#96A0B3",
+                "description": "GRIS ACERO",
+                "id": 890,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549220
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549217
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549218
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549219
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#9A1D9A",
+                "description": "MORADO",
+                "id": 788,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549228
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549225
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549226
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FF6800",
+                "description": "NARANJA",
+                "id": 17,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549236
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549233
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549235
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549208
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549205
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549206
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549207
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#C7E0C3",
+                "description": "VERDE AGUA",
+                "id": 29,
+                "price": 350,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 350,
+                      "productForSaleId": 5549216
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 350,
+                      "productForSaleId": 5549213
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 350,
+                      "productForSaleId": 5549214
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 350,
+                      "productForSaleId": 5549215
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "YURI TOP ROJO"
+  }
+]

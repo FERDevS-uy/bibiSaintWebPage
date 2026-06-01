@@ -1,0 +1,88 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124975",
+    "colorId": 332,
+    "copy": "Short pijama estampado Flore",
+    "description": "Shor tiro medio con cintura elastizada.",
+    "description2": "Realizado en jersey liviano estampado",
+    "description3": "Calce clásico",
+    "id": 40662,
+    "images": [
+      "124975_332_1.jpg",
+      "124975_332_2.jpg",
+      "124975_332_3.jpg"
+    ],
+    "mainImage": "124975_332_1.jpg",
+    "name": "FLORE SHORT",
+    "price": 590,
+    "productLine": {
+      "id": 4576,
+      "name": "PIJAMAS Y HOMEWEAR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "ESTAMPADO",
+                "id": 332,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5548778
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5548775
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5548776
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5548777
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5548774
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "FLORE SHORT ESTAMPADO"
+  }
+]

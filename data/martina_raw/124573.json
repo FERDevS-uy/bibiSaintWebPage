@@ -1,0 +1,560 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124573",
+    "colorId": 25,
+    "copy": "Remera con frunces Mara",
+    "description": "Remera escote en v, con detalles de pequeños frunces en hombros.",
+    "description2": "Realizada en jersey butonee",
+    "description3": "Calce clásico",
+    "id": 40095,
+    "images": [
+      "124573_25_1.jpg",
+      "124573_28_1.jpg",
+      "124573_9_1.jpg"
+    ],
+    "mainImage": "124573_25_1.jpg",
+    "name": "MARA REMERA",
+    "price": 590,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5547632
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5547628
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5547629
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5547630
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5547627
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 590,
+                      "productForSaleId": 5547631
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5547620
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5547616
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5547617
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5547618
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5547615
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 590,
+                      "productForSaleId": 5547619
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5547626
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5547622
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5547623
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5547624
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5547621
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 590,
+                      "productForSaleId": 5547625
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MARA REMERA AMARILLO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124573",
+    "colorId": 9,
+    "copy": "Remera con frunces Mara",
+    "description": "Remera escote en v, con detalles de pequeños frunces en hombros.",
+    "description2": "Realizada en jersey butonee",
+    "description3": "Calce clásico",
+    "id": 40095,
+    "images": [
+      "124573_25_1.jpg",
+      "124573_28_1.jpg",
+      "124573_9_1.jpg"
+    ],
+    "mainImage": "124573_9_1.jpg",
+    "name": "MARA REMERA",
+    "price": 590,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5547632
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5547628
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5547629
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5547630
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5547627
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 590,
+                      "productForSaleId": 5547631
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5547620
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5547616
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5547617
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5547618
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5547615
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 590,
+                      "productForSaleId": 5547619
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5547626
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5547622
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5547623
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5547624
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5547621
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 590,
+                      "productForSaleId": 5547625
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MARA REMERA ROJO"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124573",
+    "colorId": 28,
+    "copy": "Remera con frunces Mara",
+    "description": "Remera escote en v, con detalles de pequeños frunces en hombros.",
+    "description2": "Realizada en jersey butonee",
+    "description3": "Calce clásico",
+    "id": 40095,
+    "images": [
+      "124573_25_1.jpg",
+      "124573_28_1.jpg",
+      "124573_9_1.jpg"
+    ],
+    "mainImage": "124573_28_1.jpg",
+    "name": "MARA REMERA",
+    "price": 590,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 590,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FEFD3D",
+                "description": "AMARILLO",
+                "id": 25,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5547632
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5547628
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5547629
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5547630
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5547627
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 590,
+                      "productForSaleId": 5547631
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#BDDEF4",
+                "description": "CELESTE",
+                "id": 28,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5547620
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5547616
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5547617
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5547618
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5547615
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 590,
+                      "productForSaleId": 5547619
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 590,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 590,
+                      "productForSaleId": 5547626
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 590,
+                      "productForSaleId": 5547622
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 590,
+                      "productForSaleId": 5547623
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 590,
+                      "productForSaleId": 5547624
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 590,
+                      "productForSaleId": 5547621
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 590,
+                      "productForSaleId": 5547625
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MARA REMERA CELESTE"
+  }
+]

@@ -1,0 +1,208 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125985",
+    "colorId": 5,
+    "description2": "Realizada en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 42149,
+    "images": [
+      "125985_217_1.jpg",
+      "125985_2_1.jpg",
+      "125985_5_1.jpg",
+      "125985_5_2.jpg"
+    ],
+    "mainImage": "125985_5_1.jpg",
+    "name": "RENATA REMERA",
+    "price": 570,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 570,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#60636A",
+                "description": "GRIS",
+                "id": 5,
+                "price": 570,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 570,
+                      "productForSaleId": 5753634
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 570,
+                      "productForSaleId": 5753630
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 570,
+                      "productForSaleId": 5753631
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 570,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 570,
+                      "productForSaleId": 5753625
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 570,
+                      "productForSaleId": 5753628
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 570,
+                      "productForSaleId": 5753629
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RENATA REMERA GRIS",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125985",
+    "colorId": 2,
+    "description2": "Realizada en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 42149,
+    "images": [
+      "125985_217_1.jpg",
+      "125985_2_1.jpg",
+      "125985_5_1.jpg",
+      "125985_5_2.jpg"
+    ],
+    "mainImage": "125985_2_1.jpg",
+    "name": "RENATA REMERA",
+    "price": 570,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 570,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#60636A",
+                "description": "GRIS",
+                "id": 5,
+                "price": 570,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 570,
+                      "productForSaleId": 5753634
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 570,
+                      "productForSaleId": 5753630
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 570,
+                      "productForSaleId": 5753631
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 570,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 570,
+                      "productForSaleId": 5753625
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 570,
+                      "productForSaleId": 5753628
+                    },
+                    {
+                      "description": "50",
+                      "id": 101,
+                      "price": 570,
+                      "productForSaleId": 5753629
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RENATA REMERA NEGRO",
+    "productLineId": "3324"
+  }
+]

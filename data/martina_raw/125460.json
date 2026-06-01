@@ -1,0 +1,258 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125460",
+    "colorId": 27,
+    "copy": "Musculosa pijama Alba",
+    "description": "Musculosa básica escote redondo.",
+    "description2": "Realizada en ribb",
+    "description3": "Calce al cuerpo",
+    "id": 41380,
+    "images": [
+      "125460_1_1.jpg",
+      "125460_1_2.jpg",
+      "125460_1_3.jpg"
+    ],
+    "mainImage": "125460_1_1.jpg",
+    "name": "ALBA MUSCULOSA",
+    "price": 790,
+    "productLine": {
+      "id": 4576,
+      "name": "PIJAMAS Y HOMEWEAR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFDE6",
+                "description": "CRUDO",
+                "id": 20,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 790,
+                      "productForSaleId": 5757711
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 790,
+                      "productForSaleId": 5757712
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 790,
+                      "productForSaleId": 5757713
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 790,
+                      "productForSaleId": 5757709
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 790,
+                      "productForSaleId": 5757710
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 790,
+                      "productForSaleId": 5757714
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 790,
+                      "productForSaleId": 5757717
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 790,
+                      "productForSaleId": 5757716
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 790,
+                      "productForSaleId": 5757718
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 790,
+                      "productForSaleId": 5757715
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ALBA MUSCULOSA ROSA",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125460",
+    "colorId": 20,
+    "copy": "Musculosa pijama Alba",
+    "description": "Musculosa básica escote redondo.",
+    "description2": "Realizada en ribb",
+    "description3": "Calce al cuerpo",
+    "id": 41380,
+    "images": [
+      "125460_1_1.jpg",
+      "125460_1_2.jpg",
+      "125460_1_3.jpg"
+    ],
+    "mainImage": "125460_1_1.jpg",
+    "name": "ALBA MUSCULOSA",
+    "price": 790,
+    "productLine": {
+      "id": 4576,
+      "name": "PIJAMAS Y HOMEWEAR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 790,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFDE6",
+                "description": "CRUDO",
+                "id": 20,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 790,
+                      "productForSaleId": 5757711
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 790,
+                      "productForSaleId": 5757712
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 790,
+                      "productForSaleId": 5757713
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 790,
+                      "productForSaleId": 5757709
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 790,
+                      "productForSaleId": 5757710
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#DEA1A6",
+                "description": "ROSA",
+                "id": 27,
+                "price": 790,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 790,
+                      "productForSaleId": 5757714
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 790,
+                      "productForSaleId": 5757717
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 790,
+                      "productForSaleId": 5757716
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 790,
+                      "productForSaleId": 5757718
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 790,
+                      "productForSaleId": 5757715
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ALBA MUSCULOSA CRUDO",
+    "productLineId": "3324"
+  }
+]

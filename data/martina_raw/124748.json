@@ -1,0 +1,86 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "124748",
+    "colorId": 1211,
+    "description": "Buzo con capucha forrada y bolsillo canguro. ",
+    "description2": "Realizado en waffle",
+    "description3": "Calce clásico",
+    "id": 40333,
+    "images": [
+      "124748_1211_1.jpg"
+    ],
+    "mainImage": "124748_1211_1.jpg",
+    "name": "RADEK BUZO",
+    "price": 1080,
+    "price1": 1800,
+    "productLine": {
+      "id": 4762,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1080,
+          "price1": 1800,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#CBCBCB",
+                "description": "GRIS MELANGE CLARO ",
+                "id": 1211,
+                "price": 1080,
+                "price1": 1800,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1080,
+                      "price1": 1800,
+                      "productForSaleId": 5562219
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1080,
+                      "price1": 1800,
+                      "productForSaleId": 5562220
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1080,
+                      "price1": 1800,
+                      "productForSaleId": 5562221
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1080,
+                      "price1": 1800,
+                      "productForSaleId": 5562218
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RADEK BUZO GRIS MELANGE CLARO "
+  }
+]

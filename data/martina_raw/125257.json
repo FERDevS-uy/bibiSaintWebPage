@@ -1,0 +1,98 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125257",
+    "colorId": 1544,
+    "copy": "Tapado sastrero Malvina",
+    "description": "Tapado sastrero con cuello y solapa. Manga ranglan y calce relajado, con botones en delantero y bolsillos. Forrada en su interior. Una prenda de temporada única e imprescindible para tus outfits de invierno. Elegante y moderna.",
+    "description2": "Realizado en paño",
+    "description3": "Calce clásico",
+    "id": 41043,
+    "images": [
+      "125257_1222_1.jpg",
+      "125257_1222_2.jpg",
+      "125257_1222_3.jpg",
+      "125257_1544_1.jpg",
+      "125257_1544_2.jpg",
+      "125257_1544_3.jpg"
+    ],
+    "mainImage": "125257_1544_1.jpg",
+    "name": "MALVINA TAPADO",
+    "price": 4420,
+    "price1": 5200,
+    "productLine": {
+      "id": 4760,
+      "name": "TAPADOS Y SACOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 4420,
+          "price1": 5200,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "GRIS ASARGADO",
+                "id": 1544,
+                "price": 4420,
+                "price1": 5200,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 4420,
+                      "price1": 5200,
+                      "productForSaleId": 5569778
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 4420,
+                      "price1": 5200,
+                      "productForSaleId": 5569781
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 4420,
+                      "price1": 5200,
+                      "productForSaleId": 5569780
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 4420,
+                      "price1": 5200,
+                      "productForSaleId": 5569782
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 4420,
+                      "price1": 5200,
+                      "productForSaleId": 5569779
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MALVINA TAPADO GRIS ASARGADO"
+  }
+]

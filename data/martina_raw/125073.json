@@ -1,0 +1,282 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125073",
+    "colorId": 1515,
+    "copy": "Remera cuello redondo escote v Ariana",
+    "description": "Remera cuello redondo escote en V con vista interna.",
+    "description2": "Realizada en jersey snow",
+    "description3": "Calce clásico",
+    "id": 40832,
+    "images": [
+      "125073_1184_1.jpg",
+      "125073_1515_1.jpg",
+      "125073_1515_2.jpg"
+    ],
+    "mainImage": "125073_1515_1.jpg",
+    "name": "ARIANA REMERA",
+    "price": 470,
+    "price1": 780,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 470,
+          "price1": 780,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "LILA MELANGE",
+                "id": 1515,
+                "price": 470,
+                "price1": 780,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573746
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573743
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573747
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573744
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573745
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#79AC81",
+                "description": "VERDE MELANGE",
+                "id": 1184,
+                "price": 470,
+                "price1": 780,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573752
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573749
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573751
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573750
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573748
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ARIANA REMERA LILA MELANGE"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125073",
+    "colorId": 1184,
+    "copy": "Remera cuello redondo escote v Ariana",
+    "description": "Remera cuello redondo escote en V con vista interna.",
+    "description2": "Realizada en jersey snow",
+    "description3": "Calce clásico",
+    "id": 40832,
+    "images": [
+      "125073_1184_1.jpg",
+      "125073_1515_1.jpg",
+      "125073_1515_2.jpg"
+    ],
+    "mainImage": "125073_1184_1.jpg",
+    "name": "ARIANA REMERA",
+    "price": 470,
+    "price1": 780,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 470,
+          "price1": 780,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "LILA MELANGE",
+                "id": 1515,
+                "price": 470,
+                "price1": 780,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573746
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573743
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573747
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573744
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573745
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#79AC81",
+                "description": "VERDE MELANGE",
+                "id": 1184,
+                "price": 470,
+                "price1": 780,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573752
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573749
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573751
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573750
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 470,
+                      "price1": 780,
+                      "productForSaleId": 5573748
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ARIANA REMERA VERDE MELANGE"
+  }
+]
