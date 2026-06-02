@@ -49,6 +49,7 @@
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+  object-position: top;
   display: block;
   transition: transform 0.35s ease;
   border-radius: 0;

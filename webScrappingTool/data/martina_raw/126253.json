@@ -5,7 +5,7 @@
       "name": "BRAND"
     },
     "code": "126253",
-    "colorId": 890,
+    "colorId": 1,
     "description": "Polera sin mangas, basica.",
     "description2": "Realizadas en morley",
     "description3": "Calce clásico",
@@ -15,7 +15,7 @@
       "126253_1_2.jpg",
       "126253_890_1.jpg"
     ],
-    "mainImage": "126253_890_1.jpg",
+    "mainImage": "126253_1_1.jpg",
     "name": "AINA POLERA S/MANGAS",
     "price": 680,
     "productLine": {
@@ -37,18 +37,18 @@
             "id": "color",
             "variationValues": [
               {
-                "colorHex": "#96A0B3",
-                "description": "GRIS ACERO",
-                "id": 890,
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
                 "price": 680,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
-                      "description": "48",
-                      "id": 56,
+                      "description": "46",
+                      "id": 55,
                       "price": 680,
-                      "productForSaleId": 5754100
+                      "productForSaleId": 5754095
                     }
                   ]
                 }
@@ -58,7 +58,7 @@
         }
       ]
     },
-    "variationName": "AINA POLERA S/MANGAS GRIS ACERO",
+    "variationName": "AINA POLERA S/MANGAS BLANCO",
     "productLineId": "3324"
   }
 ]

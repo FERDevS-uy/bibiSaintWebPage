@@ -1,0 +1,62 @@
+[
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125548",
+    "colorId": 1490,
+    "description": "Media tipo soquete con motivo de flores a contra tono.",
+    "description2": "Realizada en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 41498,
+    "images": [
+      "125548_1490_1.jpg",
+      "125548_1490_2.jpg"
+    ],
+    "mainImage": "125548_1490_1.jpg",
+    "name": "LENA MEDIA",
+    "price": 380,
+    "productLine": {
+      "id": 3353,
+      "name": "MEDIAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 380,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "description": "NEGRO-GRIS-FUCSIA",
+                "id": 1490,
+                "price": 380,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "/",
+                      "id": 1,
+                      "price": 380,
+                      "productForSaleId": 5761170
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "LENA MEDIA NEGRO-GRIS-FUCSIA",
+    "productLineId": "3324"
+  }
+]

@@ -5,93 +5,6 @@
       "name": "BRAND"
     },
     "code": "126122",
-    "colorId": 1137,
-    "description": "Remerón con detalles del derecho y revés de la tela, en hombros y escote. Una prenda abrigada pero con movimiento. ",
-    "description2": "Realizado en rustico liviano",
-    "description3": "Calce amplio",
-    "id": 42323,
-    "images": [
-      "126122_1137_1.jpg",
-      "126122_1137_2.jpg",
-      "126122_20_1.jpg",
-      "126122_20_2.jpg",
-      "126122_20_3.jpg"
-    ],
-    "mainImage": "126122_1137_1.jpg",
-    "name": "MOI REMERON",
-    "price": 1295,
-    "price1": 1440,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "PRECIO REBAJADO",
-          "id": 6,
-          "price": 1295,
-          "price1": 1440,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#FFFDE6",
-                "description": "CRUDO",
-                "id": 20,
-                "price": 1295,
-                "price1": 1440,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 1295,
-                      "price1": 1440,
-                      "productForSaleId": 5753821
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#8B8D8D",
-                "description": "GRIS TOPO MELANGE",
-                "id": 1137,
-                "price": 1295,
-                "price1": 1440,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 1295,
-                      "price1": 1440,
-                      "productForSaleId": 5753825
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "MOI REMERON GRIS TOPO MELANGE",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126122",
     "colorId": 20,
     "description": "Remerón con detalles del derecho y revés de la tela, en hombros y escote. Una prenda abrigada pero con movimiento. ",
     "description2": "Realizado en rustico liviano",
@@ -137,30 +50,11 @@
                   "id": "size",
                   "variationValues": [
                     {
-                      "description": "46",
-                      "id": 55,
-                      "price": 1295,
-                      "price1": 1440,
-                      "productForSaleId": 5753821
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#8B8D8D",
-                "description": "GRIS TOPO MELANGE",
-                "id": 1137,
-                "price": 1295,
-                "price1": 1440,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
                       "description": "42",
                       "id": 52,
                       "price": 1295,
                       "price1": 1440,
-                      "productForSaleId": 5753825
+                      "productForSaleId": 5753820
                     }
                   ]
                 }

@@ -20,7 +20,8 @@
     ],
     "mainImage": "124630_2_1.jpg",
     "name": "VITALE CALZA",
-    "price": 1330,
+    "price": 1064,
+    "price1": 1330,
     "productLine": {
       "id": 4736,
       "name": "CALZAS",
@@ -33,9 +34,10 @@
       "id": "tipoVenta",
       "variationValues": [
         {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 1330,
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1064,
+          "price1": 1330,
           "variation": {
             "id": "color",
             "variationValues": [
@@ -43,33 +45,38 @@
                 "colorHex": "#000000",
                 "description": "NEGRO",
                 "id": 2,
-                "price": 1330,
+                "price": 1064,
+                "price1": 1330,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "40",
                       "id": 50,
-                      "price": 1330,
-                      "productForSaleId": 5753670
+                      "price": 1064,
+                      "price1": 1330,
+                      "productForSaleId": 5770300
                     },
                     {
                       "description": "44",
                       "id": 54,
-                      "price": 1330,
-                      "productForSaleId": 5753672
+                      "price": 1064,
+                      "price1": 1330,
+                      "productForSaleId": 5770302
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 1330,
-                      "productForSaleId": 5753669
+                      "price": 1064,
+                      "price1": 1330,
+                      "productForSaleId": 5770301
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 1330,
-                      "productForSaleId": 5753668
+                      "price": 1064,
+                      "price1": 1330,
+                      "productForSaleId": 5770298
                     }
                   ]
                 }

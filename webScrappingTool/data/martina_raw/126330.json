@@ -5,6 +5,176 @@
       "name": "BRAND"
     },
     "code": "126330",
+    "colorId": 8,
+    "description": "Remera escote redondo, manga larga semi oxford.\r\nEl morley es bitono generando un efecto rayadito, que lo hace una tela diferenciada.",
+    "description2": "Realizada en morley",
+    "description3": "Calce clásico",
+    "id": 42597,
+    "images": [
+      "126330_2_1.jpg",
+      "126330_2_2.jpg",
+      "126330_4_1.jpg",
+      "126330_4_2.jpg",
+      "126330_8_1.jpg",
+      "126330_8_2.jpg"
+    ],
+    "mainImage": "126330_8_1.jpg",
+    "name": "PINCOYA REMERA M/LARGA",
+    "price": 1075,
+    "price1": 1435,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1075,
+          "price1": 1435,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 1075,
+                "price1": 1435,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770310
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770307
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770308
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770309
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1075,
+                "price1": 1435,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770306
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770303
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770304
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770305
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#00A23A",
+                "description": "VERDE",
+                "id": 8,
+                "price": 1075,
+                "price1": 1435,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770313
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770314
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770311
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770312
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "PINCOYA REMERA M/LARGA VERDE",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126330",
     "colorId": 2,
     "description": "Remera escote redondo, manga larga semi oxford.\r\nEl morley es bitono generando un efecto rayadito, que lo hace una tela diferenciada.",
     "description2": "Realizada en morley",
@@ -20,7 +190,8 @@
     ],
     "mainImage": "126330_2_1.jpg",
     "name": "PINCOYA REMERA M/LARGA",
-    "price": 1435,
+    "price": 1075,
+    "price1": 1435,
     "productLine": {
       "id": 3326,
       "name": "REMERAS",
@@ -33,9 +204,10 @@
       "id": "tipoVenta",
       "variationValues": [
         {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 1435,
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1075,
+          "price1": 1435,
           "variation": {
             "id": "color",
             "variationValues": [
@@ -43,33 +215,38 @@
                 "colorHex": "#791226",
                 "description": "BORDO",
                 "id": 4,
-                "price": 1435,
+                "price": 1075,
+                "price1": 1435,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "42",
                       "id": 52,
-                      "price": 1435,
-                      "productForSaleId": 5754228
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770310
                     },
                     {
                       "description": "44",
                       "id": 54,
-                      "price": 1435,
-                      "productForSaleId": 5754225
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770307
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 1435,
-                      "productForSaleId": 5754226
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770308
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 1435,
-                      "productForSaleId": 5754227
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770309
                     }
                   ]
                 }
@@ -78,33 +255,38 @@
                 "colorHex": "#000000",
                 "description": "NEGRO",
                 "id": 2,
-                "price": 1435,
+                "price": 1075,
+                "price1": 1435,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "42",
                       "id": 52,
-                      "price": 1435,
-                      "productForSaleId": 5754224
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770306
                     },
                     {
                       "description": "44",
                       "id": 54,
-                      "price": 1435,
-                      "productForSaleId": 5754221
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770303
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 1435,
-                      "productForSaleId": 5754222
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770304
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 1435,
-                      "productForSaleId": 5754223
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770305
                     }
                   ]
                 }
@@ -113,33 +295,38 @@
                 "colorHex": "#00A23A",
                 "description": "VERDE",
                 "id": 8,
-                "price": 1435,
+                "price": 1075,
+                "price1": 1435,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "42",
                       "id": 52,
-                      "price": 1435,
-                      "productForSaleId": 5754231
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770313
                     },
                     {
                       "description": "44",
                       "id": 54,
-                      "price": 1435,
-                      "productForSaleId": 5754232
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770314
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 1435,
-                      "productForSaleId": 5754229
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770311
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 1435,
-                      "productForSaleId": 5754230
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770312
                     }
                   ]
                 }
@@ -173,7 +360,8 @@
     ],
     "mainImage": "126330_4_1.jpg",
     "name": "PINCOYA REMERA M/LARGA",
-    "price": 1435,
+    "price": 1075,
+    "price1": 1435,
     "productLine": {
       "id": 3326,
       "name": "REMERAS",
@@ -186,9 +374,10 @@
       "id": "tipoVenta",
       "variationValues": [
         {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 1435,
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1075,
+          "price1": 1435,
           "variation": {
             "id": "color",
             "variationValues": [
@@ -196,33 +385,38 @@
                 "colorHex": "#791226",
                 "description": "BORDO",
                 "id": 4,
-                "price": 1435,
+                "price": 1075,
+                "price1": 1435,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "42",
                       "id": 52,
-                      "price": 1435,
-                      "productForSaleId": 5754228
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770310
                     },
                     {
                       "description": "44",
                       "id": 54,
-                      "price": 1435,
-                      "productForSaleId": 5754225
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770307
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 1435,
-                      "productForSaleId": 5754226
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770308
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 1435,
-                      "productForSaleId": 5754227
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770309
                     }
                   ]
                 }
@@ -231,33 +425,38 @@
                 "colorHex": "#000000",
                 "description": "NEGRO",
                 "id": 2,
-                "price": 1435,
+                "price": 1075,
+                "price1": 1435,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "42",
                       "id": 52,
-                      "price": 1435,
-                      "productForSaleId": 5754224
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770306
                     },
                     {
                       "description": "44",
                       "id": 54,
-                      "price": 1435,
-                      "productForSaleId": 5754221
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770303
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 1435,
-                      "productForSaleId": 5754222
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770304
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 1435,
-                      "productForSaleId": 5754223
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770305
                     }
                   ]
                 }
@@ -266,33 +465,38 @@
                 "colorHex": "#00A23A",
                 "description": "VERDE",
                 "id": 8,
-                "price": 1435,
+                "price": 1075,
+                "price1": 1435,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "42",
                       "id": 52,
-                      "price": 1435,
-                      "productForSaleId": 5754231
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770313
                     },
                     {
                       "description": "44",
                       "id": 54,
-                      "price": 1435,
-                      "productForSaleId": 5754232
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770314
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 1435,
-                      "productForSaleId": 5754229
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770311
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 1435,
-                      "productForSaleId": 5754230
+                      "price": 1075,
+                      "price1": 1435,
+                      "productForSaleId": 5770312
                     }
                   ]
                 }
@@ -303,159 +507,6 @@
       ]
     },
     "variationName": "PINCOYA REMERA M/LARGA BORDO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126330",
-    "colorId": 8,
-    "description": "Remera escote redondo, manga larga semi oxford.\r\nEl morley es bitono generando un efecto rayadito, que lo hace una tela diferenciada.",
-    "description2": "Realizada en morley",
-    "description3": "Calce clásico",
-    "id": 42597,
-    "images": [
-      "126330_2_1.jpg",
-      "126330_2_2.jpg",
-      "126330_4_1.jpg",
-      "126330_4_2.jpg",
-      "126330_8_1.jpg",
-      "126330_8_2.jpg"
-    ],
-    "mainImage": "126330_8_1.jpg",
-    "name": "PINCOYA REMERA M/LARGA",
-    "price": 1435,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 1435,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#791226",
-                "description": "BORDO",
-                "id": 4,
-                "price": 1435,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 1435,
-                      "productForSaleId": 5754228
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 1435,
-                      "productForSaleId": 5754225
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 1435,
-                      "productForSaleId": 5754226
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 1435,
-                      "productForSaleId": 5754227
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 1435,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 1435,
-                      "productForSaleId": 5754224
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 1435,
-                      "productForSaleId": 5754221
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 1435,
-                      "productForSaleId": 5754222
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 1435,
-                      "productForSaleId": 5754223
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#00A23A",
-                "description": "VERDE",
-                "id": 8,
-                "price": 1435,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 1435,
-                      "productForSaleId": 5754231
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 1435,
-                      "productForSaleId": 5754232
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 1435,
-                      "productForSaleId": 5754229
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 1435,
-                      "productForSaleId": 5754230
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "PINCOYA REMERA M/LARGA VERDE",
     "productLineId": "3324"
   }
 ]

@@ -5,121 +5,6 @@
       "name": "BRAND"
     },
     "code": "126383",
-    "colorId": 2,
-    "description": "Remera manga larga con detalles al corte.",
-    "description2": "Realizada en jersey flame algodon",
-    "description3": "Calce clásico",
-    "id": 42669,
-    "images": [
-      "126383_2_1.jpg",
-      "126383_2_2.jpg",
-      "126383_452_1.jpg"
-    ],
-    "mainImage": "126383_2_1.jpg",
-    "name": "ANTONIA REMERA M/LARGA",
-    "price": 1480,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 1480,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#D5BD93",
-                "description": "AVELLANA",
-                "id": 452,
-                "price": 1480,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 1480,
-                      "productForSaleId": 5754255
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 1480,
-                      "productForSaleId": 5754253
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 1480,
-                      "productForSaleId": 5754254
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 1480,
-                      "productForSaleId": 5754256
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 1480,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 1480,
-                      "productForSaleId": 5754251
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 1480,
-                      "productForSaleId": 5754250
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 1480,
-                      "productForSaleId": 5754252
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 1480,
-                      "productForSaleId": 5754249
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "ANTONIA REMERA M/LARGA NEGRO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126383",
     "colorId": 452,
     "description": "Remera manga larga con detalles al corte.",
     "description2": "Realizada en jersey flame algodon",
@@ -227,6 +112,121 @@
       ]
     },
     "variationName": "ANTONIA REMERA M/LARGA AVELLANA",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126383",
+    "colorId": 2,
+    "description": "Remera manga larga con detalles al corte.",
+    "description2": "Realizada en jersey flame algodon",
+    "description3": "Calce clásico",
+    "id": 42669,
+    "images": [
+      "126383_2_1.jpg",
+      "126383_2_2.jpg",
+      "126383_452_1.jpg"
+    ],
+    "mainImage": "126383_2_1.jpg",
+    "name": "ANTONIA REMERA M/LARGA",
+    "price": 1480,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1480,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D5BD93",
+                "description": "AVELLANA",
+                "id": 452,
+                "price": 1480,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1480,
+                      "productForSaleId": 5754255
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1480,
+                      "productForSaleId": 5754253
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1480,
+                      "productForSaleId": 5754254
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1480,
+                      "productForSaleId": 5754256
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1480,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1480,
+                      "productForSaleId": 5754251
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 1480,
+                      "productForSaleId": 5754250
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 1480,
+                      "productForSaleId": 5754252
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1480,
+                      "productForSaleId": 5754249
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ANTONIA REMERA M/LARGA NEGRO",
     "productLineId": "3324"
   }
 ]

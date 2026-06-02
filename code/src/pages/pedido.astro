@@ -117,9 +117,101 @@ import { config } from "src/config";
     color: #777;
   }
 
+  :global(.pedido-stock-badge) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  :global(.pedido-stock-badge.pending) {
+    background: #ececec;
+    color: #555;
+  }
+
+  :global(.pedido-stock-badge.ok) {
+    background: #27ae60;
+    color: #fff;
+  }
+
+  :global(.pedido-stock-badge.error) {
+    background: #a33a3a;
+    color: #fff;
+  }
+
+  :global(.pedido-check-row) {
+    margin-top: 4px;
+  }
+
+  :global(.pedido-check-btn) {
+    border: 1px solid #222;
+    background: #fff;
+    color: #222;
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  :global(.pedido-check-btn:hover) {
+    background: #f4f4f4;
+  }
+
+  :global(.pedido-check-btn[disabled]) {
+    cursor: wait;
+    opacity: 0.7;
+  }
+
+  :global(.pedido-check-status) {
+    margin: 2px 0 0;
+    font-size: 0.76rem;
+    color: #666;
+    line-height: 1.3;
+  }
+
+  :global(.pedido-check-status.ok) {
+    color: #157f3b;
+  }
+
+  :global(.pedido-check-status.error) {
+    color: #b42318;
+  }
+
   :global(.pedido-size-badge) {
     display: inline-block;
     background: #d32f2f;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    width: fit-content;
+  }
+
+  :global(.pedido-variant-badge) {
+    display: inline-block;
+    background: #4d4d4d;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    width: fit-content;
+  }
+
+  :global(.pedido-color-badge) {
+    display: inline-block;
+    background: #1f6feb;
     color: #fff;
     font-size: 0.72rem;
     font-weight: 700;
@@ -240,18 +332,51 @@ import { config } from "src/config";
 <script>
   import { decryptIDs } from "@utils/encription";
   import { formatPrice, parsePrice } from "@utils/price";
+  import { getDisplayCategoryName } from "@utils/categoryNormalization";
+  import { normalizeSize } from "@utils/sizes";
   import type Product from "src/types/product";
+  import { providerFrom, fetchKaiLive, fetchMartinaLive, fetchNuvexLive } from "../client/stockService";
 
   const params = new URLSearchParams(window.location.search);
   const idFromQuery = params.get("id");
+  const martinaCode = import.meta.env.PUBLIC_MARTINA_CODE || "202605";
+  const martinaCountryId = import.meta.env.PUBLIC_MARTINA_COUNTRY_ID || "598";
 
   interface ProductosDePedido extends Product {
     cantidad: number;
+    requestedId: string;
+    baseId: string;
+    selectedSize: string | null;
+    variantBadgeText: string | null;
+    selectedColorId: number | null;
+    selectedColorName: string | null;
+    providerLink: string;
+    currentUnitPrice: number;
   }
 
-  function parsePedidoItem(item: string): { id: string; cantidad: number } | null {
+  function parsePedidoItem(item: string): {
+    id: string;
+    cantidad: number;
+    selectedColorId?: number | null;
+    selectedColorName?: string | null;
+  } | null {
     const trimmed = item.trim();
     if (!trimmed) return null;
+
+    if (trimmed.startsWith("{")) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        const id = String(parsed?.id ?? "").trim();
+        const cantidad = Number(parsed?.cantidad);
+        if (!id || Number.isNaN(cantidad)) return null;
+        const colorIdNum = Number(parsed?.selectedColorId);
+        const selectedColorId = Number.isFinite(colorIdNum) ? colorIdNum : null;
+        const selectedColorName = parsed?.selectedColorName ? String(parsed.selectedColorName) : null;
+        return { id, cantidad, selectedColorId, selectedColorName };
+      } catch {
+        // fallback al formato legado
+      }
+    }
 
     const separatorIndex = trimmed.lastIndexOf("-");
     if (separatorIndex === -1) return null;
@@ -261,7 +386,76 @@ import { config } from "src/config";
     const cantidad = Number(rawQty);
 
     if (!rawId || Number.isNaN(cantidad)) return null;
-    return { id: rawId, cantidad };
+    return { id: rawId, cantidad, selectedColorId: null, selectedColorName: null };
+  }
+
+  function parseVariantFromRawId(rawId: string): {
+    baseId: string;
+    selectedVariantToken: string | null;
+    selectedColorId: number | null;
+  } {
+    const [baseId, variantPart = ""] = rawId.split("__");
+    if (!variantPart) {
+      return { baseId, selectedVariantToken: null, selectedColorId: null };
+    }
+
+    let selectedVariantToken: string | null = null;
+    let selectedColorId: number | null = null;
+
+    variantPart
+      .split("_")
+      .map((token) => token.trim())
+      .filter(Boolean)
+      .forEach((token) => {
+        const colorMatch = token.match(/^c(\d+)$/i);
+        if (colorMatch) {
+          const id = Number(colorMatch[1]);
+          if (Number.isFinite(id)) selectedColorId = id;
+          return;
+        }
+        if (!selectedVariantToken) selectedVariantToken = token;
+      });
+
+    return { baseId, selectedVariantToken, selectedColorId };
+  }
+
+  function isLikelyMeasureToken(value: string): boolean {
+    const token = value.toUpperCase().trim();
+    return (
+      /(\d+\s*[Xx]\s*\d+)/.test(token)
+      || /(\d+\s*(CM|MM|M|L|LT|PZA|PZAS|UN|U))/i.test(token)
+      || /^[A-Z]-\d+$/i.test(token)
+    );
+  }
+
+  function resolveVariantForDisplay(product: Product, variantToken: string | null): { selectedSize: string | null; variantBadgeText: string | null } {
+    if (!variantToken) return { selectedSize: null, variantBadgeText: null };
+
+    const normalizedToken = variantToken.trim().toUpperCase();
+    if (!normalizedToken) return { selectedSize: null, variantBadgeText: null };
+
+    const displayCategory = getDisplayCategoryName(product);
+    const isRopaProduct = displayCategory === "Ropa";
+    const normalizedSize = normalizeSize(normalizedToken);
+
+    if (isRopaProduct && normalizedSize) {
+      return {
+        selectedSize: normalizedSize,
+        variantBadgeText: `Talle ${normalizedSize}`,
+      };
+    }
+
+    if (isLikelyMeasureToken(normalizedToken)) {
+      return {
+        selectedSize: null,
+        variantBadgeText: `Medida ${normalizedToken}`,
+      };
+    }
+
+    return {
+      selectedSize: null,
+      variantBadgeText: `Variante ${normalizedToken}`,
+    };
   }
 
 
@@ -302,26 +496,47 @@ import { config } from "src/config";
 
         const allProductos = await fetchProductos();
 
-        // El ID en carrito puede tener sufijo __TALLE (ej: mdt-41200__S)
-        // Se necesita el ID base (sin sufijo) para buscar en productos.json
-        const baseId = (rawId: string) =>
-          rawId.includes("__") ? rawId.split("__")[0] : rawId;
-
-        // Iterar desde la lista del carrito para soportar mismo producto con distintos talles
+        // Iterar desde la lista del carrito para soportar mismo producto con variantes distintas
         const productos: ProductosDePedido[] = lista
           .map((listItem) => {
-            const bid = baseId(listItem.id);
-            const product = allProductos.find((p) => p.id === bid);
+            const variant = parseVariantFromRawId(listItem.id);
+            const product = allProductos.find((p) => p.id === variant.baseId);
             if (!product) return null;
-            const sizeSuffix = listItem.id.includes("__")
-              ? ` (Talle ${listItem.id.split("__")[1]})`
-              : "";
-            return { ...product, name: product.name + sizeSuffix, cantidad: listItem.cantidad };
+            const resolvedVariant = resolveVariantForDisplay(product, variant.selectedVariantToken);
+            return {
+              ...product,
+              cantidad: listItem.cantidad,
+              requestedId: listItem.id,
+              baseId: variant.baseId,
+              selectedSize: resolvedVariant.selectedSize,
+              variantBadgeText: resolvedVariant.variantBadgeText,
+              selectedColorId:
+                listItem.selectedColorId !== null && listItem.selectedColorId !== undefined
+                  ? listItem.selectedColorId
+                  : variant.selectedColorId,
+              selectedColorName:
+                (listItem.selectedColorName && listItem.selectedColorName.trim().length > 0
+                  ? listItem.selectedColorName.trim()
+                  : null)
+                ?? (
+                  variant.selectedColorId !== null
+                  ? product.colors?.find((c) => c.id === variant.selectedColorId)?.name ?? `ID ${variant.selectedColorId}`
+                  : null
+                )
+                ?? (
+                  listItem.selectedColorId !== null && listItem.selectedColorId !== undefined
+                    ? `ID ${listItem.selectedColorId}`
+                    : null
+                )
+                ,
+              providerLink: product.paymentLink?.[0]?.url ?? "",
+              currentUnitPrice: parsePrice(product.price),
+            };
           })
           .filter((p): p is ProductosDePedido => p !== null);
 
-        // result.textContent = JSON.stringify(productos, null, 4);
         renderProducts(productos);
+        initPedidoRuntimeCheck(productos);
       } catch (e) {
         console.error(e);
         const container = document.getElementById(
@@ -345,35 +560,49 @@ import { config } from "src/config";
     const container = document.getElementById("result__container") as HTMLDivElement;
 
     const total = productos.reduce(
-      (acc, item) => acc + parsePrice(item.price) * item.cantidad,
+      (acc, item) => acc + item.currentUnitPrice * item.cantidad,
       0
     );
-
-    // Extraer talle del nombre (formato: "Nombre (Talle X)")
-    function parseName(fullName: string): { name: string; size: string | null } {
-      const match = fullName.match(/^(.+?)\s*\(Talle\s+(.+?)\)$/);
-      if (match) return { name: match[1].trim(), size: match[2] };
-      return { name: fullName, size: null };
-    }
-
-    const itemsHTML = productos.map((p) => {
-      const { name, size } = parseName(p.name);
-      const subtotal = formatPrice(parsePrice(p.price) * p.cantidad);
-      const sizeBadge = size
-        ? `<span class="pedido-size-badge">Talle ${size}</span>`
+    console.log(productos)
+    const itemsHTML = productos.map((p, index) => {
+      const rowKey = String(index);
+      const subtotalValue = p.currentUnitPrice * p.cantidad;
+      const subtotal = formatPrice(subtotalValue);
+      const variantBadgeClass = p.variantBadgeText?.startsWith("Talle ")
+        ? "pedido-size-badge"
+        : "pedido-variant-badge";
+      const variantBadge = p.variantBadgeText
+        ? `<span class="${variantBadgeClass}">${p.variantBadgeText}</span>`
+        : "";
+      const colorBadge = p.selectedColorId !== null
+        ? `<span class="pedido-color-badge">Color ${p.selectedColorName ?? `ID ${p.selectedColorId}`}</span>`
         : "";
       return `
-<div class="pedido-item">
-  <img src="${p.img[0]}" alt="${name}" loading="lazy" />
+<div class="pedido-item" data-row-key="${rowKey}" data-cantidad="${p.cantidad}" data-unit-price="${p.currentUnitPrice}">
+  <img src="${p.img[0]}" alt="${p.name}" loading="lazy" />
   <div class="pedido-item-info">
-    <span class="pedido-item-name">${name}</span>
-    ${sizeBadge}
-    <span class="pedido-item-price">$${formatPrice(parsePrice(p.price))} c/u</span>
+    <span class="pedido-item-name">${p.name}</span>
+    <span id="pedidoStock_${rowKey}" class="pedido-stock-badge pending">Pendiente</span>
+    ${variantBadge}
+    ${colorBadge}
+    <span class="pedido-item-price">$<span id="pedidoUnit_${rowKey}">${formatPrice(
+        p.currentUnitPrice
+      )}</span> c/u</span>
+    <div class="pedido-check-row">
+      <button
+        type="button"
+        class="pedido-check-btn"
+        data-row-key="${rowKey}"
+      >
+        Verificar stock y precio
+      </button>
+    </div>
+    <p id="pedidoStatus_${rowKey}" class="pedido-check-status">Pendiente de verificación.</p>
   </div>
   <div class="pedido-qty-wrap">
     <span class="pedido-qty">${p.cantidad}</span>
   </div>
-  <div class="pedido-subtotal">$${subtotal}</div>
+  <div class="pedido-subtotal">$<span id="pedidoSubtotal_${rowKey}" class="pedido-subtotal-value">${subtotal}</span></div>
 </div>`;
     }).join("");
 
@@ -396,9 +625,178 @@ import { config } from "src/config";
     </div>
     <div class="pedido-total-row main">
       <span>Total</span>
-      <span>$${formatPrice(total)}</span>
+      <span>$<span id="pedidoTotalValue">${formatPrice(total)}</span></span>
     </div>
   </div>
 </div>`;
+  }
+
+  function updatePedidoTotalFromRows() {
+    const totalEl = document.getElementById("pedidoTotalValue") as HTMLSpanElement | null;
+    if (!totalEl) return;
+
+    let total = 0;
+    const rows = document.querySelectorAll<HTMLElement>(".pedido-item[data-row-key]");
+    rows.forEach((row) => {
+      const cantidad = Number(row.dataset.cantidad || "0");
+      const unitPrice = Number(row.dataset.unitPrice || "0");
+      total += unitPrice * cantidad;
+    });
+    totalEl.textContent = formatPrice(total);
+  }
+
+  function updatePedidoRowPrice(rowKey: string, unitPrice: number) {
+    const row = document.querySelector<HTMLElement>(`.pedido-item[data-row-key="${rowKey}"]`);
+    const unitEl = document.getElementById(`pedidoUnit_${rowKey}`) as HTMLSpanElement | null;
+    const subtotalEl = document.getElementById(`pedidoSubtotal_${rowKey}`) as HTMLSpanElement | null;
+
+    if (!row || !unitEl || !subtotalEl) return;
+
+    const cantidad = Number(row.dataset.cantidad || "0");
+    row.dataset.unitPrice = String(unitPrice);
+    unitEl.textContent = formatPrice(unitPrice);
+    subtotalEl.textContent = formatPrice(unitPrice * cantidad);
+    updatePedidoTotalFromRows();
+  }
+
+  function initPedidoRuntimeCheck(productos: ProductosDePedido[]) {
+    const byRow = new Map<string, ProductosDePedido>();
+    productos.forEach((item, index) => byRow.set(String(index), item));
+
+    const setStockState = (rowKey: string, state: "pending" | "ok" | "error", text: string) => {
+      const stockEl = document.getElementById(`pedidoStock_${rowKey}`) as HTMLSpanElement | null;
+      if (!stockEl) return;
+      stockEl.textContent = text;
+      stockEl.classList.remove("pending", "ok", "error");
+      stockEl.classList.add(state);
+    };
+
+    const setStatus = (rowKey: string, text: string, tone: "ok" | "error" | "neutral" = "neutral") => {
+      const statusEl = document.getElementById(`pedidoStatus_${rowKey}`) as HTMLParagraphElement | null;
+      if (!statusEl) return;
+      statusEl.textContent = text;
+      statusEl.classList.remove("ok", "error");
+      if (tone === "ok") statusEl.classList.add("ok");
+      if (tone === "error") statusEl.classList.add("error");
+    };
+
+    const verifyOne = async (button: HTMLButtonElement, auto = false) => {
+      const rowKey = button.dataset.rowKey || "";
+      const producto = byRow.get(rowKey);
+      if (!rowKey || !producto) return;
+
+      const provider = providerFrom(producto.baseId, producto.providerLink || "");
+      const originalText = button.textContent || "Verificar stock y precio";
+
+      button.disabled = true;
+      button.textContent = auto ? "Verificando..." : "Verificando...";
+      setStatus(rowKey, "Consultando proveedor en vivo...");
+      setStockState(rowKey, "pending", "Pendiente");
+
+      try {
+        if (provider === "martina") {
+          const data = await fetchMartinaLive(producto.baseId, martinaCode, martinaCountryId);
+
+          const livePrice = parsePrice(String(data?.price || ""));
+          if (livePrice > 0) {
+            producto.currentUnitPrice = livePrice;
+            updatePedidoRowPrice(rowKey, livePrice);
+          }
+
+          if (!data || data.colors.length === 0) {
+            setStockState(rowKey, "error", "Sin stock");
+            setStatus(rowKey, "Este producto no tiene stock activo en Martina.", "error");
+            return;
+          }
+
+          let availableSizes = data.sizes || [];
+          if (producto.selectedColorId !== null) {
+            const color = data.colors.find((c) => c.id === producto.selectedColorId);
+            if (!color) {
+              setStockState(rowKey, "error", "Sin stock");
+              setStatus(rowKey, "El color elegido ya no está disponible.", "error");
+              return;
+            }
+            availableSizes = color.sizes || [];
+          }
+
+          if (producto.selectedSize && availableSizes.length > 0 && !availableSizes.includes(producto.selectedSize)) {
+            setStockState(rowKey, "error", "Sin stock");
+            setStatus(rowKey, `Sin stock para talle ${producto.selectedSize}.`, "error");
+            return;
+          }
+
+          const hasStock = availableSizes.length > 0;
+          setStockState(rowKey, hasStock ? "ok" : "error", hasStock ? "En stock" : "Sin stock");
+          setStatus(rowKey, "Stock y precio actualizados desde Martina.", hasStock ? "ok" : "error");
+          return;
+        }
+
+        if (provider === "kaideco") {
+          const data = await fetchKaiLive(producto.providerLink);
+
+          const livePrice = parsePrice(String(data?.price || ""));
+          if (livePrice > 0) {
+            producto.currentUnitPrice = livePrice;
+            updatePedidoRowPrice(rowKey, livePrice);
+          }
+
+          const sizes = Array.isArray(data?.sizes) ? data.sizes : [];
+          if (producto.selectedSize && sizes.length > 0 && !sizes.includes(producto.selectedSize)) {
+            setStockState(rowKey, "error", "Sin stock");
+            setStatus(rowKey, `Sin stock para talle ${producto.selectedSize}.`, "error");
+            return;
+          }
+
+          const inStock = data?.inStock === null ? true : Boolean(data?.inStock);
+          setStockState(rowKey, inStock ? "ok" : "error", inStock ? "En stock" : "Sin stock");
+          setStatus(rowKey, "Stock y precio actualizados desde Kai Deco.", inStock ? "ok" : "error");
+          return;
+        }
+
+        if (provider === "nuvex") {
+          const data = await fetchNuvexLive(producto.providerLink);
+
+          if (data?.inStock === true) {
+            setStockState(rowKey, "ok", "Disponible");
+            setStatus(rowKey, "Stock verificado en Nuvex. El precio se mantiene según catálogo.", "ok");
+            return;
+          }
+
+          if (data?.inStock === false) {
+            setStockState(rowKey, "error", "Sin stock");
+            setStatus(rowKey, "Sin stock en Nuvex. El precio se mantiene según catálogo.", "error");
+            return;
+          }
+
+          setStockState(rowKey, "pending", "A confirmar");
+          setStatus(rowKey, "No se pudo confirmar stock en Nuvex. El precio se mantiene según catálogo.");
+          return;
+        }
+
+        setStockState(rowKey, "pending", "A confirmar");
+        setStatus(rowKey, "No se pudo verificar en vivo este proveedor. Se mantiene catálogo.");
+      } catch (error) {
+        setStockState(rowKey, "error", "Error");
+        setStatus(rowKey, "No se pudo verificar ahora. Se mantiene información del catálogo.", "error");
+      } finally {
+        button.disabled = false;
+        button.textContent = originalText;
+      }
+    };
+
+    const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>(".pedido-check-btn"));
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        void verifyOne(button, false);
+      });
+    });
+
+    // Verificación automática al cargar la página
+    (async () => {
+      for (const button of buttons) {
+        await verifyOne(button, true);
+      }
+    })();
   }
 </script>

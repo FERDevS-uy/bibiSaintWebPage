@@ -5,122 +5,6 @@
       "name": "BRAND"
     },
     "code": "126111",
-    "colorId": 32,
-    "description": "Campera con bolsillos y capucha forrada.Confeccionada con costuras reforzadas en bordadora al tono. Acceso con cierre metálico. Puños y cintura en morley al tono. ",
-    "description2": "Realizada en frisa",
-    "description3": "Calce clásico",
-    "id": 42303,
-    "images": [
-      "126111_2_1.jpg",
-      "126111_2_2.jpg",
-      "126111_32_1.jpg",
-      "126111_32_2.jpg"
-    ],
-    "mainImage": "126111_32_1.jpg",
-    "name": "THEO CAMPERA",
-    "price": 2720,
-    "productLine": {
-      "id": 3358,
-      "name": "CAMPERAS",
-      "parent": {
-        "id": 3325,
-        "name": "HOMBRE"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 2720,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#D2CECF",
-                "description": "GRIS MELANGE",
-                "id": 32,
-                "price": 2720,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 2720,
-                      "productForSaleId": 5757048
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 2720,
-                      "productForSaleId": 5757047
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 2720,
-                      "productForSaleId": 5757050
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 2720,
-                      "productForSaleId": 5757049
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 2720,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 2720,
-                      "productForSaleId": 5757043
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 2720,
-                      "productForSaleId": 5757045
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 2720,
-                      "productForSaleId": 5757044
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 2720,
-                      "productForSaleId": 5757046
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "THEO CAMPERA GRIS MELANGE",
-    "productLineId": "3325"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126111",
     "colorId": 2,
     "description": "Campera con bolsillos y capucha forrada.Confeccionada con costuras reforzadas en bordadora al tono. Acceso con cierre metálico. Puños y cintura en morley al tono. ",
     "description2": "Realizada en frisa",
@@ -229,6 +113,122 @@
       ]
     },
     "variationName": "THEO CAMPERA NEGRO",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126111",
+    "colorId": 32,
+    "description": "Campera con bolsillos y capucha forrada.Confeccionada con costuras reforzadas en bordadora al tono. Acceso con cierre metálico. Puños y cintura en morley al tono. ",
+    "description2": "Realizada en frisa",
+    "description3": "Calce clásico",
+    "id": 42303,
+    "images": [
+      "126111_2_1.jpg",
+      "126111_2_2.jpg",
+      "126111_32_1.jpg",
+      "126111_32_2.jpg"
+    ],
+    "mainImage": "126111_32_1.jpg",
+    "name": "THEO CAMPERA",
+    "price": 2720,
+    "productLine": {
+      "id": 3358,
+      "name": "CAMPERAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2720,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 2720,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 2720,
+                      "productForSaleId": 5757048
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 2720,
+                      "productForSaleId": 5757047
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 2720,
+                      "productForSaleId": 5757050
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 2720,
+                      "productForSaleId": 5757049
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2720,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 2720,
+                      "productForSaleId": 5757043
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 2720,
+                      "productForSaleId": 5757045
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 2720,
+                      "productForSaleId": 5757044
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 2720,
+                      "productForSaleId": 5757046
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "THEO CAMPERA GRIS MELANGE",
     "productLineId": "3325"
   }
 ]

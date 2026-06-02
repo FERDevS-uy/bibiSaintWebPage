@@ -44,6 +44,7 @@
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
+  object-position: top;
 
   border-radius: var(--radius-size) var(--radius-size) 0 0;
 

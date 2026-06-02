@@ -19,7 +19,8 @@
     ],
     "mainImage": "126094_1398_1.jpg",
     "name": "DUNA PANTALON",
-    "price": 1460,
+    "price": 1095,
+    "price1": 1460,
     "productLine": {
       "id": 3348,
       "name": "PANTALONES Y BABUCHAS",
@@ -32,9 +33,10 @@
       "id": "tipoVenta",
       "variationValues": [
         {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 1460,
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1095,
+          "price1": 1460,
           "variation": {
             "id": "color",
             "variationValues": [
@@ -42,33 +44,38 @@
                 "colorHex": "#FFFFFF",
                 "description": "ANIMAL PRINT",
                 "id": 1398,
-                "price": 1460,
+                "price": 1095,
+                "price1": 1460,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "42",
                       "id": 52,
-                      "price": 1460,
-                      "productForSaleId": 5754036
+                      "price": 1095,
+                      "price1": 1460,
+                      "productForSaleId": 5770282
                     },
                     {
                       "description": "44",
                       "id": 54,
-                      "price": 1460,
-                      "productForSaleId": 5754037
+                      "price": 1095,
+                      "price1": 1460,
+                      "productForSaleId": 5770283
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 1460,
-                      "productForSaleId": 5754038
+                      "price": 1095,
+                      "price1": 1460,
+                      "productForSaleId": 5770284
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 1460,
-                      "productForSaleId": 5754035
+                      "price": 1095,
+                      "price1": 1460,
+                      "productForSaleId": 5770285
                     }
                   ]
                 }

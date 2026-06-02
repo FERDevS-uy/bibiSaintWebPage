@@ -4,7 +4,7 @@ export function formatPriceNumber(n: number): string {
   return integerPart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
-export function parsePrice(value: string | number): string {
+export function parsePrice(value: string | number, multiplier = 1): string {
   if (value === null || value === undefined) return '';
   const raw = String(value).trim();
   if (!raw) return '';
@@ -48,5 +48,6 @@ export function parsePrice(value: string | number): string {
 
   const valueNumber = parseFloat(normalized);
   if (Number.isNaN(valueNumber)) return '';
-  return formatPriceNumber(valueNumber);
+  const adjusted = valueNumber * (Number.isFinite(multiplier) ? multiplier : 1);
+  return formatPriceNumber(adjusted);
 }

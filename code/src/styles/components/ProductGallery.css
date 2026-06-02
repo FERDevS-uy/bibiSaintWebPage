@@ -7,6 +7,7 @@
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+  object-position: top;
   background: #fcfcfc;
   border-radius: 12px;
   display: block;
@@ -20,6 +21,7 @@
     max-height: 60vh;
     width: 100%;
     object-fit: cover;
+    object-position: top;
   }
 
   .gallery .thumbs {
@@ -31,6 +33,8 @@
     width: 56px;
     height: 56px;
     border-radius: 8px;
+    object-fit: cover;
+    object-position: top;
   }
 }
 
@@ -46,6 +50,7 @@
   height: 70px;
   border-radius: 8px;
   object-fit: cover;
+  object-position: top;
   cursor: pointer;
   border: 2px solid transparent;
   transition: border-color 0.2s;

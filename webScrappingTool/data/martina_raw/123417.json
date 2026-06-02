@@ -5,7 +5,7 @@
       "name": "BRAND"
     },
     "code": "123417",
-    "colorId": 5,
+    "colorId": 7,
     "description": "Boxer realizado en algodón elastizado con detalle de elástico diferenciado en cintura.",
     "description2": "Realizado en algodón elastizado",
     "description3": "Calce al cuerpo",
@@ -31,7 +31,7 @@
       "123417_8_2.jpg",
       "123417_9_1.jpg"
     ],
-    "mainImage": "123417_5_1.jpg",
+    "mainImage": "123417_7_1.jpg",
     "name": "ADRIANO BOXER",
     "price": 620,
     "productLine": {
@@ -232,7 +232,7 @@
         }
       ]
     },
-    "variationName": "ADRIANO BOXER GRIS",
+    "variationName": "ADRIANO BOXER AZUL",
     "productLineId": "3325"
   },
   {
@@ -949,7 +949,7 @@
       "name": "BRAND"
     },
     "code": "123417",
-    "colorId": 7,
+    "colorId": 5,
     "description": "Boxer realizado en algodón elastizado con detalle de elástico diferenciado en cintura.",
     "description2": "Realizado en algodón elastizado",
     "description3": "Calce al cuerpo",
@@ -975,7 +975,7 @@
       "123417_8_2.jpg",
       "123417_9_1.jpg"
     ],
-    "mainImage": "123417_7_1.jpg",
+    "mainImage": "123417_5_1.jpg",
     "name": "ADRIANO BOXER",
     "price": 620,
     "productLine": {
@@ -1176,7 +1176,7 @@
         }
       ]
     },
-    "variationName": "ADRIANO BOXER AZUL",
+    "variationName": "ADRIANO BOXER GRIS",
     "productLineId": "3325"
   }
 ]
