@@ -5,7 +5,9 @@ function addToCart(
   name: string,
   price: string,
   qty: number = 1,
-  img: string
+  img: string,
+  selectedColorId: number | null = null,
+  selectedColorName: string | null = null,
 ) {
   const product: ProductInCart = {
     id,
@@ -13,6 +15,8 @@ function addToCart(
     price,
     cantidad: qty,
     img,
+    selectedColorId,
+    selectedColorName,
   };
   let carrito = [];
 
@@ -27,6 +31,8 @@ function addToCart(
     // sin el Number(qty) lo devuelve como string
     let cant = parseInt(productoEnCarrito.cantidad, 10) + qty;
     productoEnCarrito.cantidad = cant;
+    if (selectedColorId !== null) productoEnCarrito.selectedColorId = selectedColorId;
+    if (selectedColorName) productoEnCarrito.selectedColorName = selectedColorName;
   } else {
     carrito.push(product);
   }

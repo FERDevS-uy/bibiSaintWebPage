@@ -9,7 +9,15 @@ export interface Props {
 }
 
 const { producto: p } = Astro.props;
-const colors = getColors(p.name).join(",");
+
+const colorKeysFromProvider = Array.isArray(p.colors)
+  ? p.colors
+      .map((c) => (c?.name || "").trim().toLowerCase())
+      .filter(Boolean)
+  : [];
+
+const fallbackColorKeys = getColors(p.name).map((c) => c.trim().toLowerCase());
+const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKeys])).join(",");
 ---
 
 <article class="producto_card" data-colors={colors} data-name={p.name} data-price={p.price}>
@@ -73,6 +81,7 @@ const colors = getColors(p.name).join(",");
     width: 100%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
+    object-position: top;
     display: block;
     transition: transform 0.35s ease;
   }

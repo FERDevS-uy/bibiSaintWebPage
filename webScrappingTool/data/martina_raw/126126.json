@@ -5,98 +5,6 @@
       "name": "BRAND"
     },
     "code": "126126",
-    "colorId": 159,
-    "description": "Tangaless regulable.\r\nTalle 1 (abarca 1 y 2) Talle 3 (abarca talle 3 y 4)",
-    "description2": "Realizado en encaje elastizado",
-    "description3": "Calce al cuerpo",
-    "id": 42327,
-    "images": [
-      "126126_159_1.jpg",
-      "126126_159_2.jpg",
-      "126126_4_1.jpg",
-      "126126_4_2.jpg"
-    ],
-    "mainImage": "126126_159_1.jpg",
-    "name": "SOPHIA TANGALESS",
-    "price": 300,
-    "productLine": {
-      "id": 3352,
-      "name": "ROPA INTERIOR",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 300,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#737F9C",
-                "description": "AERO",
-                "id": 159,
-                "price": 300,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "1",
-                      "id": 5,
-                      "price": 300,
-                      "productForSaleId": 5757803
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 300,
-                      "productForSaleId": 5757804
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#791226",
-                "description": "BORDO",
-                "id": 4,
-                "price": 300,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "1",
-                      "id": 5,
-                      "price": 300,
-                      "productForSaleId": 5757801
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 300,
-                      "productForSaleId": 5757802
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "SOPHIA TANGALESS AERO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126126",
     "colorId": 4,
     "description": "Tangaless regulable.\r\nTalle 1 (abarca 1 y 2) Talle 3 (abarca talle 3 y 4)",
     "description2": "Realizado en encaje elastizado",
@@ -181,6 +89,98 @@
       ]
     },
     "variationName": "SOPHIA TANGALESS BORDO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126126",
+    "colorId": 159,
+    "description": "Tangaless regulable.\r\nTalle 1 (abarca 1 y 2) Talle 3 (abarca talle 3 y 4)",
+    "description2": "Realizado en encaje elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 42327,
+    "images": [
+      "126126_159_1.jpg",
+      "126126_159_2.jpg",
+      "126126_4_1.jpg",
+      "126126_4_2.jpg"
+    ],
+    "mainImage": "126126_159_1.jpg",
+    "name": "SOPHIA TANGALESS",
+    "price": 300,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 300,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#737F9C",
+                "description": "AERO",
+                "id": 159,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5757803
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757804
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#791226",
+                "description": "BORDO",
+                "id": 4,
+                "price": 300,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 300,
+                      "productForSaleId": 5757801
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 300,
+                      "productForSaleId": 5757802
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SOPHIA TANGALESS AERO",
     "productLineId": "3324"
   }
 ]

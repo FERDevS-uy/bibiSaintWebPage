@@ -258,6 +258,8 @@ const isAbout = pathname.includes("/about");
       ".has-submenu, .has-submenu-level2",
     );
     const backBtns = document.querySelectorAll(".backMenuBtn");
+    const submenus = document.querySelectorAll(".subcategoryList");
+    const mobileMenuHeader = document.querySelector(".mobileMenuHeader");
     const closeMenuBtn = document.getElementById(
       "closeMenuBtn",
     ) as HTMLButtonElement;
@@ -266,6 +268,14 @@ const isAbout = pathname.includes("/about");
     ) as HTMLButtonElement;
     const mobileSearchBtn = document.getElementById("mobileSearchBtn");
     const searchForm = document.querySelector(".navMenu form");
+
+    const syncMobileSearchVisibility = () => {
+      if (!mobileMenuHeader) return;
+      const hasOpenSubmenu = Array.from(submenus).some((submenu) =>
+        submenu.classList.contains("open"),
+      );
+      mobileMenuHeader.classList.toggle("submenu-active", hasOpenSubmenu);
+    };
 
     // Abrir submenús
     hasSubmenuLinks.forEach((link) => {
@@ -278,6 +288,7 @@ const isAbout = pathname.includes("/about");
             const submenu = document.getElementById(targetId);
             if (submenu) {
               submenu.classList.add("open");
+              syncMobileSearchVisibility();
             }
           }
         });
@@ -293,6 +304,7 @@ const isAbout = pathname.includes("/about");
           const submenu = document.getElementById(targetId);
           if (submenu) {
             submenu.classList.remove("open");
+            syncMobileSearchVisibility();
           }
         }
       });
@@ -300,6 +312,8 @@ const isAbout = pathname.includes("/about");
 
     // Cerrar el panel móvil entero
     closeMenuBtn.addEventListener("click", () => {
+      submenus.forEach((submenu) => submenu.classList.remove("open"));
+      syncMobileSearchVisibility();
       astroNavMenu.click();
     });
 
@@ -323,6 +337,8 @@ const isAbout = pathname.includes("/about");
         }, 300); // Wait for CSS transition of menu opening
       });
     }
+
+    syncMobileSearchVisibility();
   });
 </script>
 
@@ -429,8 +445,18 @@ const isAbout = pathname.includes("/about");
     flex: 1;
   }
   .search__container.sideBar {
-    display: inherit;
+    display: block;
+    flex: 1;
+    min-width: 0;
     padding: 0;
+    margin-right: 0.5rem;
+  }
+  .search__container.sideBar :global(.searchForm) {
+    width: 100%;
+  }
+  .search__container.sideBar :global(.inputContainer) {
+    padding: 6px 12px;
+    border-radius: 18px;
   }
   .navMenu {
     flex: 0 0 auto;
@@ -541,9 +567,15 @@ const isAbout = pathname.includes("/about");
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 5rem;
-    padding-inline: 1.4rem;
+    gap: 0.75rem;
+    padding-inline: 0.9rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .mobileMenuHeader.submenu-active .search__container.sideBar {
+    display: none;
+  }
+  .mobileMenuHeader.submenu-active {
+    justify-content: flex-end;
   }
   .closeMenuBtn {
     background: none;

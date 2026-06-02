@@ -16,7 +16,8 @@
     ],
     "mainImage": "126047_381_1.jpg",
     "name": "FARAH CHOMBA M/LARGA",
-    "price": 1960,
+    "price": 1372,
+    "price1": 1960,
     "productLine": {
       "id": 3326,
       "name": "REMERAS",
@@ -29,9 +30,10 @@
       "id": "tipoVenta",
       "variationValues": [
         {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 1960,
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 1372,
+          "price1": 1960,
           "variation": {
             "id": "color",
             "variationValues": [
@@ -39,33 +41,38 @@
                 "colorHex": "#FFFFFF",
                 "description": "RAYADO",
                 "id": 381,
-                "price": 1960,
+                "price": 1372,
+                "price1": 1960,
                 "variation": {
                   "id": "size",
                   "variationValues": [
                     {
                       "description": "42",
                       "id": 52,
-                      "price": 1960,
-                      "productForSaleId": 5754052
+                      "price": 1372,
+                      "price1": 1960,
+                      "productForSaleId": 5770286
                     },
                     {
                       "description": "44",
                       "id": 54,
-                      "price": 1960,
-                      "productForSaleId": 5754053
+                      "price": 1372,
+                      "price1": 1960,
+                      "productForSaleId": 5770288
                     },
                     {
                       "description": "46",
                       "id": 55,
-                      "price": 1960,
-                      "productForSaleId": 5754051
+                      "price": 1372,
+                      "price1": 1960,
+                      "productForSaleId": 5770289
                     },
                     {
                       "description": "48",
                       "id": 56,
-                      "price": 1960,
-                      "productForSaleId": 5754050
+                      "price": 1372,
+                      "price1": 1960,
+                      "productForSaleId": 5770287
                     }
                   ]
                 }

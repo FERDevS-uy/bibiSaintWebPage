@@ -5,121 +5,6 @@
       "name": "BRAND"
     },
     "code": "126109",
-    "colorId": 2,
-    "description": "Pantalón recto, con bolsillos delanteros, elástico en cintura con cordón regulable.",
-    "description2": "Realizado en frisa",
-    "description3": "Calce clásico",
-    "id": 42301,
-    "images": [
-      "126109_2_1.jpg",
-      "126109_2_2.jpg",
-      "126109_32_1.jpg"
-    ],
-    "mainImage": "126109_2_1.jpg",
-    "name": "DUKO PANTALON",
-    "price": 2450,
-    "productLine": {
-      "id": 3357,
-      "name": "PANTALONES Y BABUCHAS",
-      "parent": {
-        "id": 3325,
-        "name": "HOMBRE"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 2450,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#D2CECF",
-                "description": "GRIS MELANGE",
-                "id": 32,
-                "price": 2450,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 2450,
-                      "productForSaleId": 5757051
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 2450,
-                      "productForSaleId": 5757053
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 2450,
-                      "productForSaleId": 5757052
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 2450,
-                      "productForSaleId": 5757054
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 2450,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 2450,
-                      "productForSaleId": 5757056
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 2450,
-                      "productForSaleId": 5757055
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 2450,
-                      "productForSaleId": 5757058
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 2450,
-                      "productForSaleId": 5757057
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "DUKO PANTALON NEGRO",
-    "productLineId": "3325"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126109",
     "colorId": 32,
     "description": "Pantalón recto, con bolsillos delanteros, elástico en cintura con cordón regulable.",
     "description2": "Realizado en frisa",
@@ -227,6 +112,121 @@
       ]
     },
     "variationName": "DUKO PANTALON GRIS MELANGE",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126109",
+    "colorId": 2,
+    "description": "Pantalón recto, con bolsillos delanteros, elástico en cintura con cordón regulable.",
+    "description2": "Realizado en frisa",
+    "description3": "Calce clásico",
+    "id": 42301,
+    "images": [
+      "126109_2_1.jpg",
+      "126109_2_2.jpg",
+      "126109_32_1.jpg"
+    ],
+    "mainImage": "126109_2_1.jpg",
+    "name": "DUKO PANTALON",
+    "price": 2450,
+    "productLine": {
+      "id": 3357,
+      "name": "PANTALONES Y BABUCHAS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2450,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 2450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 2450,
+                      "productForSaleId": 5757051
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 2450,
+                      "productForSaleId": 5757053
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 2450,
+                      "productForSaleId": 5757052
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 2450,
+                      "productForSaleId": 5757054
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 2450,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 2450,
+                      "productForSaleId": 5757056
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 2450,
+                      "productForSaleId": 5757055
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 2450,
+                      "productForSaleId": 5757058
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 2450,
+                      "productForSaleId": 5757057
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DUKO PANTALON NEGRO",
     "productLineId": "3325"
   }
 ]

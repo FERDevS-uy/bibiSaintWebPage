@@ -1,13 +1,21 @@
 {
-  "totalNew": 603,
+  "totalNew": 599,
   "totalCopy": 907,
-  "matched": 482,
-  "unmatchedNew": 121,
-  "missingInNew": 431,
+  "matched": 480,
+  "unmatchedNew": 119,
+  "missingInNew": 433,
   "unmatchedSample": [
+    {
+      "id": "400",
+      "name": "ASADERA ANTIADHERENTE CON ASAS SILICONA"
+    },
     {
       "id": "399",
       "name": "COMBO TECLADO Y MOUSE BLUETOOTH RECARGABLE"
+    },
+    {
+      "id": "261",
+      "name": "Juego Toalla 2 Pzas Priori Azul Negro Blanco Gris Rosa"
     },
     {
       "id": "mdt-42370",
@@ -116,14 +124,6 @@
     {
       "id": "mdt-42636",
       "name": "LOLA BUZO"
-    },
-    {
-      "id": "mdt-42635",
-      "name": "MONICA REMERA M/LARGA"
-    },
-    {
-      "id": "mdt-42633",
-      "name": "LUNA REMERA"
     }
   ],
   "missingSample": [
@@ -140,8 +140,16 @@
       "name": "Canasto Mimbre Rectangular"
     },
     {
+      "id": "207",
+      "name": "Masajeador"
+    },
+    {
       "id": "251",
       "name": "Bata Poncho Vel 60 x 120"
+    },
+    {
+      "id": "261",
+      "name": "Juego Toalla 2 Pzas Priori"
     },
     {
       "id": "254",
@@ -238,14 +246,6 @@
     {
       "id": "mdt-41020",
       "name": "PADUA CAMPERA"
-    },
-    {
-      "id": "mdt-41018",
-      "name": "LIDIA BABUCHA"
-    },
-    {
-      "id": "mdt-41013",
-      "name": "SHEILA CAMPERA"
     }
   ]
 }

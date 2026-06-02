@@ -78,6 +78,12 @@
                       "id": 50,
                       "price": 2700,
                       "productForSaleId": 5763150
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2700,
+                      "productForSaleId": 5763152
                     }
                   ]
                 }
@@ -192,6 +198,12 @@
                       "id": 50,
                       "price": 2700,
                       "productForSaleId": 5763150
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2700,
+                      "productForSaleId": 5763152
                     }
                   ]
                 }
@@ -306,6 +318,12 @@
                       "id": 50,
                       "price": 2700,
                       "productForSaleId": 5763150
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2700,
+                      "productForSaleId": 5763152
                     }
                   ]
                 }

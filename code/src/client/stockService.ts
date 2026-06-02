@@ -175,3 +175,56 @@ export async function fetchKaiLive(providerUrl: string) {
     window.clearTimeout(timeout);
   }
 }
+
+export async function fetchNuvexLive(providerUrl: string) {
+  if (!providerUrl || !providerUrl.toLowerCase().includes("nuvex.uy")) {
+    return {
+      provider: "nuvex" as const,
+      price: "",
+      inStock: null,
+      source: "nuvex-web",
+    };
+  }
+
+  const endpoint = new URL(`${import.meta.env.BASE_URL || "/"}api/provider-nuvex`, window.location.origin);
+  endpoint.searchParams.set("url", providerUrl);
+
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 7000);
+
+  try {
+    const response = await fetch(endpoint.toString(), {
+      cache: "no-store",
+      signal: controller.signal,
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      return {
+        provider: "nuvex" as const,
+        price: "",
+        inStock: null,
+        source: "nuvex-web",
+      };
+    }
+
+    const payload = await response.json();
+    return {
+      provider: "nuvex" as const,
+      price: String(payload?.price ?? "").trim(),
+      inStock: typeof payload?.inStock === "boolean" ? payload.inStock : null,
+      source: String(payload?.source ?? ""),
+    };
+  } catch {
+    return {
+      provider: "nuvex" as const,
+      price: "",
+      inStock: null,
+      source: "nuvex-web",
+    };
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}

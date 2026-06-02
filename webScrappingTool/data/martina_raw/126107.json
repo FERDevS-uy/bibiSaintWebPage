@@ -5,168 +5,6 @@
       "name": "BRAND"
     },
     "code": "126107",
-    "colorId": 32,
-    "description": "Remera con detalle de recortes y escote redondeado.",
-    "description2": "Realizada en jersey algodon peinado premium",
-    "description3": "Calce clásico",
-    "id": 42299,
-    "images": [
-      "126107_19_1.jpg",
-      "126107_19_2.jpg",
-      "126107_1_1.jpg",
-      "126107_2_1.jpg",
-      "126107_32_1.jpg"
-    ],
-    "mainImage": "126107_32_1.jpg",
-    "name": "DONNA REMERA",
-    "price": 660,
-    "price1": 775,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "PRECIO REBAJADO",
-          "id": 6,
-          "price": 660,
-          "price1": 775,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#FFFFFF",
-                "description": "BLANCO",
-                "id": 1,
-                "price": 660,
-                "price1": 775,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760573
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760571
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760572
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760570
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#D2CECF",
-                "description": "GRIS MELANGE",
-                "id": 32,
-                "price": 660,
-                "price1": 775,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760575
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760574
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760576
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760577
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#4F44A2",
-                "description": "VIOLETA",
-                "id": 19,
-                "price": 660,
-                "price1": 775,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760581
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760578
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 660,
-                      "price1": 775,
-                      "productForSaleId": 5760579
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "DONNA REMERA GRIS MELANGE",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126107",
     "colorId": 19,
     "description": "Remera con detalle de recortes y escote redondeado.",
     "description2": "Realizada en jersey algodon peinado premium",
@@ -483,6 +321,168 @@
       ]
     },
     "variationName": "DONNA REMERA BLANCO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126107",
+    "colorId": 32,
+    "description": "Remera con detalle de recortes y escote redondeado.",
+    "description2": "Realizada en jersey algodon peinado premium",
+    "description3": "Calce clásico",
+    "id": 42299,
+    "images": [
+      "126107_19_1.jpg",
+      "126107_19_2.jpg",
+      "126107_1_1.jpg",
+      "126107_2_1.jpg",
+      "126107_32_1.jpg"
+    ],
+    "mainImage": "126107_32_1.jpg",
+    "name": "DONNA REMERA",
+    "price": 660,
+    "price1": 775,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 660,
+          "price1": 775,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 660,
+                "price1": 775,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760573
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760571
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760572
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760570
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 660,
+                "price1": 775,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760575
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760574
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760576
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760577
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#4F44A2",
+                "description": "VIOLETA",
+                "id": 19,
+                "price": 660,
+                "price1": 775,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760581
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760578
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 660,
+                      "price1": 775,
+                      "productForSaleId": 5760579
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "DONNA REMERA GRIS MELANGE",
     "productLineId": "3324"
   }
 ]

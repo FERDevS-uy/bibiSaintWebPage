@@ -125,32 +125,32 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           </div>
         </div>
 
+        <div
+          id="colorsBlock"
+          class={`colors-block${colors && colors.length > 0 ? "" : " hidden"}`}
+        >
+          <strong>
+            Color: <span id="colorName" class="color-name">{colors?.[0]?.name ?? ""}</span>
+          </strong>
+          <div class="colors" id="colorsSelector">
+            {colors && colors.length > 0 && colors.map((c, i) => (
+              <button
+                type="button"
+                class={`swatch${i === 0 ? " selected" : ""}`}
+                style={`background-color:${c.hex || "#cccccc"}`}
+                data-color-id={String(c.id)}
+                data-color-name={c.name}
+                data-color-images={JSON.stringify(c.images || [])}
+                title={c.name}
+                aria-label={c.name}
+              ></button>
+            ))}
+          </div>
+        </div>
+
         {
           isRopa && (
             <>
-              <div
-                id="colorsBlock"
-                class={`colors-block${colors && colors.length > 0 ? "" : " hidden"}`}
-              >
-                <strong>
-                  Color: <span id="colorName" class="color-name">{colors?.[0]?.name ?? ""}</span>
-                </strong>
-                <div class="colors" id="colorsSelector">
-                  {colors && colors.length > 0 && colors.map((c, i) => (
-                    <button
-                      type="button"
-                      class={`swatch${i === 0 ? " selected" : ""}`}
-                      style={`background-color:${c.hex || "#cccccc"}`}
-                      data-color-id={String(c.id)}
-                      data-color-name={c.name}
-                      data-color-images={JSON.stringify(c.images || [])}
-                      title={c.name}
-                      aria-label={c.name}
-                    ></button>
-                  ))}
-                </div>
-              </div>
-
               <strong>Talle:</strong>
               <div class="sizes" id="sizesSelector">
                 <button type="button" class="size" data-size="XS">XS</button>
@@ -602,6 +602,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     width: 100%;
     aspect-ratio: 1/1;
     object-fit: cover;
+    object-position: top;
     margin-bottom: 10px;
   }
 
@@ -668,9 +669,18 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     const sizeFeedback = document.getElementById("sizeFeedback");
     let selectedSize = "";
 
+    const clearSelectedSize = () => {
+      selectedSize = "";
+      if (!sizesSelector) return;
+      sizesSelector
+        .querySelectorAll<HTMLButtonElement>(".size")
+        .forEach((btn) => btn.classList.remove("selected"));
+    };
+
     // Estado de talles/colores disponibles (compartido con el verificador de stock)
-    const availableSizesByColor = new Map<number, Set<string>>();
-    let selectedColorId: number | null = null;
+      const availableSizesByColor = new Map<number, Set<string>>();
+      let selectedColorId: number | null = null;
+      let selectedColorName: string | null = null;
 
     if (sizesSelector) {
       sizesSelector.addEventListener("click", (event) => {
@@ -734,6 +744,8 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         price.innerText.replace("$", "").replace(",", "."),
         qty,
         img?.src ?? "",
+          selectedColorId,
+          selectedColorName,
       );
 
       window.updateCartCount && window.updateCartCount();
@@ -745,6 +757,55 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     const statusEl = document.getElementById("stockCheckStatus") as HTMLParagraphElement | null;
     const stockBadge = document.getElementById("stockBadge") as HTMLSpanElement | null;
     const priceEl = document.getElementById("productPrice") as HTMLSpanElement | null;
+
+    // Fallback de colores para proveedores sin verificación en vivo (ej: Nuvex).
+    // En Martina/Kai la lógica completa vive más abajo junto al checkStock.
+    if (!checkStockBtn) {
+      const colorsSelector = document.getElementById("colorsSelector");
+      const colorNameEl = document.getElementById("colorName");
+
+      if (colorsSelector && colorsSelector.dataset.bound !== "true") {
+        colorsSelector.dataset.bound = "true";
+
+        const selectColor = (sw: HTMLButtonElement) => {
+          const cid = Number(sw.dataset.colorId);
+          if (Number.isFinite(cid)) selectedColorId = cid;
+          selectedColorName = sw.dataset.colorName || null;
+          if (colorNameEl) colorNameEl.textContent = selectedColorName || "";
+
+          colorsSelector
+            .querySelectorAll<HTMLButtonElement>(".swatch")
+            .forEach((item) => item.classList.toggle("selected", item === sw));
+
+          try {
+            const raw = sw.dataset.colorImages;
+            if (!raw) return;
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              window.dispatchEvent(
+                new CustomEvent("product:image-set", {
+                  detail: { images: parsed.filter(Boolean) },
+                }),
+              );
+            }
+          } catch {
+            /* noop */
+          }
+        };
+
+        colorsSelector.addEventListener("click", (event) => {
+          const target = event.target as HTMLElement;
+          const sw = target.closest(".swatch") as HTMLButtonElement | null;
+          if (!sw) return;
+          selectColor(sw);
+        });
+
+        const firstSwatch = colorsSelector.querySelector<HTMLButtonElement>(".swatch");
+        if (firstSwatch) {
+          selectColor(firstSwatch);
+        }
+      }
+    }
 
     if (checkStockBtn && statusEl && stockBadge && priceEl) {
       const providerLink = checkStockBtn.dataset.providerLink ?? "";
@@ -833,7 +894,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           button.textContent = size;
           sizesSelector.appendChild(button);
         });
-        selectedSize = "";
+        clearSelectedSize();
       };
 
       // --- colores + talles disponibles ---
@@ -858,7 +919,8 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         selectedColorId = colorId;
         const set = availableSizesByColor.get(colorId) ?? new Set<string>();
         markUnavailableSizes(set);
-        selectedSize = "";
+        clearSelectedSize();
+        sizeFeedback?.classList.add("hidden");
 
         // marcar swatch seleccionado y nombre
         let selectedImages: string[] = [];
@@ -869,7 +931,8 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
               const isMatch = Number(sw.dataset.colorId) === colorId;
               sw.classList.toggle("selected", isMatch);
               if (isMatch) {
-                if (colorNameEl) colorNameEl.textContent = sw.dataset.colorName || "";
+                selectedColorName = sw.dataset.colorName || null;
+                if (colorNameEl) colorNameEl.textContent = selectedColorName || "";
                 try {
                   const raw = sw.dataset.colorImages;
                   if (raw) {
@@ -940,21 +1003,33 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           const cid = Number(firstSwatch.dataset.colorId);
           if (Number.isFinite(cid)) {
             selectedColorId = cid;
-            // dispara cambio de galería (sin marcar talles ya que no tenemos stock aún)
-            try {
-              const raw = firstSwatch.dataset.colorImages;
-              if (raw) {
-                const parsed = JSON.parse(raw);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                  window.dispatchEvent(
-                    new CustomEvent("product:image-set", {
-                      detail: { images: parsed.filter(Boolean) },
-                    }),
-                  );
+            selectedColorName = firstSwatch.dataset.colorName || null;
+            if (colorNameEl) colorNameEl.textContent = selectedColorName || "";
+            // Sólo para productos Nuvex disparamos el cambio de galería al cargar
+            // (cada color suele tener su propio set de fotos). Para Martina/Kai
+            // dejamos intacta la galería completa que ya armó el SSR para no
+            // recortar el carrusel cuando el usuario aún no eligió color.
+            const productIdForInit =
+              document.getElementById("addToCartBtn")?.getAttribute("data-id") || "";
+            const pidLower = productIdForInit.toLowerCase();
+            const isNuvexProduct =
+              !pidLower.startsWith("mdt-") && !pidLower.startsWith("kai-");
+            if (isNuvexProduct) {
+              try {
+                const raw = firstSwatch.dataset.colorImages;
+                if (raw) {
+                  const parsed = JSON.parse(raw);
+                  if (Array.isArray(parsed) && parsed.length > 0) {
+                    window.dispatchEvent(
+                      new CustomEvent("product:image-set", {
+                        detail: { images: parsed.filter(Boolean) },
+                      }),
+                    );
+                  }
                 }
+              } catch {
+                /* noop */
               }
-            } catch {
-              /* noop */
             }
           }
         }
@@ -967,7 +1042,10 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
             if (productIdAttr.toLowerCase().startsWith('mdt-')) {
               const imagesDataEl = document.getElementById('productImagesData');
               const raw = imagesDataEl?.getAttribute('data-images') || '[]';
-              const imgs = JSON.parse(raw);
+              const parsedImgs = JSON.parse(raw);
+              const imgs: string[] = Array.isArray(parsedImgs)
+                ? parsedImgs.filter((value): value is string => typeof value === "string")
+                : [];
               const grouped = new Map();
               imgs.forEach((u) => {
                 try {
@@ -1287,30 +1365,50 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
   }
 
   initProductDetail();
-  // Enviar set inicial de imágenes a la isla ProductGallery (fallback si la isla recibió solo la principal)
-  try {
-    const imagesDataEl = document.getElementById('productImagesData');
-    if (imagesDataEl) {
-      const raw = imagesDataEl.getAttribute('data-images') || '[]';
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        window.dispatchEvent(new CustomEvent('product:image-set', { detail: { images: parsed.filter(Boolean) } }));
-      }
-    }
-  } catch (e) {
-    /* noop */
-  }
-  // reintento con retardo para cuando la isla React se hidrate más tarde
-  setTimeout(() => {
+  // Solo para Nuvex enviamos set inicial manual a la galería.
+  // Para Martina/Kai dejamos el render SSR original sin tocar.
+  const globalProductId =
+    document.getElementById("addToCartBtn")?.getAttribute("data-id") || "";
+  const globalPidLower = globalProductId.toLowerCase();
+  const globalIsNuvex =
+    !globalPidLower.startsWith("mdt-") && !globalPidLower.startsWith("kai-");
+
+  if (globalIsNuvex) {
     try {
-      const imagesDataEl = document.getElementById('productImagesData');
-      if (!imagesDataEl) return;
-      const raw = imagesDataEl.getAttribute('data-images') || '[]';
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        window.dispatchEvent(new CustomEvent('product:image-set', { detail: { images: parsed.filter(Boolean) } }));
+      const imagesDataEl = document.getElementById("productImagesData");
+      if (imagesDataEl) {
+        const raw = imagesDataEl.getAttribute("data-images") || "[]";
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          window.dispatchEvent(
+            new CustomEvent("product:image-set", {
+              detail: { images: parsed.filter(Boolean) },
+            }),
+          );
+        }
       }
-    } catch {}
-  }, 350);
+    } catch {
+      /* noop */
+    }
+
+    // Reintento para cubrir hidratación tardía de la isla.
+    setTimeout(() => {
+      try {
+        const imagesDataEl = document.getElementById("productImagesData");
+        if (!imagesDataEl) return;
+        const raw = imagesDataEl.getAttribute("data-images") || "[]";
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          window.dispatchEvent(
+            new CustomEvent("product:image-set", {
+              detail: { images: parsed.filter(Boolean) },
+            }),
+          );
+        }
+      } catch {
+        /* noop */
+      }
+    }, 350);
+  }
   document.addEventListener("astro:page-load", initProductDetail);
 </script>

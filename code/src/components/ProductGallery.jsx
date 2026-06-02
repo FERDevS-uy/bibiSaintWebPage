@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import "../styles/components/ProductGallery.css";
 
 /**
- * Galería de imágenes del producto, cargada como isla React (lazy).
+ * Galeria de imagenes del producto, cargada como isla React (lazy).
  * - Imagen principal + miniaturas clickeables.
- * - loading="lazy" en todas las imágenes.
- * - Si TODAS las imágenes fallan al cargar, muestra un mensaje indicando
+ * - loading="lazy" en todas las imagenes.
+ * - Si TODAS las imagenes fallan al cargar, muestra un mensaje indicando
  *   que el producto puede no estar en venta.
  */
 export default function ProductGallery({ images = [], name = "" }) {
@@ -15,7 +15,7 @@ export default function ProductGallery({ images = [], name = "" }) {
   const [brokenSet, setBrokenSet] = useState(() => new Set());
   const mainImgRef = useRef(null);
 
-  // Escucha cambio de color para sustituir el set de imágenes en vivo.
+  // Escucha cambio de color para sustituir el set de imagenes en vivo.
   useEffect(() => {
     function onImageSet(ev) {
       const next = Array.isArray(ev?.detail?.images)
@@ -38,7 +38,7 @@ export default function ProductGallery({ images = [], name = "" }) {
       return next;
     });
 
-  // Avanzar al primer índice no roto si el actual lo está
+  // Avanzar al primer indice no roto si el actual lo esta
   useEffect(() => {
     if (!brokenSet.has(activeIndex)) return;
     const nextValid = safeImages.findIndex((_, i) => !brokenSet.has(i));
@@ -51,9 +51,9 @@ export default function ProductGallery({ images = [], name = "" }) {
   if (safeImages.length === 0 || allBroken) {
     return (
       <div className="gallery">
-        <div className="mainImg gallery-unavailable" role="img" aria-label="Producto sin imágenes">
+        <div className="mainImg gallery-unavailable" role="img" aria-label="Producto sin imagenes">
           <span className="gallery-unavailable-text">
-            Este producto no está disponible actualmente.
+            Este producto no esta disponible actualmente.
           </span>
         </div>
       </div>

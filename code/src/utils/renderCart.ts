@@ -6,6 +6,29 @@ import { decryptIDs, encryptIDs } from "./encription";
 import { config } from "src/config";
 import { formatPrice, parsePrice } from "./price";
 
+function parseColorFromVariantId(rawId: string): number | null {
+  const [, variantPart = ""] = String(rawId || "").split("__");
+  if (!variantPart) return null;
+  for (const token of variantPart.split("_")) {
+    const match = token.trim().match(/^c(\d+)$/i);
+    if (!match) continue;
+    const id = Number(match[1]);
+    if (Number.isFinite(id)) return id;
+  }
+  return null;
+}
+
+function serializePedidoItem(product: ProductInCart): string {
+  const colorId = product.selectedColorId ?? parseColorFromVariantId(product.id);
+  const payload = {
+    id: product.id,
+    cantidad: Number(product.cantidad) || 1,
+    selectedColorId: colorId,
+    selectedColorName: product.selectedColorName || null,
+  };
+  return JSON.stringify(payload);
+}
+
 export default function renderCart() {
   const storage = JSON.parse(localStorage.getItem("carrito") || "[]");
   let totalValue = 0;
@@ -65,7 +88,15 @@ export default function renderCart() {
         // Find product to get details for re-adding
         const product = storage.find((p: ProductInCart) => p.id === idx);
         if (product) {
-            addToCart(product.id, product.name, product.price, 1, product.img);
+            addToCart(
+              product.id,
+              product.name,
+              product.price,
+              1,
+              product.img,
+              product.selectedColorId ?? null,
+              product.selectedColorName ?? null,
+            );
             renderCart();
         }
       }
@@ -88,7 +119,7 @@ export default function renderCart() {
   };
 
 
-  const encryption = encryptIDs(storage.map((p: ProductInCart) => `${p.id}-${p.cantidad}`), "elias")
+  const encryption = encryptIDs(storage.map((p: ProductInCart) => serializePedidoItem(p)), "elias")
   localStorage.setItem("lastPedidoToken", encryption);
 
   // Mensaje para copiar o enviar
@@ -110,6 +141,11 @@ export default function renderCart() {
 const productRow = (p: ProductInCart, subtotal: number): String => {
   const formattedUnitPrice = formatPrice(parsePrice(p.price));
   const formattedSubtotal = formatPrice(subtotal);
+  const colorIdFromVariant = parseColorFromVariantId(p.id);
+  const colorLabel = p.selectedColorName || (colorIdFromVariant !== null ? `ID ${colorIdFromVariant}` : "");
+  const colorMeta = colorLabel
+    ? `<div class="cartMeta"><span class="metaLabel">Color</span><span class="metaValue">${colorLabel}</span></div>`
+    : "";
 
   return `
       <tr>
@@ -123,6 +159,7 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
 
         <td class="tdDesc">
            <div class="cartName">${p.name}</div>
+            ${colorMeta}
            <div class="cartMeta">
              <span class="metaLabel">Precio</span>
              <span class="metaValue">$${formattedUnitPrice}</span>
