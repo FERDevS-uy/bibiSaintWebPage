@@ -2,7 +2,6 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { wrapper } from 'axios-cookiejar-support';
 import { CookieJar } from 'tough-cookie';
-import FormData from 'form-data';
 import { normalizeText, cleanDescription, inferSubcategory } from '../utils/text';
 import { parsePrice } from '../utils/price';
 import { delay } from '../utils/delay';
@@ -10,10 +9,16 @@ import { Product } from '../utils/product';
 
 const baseUrl = "https://nuvex.uy/index.php?route=common/home";
 const loginUrl = "https://nuvex.uy/index.php?route=account/login";
+const accountUrl = "https://nuvex.uy/index.php?route=account/account";
 
 const jar = new CookieJar();
 const client = wrapper(axios.create({ jar } as any));
 let tlsRelaxedEnabled = false;
+
+const browserHeaders = {
+  'User-Agent': 'Mozilla/5.0',
+  Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+};
 
 function isTlsCertError(err: any): boolean {
   const code = err?.code || err?.cause?.code;
@@ -102,6 +107,49 @@ function colorHexFromName(name: string): string {
   return '#cccccc';
 }
 
+const NUVEX_CANONICAL_SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+
+function normalizeLegacySize(raw: string): string | null {
+  const token = String(raw || '').trim().toUpperCase();
+  if (!token) return null;
+  const map: Record<string, string> = {
+    XS: 'XS',
+    S: 'S',
+    P: 'S',
+    M: 'M',
+    L: 'L',
+    G: 'L',
+    XL: 'XL',
+    XG: 'XL',
+    GG: 'XL',
+    XXL: 'XXL',
+    XXXL: 'XXXL',
+  };
+  return map[token] || null;
+}
+
+function extractNuvexSizeHint(rawColorName: string): string | null {
+  const match = String(rawColorName || '').toUpperCase().match(/\b(XXXL|XXL|XL|XS|GG|XG|G|M|P|S|L)\b/);
+  if (!match) return null;
+  return normalizeLegacySize(match[1]);
+}
+
+function cleanNuvexColorName(rawColorName: string): string {
+  const cleaned = String(rawColorName || '')
+    .replace(/\b(XXXL|XXL|XL|XS|GG|XG|G|M|P|S|L)\b/gi, ' ')
+    .replace(/\b\d{6,}\b/g, ' ')
+    .replace(/[\s_-]{2,}/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return toTitleCase(cleaned);
+}
+
+function colorGroupingKey(name: string): string {
+  return stripAccents(String(name || '').toLowerCase())
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
 function extractNuvexColorsAndImages($: cheerio.CheerioAPI) {
   const thumbnailUrls = $('.thumbnails li')
     .map((_, li) => {
@@ -127,21 +175,25 @@ function extractNuvexColorsAndImages($: cheerio.CheerioAPI) {
         const value = Number($(el).attr('value'));
         const parsed = parseNuvexOptionText($(el).text());
         if (!parsed) return null;
+        const sizeHint = extractNuvexSizeHint(parsed.color);
+        const cleanedColor = cleanNuvexColorName(parsed.color);
+        const finalColorName = cleanedColor || toTitleCase(parsed.color);
         return {
           id: Number.isFinite(value) ? value : null,
           code: parsed.code,
-          name: toTitleCase(parsed.color),
+          name: finalColorName,
+          sizeHint,
         };
       })
       .get()
-      .filter(Boolean) as Array<{ id: number | null; code: string; name: string }>;
+      .filter(Boolean) as Array<{ id: number | null; code: string; name: string; sizeHint: string | null }>;
 
   const preferredSelect = $('#input-option103').first();
   const candidateSelects = preferredSelect.length > 0
     ? [preferredSelect]
     : $('select[id^="input-option"]').toArray().map((el) => $(el));
 
-  let optionValues: Array<{ id: number | null; code: string; name: string }> = [];
+  let optionValues: Array<{ id: number | null; code: string; name: string; sizeHint: string | null }> = [];
   let bestScore = -1;
 
   for (const selectEl of candidateSelects) {
@@ -196,18 +248,64 @@ function extractNuvexColorsAndImages($: cheerio.CheerioAPI) {
       hex: colorHexFromName(opt.name),
       name: opt.name,
       images: matched ? [matched] : [],
+      sizes: opt.sizeHint ? [opt.sizeHint] : [],
+    };
+  });
+
+  // Unificar colores repetidos (ej: Terracota P/M/G -> Terracota con varios talles).
+  const groupedByColor = new Map<
+    string,
+    { id: number; hex: string; name: string; images: string[]; sizes: string[] }
+  >();
+
+  colorsWithImages.forEach((entry, idx) => {
+    const key = colorGroupingKey(entry.name) || `color-${idx + 1}`;
+    const existing = groupedByColor.get(key);
+    if (!existing) {
+      groupedByColor.set(key, {
+        id: entry.id,
+        hex: entry.hex,
+        name: entry.name,
+        images: [...entry.images],
+        sizes: [...entry.sizes],
+      });
+      return;
+    }
+
+    const imageSet = new Set(existing.images);
+    entry.images.forEach((imageUrl) => {
+      if (!imageSet.has(imageUrl)) {
+        existing.images.push(imageUrl);
+        imageSet.add(imageUrl);
+      }
+    });
+
+    const sizeSet = new Set(existing.sizes);
+    entry.sizes.forEach((size) => {
+      if (!sizeSet.has(size)) {
+        existing.sizes.push(size);
+        sizeSet.add(size);
+      }
+    });
+  });
+
+  const groupedColors = Array.from(groupedByColor.values()).map((entry) => {
+    const orderedSizes = NUVEX_CANONICAL_SIZE_ORDER.filter((size) => entry.sizes.includes(size));
+    return {
+      ...entry,
+      sizes: orderedSizes,
     };
   });
 
   const allImages = Array.from(
     new Set([
-      ...colorsWithImages.flatMap((c) => c.images),
+      ...groupedColors.flatMap((c) => c.images),
       ...uniqueThumbs,
     ]),
   );
 
   return {
-    serializedColors: JSON.stringify(colorsWithImages),
+    serializedColors: JSON.stringify(groupedColors),
     allImages,
   };
 }
@@ -220,23 +318,54 @@ async function login(): Promise<boolean> {
   }
 
   console.log('Iniciando sesión en la tienda...');
-  const form = new FormData();
-  form.append('email', email);
-  form.append('password', password);
+  const form = new URLSearchParams();
+  form.set('email', email);
+  form.set('password', password);
 
   try {
-    const res = await runWithTlsFallback(
+    await runWithTlsFallback(
+      () =>
+        client.get(loginUrl, {
+          headers: browserHeaders,
+          maxRedirects: 5,
+        }),
+      'login preflight',
+    );
+
+    await runWithTlsFallback(
       () =>
         client.post(loginUrl, form, {
-          headers: form.getHeaders(),
+          headers: {
+            ...browserHeaders,
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Origin: 'https://nuvex.uy',
+            Referer: loginUrl,
+          },
           maxRedirects: 5,
         }),
       'login',
     );
-    if (res.status === 200) {
+
+    const accountRes = await runWithTlsFallback(
+      () =>
+        client.get(accountUrl, {
+          headers: browserHeaders,
+          maxRedirects: 5,
+        }),
+      'login verify',
+    );
+
+    const accountHtml = String(accountRes.data || '');
+    const isAuthenticated =
+      /route=account\/logout|route=account\/edit/i.test(accountHtml) &&
+      !/route=account\/login/i.test(accountHtml);
+
+    if (isAuthenticated) {
       console.log('Sesión iniciada con éxito. Los precios ahora son accesibles.');
       return true;
     }
+
+    console.warn('Nuvex respondió al login, pero no dejó sesión activa. Revisa credenciales o cambios en el formulario.');
   } catch (err: any) {
     console.error('Error al iniciar sesión:', err.message);
   }
@@ -248,7 +377,7 @@ async function getCategories(): Promise<string[]> {
     const { data } = await runWithTlsFallback(
       () =>
         client.get(baseUrl, {
-          headers: { 'User-Agent': 'Mozilla/5.0' },
+          headers: browserHeaders,
         }),
       'categorias',
     );
@@ -269,6 +398,27 @@ async function getCategories(): Promise<string[]> {
 }
 
 export async function scrapNuvexProducts(): Promise<Product[]> {
+  const requestTimeoutMs = Math.max(
+    5000,
+    Number.parseInt(String(process.env.NUVEX_REQUEST_TIMEOUT_MS || '15000'), 10) || 15000,
+  );
+  const batchSize = Math.max(
+    1,
+    Number.parseInt(String(process.env.NUVEX_BATCH_SIZE || '12'), 10) || 12,
+  );
+  const batchPauseMs = Math.max(
+    0,
+    Number.parseInt(String(process.env.NUVEX_BATCH_PAUSE_MS || '20'), 10) || 20,
+  );
+  const pagePauseMs = Math.max(
+    0,
+    Number.parseInt(String(process.env.NUVEX_PAGE_PAUSE_MS || '20'), 10) || 20,
+  );
+
+  console.log(
+    `[Nuvex] Performance profile: batch=${batchSize}, pause(batch)=${batchPauseMs}ms, pause(page)=${pagePauseMs}ms, timeout=${requestTimeoutMs}ms`,
+  );
+
   const loggedIn = await login();
   if (!loggedIn) {
     console.warn('No se pudo iniciar sesión en Nuvex. El scraping se intentará, pero algunos datos pueden faltar.');
@@ -293,7 +443,8 @@ export async function scrapNuvexProducts(): Promise<Product[]> {
         const { data } = await runWithTlsFallback(
           () =>
             client.get(pageUrl, {
-              headers: { 'User-Agent': 'Mozilla/5.0' },
+              headers: browserHeaders,
+              timeout: requestTimeoutMs,
             }),
           `categoria page=${page}`,
         );
@@ -317,16 +468,15 @@ export async function scrapNuvexProducts(): Promise<Product[]> {
         break;
       }
       page++;
-      await delay(50);
+      if (pagePauseMs > 0) await delay(pagePauseMs);
     }
   }
   const uniqueQueue = Array.from(new Map(productQueue.map((item) => [item.url, item])).values());
-  console.log(`=== Se recorrerán lentamente ${uniqueQueue.length} páginas de productos individuales de Nuvex ===`);
+  console.log(`=== Se recorrerán ${uniqueQueue.length} páginas de productos individuales de Nuvex ===`);
   const allProductsMap = new Map<string, Product>();
-  // Procesar productos en paralelo por lotes de 10
-  const BATCH_SIZE = 10;
-  for (let i = 0; i < uniqueQueue.length; i += BATCH_SIZE) {
-    const batch = uniqueQueue.slice(i, i + BATCH_SIZE);
+  // Procesar productos en paralelo por lotes configurables
+  for (let i = 0; i < uniqueQueue.length; i += batchSize) {
+    const batch = uniqueQueue.slice(i, i + batchSize);
     await Promise.all(batch.map(async ({ url, catName }, j) => {
       const idx = i + j;
       console.log(`[${idx + 1}/${uniqueQueue.length}] Raspando Nuvex: ${url}`);
@@ -334,7 +484,8 @@ export async function scrapNuvexProducts(): Promise<Product[]> {
         const { data } = await runWithTlsFallback(
           () =>
             client.get(url, {
-              headers: { 'User-Agent': 'Mozilla/5.0' },
+              headers: browserHeaders,
+              timeout: requestTimeoutMs,
             }),
           `producto ${url}`,
         );
@@ -388,7 +539,7 @@ export async function scrapNuvexProducts(): Promise<Product[]> {
         console.error(`Error al revisar producto id ${url}:`, e.message);
       }
     }));
-    await delay(80);
+    if (batchPauseMs > 0) await delay(batchPauseMs);
   }
   return Array.from(allProductsMap.values());
 }

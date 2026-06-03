@@ -1,21 +1,33 @@
 {
-  "totalNew": 599,
+  "totalNew": 596,
   "totalCopy": 907,
-  "matched": 480,
+  "matched": 477,
   "unmatchedNew": 119,
-  "missingInNew": 433,
+  "missingInNew": 436,
   "unmatchedSample": [
+    {
+      "id": "282",
+      "name": "Canasto Mimbre Beige"
+    },
     {
       "id": "400",
       "name": "ASADERA ANTIADHERENTE CON ASAS SILICONA"
+    },
+    {
+      "id": "403",
+      "name": "MASAJEADOR PISTOLA"
     },
     {
       "id": "399",
       "name": "COMBO TECLADO Y MOUSE BLUETOOTH RECARGABLE"
     },
     {
-      "id": "261",
-      "name": "Juego Toalla 2 Pzas Priori Azul Negro Blanco Gris Rosa"
+      "id": "401",
+      "name": "SET DE BINGO"
+    },
+    {
+      "id": "402",
+      "name": "JUEGO DE MESA 3 EN 1 29 CM"
     },
     {
       "id": "mdt-42370",
@@ -112,24 +124,20 @@
     {
       "id": "mdt-42668",
       "name": "VIVIANA REMERA"
-    },
-    {
-      "id": "mdt-42659",
-      "name": "MAVINGA REMERA"
-    },
-    {
-      "id": "mdt-42637",
-      "name": "SOLANGE CAMPERA"
-    },
-    {
-      "id": "mdt-42636",
-      "name": "LOLA BUZO"
     }
   ],
   "missingSample": [
     {
       "id": "146",
       "name": "Cortina Dormitorio Dohler Rosane"
+    },
+    {
+      "id": "282",
+      "name": "Canasto Mimbre Beige Blanco"
+    },
+    {
+      "id": "397",
+      "name": "JUEGO DESTORNILLADORES"
     },
     {
       "id": "293",
@@ -146,10 +154,6 @@
     {
       "id": "251",
       "name": "Bata Poncho Vel 60 x 120"
-    },
-    {
-      "id": "261",
-      "name": "Juego Toalla 2 Pzas Priori"
     },
     {
       "id": "254",
@@ -196,6 +200,10 @@
       "name": "GIULIANA CAMISA"
     },
     {
+      "id": "mdt-41050",
+      "name": "LIVORNO POLERA"
+    },
+    {
       "id": "mdt-41048",
       "name": "ROSA BLUSA"
     },
@@ -238,14 +246,6 @@
     {
       "id": "mdt-41031",
       "name": "BOSNIA CAMPERA"
-    },
-    {
-      "id": "mdt-41027",
-      "name": "COLOME POLERON"
-    },
-    {
-      "id": "mdt-41020",
-      "name": "PADUA CAMPERA"
     }
   ]
 }

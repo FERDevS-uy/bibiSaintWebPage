@@ -50,7 +50,7 @@ const { products, title, id } = Astro.props;
     max-width: 1100px;
     margin: 1.5rem auto;
     padding-inline: 1rem;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .carousel-title {
@@ -111,9 +111,11 @@ const { products, title, id } = Astro.props;
     aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 8px;
-    border: 1px solid transparent;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background-color: #000000;
+    border: 1px solid #e6e6e6;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.08),
+      0 1px 3px rgba(0, 0, 0, 0.06);
+    background-color: #ffffff;
   }
 
   .carousel-img-wrapper {
@@ -197,9 +199,10 @@ const { products, title, id } = Astro.props;
     }
 
     .carousel-track {
-      padding-inline: 0;
+      padding-inline: 10px;
       scroll-snap-type: none;
       gap: 20px;
+      padding-block: 16px 26px;
     }
 
     .carousel-item {
@@ -208,6 +211,23 @@ const { products, title, id } = Astro.props;
       scroll-snap-stop: unset;
       transform: none !important;
       opacity: 1 !important;
+      background: #ffffff;
+      border: none;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.08),
+        0 1px 3px rgba(0, 0, 0, 0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      position: relative;
+    }
+
+    .carousel-item:hover {
+      transform: scale(0.98) !important;
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        0 2px 6px rgba(0, 0, 0, 0.08);
+      border: 1px solid #1a1a1a;
     }
 
     .carousel-info {
@@ -218,24 +238,24 @@ const { products, title, id } = Astro.props;
     }
 
     .p-name {
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       height: 2.6em;
     }
 
     .p-price {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
+      color: #1a1a1a;
     }
 
     .carousel-img-link {
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-      border: 1px solid transparent;
+      box-shadow: none;
+      transition: none;
+      border: none;
+      border-radius: 0;
     }
 
-    .carousel-img-link:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      border-color: rgba(0, 0, 0, 0.7);
+    .carousel-item:hover .carousel-img-link {
+      border-color: transparent;
     }
 
     /* Mostrar flechas en Desktop */
@@ -270,11 +290,11 @@ const { products, title, id } = Astro.props;
     }
 
     .prev-arrow {
-      left: -24px;
+      left: -22px;
     }
 
     .next-arrow {
-      right: -24px;
+      right: -22px;
     }
 
     /* Botón AddToCart en desktop: hover state similar a la grilla */

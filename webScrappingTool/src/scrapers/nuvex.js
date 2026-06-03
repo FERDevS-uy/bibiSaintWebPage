@@ -50,15 +50,19 @@ const axios_1 = __importDefault(require("axios"));
 const cheerio = __importStar(require("cheerio"));
 const axios_cookiejar_support_1 = require("axios-cookiejar-support");
 const tough_cookie_1 = require("tough-cookie");
-const form_data_1 = __importDefault(require("form-data"));
 const text_1 = require("../utils/text");
 const price_1 = require("../utils/price");
 const delay_1 = require("../utils/delay");
 const baseUrl = "https://nuvex.uy/index.php?route=common/home";
 const loginUrl = "https://nuvex.uy/index.php?route=account/login";
+const accountUrl = "https://nuvex.uy/index.php?route=account/account";
 const jar = new tough_cookie_1.CookieJar();
 const client = (0, axios_cookiejar_support_1.wrapper)(axios_1.default.create({ jar }));
 let tlsRelaxedEnabled = false;
+const browserHeaders = {
+    'User-Agent': 'Mozilla/5.0',
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+};
 function isTlsCertError(err) {
     var _a;
     const code = (err === null || err === void 0 ? void 0 : err.code) || ((_a = err === null || err === void 0 ? void 0 : err.cause) === null || _a === void 0 ? void 0 : _a.code);
@@ -148,20 +152,6 @@ function colorHexFromName(name) {
     return '#cccccc';
 }
 function extractNuvexColorsAndImages($) {
-    const optionValues = $('#input-option103 option')
-        .map((_, el) => {
-        const value = Number($(el).attr('value'));
-        const parsed = parseNuvexOptionText($(el).text());
-        if (!parsed)
-            return null;
-        return {
-            id: Number.isFinite(value) ? value : null,
-            code: parsed.code,
-            name: toTitleCase(parsed.color),
-        };
-    })
-        .get()
-        .filter(Boolean);
     const thumbnailUrls = $('.thumbnails li')
         .map((_, li) => {
         const a = $(li).find('a').first();
@@ -175,11 +165,43 @@ function extractNuvexColorsAndImages($) {
         .get()
         .filter(Boolean);
     const uniqueThumbs = Array.from(new Set(thumbnailUrls));
+    const parseOptionSet = (selector) => selector
+        .find('option')
+        .map((_, el) => {
+        const value = Number($(el).attr('value'));
+        const parsed = parseNuvexOptionText($(el).text());
+        if (!parsed)
+            return null;
+        return {
+            id: Number.isFinite(value) ? value : null,
+            code: parsed.code,
+            name: toTitleCase(parsed.color),
+        };
+    })
+        .get()
+        .filter(Boolean);
+    const preferredSelect = $('#input-option103').first();
+    const candidateSelects = preferredSelect.length > 0
+        ? [preferredSelect]
+        : $('select[id^="input-option"]').toArray().map((el) => $(el));
+    let optionValues = [];
+    let bestScore = -1;
+    for (const selectEl of candidateSelects) {
+        const parsedOptions = parseOptionSet(selectEl);
+        if (parsedOptions.length < 2)
+            continue;
+        // Priorizar el selector cuyas opciones se pueden asociar a miniaturas por código.
+        const matchesByCode = parsedOptions.filter((opt) => opt.code && uniqueThumbs.some((u) => u.includes(opt.code))).length;
+        const score = matchesByCode * 10 + parsedOptions.length;
+        if (score > bestScore) {
+            bestScore = score;
+            optionValues = parsedOptions;
+        }
+    }
     if (optionValues.length === 0) {
         return {
             serializedColors: '',
             allImages: uniqueThumbs,
-            colorNamesForTitle: [],
         };
     }
     const usedImages = new Set();
@@ -222,7 +244,6 @@ function extractNuvexColorsAndImages($) {
     return {
         serializedColors: JSON.stringify(colorsWithImages),
         allImages,
-        colorNamesForTitle: colorsWithImages.map((c) => c.name),
     };
 }
 function login() {
@@ -233,18 +254,30 @@ function login() {
             return false;
         }
         console.log('Iniciando sesión en la tienda...');
-        const form = new form_data_1.default();
-        form.append('email', email);
-        form.append('password', password);
+        const form = new URLSearchParams();
+        form.set('email', email);
+        form.set('password', password);
         try {
-            const res = yield runWithTlsFallback(() => client.post(loginUrl, form, {
-                headers: form.getHeaders(),
+            yield runWithTlsFallback(() => client.get(loginUrl, {
+                headers: browserHeaders,
+                maxRedirects: 5,
+            }), 'login preflight');
+            yield runWithTlsFallback(() => client.post(loginUrl, form, {
+                headers: Object.assign(Object.assign({}, browserHeaders), { 'Content-Type': 'application/x-www-form-urlencoded', Origin: 'https://nuvex.uy', Referer: loginUrl }),
                 maxRedirects: 5,
             }), 'login');
-            if (res.status === 200) {
+            const accountRes = yield runWithTlsFallback(() => client.get(accountUrl, {
+                headers: browserHeaders,
+                maxRedirects: 5,
+            }), 'login verify');
+            const accountHtml = String(accountRes.data || '');
+            const isAuthenticated = /route=account\/logout|route=account\/edit/i.test(accountHtml) &&
+                !/route=account\/login/i.test(accountHtml);
+            if (isAuthenticated) {
                 console.log('Sesión iniciada con éxito. Los precios ahora son accesibles.');
                 return true;
             }
+            console.warn('Nuvex respondió al login, pero no dejó sesión activa. Revisa credenciales o cambios en el formulario.');
         }
         catch (err) {
             console.error('Error al iniciar sesión:', err.message);
@@ -256,7 +289,7 @@ function getCategories() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { data } = yield runWithTlsFallback(() => client.get(baseUrl, {
-                headers: { 'User-Agent': 'Mozilla/5.0' },
+                headers: browserHeaders,
             }), 'categorias');
             const $ = cheerio.load(data);
             const categoryUrls = new Set();
@@ -297,7 +330,7 @@ function scrapNuvexProducts() {
                 const pageUrl = `${catUrl}&page=${page}&limit=1000`;
                 try {
                     const { data } = yield runWithTlsFallback(() => client.get(pageUrl, {
-                        headers: { 'User-Agent': 'Mozilla/5.0' },
+                        headers: browserHeaders,
                     }), `categoria page=${page}`);
                     const $ = cheerio.load(data);
                     const $layouts = $('.product-layout');
@@ -338,7 +371,7 @@ function scrapNuvexProducts() {
                 console.log(`[${idx + 1}/${uniqueQueue.length}] Raspando Nuvex: ${url}`);
                 try {
                     const { data } = yield runWithTlsFallback(() => client.get(url, {
-                        headers: { 'User-Agent': 'Mozilla/5.0' },
+                        headers: browserHeaders,
                     }), `producto ${url}`);
                     const $ = cheerio.load(data);
                     let id = '';
@@ -368,8 +401,7 @@ function scrapNuvexProducts() {
                     const images = extractedColors.allImages.length > 0
                         ? extractedColors.allImages
                         : (fallbackImage ? [fallbackImage] : []);
-                    const colors = (0, text_1.getUniqueColors)(`${name} ${extractedColors.colorNamesForTitle.join(' ')}`);
-                    const finalName = (0, text_1.appendColorsToName)(name, colors);
+                    const finalName = name;
                     const subcategorias = (0, text_1.inferSubcategory)(finalName, catName);
                     if (id && !allProductsMap.has(id)) {
                         allProductsMap.set(id, {

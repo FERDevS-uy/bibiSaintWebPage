@@ -230,11 +230,13 @@ const { categories } = Astro.props;
   .logo {
     width: 200px;
     height: auto;
+    display: block;
+    vertical-align: middle;
   }
 
   .social_medias {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     gap: 1.5rem;
   }
@@ -250,8 +252,8 @@ const { categories } = Astro.props;
   .footerContainer.mobile {
     margin-inline: auto;
     width: 92%;
-    padding-top: 1rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0.65rem;
+    padding-bottom: 0.35rem;
   }
 
   .footerContainer.mobile .contact-details {
@@ -260,21 +262,21 @@ const { categories } = Astro.props;
     margin-inline: auto;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .footerContainer.mobile .title {
     text-align: center;
-    font-size: 2.2rem;
+    font-size: 1.7rem;
     font-weight: 800;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.75rem;
     color: #ffffff;
   }
 
   .footerContainer.mobile .detail-item {
     display: flex;
     align-items: flex-start;
-    gap: 1.25rem;
+    gap: 0.8rem;
   }
 
   .footerContainer.mobile .icon-wrapper {
@@ -283,12 +285,14 @@ const { categories } = Astro.props;
     justify-content: center;
     color: #ffffff;
     flex-shrink: 0;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   .footerContainer.mobile .icon-wrapper svg {
     stroke: #ffffff;
     display: block;
+    width: 22px;
+    height: 22px;
   }
 
   .footerContainer.mobile .detail-text {
@@ -301,9 +305,9 @@ const { categories } = Astro.props;
   .footerContainer.mobile .detail-text p,
   .footerContainer.mobile .detail-text span {
     margin: 0;
-    font-size: 1.05rem;
+    font-size: 0.92rem;
     font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.3;
     color: #ffffff;
     word-break: break-word;
   }
@@ -312,7 +316,7 @@ const { categories } = Astro.props;
     border: none;
     height: 1px;
     background-color: rgba(255, 255, 255, 0.35);
-    margin-block: 1.75rem;
+    margin-block: 1.1rem;
     width: 100%;
   }
 
@@ -324,11 +328,11 @@ const { categories } = Astro.props;
     width: 100%;
     max-width: 500px;
     margin-inline: auto;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .footerContainer.mobile .logo {
-    height: 40px;
+    height: 34px;
     width: auto;
     object-fit: contain;
     display: block;
@@ -337,7 +341,7 @@ const { categories } = Astro.props;
   .footerContainer.mobile .social-icons-list {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 8px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -351,8 +355,8 @@ const { categories } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     border: 1.5px solid #ffffff !important;
     color: #ffffff;
@@ -366,10 +370,22 @@ const { categories } = Astro.props;
   }
 
   .footerContainer.mobile .social-icons-list svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     fill: #ffffff;
     stroke: none;
+  }
+
+  @media screen and (max-width: 420px) {
+    .footerContainer.mobile .title {
+      font-size: 1.5rem;
+    }
+
+    .footerContainer.mobile .detail-text p,
+    .footerContainer.mobile .detail-text span {
+      font-size: 0.86rem;
+      line-height: 1.28;
+    }
   }
 
   @media screen and (min-width: 1000px) {
@@ -399,6 +415,20 @@ const { categories } = Astro.props;
     text-wrap: wrap;
     text-align: center;
     min-width: 250px;
+  }
+
+  .col1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .col1 > a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
   }
 
   .cats-list li {

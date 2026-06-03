@@ -5,127 +5,6 @@
       "name": "BRAND"
     },
     "code": "126028",
-    "colorId": 7,
-    "description": "Remera escote en v, manga larga con detalle de frunce en delantero y recorte bajo busto.",
-    "description2": "Realizada en waffle",
-    "description3": "Calce clásico",
-    "id": 42197,
-    "images": [
-      "126028_3_1.jpg",
-      "126028_3_2.jpg",
-      "126028_7_1.jpg",
-      "126028_7_2.jpg"
-    ],
-    "mainImage": "126028_7_1.jpg",
-    "name": "MIRABEL REMERA M/LARGA",
-    "price": 710,
-    "price1": 945,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "PRECIO REBAJADO",
-          "id": 6,
-          "price": 710,
-          "price1": 945,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#02247F",
-                "description": "AZUL",
-                "id": 7,
-                "price": 710,
-                "price1": 945,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 710,
-                      "price1": 945,
-                      "productForSaleId": 5760554
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 710,
-                      "price1": 945,
-                      "productForSaleId": 5760557
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 710,
-                      "price1": 945,
-                      "productForSaleId": 5760555
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 710,
-                      "price1": 945,
-                      "productForSaleId": 5760556
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#FFF8EC",
-                "description": "NATURAL",
-                "id": 3,
-                "price": 710,
-                "price1": 945,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 710,
-                      "price1": 945,
-                      "productForSaleId": 5760551
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 710,
-                      "price1": 945,
-                      "productForSaleId": 5760549
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 710,
-                      "price1": 945,
-                      "productForSaleId": 5760550
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "MIRABEL REMERA M/LARGA AZUL",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126028",
     "colorId": 3,
     "description": "Remera escote en v, manga larga con detalle de frunce en delantero y recorte bajo busto.",
     "description2": "Realizada en waffle",
@@ -210,13 +89,6 @@
                   "id": "size",
                   "variationValues": [
                     {
-                      "description": "44",
-                      "id": 54,
-                      "price": 710,
-                      "price1": 945,
-                      "productForSaleId": 5760551
-                    },
-                    {
                       "description": "46",
                       "id": 55,
                       "price": 710,
@@ -239,6 +111,120 @@
       ]
     },
     "variationName": "MIRABEL REMERA M/LARGA NATURAL",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126028",
+    "colorId": 7,
+    "description": "Remera escote en v, manga larga con detalle de frunce en delantero y recorte bajo busto.",
+    "description2": "Realizada en waffle",
+    "description3": "Calce clásico",
+    "id": 42197,
+    "images": [
+      "126028_3_1.jpg",
+      "126028_3_2.jpg",
+      "126028_7_1.jpg",
+      "126028_7_2.jpg"
+    ],
+    "mainImage": "126028_7_1.jpg",
+    "name": "MIRABEL REMERA M/LARGA",
+    "price": 710,
+    "price1": 945,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 710,
+          "price1": 945,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#02247F",
+                "description": "AZUL",
+                "id": 7,
+                "price": 710,
+                "price1": 945,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 710,
+                      "price1": 945,
+                      "productForSaleId": 5760554
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 710,
+                      "price1": 945,
+                      "productForSaleId": 5760557
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 710,
+                      "price1": 945,
+                      "productForSaleId": 5760555
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 710,
+                      "price1": 945,
+                      "productForSaleId": 5760556
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#FFF8EC",
+                "description": "NATURAL",
+                "id": 3,
+                "price": 710,
+                "price1": 945,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 710,
+                      "price1": 945,
+                      "productForSaleId": 5760549
+                    },
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 710,
+                      "price1": 945,
+                      "productForSaleId": 5760550
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "MIRABEL REMERA M/LARGA AZUL",
     "productLineId": "3324"
   }
 ]

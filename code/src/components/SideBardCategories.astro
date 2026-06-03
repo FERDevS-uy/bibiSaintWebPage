@@ -115,16 +115,6 @@ const uniqueColors = Array.from(colorChipsMap.values());
 
   <div id="sf-body" class="sf-body">
 
-    <!-- Back to category -->
-    <div class="sf-section sf-section--back">
-      <a href={`${BASE}/categories/${categoryFather}`} class="sf-back-link">
-        <svg viewBox="0 0 20 20" fill="none" width="14" height="14">
-          <path d="M13 4L7 10L13 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        {categoryFather}
-      </a>
-    </div>
-
     <!-- Categories tree -->
     {treeNodes.length > 0 && (
       <div class="sf-section">
@@ -267,7 +257,6 @@ const uniqueColors = Array.from(colorChipsMap.values());
     border-bottom: 1px solid #f2f2f2;
   }
   .sf-section:last-child { border-bottom: none; }
-  .sf-section--back { padding-bottom: 12px; }
 
   .sf-section-title {
     font-size: 0.68rem;
@@ -277,19 +266,6 @@ const uniqueColors = Array.from(colorChipsMap.values());
     color: #aaa;
     margin: 0 0 10px;
   }
-
-  /* Back link */
-  .sf-back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    text-decoration: none;
-    color: #d32f2f;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-  .sf-back-link:hover { opacity: 0.75; }
 
   /* Category list */
   .sf-list {

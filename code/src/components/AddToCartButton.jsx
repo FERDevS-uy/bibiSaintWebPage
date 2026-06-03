@@ -11,6 +11,12 @@ const checkCart = `
 
 export default function AddToCartButton({ producto: p, variant = "icon" }) {
   const [checked, setChecked] = useState(false);
+  const categoryName = String(p?.categories?.name ?? "").toUpperCase();
+  const requiresSizeSelection =
+    String(p?.id ?? "").toLowerCase().startsWith("mdt-") ||
+    categoryName === "ROPA" ||
+    categoryName === "MUJER" ||
+    categoryName === "HOMBRE";
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -21,6 +27,19 @@ export default function AddToCartButton({ producto: p, variant = "icon" }) {
     setChecked(true);
     setTimeout(() => setChecked(false), 1500);
   };
+
+  if (requiresSizeSelection) {
+    return (
+      <a
+        className={`addToCart ${variant === "full" ? "addToCartFull addToCartNeedsSize" : "addToCartNeedsSizeIcon"}`}
+        href={`${import.meta.env.BASE_URL}/producto/${p.id}`}
+        title="Elegir talle antes de agregar"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {variant === "full" ? "ELEGIR TALLE" : <span dangerouslySetInnerHTML={{ __html: cartSVG }} />}
+      </a>
+    );
+  }
 
   if (variant === "full") {
     return (

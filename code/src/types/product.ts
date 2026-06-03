@@ -6,6 +6,7 @@ export interface ProductColor {
   hex: string;
   name: string;
   images: string[];
+  sizes?: string[];
 }
 
 export default interface Product {

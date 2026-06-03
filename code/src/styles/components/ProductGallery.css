@@ -1,5 +1,7 @@
 .gallery {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .gallery .mainImg {
@@ -17,24 +19,37 @@
 
 /* Mobile: limitar la altura para evitar páginas demasiado largas cuando hay muchas miniaturas */
 @media (max-width: 767px) {
+  .gallery {
+    overflow-x: clip;
+  }
+
   .gallery .mainImg {
-    max-height: 60vh;
+    max-height: 56vh;
     width: 100%;
     object-fit: cover;
     object-position: top;
   }
 
   .gallery .thumbs {
+    width: 100%;
+    max-width: 100%;
     gap: 8px;
-    padding-bottom: 6px;
+    padding: 0 0 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
   }
 
   .gallery .thumb {
-    width: 56px;
-    height: 56px;
+    flex: 0 0 auto;
+    width: 54px;
+    height: 54px;
     border-radius: 8px;
     object-fit: cover;
     object-position: top;
+    scroll-snap-align: start;
   }
 }
 
@@ -43,6 +58,7 @@
   gap: 12px;
   overflow-x: auto;
   padding-bottom: 5px;
+  max-width: 100%;
 }
 
 .gallery .thumb {

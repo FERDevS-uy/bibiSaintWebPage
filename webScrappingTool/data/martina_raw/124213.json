@@ -55,6 +55,12 @@
                       "productForSaleId": 5757682
                     },
                     {
+                      "description": "110",
+                      "id": 122,
+                      "price": 620,
+                      "productForSaleId": 5757681
+                    },
+                    {
                       "description": "95",
                       "id": 73,
                       "price": 620,
@@ -160,6 +166,12 @@
                       "id": 8,
                       "price": 620,
                       "productForSaleId": 5757682
+                    },
+                    {
+                      "description": "110",
+                      "id": 122,
+                      "price": 620,
+                      "productForSaleId": 5757681
                     },
                     {
                       "description": "95",

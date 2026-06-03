@@ -8,9 +8,23 @@ interface Props {
 }
 
 const { producto: p, variant = "icon" } = Astro.props;
+const categoryName = String(p?.categories?.name ?? "").toUpperCase();
+const requiresSizeSelection =
+  String(p?.id ?? "").toLowerCase().startsWith("mdt-") ||
+  categoryName === "ROPA" ||
+  categoryName === "MUJER" ||
+  categoryName === "HOMBRE";
 ---
 
-{variant === "full" ? (
+{requiresSizeSelection ? (
+  <a
+    class={`addToCart ${variant === "full" ? "addToCartFull addToCartNeedsSize" : "addToCartNeedsSizeIcon"}`}
+    href={`${import.meta.env.BASE_URL}/producto/${p.id}`}
+    title="Elegir talle antes de agregar"
+  >
+    {variant === "full" ? "ELEGIR TALLE" : <Fragment set:html={cartSVG} />}
+  </a>
+) : variant === "full" ? (
   <button
     class="addToCart addToCartFull"
     title="Agregar al carrito"
@@ -46,6 +60,7 @@ const { producto: p, variant = "icon" } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
   }
   .addToCart:hover {
     background-color: #479030;
@@ -85,6 +100,27 @@ const { producto: p, variant = "icon" } = Astro.props;
   .addToCartFull:active {
     transform: scale(0.98);
   }
+
+  .addToCartNeedsSize {
+    background-color: #f9a825;
+    border-color: #f9a825;
+    color: #1a1a1a !important;
+  }
+
+  .addToCartNeedsSize:hover {
+    background-color: #f57f17;
+    border-color: #f57f17;
+    color: #ffffff !important;
+  }
+
+  .addToCartNeedsSizeIcon {
+    background-color: #f9a825;
+    border: none;
+  }
+
+  .addToCartNeedsSizeIcon:hover {
+    background-color: #f57f17;
+  }
 </style>
 
 <script>
@@ -93,7 +129,7 @@ const { producto: p, variant = "icon" } = Astro.props;
     "<svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g><g id='SVGRepo_iconCarrier'> <path d='M21 5L19 12H7.37671M20 16H8L6 3H3M11 6L13 8L17 4M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'></path> </g></svg>";
 
   document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".addToCart").forEach((btn) => {
+    document.querySelectorAll(".addToCart[data-id]").forEach((btn) => {
       btn.addEventListener("click", (e: Event) => {
         const target = e.currentTarget as HTMLButtonElement;
         const id = target.getAttribute("data-id") ?? "";

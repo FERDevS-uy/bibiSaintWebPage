@@ -18,6 +18,34 @@ interface csvData {
   colores?: string,
 }
 
+function inferTecnoSubcategory(productName: string): string {
+  const normalized = productName
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+  if (/(parlante|speaker|auricular|audio|mic|microfono|headset)/i.test(normalized)) return "Audio";
+  if (/(cable|usb|tipo c|type c|hdmi|adaptador|conector|hub|cargador)/i.test(normalized)) return "Cables y Conectividad";
+  if (/(aro de luz|ring|lampara|led|luz)/i.test(normalized)) return "Iluminacion";
+  if (/(camara|smart|domotica|sensor|wifi|enchufe inteligente)/i.test(normalized)) return "Smart Home";
+  if (/(soporte|holder|base|tripode|trípode)/i.test(normalized)) return "Soportes";
+  if (/(gadget|reloj|smartwatch|teclado|mouse|raton|ratón)/i.test(normalized)) return "Gadgets";
+  return "Accesorios";
+}
+
+function parseSubcategories(rawSubcategories: string, category: string, productName: string) {
+  const trimmed = String(rawSubcategories ?? "").trim();
+  if (trimmed) {
+    return trimmed.split(/\|/).map((subC) => ({ name: subC.trim(), count: 0 }));
+  }
+
+  const isTecno = /tecno|tecnologia|tecnología/i.test(String(category ?? ""));
+  if (!isTecno) return [];
+
+  const inferred = inferTecnoSubcategory(productName);
+  return [{ name: inferred, count: 0 }];
+}
+
 function parseImageList(raw: string | undefined): string[] {
   const trimmed = String(raw ?? "").trim();
   if (!trimmed) return [];
@@ -97,6 +125,7 @@ function parseColors(raw: string | undefined, images: string[]): ProductColor[] 
         hex: String(c.hex ?? "#cccccc"),
         name: String(c.name ?? ""),
         images: Array.isArray(c.images) ? c.images.map((i: any) => String(i)) : [],
+        sizes: Array.isArray(c.sizes) ? c.sizes.map((s: any) => String(s).toUpperCase()) : undefined,
       }))
       .filter((c) => Number.isFinite(c.id) && c.name);
 
@@ -137,9 +166,7 @@ export function cargarProductos(): Product[] {
       categories: {
         name: d.categorias.trim(),
         count: 0,
-        subcategories: d.subcategorias.trim() !== ""
-          ? d.subcategorias.split(/\|/).map(subC => ({ name: subC.trim(), count: 0 }))
-          : []
+        subcategories: parseSubcategories(d.subcategorias, d.categorias, d.name),
       },
       colors: parseColors(d.colores, images),
     };

@@ -69,8 +69,8 @@
 }
 
 #cartList .tdActions button:hover {
-  background-color: var(--principal-text-color);
-  color: #fff;
+  background-color: #1f1f1f;
+  color: #f2f2f2;
 }
 
 #cartList .tdActions button svg {
@@ -82,7 +82,7 @@
 }
 
 #mailBtn {
-  background: #3b82f6;
+  background: #1f4ea8;
   color: #fff;
   border-radius: 4px;
   font-weight: 700;
@@ -98,7 +98,7 @@
 }
 
 #mailBtn:hover {
-  background: #2563eb;
+  background: #173f89;
 }
 
 @media screen and (min-width: 1000px) {
@@ -177,6 +177,17 @@
     font-size: 0.88rem;
   }
 
+  .cartMeta.cartMetaQty {
+    align-items: flex-start;
+    gap: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .cartMeta.cartMetaQty .metaLabel {
+    padding-top: 3px;
+  }
+
   /* Quitar línea al último cartMeta (Subtotal) */
   .cartMeta:last-child {
     border-bottom: none;
@@ -211,19 +222,20 @@
     display: inline-flex;
     align-items: center;
     border: 1px solid #999;
-    border-radius: 50px;
-    height: 30px;
+    border-radius: 14px;
+    height: 34px;
     overflow: hidden;
-    width: fit-content;
+    width: 112px;
     margin: 0;
+    background: #fff;
   }
 
   .cartMeta .qtyBtn {
     background: none;
     border: none;
-    width: 28px;
+    width: 32px;
     height: 100%;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 400;
     cursor: pointer;
     display: flex;
@@ -232,14 +244,41 @@
   }
 
   .cartMeta .qtyValue {
-    padding: 0 8px;
-    font-size: 0.95rem;
+    padding: 0;
+    font-size: 0.98rem;
     border-left: 1px solid #999;
     border-right: 1px solid #999;
     height: 100%;
     display: flex;
     align-items: center;
-    min-width: 24px;
+    min-width: 48px;
     justify-content: center;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+
+  @media (max-width: 420px) {
+    .cartMeta {
+      font-size: 0.85rem;
+    }
+
+    .cartMeta.cartMetaQty {
+      gap: 6px;
+    }
+
+    .cartMeta .qtyControls {
+      width: 104px;
+      height: 32px;
+    }
+
+    .cartMeta .qtyBtn {
+      width: 30px;
+      font-size: 1rem;
+    }
+
+    .cartMeta .qtyValue {
+      min-width: 44px;
+      font-size: 0.93rem;
+    }
   }
 }

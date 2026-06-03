@@ -10,8 +10,11 @@
     "description2": "Realizada en viscosa elastizada estampada",
     "description3": "Calce clásico",
     "id": 42769,
-    "images": [],
-    "mainImage": "126471.jpg",
+    "images": [
+      "126471_332_1.jpg",
+      "126471_332_2.jpg"
+    ],
+    "mainImage": "126471_332_1.jpg",
     "name": "AMOENA REMERA M/LARGA",
     "price": 1200,
     "productLine": {
