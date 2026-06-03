@@ -125,126 +125,6 @@
       "name": "BRAND"
     },
     "code": "125681",
-    "colorId": 1063,
-    "copy": "Remera de morley Nuria",
-    "description": "Remera escote redondo, con manga corta caida y ruedo recto. ",
-    "description2": "Realizada en morley viscosa elastizada",
-    "description3": "Calce amplio",
-    "id": 41690,
-    "images": [
-      "125681_1063_1.jpg",
-      "125681_147_1.jpg",
-      "125681_299_1.jpg",
-      "125681_32_1.jpg"
-    ],
-    "mainImage": "125681_1063_1.jpg",
-    "name": "NURIA REMERA",
-    "price": 615,
-    "price1": 880,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "PRECIO REBAJADO",
-          "id": 6,
-          "price": 615,
-          "price1": 880,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#D2CECF",
-                "description": "GRIS MELANGE",
-                "id": 32,
-                "price": 615,
-                "price1": 880,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 615,
-                      "price1": 880,
-                      "productForSaleId": 5760637
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 615,
-                      "price1": 880,
-                      "productForSaleId": 5760635
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#F9E6B2",
-                "description": "VAINILLA",
-                "id": 147,
-                "price": 615,
-                "price1": 880,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 615,
-                      "price1": 880,
-                      "productForSaleId": 5760645
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 615,
-                      "price1": 880,
-                      "productForSaleId": 5760643
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#873444",
-                "description": "VINO",
-                "id": 1063,
-                "price": 615,
-                "price1": 880,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 615,
-                      "price1": 880,
-                      "productForSaleId": 5760649
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "NURIA REMERA VINO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125681",
     "colorId": 147,
     "copy": "Remera de morley Nuria",
     "description": "Remera escote redondo, con manga corta caida y ruedo recto. ",
@@ -357,6 +237,126 @@
       ]
     },
     "variationName": "NURIA REMERA VAINILLA",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125681",
+    "colorId": 1063,
+    "copy": "Remera de morley Nuria",
+    "description": "Remera escote redondo, con manga corta caida y ruedo recto. ",
+    "description2": "Realizada en morley viscosa elastizada",
+    "description3": "Calce amplio",
+    "id": 41690,
+    "images": [
+      "125681_1063_1.jpg",
+      "125681_147_1.jpg",
+      "125681_299_1.jpg",
+      "125681_32_1.jpg"
+    ],
+    "mainImage": "125681_1063_1.jpg",
+    "name": "NURIA REMERA",
+    "price": 615,
+    "price1": 880,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 615,
+          "price1": 880,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#D2CECF",
+                "description": "GRIS MELANGE",
+                "id": 32,
+                "price": 615,
+                "price1": 880,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 615,
+                      "price1": 880,
+                      "productForSaleId": 5760637
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 615,
+                      "price1": 880,
+                      "productForSaleId": 5760635
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F9E6B2",
+                "description": "VAINILLA",
+                "id": 147,
+                "price": 615,
+                "price1": 880,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 615,
+                      "price1": 880,
+                      "productForSaleId": 5760645
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 615,
+                      "price1": 880,
+                      "productForSaleId": 5760643
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#873444",
+                "description": "VINO",
+                "id": 1063,
+                "price": 615,
+                "price1": 880,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 615,
+                      "price1": 880,
+                      "productForSaleId": 5760649
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "NURIA REMERA VINO",
     "productLineId": "3324"
   }
 ]

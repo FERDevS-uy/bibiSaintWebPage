@@ -1,5 +1,44 @@
 import type ProductInCart from "src/types/productInCart";
 
+function sanitizeImageUrl(value: string): string {
+  return String(value ?? "")
+    .trim()
+    .replace(/[\s,;]+$/g, "")
+    .replace(/^['\"]+|['\"]+$/g, "");
+}
+
+function pickFirstImage(raw: unknown): string {
+  if (Array.isArray(raw)) {
+    const first = raw.find((value) => typeof value === "string" && value.trim());
+    return typeof first === "string" ? sanitizeImageUrl(first) : "";
+  }
+
+  const value = String(raw ?? "").trim();
+  if (!value) return "";
+
+  if (value.startsWith("[")) {
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) {
+        const first = parsed.find((item) => typeof item === "string" && item.trim());
+        return typeof first === "string" ? sanitizeImageUrl(first) : "";
+      }
+    } catch {
+      // noop
+    }
+  }
+
+  if (value.includes(",")) {
+    const [first] = value.split(",");
+    return sanitizeImageUrl(first?.trim() || "");
+  }
+
+  const urlMatches = value.match(/https?:\/\/.*?(?=https?:\/\/|$)/g);
+  if (urlMatches && urlMatches.length > 0) return sanitizeImageUrl(urlMatches[0]);
+
+  return sanitizeImageUrl(value);
+}
+
 function addToCart(
   id: string,
   name: string,
@@ -14,7 +53,7 @@ function addToCart(
     name,
     price,
     cantidad: qty,
-    img,
+    img: pickFirstImage(img),
     selectedColorId,
     selectedColorName,
   };

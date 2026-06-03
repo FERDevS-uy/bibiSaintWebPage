@@ -5,110 +5,6 @@
       "name": "BRAND"
     },
     "code": "126127",
-    "colorId": 2,
-    "description": "Musculosa con escote buche, una prenda que no pasa de moda y siempre realza tu estilo!",
-    "description2": "Realizada en viscosa elastizada",
-    "description3": "Calce clásico",
-    "id": 42328,
-    "images": [
-      "126127_2_1.jpg",
-      "126127_2_2.jpg",
-      "126127_866_1.jpg",
-      "126127_866_2.jpg"
-    ],
-    "mainImage": "126127_2_1.jpg",
-    "name": "RODIA MUSCULOSA",
-    "price": 775,
-    "productLine": {
-      "id": 4755,
-      "name": "MUSCULOSAS Y TOPS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 775,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 775,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 775,
-                      "productForSaleId": 5753864
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 775,
-                      "productForSaleId": 5753866
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 775,
-                      "productForSaleId": 5753865
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 775,
-                      "productForSaleId": 5753867
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#F8DCEA",
-                "description": "ROSA VIEJO",
-                "id": 866,
-                "price": 775,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 775,
-                      "productForSaleId": 5753868
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 775,
-                      "productForSaleId": 5753871
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "RODIA MUSCULOSA NEGRO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126127",
     "colorId": 866,
     "description": "Musculosa con escote buche, una prenda que no pasa de moda y siempre realza tu estilo!",
     "description2": "Realizada en viscosa elastizada",
@@ -166,12 +62,6 @@
                       "id": 55,
                       "price": 775,
                       "productForSaleId": 5753865
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 775,
-                      "productForSaleId": 5753867
                     }
                   ]
                 }
@@ -205,6 +95,104 @@
       ]
     },
     "variationName": "RODIA MUSCULOSA ROSA VIEJO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126127",
+    "colorId": 2,
+    "description": "Musculosa con escote buche, una prenda que no pasa de moda y siempre realza tu estilo!",
+    "description2": "Realizada en viscosa elastizada",
+    "description3": "Calce clásico",
+    "id": 42328,
+    "images": [
+      "126127_2_1.jpg",
+      "126127_2_2.jpg",
+      "126127_866_1.jpg",
+      "126127_866_2.jpg"
+    ],
+    "mainImage": "126127_2_1.jpg",
+    "name": "RODIA MUSCULOSA",
+    "price": 775,
+    "productLine": {
+      "id": 4755,
+      "name": "MUSCULOSAS Y TOPS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 775,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 775,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 775,
+                      "productForSaleId": 5753864
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 775,
+                      "productForSaleId": 5753866
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 775,
+                      "productForSaleId": 5753865
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#F8DCEA",
+                "description": "ROSA VIEJO",
+                "id": 866,
+                "price": 775,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 775,
+                      "productForSaleId": 5753868
+                    },
+                    {
+                      "description": "46",
+                      "id": 55,
+                      "price": 775,
+                      "productForSaleId": 5753871
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "RODIA MUSCULOSA NEGRO",
     "productLineId": "3324"
   }
 ]

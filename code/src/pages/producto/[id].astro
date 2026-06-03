@@ -141,6 +141,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
                 data-color-id={String(c.id)}
                 data-color-name={c.name}
                 data-color-images={JSON.stringify(c.images || [])}
+                data-color-sizes={JSON.stringify(c.sizes || [])}
                 title={c.name}
                 aria-label={c.name}
               ></button>
@@ -148,22 +149,18 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           </div>
         </div>
 
-        {
-          isRopa && (
-            <>
-              <strong>Talle:</strong>
-              <div class="sizes" id="sizesSelector">
-                <button type="button" class="size" data-size="XS">XS</button>
-                <button type="button" class="size" data-size="S">S</button>
-                <button type="button" class="size" data-size="M">M</button>
-                <button type="button" class="size" data-size="L">L</button>
-                <button type="button" class="size" data-size="XL">XL</button>
-                <button type="button" class="size" data-size="XXL">XXL</button>
-              </div>
-              <p id="sizeFeedback" class="size-feedback hidden">Selecciona un talle disponible para continuar.</p>
-            </>
-          )
-        }
+        <div id="sizesBlock" class={`sizes-block${isRopa ? "" : " hidden"}`}>
+          <strong>Talle:</strong>
+          <div class="sizes" id="sizesSelector">
+            <button type="button" class="size" data-size="XS">XS</button>
+            <button type="button" class="size" data-size="S">S</button>
+            <button type="button" class="size" data-size="M">M</button>
+            <button type="button" class="size" data-size="L">L</button>
+            <button type="button" class="size" data-size="XL">XL</button>
+            <button type="button" class="size" data-size="XXL">XXL</button>
+          </div>
+          <p id="sizeFeedback" class="size-feedback hidden">Selecciona un talle disponible para continuar.</p>
+        </div>
 
         <div class="priceRow">
           <span id="productPrice" class="price">${price}</span>
@@ -233,12 +230,15 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
 
 <style>
   .productContainer {
+    box-sizing: border-box;
+    width: 100%;
     max-width: 1200px;
     min-height: 100vh;
     margin: 0 auto;
     padding: 20px;
     font-family: "Poppins", sans-serif;
     margin-bottom: 3rem;
+    overflow-x: clip;
   }
 
   /**** Breadcrumb *****/
@@ -261,9 +261,20 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
 
   /**** Layout *****/
   .product_layout {
+    box-sizing: border-box;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 40px;
+    min-width: 0;
+  }
+
+  .infoBox,
+  .priceRow,
+  .colors,
+  .sizes {
+    min-width: 0;
+    max-width: 100%;
   }
 
   /**** Gallery (estilos en src/styles/components/ProductGallery.css) *****/
@@ -366,6 +377,10 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
   }
 
   /**** Sizes *****/
+  .sizes-block.hidden {
+    display: none;
+  }
+
   .sizes {
     display: flex;
     gap: 5px;
@@ -378,8 +393,23 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     background: white;
     border: 1px solid #000;
     color: #000;
-    font-size: 32px;
-    font-weight: 250;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  :global(.size) {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 1px solid #000;
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -391,7 +421,17 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     background: #f0f0f0;
   }
 
+  :global(.size:hover) {
+    background: #f0f0f0;
+  }
+
   .size.selected {
+    background: var(--p-b-color);
+    border-color: var(--p-b-color);
+    color: #fff;
+  }
+
+  :global(.size.selected) {
     background: var(--p-b-color);
     border-color: var(--p-b-color);
     color: #fff;
@@ -406,7 +446,30 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     position: relative;
   }
 
+  :global(.size.unavailable),
+  :global(.size[disabled]) {
+    background: #f3f3f3;
+    color: #b1b1b1;
+    border-color: #e0e0e0;
+    cursor: not-allowed;
+    position: relative;
+  }
+
   .size.unavailable::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      #c9c9c9 calc(50% - 1px),
+      #c9c9c9 calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
+    pointer-events: none;
+  }
+
+  :global(.size.unavailable::after) {
     content: "";
     position: absolute;
     inset: 0;
@@ -491,18 +554,19 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px;
     margin-top: 20px;
   }
 
   .priceRow .price {
     display: block;
-    height: 50px;
-    line-height: 160%;
+    height: auto;
+    line-height: 1.2;
     font-size: 32px;
     font-weight: 800;
     color: #000;
-    margin-right: auto;
+    margin-right: 0;
+    min-width: 140px;
   }
 
   /* Adjust NumberInput styling overlap if possible, otherwise wrapper */
@@ -530,10 +594,10 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
   }
 
   .runtimeStockCheck {
-    margin-top: 12px;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
   }
 
   .checkStockBtn {
@@ -601,7 +665,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
   .cardImg {
     width: 100%;
     aspect-ratio: 1/1;
-    object-fit: cover;
+    object-fit: contain;
     object-position: top;
     margin-bottom: 10px;
   }
@@ -631,6 +695,41 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
   }
 
   /**** Desktop Media Query *****/
+  @media (max-width: 767px) {
+    .productContainer {
+      padding-inline: 14px;
+    }
+
+    .priceRow {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .priceRow .price {
+      min-width: 0;
+      font-size: 30px;
+    }
+
+    .buyBtn {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .sizes {
+      flex-wrap: wrap;
+      row-gap: 8px;
+    }
+
+    .colors {
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2px;
+    }
+  }
+
   @media (min-width: 768px) {
     .product_layout {
       flex-direction: row;
@@ -642,14 +741,48 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
       padding-left: 20px;
     }
 
-    .price {
-      width: auto;
-      margin-right: 20px;
+    .priceRow {
+      display: grid;
+      grid-template-columns: auto auto minmax(210px, 1fr);
+      align-items: center;
+      gap: 10px;
+    }
+
+    .priceRow :global(.number-control) {
+      width: 92px;
+      height: 44px;
+    }
+
+    .priceRow :global(.number-control .control-btn) {
+      width: 32px;
+      font-size: 21px;
+    }
+
+    .priceRow :global(.number-control input[type="number"]) {
+      font-size: 1.75rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .priceRow .price {
+      margin-right: 0;
     }
 
     .buyBtn {
+      width: 100%;
+      min-width: 210px;
+      height: 44px;
       flex: initial;
-      width: auto;
+    }
+
+    .runtimeStockCheck {
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .checkStockStatus {
+      font-size: 0.82rem;
     }
 
     .relatedList {
@@ -666,8 +799,12 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
 
     addBtn.dataset.bound = "true";
     const sizesSelector = document.getElementById("sizesSelector");
+    const sizesBlock = document.getElementById("sizesBlock");
     const sizeFeedback = document.getElementById("sizeFeedback");
     let selectedSize = "";
+    let requiresSizeSelection = Boolean(
+      sizesSelector && sizesBlock && !sizesBlock.classList.contains("hidden"),
+    );
 
     const clearSelectedSize = () => {
       selectedSize = "";
@@ -681,6 +818,22 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
       const availableSizesByColor = new Map<number, Set<string>>();
       let selectedColorId: number | null = null;
       let selectedColorName: string | null = null;
+
+    const setSizeRequirement = (required: boolean) => {
+      requiresSizeSelection = required;
+      if (!sizesBlock || !sizesSelector) return;
+      sizesBlock.classList.toggle("hidden", !required);
+      if (!required) {
+        clearSelectedSize();
+        sizeFeedback?.classList.add("hidden");
+        sizesSelector
+          .querySelectorAll<HTMLButtonElement>(".size")
+          .forEach((btn) => {
+            btn.classList.remove("unavailable", "selected");
+            btn.disabled = false;
+          });
+      }
+    };
 
     if (sizesSelector) {
       sizesSelector.addEventListener("click", (event) => {
@@ -705,7 +858,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
       const img = document.querySelector(".gallery .mainImg") as HTMLImageElement | null;
       const qty = parseInt(qtyInput.value, 10);
 
-      const isClothing = Boolean(sizesSelector);
+      const isClothing = Boolean(sizesSelector) && requiresSizeSelection;
       if (isClothing && !selectedSize) {
         if (sizeFeedback) {
           sizeFeedback.textContent = "Selecciona un talle para continuar.";
@@ -764,18 +917,152 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
       const colorsSelector = document.getElementById("colorsSelector");
       const colorNameEl = document.getElementById("colorName");
 
+      const canonicalOrder = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"];
+
+      const normalizeLegacySize = (raw: string): string | null => {
+        const token = String(raw || "").trim().toUpperCase();
+        if (!token) return null;
+        const aliasMap: Record<string, string> = {
+          P: "S",
+          S: "S",
+          M: "M",
+          G: "L",
+          L: "L",
+          GG: "XL",
+          XG: "XL",
+          XL: "XL",
+          XXL: "XXL",
+          XXXL: "XXXL",
+          XS: "XS",
+        };
+        return aliasMap[token] || null;
+      };
+
+      const cleanColorLabel = (raw: string): string => {
+        return String(raw || "")
+          .replace(/\b(XXXL|XXL|XL|XS|GG|XG|G|M|P|S|L)\b/gi, " ")
+          .replace(/\b\d{6,}\b/g, " ")
+          .replace(/[\s_-]{2,}/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      };
+
+      const extractNuvexSizeFromColorName = (raw: string): string | null => {
+        const token = String(raw || "").toUpperCase();
+        const match = token.match(/\b(XXXL|XXL|XL|XS|GG|XG|G|M|P|S|L)\b/);
+        if (!match) return null;
+        return normalizeLegacySize(match[1]);
+      };
+
+      const extractDescriptionSizes = (rawText: string): string[] => {
+        const found = new Set<string>();
+        const source = String(rawText || "");
+        const tallaRegex = /\btalle\s*[:\-]?\s*([a-zA-Z]{1,4}|\d{1,3})\b/gi;
+        let m: RegExpExecArray | null;
+        while ((m = tallaRegex.exec(source)) !== null) {
+          const normalized = normalizeLegacySize(m[1]);
+          if (normalized) found.add(normalized);
+        }
+        return canonicalOrder.filter((size) => found.has(size));
+      };
+
+      const renderNormalizedSizesForFallback = (sizes: string[]) => {
+        if (!sizesSelector || sizes.length === 0) return;
+        sizesSelector.innerHTML = "";
+        sizes.forEach((size) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "size";
+          button.dataset.size = size;
+          button.textContent = size;
+          sizesSelector.appendChild(button);
+        });
+        clearSelectedSize();
+      };
+
+      const markUnavailableSizesForFallback = (availableSet: Set<string>) => {
+        if (!sizesSelector) return;
+        sizesSelector
+          .querySelectorAll<HTMLButtonElement>(".size")
+          .forEach((btn) => {
+            const sz = btn.dataset.size || "";
+            const isAvailable = availableSet.has(sz);
+            btn.classList.toggle("unavailable", !isAvailable);
+            btn.disabled = !isAvailable;
+            if (!isAvailable) btn.classList.remove("selected");
+          });
+      };
+
       if (colorsSelector && colorsSelector.dataset.bound !== "true") {
         colorsSelector.dataset.bound = "true";
+
+        availableSizesByColor.clear();
+        colorsSelector
+          .querySelectorAll<HTMLButtonElement>(".swatch")
+          .forEach((sw) => {
+            const cid = Number(sw.dataset.colorId);
+            if (!Number.isFinite(cid)) return;
+            const rawName = sw.dataset.colorName || "";
+            const cleanedName = cleanColorLabel(rawName);
+            if (cleanedName) sw.dataset.colorName = cleanedName;
+            let hasSizesFromPayload = false;
+            try {
+              const parsedSizes = JSON.parse(sw.dataset.colorSizes || "[]");
+              if (Array.isArray(parsedSizes)) {
+                parsedSizes
+                  .map((sizeToken) => normalizeLegacySize(String(sizeToken || "")))
+                  .filter((size): size is string => Boolean(size))
+                  .forEach((size) => {
+                    if (!availableSizesByColor.has(cid)) {
+                      availableSizesByColor.set(cid, new Set<string>());
+                    }
+                    availableSizesByColor.get(cid)?.add(size);
+                    hasSizesFromPayload = true;
+                  });
+              }
+            } catch {
+              hasSizesFromPayload = false;
+            }
+            const hintedSize = extractNuvexSizeFromColorName(rawName);
+            if (!hasSizesFromPayload && hintedSize) {
+              if (!availableSizesByColor.has(cid)) {
+                availableSizesByColor.set(cid, new Set<string>());
+              }
+              availableSizesByColor.get(cid)?.add(hintedSize);
+            }
+          });
+
+        const applySelectedColorAvailability = () => {
+          if (!sizesSelector || !requiresSizeSelection) return;
+          if (selectedColorId === null) return;
+          const availableForColor = availableSizesByColor.get(selectedColorId);
+          if (!availableForColor || availableForColor.size === 0) {
+            sizesSelector
+              .querySelectorAll<HTMLButtonElement>(".size")
+              .forEach((btn) => {
+                btn.classList.remove("unavailable");
+                btn.disabled = false;
+              });
+            return;
+          }
+          markUnavailableSizesForFallback(availableForColor);
+        };
 
         const selectColor = (sw: HTMLButtonElement) => {
           const cid = Number(sw.dataset.colorId);
           if (Number.isFinite(cid)) selectedColorId = cid;
-          selectedColorName = sw.dataset.colorName || null;
+          const cleanedName = cleanColorLabel(sw.dataset.colorName || "");
+          if (cleanedName) sw.dataset.colorName = cleanedName;
+          selectedColorName = cleanedName || sw.dataset.colorName || null;
           if (colorNameEl) colorNameEl.textContent = selectedColorName || "";
 
           colorsSelector
             .querySelectorAll<HTMLButtonElement>(".swatch")
             .forEach((item) => item.classList.toggle("selected", item === sw));
+
+          applySelectedColorAvailability();
+          clearSelectedSize();
+          sizeFeedback?.classList.add("hidden");
 
           try {
             const raw = sw.dataset.colorImages;
@@ -804,6 +1091,27 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         if (firstSwatch) {
           selectColor(firstSwatch);
         }
+
+        const descriptionSource =
+          (document.querySelector(".desc-content") as HTMLElement | null)?.textContent ||
+          (document.querySelector(".description-box") as HTMLElement | null)?.textContent ||
+          "";
+        const descriptionSizes = extractDescriptionSizes(descriptionSource);
+        const colorHintSizes = new Set<string>();
+        availableSizesByColor.forEach((set) => {
+          set.forEach((size) => colorHintSizes.add(size));
+        });
+
+        const inferredSizes =
+          descriptionSizes.length > 1
+            ? descriptionSizes
+            : canonicalOrder.filter((size) => colorHintSizes.has(size));
+        const hasSelectableSizes = inferredSizes.length > 1;
+        setSizeRequirement(hasSelectableSizes);
+        if (hasSelectableSizes) {
+          renderNormalizedSizesForFallback(inferredSizes);
+          applySelectedColorAvailability();
+        }
       }
     }
 
@@ -827,8 +1135,12 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           "48": "XXL",
           "50": "XXXL",
           XS: "XS",
+          P: "S",
           S: "S",
           M: "M",
+          G: "L",
+          GG: "XL",
+          XG: "XL",
           L: "L",
           XL: "XL",
           XXL: "XXL",
@@ -863,6 +1175,13 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         });
 
         return canonicalOrder.filter((size) => values.has(size));
+      };
+
+      const hasExplicitNoSize = (rawSizes: string[]) => {
+        return rawSizes.some((raw) => {
+          const token = String(raw ?? "").trim().toLowerCase();
+          return token === "/" || token === "-" || token === "sin talle" || token === "unico" || token === "único" || token === "one size";
+        });
       };
 
       const providerFrom = (id: string, link: string): "martina" | "nuvex" | "kaideco" | "unknown" => {
@@ -957,7 +1276,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
       };
 
       const renderColors = (
-        colors: Array<{ id: number; hex: string; name: string }>,
+        colors: Array<{ id: number; hex: string; name: string; sizes?: string[] }>,
       ) => {
         if (!colorsSelector || !colorsBlock) return;
 
@@ -979,6 +1298,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           btn.style.backgroundColor = c.hex || "#cccccc";
           btn.dataset.colorId = String(c.id);
           btn.dataset.colorName = c.name;
+          btn.dataset.colorSizes = JSON.stringify(Array.isArray(c.sizes) ? c.sizes : []);
           const imagesAttr = prevImagesById.get(c.id);
           if (imagesAttr) btn.dataset.colorImages = imagesAttr;
           btn.title = c.name;
@@ -1295,12 +1615,19 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
               availableSizesByColor.set(c.id, new Set(c.sizes));
             });
 
+            const allRawSizes = data.colors.flatMap((c) => c.rawSizes || []);
+            const allNormalizedSizes = data.colors.flatMap((c) => c.sizes || []);
+            const shouldSkipSize = allNormalizedSizes.length === 0 && hasExplicitNoSize(allRawSizes);
+            setSizeRequirement(!shouldSkipSize);
+
             renderColors(data.colors);
 
             // seleccionar primer color y aplicar sus talles
             const firstColor = data.colors[0];
             selectedColorId = firstColor.id;
-            applyColorSelection(firstColor.id);
+            if (!shouldSkipSize) {
+              applyColorSelection(firstColor.id);
+            }
 
             setStatus("Actualizado desde martina.", "ok");
           } else if (provider === "kaideco") {
@@ -1324,11 +1651,14 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
               : [];
 
             if (normalizedSizes.length > 0) {
+              setSizeRequirement(true);
               renderNormalizedSizes(normalizedSizes);
               availableSizesByColor.clear();
               availableSizesByColor.set(-1, new Set(normalizedSizes));
               selectedColorId = -1;
               markUnavailableSizes(new Set(normalizedSizes));
+            } else {
+              setSizeRequirement(false);
             }
 
             setStatus("Actualizado desde kaideco.", "ok");

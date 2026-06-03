@@ -10,8 +10,10 @@
     "description2": "Realizada en viscosa elastizada estampada",
     "description3": "Calce clásico",
     "id": 42770,
-    "images": [],
-    "mainImage": "126472.jpg",
+    "images": [
+      "126472_332_1.jpg"
+    ],
+    "mainImage": "126472_332_1.jpg",
     "name": "BRITA REMERA M/LARGA",
     "price": 1200,
     "productLine": {

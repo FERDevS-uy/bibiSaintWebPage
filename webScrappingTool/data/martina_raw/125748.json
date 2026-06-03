@@ -92,13 +92,6 @@
                       "price": 340,
                       "price1": 490,
                       "productForSaleId": 5760655
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 340,
-                      "price1": 490,
-                      "productForSaleId": 5760652
                     }
                   ]
                 }
@@ -204,13 +197,6 @@
                       "price": 340,
                       "price1": 490,
                       "productForSaleId": 5760655
-                    },
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 340,
-                      "price1": 490,
-                      "productForSaleId": 5760652
                     }
                   ]
                 }

@@ -332,7 +332,6 @@ import { config } from "src/config";
 <script>
   import { decryptIDs } from "@utils/encription";
   import { formatPrice, parsePrice } from "@utils/price";
-  import { getDisplayCategoryName } from "@utils/categoryNormalization";
   import { normalizeSize } from "@utils/sizes";
   import type Product from "src/types/product";
   import { providerFrom, fetchKaiLive, fetchMartinaLive, fetchNuvexLive } from "../client/stockService";
@@ -354,12 +353,14 @@ import { config } from "src/config";
     currentUnitPrice: number;
   }
 
-  function parsePedidoItem(item: string): {
+  interface ParsedPedidoItem {
     id: string;
     cantidad: number;
-    selectedColorId?: number | null;
-    selectedColorName?: string | null;
-  } | null {
+    selectedColorId: number | null;
+    selectedColorName: string | null;
+  }
+
+  function parsePedidoItem(item: string): ParsedPedidoItem | null {
     const trimmed = item.trim();
     if (!trimmed) return null;
 
@@ -428,17 +429,15 @@ import { config } from "src/config";
     );
   }
 
-  function resolveVariantForDisplay(product: Product, variantToken: string | null): { selectedSize: string | null; variantBadgeText: string | null } {
+  function resolveVariantForDisplay(_product: Product, variantToken: string | null): { selectedSize: string | null; variantBadgeText: string | null } {
     if (!variantToken) return { selectedSize: null, variantBadgeText: null };
 
     const normalizedToken = variantToken.trim().toUpperCase();
     if (!normalizedToken) return { selectedSize: null, variantBadgeText: null };
 
-    const displayCategory = getDisplayCategoryName(product);
-    const isRopaProduct = displayCategory === "Ropa";
     const normalizedSize = normalizeSize(normalizedToken);
 
-    if (isRopaProduct && normalizedSize) {
+    if (normalizedSize) {
       return {
         selectedSize: normalizedSize,
         variantBadgeText: `Talle ${normalizedSize}`,
@@ -485,9 +484,9 @@ import { config } from "src/config";
 
     if (id) {
       const decrypted = decryptIDs(id, "elias");
-      const lista = decrypted
+      const lista: ParsedPedidoItem[] = decrypted
         .map(parsePedidoItem)
-        .filter((item): item is { id: string; cantidad: number } => Boolean(item));
+        .filter((item): item is ParsedPedidoItem => item !== null);
 
       try {
         if (lista.length === 0) {

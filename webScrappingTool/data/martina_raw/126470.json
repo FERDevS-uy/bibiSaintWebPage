@@ -10,8 +10,11 @@
     "description2": "Realizada en viscosa elastizada estampada",
     "description3": "Calce clásico",
     "id": 42768,
-    "images": [],
-    "mainImage": "126470.jpg",
+    "images": [
+      "126470_332_1.jpg",
+      "126470_332_2.jpg"
+    ],
+    "mainImage": "126470_332_1.jpg",
     "name": "ROSETA POLERA",
     "price": 1200,
     "productLine": {

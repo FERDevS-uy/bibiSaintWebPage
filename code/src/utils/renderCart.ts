@@ -6,6 +6,49 @@ import { decryptIDs, encryptIDs } from "./encription";
 import { config } from "src/config";
 import { formatPrice, parsePrice } from "./price";
 
+const CART_IMAGE_FALLBACK =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%23f3f3f3'/%3E%3Crect x='18' y='18' width='84' height='84' rx='8' fill='%23e5e5e5'/%3E%3Cpath d='M37 78l16-17 13 12 17-20 12 25H37z' fill='%23c8c8c8'/%3E%3Ccircle cx='47' cy='46' r='7' fill='%23cfcfcf'/%3E%3C/svg%3E";
+
+function sanitizeImageUrl(value: string): string {
+  return String(value ?? "")
+    .trim()
+    .replace(/[\s,;]+$/g, "")
+    .replace(/^['\"]+|['\"]+$/g, "");
+}
+
+function normalizeCartImage(raw: unknown): string {
+  if (Array.isArray(raw)) {
+    const first = raw.find((value) => typeof value === "string" && value.trim());
+    return typeof first === "string" ? sanitizeImageUrl(first) : CART_IMAGE_FALLBACK;
+  }
+
+  const value = String(raw ?? "").trim();
+  if (!value) return CART_IMAGE_FALLBACK;
+
+  if (value.startsWith("[")) {
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) {
+        const first = parsed.find((item) => typeof item === "string" && item.trim());
+        if (typeof first === "string") return sanitizeImageUrl(first);
+      }
+    } catch {
+      // noop
+    }
+  }
+
+  if (value.includes(",")) {
+    const [first] = value.split(",");
+    const normalized = sanitizeImageUrl(first || "");
+    if (normalized) return normalized;
+  }
+
+  const urlMatches = value.match(/https?:\/\/.*?(?=https?:\/\/|$)/g);
+  if (urlMatches && urlMatches.length > 0) return sanitizeImageUrl(urlMatches[0]);
+
+  return sanitizeImageUrl(value) || CART_IMAGE_FALLBACK;
+}
+
 function parseColorFromVariantId(rawId: string): number | null {
   const [, variantPart = ""] = String(rawId || "").split("__");
   if (!variantPart) return null;
@@ -16,6 +59,11 @@ function parseColorFromVariantId(rawId: string): number | null {
     if (Number.isFinite(id)) return id;
   }
   return null;
+}
+
+function getBaseProductId(rawId: string): string {
+  const [baseId = ""] = String(rawId || "").split("__");
+  return baseId;
 }
 
 function serializePedidoItem(product: ProductInCart): string {
@@ -142,7 +190,10 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
   const formattedUnitPrice = formatPrice(parsePrice(p.price));
   const formattedSubtotal = formatPrice(subtotal);
   const colorIdFromVariant = parseColorFromVariantId(p.id);
+  const productId = getBaseProductId(p.id);
+  const productHref = `${config.base}/producto/${productId}`;
   const colorLabel = p.selectedColorName || (colorIdFromVariant !== null ? `ID ${colorIdFromVariant}` : "");
+  const imgSrc = normalizeCartImage(p.img);
   const colorMeta = colorLabel
     ? `<div class="cartMeta"><span class="metaLabel">Color</span><span class="metaValue">${colorLabel}</span></div>`
     : "";
@@ -154,7 +205,9 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
         </td>
 
         <td class="tdImg">
-           <img src="${p.img || "/placeholder.png"}" alt="${p.name}" width="60" />
+            <a href="${productHref}" class="cartThumbLink" title="Ver producto ${p.name}">
+              <img src="${imgSrc}" alt="${p.name}" width="60" onerror="this.onerror=null;this.src='${CART_IMAGE_FALLBACK}'" />
+            </a>
         </td>
 
         <td class="tdDesc">

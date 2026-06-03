@@ -5,7 +5,7 @@
       "name": "BRAND"
     },
     "code": "126160",
-    "colorId": 32,
+    "colorId": 1214,
     "description": "Remera manga larga, escote redondo. El basico infaltable para el invierno!",
     "description2": "Realizada en jersey melange",
     "description3": "Calce clásico",
@@ -18,7 +18,7 @@
       "126160_44_1.jpg",
       "126160_44_2.jpg"
     ],
-    "mainImage": "126160_32_1.jpg",
+    "mainImage": "126160_1214_1.jpg",
     "name": "VOLK REMERA M/LARGA",
     "price": 1000,
     "productLine": {
@@ -149,7 +149,7 @@
         }
       ]
     },
-    "variationName": "VOLK REMERA M/LARGA GRIS MELANGE",
+    "variationName": "VOLK REMERA M/LARGA ROJO MELANGE",
     "productLineId": "3325"
   },
   {
@@ -311,7 +311,7 @@
       "name": "BRAND"
     },
     "code": "126160",
-    "colorId": 1214,
+    "colorId": 32,
     "description": "Remera manga larga, escote redondo. El basico infaltable para el invierno!",
     "description2": "Realizada en jersey melange",
     "description3": "Calce clásico",
@@ -324,7 +324,7 @@
       "126160_44_1.jpg",
       "126160_44_2.jpg"
     ],
-    "mainImage": "126160_1214_1.jpg",
+    "mainImage": "126160_32_1.jpg",
     "name": "VOLK REMERA M/LARGA",
     "price": 1000,
     "productLine": {
@@ -455,7 +455,7 @@
         }
       ]
     },
-    "variationName": "VOLK REMERA M/LARGA ROJO MELANGE",
+    "variationName": "VOLK REMERA M/LARGA GRIS MELANGE",
     "productLineId": "3325"
   }
 ]

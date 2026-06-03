@@ -2,6 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import ItemProductoBox from "./ItemProductBox.jsx";
 import NavPag from "./NavPag.jsx";
 
+const BASE_URL = import.meta.env.BASE_URL || "/";
+const PRODUCTS_JSON_URL = `${BASE_URL.replace(/\/$/, "")}/productos.json`;
+
 const SORT_OPTIONS = [
   { value: "default", label: "Más Vendidos" },
   { value: "price-asc", label: "Precio: menor a mayor" },
@@ -34,7 +37,7 @@ export default function ListarProductos({ pageSize = 10 }) {
 
   // ✅ cargar JSON
   useEffect(() => {
-    fetch("/productos.json")
+    fetch(PRODUCTS_JSON_URL)
       .then((res) => res.json())
       .then((data) => setProductos(data));
   }, []);

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ListarProductos from "./ListarProductos.astro";
 import "../styles/global.css"
+
+const BASE_URL = import.meta.env.BASE_URL || "/";
+const PRODUCTS_JSON_URL = `${BASE_URL.replace(/\/$/, "")}/productos.json`;
+
 export default function ListarProductosIsland({ productosIniciales, baseURL }) {
   const [query, setQuery] = useState("");
   const [productos, setProductos] = useState(productosIniciales);
@@ -10,7 +14,7 @@ export default function ListarProductosIsland({ productosIniciales, baseURL }) {
 
     if (!q) return;
 
-    fetch("/productos.json")
+    fetch(PRODUCTS_JSON_URL)
       .then(res => res.json())
       .then(all => {
         const filtered = all.filter(p => p.name.toLowerCase().includes(q));

@@ -79,9 +79,34 @@ function groupMartinaImagesByColor(images, code) {
     });
     return grouped;
 }
+function normalizeMartinaPayloadToArray(data) {
+    if (!data)
+        return [];
+    if (Array.isArray(data))
+        return data;
+    if (Array.isArray(data.data))
+        return data.data;
+    if (Array.isArray(data.products))
+        return data.products;
+    if (Array.isArray(data.result))
+        return data.result;
+    const walkFindArray = (o) => {
+        if (!o || typeof o !== 'object')
+            return null;
+        if (Array.isArray(o) && o.length > 0 && typeof o[0] === 'object')
+            return o;
+        for (const k of Object.keys(o)) {
+            const res = walkFindArray(o[k]);
+            if (res)
+                return res;
+        }
+        return null;
+    };
+    return walkFindArray(data) || [];
+}
 function scrapMartinaDiTrento() {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a, _b;
+        var _a, _b, _c, _d;
         console.log('Iniciando scraping de Martina di Trento...');
         try {
             const headers = { accept: 'application/json, text/plain, */*', Referer: 'https://tienda.martinaditrento.com/' };
@@ -143,32 +168,7 @@ function scrapMartinaDiTrento() {
                     console.log(url);
                     try {
                         const { data } = yield axios_1.default.get(url, { headers, httpsAgent, timeout: 30000 });
-                        // intentar varios lugares comunes del payload
-                        if (!data)
-                            return [];
-                        if (Array.isArray(data))
-                            return data;
-                        if (Array.isArray(data.data))
-                            return data.data;
-                        if (Array.isArray(data.products))
-                            return data.products;
-                        if (Array.isArray(data.result))
-                            return data.result;
-                        // si viene dentro de un objeto profundo, buscar el primer array de objetos
-                        const walkFindArray = (o) => {
-                            if (!o || typeof o !== 'object')
-                                return null;
-                            if (Array.isArray(o) && o.length > 0 && typeof o[0] === 'object')
-                                return o;
-                            for (const k of Object.keys(o)) {
-                                const res = walkFindArray(o[k]);
-                                if (res)
-                                    return res;
-                            }
-                            return null;
-                        };
-                        const fallback = walkFindArray(data);
-                        return fallback || [];
+                        return normalizeMartinaPayloadToArray(data);
                     }
                     catch (e) {
                         console.warn(`Error consultando store/product code=${code}:`, e.message || e);
@@ -182,33 +182,23 @@ function scrapMartinaDiTrento() {
                     const url = `${MARTINA_STORE_PRODUCT_BASE}?countryId=${country}&code=${encodeURIComponent(String(code))}&productLineId=${encodeURIComponent(String(productLineId))}&category=${encodeURIComponent(String(category || ''))}`;
                     try {
                         const { data } = yield axios_1.default.get(url, { headers, httpsAgent, timeout: 30000 });
-                        if (!data)
-                            return [];
-                        if (Array.isArray(data))
-                            return data;
-                        if (Array.isArray(data.data))
-                            return data.data;
-                        if (Array.isArray(data.products))
-                            return data.products;
-                        if (Array.isArray(data.result))
-                            return data.result;
-                        const walkFindArray = (o) => {
-                            if (!o || typeof o !== 'object')
-                                return null;
-                            if (Array.isArray(o) && o.length > 0 && typeof o[0] === 'object')
-                                return o;
-                            for (const k of Object.keys(o)) {
-                                const res = walkFindArray(o[k]);
-                                if (res)
-                                    return res;
-                            }
-                            return null;
-                        };
-                        const fallback = walkFindArray(data);
-                        return fallback || [];
+                        return normalizeMartinaPayloadToArray(data);
                     }
                     catch (e) {
                         console.warn(`Error consultando store/product by productLine=${productLineId} category=${category}:`, e.message || e);
+                        return [];
+                    }
+                });
+            }
+            function fetchStoreProductByProductId(country, code, productId) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    const url = `${MARTINA_STORE_PRODUCT_BASE}?productId=${encodeURIComponent(String(productId))}&code=${encodeURIComponent(String(code))}&countryId=${encodeURIComponent(String(country))}`;
+                    try {
+                        const { data } = yield axios_1.default.get(url, { headers, httpsAgent, timeout: 30000 });
+                        return normalizeMartinaPayloadToArray(data);
+                    }
+                    catch (e) {
+                        console.warn(`Error consultando store/product productId=${productId}:`, e.message || e);
                         return [];
                     }
                 });
@@ -295,14 +285,34 @@ function scrapMartinaDiTrento() {
                 }
                 console.log(`Martina: no se detectaron codes, consultando catálogos por productLine usando code=${codeToUse}`);
                 const concurrencyPL = Math.max(1, parseInt(String(process.env.MARTINA_CONCURRENCY || '3'), 10));
+                const detailByProductId = new Map();
                 // iterar productLines (normalmente 2) y recolectar resultados
                 for (const pl of productLines) {
                     try {
                         const arr = yield fetchStoreProductByProductLine(country, codeToUse, pl.productLineId, pl.category);
                         if (!Array.isArray(arr))
                             continue;
-                        arr.forEach((it) => {
+                        for (const it of arr) {
                             if (it && typeof it === 'object') {
+                                const providerId = String((_b = (_a = it.id) !== null && _a !== void 0 ? _a : it.productId) !== null && _b !== void 0 ? _b : '').trim();
+                                const hasImages = Array.isArray(it.images) && it.images.length > 0;
+                                if (!hasImages && providerId) {
+                                    let detail = detailByProductId.get(providerId);
+                                    if (detail === undefined) {
+                                        const detailArr = yield fetchStoreProductByProductId(country, codeToUse, providerId);
+                                        detail =
+                                            detailArr.find((d) => { var _a, _b; return String((_b = (_a = d === null || d === void 0 ? void 0 : d.id) !== null && _a !== void 0 ? _a : d === null || d === void 0 ? void 0 : d.productId) !== null && _b !== void 0 ? _b : '') === providerId; }) ||
+                                                detailArr[0] ||
+                                                null;
+                                        detailByProductId.set(providerId, detail);
+                                    }
+                                    if (detail && Array.isArray(detail.images) && detail.images.length > 0) {
+                                        it.images = detail.images;
+                                    }
+                                    if (detail && detail.mainImage) {
+                                        it.mainImage = detail.mainImage;
+                                    }
+                                }
                                 const detected = detectCodeFromEntry(it);
                                 if (!it.code && detected)
                                     it.code = detected;
@@ -310,7 +320,7 @@ function scrapMartinaDiTrento() {
                                 it.productLineId = pl.productLineId;
                                 allFetchedItems.push(it);
                             }
-                        });
+                        }
                     }
                     catch (err) {
                         console.warn('Error consultando productLine', pl, err && err.message ? err.message : err);
@@ -351,7 +361,7 @@ function scrapMartinaDiTrento() {
                     for (const [c, arr] of byCode.entries()) {
                         for (const entry of arr) {
                             // intentar obtener id del proveedor desde distintas propiedades
-                            const candidateId = (entry && ((_b = (_a = entry.id) !== null && _a !== void 0 ? _a : entry.productId) !== null && _b !== void 0 ? _b : (entry.product && entry.product.id))) || '';
+                            const candidateId = (entry && ((_d = (_c = entry.id) !== null && _c !== void 0 ? _c : entry.productId) !== null && _d !== void 0 ? _d : (entry.product && entry.product.id))) || '';
                             const providerId = String(candidateId || c).trim();
                             if (!providerId)
                                 continue;
