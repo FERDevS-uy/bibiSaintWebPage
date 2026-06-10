@@ -39,6 +39,23 @@
             "id": "color",
             "variationValues": [
               {
+                "colorHex": "#FFFDE6",
+                "description": "CRUDO-NEGRO",
+                "id": 139,
+                "price": 1725,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1725,
+                      "productForSaleId": 5758253
+                    }
+                  ]
+                }
+              },
+              {
                 "description": "CRUDO-ROSA",
                 "id": 1570,
                 "price": 1725,
@@ -50,12 +67,6 @@
                       "id": 52,
                       "price": 1725,
                       "productForSaleId": 5754281
-                    },
-                    {
-                      "description": "48",
-                      "id": 56,
-                      "price": 1725,
-                      "productForSaleId": 5754283
                     }
                   ]
                 }
@@ -66,6 +77,86 @@
       ]
     },
     "variationName": "GRECIA BUZO CRUDO-ROSA",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126468",
+    "colorId": 139,
+    "description": "Buzo en corderito, con cuello alto y broches.",
+    "description2": "Realizado en corderito",
+    "description3": "Calce clásico",
+    "id": 42766,
+    "images": [
+      "126468_139_1.jpg",
+      "126468_139_2.jpg",
+      "126468_1570_1.jpg",
+      "126468_1570_2.jpg",
+      "126468_1570_3.jpg"
+    ],
+    "mainImage": "126468_139_1.jpg",
+    "name": "GRECIA BUZO",
+    "price": 1725,
+    "productLine": {
+      "id": 4756,
+      "name": "BUZOS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1725,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFDE6",
+                "description": "CRUDO-NEGRO",
+                "id": 139,
+                "price": 1725,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "48",
+                      "id": 56,
+                      "price": 1725,
+                      "productForSaleId": 5758253
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "CRUDO-ROSA",
+                "id": 1570,
+                "price": 1725,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 1725,
+                      "productForSaleId": 5754281
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "GRECIA BUZO CRUDO-NEGRO",
     "productLineId": "3324"
   }
 ]

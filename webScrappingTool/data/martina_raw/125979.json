@@ -5,86 +5,6 @@
       "name": "BRAND"
     },
     "code": "125979",
-    "colorId": 2,
-    "description": "Bombacha colaless con detalle de recorte en puntilla elastizada en laterales.",
-    "description2": "Realizado en algodón elastizado",
-    "description3": "Calce al cuerpo",
-    "id": 42143,
-    "images": [
-      "125979_21_1.jpg",
-      "125979_21_2.jpg",
-      "125979_2_1.jpg",
-      "125979_2_2.jpg"
-    ],
-    "mainImage": "125979_2_1.jpg",
-    "name": "CLEOPATRA COLALESS",
-    "price": 220,
-    "productLine": {
-      "id": 3352,
-      "name": "ROPA INTERIOR",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 220,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#F3EEDA",
-                "description": "HUESO",
-                "id": 21,
-                "price": 220,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "1",
-                      "id": 5,
-                      "price": 220,
-                      "productForSaleId": 5757750
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 220,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "1",
-                      "id": 5,
-                      "price": 220,
-                      "productForSaleId": 5757745
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "CLEOPATRA COLALESS NEGRO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125979",
     "colorId": 21,
     "description": "Bombacha colaless con detalle de recorte en puntilla elastizada en laterales.",
     "description2": "Realizado en algodón elastizado",
@@ -157,6 +77,86 @@
       ]
     },
     "variationName": "CLEOPATRA COLALESS HUESO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125979",
+    "colorId": 2,
+    "description": "Bombacha colaless con detalle de recorte en puntilla elastizada en laterales.",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 42143,
+    "images": [
+      "125979_21_1.jpg",
+      "125979_21_2.jpg",
+      "125979_2_1.jpg",
+      "125979_2_2.jpg"
+    ],
+    "mainImage": "125979_2_1.jpg",
+    "name": "CLEOPATRA COLALESS",
+    "price": 220,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 220,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#F3EEDA",
+                "description": "HUESO",
+                "id": 21,
+                "price": 220,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 220,
+                      "productForSaleId": 5757750
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 220,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "1",
+                      "id": 5,
+                      "price": 220,
+                      "productForSaleId": 5757745
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "CLEOPATRA COLALESS NEGRO",
     "productLineId": "3324"
   }
 ]

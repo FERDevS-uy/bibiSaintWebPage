@@ -5,7 +5,11 @@ exports.parsePrice = parsePrice;
 function formatPriceNumber(n) {
     if (!isFinite(n))
         return '';
-    const integerPart = Math.trunc(n);
+    const absValue = Math.abs(n);
+    const baseInteger = Math.trunc(absValue);
+    const decimalPart = absValue - baseInteger;
+    const roundedInteger = decimalPart + 1e-9 >= 0.6 ? baseInteger + 1 : baseInteger;
+    const integerPart = n < 0 ? -roundedInteger : roundedInteger;
     return integerPart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 function parsePrice(value, multiplier = 1) {

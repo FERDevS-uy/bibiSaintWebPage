@@ -5,111 +5,6 @@
       "name": "BRAND"
     },
     "code": "125748",
-    "colorId": 9,
-    "description": "Remera escote en v con recorte y frunces en bajo busto, manga corta.",
-    "description2": "Realizada en jersey fine",
-    "description3": "Calce clásico",
-    "id": 41770,
-    "images": [
-      "125748_20_1.jpg",
-      "125748_9_1.jpg"
-    ],
-    "mainImage": "125748_9_1.jpg",
-    "name": "SILVI REMERA",
-    "price": 340,
-    "price1": 490,
-    "productLine": {
-      "id": 3326,
-      "name": "REMERAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "PRECIO REBAJADO",
-          "id": 6,
-          "price": 340,
-          "price1": 490,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#FFFDE6",
-                "description": "CRUDO",
-                "id": 20,
-                "price": 340,
-                "price1": 490,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "40",
-                      "id": 50,
-                      "price": 340,
-                      "price1": 490,
-                      "productForSaleId": 5760658
-                    },
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 340,
-                      "price1": 490,
-                      "productForSaleId": 5760657
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#EF1635",
-                "description": "ROJO",
-                "id": 9,
-                "price": 340,
-                "price1": 490,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "40",
-                      "id": 50,
-                      "price": 340,
-                      "price1": 490,
-                      "productForSaleId": 5760654
-                    },
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 340,
-                      "price1": 490,
-                      "productForSaleId": 5760653
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 340,
-                      "price1": 490,
-                      "productForSaleId": 5760655
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "SILVI REMERA ROJO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125748",
     "colorId": 20,
     "description": "Remera escote en v con recorte y frunces en bajo busto, manga corta.",
     "description2": "Realizada en jersey fine",
@@ -207,6 +102,111 @@
       ]
     },
     "variationName": "SILVI REMERA CRUDO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125748",
+    "colorId": 9,
+    "description": "Remera escote en v con recorte y frunces en bajo busto, manga corta.",
+    "description2": "Realizada en jersey fine",
+    "description3": "Calce clásico",
+    "id": 41770,
+    "images": [
+      "125748_20_1.jpg",
+      "125748_9_1.jpg"
+    ],
+    "mainImage": "125748_9_1.jpg",
+    "name": "SILVI REMERA",
+    "price": 340,
+    "price1": 490,
+    "productLine": {
+      "id": 3326,
+      "name": "REMERAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "PRECIO REBAJADO",
+          "id": 6,
+          "price": 340,
+          "price1": 490,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFDE6",
+                "description": "CRUDO",
+                "id": 20,
+                "price": 340,
+                "price1": 490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 340,
+                      "price1": 490,
+                      "productForSaleId": 5760658
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 340,
+                      "price1": 490,
+                      "productForSaleId": 5760657
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#EF1635",
+                "description": "ROJO",
+                "id": 9,
+                "price": 340,
+                "price1": 490,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 340,
+                      "price1": 490,
+                      "productForSaleId": 5760654
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 340,
+                      "price1": 490,
+                      "productForSaleId": 5760653
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 340,
+                      "price1": 490,
+                      "productForSaleId": 5760655
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "SILVI REMERA ROJO",
     "productLineId": "3324"
   }
 ]

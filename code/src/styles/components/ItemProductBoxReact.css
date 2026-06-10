@@ -56,6 +56,14 @@
   box-shadow: none;
 }
 
+/* Botas largas/caña alta: la imagen es muy vertical y se recorta la suela.
+   Usamos contain para que se vea completa y centramos. */
+.listaProductos .card-img-link img.producto_card__img--tall {
+  object-fit: contain;
+  object-position: center;
+  background: #fcfcfc;
+}
+
 .listaProductos .card-info {
   padding: 10px 12px 12px;
   display: flex;

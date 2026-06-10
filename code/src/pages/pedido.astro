@@ -334,7 +334,14 @@ import { config } from "src/config";
   import { formatPrice, parsePrice } from "@utils/price";
   import { normalizeSize } from "@utils/sizes";
   import type Product from "src/types/product";
-  import { providerFrom, fetchKaiLive, fetchMartinaLive, fetchNuvexLive } from "../client/stockService";
+  import {
+    applyProviderMarkupValue,
+    fetchAlondraLive,
+    fetchKaiLive,
+    fetchMartinaLive,
+    fetchNuvexLive,
+    providerFrom,
+  } from "../client/stockService";
 
   const params = new URLSearchParams(window.location.search);
   const idFromQuery = params.get("id");
@@ -696,7 +703,7 @@ import { config } from "src/config";
         if (provider === "martina") {
           const data = await fetchMartinaLive(producto.baseId, martinaCode, martinaCountryId);
 
-          const livePrice = parsePrice(String(data?.price || ""));
+          const livePrice = applyProviderMarkupValue(data?.price, provider);
           if (livePrice > 0) {
             producto.currentUnitPrice = livePrice;
             updatePedidoRowPrice(rowKey, livePrice);
@@ -734,7 +741,7 @@ import { config } from "src/config";
         if (provider === "kaideco") {
           const data = await fetchKaiLive(producto.providerLink);
 
-          const livePrice = parsePrice(String(data?.price || ""));
+          const livePrice = applyProviderMarkupValue(data?.price, provider);
           if (livePrice > 0) {
             producto.currentUnitPrice = livePrice;
             updatePedidoRowPrice(rowKey, livePrice);
@@ -770,6 +777,32 @@ import { config } from "src/config";
 
           setStockState(rowKey, "pending", "A confirmar");
           setStatus(rowKey, "No se pudo confirmar stock en Nuvex. El precio se mantiene según catálogo.");
+          return;
+        }
+
+        if (provider === "alondra") {
+          const data = await fetchAlondraLive(producto.baseId);
+
+          const livePrice = applyProviderMarkupValue(data?.price, provider);
+          if (livePrice > 0) {
+            producto.currentUnitPrice = livePrice;
+            updatePedidoRowPrice(rowKey, livePrice);
+          }
+
+          if (data?.inStock === true) {
+            setStockState(rowKey, "ok", "Disponible");
+            setStatus(rowKey, "Stock y precio actualizados desde Alondra.", "ok");
+            return;
+          }
+
+          if (data?.inStock === false) {
+            setStockState(rowKey, "error", "Sin stock");
+            setStatus(rowKey, "Sin stock en Alondra. Precio actualizado si estuvo disponible.", "error");
+            return;
+          }
+
+          setStockState(rowKey, "pending", "A confirmar");
+          setStatus(rowKey, "No se pudo confirmar stock en Alondra. Precio actualizado si hubo respuesta.");
           return;
         }
 

@@ -5,124 +5,6 @@
       "name": "BRAND"
     },
     "code": "125655",
-    "colorId": 5,
-    "copy": "JON SHORT  NEGRO 2 5 4 3 ",
-    "description": "Short tiro medio con cintura elastizada y bolsillos laterales. De calce holgado y confortable. ",
-    "description2": "Realizado en rustico",
-    "description3": "Calce amplio",
-    "id": 41650,
-    "images": [
-      "125655_2_1.jpg",
-      "125655_2_2.jpg",
-      "125655_2_3.jpg",
-      "125655_2_4.jpg",
-      "125655_5_1.jpg"
-    ],
-    "mainImage": "125655_5_1.jpg",
-    "name": "JON SHORT ",
-    "price": 1100,
-    "productLine": {
-      "id": 4764,
-      "name": "BERMUDAS Y SHORTS",
-      "parent": {
-        "id": 3325,
-        "name": "HOMBRE"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 1100,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#60636A",
-                "description": "GRIS",
-                "id": 5,
-                "price": 1100,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 1100,
-                      "productForSaleId": 5757011
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 1100,
-                      "productForSaleId": 5757013
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 1100,
-                      "productForSaleId": 5757012
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 1100,
-                      "productForSaleId": 5757014
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 1100,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "2",
-                      "id": 20,
-                      "price": 1100,
-                      "productForSaleId": 5757009
-                    },
-                    {
-                      "description": "3",
-                      "id": 30,
-                      "price": 1100,
-                      "productForSaleId": 5757008
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 1100,
-                      "productForSaleId": 5757007
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 1100,
-                      "productForSaleId": 5757010
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "JON SHORT  GRIS",
-    "productLineId": "3325"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125655",
     "colorId": 2,
     "copy": "JON SHORT  NEGRO 2 5 4 3 ",
     "description": "Short tiro medio con cintura elastizada y bolsillos laterales. De calce holgado y confortable. ",
@@ -233,6 +115,124 @@
       ]
     },
     "variationName": "JON SHORT  NEGRO",
+    "productLineId": "3325"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125655",
+    "colorId": 5,
+    "copy": "JON SHORT  NEGRO 2 5 4 3 ",
+    "description": "Short tiro medio con cintura elastizada y bolsillos laterales. De calce holgado y confortable. ",
+    "description2": "Realizado en rustico",
+    "description3": "Calce amplio",
+    "id": 41650,
+    "images": [
+      "125655_2_1.jpg",
+      "125655_2_2.jpg",
+      "125655_2_3.jpg",
+      "125655_2_4.jpg",
+      "125655_5_1.jpg"
+    ],
+    "mainImage": "125655_5_1.jpg",
+    "name": "JON SHORT ",
+    "price": 1100,
+    "productLine": {
+      "id": 4764,
+      "name": "BERMUDAS Y SHORTS",
+      "parent": {
+        "id": 3325,
+        "name": "HOMBRE"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 1100,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#60636A",
+                "description": "GRIS",
+                "id": 5,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1100,
+                      "productForSaleId": 5757011
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1100,
+                      "productForSaleId": 5757013
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1100,
+                      "productForSaleId": 5757012
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1100,
+                      "productForSaleId": 5757014
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 1100,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "2",
+                      "id": 20,
+                      "price": 1100,
+                      "productForSaleId": 5757009
+                    },
+                    {
+                      "description": "3",
+                      "id": 30,
+                      "price": 1100,
+                      "productForSaleId": 5757008
+                    },
+                    {
+                      "description": "4",
+                      "id": 47,
+                      "price": 1100,
+                      "productForSaleId": 5757007
+                    },
+                    {
+                      "description": "5",
+                      "id": 57,
+                      "price": 1100,
+                      "productForSaleId": 5757010
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "JON SHORT  GRIS",
     "productLineId": "3325"
   }
 ]

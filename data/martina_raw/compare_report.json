@@ -1,10 +1,42 @@
 {
-  "totalNew": 596,
+  "totalNew": 716,
   "totalCopy": 907,
-  "matched": 477,
-  "unmatchedNew": 119,
-  "missingInNew": 436,
+  "matched": 476,
+  "unmatchedNew": 240,
+  "missingInNew": 437,
   "unmatchedSample": [
+    {
+      "id": "408",
+      "name": "ACOLCHADO PLUMA 220 x 240 HOME CLASS"
+    },
+    {
+      "id": "409",
+      "name": "ACOLCHADO PLUMA 240x260 HOME CLASS"
+    },
+    {
+      "id": "407",
+      "name": "ACOLCHADO PLUMA 150 x 220 HOME CLASS"
+    },
+    {
+      "id": "414",
+      "name": "FRAZADA KING CORD/FLANNEL L 240x260"
+    },
+    {
+      "id": "413",
+      "name": "FRAZADA 2PZA CORD/FLANNEL L 220x240"
+    },
+    {
+      "id": "411",
+      "name": "FRAZADA 2PZA C/CORDERITO POLAR HOJAS MENTA"
+    },
+    {
+      "id": "412",
+      "name": "FRAZADA 1PZA CORD/FLANNEL L 150x220"
+    },
+    {
+      "id": "410",
+      "name": "FRAZADA 1PZA C/CORDERITO POLAR"
+    },
     {
       "id": "282",
       "name": "Canasto Mimbre Beige"
@@ -28,6 +60,18 @@
     {
       "id": "402",
       "name": "JUEGO DE MESA 3 EN 1 29 CM"
+    },
+    {
+      "id": "406",
+      "name": "CONSOLA POP IT PATO"
+    },
+    {
+      "id": "405",
+      "name": "CONSOLA POP IT OSO"
+    },
+    {
+      "id": "404",
+      "name": "CONSOLA POP IT ASTRONAUTA"
     },
     {
       "id": "mdt-42370",
@@ -80,50 +124,6 @@
     {
       "id": "mdt-42809",
       "name": "HILLS BLAZER"
-    },
-    {
-      "id": "mdt-42808",
-      "name": "MOSA CHAQUETA"
-    },
-    {
-      "id": "mdt-42805",
-      "name": "BROCA REMERA"
-    },
-    {
-      "id": "mdt-42804",
-      "name": "ORIZA CAMISA"
-    },
-    {
-      "id": "mdt-42770",
-      "name": "BRITA REMERA M/LARGA"
-    },
-    {
-      "id": "mdt-42769",
-      "name": "AMOENA REMERA M/LARGA"
-    },
-    {
-      "id": "mdt-42768",
-      "name": "ROSETA POLERA"
-    },
-    {
-      "id": "mdt-42767",
-      "name": "JOSEFA BLUSA"
-    },
-    {
-      "id": "mdt-42766",
-      "name": "GRECIA BUZO"
-    },
-    {
-      "id": "mdt-42684",
-      "name": "NURIT REMERA"
-    },
-    {
-      "id": "mdt-42669",
-      "name": "ANTONIA REMERA M/LARGA"
-    },
-    {
-      "id": "mdt-42668",
-      "name": "VIVIANA REMERA"
     }
   ],
   "missingSample": [
@@ -146,6 +146,14 @@
     {
       "id": "290",
       "name": "Canasto Mimbre Rectangular"
+    },
+    {
+      "id": "29",
+      "name": "Fuente Asadera Rectangular"
+    },
+    {
+      "id": "31",
+      "name": "Bandeja Pizzera Redonda"
     },
     {
       "id": "207",
@@ -238,14 +246,6 @@
     {
       "id": "mdt-41034",
       "name": "DELIA REMERA"
-    },
-    {
-      "id": "mdt-41032",
-      "name": "FLOPI REMERON"
-    },
-    {
-      "id": "mdt-41031",
-      "name": "BOSNIA CAMPERA"
     }
   ]
 }
