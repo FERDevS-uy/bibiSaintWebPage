@@ -3,6 +3,8 @@ declare module "@components/ProductGallery.jsx" {
   const ProductGallery: ComponentType<{
     images?: string[];
     name?: string;
+    description?: string;
+    id?: string;
   }>;
   export default ProductGallery;
 }

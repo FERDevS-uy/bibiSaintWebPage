@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { isTallBoot } from "../utils/isTallBoot";
 import "../styles/components/ProductGallery.css";
 
 /**
@@ -8,7 +9,7 @@ import "../styles/components/ProductGallery.css";
  * - Si TODAS las imagenes fallan al cargar, muestra un mensaje indicando
  *   que el producto puede no estar en venta.
  */
-export default function ProductGallery({ images = [], name = "" }) {
+export default function ProductGallery({ images = [], name = "", description = "", id = "" }) {
   const initial = Array.isArray(images) ? images.filter(Boolean) : [];
   const [safeImages, setSafeImages] = useState(initial);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -61,12 +62,13 @@ export default function ProductGallery({ images = [], name = "" }) {
   }
 
   const activeSrc = safeImages[activeIndex];
+  const tall = isTallBoot(name, description, id);
 
   return (
     <div className="gallery">
       <img
         ref={mainImgRef}
-        className="mainImg"
+        className={`mainImg${tall ? " mainImg--tall" : ""}`}
         src={activeSrc}
         alt={name}
         loading="lazy"
@@ -82,7 +84,7 @@ export default function ProductGallery({ images = [], name = "" }) {
                 key={`${src}-${i}`}
                 src={src}
                 alt=""
-                className={`thumb${i === activeIndex ? " thumb-active" : ""}`}
+                className={`thumb${i === activeIndex ? " thumb-active" : ""}${tall ? " thumb--tall" : ""}`}
                 loading="lazy"
                 decoding="async"
                 onClick={() => setActiveIndex(i)}

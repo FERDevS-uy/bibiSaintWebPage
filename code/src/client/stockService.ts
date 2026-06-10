@@ -1,11 +1,73 @@
 import { normalizeSizes } from "../utils/sizes";
 
-export function providerFrom(id: string, link: string): "martina" | "nuvex" | "kaideco" | "unknown" {
+export type Provider = "martina" | "nuvex" | "kaideco" | "alondra" | "unknown";
+
+const PROVIDER_MULTIPLIER: Record<Exclude<Provider, "unknown">, number> = {
+  martina: 1,
+  nuvex: 1.4,
+  kaideco: 1.2,
+  alondra: 1.22,
+};
+
+function parseLoosePrice(rawPrice: unknown): number {
+  const value = String(rawPrice ?? "")
+    .trim()
+    .replace(/\s+/g, "")
+    .replace(/[^\d,.-]/g, "");
+
+  if (!value) return 0;
+
+  const hasComma = value.includes(",");
+  const hasDot = value.includes(".");
+
+  if (hasComma && hasDot) {
+    return Number(value.replace(/\./g, "").replace(",", "."));
+  }
+
+  if (hasComma) {
+    return Number(value.replace(",", "."));
+  }
+
+  if (hasDot) {
+    const parts = value.split(".");
+    const looksLikeThousands =
+      parts.length > 1 && parts.slice(1).every((part) => part.length === 3);
+
+    if (looksLikeThousands) {
+      return Number(parts.join(""));
+    }
+  }
+
+  return Number(value);
+}
+
+function formatUyPrice(price: number): string {
+  const value = Number.isFinite(price) ? Math.round(price) : 0;
+  return value.toLocaleString("es-UY");
+}
+
+export function applyProviderMarkupValue(rawPrice: unknown, provider: Provider): number {
+  const base = parseLoosePrice(rawPrice);
+  if (!Number.isFinite(base) || base <= 0) return 0;
+
+  if (provider === "unknown") return Math.round(base);
+
+  const multiplier = PROVIDER_MULTIPLIER[provider] ?? 1;
+  return Math.round(base * multiplier);
+}
+
+export function applyProviderMarkup(rawPrice: unknown, provider: Provider): string {
+  const adjusted = applyProviderMarkupValue(rawPrice, provider);
+  return adjusted > 0 ? formatUyPrice(adjusted) : "";
+}
+
+export function providerFrom(id: string, link: string): Provider {
   const idLower = id.toLowerCase();
   const linkLower = link.toLowerCase();
 
   if (idLower.startsWith("mdt-")) return "martina";
   if (idLower.startsWith("kai-") || linkLower.includes("kaideco.uy")) return "kaideco";
+  if (idLower.startsWith("alo-") || linkLower.includes("alondra.com.uy") || linkLower.includes("alondra-ecommerce")) return "alondra";
   if (linkLower.includes("nuvex.uy")) return "nuvex";
   return "unknown";
 }
@@ -213,7 +275,8 @@ export async function fetchNuvexLive(providerUrl: string) {
     const payload = await response.json();
     return {
       provider: "nuvex" as const,
-      price: String(payload?.price ?? "").trim(),
+      // Politica runtime: para Nuvex solo se valida stock en vivo.
+      price: "",
       inStock: typeof payload?.inStock === "boolean" ? payload.inStock : null,
       source: String(payload?.source ?? ""),
     };
@@ -223,6 +286,67 @@ export async function fetchNuvexLive(providerUrl: string) {
       price: "",
       inStock: null,
       source: "nuvex-web",
+    };
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
+const ALONDRA_API_BASE = "https://alondra-ecommerce-be.sitios.uy/api";
+
+function parseAlondraInStock(product: any): boolean | null {
+  if (typeof product?.listed === "boolean") return product.listed;
+  if (typeof product?.in_stock === "boolean") return product.in_stock;
+  if (typeof product?.stock === "number") return product.stock > 0;
+  if (typeof product?.quantity === "number") return product.quantity > 0;
+  return null;
+}
+
+export async function fetchAlondraLive(productId: string) {
+  const alondraId = String(productId || "").replace(/^alo-/i, "").trim();
+  if (!alondraId) {
+    return {
+      provider: "alondra" as const,
+      price: "",
+      inStock: null,
+    };
+  }
+
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 7000);
+
+  try {
+    const endpoint = `${ALONDRA_API_BASE}/products/${encodeURIComponent(alondraId)}`;
+    const response = await fetch(endpoint, {
+      cache: "no-store",
+      signal: controller.signal,
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      return {
+        provider: "alondra" as const,
+        price: "",
+        inStock: null,
+      };
+    }
+
+    const payload = await response.json();
+    const product = Array.isArray(payload) ? payload[0] : payload;
+    const rawPrice = product?.new_price ?? product?.price ?? "";
+
+    return {
+      provider: "alondra" as const,
+      price: String(rawPrice ?? "").trim(),
+      inStock: parseAlondraInStock(product),
+    };
+  } catch {
+    return {
+      provider: "alondra" as const,
+      price: "",
+      inStock: null,
     };
   } finally {
     window.clearTimeout(timeout);

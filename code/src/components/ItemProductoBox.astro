@@ -3,12 +3,14 @@ import type Product from "../types/product";
 import { config } from "../config";
 import AddToCartButton from "./AddToCartButton.astro";
 import getColors from "@utils/getColors";
+import { isTallBoot } from "@utils/isTallBoot";
 
 export interface Props {
   producto: Product;
 }
 
 const { producto: p } = Astro.props;
+const tall = isTallBoot(p.name, p.description, p.id);
 
 const colorKeysFromProvider = Array.isArray(p.colors)
   ? p.colors
@@ -20,9 +22,9 @@ const fallbackColorKeys = getColors(p.name).map((c) => c.trim().toLowerCase());
 const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKeys])).join(",");
 ---
 
-<article class="producto_card" data-colors={colors} data-name={p.name} data-price={p.price}>
+<article class={`producto_card${tall ? " producto_card--tall" : ""}`} data-colors={colors} data-name={p.name} data-price={p.price}>
   <a href={`${import.meta.env.BASE_URL}/producto/${p.id}`} class="card-img-link" title={p.name}>
-    <img src={p.img[0]} alt={p.name} />
+    <img src={p.img[0]} alt={p.name} class={tall ? "producto_card__img--tall" : undefined} />
   </a>
 
   <div class="card-info">
@@ -84,6 +86,14 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
     object-position: top;
     display: block;
     transition: transform 0.35s ease;
+  }
+
+  /* Botas largas/caña alta: la imagen es muy vertical y se recorta la suela.
+     Usamos contain para que se vea completa y centramos. */
+  img.producto_card__img--tall {
+    object-fit: contain !important;
+    object-position: center !important;
+    background: #fcfcfc;
   }
 
   .producto_card:hover img {

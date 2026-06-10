@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "scrap": "node src/utils/fetch_productos.js",
-    "providers:sync": "pnpm --dir ../webScrappingTool run dev"
+    "providers:sync": "pnpm --dir ../webScrappingTool exec ts-node --prefer-ts-exts src/index.ts",
+    "images:remove-bg:boots": "node scripts/removeBootBackgrounds.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",

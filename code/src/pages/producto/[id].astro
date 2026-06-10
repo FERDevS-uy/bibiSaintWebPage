@@ -9,6 +9,7 @@ import {
   getDisplayCategoryName,
   getDisplaySubcategories,
 } from "@utils/categoryNormalization";
+import { isTallBoot } from "@utils/isTallBoot";
 
 export function getStaticPaths() {
   const productos = cargarProductos();
@@ -60,13 +61,21 @@ const groupSubcategory = detailedSubcategory
 const leafSubcategory = detailedSubcategory || displaySubcategories[0];
 
 const isRopa = displayCategoryName === "Ropa";
+const disableColorSelection = /^tal-/i.test(String(id || ""));
 const runtimeStockCheckEnabled = import.meta.env.PUBLIC_ENABLE_STOCK_CHECK !== "false";
 const primaryProviderLink = paymentLink?.[0]?.url ?? "";
 const martinaCode = import.meta.env.PUBLIC_MARTINA_CODE || "202605";
 const martinaCountryId = import.meta.env.PUBLIC_MARTINA_COUNTRY_ID || "598";
 const isMartinaProduct = String(id).toLowerCase().startsWith("mdt-");
 const isKaiProduct = String(id).toLowerCase().startsWith("kai-") || primaryProviderLink.includes("kaideco.uy/products/");
-const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || isKaiProduct);
+const isNuvexProduct = primaryProviderLink.includes("nuvex.uy");
+const isAlondraProduct =
+  String(id).toLowerCase().startsWith("alo-")
+  || primaryProviderLink.includes("alondra.com.uy")
+  || primaryProviderLink.includes("alondra-ecommerce");
+const showRuntimeStockCheck =
+  runtimeStockCheckEnabled
+  && (isMartinaProduct || isKaiProduct || isNuvexProduct || isAlondraProduct);
 ---
 
 <Layout
@@ -103,7 +112,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     <div class="product_layout">
       <!-- LEFT IMAGE SECTION (isla React, carga lazy) -->
       {/* Galería como isla React: carga lazy, marca producto como no disponible si fallan las imágenes */}
-      <ProductGallery images={img} name={name} client:visible />
+      <ProductGallery images={img} name={name} description={description} id={id} client:visible />
       <div id="productImagesData" data-images={JSON.stringify(img)} style="display:none"></div>
 
       <!-- RIGHT INFO -->
@@ -127,13 +136,14 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
 
         <div
           id="colorsBlock"
-          class={`colors-block${colors && colors.length > 0 ? "" : " hidden"}`}
+          data-disable-selection={disableColorSelection ? "true" : "false"}
+          class={`colors-block${colors && colors.length > 0 && !disableColorSelection ? "" : " hidden"}`}
         >
           <strong>
             Color: <span id="colorName" class="color-name">{colors?.[0]?.name ?? ""}</span>
           </strong>
           <div class="colors" id="colorsSelector">
-            {colors && colors.length > 0 && colors.map((c, i) => (
+            {colors && colors.length > 0 && !disableColorSelection && colors.map((c, i) => (
               <button
                 type="button"
                 class={`swatch${i === 0 ? " selected" : ""}`}
@@ -210,17 +220,20 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           <h2>Productos Relacionados</h2>
 
           <div class="relatedList">
-            {relacionados.map((prod: any) => (
+            {relacionados.map((prod: any) => {
+              const tall = isTallBoot(prod.name, prod.description, prod.id);
+              return (
               <div class="card">
                 <a href={`${import.meta.env.BASE_URL}/producto/${prod.id}`}>
-                  <div class="cardImg">
-                    <img class="cardImg" src={prod.img[0]} alt={prod.name} />
+                  <div class={`cardImg${tall ? " cardImg--tall" : ""}`}>
+                    <img class={`cardImg${tall ? " cardImg--tall" : ""}`} src={prod.img[0]} alt={prod.name} />
                   </div>
                   <span class="cardTitle">{prod.name}</span>
                   <span class="cardPrice">${prod.price}</span>
                 </a>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )
@@ -670,6 +683,13 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     margin-bottom: 10px;
   }
 
+  /* Botas largas: que la imagen se vea completa (sin recorte) */
+  .cardImg--tall {
+    object-fit: contain;
+    object-position: center;
+    background: #fcfcfc;
+  }
+
   .cardTitle {
     font-size: 14px;
     font-weight: 700;
@@ -801,6 +821,12 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     const sizesSelector = document.getElementById("sizesSelector");
     const sizesBlock = document.getElementById("sizesBlock");
     const sizeFeedback = document.getElementById("sizeFeedback");
+    const colorsBlockRoot = document.getElementById("colorsBlock") as HTMLElement | null;
+    const colorSelectionDisabled =
+      colorsBlockRoot?.dataset.disableSelection === "true";
+    if (colorSelectionDisabled && colorsBlockRoot) {
+      colorsBlockRoot.classList.add("hidden");
+    }
     let selectedSize = "";
     let requiresSizeSelection = Boolean(
       sizesSelector && sizesBlock && !sizesBlock.classList.contains("hidden"),
@@ -913,7 +939,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
 
     // Fallback de colores para proveedores sin verificación en vivo (ej: Nuvex).
     // En Martina/Kai la lógica completa vive más abajo junto al checkStock.
-    if (!checkStockBtn) {
+    if (!checkStockBtn && !colorSelectionDisabled) {
       const colorsSelector = document.getElementById("colorsSelector");
       const colorNameEl = document.getElementById("colorName");
 
@@ -1184,14 +1210,67 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         });
       };
 
-      const providerFrom = (id: string, link: string): "martina" | "nuvex" | "kaideco" | "unknown" => {
+      const providerFrom = (id: string, link: string): "martina" | "nuvex" | "kaideco" | "alondra" | "unknown" => {
         const idLower = id.toLowerCase();
         const linkLower = link.toLowerCase();
 
         if (idLower.startsWith("mdt-")) return "martina";
         if (idLower.startsWith("kai-") || linkLower.includes("kaideco.uy")) return "kaideco";
+        if (idLower.startsWith("alo-") || linkLower.includes("alondra.com.uy") || linkLower.includes("alondra-ecommerce")) return "alondra";
         if (linkLower.includes("nuvex.uy")) return "nuvex";
         return "unknown";
+      };
+
+      const providerMultiplier = {
+        martina: 1,
+        nuvex: 1.4,
+        kaideco: 1.2,
+        alondra: 1.22,
+        unknown: 1,
+      } as const;
+
+      const parseLoosePrice = (rawPrice: unknown): number => {
+        const value = String(rawPrice ?? "")
+          .trim()
+          .replace(/\s+/g, "")
+          .replace(/[^\d,.-]/g, "");
+
+        if (!value) return 0;
+
+        const hasComma = value.includes(",");
+        const hasDot = value.includes(".");
+
+        if (hasComma && hasDot) {
+          return Number(value.replace(/\./g, "").replace(",", "."));
+        }
+
+        if (hasComma) {
+          return Number(value.replace(",", "."));
+        }
+
+        if (hasDot) {
+          const parts = value.split(".");
+          const looksLikeThousands =
+            parts.length > 1 && parts.slice(1).every((part) => part.length === 3);
+
+          if (looksLikeThousands) {
+            return Number(parts.join(""));
+          }
+        }
+
+        return Number(value);
+      };
+
+      const applyProviderMarkup = (
+        rawPrice: unknown,
+        provider: "martina" | "nuvex" | "kaideco" | "alondra" | "unknown",
+      ): string => {
+        const base = parseLoosePrice(rawPrice);
+        if (!Number.isFinite(base) || base <= 0) return "";
+
+        const multiplier = providerMultiplier[provider] ?? 1;
+        const adjusted = Math.round(base * multiplier);
+        return adjusted.toLocaleString("es-UY");
       };
 
       const setStatus = (message: string, tone: "ok" | "error" | "neutral" = "neutral") => {
@@ -1278,6 +1357,10 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
       const renderColors = (
         colors: Array<{ id: number; hex: string; name: string; sizes?: string[] }>,
       ) => {
+        if (colorSelectionDisabled) {
+          if (colorsBlock) colorsBlock.classList.add("hidden");
+          return;
+        }
         if (!colorsSelector || !colorsBlock) return;
 
         // Indexar imágenes previas server-rendered (por id) para preservarlas
@@ -1308,7 +1391,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         colorsBlock.classList.remove("hidden");
       };
 
-      if (colorsSelector) {
+      if (colorsSelector && !colorSelectionDisabled) {
         colorsSelector.addEventListener("click", (event) => {
           const target = event.target as HTMLElement;
           const sw = target.closest(".swatch") as HTMLButtonElement | null;
@@ -1333,7 +1416,9 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
               document.getElementById("addToCartBtn")?.getAttribute("data-id") || "";
             const pidLower = productIdForInit.toLowerCase();
             const isNuvexProduct =
-              !pidLower.startsWith("mdt-") && !pidLower.startsWith("kai-");
+              !pidLower.startsWith("mdt-")
+              && !pidLower.startsWith("kai-")
+              && !pidLower.startsWith("alo-");
             if (isNuvexProduct) {
               try {
                 const raw = firstSwatch.dataset.colorImages;
@@ -1564,6 +1649,116 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         }
       };
 
+      const fetchNuvexLive = async (providerUrl: string) => {
+        if (!providerUrl || !providerUrl.toLowerCase().includes("nuvex.uy")) {
+          return {
+            provider: "nuvex" as const,
+            price: "",
+            inStock: null,
+          };
+        }
+
+        const endpoint = new URL(`${import.meta.env.BASE_URL || "/"}api/provider-nuvex`, window.location.origin);
+        endpoint.searchParams.set("url", providerUrl);
+
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 7000);
+
+        try {
+          const response = await fetch(endpoint.toString(), {
+            cache: "no-store",
+            signal: controller.signal,
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            return {
+              provider: "nuvex" as const,
+              price: "",
+              inStock: null,
+            };
+          }
+
+          const payload = await response.json();
+          return {
+            provider: "nuvex" as const,
+            price: String(payload?.price ?? "").trim(),
+            inStock: typeof payload?.inStock === "boolean" ? payload.inStock : null,
+          };
+        } catch {
+          return {
+            provider: "nuvex" as const,
+            price: "",
+            inStock: null,
+          };
+        } finally {
+          window.clearTimeout(timeout);
+        }
+      };
+
+      const fetchAlondraLive = async (productId: string) => {
+        const alondraId = String(productId || "").replace(/^alo-/i, "").trim();
+        if (!alondraId) {
+          return {
+            provider: "alondra" as const,
+            price: "",
+            inStock: null,
+          };
+        }
+
+        const endpoint = `https://alondra-ecommerce-be.sitios.uy/api/products/${encodeURIComponent(alondraId)}`;
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 7000);
+
+        try {
+          const response = await fetch(endpoint, {
+            cache: "no-store",
+            signal: controller.signal,
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            return {
+              provider: "alondra" as const,
+              price: "",
+              inStock: null,
+            };
+          }
+
+          const payload = await response.json();
+          const product = Array.isArray(payload) ? payload[0] : payload;
+          const rawPrice = product?.new_price ?? product?.price ?? "";
+          const inStock =
+            typeof product?.listed === "boolean"
+              ? product.listed
+              : typeof product?.in_stock === "boolean"
+                ? product.in_stock
+                : typeof product?.stock === "number"
+                  ? product.stock > 0
+                  : typeof product?.quantity === "number"
+                    ? product.quantity > 0
+                    : null;
+
+          return {
+            provider: "alondra" as const,
+            price: String(rawPrice ?? "").trim(),
+            inStock,
+          };
+        } catch {
+          return {
+            provider: "alondra" as const,
+            price: "",
+            inStock: null,
+          };
+        } finally {
+          window.clearTimeout(timeout);
+        }
+      };
+
       checkStockBtn.addEventListener("click", async () => {
         const productId = checkStockBtn.dataset.productId ?? "";
         if (!productId) return;
@@ -1579,7 +1774,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           if (provider === "martina") {
             const data = await fetchMartinaLive(productId);
 
-            const nextPrice = String(data?.price ?? "").trim();
+            const nextPrice = applyProviderMarkup(data?.price, provider);
             if (nextPrice) {
               priceEl.textContent = `$${nextPrice}`;
             }
@@ -1633,7 +1828,7 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
           } else if (provider === "kaideco") {
             const data = await fetchKaiLive(providerLink);
 
-            const nextPrice = String(data?.price ?? "").trim();
+            const nextPrice = applyProviderMarkup(data?.price, provider);
             if (nextPrice) {
               priceEl.textContent = `$${nextPrice}`;
             }
@@ -1662,6 +1857,39 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
             }
 
             setStatus("Actualizado desde kaideco.", "ok");
+          } else if (provider === "nuvex") {
+            const data = await fetchNuvexLive(providerLink);
+
+            if (data?.inStock === true) {
+              stockBadge.textContent = "En Stock";
+              stockBadge.style.background = "#27ae60";
+              setStatus("Stock verificado en Nuvex. El precio se mantiene según catálogo.", "ok");
+            } else if (data?.inStock === false) {
+              stockBadge.textContent = "Sin stock";
+              stockBadge.style.background = "#a33a3a";
+              setStatus("Sin stock en Nuvex. El precio se mantiene según catálogo.", "error");
+            } else {
+              setStatus("No se pudo confirmar stock en Nuvex. El precio se mantiene según catálogo.");
+            }
+          } else if (provider === "alondra") {
+            const data = await fetchAlondraLive(productId);
+
+            const nextPrice = applyProviderMarkup(data?.price, provider);
+            if (nextPrice) {
+              priceEl.textContent = `$${nextPrice}`;
+            }
+
+            if (data?.inStock === true) {
+              stockBadge.textContent = "En Stock";
+              stockBadge.style.background = "#27ae60";
+              setStatus("Stock y precio actualizados desde Alondra.", "ok");
+            } else if (data?.inStock === false) {
+              stockBadge.textContent = "Sin stock";
+              stockBadge.style.background = "#a33a3a";
+              setStatus("Sin stock en Alondra. Precio actualizado si estuvo disponible.", "error");
+            } else {
+              setStatus("No se pudo confirmar stock en Alondra. Precio actualizado si hubo respuesta.");
+            }
           } else {
             setStatus(
               "Este proveedor no soporta verificacion en vivo desde esta pagina estatica.",
@@ -1681,7 +1909,12 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
         checkStockBtn.dataset.productId ?? "",
         providerLink,
       );
-      if (autoProvider === "martina" || autoProvider === "kaideco") {
+      if (
+        autoProvider === "martina"
+        || autoProvider === "kaideco"
+        || autoProvider === "nuvex"
+        || autoProvider === "alondra"
+      ) {
         // requestIdleCallback si está disponible, sino timeout corto
         const trigger = () => checkStockBtn.click();
         const w = window as any;
@@ -1701,7 +1934,9 @@ const showRuntimeStockCheck = runtimeStockCheckEnabled && (isMartinaProduct || i
     document.getElementById("addToCartBtn")?.getAttribute("data-id") || "";
   const globalPidLower = globalProductId.toLowerCase();
   const globalIsNuvex =
-    !globalPidLower.startsWith("mdt-") && !globalPidLower.startsWith("kai-");
+    !globalPidLower.startsWith("mdt-")
+    && !globalPidLower.startsWith("kai-")
+    && !globalPidLower.startsWith("alo-");
 
   if (globalIsNuvex) {
     try {

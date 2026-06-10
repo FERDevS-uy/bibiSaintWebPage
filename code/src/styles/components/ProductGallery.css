@@ -17,6 +17,18 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
+/* Botas largas/caña alta: usar contain para no recortar la suela. */
+.gallery .mainImg--tall {
+  object-fit: contain;
+  object-position: center;
+}
+
+.gallery .thumb--tall {
+  object-fit: contain !important;
+  object-position: center !important;
+  background: #fcfcfc;
+}
+
 /* Mobile: limitar la altura para evitar páginas demasiado largas cuando hay muchas miniaturas */
 @media (max-width: 767px) {
   .gallery {
@@ -28,6 +40,11 @@
     width: 100%;
     object-fit: cover;
     object-position: top;
+  }
+
+  .gallery .mainImg--tall {
+    object-fit: contain;
+    object-position: center;
   }
 
   .gallery .thumbs {
