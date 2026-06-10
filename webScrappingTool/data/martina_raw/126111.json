@@ -58,12 +58,6 @@
                       "productForSaleId": 5757047
                     },
                     {
-                      "description": "4",
-                      "id": 47,
-                      "price": 2720,
-                      "productForSaleId": 5757050
-                    },
-                    {
                       "description": "5",
                       "id": 57,
                       "price": 2720,
@@ -91,18 +85,6 @@
                       "id": 30,
                       "price": 2720,
                       "productForSaleId": 5757045
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 2720,
-                      "productForSaleId": 5757044
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 2720,
-                      "productForSaleId": 5757046
                     }
                   ]
                 }
@@ -174,12 +156,6 @@
                       "productForSaleId": 5757047
                     },
                     {
-                      "description": "4",
-                      "id": 47,
-                      "price": 2720,
-                      "productForSaleId": 5757050
-                    },
-                    {
                       "description": "5",
                       "id": 57,
                       "price": 2720,
@@ -207,18 +183,6 @@
                       "id": 30,
                       "price": 2720,
                       "productForSaleId": 5757045
-                    },
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 2720,
-                      "productForSaleId": 5757044
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 2720,
-                      "productForSaleId": 5757046
                     }
                   ]
                 }

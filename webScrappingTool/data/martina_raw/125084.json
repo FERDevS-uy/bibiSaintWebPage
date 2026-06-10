@@ -41,25 +41,6 @@
             "id": "color",
             "variationValues": [
               {
-                "colorHex": "#02247F",
-                "description": "AZUL",
-                "id": 7,
-                "price": 1190,
-                "price1": 1490,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 1190,
-                      "price1": 1490,
-                      "productForSaleId": 5753839
-                    }
-                  ]
-                }
-              },
-              {
                 "colorHex": "#EF1635",
                 "description": "ROJO",
                 "id": 9,
@@ -84,93 +65,6 @@
       ]
     },
     "variationName": "FILIPA BUZO ROJO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125084",
-    "colorId": 7,
-    "copy": "Buzo micro polar Filipa",
-    "description": "Buzo 1/2 cierre con cuello alto. Detalle a contra color de cinta en los hombros. Una prenda ideal para este invierno.",
-    "description2": "Realizado en micro polar",
-    "description3": "Calce clásico",
-    "id": 40843,
-    "images": [
-      "125084_7_1.jpg",
-      "125084_7_2.jpg",
-      "125084_9_1.jpg",
-      "125084_9_2.jpg"
-    ],
-    "mainImage": "125084_7_1.jpg",
-    "name": "FILIPA BUZO",
-    "price": 1190,
-    "price1": 1490,
-    "productLine": {
-      "id": 4756,
-      "name": "BUZOS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "PRECIO REBAJADO",
-          "id": 6,
-          "price": 1190,
-          "price1": 1490,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#02247F",
-                "description": "AZUL",
-                "id": 7,
-                "price": 1190,
-                "price1": 1490,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 1190,
-                      "price1": 1490,
-                      "productForSaleId": 5753839
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#EF1635",
-                "description": "ROJO",
-                "id": 9,
-                "price": 1190,
-                "price1": 1490,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "46",
-                      "id": 55,
-                      "price": 1190,
-                      "price1": 1490,
-                      "productForSaleId": 5753843
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "FILIPA BUZO AZUL",
     "productLineId": "3324"
   }
 ]

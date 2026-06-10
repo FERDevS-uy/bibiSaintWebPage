@@ -5,106 +5,6 @@
       "name": "BRAND"
     },
     "code": "123855",
-    "colorId": 2,
-    "copy": "Tiro Corto Anabelle ",
-    "description": "Bombacha tiro corto con detalle de puntilla elastizada en piernas delanteras.",
-    "description2": "Realizado en algodón elastizado",
-    "description3": "Calce al cuerpo",
-    "id": 38851,
-    "images": [
-      "123855_1063_1.jpg",
-      "123855_1063_2.jpg",
-      "123855_2_1.jpg",
-      "123855_2_2.jpg",
-      "123855_2_3.jpg",
-      "123855_2_4.jpg",
-      "123855_2_5.jpg",
-      "123855_452_1.jpg",
-      "123855_452_2.jpg",
-      "123855_452_3.jpg",
-      "123855_45_1.jpg"
-    ],
-    "mainImage": "123855_2_1.jpg",
-    "name": "ANABELLE TIRO CORTO",
-    "price": 350,
-    "productLine": {
-      "id": 3352,
-      "name": "ROPA INTERIOR",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 350,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#D5BD93",
-                "description": "AVELLANA",
-                "id": 452,
-                "price": 350,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "4",
-                      "id": 47,
-                      "price": 350,
-                      "productForSaleId": 5757672
-                    },
-                    {
-                      "description": "5",
-                      "id": 57,
-                      "price": 350,
-                      "productForSaleId": 5757673
-                    },
-                    {
-                      "description": "6",
-                      "id": 59,
-                      "price": 350,
-                      "productForSaleId": 5757674
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 350,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "6",
-                      "id": 59,
-                      "price": 350,
-                      "productForSaleId": 5757652
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "ANABELLE TIRO CORTO NEGRO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "123855",
     "colorId": 452,
     "copy": "Tiro Corto Anabelle ",
     "description": "Bombacha tiro corto con detalle de puntilla elastizada en piernas delanteras.",
@@ -170,23 +70,6 @@
                       "id": 59,
                       "price": 350,
                       "productForSaleId": 5757674
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 350,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "6",
-                      "id": 59,
-                      "price": 350,
-                      "productForSaleId": 5757652
                     }
                   ]
                 }

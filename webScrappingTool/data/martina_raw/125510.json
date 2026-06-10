@@ -5,7 +5,7 @@
       "name": "BRAND"
     },
     "code": "125510",
-    "colorId": 32,
+    "colorId": 452,
     "copy": "Bombacha culotte Neve",
     "description": "Culotte básico con costura central.",
     "description2": "Realizado en algodon elastizado",
@@ -17,7 +17,7 @@
       "125510_32_1.jpg",
       "125510_452_1.jpg"
     ],
-    "mainImage": "125510_32_1.jpg",
+    "mainImage": "125510_452_1.jpg",
     "name": "NEVE CULOTTE",
     "price": 290,
     "productLine": {
@@ -177,7 +177,7 @@
         }
       ]
     },
-    "variationName": "NEVE CULOTTE GRIS MELANGE",
+    "variationName": "NEVE CULOTTE AVELLANA",
     "productLineId": "3324"
   },
   {
@@ -548,7 +548,7 @@
       "name": "BRAND"
     },
     "code": "125510",
-    "colorId": 452,
+    "colorId": 32,
     "copy": "Bombacha culotte Neve",
     "description": "Culotte básico con costura central.",
     "description2": "Realizado en algodon elastizado",
@@ -560,7 +560,7 @@
       "125510_32_1.jpg",
       "125510_452_1.jpg"
     ],
-    "mainImage": "125510_452_1.jpg",
+    "mainImage": "125510_32_1.jpg",
     "name": "NEVE CULOTTE",
     "price": 290,
     "productLine": {
@@ -720,7 +720,7 @@
         }
       ]
     },
-    "variationName": "NEVE CULOTTE AVELLANA",
+    "variationName": "NEVE CULOTTE GRIS MELANGE",
     "productLineId": "3324"
   }
 ]

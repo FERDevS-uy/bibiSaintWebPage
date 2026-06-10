@@ -5,112 +5,6 @@
       "name": "BRAND"
     },
     "code": "126482",
-    "colorId": 1,
-    "description": "Camisa corta con aplique de strass en cuello, delantero y espalda.",
-    "description2": "Realizada en poplin",
-    "description3": "Calce clásico",
-    "id": 42804,
-    "images": [
-      "126482_1234_1.jpg",
-      "126482_1234_2.jpg",
-      "126482_1234_3.jpg",
-      "126482_1_1.jpg",
-      "126482_1_2.jpg",
-      "126482_1_3.jpg"
-    ],
-    "mainImage": "126482_1_1.jpg",
-    "name": "ORIZA CAMISA",
-    "price": 2500,
-    "productLine": {
-      "id": 3346,
-      "name": "CAMISAS Y BLUSAS",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 2500,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#FFFFFF",
-                "description": "BLANCO",
-                "id": 1,
-                "price": 2500,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "40",
-                      "id": 50,
-                      "price": 2500,
-                      "productForSaleId": 5763155
-                    },
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 2500,
-                      "productForSaleId": 5763153
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 2500,
-                      "productForSaleId": 5763154
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#D3EEF7",
-                "description": "RAYADO CELESTE Y BLANCO",
-                "id": 1234,
-                "price": 2500,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "40",
-                      "id": 50,
-                      "price": 2500,
-                      "productForSaleId": 5763157
-                    },
-                    {
-                      "description": "42",
-                      "id": 52,
-                      "price": 2500,
-                      "productForSaleId": 5763158
-                    },
-                    {
-                      "description": "44",
-                      "id": 54,
-                      "price": 2500,
-                      "productForSaleId": 5763156
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "ORIZA CAMISA BLANCO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "126482",
     "colorId": 1234,
     "description": "Camisa corta con aplique de strass en cuello, delantero y espalda.",
     "description2": "Realizada en poplin",
@@ -209,6 +103,112 @@
       ]
     },
     "variationName": "ORIZA CAMISA RAYADO CELESTE Y BLANCO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "126482",
+    "colorId": 1,
+    "description": "Camisa corta con aplique de strass en cuello, delantero y espalda.",
+    "description2": "Realizada en poplin",
+    "description3": "Calce clásico",
+    "id": 42804,
+    "images": [
+      "126482_1234_1.jpg",
+      "126482_1234_2.jpg",
+      "126482_1234_3.jpg",
+      "126482_1_1.jpg",
+      "126482_1_2.jpg",
+      "126482_1_3.jpg"
+    ],
+    "mainImage": "126482_1_1.jpg",
+    "name": "ORIZA CAMISA",
+    "price": 2500,
+    "productLine": {
+      "id": 3346,
+      "name": "CAMISAS Y BLUSAS",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 2500,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 2500,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2500,
+                      "productForSaleId": 5763155
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2500,
+                      "productForSaleId": 5763153
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2500,
+                      "productForSaleId": 5763154
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#D3EEF7",
+                "description": "RAYADO CELESTE Y BLANCO",
+                "id": 1234,
+                "price": 2500,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "40",
+                      "id": 50,
+                      "price": 2500,
+                      "productForSaleId": 5763157
+                    },
+                    {
+                      "description": "42",
+                      "id": 52,
+                      "price": 2500,
+                      "productForSaleId": 5763158
+                    },
+                    {
+                      "description": "44",
+                      "id": 54,
+                      "price": 2500,
+                      "productForSaleId": 5763156
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "ORIZA CAMISA BLANCO",
     "productLineId": "3324"
   }
 ]

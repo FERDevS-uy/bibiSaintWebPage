@@ -5,122 +5,6 @@
       "name": "BRAND"
     },
     "code": "125981",
-    "colorId": 531,
-    "description": "Corpiño sin aro y breteles regulables, detalle de puntilla elastizada y espada con diseño tipo top.",
-    "description2": "Realizado en microfibra",
-    "description3": "Calce al cuerpo",
-    "id": 42145,
-    "images": [
-      "125981_1_1.jpg",
-      "125981_1_2.jpg",
-      "125981_531_1.jpg",
-      "125981_531_2.jpg"
-    ],
-    "mainImage": "125981_531_1.jpg",
-    "name": "KEMET CORPIÑO",
-    "price": 950,
-    "productLine": {
-      "id": 3352,
-      "name": "ROPA INTERIOR",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 950,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#FFFFFF",
-                "description": "BLANCO",
-                "id": 1,
-                "price": 950,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "100",
-                      "id": 8,
-                      "price": 950,
-                      "productForSaleId": 5757753
-                    },
-                    {
-                      "description": "105",
-                      "id": 121,
-                      "price": 950,
-                      "productForSaleId": 5757756
-                    },
-                    {
-                      "description": "90",
-                      "id": 72,
-                      "price": 950,
-                      "productForSaleId": 5757755
-                    },
-                    {
-                      "description": "95",
-                      "id": 73,
-                      "price": 950,
-                      "productForSaleId": 5757754
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#A39488",
-                "description": "VISON",
-                "id": 531,
-                "price": 950,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "100",
-                      "id": 8,
-                      "price": 950,
-                      "productForSaleId": 5757758
-                    },
-                    {
-                      "description": "105",
-                      "id": 121,
-                      "price": 950,
-                      "productForSaleId": 5757759
-                    },
-                    {
-                      "description": "90",
-                      "id": 72,
-                      "price": 950,
-                      "productForSaleId": 5757757
-                    },
-                    {
-                      "description": "95",
-                      "id": 73,
-                      "price": 950,
-                      "productForSaleId": 5757760
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "KEMET CORPIÑO VISON",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "125981",
     "colorId": 1,
     "description": "Corpiño sin aro y breteles regulables, detalle de puntilla elastizada y espada con diseño tipo top.",
     "description2": "Realizado en microfibra",
@@ -229,6 +113,122 @@
       ]
     },
     "variationName": "KEMET CORPIÑO BLANCO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "125981",
+    "colorId": 531,
+    "description": "Corpiño sin aro y breteles regulables, detalle de puntilla elastizada y espada con diseño tipo top.",
+    "description2": "Realizado en microfibra",
+    "description3": "Calce al cuerpo",
+    "id": 42145,
+    "images": [
+      "125981_1_1.jpg",
+      "125981_1_2.jpg",
+      "125981_531_1.jpg",
+      "125981_531_2.jpg"
+    ],
+    "mainImage": "125981_531_1.jpg",
+    "name": "KEMET CORPIÑO",
+    "price": 950,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 950,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5757753
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5757756
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5757755
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5757754
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#A39488",
+                "description": "VISON",
+                "id": 531,
+                "price": 950,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 950,
+                      "productForSaleId": 5757758
+                    },
+                    {
+                      "description": "105",
+                      "id": 121,
+                      "price": 950,
+                      "productForSaleId": 5757759
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 950,
+                      "productForSaleId": 5757757
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 950,
+                      "productForSaleId": 5757760
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "KEMET CORPIÑO VISON",
     "productLineId": "3324"
   }
 ]

@@ -5,155 +5,6 @@
       "name": "BRAND"
     },
     "code": "123415",
-    "colorId": 1,
-    "copy": "Top con espalda deportiva Trani",
-    "description": "Top con espalda tipo deportivo y terminación de elástico embutido para mayor comodidad y calce perfecto. ",
-    "description2": "Realizado en algodón elastizado",
-    "description3": "Calce al cuerpo",
-    "id": 37664,
-    "images": [
-      "123415_17_1.jpg",
-      "123415_17_2.jpg",
-      "123415_17_3.jpg",
-      "123415_17_4.jpg",
-      "123415_19_1.jpg",
-      "123415_19_2.jpg",
-      "123415_19_3.jpg",
-      "123415_1_1.jpg",
-      "123415_1_2.jpg",
-      "123415_1_3.jpg",
-      "123415_1_4.jpg",
-      "123415_1_5.jpg",
-      "123415_1_6.jpg",
-      "123415_22_1.jpg",
-      "123415_22_2.jpg",
-      "123415_22_3.jpg",
-      "123415_22_4.jpg",
-      "123415_22_5.jpg",
-      "123415_22_6.jpg",
-      "123415_22_9.jpg",
-      "123415_28_1.jpg",
-      "123415_28_2.jpg",
-      "123415_28_3.jpg",
-      "123415_28_4.jpg",
-      "123415_28_9.jpg",
-      "123415_2_1.jpg",
-      "123415_2_2.jpg",
-      "123415_452_1.jpg",
-      "123415_70_1.jpg",
-      "123415_70_2.jpg",
-      "123415_70_3.jpg",
-      "123415_70_4.jpg",
-      "123415_70_5.jpg",
-      "123415_70_9.jpg",
-      "123415_7_1.jpg",
-      "123415_7_2.jpg",
-      "123415_7_3.jpg",
-      "123415_7_4.jpg",
-      "123415_7_5.jpg",
-      "123415_8_1.jpg",
-      "123415_8_2.jpg",
-      "123415_8_3.jpg"
-    ],
-    "mainImage": "123415_1_1.jpg",
-    "name": "TRANI TOP",
-    "price": 400,
-    "productLine": {
-      "id": 3352,
-      "name": "ROPA INTERIOR",
-      "parent": {
-        "id": 3324,
-        "name": "MUJER"
-      }
-    },
-    "variation": {
-      "id": "tipoVenta",
-      "variationValues": [
-        {
-          "description": "VENTA NORMAL",
-          "id": 2,
-          "price": 400,
-          "variation": {
-            "id": "color",
-            "variationValues": [
-              {
-                "colorHex": "#FFFFFF",
-                "description": "BLANCO",
-                "id": 1,
-                "price": 400,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "100",
-                      "id": 8,
-                      "price": 400,
-                      "productForSaleId": 5757644
-                    },
-                    {
-                      "description": "85",
-                      "id": 68,
-                      "price": 400,
-                      "productForSaleId": 5757646
-                    },
-                    {
-                      "description": "90",
-                      "id": 72,
-                      "price": 400,
-                      "productForSaleId": 5757643
-                    },
-                    {
-                      "description": "95",
-                      "id": 73,
-                      "price": 400,
-                      "productForSaleId": 5757645
-                    }
-                  ]
-                }
-              },
-              {
-                "colorHex": "#000000",
-                "description": "NEGRO",
-                "id": 2,
-                "price": 400,
-                "variation": {
-                  "id": "size",
-                  "variationValues": [
-                    {
-                      "description": "85",
-                      "id": 68,
-                      "price": 400,
-                      "productForSaleId": 5757647
-                    },
-                    {
-                      "description": "90",
-                      "id": 72,
-                      "price": 400,
-                      "productForSaleId": 5757650
-                    },
-                    {
-                      "description": "95",
-                      "id": 73,
-                      "price": 400,
-                      "productForSaleId": 5757648
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "variationName": "TRANI TOP BLANCO",
-    "productLineId": "3324"
-  },
-  {
-    "brand": {
-      "id": 1,
-      "name": "BRAND"
-    },
-    "code": "123415",
     "colorId": 2,
     "copy": "Top con espalda deportiva Trani",
     "description": "Top con espalda tipo deportivo y terminación de elástico embutido para mayor comodidad y calce perfecto. ",
@@ -295,6 +146,155 @@
       ]
     },
     "variationName": "TRANI TOP NEGRO",
+    "productLineId": "3324"
+  },
+  {
+    "brand": {
+      "id": 1,
+      "name": "BRAND"
+    },
+    "code": "123415",
+    "colorId": 1,
+    "copy": "Top con espalda deportiva Trani",
+    "description": "Top con espalda tipo deportivo y terminación de elástico embutido para mayor comodidad y calce perfecto. ",
+    "description2": "Realizado en algodón elastizado",
+    "description3": "Calce al cuerpo",
+    "id": 37664,
+    "images": [
+      "123415_17_1.jpg",
+      "123415_17_2.jpg",
+      "123415_17_3.jpg",
+      "123415_17_4.jpg",
+      "123415_19_1.jpg",
+      "123415_19_2.jpg",
+      "123415_19_3.jpg",
+      "123415_1_1.jpg",
+      "123415_1_2.jpg",
+      "123415_1_3.jpg",
+      "123415_1_4.jpg",
+      "123415_1_5.jpg",
+      "123415_1_6.jpg",
+      "123415_22_1.jpg",
+      "123415_22_2.jpg",
+      "123415_22_3.jpg",
+      "123415_22_4.jpg",
+      "123415_22_5.jpg",
+      "123415_22_6.jpg",
+      "123415_22_9.jpg",
+      "123415_28_1.jpg",
+      "123415_28_2.jpg",
+      "123415_28_3.jpg",
+      "123415_28_4.jpg",
+      "123415_28_9.jpg",
+      "123415_2_1.jpg",
+      "123415_2_2.jpg",
+      "123415_452_1.jpg",
+      "123415_70_1.jpg",
+      "123415_70_2.jpg",
+      "123415_70_3.jpg",
+      "123415_70_4.jpg",
+      "123415_70_5.jpg",
+      "123415_70_9.jpg",
+      "123415_7_1.jpg",
+      "123415_7_2.jpg",
+      "123415_7_3.jpg",
+      "123415_7_4.jpg",
+      "123415_7_5.jpg",
+      "123415_8_1.jpg",
+      "123415_8_2.jpg",
+      "123415_8_3.jpg"
+    ],
+    "mainImage": "123415_1_1.jpg",
+    "name": "TRANI TOP",
+    "price": 400,
+    "productLine": {
+      "id": 3352,
+      "name": "ROPA INTERIOR",
+      "parent": {
+        "id": 3324,
+        "name": "MUJER"
+      }
+    },
+    "variation": {
+      "id": "tipoVenta",
+      "variationValues": [
+        {
+          "description": "VENTA NORMAL",
+          "id": 2,
+          "price": 400,
+          "variation": {
+            "id": "color",
+            "variationValues": [
+              {
+                "colorHex": "#FFFFFF",
+                "description": "BLANCO",
+                "id": 1,
+                "price": 400,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "100",
+                      "id": 8,
+                      "price": 400,
+                      "productForSaleId": 5757644
+                    },
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 400,
+                      "productForSaleId": 5757646
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 400,
+                      "productForSaleId": 5757643
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 400,
+                      "productForSaleId": 5757645
+                    }
+                  ]
+                }
+              },
+              {
+                "colorHex": "#000000",
+                "description": "NEGRO",
+                "id": 2,
+                "price": 400,
+                "variation": {
+                  "id": "size",
+                  "variationValues": [
+                    {
+                      "description": "85",
+                      "id": 68,
+                      "price": 400,
+                      "productForSaleId": 5757647
+                    },
+                    {
+                      "description": "90",
+                      "id": 72,
+                      "price": 400,
+                      "productForSaleId": 5757650
+                    },
+                    {
+                      "description": "95",
+                      "id": 73,
+                      "price": 400,
+                      "productForSaleId": 5757648
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "variationName": "TRANI TOP BLANCO",
     "productLineId": "3324"
   }
 ]

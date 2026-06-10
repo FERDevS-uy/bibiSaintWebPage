@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { scrapNuvexProducts } from './scrapers/nuvex';
 import { scrapKaiDeco } from './scrapers/kaideco';
 import { scrapMartinaDiTrento } from './scrapers/martina';
+import { scrapAlondraProducts } from './scrapers/alondra';
 import { searchSimilarity, Product } from './utils/product';
 import { stringSimilarity } from 'string-similarity-js';
 
@@ -69,13 +70,14 @@ async function compareWithCopy(newProducts: Product[]) {
 }
 
 async function scrapAllProducts() {
-  console.log('=== Iniciando scraping unificado de Nuvex, Kai Deco y Martina di Trento ===');
-  const [nuvexProducts, kaiProducts, martinaProducts] = await Promise.all([
+  console.log('=== Iniciando scraping unificado de Nuvex, Kai Deco, Martina di Trento y Alondra ===');
+  const [nuvexProducts, kaiProducts, martinaProducts, alondraProducts] = await Promise.all([
     scrapNuvexProducts(),
     scrapKaiDeco(),
     scrapMartinaDiTrento(),
+    scrapAlondraProducts(),
   ]);
-  const allProducts = [...nuvexProducts, ...kaiProducts, ...martinaProducts];
+  const allProducts = [...nuvexProducts, ...kaiProducts, ...martinaProducts, ...alondraProducts];
   console.log(`Total de productos unificados antes de similitud: ${allProducts.length}`);
   const parsedProducts = searchSimilarity(allProducts);
   console.log(`Scraping finalizado. ${parsedProducts.length} productos generados.`);
@@ -106,6 +108,27 @@ if (process.env.ONLY_MARTINA === '1' || process.env.ONLY_MARTINA === 'true') {
       console.log('Martina-only CSV guardado en', csvFilePath);
     } catch (e: any) {
       console.warn('No se pudo guardar CSV Martina-only:', e.message || e);
+    }
+    try {
+      await compareWithCopy(parsedProducts);
+    } catch (e: any) {
+      console.warn('Error durante compareWithCopy:', e.message || e);
+    }
+  })();
+} else if (process.env.ONLY_ALONDRA === '1' || process.env.ONLY_ALONDRA === 'true') {
+  (async () => {
+    console.log('=== Ejecutando SOLO Alondra ===');
+    const alondraProducts = await scrapAlondraProducts();
+    const parsedProducts = searchSimilarity(alondraProducts);
+    console.log(`Alondra-only: ${parsedProducts.length} productos generados.`);
+    const finalCsv = Papa.unparse(parsedProducts, {
+      columns: ['id', 'relacionados', 'name', 'description', 'precio', 'imagen', 'categorias', 'linkPago', 'subcategorias', 'oferta', 'colores'],
+    });
+    try {
+      await fs.writeFile(csvFilePath, finalCsv);
+      console.log('Alondra-only CSV guardado en', csvFilePath);
+    } catch (e: any) {
+      console.warn('No se pudo guardar CSV Alondra-only:', e.message || e);
     }
     try {
       await compareWithCopy(parsedProducts);
