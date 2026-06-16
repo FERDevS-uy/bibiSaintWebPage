@@ -1,6 +1,7 @@
 ---
 import type Product from "../types/product";
 import AddToCartButton from "./AddToCartButton.astro";
+import { isTallBoot } from "@utils/isTallBoot";
 
 interface Props {
   products: Product[];
@@ -21,10 +22,19 @@ const { products, title, id } = Astro.props;
 
     <div class="carousel-track">
       {products.map((p, index) => (
-        <article class="carousel-item" data-index={index}>
-          <a href={`${import.meta.env.BASE_URL}/producto/${p.id}`} class="carousel-img-link" title={p.name}>
+        <article class={`carousel-item${isTallBoot(p.name, p.description, p.id) ? " carousel-item--tall" : ""}`} data-index={index}>
+          <a
+            href={`${import.meta.env.BASE_URL}/producto/${p.id}`}
+            class={`carousel-img-link${isTallBoot(p.name, p.description, p.id) ? " carousel-img-link--tall" : ""}`}
+            title={p.name}
+          >
             <div class="carousel-img-wrapper">
-              <img src={p.img[0]} alt={p.name} loading="lazy" />
+              <img
+                src={p.img[0]}
+                alt={p.name}
+                loading="lazy"
+                class={isTallBoot(p.name, p.description, p.id) ? "carousel-img--tall" : undefined}
+              />
             </div>
           </a>
           <div class="carousel-info">
@@ -129,6 +139,13 @@ const { products, title, id } = Astro.props;
     object-fit: cover;
     object-position: top;
     display: block;
+  }
+
+  /* Misma regla que ProductGallery/ItemProductoBox: tal-* y botas altas no se recortan */
+  .carousel-img--tall {
+    object-fit: contain;
+    object-position: center;
+    background: #fcfcfc;
   }
 
   /* Info (Nombre y Precio) */

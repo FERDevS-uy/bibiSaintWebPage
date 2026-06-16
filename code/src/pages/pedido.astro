@@ -775,8 +775,17 @@ import { config } from "src/config";
             return;
           }
 
+          if (data?.source === "nuvex-static-no-api") {
+            setStockState(rowKey, "pending", "A confirmar");
+            setStatus(
+              rowKey,
+              "En GitHub Pages no se puede verificar Nuvex en vivo (hosting estático + CORS). Se mantiene stock de catálogo.",
+            );
+            return;
+          }
+
           setStockState(rowKey, "pending", "A confirmar");
-          setStatus(rowKey, "No se pudo confirmar stock en Nuvex. El precio se mantiene según catálogo.");
+          setStatus(rowKey, "Ten presente que puede ser que este producto no este disponible.");
           return;
         }
 

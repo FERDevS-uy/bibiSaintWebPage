@@ -1655,10 +1655,12 @@ const showRuntimeStockCheck =
             provider: "nuvex" as const,
             price: "",
             inStock: null,
+            source: "nuvex-web",
           };
         }
 
-        const endpoint = new URL(`${import.meta.env.BASE_URL || "/"}api/provider-nuvex`, window.location.origin);
+        const endpointPath = `${String(import.meta.env.BASE_URL || "/").replace(/\/+$/, "")}/api/provider-nuvex`;
+        const endpoint = new URL(endpointPath, window.location.origin);
         endpoint.searchParams.set("url", providerUrl);
 
         const controller = new AbortController();
@@ -1678,6 +1680,7 @@ const showRuntimeStockCheck =
               provider: "nuvex" as const,
               price: "",
               inStock: null,
+              source: response.status === 404 ? "nuvex-static-no-api" : "nuvex-web",
             };
           }
 
@@ -1686,12 +1689,14 @@ const showRuntimeStockCheck =
             provider: "nuvex" as const,
             price: String(payload?.price ?? "").trim(),
             inStock: typeof payload?.inStock === "boolean" ? payload.inStock : null,
+            source: String(payload?.source ?? "nuvex-web"),
           };
         } catch {
           return {
             provider: "nuvex" as const,
             price: "",
             inStock: null,
+            source: "nuvex-static-no-api",
           };
         } finally {
           window.clearTimeout(timeout);
@@ -1868,8 +1873,12 @@ const showRuntimeStockCheck =
               stockBadge.textContent = "Sin stock";
               stockBadge.style.background = "#a33a3a";
               setStatus("Sin stock en Nuvex. El precio se mantiene según catálogo.", "error");
+            } else if (data?.source === "nuvex-static-no-api") {
+              setStatus(
+                "En GitHub Pages no se puede verificar Nuvex en vivo (hosting estático + CORS). Se mantiene stock de catálogo.",
+              );
             } else {
-              setStatus("No se pudo confirmar stock en Nuvex. El precio se mantiene según catálogo.");
+              setStatus("Ten presente que puede ser que este producto no este disponible.");
             }
           } else if (provider === "alondra") {
             const data = await fetchAlondraLive(productId);
