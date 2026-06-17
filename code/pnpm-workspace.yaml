@@ -1,5 +1,8 @@
 packages:
   - '.'
+allowBuilds:
+  esbuild: false
+  workerd: false
 onlyBuiltDependencies:
   - esbuild
   - sharp
