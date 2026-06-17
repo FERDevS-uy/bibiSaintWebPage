@@ -9,6 +9,36 @@ const PROVIDER_MULTIPLIER: Record<Exclude<Provider, "unknown">, number> = {
   alondra: 1.22,
 };
 
+let nuvexApiReachability: Promise<boolean> | null = null;
+
+async function canUseNuvexApi(endpoint: URL): Promise<boolean> {
+  if (!nuvexApiReachability) {
+    nuvexApiReachability = (async () => {
+      try {
+        const probe = new URL(endpoint.toString());
+        probe.searchParams.set("url", "https://nuvex.uy");
+
+        const response = await fetch(probe.toString(), {
+          method: "GET",
+          headers: { Accept: "application/json" },
+          cache: "no-store",
+        });
+
+        // 400 JSON => endpoint existe pero faltan/invalidan params (esperado para probe)
+        if (response.status === 400) return true;
+        if (response.status === 404 || response.status === 405) return false;
+
+        const contentType = response.headers.get("content-type") || "";
+        return contentType.toLowerCase().includes("application/json");
+      } catch {
+        return false;
+      }
+    })();
+  }
+
+  return nuvexApiReachability;
+}
+
 function parseLoosePrice(rawPrice: unknown): number {
   const value = String(rawPrice ?? "")
     .trim()
@@ -248,7 +278,19 @@ export async function fetchNuvexLive(providerUrl: string) {
     };
   }
 
-  const endpoint = new URL(`${import.meta.env.BASE_URL || "/"}api/provider-nuvex`, window.location.origin);
+  const endpointPath = `${String(import.meta.env.BASE_URL || "/").replace(/\/+$/, "")}/api/provider-nuvex`;
+  const endpoint = new URL(endpointPath, window.location.origin);
+
+  const hasNuvexApi = await canUseNuvexApi(endpoint);
+  if (!hasNuvexApi) {
+    return {
+      provider: "nuvex" as const,
+      price: "",
+      inStock: null,
+      source: "nuvex-static-no-api",
+    };
+  }
+
   endpoint.searchParams.set("url", providerUrl);
 
   const controller = new AbortController();
@@ -268,7 +310,7 @@ export async function fetchNuvexLive(providerUrl: string) {
         provider: "nuvex" as const,
         price: "",
         inStock: null,
-        source: "nuvex-web",
+        source: response.status === 404 ? "nuvex-static-no-api" : "nuvex-web",
       };
     }
 
@@ -285,7 +327,7 @@ export async function fetchNuvexLive(providerUrl: string) {
       provider: "nuvex" as const,
       price: "",
       inStock: null,
-      source: "nuvex-web",
+      source: "nuvex-static-no-api",
     };
   } finally {
     window.clearTimeout(timeout);

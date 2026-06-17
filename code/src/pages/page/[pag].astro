@@ -4,6 +4,8 @@ import Layout from "@layouts/Layout.astro";
 import { cargarProductos } from "@utils/loadCSV";
 import { config } from "src/config";
 
+export const prerender = true;
+
 /** Genera los archivos html por cada categoría */
 export const getStaticPaths = () => {
   const CANT_PRODUCTOS = config.postPerPage;

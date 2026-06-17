@@ -4,6 +4,8 @@ import Layout from "@layouts/Layout.astro";
 import ProductCarousel from "@components/ProductCarousel.astro";
 import { cargarProductos } from "@utils/loadCSV";
 
+export const prerender = true;
+
 const todosLosProductos = cargarProductos();
 
 // 1. ¡Novedades!: Los últimos 8 productos agregados en el CSV (en orden inverso, del más reciente al más antiguo)

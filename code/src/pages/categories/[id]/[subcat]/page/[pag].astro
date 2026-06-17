@@ -9,6 +9,8 @@ import SideBardCategories from "@components/SideBardCategories.astro";
 import type { subCategory } from "src/types/categoryList";
 import "../../../style.css";
 
+export const prerender = true;
+
 /** Genera los archivos html por cada subcategoría */
 export const getStaticPaths = () => {
   const CANT_PRODUCTOS = config.postPerPage;

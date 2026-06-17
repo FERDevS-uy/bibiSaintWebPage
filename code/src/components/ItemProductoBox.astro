@@ -2,6 +2,7 @@
 import type Product from "../types/product";
 import { config } from "../config";
 import AddToCartButton from "./AddToCartButton.astro";
+import LivePrice from "./LivePrice.astro";
 import getColors from "@utils/getColors";
 import { isTallBoot } from "@utils/isTallBoot";
 
@@ -29,7 +30,14 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
 
   <div class="card-info">
     <span class="p-name">{p.name}</span>
-    <span class="p-price">${p.price}</span>
+    <LivePrice
+      productId={p.id}
+      providerLink={p.paymentLink?.[0]?.url ?? ""}
+      fallbackPrice={p.price}
+      server:defer
+    >
+      <span slot="fallback" class="p-price">${p.price}</span>
+    </LivePrice>
     <div class="add-btn-wrapper">
       <AddToCartButton producto={p} variant="full" />
     </div>

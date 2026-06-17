@@ -9,6 +9,8 @@ import { config } from "src/config";
 import type { subCategory } from "src/types/categoryList";
 import '../style.css';
 
+export const prerender = true;
+
 export const getStaticPaths = () => {
   const CANT_PRODUCTOS = config.postPerPage;
   const products = cargarProductos();
