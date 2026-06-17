@@ -1,0 +1,28 @@
+/**
+ * Cloudflare Workers config for the Astro SSR build.
+ *
+ * - El adapter @astrojs/cloudflare emite `dist/_worker.js/index.js` + `dist/`
+ *   con los assets prerendereados.
+ * - Workers Static Assets sirve `dist/` y delega al worker cuando una ruta
+ *   coincide con una Server Island / endpoint SSR.
+ *
+ * Las variables públicas (PUBLIC_*) y secretos se setean en Cloudflare Dashboard
+ * (Workers & Pages → tu worker → Settings → Variables and Secrets) o vía
+ * `wrangler secret put`. No las pongas acá si son sensibles.
+ *
+ * Docs: https://developers.cloudflare.com/workers/static-assets/binding/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "bibisaintwebpage",
+	"main": "./dist/_worker.js/index.js",
+	"compatibility_date": "2025-11-12",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS"
+	},
+	"observability": {
+		"enabled": true
+	}
+}
