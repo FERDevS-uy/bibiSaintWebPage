@@ -1,5 +1,4 @@
 import type { APIRoute } from "astro";
-import https from "node:https";
 
 export const prerender = false;
 
@@ -24,55 +23,6 @@ const NUVEX_HEADERS: Record<string, string> = {
   Pragma: "no-cache",
   "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
 };
-
-function isTlsCertificateError(error: unknown): boolean {
-  if (!(error instanceof Error)) return false;
-  const message = error.message?.toLowerCase() ?? "";
-  if (
-    message.includes("unable to verify the first certificate") ||
-    message.includes("unable_to_verify_leaf_signature")
-  ) {
-    return true;
-  }
-
-  const causeCode = (error as { cause?: { code?: string } }).cause?.code;
-  return causeCode === "UNABLE_TO_VERIFY_LEAF_SIGNATURE";
-}
-
-function fetchWithInsecureTls(url: string, timeoutMs = 7000): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const request = https.request(
-      url,
-      {
-        method: "GET",
-        headers: NUVEX_HEADERS,
-        rejectUnauthorized: false,
-      },
-      (response) => {
-        const status = response.statusCode ?? 0;
-        if (status < 200 || status >= 300) {
-          reject(new Error(`HTTP ${status}`));
-          response.resume();
-          return;
-        }
-
-        const chunks: Buffer[] = [];
-        response.on("data", (chunk) => {
-          chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-        });
-        response.on("end", () => {
-          resolve(Buffer.concat(chunks).toString("utf-8"));
-        });
-      },
-    );
-
-    request.setTimeout(timeoutMs, () => {
-      request.destroy(new Error("Request timeout"));
-    });
-    request.on("error", reject);
-    request.end();
-  });
-}
 
 function decodeHtmlEntities(value: string): string {
   return value
@@ -178,34 +128,12 @@ export const GET: APIRoute = async ({ url }) => {
   targetUrl.protocol = "https:";
 
   try {
-    let response: Response;
-    let html: string;
-
-    try {
-      response = await fetch(targetUrl.toString(), {
-        method: "GET",
-        redirect: "follow",
-        headers: NUVEX_HEADERS,
-        signal: controller.signal,
-      });
-    } catch (error) {
-      if (!isTlsCertificateError(error)) throw error;
-
-      // Fallback específico para Nuvex cuando su certificado intermedio falla en Node.
-      html = await fetchWithInsecureTls(targetUrl.toString());
-      const inStock = detectStockFromHtml(html);
-      const availability = extractAvailabilityText(html);
-
-      return new Response(
-        JSON.stringify({
-          inStock,
-          price: "",
-          availability,
-          source: "nuvex-web",
-        }),
-        { status: 200, headers: { "Content-Type": "application/json" } },
-      );
-    }
+    const response = await fetch(targetUrl.toString(), {
+      method: "GET",
+      redirect: "follow",
+      headers: NUVEX_HEADERS,
+      signal: controller.signal,
+    });
 
     if (!response.ok) {
       return new Response(
@@ -220,7 +148,7 @@ export const GET: APIRoute = async ({ url }) => {
       );
     }
 
-    html = await response.text();
+    const html = await response.text();
     const inStock = detectStockFromHtml(html);
     const availability = extractAvailabilityText(html);
 

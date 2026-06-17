@@ -1,6 +1,7 @@
 ---
 import type Product from "../types/product";
 import AddToCartButton from "./AddToCartButton.astro";
+import LivePrice from "./LivePrice.astro";
 import { isTallBoot } from "@utils/isTallBoot";
 
 interface Props {
@@ -39,7 +40,14 @@ const { products, title, id } = Astro.props;
           </a>
           <div class="carousel-info">
             <span class="p-name">{p.name}</span>
-            <span class="p-price">${p.price}</span>
+            <LivePrice
+              productId={p.id}
+              providerLink={p.paymentLink?.[0]?.url ?? ""}
+              fallbackPrice={p.price}
+              server:defer
+            >
+              <span slot="fallback" class="p-price">${p.price}</span>
+            </LivePrice>
             <div class="add-btn-wrapper">
               <AddToCartButton producto={p} variant="full" />
             </div>

@@ -5,6 +5,8 @@ import { cargarProductos } from "@utils/loadCSV";
 import { parsePrice } from "@utils/price";
 import { config } from "src/config";
 
+export const prerender = true;
+
 const topBaratos = [...cargarProductos()]
   .map((product) => ({
     product,

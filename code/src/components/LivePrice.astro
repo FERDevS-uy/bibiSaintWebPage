@@ -1,0 +1,63 @@
+---
+/**
+ * Server Island: precio + estado de stock en vivo del proveedor.
+ *
+ * Uso:
+ *   <LivePrice productId={p.id} providerLink={p.paymentLink?.[0]?.url ?? ""} fallbackPrice={p.price} server:defer>
+ *     <span slot="fallback" class="p-price">${p.price}</span>
+ *   </LivePrice>
+ *
+ * Mientras se resuelve la consulta al proveedor, Astro renderiza el slot
+ * "fallback" (HTML estático, instantáneo). Cuando el island responde, lo
+ * reemplaza in-place sin romper hidratación de otros componentes.
+ */
+import { getLivePrice } from "../server/livePrice";
+
+interface Props {
+  productId: string;
+  providerLink: string;
+  fallbackPrice: string | number;
+  showStockBadge?: boolean;
+}
+
+const { productId, providerLink, fallbackPrice, showStockBadge = false } = Astro.props;
+
+const live = await getLivePrice({ productId, providerLink, fallbackPrice });
+
+const stockLabel =
+  live.inStock === true ? "En stock" : live.inStock === false ? "Sin stock" : null;
+---
+
+<span class="p-price" data-source={live.source} data-provider={live.provider}>
+  ${live.price}
+</span>
+{
+  showStockBadge && stockLabel && (
+    <span class={`p-stock p-stock--${live.inStock ? "ok" : "no"}`}>{stockLabel}</span>
+  )
+}
+
+<style>
+  .p-stock {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: 0.4rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .p-stock--ok {
+    background: #d8f3dc;
+    color: #1b4332;
+  }
+
+  .p-stock--no {
+    background: #f8d7da;
+    color: #7a1f24;
+  }
+</style>

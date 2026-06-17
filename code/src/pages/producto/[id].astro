@@ -11,6 +11,8 @@ import {
 } from "@utils/categoryNormalization";
 import { isTallBoot } from "@utils/isTallBoot";
 
+export const prerender = true;
+
 export function getStaticPaths() {
   const productos = cargarProductos();
 
