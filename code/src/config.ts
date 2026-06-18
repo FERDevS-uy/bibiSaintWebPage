@@ -2,14 +2,17 @@
 // Si querés deployar de nuevo bajo un subpath (ej. GitHub Pages), cambiá
 // `base` a "/bibiSaintWebPage" y `site` en consecuencia.
 const url = import.meta.env.SITE || "https://bibisaintwebpage.pages.dev/";
+const rawBase = import.meta.env.BASE_URL || "/";
+const base = rawBase === "/" ? "" : rawBase.replace(/\/$/, "");
 
 const pageData = {
   site: url,
-  base: "",
+  base,
   pageTitle: "Bibi's Ventasonline",
   pagesSubTitle: "Hogar & Deco",
   postPerPage: 10,
-  description: "Descripción temporal"
+  description: "Descripción temporal",
+  useSupabase: Boolean(import.meta.env.PUBLIC_USE_SUPABASE === "true"),
 };
 
 export { pageData as config };

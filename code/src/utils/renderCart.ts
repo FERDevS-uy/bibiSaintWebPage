@@ -3,7 +3,7 @@ import removeToCart from "./removeToCart";
 import addToCart from "./addToCart";
 import trash from "../assets/trash.svg?raw";
 import { decryptIDs, encryptIDs } from "./encription";
-import { config } from "src/config";
+import { withBasePath } from "./basePath";
 import { formatPrice, parsePrice } from "./price";
 
 const CART_IMAGE_FALLBACK =
@@ -169,11 +169,13 @@ export default function renderCart() {
 
   const encryption = encryptIDs(storage.map((p: ProductInCart) => serializePedidoItem(p)), "elias")
   localStorage.setItem("lastPedidoToken", encryption);
+  const pedidoPath = withBasePath("/pedido");
+  const pedidoUrl = `${window.location.origin}${pedidoPath}?id=${encryption}`;
 
   // Mensaje para copiar o enviar
   const pedido = storage.map((p: ProductInCart) => `
   - ${p.name} x${p.cantidad} ($${formatPrice(parsePrice(p.price))})`)
-    .join(" ") + `\nTotal: $${formatPrice(totalValue)}\n${config.site}pedido?id=${encryption}`;
+    .join(" ") + `\nTotal: $${formatPrice(totalValue)}\n${pedidoUrl}`;
 
   // Copy func logic kept but button is hidden in UI
   copyBtn.title = `Copiar: ${pedido}`
@@ -191,7 +193,7 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
   const formattedSubtotal = formatPrice(subtotal);
   const colorIdFromVariant = parseColorFromVariantId(p.id);
   const productId = getBaseProductId(p.id);
-  const productHref = `${config.base}/producto/${productId}`;
+  const productHref = withBasePath(`/producto/${productId}`);
   const colorLabel = p.selectedColorName || (colorIdFromVariant !== null ? `ID ${colorIdFromVariant}` : "");
   const imgSrc = normalizeCartImage(p.img);
   const colorMeta = colorLabel

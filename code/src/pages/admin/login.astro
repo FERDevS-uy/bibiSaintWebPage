@@ -1,0 +1,27 @@
+---
+import LoginForm from "../../components/admin/LoginForm.tsx";
+const siteTitle = "Bibi's Admin - Iniciar sesión";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{siteTitle}</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+        background: #f5f5f5;
+        min-height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <LoginForm client:load />
+  </body>
+</html>

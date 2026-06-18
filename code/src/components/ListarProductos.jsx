@@ -28,11 +28,16 @@ export default function ListarProductos({ pageSize = 10 }) {
   const [sort, setSort] = useState("default");
   const [sortOpen, setSortOpen] = useState(false);
 
-  // ✅ obtener query param del cliente
+  // ✅ leer query param del cliente
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const q = params.get("q")?.toLowerCase() ?? "";
-    setQuery(q);
+    const readQueryFromURL = () => {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get("q")?.toLowerCase() ?? "";
+      setQuery(q);
+    };
+    readQueryFromURL();
+    window.addEventListener("searchurlchange", readQueryFromURL);
+    return () => window.removeEventListener("searchurlchange", readQueryFromURL);
   }, []);
 
   // ✅ cargar JSON
@@ -94,7 +99,8 @@ export default function ListarProductos({ pageSize = 10 }) {
 
   return (
     <section className={`listaProductos${emptyList ? " centerBox" : ""}`}>
-      {emptyList && <h3 style={{ color: "gray" }}>Sin Productos</h3>}
+      {emptyList && !query && <h3 style={{ color: "gray" }}>Sin Productos</h3>}
+      {emptyList && query && <h3 style={{ color: "gray" }}>No se encontraron resultados para "{query}"</h3>}
 
       {!emptyList && (
         <>

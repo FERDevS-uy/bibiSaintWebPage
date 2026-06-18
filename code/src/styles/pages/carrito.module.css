@@ -2,7 +2,7 @@
   max-width: 1200px;
   margin: 40px auto;
   padding: 20px;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "Poppins", "Poppins Fallback", Arial, sans-serif;
   color: #222;
   display: grid;
   align-items: start;

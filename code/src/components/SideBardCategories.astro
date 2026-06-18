@@ -1,5 +1,6 @@
 ---
 import type Product from "src/types/product";
+import { withBasePath } from "@utils/basePath";
 import { capitalize } from "@utils/capitalizeString";
 import getColors from "@utils/getColors";
 import type { subCategory } from "src/types/categoryList";
@@ -20,7 +21,7 @@ interface TreeNode {
   children: { name: string; label: string; href: string }[];
 }
 
-const BASE = import.meta.env.BASE_URL;
+const pathname = Astro.url.pathname;
 const treeNodes: TreeNode[] = [];
 const parentMap = new Map<string, TreeNode>();
 
@@ -33,7 +34,7 @@ arrayCategorys.forEach((subcat) => {
     if (!parentMap.has(parentName)) {
       const node: TreeNode = {
         name: parentName,
-        href: `${BASE}/categories/${categoryFather}/${parentName}`,
+        href: withBasePath(`/categories/${categoryFather}/${parentName}`, pathname),
         children: [],
       };
       parentMap.set(parentName, node);
@@ -42,13 +43,13 @@ arrayCategorys.forEach((subcat) => {
     parentMap.get(parentName)!.children.push({
       name: subcat.name,
       label: childLabel,
-      href: `${BASE}/categories/${categoryFather}/${subcat.name}`,
+      href: withBasePath(`/categories/${categoryFather}/${subcat.name}`, pathname),
     });
   } else {
     if (!parentMap.has(subcat.name)) {
       const node: TreeNode = {
         name: subcat.name,
-        href: `${BASE}/categories/${categoryFather}/${subcat.name}`,
+        href: withBasePath(`/categories/${categoryFather}/${subcat.name}`, pathname),
         children: [],
       };
       parentMap.set(subcat.name, node);
@@ -203,7 +204,7 @@ const uniqueColors = Array.from(colorChipsMap.values());
 
 <style>
   .sf-sidebar {
-    font-family: "Poppins", Arial, sans-serif;
+    font-family: "Poppins", "Poppins Fallback", Arial, sans-serif;
     color: #222;
     background: #fff;
   }

@@ -1,44 +1,29 @@
 ---
 import ListarProductos from "@components/ListarProductos.astro";
 import Layout from "@layouts/Layout.astro";
-import { cargarProductos } from "@utils/loadCSV";
+import { loadProducts } from "@utils/loadProducts";
 import { countCategories } from "@utils/countCategories";
 import { productMatchesSubcategory } from "@utils/categoryNormalization";
 import { config } from "src/config";
 import SideBardCategories from "@components/SideBardCategories.astro";
-import type { subCategory } from "src/types/categoryList";
+import { withBasePath } from "@utils/basePath";
 import "../../style.css";
 
-export const prerender = true;
-
-export const getStaticPaths = () => {
-  const CANT_PRODUCTOS = config.postPerPage;
-  const products = cargarProductos();
-  const categories = countCategories(products);
-
-  return categories.flatMap((category) => {
-    return category.subcategories.map((sub: subCategory) => {
-      const productsPerSubCat = products.filter(
-        (p) => productMatchesSubcategory(p, category.name, sub.name),
-      );
-
-      const totalPages = Math.ceil(productsPerSubCat.length / CANT_PRODUCTOS);
-
-      return {
-        params: { id: category.name, subcat: sub.name },
-        props: {
-          products: productsPerSubCat.slice(0, CANT_PRODUCTOS),
-          totalPages,
-          subCats: category.subcategories,
-        },
-      };
-    });
-  });
-};
-
+const CANT_PRODUCTOS = config.postPerPage;
+const allProducts = await loadProducts();
 const { id, subcat } = Astro.params;
-const { products, subCats, totalPages } = Astro.props;
-const baseUrl = `${config.base}/categories/${id}/${subcat}`;
+const categories = countCategories(allProducts);
+
+const category = categories.find((c) => c.name === id);
+const subCats = category?.subcategories ?? [];
+
+const productsPerSubCat = allProducts.filter(
+  (p) => productMatchesSubcategory(p, id!, subcat!),
+);
+
+const totalPages = Math.ceil(productsPerSubCat.length / CANT_PRODUCTOS);
+const products = productsPerSubCat.slice(0, CANT_PRODUCTOS);
+const baseUrl = withBasePath(`/categories/${id}/${subcat}`, Astro.url.pathname);
 ---
 
 <Layout

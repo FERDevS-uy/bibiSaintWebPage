@@ -1,13 +1,14 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import ListarProductos from "@components/ListarProductos.astro";
-import { cargarProductos } from "@utils/loadCSV";
+import { loadProducts } from "@utils/loadProducts";
 import { parsePrice } from "@utils/price";
 import { config } from "src/config";
+import { withBasePath } from "@utils/basePath";
 
-export const prerender = true;
+const allProducts = await loadProducts();
 
-const topBaratos = [...cargarProductos()]
+const topBaratos = [...allProducts]
   .map((product) => ({
     product,
     numericPrice: parsePrice(product.price),
@@ -23,7 +24,7 @@ const topBaratos = [...cargarProductos()]
 const productsPerPage = config.postPerPage;
 const totalPages = Math.ceil(topBaratos.length / productsPerPage);
 const products = topBaratos.slice(0, productsPerPage);
-const offersBaseUrl = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/ofertas`;
+const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
 ---
 
 <Layout pageTitle="Bibi's - Ofertas" pageId="offers">

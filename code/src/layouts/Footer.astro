@@ -1,5 +1,6 @@
 ---
 import type CategoryList from "src/types/categoryList";
+import { withBasePath } from "@utils/basePath";
 import { Image } from "astro:assets";
 
 import logo from "@assets/logo_blanco.png";
@@ -13,8 +14,9 @@ const globeSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 
 interface Props {
   categories: CategoryList[];
+  basePath?: string;
 }
-const { categories } = Astro.props;
+const { categories, basePath = "" } = Astro.props;
 ---
 
 <footer>
@@ -92,7 +94,7 @@ const { categories } = Astro.props;
 
   <div class="footerContainer desktop">
     <div class="col1">
-      <a href={import.meta.env.BASE_URL}>
+      <a href={withBasePath("/", basePath)}>
         <Image class="logo" src={logo} alt="logo blanco" />
       </a>
       <p>Bibi's - Donde cada </p>
@@ -109,7 +111,7 @@ const { categories } = Astro.props;
               .map((cat) => (
                 <li>
                   <a
-                    href={`${import.meta.env.BASE_URL}/categories/${cat.name}`}
+                    href={withBasePath(`/categories/${cat.name}`, basePath)}
                   >
                     {cat.name}
                   </a>
@@ -130,7 +132,7 @@ const { categories } = Astro.props;
 
     <div class="col4 social_medias">
       <h3>CONTACTO</h3>
-      <a class="navLink" href={`${import.meta.env.BASE_URL}/about`}
+      <a class="navLink" href={withBasePath("/about", basePath)}
         >Quienes somos</a
       >
       <ul class="social-icons-list">

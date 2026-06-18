@@ -1,12 +1,14 @@
-import { cargarProductos } from "@utils/loadCSV";
+import { loadProducts, isSupabaseEnabled } from "@utils/loadProducts";
 
-export const prerender = true;
+export const prerender = !isSupabaseEnabled();
 
-export async function GET({ }): Promise<Response> {
-    return new Response(JSON.stringify(await cargarProductos()), {
-        status: 200,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
+export async function GET(): Promise<Response> {
+  const products = await loadProducts();
+
+  return new Response(JSON.stringify(products), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }

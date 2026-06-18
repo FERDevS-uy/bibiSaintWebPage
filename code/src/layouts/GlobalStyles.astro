@@ -1,4 +1,15 @@
 <style is:global>
+  /* Fallback con métricas ajustadas para minimizar el "salto" al cargar Poppins.
+     Se declara global para que pueda referenciarse desde estilos scoped. */
+  @font-face {
+    font-family: "Poppins Fallback";
+    src: local("Arial");
+    size-adjust: 112%;
+    ascent-override: 92%;
+    descent-override: 24%;
+    line-gap-override: 0%;
+  }
+
   :root {
     --max-width-container: 1100px; /* Más ancho para tarjetas y contenido */
     --principal-background-color: #f7f6f2;
@@ -25,7 +36,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+    font-family: "Poppins", "Poppins Fallback", "Segoe UI", Arial, sans-serif;
+    /* Evita el faux-bold del fallback mientras carga Poppins. */
+    font-synthesis: none;
   }
 
   .hidden {

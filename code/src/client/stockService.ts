@@ -1,4 +1,5 @@
 import { normalizeSizes } from "../utils/sizes";
+import { withBasePath } from "../utils/basePath";
 
 export type Provider = "martina" | "nuvex" | "kaideco" | "alondra" | "unknown";
 
@@ -278,7 +279,7 @@ export async function fetchNuvexLive(providerUrl: string) {
     };
   }
 
-  const endpointPath = `${String(import.meta.env.BASE_URL || "/").replace(/\/+$/, "")}/api/provider-nuvex`;
+  const endpointPath = withBasePath("/api/provider-nuvex");
   const endpoint = new URL(endpointPath, window.location.origin);
 
   const hasNuvexApi = await canUseNuvexApi(endpoint);

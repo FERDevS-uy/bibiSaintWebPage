@@ -1,11 +1,9 @@
 ---
-const rawBaseUrl = import.meta.env.BASE_URL || "/";
-const normalizedBaseUrl = rawBaseUrl === "/"
-  ? ""
-  : rawBaseUrl.replace(/\/$/, "");
+import { withBasePath } from "@utils/basePath";
 
-const ofertasHref = `${normalizedBaseUrl}/ofertas`;
-const bannerSrc = `${normalizedBaseUrl}/banner.jpeg`;
+const pathname = Astro.url.pathname;
+const ofertasHref = withBasePath("/ofertas", pathname);
+const bannerSrc = withBasePath("/banner.jpeg", pathname);
 ---
 
 <section id="banner" aria-label="Banner de ofertas destacadas">

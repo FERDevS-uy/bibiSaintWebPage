@@ -1,7 +1,7 @@
 ---
-import { cargarProductos } from "../../utils/loadCSV";
 import Layout from "../../layouts/Layout.astro";
 import { config } from "../../config";
+import { withBasePath } from "@utils/basePath";
 import NumberInput from "@components/NumberInput.astro";
 import ProductGallery from "@components/ProductGallery.jsx";
 import type Product from "../../types/product";
@@ -10,28 +10,17 @@ import {
   getDisplaySubcategories,
 } from "@utils/categoryNormalization";
 import { isTallBoot } from "@utils/isTallBoot";
+import { loadProductById, loadRelatedProducts } from "../../utils/loadProducts";
 
-export const prerender = true;
+const { id } = Astro.params;
 
-export function getStaticPaths() {
-  const productos = cargarProductos();
+const product = await loadProductById(id!);
 
-  return productos.map((p) => {
-    const { id, relacionados, ...rest } = p;
-
-    const productosRelacionados = productos.filter((p) =>
-      relacionados.includes(p.id),
-    );
-
-    return {
-      params: { id },
-      props: { id, productosRelacionados, ...rest },
-    };
-  });
+if (!product) {
+  return Astro.redirect("/404", 404);
 }
 
 const {
-  id,
   name,
   img,
   price,
@@ -39,8 +28,10 @@ const {
   paymentLink,
   description,
   colors,
-  productosRelacionados: relacionados,
-} = Astro.props;
+  relacionados: relacionadosIds,
+} = product;
+
+const relacionados = await loadRelatedProducts(relacionadosIds);
 
 const productForCategoryPath: Product = {
   id,
@@ -78,6 +69,7 @@ const isAlondraProduct =
 const showRuntimeStockCheck =
   runtimeStockCheckEnabled
   && (isMartinaProduct || isKaiProduct || isNuvexProduct || isAlondraProduct);
+const pathname = Astro.url.pathname;
 ---
 
 <Layout
@@ -88,14 +80,14 @@ const showRuntimeStockCheck =
   <section class="productContainer">
     <!-- BREADCRUMB -->
     <div class="breadcrumb">
-      <a href={`${import.meta.env.BASE_URL}/categories/${displayCategoryName}`}
+      <a href={withBasePath(`/categories/${displayCategoryName}`, pathname)}
         >{displayCategoryName}</a
       >
 
       {groupSubcategory && (
         <>
           {" / "}
-          <a href={`${import.meta.env.BASE_URL}/categories/${displayCategoryName}/${groupSubcategory}`}>
+          <a href={withBasePath(`/categories/${displayCategoryName}/${groupSubcategory}`, pathname)}>
             {groupSubcategory}
           </a>
         </>
@@ -104,7 +96,7 @@ const showRuntimeStockCheck =
       {leafSubcategory && leafSubcategory !== groupSubcategory && (
         <>
           {" / "}
-          <a href={`${import.meta.env.BASE_URL}/categories/${displayCategoryName}/${leafSubcategory}`}>
+          <a href={withBasePath(`/categories/${displayCategoryName}/${leafSubcategory}`, pathname)}>
             {leafSubcategory.replace(`${groupSubcategory} - `, "")}
           </a>
         </>
@@ -226,9 +218,9 @@ const showRuntimeStockCheck =
               const tall = isTallBoot(prod.name, prod.description, prod.id);
               return (
               <div class="card">
-                <a href={`${import.meta.env.BASE_URL}/producto/${prod.id}`}>
+                <a href={withBasePath(`/producto/${prod.id}`, pathname)}>
                   <div class={`cardImg${tall ? " cardImg--tall" : ""}`}>
-                    <img class={`cardImg${tall ? " cardImg--tall" : ""}`} src={prod.img[0]} alt={prod.name} />
+                    <img loading="lazy" class={`cardImg${tall ? " cardImg--tall" : ""}`} src={prod.img[0]} alt={prod.name} />
                   </div>
                   <span class="cardTitle">{prod.name}</span>
                   <span class="cardPrice">${prod.price}</span>
@@ -251,7 +243,7 @@ const showRuntimeStockCheck =
     min-height: 100vh;
     margin: 0 auto;
     padding: 20px;
-    font-family: "Poppins", sans-serif;
+    font-family: "Poppins", "Poppins Fallback", sans-serif;
     margin-bottom: 3rem;
     overflow-x: clip;
   }
@@ -1661,7 +1653,7 @@ const showRuntimeStockCheck =
           };
         }
 
-        const endpointPath = `${String(import.meta.env.BASE_URL || "/").replace(/\/+$/, "")}/api/provider-nuvex`;
+        const endpointPath = `${String(document.documentElement.dataset.basePath || "").replace(/\/+$/, "")}/api/provider-nuvex`;
         const endpoint = new URL(endpointPath, window.location.origin);
         endpoint.searchParams.set("url", providerUrl);
 

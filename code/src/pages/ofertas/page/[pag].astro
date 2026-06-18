@@ -1,47 +1,35 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import ListarProductos from "@components/ListarProductos.astro";
-import { cargarProductos } from "@utils/loadCSV";
+import { loadProducts } from "@utils/loadProducts";
 import { parsePrice } from "@utils/price";
 import { config } from "src/config";
+import { withBasePath } from "@utils/basePath";
 
-export const prerender = true;
+const allProducts = await loadProducts();
+const productsPerPage = config.postPerPage;
+const { pag } = Astro.params;
 
-export const getStaticPaths = () => {
-  const productsPerPage = config.postPerPage;
-  const topBaratos = [...cargarProductos()]
-    .map((product) => ({
-      product,
-      numericPrice: parsePrice(product.price),
-    }))
-    .filter(({ numericPrice }) => Number.isFinite(numericPrice) && numericPrice > 0)
-    .sort((a, b) => {
-      if (a.numericPrice !== b.numericPrice) return a.numericPrice - b.numericPrice;
-      return a.product.name.localeCompare(b.product.name, "es", { sensitivity: "base" });
-    })
-    .slice(0, 50)
-    .map(({ product }) => product);
-  const totalPages = Math.ceil(topBaratos.length / productsPerPage);
+const topBaratos = [...allProducts]
+  .map((product) => ({
+    product,
+    numericPrice: parsePrice(product.price),
+  }))
+  .filter(({ numericPrice }) => Number.isFinite(numericPrice) && numericPrice > 0)
+  .sort((a, b) => {
+    if (a.numericPrice !== b.numericPrice) return a.numericPrice - b.numericPrice;
+    return a.product.name.localeCompare(b.product.name, "es", { sensitivity: "base" });
+  })
+  .slice(0, 50)
+  .map(({ product }) => product);
 
-  return Array.from({ length: totalPages }, (_, index) => {
-    const page = index + 1;
-    const start = index * productsPerPage;
-    const end = start + productsPerPage;
-
-    return {
-      params: { pag: String(page) },
-      props: {
-        products: topBaratos.slice(start, end),
-        totalPages,
-        actualPage: page,
-        totalProducts: topBaratos.length,
-      },
-    };
-  });
-};
-
-const { products, totalPages, actualPage, totalProducts } = Astro.props;
-const offersBaseUrl = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/ofertas`;
+const totalPages = Math.ceil(topBaratos.length / productsPerPage);
+const pageNum = Number(pag);
+const start = (pageNum - 1) * productsPerPage;
+const products = topBaratos.slice(start, start + productsPerPage);
+const actualPage = pageNum;
+const totalProducts = topBaratos.length;
+const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
 ---
 
 <Layout pageTitle={`Bibi's - Ofertas (${actualPage}/${totalPages})`} pageId="offers">
