@@ -1,7 +1,7 @@
 ---
-import { cargarProductos } from "@utils/loadCSV";
+import { loadProducts } from "@utils/loadProducts";
 
-const items = await cargarProductos();
+const items = await loadProducts();
 ---
 
 <form class="searchForm">
@@ -288,12 +288,13 @@ const items = await cargarProductos();
 <script define:vars={{ items }}>
   /* Definido en global.d.ts */
   window.productos = items;
+  window.baseUrl = document.documentElement.dataset.basePath || "";
 </script>
 
 <script>
   import Fuse from "fuse.js";
 
-  const BASE_URL = import.meta.env.BASE_URL;
+  const BASE_URL = window.baseUrl || "";
   const params = new URLSearchParams(window.location.search);
   const urlQuery = params.get("q");
 
@@ -329,6 +330,23 @@ const items = await cargarProductos();
       updateInputState();
     }
 
+    const updateSearchUrl = (query) => {
+      const isSearchPage = window.location.pathname.includes("/search");
+      if (!isSearchPage) return;
+      clearTimeout(window._searchDebounce);
+      window._searchDebounce = setTimeout(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (query) {
+          params.set("q", query);
+        } else {
+          params.delete("q");
+        }
+        const newUrl = `${window.location.pathname}${params.toString() ? "?" + params.toString() : ""}`;
+        window.history.replaceState(null, "", newUrl);
+        window.dispatchEvent(new CustomEvent("searchurlchange", { detail: { q: query } }));
+      }, 300);
+    };
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -346,12 +364,14 @@ const items = await cargarProductos();
         form.classList.remove("active");
         form.classList.remove("has-text");
         input.focus();
+        updateSearchUrl("");
       });
     }
 
     input.addEventListener("input", () => {
       const query = input.value.trim();
       updateInputState();
+      updateSearchUrl(query);
 
       if (!query) {
         resultContainer.innerHTML = "";
@@ -374,7 +394,7 @@ const items = await cargarProductos();
           const price = r.item.price || '';
           return `
         <li class="searchResultItem">
-          <a href="${import.meta.env.BASE_URL}/producto/${r.item.id}">
+            <a href="${BASE_URL}/producto/${r.item.id}">
             <div class="searchResultImage">
               <img src="${src}" alt="${r.item.name}" />
             </div>

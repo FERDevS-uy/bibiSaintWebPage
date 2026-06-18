@@ -1,5 +1,5 @@
 ---
-import { config } from "../config";
+import { withBasePath } from "@utils/basePath";
 import type CategoryList from "../types/categoryList";
 
 interface Props {
@@ -8,13 +8,14 @@ interface Props {
 }
 
 const { categories, selected } = Astro.props as Props;
+const pathname = Astro.url.pathname;
 ---
 
 <section class="categoryBox">
   <div class="scrollbox">
     {
       categories.map((c) => (
-        <a href={`${config.base}/categories/${c.name}`} class={`categoryLink${selected===c.name? ' selected': ''}`}>
+        <a href={withBasePath(`/categories/${c.name}`, pathname)} class={`categoryLink${selected===c.name? ' selected': ''}`}>
           {c.name} <span class="count">({c.count})</span>
         </a>
       ))

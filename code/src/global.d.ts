@@ -5,5 +5,6 @@ declare global {
   interface Window {
     updateCartCount?: () => void;
     productos: Product[]
+    baseUrl?: string;
   }
 }

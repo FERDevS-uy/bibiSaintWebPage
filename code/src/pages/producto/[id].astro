@@ -1,5 +1,4 @@
 ---
-import { cargarProductos } from "../../utils/loadCSV";
 import Layout from "../../layouts/Layout.astro";
 import { config } from "../../config";
 import { withBasePath } from "@utils/basePath";
@@ -11,28 +10,17 @@ import {
   getDisplaySubcategories,
 } from "@utils/categoryNormalization";
 import { isTallBoot } from "@utils/isTallBoot";
+import { loadProductById, loadRelatedProducts } from "../../utils/loadProducts";
 
-export const prerender = true;
+const { id } = Astro.params;
 
-export function getStaticPaths() {
-  const productos = cargarProductos();
+const product = await loadProductById(id!);
 
-  return productos.map((p) => {
-    const { id, relacionados, ...rest } = p;
-
-    const productosRelacionados = productos.filter((p) =>
-      relacionados.includes(p.id),
-    );
-
-    return {
-      params: { id },
-      props: { id, productosRelacionados, ...rest },
-    };
-  });
+if (!product) {
+  return Astro.redirect("/404", 404);
 }
 
 const {
-  id,
   name,
   img,
   price,
@@ -40,8 +28,10 @@ const {
   paymentLink,
   description,
   colors,
-  productosRelacionados: relacionados,
-} = Astro.props;
+  relacionados: relacionadosIds,
+} = product;
+
+const relacionados = await loadRelatedProducts(relacionadosIds);
 
 const productForCategoryPath: Product = {
   id,

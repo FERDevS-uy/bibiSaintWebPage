@@ -4,47 +4,34 @@ import SideBardCategories from "@components/SideBardCategories.astro";
 import Layout from "@layouts/Layout.astro";
 import { countCategories } from "@utils/countCategories";
 import { productMatchesCategory } from "@utils/categoryNormalization";
-import { cargarProductos } from "@utils/loadCSV";
+import { loadProducts } from "@utils/loadProducts";
 import { config } from "src/config";
+import { withBasePath } from "@utils/basePath";
 import type { subCategory } from "src/types/categoryList";
 import '../style.css';
 
-export const prerender = true;
-
-export const getStaticPaths = () => {
-  const CANT_PRODUCTOS = config.postPerPage;
-  const products = cargarProductos();
-  const categories = countCategories(products);
-
-  return categories.map((category) => {
-    const subcategoryMap = new Map<string, subCategory>();
-    if (category.subcategories.length > 0) {
-      category.subcategories.forEach((subC) => {
-        if (!subcategoryMap.has(subC.name))
-          subcategoryMap.set(subC.name, { ...subC });
-      });
-    }
-
-    const productsPerCat = products.filter(
-      (p) => productMatchesCategory(p, category.name),
-    );
-
-    const totalPages = Math.ceil(productsPerCat.length / CANT_PRODUCTOS);
-
-    return {
-      params: { id: category.name },
-      props: {
-        products: productsPerCat.slice(0, CANT_PRODUCTOS),
-        subCat: Array.from(subcategoryMap.values()),
-        totalPages,
-      },
-    };
-  });
-};
-
+const CANT_PRODUCTOS = config.postPerPage;
+const allProducts = await loadProducts();
 const { id } = Astro.params;
-const { products, subCat, totalPages } = Astro.props;
-const baseUrl = `${import.meta.env.BASE_URL}/categories/${id}`;
+const categories = countCategories(allProducts);
+
+const category = categories.find((c) => c.name === id);
+const subcategoryMap = new Map<string, subCategory>();
+if (category?.subcategories.length) {
+  category.subcategories.forEach((subC) => {
+    if (!subcategoryMap.has(subC.name))
+      subcategoryMap.set(subC.name, { ...subC });
+  });
+}
+
+const productsPerCat = allProducts.filter(
+  (p) => productMatchesCategory(p, id!),
+);
+
+const totalPages = Math.ceil(productsPerCat.length / CANT_PRODUCTOS);
+const products = productsPerCat.slice(0, CANT_PRODUCTOS);
+const subCat = Array.from(subcategoryMap.values());
+const baseUrl = withBasePath(`/categories/${id}`, Astro.url.pathname);
 ---
 
 <Layout

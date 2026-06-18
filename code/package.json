@@ -12,13 +12,15 @@
     "scrap": "node src/utils/fetch_productos.js",
     "providers:sync": "pnpm --dir ../webScrappingTool exec ts-node --prefer-ts-exts src/index.ts",
     "images:remove-bg:boots": "node scripts/removeBootBackgrounds.mjs",
-    "deploy": "astro build && wrangler deploy",
-    "cf:preview": "astro build && wrangler dev",
+    "db:migrate": "node scripts/migrateToSupabase.mjs",
+    "deploy": "astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && echo '_worker.js' > dist-deploy/.assetsignore && wrangler deploy ./dist-deploy/_worker.js/index.js --assets ./dist-deploy",
+    "cf:preview": "astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && echo '_worker.js' > dist-deploy/.assetsignore && wrangler dev ./dist-deploy/_worker.js/index.js --assets ./dist-deploy",
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.13",
     "@astrojs/react": "^4.4.2",
+    "@supabase/supabase-js": "^2.108.2",
     "astro": "^5.18.1",
     "astro-icon": "1.1.5",
     "astro-navbar": "2.3.9",

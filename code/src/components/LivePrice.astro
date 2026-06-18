@@ -28,9 +28,7 @@ const stockLabel =
   live.inStock === true ? "En stock" : live.inStock === false ? "Sin stock" : null;
 ---
 
-<span class="p-price" data-source={live.source} data-provider={live.provider}>
-  ${live.price}
-</span>
+<span class="p-price" data-source={live.source} data-provider={live.provider}>${`$${live.price}`}</span>
 {
   showStockBadge && stockLabel && (
     <span class={`p-stock p-stock--${live.inStock ? "ok" : "no"}`}>{stockLabel}</span>

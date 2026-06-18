@@ -1,7 +1,7 @@
 ---
 import type Product from "../types/product";
+import { withBasePath } from "@utils/basePath";
 import AddToCartButton from "./AddToCartButton.astro";
-import LivePrice from "./LivePrice.astro";
 import { isTallBoot } from "@utils/isTallBoot";
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { products, title, id } = Astro.props;
+const pathname = Astro.url.pathname;
 ---
 
 <div class="carousel-container" id={id}>
@@ -25,7 +26,7 @@ const { products, title, id } = Astro.props;
       {products.map((p, index) => (
         <article class={`carousel-item${isTallBoot(p.name, p.description, p.id) ? " carousel-item--tall" : ""}`} data-index={index}>
           <a
-            href={`${import.meta.env.BASE_URL}/producto/${p.id}`}
+            href={withBasePath(`/producto/${p.id}`, pathname)}
             class={`carousel-img-link${isTallBoot(p.name, p.description, p.id) ? " carousel-img-link--tall" : ""}`}
             title={p.name}
           >
@@ -40,14 +41,7 @@ const { products, title, id } = Astro.props;
           </a>
           <div class="carousel-info">
             <span class="p-name">{p.name}</span>
-            <LivePrice
-              productId={p.id}
-              providerLink={p.paymentLink?.[0]?.url ?? ""}
-              fallbackPrice={p.price}
-              server:defer
-            >
-              <span slot="fallback" class="p-price">${p.price}</span>
-            </LivePrice>
+            <span class="p-price">${p.price}</span>
             <div class="add-btn-wrapper">
               <AddToCartButton producto={p} variant="full" />
             </div>

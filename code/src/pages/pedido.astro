@@ -24,7 +24,7 @@ export const prerender = true;
     max-width: 900px;
     margin: 40px auto;
     padding: 0 20px 60px;
-    font-family: "Poppins", Arial, sans-serif;
+    font-family: "Poppins", "Poppins Fallback", Arial, sans-serif;
     color: #222;
   }
 
@@ -212,15 +212,28 @@ export const prerender = true;
   }
 
   :global(.pedido-color-badge) {
-    display: inline-block;
-    background: #1f6feb;
-    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f0f0f0;
+    color: #222;
     font-size: 0.72rem;
     font-weight: 700;
-    padding: 2px 8px;
+    padding: 3px 10px 3px 4px;
     border-radius: 20px;
     letter-spacing: 0.04em;
     width: fit-content;
+    border: 1px solid #d8d8d8;
+  }
+
+  :global(.pedido-color-swatch) {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+    flex-shrink: 0;
   }
 
   :global(.pedido-qty) {
@@ -320,6 +333,10 @@ export const prerender = true;
       justify-content: space-between;
     }
 
+    :global(.pedido-total-box) {
+      justify-content: stretch;
+    }
+
     :global(.pedido-total-inner) {
       min-width: unset;
       width: 100%;
@@ -332,514 +349,246 @@ export const prerender = true;
 </style>
 
 <script>
-  import { decryptIDs } from "@utils/encription";
-  import { formatPrice, parsePrice } from "@utils/price";
-  import { normalizeSize } from "@utils/sizes";
-  import type Product from "src/types/product";
-  import {
-    applyProviderMarkupValue,
-    fetchAlondraLive,
-    fetchKaiLive,
-    fetchMartinaLive,
-    fetchNuvexLive,
-    providerFrom,
-  } from "../client/stockService";
-
-  const params = new URLSearchParams(window.location.search);
-  const idFromQuery = params.get("id");
-  const martinaCode = import.meta.env.PUBLIC_MARTINA_CODE || "202605";
-  const martinaCountryId = import.meta.env.PUBLIC_MARTINA_COUNTRY_ID || "598";
-
-  interface ProductosDePedido extends Product {
-    cantidad: number;
-    requestedId: string;
-    baseId: string;
-    selectedSize: string | null;
-    variantBadgeText: string | null;
-    selectedColorId: number | null;
-    selectedColorName: string | null;
-    providerLink: string;
-    currentUnitPrice: number;
+  // Base64URL encode/decode inline
+  function base64UrlEncode(bytes) {
+    let binary = "";
+    for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+    const b64 = btoa(binary);
+    return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
   }
-
-  interface ParsedPedidoItem {
-    id: string;
-    cantidad: number;
-    selectedColorId: number | null;
-    selectedColorName: string | null;
+  
+  function base64UrlDecode(b64url) {
+    let b64 = b64url.replace(/-/g, "+").replace(/_/g, "/");
+    const pad = b64.length % 4;
+    if (pad) b64 += "=".repeat(4 - pad);
+    const binary = atob(b64);
+    const out = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) out[i] = binary.charCodeAt(i);
+    return out;
   }
-
-  function parsePedidoItem(item: string): ParsedPedidoItem | null {
-    const trimmed = item.trim();
-    if (!trimmed) return null;
-
-    if (trimmed.startsWith("{")) {
-      try {
-        const parsed = JSON.parse(trimmed);
-        const id = String(parsed?.id ?? "").trim();
-        const cantidad = Number(parsed?.cantidad);
-        if (!id || Number.isNaN(cantidad)) return null;
-        const colorIdNum = Number(parsed?.selectedColorId);
-        const selectedColorId = Number.isFinite(colorIdNum) ? colorIdNum : null;
-        const selectedColorName = parsed?.selectedColorName ? String(parsed.selectedColorName) : null;
-        return { id, cantidad, selectedColorId, selectedColorName };
-      } catch {
-        // fallback al formato legado
-      }
-    }
-
-    const separatorIndex = trimmed.lastIndexOf("-");
-    if (separatorIndex === -1) return null;
-
-    const rawId = trimmed.slice(0, separatorIndex).trim();
-    const rawQty = trimmed.slice(separatorIndex + 1).trim();
-    const cantidad = Number(rawQty);
-
-    if (!rawId || Number.isNaN(cantidad)) return null;
-    return { id: rawId, cantidad, selectedColorId: null, selectedColorName: null };
-  }
-
-  function parseVariantFromRawId(rawId: string): {
-    baseId: string;
-    selectedVariantToken: string | null;
-    selectedColorId: number | null;
-  } {
-    const [baseId, variantPart = ""] = rawId.split("__");
-    if (!variantPart) {
-      return { baseId, selectedVariantToken: null, selectedColorId: null };
-    }
-
-    let selectedVariantToken: string | null = null;
-    let selectedColorId: number | null = null;
-
-    variantPart
-      .split("_")
-      .map((token) => token.trim())
-      .filter(Boolean)
-      .forEach((token) => {
-        const colorMatch = token.match(/^c(\d+)$/i);
-        if (colorMatch) {
-          const id = Number(colorMatch[1]);
-          if (Number.isFinite(id)) selectedColorId = id;
-          return;
-        }
-        if (!selectedVariantToken) selectedVariantToken = token;
-      });
-
-    return { baseId, selectedVariantToken, selectedColorId };
-  }
-
-  function isLikelyMeasureToken(value: string): boolean {
-    const token = value.toUpperCase().trim();
-    return (
-      /(\d+\s*[Xx]\s*\d+)/.test(token)
-      || /(\d+\s*(CM|MM|M|L|LT|PZA|PZAS|UN|U))/i.test(token)
-      || /^[A-Z]-\d+$/i.test(token)
-    );
-  }
-
-  function resolveVariantForDisplay(_product: Product, variantToken: string | null): { selectedSize: string | null; variantBadgeText: string | null } {
-    if (!variantToken) return { selectedSize: null, variantBadgeText: null };
-
-    const normalizedToken = variantToken.trim().toUpperCase();
-    if (!normalizedToken) return { selectedSize: null, variantBadgeText: null };
-
-    const normalizedSize = normalizeSize(normalizedToken);
-
-    if (normalizedSize) {
-      return {
-        selectedSize: normalizedSize,
-        variantBadgeText: `Talle ${normalizedSize}`,
-      };
-    }
-
-    if (isLikelyMeasureToken(normalizedToken)) {
-      return {
-        selectedSize: null,
-        variantBadgeText: `Medida ${normalizedToken}`,
-      };
-    }
-
-    return {
-      selectedSize: null,
-      variantBadgeText: `Variante ${normalizedToken}`,
+  
+  // PRNG xorshift32 inline
+  function makePRNG(seed) {
+    let x = (seed >>> 0) || 123456789;
+    return function next() {
+      x ^= (x << 13);
+      x ^= (x >>> 17);
+      x ^= (x << 5);
+      return (x >>> 0);
     };
   }
+  
+  function seedFromPassword(pw) {
+    let h = 2166136261 >>> 0;
+    for (let i = 0; i < pw.length; i++) {
+      h ^= pw.charCodeAt(i);
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    h = (h ^ (h >>> 16)) >>> 0;
+    return h || 123456789;
+  }
+  
+  // Decrypt inline
+  function decryptIDs(token, password) {
+    const data = base64UrlDecode(token);
+    const seed = seedFromPassword(password);
+    const prng = makePRNG(seed);
+    const out = new Uint8Array(data.length);
+    let val = 0;
+    for (let i = 0; i < data.length; i++) {
+      if (i % 4 === 0) val = prng();
+      out[i] = data[i] ^ ((val >>> ((i % 4) * 8)) & 0xff);
+    }
+    const json = new TextDecoder().decode(out);
+    return JSON.parse(json);
+  }
+  
+  // Price parsing inline
+  function parsePrice(priceStr) {
+    const cleanStr = String(priceStr).replace(/[^\d.,]/g, "").replace(/\./g, "").replace(",", ".");
+    return parseFloat(cleanStr) || 0;
+  }
+  
+  function formatPrice(price) {
+    return new Intl.NumberFormat("es-UY", { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(price);
+  }
 
-
-  async function fetchProductos(): Promise<Product[]> {
-    const urls = [
-      `${import.meta.env.BASE_URL}/productos.json`,
-      "/productos.json",
-      "productos.json",
-    ];
-
-    for (const url of urls) {
-      try {
-        const response = await fetch(url);
-        if (response.ok) {
-          return (await response.json()) as Product[];
-        }
-      } catch {
-        // Intenta la siguiente ruta
+  // Normaliza talles para variantes (XS..XXXL, GG/XG, 0..5, 40..50)
+  function normalizeSize(rawSize) {
+    const map = {
+      "0": "XS", "1": "S", "2": "M", "3": "L", "4": "XL", "5": "XXL",
+      "40": "S", "42": "M", "44": "L", "46": "XL", "48": "XXL", "50": "XXXL",
+      "XS": "XS", "P": "S", "S": "S", "M": "M",
+      "G": "L", "GG": "XL", "XG": "XL",
+      "L": "L", "XL": "XL", "XXL": "XXL", "XXXL": "XXXL"
+    };
+    const token = String(rawSize || "").toUpperCase().replace(/\s+/g, "").trim();
+    if (!token) return null;
+    if (map[token]) return map[token];
+    const parts = token.split("/");
+    for (const part of parts) {
+      if (map[part]) return map[part];
+    }
+    const matches = token.match(/(XXXL|XXL|XL|XS|S|M|L|50|48|46|44|42|40|[0-5])/g);
+    if (matches) {
+      for (const m of matches) {
+        if (map[m]) return map[m];
       }
     }
+    return null;
+  }
 
-    throw new Error("No se pudo obtener productos.json en ninguna ruta.");
+  // Parsea "baseId__variant_cN" -> { baseId, variantToken, colorId }
+  function parseTokenId(tokenId) {
+    const [base, rest = ""] = String(tokenId || "").split("__");
+    if (!rest) return { baseId: base, variantToken: null, colorId: null };
+    let variant = null;
+    let colorId = null;
+    rest.split("_").map((p) => p.trim()).filter(Boolean).forEach((part) => {
+      const m = part.match(/^c(\d+)$/i);
+      if (m) {
+        const cid = Number(m[1]);
+        if (Number.isFinite(cid)) colorId = cid;
+        return;
+      }
+      if (!variant) variant = part;
+    });
+    return { baseId: base, variantToken: variant, colorId };
+  }
+
+  function isMeasurement(str) {
+    const upper = String(str || "").toUpperCase().trim();
+    return /(\d+\s*[Xx]\s*\d+)/.test(upper) || /(\d+\s*(CM|MM|M|L|LT|PZA|PZAS|UN|U))/i.test(upper) || /^[A-Z]-\d+$/i.test(upper);
+  }
+
+  function variantBadgeText(variantToken) {
+    if (!variantToken) return null;
+    const upper = String(variantToken).trim().toUpperCase();
+    if (!upper) return null;
+    const normalized = normalizeSize(upper);
+    if (normalized) return `Talle ${normalized}`;
+    if (isMeasurement(upper)) return `Medida ${upper}`;
+    return `Variante ${upper}`;
+  }
+
+  function escapeHtml(str) {
+    return String(str ?? "").replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
   }
 
   window.addEventListener("DOMContentLoaded", async () => {
-    const id = idFromQuery || localStorage.getItem("lastPedidoToken");
+    const params = new URLSearchParams(window.location.search);
+    const tokenId = params.get("id");
 
-    if (id) {
-      const decrypted = decryptIDs(id, "elias");
-      const lista: ParsedPedidoItem[] = decrypted
-        .map(parsePedidoItem)
-        .filter((item): item is ParsedPedidoItem => item !== null);
+    if (!tokenId) {
+      const el = document.getElementById("result__container");
+      if (el) el.innerHTML = '<p class="pedido-message">No hay id de pedido. Generá uno desde el carrito.</p>';
+      return;
+    }
 
-      try {
-        if (lista.length === 0) {
-          throw new Error("El enlace de pedido no tiene productos validos.");
-        }
+    try {
+      const decrypted = decryptIDs(tokenId, "elias");
 
-        const allProductos = await fetchProductos();
+      // Fetch productos.json
+      const runtimeBasePath = (document.documentElement.dataset.basePath || "").replace(/\/+$/, "");
+      const urls = [`${runtimeBasePath}/productos.json`, "/productos.json", "productos.json"];
+      let productos = [];
+      for (const url of urls) {
+        try {
+          const res = await fetch(url);
+          if (res.ok) {
+            productos = await res.json();
+            break;
+          }
+        } catch (e) { }
+      }
 
-        // Iterar desde la lista del carrito para soportar mismo producto con variantes distintas
-        const productos: ProductosDePedido[] = lista
-          .map((listItem) => {
-            const variant = parseVariantFromRawId(listItem.id);
-            const product = allProductos.find((p) => p.id === variant.baseId);
-            if (!product) return null;
-            const resolvedVariant = resolveVariantForDisplay(product, variant.selectedVariantToken);
+      if (productos.length === 0) throw new Error("No se pudo obtener productos.json");
+
+      // Parse items from decrypted array
+      // Soporta payload JSON ({id, cantidad, selectedColorId, selectedColorName})
+      // y formato legacy "id-cantidad".
+      const items = decrypted.map((item) => {
+        const trimmed = String(item || "").trim();
+        if (!trimmed) return null;
+        if (trimmed.startsWith("{")) {
+          try {
+            const parsed = JSON.parse(trimmed);
+            const idVal = String(parsed?.id ?? "").trim();
+            const cantVal = Number(parsed?.cantidad);
+            if (!idVal || Number.isNaN(cantVal)) return null;
+            const cId = Number(parsed?.selectedColorId);
             return {
-              ...product,
-              cantidad: listItem.cantidad,
-              requestedId: listItem.id,
-              baseId: variant.baseId,
-              selectedSize: resolvedVariant.selectedSize,
-              variantBadgeText: resolvedVariant.variantBadgeText,
-              selectedColorId:
-                listItem.selectedColorId !== null && listItem.selectedColorId !== undefined
-                  ? listItem.selectedColorId
-                  : variant.selectedColorId,
-              selectedColorName:
-                (listItem.selectedColorName && listItem.selectedColorName.trim().length > 0
-                  ? listItem.selectedColorName.trim()
-                  : null)
-                ?? (
-                  variant.selectedColorId !== null
-                  ? product.colors?.find((c) => c.id === variant.selectedColorId)?.name ?? `ID ${variant.selectedColorId}`
-                  : null
-                )
-                ?? (
-                  listItem.selectedColorId !== null && listItem.selectedColorId !== undefined
-                    ? `ID ${listItem.selectedColorId}`
-                    : null
-                )
-                ,
-              providerLink: product.paymentLink?.[0]?.url ?? "",
-              currentUnitPrice: parsePrice(product.price),
+              id: idVal,
+              cantidad: cantVal,
+              selectedColorId: Number.isFinite(cId) ? cId : null,
+              selectedColorName: parsed?.selectedColorName ? String(parsed.selectedColorName) : null,
             };
-          })
-          .filter((p): p is ProductosDePedido => p !== null);
-
-        renderProducts(productos);
-        initPedidoRuntimeCheck(productos);
-      } catch (e) {
-        console.error(e);
-        const container = document.getElementById(
-          "result__container"
-        ) as HTMLDivElement;
-        if (container) {
-          container.innerHTML = '<p class="pedido-message">No se pudo cargar el pedido. Revisá el enlace e intenta nuevamente.</p>';
+          } catch { return null; }
         }
+        const lastDash = trimmed.lastIndexOf("-");
+        if (lastDash === -1) return null;
+        const id = trimmed.slice(0, lastDash).trim();
+        const cant = Number(trimmed.slice(lastDash + 1).trim());
+        if (!id || Number.isNaN(cant)) return null;
+        return { id, cantidad: cant, selectedColorId: null, selectedColorName: null };
+      }).filter(Boolean);
+
+      if (items.length === 0) throw new Error("El pedido no tiene productos");
+
+      // Build pedido list - busca por baseId (sin variante)
+      const pedidos = items.map((item) => {
+        const parsed = parseTokenId(item.id);
+        const prod = productos.find((p) => p.id === parsed.baseId);
+        if (!prod) return null;
+        const colorId = item.selectedColorId !== null ? item.selectedColorId : parsed.colorId;
+        let colorName = item.selectedColorName;
+        let colorHex = null;
+        if (Array.isArray(prod.colors) && colorId !== null && colorId !== undefined) {
+          const c = prod.colors.find((c) => c.id === colorId);
+          if (c) {
+            if (!colorName) colorName = c.name;
+            colorHex = c.hex || null;
+          }
+        }
+        return {
+          ...prod,
+          cantidad: item.cantidad,
+          requestedId: item.id,
+          baseId: parsed.baseId,
+          variantBadgeText: variantBadgeText(parsed.variantToken),
+          selectedColorId: colorId,
+          selectedColorName: colorName,
+          selectedColorHex: colorHex,
+          currentUnitPrice: parsePrice(prod.price),
+        };
+      }).filter(Boolean);
+
+      const container = document.getElementById("result__container");
+      if (!container) return;
+
+      if (pedidos.length === 0) {
+        container.innerHTML = '<p class="pedido-message">No se encontraron los productos del pedido en el catálogo.</p>';
+        return;
       }
-    } else {
-      const container = document.getElementById(
-        "result__container"
-      ) as HTMLDivElement;
-      if (container) {
-        container.innerHTML = '<p class="pedido-message">No hay id de pedido en la URL. Generá uno desde el carrito o abrí un enlace de pedido.</p>';
-      }
+
+      const total = pedidos.reduce((s, p) => s + p.currentUnitPrice * p.cantidad, 0);
+      const itemsHtml = pedidos.map((p, i) => {
+        const img = Array.isArray(p.img) ? p.img[0] : p.img;
+        const badgeClass = p.variantBadgeText && p.variantBadgeText.startsWith("Talle ") ? "pedido-size-badge" : "pedido-variant-badge";
+        const variantBadge = p.variantBadgeText ? `<span class="${badgeClass}">${escapeHtml(p.variantBadgeText)}</span>` : "";
+        const hasColor = p.selectedColorName || p.selectedColorHex;
+        const colorBadge = hasColor
+          ? `<span class="pedido-color-badge"><span class="pedido-color-swatch" style="background:${escapeHtml(p.selectedColorHex || '#cccccc')}"></span>${escapeHtml(p.selectedColorName || ("ID " + p.selectedColorId))}</span>`
+          : "";
+        return `<div class="pedido-item" data-row-key="${i}" data-cantidad="${p.cantidad}" data-unit-price="${p.currentUnitPrice}"><img src="${img}" alt="${escapeHtml(p.name)}" loading="lazy" /><div class="pedido-item-info"><span class="pedido-item-name">${escapeHtml(p.name)}</span>${variantBadge}${colorBadge}<span class="pedido-item-price">$<span>${formatPrice(p.currentUnitPrice)}</span> c/u</span><p class="pedido-check-status">Stock verificar manualmente</p></div><div class="pedido-qty-wrap"><span class="pedido-qty">${p.cantidad}</span></div><div class="pedido-subtotal">$<span>${formatPrice(p.currentUnitPrice * p.cantidad)}</span></div></div>`;
+      }).join("");
+
+      container.innerHTML = `<div class="pedido-list"><div class="pedido-list-header"><span></span><span>Producto</span><span style="text-align:center">Cant.</span><span style="text-align:right">Subtotal</span></div>${itemsHtml}</div><div class="pedido-total-box"><div class="pedido-total-inner"><div class="pedido-total-row"><span>${pedidos.length} productos</span><span>${pedidos.reduce((s, p) => s + p.cantidad, 0)} unidades</span></div><div class="pedido-total-row main"><span>Total</span><span>$<span>${formatPrice(total)}</span></span></div></div></div>`;
+    } catch (err) {
+      const el = document.getElementById("result__container");
+      if (el) el.innerHTML = '<p class="pedido-message">Error: ' + escapeHtml(err.message) + '</p>';
     }
   });
-
-  function renderProducts(productos: ProductosDePedido[]): void {
-    const container = document.getElementById("result__container") as HTMLDivElement;
-
-    const total = productos.reduce(
-      (acc, item) => acc + item.currentUnitPrice * item.cantidad,
-      0
-    );
-    console.log(productos)
-    const itemsHTML = productos.map((p, index) => {
-      const rowKey = String(index);
-      const subtotalValue = p.currentUnitPrice * p.cantidad;
-      const subtotal = formatPrice(subtotalValue);
-      const variantBadgeClass = p.variantBadgeText?.startsWith("Talle ")
-        ? "pedido-size-badge"
-        : "pedido-variant-badge";
-      const variantBadge = p.variantBadgeText
-        ? `<span class="${variantBadgeClass}">${p.variantBadgeText}</span>`
-        : "";
-      const colorBadge = p.selectedColorId !== null
-        ? `<span class="pedido-color-badge">Color ${p.selectedColorName ?? `ID ${p.selectedColorId}`}</span>`
-        : "";
-      return `
-<div class="pedido-item" data-row-key="${rowKey}" data-cantidad="${p.cantidad}" data-unit-price="${p.currentUnitPrice}">
-  <img src="${p.img[0]}" alt="${p.name}" loading="lazy" />
-  <div class="pedido-item-info">
-    <span class="pedido-item-name">${p.name}</span>
-    <span id="pedidoStock_${rowKey}" class="pedido-stock-badge pending">Pendiente</span>
-    ${variantBadge}
-    ${colorBadge}
-    <span class="pedido-item-price">$<span id="pedidoUnit_${rowKey}">${formatPrice(
-        p.currentUnitPrice
-      )}</span> c/u</span>
-    <div class="pedido-check-row">
-      <button
-        type="button"
-        class="pedido-check-btn"
-        data-row-key="${rowKey}"
-      >
-        Verificar stock y precio
-      </button>
-    </div>
-    <p id="pedidoStatus_${rowKey}" class="pedido-check-status">Pendiente de verificación.</p>
-  </div>
-  <div class="pedido-qty-wrap">
-    <span class="pedido-qty">${p.cantidad}</span>
-  </div>
-  <div class="pedido-subtotal">$<span id="pedidoSubtotal_${rowKey}" class="pedido-subtotal-value">${subtotal}</span></div>
-</div>`;
-    }).join("");
-
-    container.innerHTML = `
-<div class="pedido-list">
-  <div class="pedido-list-header">
-    <span></span>
-    <span>Producto</span>
-    <span style="text-align:center">Cant.</span>
-    <span style="text-align:right">Subtotal</span>
-  </div>
-  ${itemsHTML}
-</div>
-
-<div class="pedido-total-box">
-  <div class="pedido-total-inner">
-    <div class="pedido-total-row">
-      <span>${productos.length} ${productos.length === 1 ? "producto" : "productos"}</span>
-      <span>${productos.reduce((a, p) => a + p.cantidad, 0)} unidades</span>
-    </div>
-    <div class="pedido-total-row main">
-      <span>Total</span>
-      <span>$<span id="pedidoTotalValue">${formatPrice(total)}</span></span>
-    </div>
-  </div>
-</div>`;
-  }
-
-  function updatePedidoTotalFromRows() {
-    const totalEl = document.getElementById("pedidoTotalValue") as HTMLSpanElement | null;
-    if (!totalEl) return;
-
-    let total = 0;
-    const rows = document.querySelectorAll<HTMLElement>(".pedido-item[data-row-key]");
-    rows.forEach((row) => {
-      const cantidad = Number(row.dataset.cantidad || "0");
-      const unitPrice = Number(row.dataset.unitPrice || "0");
-      total += unitPrice * cantidad;
-    });
-    totalEl.textContent = formatPrice(total);
-  }
-
-  function updatePedidoRowPrice(rowKey: string, unitPrice: number) {
-    const row = document.querySelector<HTMLElement>(`.pedido-item[data-row-key="${rowKey}"]`);
-    const unitEl = document.getElementById(`pedidoUnit_${rowKey}`) as HTMLSpanElement | null;
-    const subtotalEl = document.getElementById(`pedidoSubtotal_${rowKey}`) as HTMLSpanElement | null;
-
-    if (!row || !unitEl || !subtotalEl) return;
-
-    const cantidad = Number(row.dataset.cantidad || "0");
-    row.dataset.unitPrice = String(unitPrice);
-    unitEl.textContent = formatPrice(unitPrice);
-    subtotalEl.textContent = formatPrice(unitPrice * cantidad);
-    updatePedidoTotalFromRows();
-  }
-
-  function initPedidoRuntimeCheck(productos: ProductosDePedido[]) {
-    const byRow = new Map<string, ProductosDePedido>();
-    productos.forEach((item, index) => byRow.set(String(index), item));
-
-    const setStockState = (rowKey: string, state: "pending" | "ok" | "error", text: string) => {
-      const stockEl = document.getElementById(`pedidoStock_${rowKey}`) as HTMLSpanElement | null;
-      if (!stockEl) return;
-      stockEl.textContent = text;
-      stockEl.classList.remove("pending", "ok", "error");
-      stockEl.classList.add(state);
-    };
-
-    const setStatus = (rowKey: string, text: string, tone: "ok" | "error" | "neutral" = "neutral") => {
-      const statusEl = document.getElementById(`pedidoStatus_${rowKey}`) as HTMLParagraphElement | null;
-      if (!statusEl) return;
-      statusEl.textContent = text;
-      statusEl.classList.remove("ok", "error");
-      if (tone === "ok") statusEl.classList.add("ok");
-      if (tone === "error") statusEl.classList.add("error");
-    };
-
-    const verifyOne = async (button: HTMLButtonElement, auto = false) => {
-      const rowKey = button.dataset.rowKey || "";
-      const producto = byRow.get(rowKey);
-      if (!rowKey || !producto) return;
-
-      const provider = providerFrom(producto.baseId, producto.providerLink || "");
-      const originalText = button.textContent || "Verificar stock y precio";
-
-      button.disabled = true;
-      button.textContent = auto ? "Verificando..." : "Verificando...";
-      setStatus(rowKey, "Consultando proveedor en vivo...");
-      setStockState(rowKey, "pending", "Pendiente");
-
-      try {
-        if (provider === "martina") {
-          const data = await fetchMartinaLive(producto.baseId, martinaCode, martinaCountryId);
-
-          const livePrice = applyProviderMarkupValue(data?.price, provider);
-          if (livePrice > 0) {
-            producto.currentUnitPrice = livePrice;
-            updatePedidoRowPrice(rowKey, livePrice);
-          }
-
-          if (!data || data.colors.length === 0) {
-            setStockState(rowKey, "error", "Sin stock");
-            setStatus(rowKey, "Este producto no tiene stock activo en Martina.", "error");
-            return;
-          }
-
-          let availableSizes = data.sizes || [];
-          if (producto.selectedColorId !== null) {
-            const color = data.colors.find((c) => c.id === producto.selectedColorId);
-            if (!color) {
-              setStockState(rowKey, "error", "Sin stock");
-              setStatus(rowKey, "El color elegido ya no está disponible.", "error");
-              return;
-            }
-            availableSizes = color.sizes || [];
-          }
-
-          if (producto.selectedSize && availableSizes.length > 0 && !availableSizes.includes(producto.selectedSize)) {
-            setStockState(rowKey, "error", "Sin stock");
-            setStatus(rowKey, `Sin stock para talle ${producto.selectedSize}.`, "error");
-            return;
-          }
-
-          const hasStock = availableSizes.length > 0;
-          setStockState(rowKey, hasStock ? "ok" : "error", hasStock ? "En stock" : "Sin stock");
-          setStatus(rowKey, "Stock y precio actualizados desde Martina.", hasStock ? "ok" : "error");
-          return;
-        }
-
-        if (provider === "kaideco") {
-          const data = await fetchKaiLive(producto.providerLink);
-
-          const livePrice = applyProviderMarkupValue(data?.price, provider);
-          if (livePrice > 0) {
-            producto.currentUnitPrice = livePrice;
-            updatePedidoRowPrice(rowKey, livePrice);
-          }
-
-          const sizes = Array.isArray(data?.sizes) ? data.sizes : [];
-          if (producto.selectedSize && sizes.length > 0 && !sizes.includes(producto.selectedSize)) {
-            setStockState(rowKey, "error", "Sin stock");
-            setStatus(rowKey, `Sin stock para talle ${producto.selectedSize}.`, "error");
-            return;
-          }
-
-          const inStock = data?.inStock === null ? true : Boolean(data?.inStock);
-          setStockState(rowKey, inStock ? "ok" : "error", inStock ? "En stock" : "Sin stock");
-          setStatus(rowKey, "Stock y precio actualizados desde Kai Deco.", inStock ? "ok" : "error");
-          return;
-        }
-
-        if (provider === "nuvex") {
-          const data = await fetchNuvexLive(producto.providerLink);
-
-          if (data?.inStock === true) {
-            setStockState(rowKey, "ok", "Disponible");
-            setStatus(rowKey, "Stock verificado en Nuvex. El precio se mantiene según catálogo.", "ok");
-            return;
-          }
-
-          if (data?.inStock === false) {
-            setStockState(rowKey, "error", "Sin stock");
-            setStatus(rowKey, "Sin stock en Nuvex. El precio se mantiene según catálogo.", "error");
-            return;
-          }
-
-          if (data?.source === "nuvex-static-no-api") {
-            setStockState(rowKey, "pending", "A confirmar");
-            setStatus(
-              rowKey,
-              "En GitHub Pages no se puede verificar Nuvex en vivo (hosting estático + CORS). Se mantiene stock de catálogo.",
-            );
-            return;
-          }
-
-          setStockState(rowKey, "pending", "A confirmar");
-          setStatus(rowKey, "Ten presente que puede ser que este producto no este disponible.");
-          return;
-        }
-
-        if (provider === "alondra") {
-          const data = await fetchAlondraLive(producto.baseId);
-
-          const livePrice = applyProviderMarkupValue(data?.price, provider);
-          if (livePrice > 0) {
-            producto.currentUnitPrice = livePrice;
-            updatePedidoRowPrice(rowKey, livePrice);
-          }
-
-          if (data?.inStock === true) {
-            setStockState(rowKey, "ok", "Disponible");
-            setStatus(rowKey, "Stock y precio actualizados desde Alondra.", "ok");
-            return;
-          }
-
-          if (data?.inStock === false) {
-            setStockState(rowKey, "error", "Sin stock");
-            setStatus(rowKey, "Sin stock en Alondra. Precio actualizado si estuvo disponible.", "error");
-            return;
-          }
-
-          setStockState(rowKey, "pending", "A confirmar");
-          setStatus(rowKey, "No se pudo confirmar stock en Alondra. Precio actualizado si hubo respuesta.");
-          return;
-        }
-
-        setStockState(rowKey, "pending", "A confirmar");
-        setStatus(rowKey, "No se pudo verificar en vivo este proveedor. Se mantiene catálogo.");
-      } catch (error) {
-        setStockState(rowKey, "error", "Error");
-        setStatus(rowKey, "No se pudo verificar ahora. Se mantiene información del catálogo.", "error");
-      } finally {
-        button.disabled = false;
-        button.textContent = originalText;
-      }
-    };
-
-    const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>(".pedido-check-btn"));
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        void verifyOne(button, false);
-      });
-    });
-
-    // Verificación automática al cargar la página
-    (async () => {
-      for (const button of buttons) {
-        await verifyOne(button, true);
-      }
-    })();
-  }
 </script>

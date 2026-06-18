@@ -1,11 +1,14 @@
 ---
 // Main Banner component for the homepage
+import { withBasePath } from "@utils/basePath";
+
+const bannerSrc = withBasePath("/banner.jpeg", Astro.url.pathname);
 ---
 
 <div class="banner-container">
   <!-- Provide fallback or reference to the user's banner.webp / banner.jpg -->
   <img 
-    src={`${import.meta.env.BASE_URL}/banner.jpeg`} 
+    src={bannerSrc} 
     alt="Deco de fibras naturales - Bibi's" 
     class="banner-img" 
     loading="lazy"

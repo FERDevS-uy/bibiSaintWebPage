@@ -1,7 +1,7 @@
 ---
 import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
-import { config } from "src/config";
 import type CategoryList from "src/types/categoryList";
+import { withBasePath } from "@utils/basePath";
 import { Image } from "astro:assets";
 import SearchInput from "@components/SearchInput.astro";
 
@@ -12,8 +12,9 @@ const { default: downSVG } = await import("@assets/down.svg?raw");
 interface Props {
   categories: CategoryList[];
   categorySelected?: string;
+  basePath?: string;
 }
-const { categories, categorySelected } = Astro.props;
+const { categories, categorySelected, basePath = "" } = Astro.props;
 
 interface GroupedSubcategory {
   group: string;
@@ -72,7 +73,8 @@ const sortedCategories = categories.sort((a, b) => {
 
 // Detect current path for mobile active highlight
 const pathname = Astro.url.pathname;
-const base = config.base || "";
+const base = basePath;
+const homeHref = withBasePath("/", pathname);
 const isHome = pathname === base + "/" || pathname === base || pathname === base + "/index";
 const isAbout = pathname.includes("/about");
 ---
@@ -82,7 +84,7 @@ const isAbout = pathname.includes("/about");
     <div class="headerContainer">
       <MenuIcon class="menuIcon" />
       <div class="logoContainer">
-        <a href={config.base}>
+        <a href={homeHref}>
           <Image src={logo} alt="logo blanco" />
         </a>
       </div>
@@ -99,7 +101,7 @@ const isAbout = pathname.includes("/about");
           </svg>
         </button>
 
-        <a href={`${config.base}/carrito`} class="cartLink">
+        <a href={withBasePath("/carrito", pathname)} class="cartLink">
           <Image src={cart} alt="Carrito" class="cart-icon" />
           <div id="cartCount" class="cartCount hidden">
             <span></span>
@@ -136,7 +138,7 @@ const isAbout = pathname.includes("/about");
           sortedCategories.map((c) => (
             <li class={`categoryItem ${categorySelected === c.name ? "is-current" : ""}`}>
               <a
-                href={`${config.base}/categories/${c.name}`}
+                href={withBasePath(`/categories/${c.name}`, pathname)}
                 class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""} ${c.subcategories && c.subcategories.length > 0 ? "has-submenu" : ""}`}
                 data-submenu-target={`submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}`}
               >
@@ -162,7 +164,7 @@ const isAbout = pathname.includes("/about");
                   <ul>
                     <li>
                       <a
-                        href={`${config.base}/categories/${c.name}`}
+                        href={withBasePath(`/categories/${c.name}`, pathname)}
                         class="principal navLink subcategoryLink"
                         style="font-weight: bold;"
                       >
@@ -173,7 +175,7 @@ const isAbout = pathname.includes("/about");
                       c.subcategories.map((sub) => (
                         <li>
                           <a
-                            href={`${config.base}/categories/${c.name}/${sub.name}`}
+                            href={withBasePath(`/categories/${c.name}/${sub.name}`, pathname)}
                             class="navLink subcategoryLink"
                           >
                             {sub.name}
@@ -189,7 +191,7 @@ const isAbout = pathname.includes("/about");
                         return (
                           <li class="nestedCategoryItem">
                             <a
-                              href={`${config.base}/categories/${c.name}/${groupData.group}`}
+                              href={withBasePath(`/categories/${c.name}/${groupData.group}`, pathname)}
                               class={`navLink subcategoryLink ${groupData.items.length > 0 ? "has-submenu-level2" : ""}`}
                               data-submenu-target={groupData.items.length > 0 ? nestedId : undefined}
                             >
@@ -211,7 +213,7 @@ const isAbout = pathname.includes("/about");
                                 <ul>
                                   <li>
                                     <a
-                                      href={`${config.base}/categories/${c.name}/${groupData.group}`}
+                                      href={withBasePath(`/categories/${c.name}/${groupData.group}`, pathname)}
                                       class="principal navLink subcategoryLink"
                                       style="font-weight: bold;"
                                     >
@@ -222,7 +224,7 @@ const isAbout = pathname.includes("/about");
                                   {groupData.items.map((subName) => (
                                     <li>
                                       <a
-                                        href={`${config.base}/categories/${c.name}/${subName}`}
+                                        href={withBasePath(`/categories/${c.name}/${subName}`, pathname)}
                                         class="navLink subcategoryLink"
                                       >
                                         {subName.replace(`${groupData.group} - `, "")}
@@ -244,9 +246,9 @@ const isAbout = pathname.includes("/about");
     </ul>
 
     <ul class="mainNav mainNavBottom">
-      <li><a class={`navLink ${isHome ? "active-page" : ""}`} href={config.base}>Inicio</a></li>
+      <li><a class={`navLink ${isHome ? "active-page" : ""}`} href={homeHref}>Inicio</a></li>
       <li>
-        <a class={`navLink ${isAbout ? "active-page" : ""}`} href={`${config.base}/about`}>Quienes Somos</a>
+        <a class={`navLink ${isAbout ? "active-page" : ""}`} href={withBasePath("/about", pathname)}>Quienes Somos</a>
       </li>
     </ul>
   </MenuItems>

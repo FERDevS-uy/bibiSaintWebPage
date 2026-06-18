@@ -1,5 +1,4 @@
 ---
-import { config } from "src/config";
 import styles from "../styles/components/NavPag.module.css";
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
   baseURL?: string;
 }
 
-const { totalPages, actualPage, baseURL = config.base } = Astro.props;
+const { totalPages, actualPage, baseURL = "" } = Astro.props;
 
 const nextUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${+actualPage + 1}`) : `${baseURL}/page/${+actualPage + 1}`;
 const prevUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${+actualPage - 1}`) : `${baseURL}/page/${+actualPage - 1}`;

@@ -1,9 +1,12 @@
 ---
+import { config } from "../config";
 import Layout from "../layouts/Layout.astro";
+import { withBasePath } from "@utils/basePath";
 import styles from "../styles/pages/carrito.module.css";
 import "../styles/components/CartDynamic.css";
 
 export const prerender = true;
+const pathname = Astro.url.pathname;
 ---
 
 <Layout>
@@ -37,7 +40,7 @@ export const prerender = true;
       <button id="clearBtn" class={`${styles.cartBtn} ${styles.danger}`}
         >Vaciar Carrito</button
       >
-      <a href="/" class={`${styles.cartBtn} ${styles.secondary}`}
+      <a href={withBasePath("/", pathname)} class={`${styles.cartBtn} ${styles.secondary}`}
         >Seguir Comprando</a
       >
 

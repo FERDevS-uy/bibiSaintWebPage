@@ -1,5 +1,6 @@
 ---
 import type Product from "../types/product";
+import { withBasePath } from "@utils/basePath";
 const { default: cartSVG } = await import("../assets/add-one-cart.svg?raw");
 
 interface Props {
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const { producto: p, variant = "icon" } = Astro.props;
+const pathname = Astro.url.pathname;
 const categoryName = String(p?.categories?.name ?? "").toUpperCase();
 const requiresSizeSelection =
   String(p?.id ?? "").toLowerCase().startsWith("mdt-") ||
@@ -19,7 +21,7 @@ const requiresSizeSelection =
 {requiresSizeSelection ? (
   <a
     class={`addToCart ${variant === "full" ? "addToCartFull addToCartNeedsSize" : "addToCartNeedsSizeIcon"}`}
-    href={`${import.meta.env.BASE_URL}/producto/${p.id}`}
+    href={withBasePath(`/producto/${p.id}`, pathname)}
     title="Elegir talle antes de agregar"
   >
     {variant === "full" ? "ELEGIR TALLE" : <Fragment set:html={cartSVG} />}
