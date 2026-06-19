@@ -179,7 +179,7 @@ const pathname = Astro.url.pathname;
             type="button"
             id="addToCartBtn"
             class="buyBtn"
-            data-id={Astro.props.id}
+            data-id={id}
           >
             Añadir al Carrito
           </button>
@@ -1067,6 +1067,18 @@ const pathname = Astro.url.pathname;
           }
           markUnavailableSizesForFallback(availableForColor);
         };
+
+        // Aplicar disponibilidad de talles del primer color al cargar la página
+        {
+          const firstSw = colorsSelector.querySelector<HTMLButtonElement>(".swatch");
+          if (firstSw) {
+            const cid = Number(firstSw.dataset.colorId);
+            if (Number.isFinite(cid)) {
+              selectedColorId = cid;
+              applySelectedColorAvailability();
+            }
+          }
+        }
 
         const selectColor = (sw: HTMLButtonElement) => {
           const cid = Number(sw.dataset.colorId);
