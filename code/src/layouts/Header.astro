@@ -2,7 +2,6 @@
 import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
 import type CategoryList from "src/types/categoryList";
 import { withBasePath } from "@utils/basePath";
-import { Image } from "astro:assets";
 import SearchInput from "@components/SearchInput.astro";
 
 import logo from "@assets/logo_blanco.png";
@@ -85,7 +84,7 @@ const isAbout = pathname.includes("/about");
       <MenuIcon class="menuIcon" />
       <div class="logoContainer">
         <a href={homeHref}>
-          <Image src={logo} alt="logo blanco" />
+          <img src={logo.src} alt="logo blanco" />
         </a>
       </div>
 
@@ -102,7 +101,7 @@ const isAbout = pathname.includes("/about");
         </button>
 
         <a href={withBasePath("/carrito", pathname)} class="cartLink">
-          <Image src={cart} alt="Carrito" class="cart-icon" />
+          <img src={cart.src} alt="Carrito" class="cart-icon" />
           <div id="cartCount" class="cartCount hidden">
             <span></span>
           </div>
