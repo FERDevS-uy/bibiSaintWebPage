@@ -233,7 +233,11 @@ function parseColors(raw: string | undefined, images: string[]): ProductColor[] 
   }
 }
 
+let cachedProducts: Product[] | null = null;
+
 export function cargarProductos(): Product[] {
+  if (cachedProducts) return cachedProducts;
+
   const parseProductsFromCsv = (csvPath: string): Product[] => {
     if (!fs.existsSync(csvPath)) return [];
 
@@ -279,5 +283,6 @@ export function cargarProductos(): Product[] {
   const productosCatalogo = parseProductsFromCsv(productosCatalogoPath);
 
   // Mantiene el pedido pedido por negocio: base primero y catalogo anexado al final.
-  return [...productosBase, ...productosCatalogo];
+  cachedProducts = [...productosBase, ...productosCatalogo];
+  return cachedProducts;
 }
