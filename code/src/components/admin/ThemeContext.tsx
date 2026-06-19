@@ -451,29 +451,6 @@ body {
   opacity: 0.6;
 }
 
-/* ── Notification ── */
-
-.admin-notif {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.7rem 1rem;
-  border-radius: var(--admin-radius-sm);
-  font-size: 0.85rem;
-  font-weight: 600;
-  animation: slideDown 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.admin-notif-ok {
-  background: var(--admin-success-bg);
-  color: var(--admin-success);
-}
-
-.admin-notif-error {
-  background: var(--admin-error-bg);
-  color: var(--admin-error);
-}
-
 /* ── Chips ── */
 
 .admin-chip {
@@ -527,6 +504,71 @@ body {
   transform: scale(0.9);
 }
 
+/* ── Modal ── */
+
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.admin-modal {
+  background: var(--admin-surface);
+  border-radius: var(--admin-radius-lg);
+  padding: 2rem;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--admin-shadow-xl);
+  animation: bounceIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: center;
+  position: relative;
+}
+
+.admin-modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.admin-modal-ok .admin-modal-icon {
+  color: var(--admin-success);
+}
+
+.admin-modal-error .admin-modal-icon {
+  color: var(--admin-error);
+}
+
+.admin-modal-title {
+  font-family: var(--admin-font-serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 0 0 0.5rem;
+  color: var(--admin-text);
+}
+
+.admin-modal-body {
+  font-size: 0.95rem;
+  color: var(--admin-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.admin-modal-btn {
+  min-width: 140px;
+  justify-content: center;
+  padding: 0.7rem 1.4rem;
+  font-size: 0.95rem;
+}
+
 /* ── Responsive ── */
 
 @media (max-width: 768px) {
@@ -551,12 +593,114 @@ body {
   }
 
   .admin-main-inner {
-    padding: 1rem;
+    padding: 0.75rem;
     padding-top: 4.5rem;
   }
 
   .admin-fab {
     display: flex;
+  }
+
+  .admin-nav-link {
+    font-size: 1rem;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .admin-sidebar-btn {
+    font-size: 0.9rem;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .admin-btn {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+
+  .admin-input {
+    font-size: 1rem;
+    padding: 0.7rem 0.8rem;
+  }
+
+  .admin-card {
+    padding: 1rem;
+  }
+
+  .admin-modal {
+    padding: 1.5rem;
+    max-width: 340px;
+  }
+
+  .admin-page-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .admin-header-right {
+    width: 100%;
+  }
+
+  .admin-header-right .admin-btn {
+    flex: 1;
+  }
+
+  .admin-search-wrap {
+    max-width: 100% !important;
+    flex: 1;
+  }
+
+  .admin-filter-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .admin-filter-group {
+    width: 100%;
+    min-width: 0 !important;
+  }
+
+  .admin-filter-group select {
+    width: 100%;
+  }
+
+  .admin-pagination {
+    gap: 0.2rem;
+  }
+
+  .admin-pagination button {
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 0.9rem;
+  }
+
+  .admin-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .admin-color-sizes {
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .admin-color-sizes label {
+    min-height: 36px;
+    min-width: 36px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .admin-sidebar {
+    width: 220px;
+    min-width: 220px;
+  }
+}
+
+@media (min-width: 769px) {
+  .admin-sidebar {
+    position: sticky;
+    top: 0;
   }
 }
 

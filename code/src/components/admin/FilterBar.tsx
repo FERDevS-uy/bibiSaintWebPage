@@ -9,7 +9,7 @@ interface FilterBarProps {
   hasFilters: boolean;
 }
 
-export default function FilterBar({
+const FilterBar = React.memo(function FilterBar({
   filters,
   displayCategories,
   onFilterChange,
@@ -20,10 +20,10 @@ export default function FilterBar({
   const subcategories = selectedCat?.subcategories ?? [];
 
   return (
-    <div style={bar}>
+    <div className="admin-filter-bar" style={bar}>
       <div style={row}>
         {/* Category */}
-        <div style={group}>
+        <div className="admin-filter-group" style={group}>
           <label style={label}>Categoría</label>
           <select
             value={filters.category}
@@ -43,7 +43,7 @@ export default function FilterBar({
         </div>
 
         {/* Subcategory */}
-        <div style={group}>
+        <div className="admin-filter-group" style={group}>
           <label style={label}>Subcategoría</label>
           <select
             value={filters.subcategory}
@@ -65,7 +65,7 @@ export default function FilterBar({
         </div>
 
         {/* Status */}
-        <div style={group}>
+        <div className="admin-filter-group" style={group}>
           <label style={label}>Estado</label>
           <select
             value={filters.status}
@@ -79,7 +79,7 @@ export default function FilterBar({
         </div>
 
         {/* Offer */}
-        <label style={checkLabel}>
+        <label className="admin-filter-group" style={checkLabel}>
           <input
             type="checkbox"
             checked={filters.offer}
@@ -99,7 +99,9 @@ export default function FilterBar({
       </div>
     </div>
   );
-}
+});
+
+export default FilterBar;
 
 const bar: React.CSSProperties = {
   marginBottom: "1.25rem",

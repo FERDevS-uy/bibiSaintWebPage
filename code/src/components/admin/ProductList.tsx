@@ -5,6 +5,7 @@ import { usePendingToast } from "./toastUtils";
 import FilterBar from "./FilterBar";
 import Pagination from "./Pagination";
 import ProductCard from "./ProductCard";
+import Modal from "./Modal";
 
 export default function ProductList() {
   const { toast: pendingToast, dismiss: dismissToast } = usePendingToast();
@@ -35,7 +36,7 @@ export default function ProductList() {
   return (
     <div style={wrap}>
       {/* Header */}
-      <div style={headerStyle}>
+      <div className="admin-page-header" style={headerStyle}>
         <div>
           <h1 style={pageTitle}>Productos</h1>
           <p style={pageSub}>
@@ -43,12 +44,12 @@ export default function ProductList() {
             {totalPages > 1 && ` · Página ${page + 1} de ${totalPages}`}
           </p>
         </div>
-        <div style={headerRight}>
+        <div className="admin-header-right" style={headerRight}>
           <a href="/admin/productos/nuevo" className="admin-btn admin-btn-primary" style={{ textDecoration: "none" }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Nuevo producto
           </a>
-          <div style={searchWrap}>
+          <div className="admin-search-wrap" style={searchWrap}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--admin-text-secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input
               type="text"
@@ -64,16 +65,14 @@ export default function ProductList() {
 
       {/* Pending toast from redirect */}
       {pendingToast && (
-        <div
-          role="alert"
-          className={`admin-notif ${pendingToast.type === "ok" ? "admin-notif-ok" : "admin-notif-error"}`}
-          style={{ marginBottom: "1rem" }}
+        <Modal
+          open={!!pendingToast}
+          onClose={dismissToast}
+          type={pendingToast.type}
+          title={pendingToast.type === "ok" ? "Éxito" : "Error"}
         >
-          <span>{pendingToast.text}</span>
-          <button onClick={dismissToast} style={{ background: "none", border: "none", cursor: "pointer", color: "inherit", padding: "0.15rem", display: "flex", alignItems: "center", opacity: 0.7 }} aria-label="Cerrar notificación">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
-        </div>
+          {pendingToast.text}
+        </Modal>
       )}
 
       {/* Filters */}
@@ -99,7 +98,7 @@ export default function ProductList() {
       )}
 
       {/* Product grid */}
-      {!loading || products.length > 0 ? (
+      {(!loading || products.length > 0) && (
         <div style={gridStyle}>
           {products.map((p, idx) => (
             <ProductCard
@@ -110,7 +109,7 @@ export default function ProductList() {
             />
           ))}
         </div>
-      ) : null}
+      )}
 
       {/* Empty state */}
       {!loading && products.length === 0 && (

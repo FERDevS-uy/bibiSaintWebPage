@@ -6,7 +6,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({ page, totalPages, onPageChange }: PaginationProps) {
+const Pagination = React.memo(function Pagination({ page, totalPages, onPageChange }: PaginationProps) {
   if (totalPages <= 1) return null;
 
   // Build page numbers to show (max 7)
@@ -22,7 +22,7 @@ export default function Pagination({ page, totalPages, onPageChange }: Paginatio
   }
 
   return (
-    <nav aria-label="Paginación" style={wrap}>
+    <nav aria-label="Paginación" className="admin-pagination" style={wrap}>
       <button
         className="admin-btn admin-btn-ghost"
         onClick={() => onPageChange(0)}
@@ -75,7 +75,9 @@ export default function Pagination({ page, totalPages, onPageChange }: Paginatio
       </button>
     </nav>
   );
-}
+});
+
+export default Pagination;
 
 const wrap: React.CSSProperties = {
   display: "flex",

@@ -4,6 +4,7 @@ import {
   getDisplayCategoryName,
   getDisplaySubcategories,
 } from "../../../utils/categoryNormalization";
+import { setPendingToast } from "../toastUtils";
 
 export interface AdminProduct {
   id: string;
@@ -115,26 +116,6 @@ export function useProducts() {
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
 
-  // Extract category tree from raw data (before normalization)
-  const categoryTree = useMemo(() => {
-    const catMap = new Map<string, Set<string>>();
-    for (const p of allProducts) {
-      const c = p.categories;
-      if (!c?.name) continue;
-      if (!catMap.has(c.name)) catMap.set(c.name, new Set());
-      const subs = Array.isArray(c.subcategories) ? c.subcategories : [];
-      for (const s of subs) {
-        if (s?.name) catMap.get(c.name)!.add(s.name);
-      }
-    }
-    const cats: { name: string; subcategories: string[] }[] = [];
-    for (const [name, subs] of catMap) {
-      cats.push({ name, subcategories: [...subs].sort() });
-    }
-    cats.sort((a, b) => a.name.localeCompare(b.name));
-    return cats;
-  }, [allProducts]);
-
   // Extract display category names (after normalization) for filter dropdown
   const displayCategories = useMemo(() => {
     const catMap = new Map<string, Map<string, number>>();
@@ -182,7 +163,7 @@ export function useProducts() {
       .eq("id", id);
 
     if (error) {
-      alert("Error al actualizar: " + error.message);
+      setPendingToast({ type: "error", text: "Error al actualizar: " + error.message });
       return;
     }
 
@@ -204,7 +185,6 @@ export function useProducts() {
     clearFilters,
     toggleActive,
     displayCategories,
-    categoryTree,
     hasFilters:
       filters.category !== "" ||
       filters.subcategory !== "" ||

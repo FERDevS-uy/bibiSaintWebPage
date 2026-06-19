@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
+import Modal from "./Modal";
 
 interface SyncResult {
   provider: string;
@@ -79,11 +80,9 @@ export default function ProvidersPanel() {
         </div>
       )}
 
-      {error && (
-        <div className="admin-notif admin-notif-error" style={{ marginBottom: "1rem" }}>
-          {error}
-        </div>
-      )}
+      <Modal open={!!error} onClose={() => setError(null)} type="error" title="Error de sincronización">
+        {error}
+      </Modal>
 
       {result && (
         <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>

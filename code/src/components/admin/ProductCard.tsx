@@ -8,7 +8,7 @@ interface ProductCardProps {
   onToggleActive: (id: string, current: boolean) => void;
 }
 
-export default function ProductCard({ product, index, onToggleActive }: ProductCardProps) {
+const ProductCard = React.memo(function ProductCard({ product, index, onToggleActive }: ProductCardProps) {
   const p = product;
   const displayCat = getDisplayCategoryName(p);
   const displaySubs = getDisplaySubcategories(p);
@@ -82,7 +82,9 @@ export default function ProductCard({ product, index, onToggleActive }: ProductC
       </div>
     </div>
   );
-}
+});
+
+export default ProductCard;
 
 const top: React.CSSProperties = {
   display: "flex",
