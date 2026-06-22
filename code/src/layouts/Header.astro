@@ -4,7 +4,7 @@ import type CategoryList from "src/types/categoryList";
 import { withBasePath } from "@utils/basePath";
 import SearchInput from "@components/SearchInput.astro";
 
-import logo from "@assets/logo_blanco.png";
+import logo from "@assets/logo_blanco.webp";
 import cart from "@assets/cart.png"
 const { default: downSVG } = await import("@assets/down.svg?raw");
 
@@ -84,7 +84,7 @@ const isAbout = pathname.includes("/about");
       <MenuIcon class="menuIcon" />
       <div class="logoContainer">
         <a href={homeHref}>
-          <img src={logo.src} alt="logo blanco" />
+          <img src={logo.src} alt="logo blanco" width="200" height="100" fetchpriority="high" />
         </a>
       </div>
 

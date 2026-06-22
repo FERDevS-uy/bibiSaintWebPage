@@ -2,7 +2,7 @@
 import type CategoryList from "src/types/categoryList";
 import { withBasePath } from "@utils/basePath";
 
-import logo from "@assets/logo_blanco.png";
+import logo from "@assets/logo_blanco.webp";
 import { Icon } from "astro-icon/components";
 const { default: facebookSVG } = await import("@assets/facebook.svg?raw");
 const { default: instagramSVG } = await import("@assets/instagram.svg?raw");
@@ -46,7 +46,7 @@ const { categories, basePath = "" } = Astro.props;
     <hr class="separator" />
 
     <div class="social_medias">
-      <img src={logo.src} alt="logo blanco" class="logo" />
+      <img src={logo.src} alt="logo blanco" width="200" height="100" class="logo" />
 
       <ul class="social-icons-list">
         <li>
@@ -94,7 +94,7 @@ const { categories, basePath = "" } = Astro.props;
   <div class="footerContainer desktop">
     <div class="col1">
       <a href={withBasePath("/", basePath)}>
-        <img class="logo" src={logo.src} alt="logo blanco" />
+        <img class="logo" src={logo.src} alt="logo blanco" width="200" height="100" />
       </a>
       <p>Bibi's - Donde cada </p>
       <p>elección tiene alma</p>
