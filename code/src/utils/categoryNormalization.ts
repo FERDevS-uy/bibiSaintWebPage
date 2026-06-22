@@ -28,6 +28,25 @@ function getGenderFromCategory(product: Product): "Mujer" | "Hombre" | null {
   return null;
 }
 
+function inferTecnoSubcategory(productName: string): string {
+  const normalized = productName
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+  if (/(parlante|speaker|auricular|audio|mic|microfono|headset)/i.test(normalized)) return "Audio";
+  if (/(cable|usb|tipo c|type c|hdmi|adaptador|conector|hub|cargador)/i.test(normalized)) return "Cables y Conectividad";
+  if (/(aro de luz|ring|lampara|led|luz)/i.test(normalized)) return "Iluminacion";
+  if (/(camara|smart|domotica|sensor|wifi|enchufe inteligente)/i.test(normalized)) return "Smart Home";
+  if (/(soporte|holder|base|tripode|trípode)/i.test(normalized)) return "Soportes";
+  if (/(gadget|reloj|smartwatch|teclado|mouse|raton|ratón)/i.test(normalized)) return "Gadgets";
+  return "Accesorios";
+}
+
+function isTecnoProduct(product: Product): boolean {
+  return /tecno|tecnologia|tecnología/i.test(product.categories.name.trim());
+}
+
 export function getDisplayCategoryName(product: Product): string {
   const gender = getGenderFromCategory(product);
   if (isMartinaProduct(product) && gender) return "Ropa";
@@ -35,9 +54,14 @@ export function getDisplayCategoryName(product: Product): string {
 }
 
 export function getDisplaySubcategories(product: Product): string[] {
-  const sourceSubcategories = product.categories.subcategories
+  const rawSubcategories = product.categories.subcategories ?? [];
+  let sourceSubcategories = rawSubcategories
     .map((sub) => normalizeLabel(sub.name))
     .filter(Boolean);
+
+  if (sourceSubcategories.length === 0 && isTecnoProduct(product)) {
+    sourceSubcategories = [normalizeLabel(inferTecnoSubcategory(product.name))];
+  }
 
   const gender = getGenderFromCategory(product);
   if (!(isMartinaProduct(product) && gender)) {
