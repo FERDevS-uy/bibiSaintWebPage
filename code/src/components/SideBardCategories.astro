@@ -431,7 +431,7 @@ const uniqueColors = Array.from(colorChipsMap.values());
 
 <script>
   // @ts-nocheck
-  window.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     // Mobile toggle
     const toggle = document.getElementById("sf-toggle");
     const body = document.getElementById("sf-body");

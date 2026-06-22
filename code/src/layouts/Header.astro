@@ -254,7 +254,7 @@ const isAbout = pathname.includes("/about");
 </header>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     const hasSubmenuLinks = document.querySelectorAll(
       ".has-submenu, .has-submenu-level2",
     );
@@ -268,7 +268,6 @@ const isAbout = pathname.includes("/about");
       "astronav-menu",
     ) as HTMLButtonElement;
     const mobileSearchBtn = document.getElementById("mobileSearchBtn");
-    const searchForm = document.querySelector(".navMenu form");
 
     const syncMobileSearchVisibility = () => {
       if (!mobileMenuHeader) return;
@@ -389,8 +388,8 @@ const isAbout = pathname.includes("/about");
     }
   }
 
-  // Ejecutar al cargar y al redimensionar
-  window.addEventListener("DOMContentLoaded", checkCategoryListWidth);
+  // Ejecutar al navegar y al redimensionar
+  document.addEventListener("astro:page-load", checkCategoryListWidth);
   window.addEventListener("resize", checkCategoryListWidth);
 </script>
 

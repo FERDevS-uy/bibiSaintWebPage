@@ -477,7 +477,7 @@ export const prerender = true;
     }[c]));
   }
 
-  window.addEventListener("DOMContentLoaded", async () => {
+  document.addEventListener("astro:page-load", async () => {
     const params = new URLSearchParams(window.location.search);
     const tokenId = params.get("id");
 
