@@ -15,6 +15,9 @@ const url = process.env.PUBLIC_SITE_URL || "https://bibisaintwebpage.pages.dev/"
 export default defineConfig({
   site: url,
   output: "server",
+  prefetch: {
+    defaultStrategy: "viewport",
+  },
   adapter: cloudflare({
     imageService: "passthrough",
   }),
