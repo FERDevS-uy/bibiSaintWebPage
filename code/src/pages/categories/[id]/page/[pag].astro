@@ -1,9 +1,8 @@
 ---
 import ListarProductos from "@components/ListarProductos.astro";
 import Layout from "@layouts/Layout.astro";
-import { loadProducts } from "@utils/loadProducts";
+import { loadProducts, loadCategoryProducts } from "@utils/loadProducts";
 import { countCategories } from "@utils/countCategories";
-import { productMatchesCategory } from "@utils/categoryNormalization";
 import { config } from "src/config";
 import SideBardCategories from "@components/SideBardCategories.astro";
 import { withBasePath } from "@utils/basePath";
@@ -11,8 +10,9 @@ import type { subCategory } from "src/types/categoryList";
 import "../../style.css";
 
 const CANT_PRODUCTOS = config.postPerPage;
-const allProducts = await loadProducts();
 const { id, pag } = Astro.params;
+
+const allProducts = await loadProducts();
 const categories = countCategories(allProducts);
 
 const category = categories.find((c) => c.name === id);
@@ -24,12 +24,13 @@ if (category?.subcategories.length) {
   });
 }
 
-const productsPerCat = allProducts.filter((p) => productMatchesCategory(p, id!));
+const { products, total } = await loadCategoryProducts({
+  category: id!,
+  page: Number(pag),
+  pageSize: CANT_PRODUCTOS,
+});
 
-const totalPages = Math.ceil(productsPerCat.length / CANT_PRODUCTOS);
-const pageNum = Number(pag);
-const start = (pageNum - 1) * CANT_PRODUCTOS;
-const products = productsPerCat.slice(start, start + CANT_PRODUCTOS);
+const totalPages = Math.ceil(total / CANT_PRODUCTOS);
 const subCat = Array.from(subcategoryMap.values());
 const baseUrl = withBasePath(`/categories/${id}`, Astro.url.pathname);
 ---
