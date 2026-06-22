@@ -37,9 +37,25 @@ async function upsertProducts(products: ProductRow[], provider: string): Promise
   const BATCH_SIZE = 50;
   for (let i = 0; i < products.length; i += BATCH_SIZE) {
     const batch = products.slice(i, i + BATCH_SIZE);
+    const ids = batch.map((p) => p.id);
 
-    const { error } = await supabase.from("products").upsert(
-      batch.map((p) => ({
+    const { data: existing } = await supabase
+      .from("products")
+      .select("id, en_oferta, price")
+      .in("id", ids);
+
+    const existingMap = new Map<string, { en_oferta: boolean; price: string }>();
+    if (existing) {
+      for (const row of existing) {
+        existingMap.set(row.id as string, { en_oferta: Boolean(row.en_oferta), price: String(row.price ?? "") });
+      }
+    }
+
+    const toUpsert: Array<Record<string, unknown>> = [];
+    for (const p of batch) {
+      const prev = existingMap.get(p.id);
+      if (prev && prev.price === p.price) continue;
+      toUpsert.push({
         id: p.id,
         name: p.name,
         description: p.description,
@@ -48,21 +64,27 @@ async function upsertProducts(products: ProductRow[], provider: string): Promise
         categories: p.categories,
         payment_link: p.payment_link,
         relacionados: p.relacionados,
-        en_oferta: p.en_oferta,
+        en_oferta: prev?.en_oferta ?? false,
         colors: p.colors || [],
         source: p.source,
         active: p.active,
         auto_update_price: p.auto_update_price,
         external_id: p.external_id,
-      })),
+      });
+    }
+
+    if (toUpsert.length === 0) continue;
+
+    const { error } = await supabase.from("products").upsert(
+      toUpsert,
       { onConflict: "id", ignoreDuplicates: false },
     );
 
     if (error) {
       console.error(`${provider}: error en batch ${i / BATCH_SIZE + 1}:`, error.message);
-      errors += batch.length;
+      errors += toUpsert.length;
     } else {
-      upserted += batch.length;
+      upserted += toUpsert.length;
     }
   }
 

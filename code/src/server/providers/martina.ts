@@ -114,7 +114,7 @@ async function fetchStoreProductForCode(
 ): Promise<any[]> {
   const url = `${MARTINA_STORE_PRODUCT_BASE}?countryId=${country}&code=${encodeURIComponent(code)}`;
   try {
-    const data = await fetchJson(url, 30000);
+    const data = await martinaFetch(url, 30000);
     return normalizeMartinaPayloadToArray(data);
   } catch (e: any) {
     console.warn(`Martina: error code=${code}:`, e?.message || e);
@@ -134,7 +134,7 @@ async function fetchStoreProductByProductLine(
     String(category || ""),
   )}`;
   try {
-    const data = await fetchJson(url, 30000);
+    const data = await martinaFetch(url, 30000);
     return normalizeMartinaPayloadToArray(data);
   } catch (e: any) {
     console.warn(`Martina: error productLine=${productLineId}:`, e?.message || e);
@@ -151,7 +151,7 @@ async function fetchStoreProductByProductId(
     String(productId),
   )}&code=${encodeURIComponent(String(code))}&countryId=${encodeURIComponent(String(country))}`;
   try {
-    const data = await fetchJson(url, 30000);
+    const data = await martinaFetch(url, 30000);
     return normalizeMartinaPayloadToArray(data);
   } catch (e: any) {
     console.warn(`Martina: error productId=${productId}:`, e?.message || e);
@@ -281,7 +281,9 @@ export async function syncMartina(): Promise<{ products: ProductRow[]; count: nu
       [first?.description, first?.description2, first?.description3].filter(Boolean).join(" "),
     );
     const price = parsePrice(first?.price ?? "", 1);
-    const enOferta = first?.price1 && parseFloat(String(first.price1)) > parseFloat(String(first.price ?? 0));
+    const enOferta = first?.price1
+      ? parseFloat(String(first.price1)) > parseFloat(String(first.price ?? 0))
+      : false;
 
     const categoryName = String(
       first?.productLine?.parent?.name || first?.productLine?.name || "Ropa",
