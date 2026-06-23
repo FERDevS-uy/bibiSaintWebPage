@@ -24,16 +24,9 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: latest
-          
-      - name: Allow build scripts
-        run: |
-          echo "onlyBuiltDependencies[]=sharp" >> .npmrc
-          echo "onlyBuiltDependencies[]=esbuild" >> .npmrc
-          echo "onlyBuiltDependencies[]=workerd" >> .npmrc
-          echo "onlyBuiltDependencies[]=wrangler" >> .npmrc
        
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --config.allow-build=sharp
 
       - name: Build and deploy to Cloudflare Workers
         run: pnpm run deploy
