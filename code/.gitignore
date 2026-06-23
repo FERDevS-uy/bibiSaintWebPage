@@ -24,5 +24,12 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# opencode skills + lock
+.agents/
+skills-lock.json
+
+# dev console logs
+dev-console-errors.log
+
 # Playwright test artifacts
 .playwright-mcp/
