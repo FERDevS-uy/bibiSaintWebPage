@@ -26,7 +26,9 @@ jobs:
           version: latest
        
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --config.allow-build=sharp
+        run: pnpm install --frozen-lockfile
+        env:
+          pnpm_config_allow_builds: '{"sharp": true}'
 
       - name: Build and deploy to Cloudflare Workers
         run: pnpm run deploy
