@@ -25,8 +25,12 @@ jobs:
         with:
           version: latest
           
-      - name: Approve builds
-        run: pnpm approve-builds
+      - name: Allow build scripts
+        run: |
+          echo "onlyBuiltDependencies[]=sharp" >> .npmrc
+          echo "onlyBuiltDependencies[]=esbuild" >> .npmrc
+          echo "onlyBuiltDependencies[]=workerd" >> .npmrc
+          echo "onlyBuiltDependencies[]=wrangler" >> .npmrc
        
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
