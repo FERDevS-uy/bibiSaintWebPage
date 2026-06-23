@@ -30,8 +30,6 @@ jobs:
   
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        env:
-           PNPM_CONFIG_ALLOW_BUILDS: sharp
 
       - name: Build and deploy to Cloudflare Workers
         run: pnpm run deploy
