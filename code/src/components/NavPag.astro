@@ -45,7 +45,7 @@ const prevUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/
 
 <script>
   // @ts-nocheck
-  window.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     const nav = document.getElementById("products-pagination");
     if (!nav) return;
 

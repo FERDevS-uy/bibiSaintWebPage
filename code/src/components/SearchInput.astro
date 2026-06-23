@@ -1,9 +1,3 @@
----
-import { loadProducts } from "@utils/loadProducts";
-
-const items = await loadProducts();
----
-
 <form class="searchForm">
   <div class="inputContainer">
     <input
@@ -285,128 +279,136 @@ const items = await loadProducts();
   }
 </style>
 
-<script define:vars={{ items }}>
-  /* Definido en global.d.ts */
-  window.productos = items;
-  window.baseUrl = document.documentElement.dataset.basePath || "";
-</script>
-
 <script>
-  import Fuse from "fuse.js";
+  const BASE_URL = document.documentElement.dataset.basePath || "";
 
-  const BASE_URL = window.baseUrl || "";
-  const params = new URLSearchParams(window.location.search);
-  const urlQuery = params.get("q");
+  let fuseInstance = null;
+  let productsCache = null;
+  let fusePromise = null;
 
-  const fuse = new Fuse(window.productos, {
-    keys: [
-      "name",
-      "description",
-      "id",
-      "categories.name",
-      "categories.subcategories.name",
-    ],
-    threshold: 0.3,
-  });
-
-  // Inicializar cada instancia del formulario de forma independiente
-  document.querySelectorAll(".searchForm").forEach((form) => {
-    const input = form.querySelector(".searchInput") as HTMLInputElement;
-    const resultContainer = form.querySelector(".searchResults") as HTMLElement;
-    const viewAllBtn = form.querySelector(".viewAllBtn") as HTMLAnchorElement;
-    const clearBtn = form.querySelector(".clearBtn") as HTMLButtonElement;
-
-    const updateInputState = () => {
-      const query = input.value.trim();
-      if (query) {
-        form.classList.add("has-text");
-      } else {
-        form.classList.remove("has-text");
-      }
-    };
-
-    if (urlQuery) {
-      input.value = urlQuery;
-      updateInputState();
-    }
-
-    const updateSearchUrl = (query) => {
-      const isSearchPage = window.location.pathname.includes("/search");
-      if (!isSearchPage) return;
-      clearTimeout(window._searchDebounce);
-      window._searchDebounce = setTimeout(() => {
-        const params = new URLSearchParams(window.location.search);
-        if (query) {
-          params.set("q", query);
-        } else {
-          params.delete("q");
-        }
-        const newUrl = `${window.location.pathname}${params.toString() ? "?" + params.toString() : ""}`;
-        window.history.replaceState(null, "", newUrl);
-        window.dispatchEvent(new CustomEvent("searchurlchange", { detail: { q: query } }));
-      }, 300);
-    };
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const query = input.value.trim();
-
-      if (query)
-        window.location.href = `${BASE_URL}/search/page/1/?q=${encodeURIComponent(query)}`;
-      else window.location.href = BASE_URL;
-    });
-
-    if (clearBtn) {
-      clearBtn.addEventListener("click", () => {
-        input.value = "";
-        resultContainer.innerHTML = "";
-        form.classList.remove("active");
-        form.classList.remove("has-text");
-        input.focus();
-        updateSearchUrl("");
+  async function ensureFuse() {
+    if (fuseInstance) return;
+    if (fusePromise) return fusePromise;
+    fusePromise = (async () => {
+      const [Fuse, products] = await Promise.all([
+        import("fuse.js"),
+        productsCache || fetch("/api/search-products").then(r => r.json()).then(data => { productsCache = data; return data; }),
+      ]);
+      fuseInstance = new Fuse.default(products, {
+        keys: ["name", "description", "id", "categories.name", "categories.subcategories.name"],
+        threshold: 0.3,
       });
-    }
+    })();
+    return fusePromise;
+  }
 
-    input.addEventListener("input", () => {
-      const query = input.value.trim();
-      updateInputState();
-      updateSearchUrl(query);
+  function initSearch() {
+    const params = new URLSearchParams(window.location.search);
+    const urlQuery = params.get("q");
 
-      if (!query) {
-        resultContainer.innerHTML = "";
-        form.classList.remove("active");
-        return;
+    document.querySelectorAll(".searchForm").forEach((form) => {
+      if (form.dataset.searchBound === "true") return;
+      form.dataset.searchBound = "true";
+
+      const input = form.querySelector(".searchInput");
+      const resultContainer = form.querySelector(".searchResults");
+      const viewAllBtn = form.querySelector(".viewAllBtn");
+      const clearBtn = form.querySelector(".clearBtn");
+
+      const updateInputState = () => {
+        const query = input.value.trim();
+        form.classList.toggle("has-text", !!query);
+      };
+
+      if (urlQuery) {
+        input.value = urlQuery;
+        updateInputState();
       }
 
-      const results = fuse.search(query).slice(0, 4);
+      let debounceTimer = null;
 
-      if (results.length === 0) form.classList.remove("active");
-      else form.classList.add("active");
+      const updateSearchUrl = (query) => {
+        const isSearchPage = window.location.pathname.includes("/search");
+        if (!isSearchPage) return;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          if (!document.contains(form)) return;
+          const searchParams = new URLSearchParams(window.location.search);
+          if (query) searchParams.set("q", query);
+          else searchParams.delete("q");
+          const newUrl = `${window.location.pathname}${searchParams.toString() ? "?" + searchParams.toString() : ""}`;
+          window.history.replaceState(null, "", newUrl);
+          window.dispatchEvent(new CustomEvent("searchurlchange", { detail: { q: query } }));
+        }, 300);
+      };
 
-      if (viewAllBtn) {
-        viewAllBtn.href = `${BASE_URL}/search/page/1/?q=${encodeURIComponent(query)}`;
+      input.addEventListener("focus", () => {
+        ensureFuse();
+      });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const query = input.value.trim();
+        if (query)
+          window.location.href = `${BASE_URL}/search/page/1/?q=${encodeURIComponent(query)}`;
+        else window.location.href = BASE_URL;
+      });
+
+      if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+          input.value = "";
+          resultContainer.innerHTML = "";
+          form.classList.remove("active");
+          form.classList.remove("has-text");
+          input.focus();
+          updateSearchUrl("");
+        });
       }
 
-      resultContainer.innerHTML = results
-        .map((r) => {
-          const src = Array.isArray(r.item.img) && r.item.img.length ? r.item.img[0] : '/assets/no-image.png';
-          const price = r.item.price || '';
-          return `
-        <li class="searchResultItem">
-            <a href="${BASE_URL}/producto/${r.item.id}">
-            <div class="searchResultImage">
-              <img src="${src}" alt="${r.item.name}" />
-            </div>
-            <div class="searchResultInfo">
-              <span class="searchResultName">${r.item.name}</span>
-              <span class="searchResultPrice">$${price}</span>
-            </div>
-          </a>
-        </li>
-      `;
-        })
-        .join("");
+      input.addEventListener("input", async () => {
+        const query = input.value.trim();
+        updateInputState();
+        updateSearchUrl(query);
+
+        if (!query) {
+          resultContainer.innerHTML = "";
+          form.classList.remove("active");
+          return;
+        }
+
+        await ensureFuse();
+        if (input.value.trim() !== query) return;
+
+        const results = fuseInstance.search(query).slice(0, 4);
+
+        form.classList.toggle("active", results.length > 0);
+
+        if (viewAllBtn) {
+          viewAllBtn.href = `${BASE_URL}/search/page/1/?q=${encodeURIComponent(query)}`;
+        }
+
+        resultContainer.innerHTML = results
+          .map((r) => {
+            const src = Array.isArray(r.item.img) && r.item.img.length ? r.item.img[0] : '/assets/no-image.png';
+            const price = r.item.price || '';
+            return `
+          <li class="searchResultItem">
+              <a href="${BASE_URL}/producto/${r.item.id}">
+              <div class="searchResultImage">
+                <img src="${src}" alt="${r.item.name}" />
+              </div>
+              <div class="searchResultInfo">
+                <span class="searchResultName">${r.item.name}</span>
+                <span class="searchResultPrice">$${price}</span>
+              </div>
+            </a>
+          </li>
+        `;
+          })
+          .join("");
+      });
     });
-  });
+  }
+
+  document.addEventListener("astro:page-load", initSearch);
 </script>

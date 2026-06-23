@@ -302,7 +302,9 @@ const emptyList = !productos || productos.length === 0;
     return parsePrice(card?.dataset.price ?? "0");
   }
 
-  window.addEventListener("DOMContentLoaded", () => {
+  let sortInitialized = false;
+
+  document.addEventListener("astro:page-load", () => {
     const root = document.querySelector("[data-sort-root]");
     const trigger = document.getElementById("products-sort-trigger");
     const currentLabel = document.getElementById("products-sort-current");
@@ -310,6 +312,16 @@ const emptyList = !productos || productos.length === 0;
     const list = document.getElementById("products-list-grid");
 
     if (!root || !trigger || !currentLabel || !menu || !list) return;
+
+    if (sortInitialized) {
+      const paramsSort = new URLSearchParams(window.location.search).get("sort") || "default";
+      const vs = SORT_LABELS[paramsSort] ? paramsSort : "default";
+      currentLabel.textContent = SORT_LABELS[vs];
+      applySort(vs);
+      return;
+    }
+
+    sortInitialized = true;
 
     const originalItems = Array.from(
       list.querySelectorAll(":scope > .producto_card, :scope > li")

@@ -3,16 +3,20 @@ import { withBasePath } from "@utils/basePath";
 
 const pathname = Astro.url.pathname;
 const ofertasHref = withBasePath("/ofertas", pathname);
-const bannerSrc = withBasePath("/banner.jpeg", pathname);
+const bannerWebp = withBasePath("/banner.webp", pathname);
+const bannerJpeg = withBasePath("/banner.jpeg", pathname);
 ---
 
 <section id="banner" aria-label="Banner de ofertas destacadas">
   <a class="hero-link" href={ofertasHref}>
     <picture class="hero-media">
+      <source srcset={bannerWebp} type="image/webp" />
       <img
-        src={bannerSrc}
+        src={bannerJpeg}
         alt="Ofertas destacadas de Bibi's"
-        loading="lazy"
+        width="1920"
+        height="450"
+        fetchpriority="high"
         class="hero-image"
       />
     </picture>

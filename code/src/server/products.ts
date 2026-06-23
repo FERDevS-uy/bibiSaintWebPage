@@ -1,4 +1,5 @@
 import type Product from "../types/product";
+import type Category from "../types/categoryList";
 import { getSupabase } from "./supabase";
 
 interface SupabaseProductRow {
@@ -44,6 +45,61 @@ export async function fetchProducts(): Promise<Product[]> {
   }
 
   return (data ?? []).map((row) => rowToProduct(row as unknown as SupabaseProductRow));
+}
+
+export async function fetchCategoryProducts(options: {
+  category: string;
+  subcategory?: string;
+  page: number;
+  pageSize: number;
+}): Promise<{ products: Product[]; total: number }> {
+  const supabase = getSupabase();
+  const start = (options.page - 1) * options.pageSize;
+  const end = start + options.pageSize - 1;
+
+  let query = supabase
+    .from("products")
+    .select("*", { count: "exact" })
+    .eq("active", true)
+    .eq("categories->>name", options.category);
+
+  if (options.subcategory) {
+    query = query.contains("categories", { subcategories: [{ name: options.subcategory }] });
+  }
+
+  const { data, count, error } = await query
+    .order("name", { ascending: true })
+    .range(start, end);
+
+  if (error) {
+    console.error("Supabase fetchCategoryProducts error:", error);
+    return { products: [], total: 0 };
+  }
+
+  return {
+    products: (data ?? []).map((row) => rowToProduct(row as unknown as SupabaseProductRow)),
+    total: count ?? 0,
+  };
+}
+
+export async function fetchCategoryCounts(): Promise<Category[]> {
+  const supabase = getSupabase();
+
+  const { data, error } = await supabase.rpc("get_category_counts");
+
+  if (error) {
+    console.error("Supabase fetchCategoryCounts error:", error);
+    return [];
+  }
+
+  return (data ?? []).map((row: any) => ({
+    name: row.name ?? row.category_name ?? "",
+    count: Number(row.count ?? row.product_count ?? 0),
+    subcategories: Array.isArray(row.subcategories) ? row.subcategories.map((s: any) => ({
+      name: typeof s === "string" ? s : (s.name ?? ""),
+      count: Number(s.count ?? 0),
+    })) : [],
+  }));
 }
 
 export async function fetchProductById(id: string): Promise<Product | null> {

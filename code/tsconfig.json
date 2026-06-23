@@ -24,6 +24,9 @@
       ],
       "@server/*": [
         "src/server/*"
+      ],
+      "@stores/*": [
+        "src/stores/*"
       ]
     },
     "jsx": "react-jsx",

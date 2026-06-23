@@ -1,7 +1,7 @@
 import { defineMiddleware } from "astro/middleware";
 
 const WINDOW_MS = 60_000;
-const MAX_REQUESTS = 120;
+const MAX_REQUESTS = 300;
 const CLEANUP_INTERVAL = 120_000;
 
 const hits = new Map<string, { count: number; resetAt: number }>();

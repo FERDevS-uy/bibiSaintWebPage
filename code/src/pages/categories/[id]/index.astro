@@ -3,16 +3,16 @@ import ListarProductos from "@components/ListarProductos.astro";
 import SideBardCategories from "@components/SideBardCategories.astro";
 import Layout from "@layouts/Layout.astro";
 import { countCategories } from "@utils/countCategories";
-import { productMatchesCategory } from "@utils/categoryNormalization";
-import { loadProducts } from "@utils/loadProducts";
+import { loadProducts, loadCategoryProducts } from "@utils/loadProducts";
 import { config } from "src/config";
 import { withBasePath } from "@utils/basePath";
 import type { subCategory } from "src/types/categoryList";
 import '../style.css';
 
 const CANT_PRODUCTOS = config.postPerPage;
-const allProducts = await loadProducts();
 const { id } = Astro.params;
+
+const allProducts = await loadProducts();
 const categories = countCategories(allProducts);
 
 const category = categories.find((c) => c.name === id);
@@ -24,12 +24,13 @@ if (category?.subcategories.length) {
   });
 }
 
-const productsPerCat = allProducts.filter(
-  (p) => productMatchesCategory(p, id!),
-);
+const { products, total } = await loadCategoryProducts({
+  category: id!,
+  page: 1,
+  pageSize: CANT_PRODUCTOS,
+});
 
-const totalPages = Math.ceil(productsPerCat.length / CANT_PRODUCTOS);
-const products = productsPerCat.slice(0, CANT_PRODUCTOS);
+const totalPages = Math.ceil(total / CANT_PRODUCTOS);
 const subCat = Array.from(subcategoryMap.values());
 const baseUrl = withBasePath(`/categories/${id}`, Astro.url.pathname);
 ---
@@ -53,4 +54,3 @@ const baseUrl = withBasePath(`/categories/${id}`, Astro.url.pathname);
     />
   </div>
 </Layout>
-

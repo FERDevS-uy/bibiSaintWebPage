@@ -477,7 +477,7 @@ export const prerender = true;
     }[c]));
   }
 
-  window.addEventListener("DOMContentLoaded", async () => {
+  document.addEventListener("astro:page-load", async () => {
     const params = new URLSearchParams(window.location.search);
     const tokenId = params.get("id");
 
@@ -538,7 +538,7 @@ export const prerender = true;
       if (items.length === 0) throw new Error("El pedido no tiene productos");
 
       // Build pedido list - busca por baseId (sin variante)
-      const pedidos = items.map((item) => {
+      const foundItems = items.map((item) => {
         const parsed = parseTokenId(item.id);
         const prod = productos.find((p) => p.id === parsed.baseId);
         if (!prod) return null;
@@ -563,7 +563,9 @@ export const prerender = true;
           selectedColorHex: colorHex,
           currentUnitPrice: parsePrice(prod.price),
         };
-      }).filter(Boolean);
+      });
+      const missingCount = foundItems.filter((p) => p === null).length;
+      const pedidos = foundItems.filter(Boolean);
 
       const container = document.getElementById("result__container");
       if (!container) return;
@@ -574,6 +576,9 @@ export const prerender = true;
       }
 
       const total = pedidos.reduce((s, p) => s + p.currentUnitPrice * p.cantidad, 0);
+      const warningHtml = missingCount > 0
+        ? `<p style="color:#b42318;font-size:0.85rem;font-weight:600;margin:0 0 12px;padding:10px 16px;background:#fff2f0;border-radius:8px;">${missingCount} producto${missingCount > 1 ? "s" : ""} del pedido no se encontraron en el catálogo actual.</p>`
+        : "";
       const itemsHtml = pedidos.map((p, i) => {
         const img = Array.isArray(p.img) ? p.img[0] : p.img;
         const badgeClass = p.variantBadgeText && p.variantBadgeText.startsWith("Talle ") ? "pedido-size-badge" : "pedido-variant-badge";
@@ -585,7 +590,7 @@ export const prerender = true;
         return `<div class="pedido-item" data-row-key="${i}" data-cantidad="${p.cantidad}" data-unit-price="${p.currentUnitPrice}"><img src="${img}" alt="${escapeHtml(p.name)}" loading="lazy" /><div class="pedido-item-info"><span class="pedido-item-name">${escapeHtml(p.name)}</span>${variantBadge}${colorBadge}<span class="pedido-item-price">$<span>${formatPrice(p.currentUnitPrice)}</span> c/u</span><p class="pedido-check-status">Stock verificar manualmente</p></div><div class="pedido-qty-wrap"><span class="pedido-qty">${p.cantidad}</span></div><div class="pedido-subtotal">$<span>${formatPrice(p.currentUnitPrice * p.cantidad)}</span></div></div>`;
       }).join("");
 
-      container.innerHTML = `<div class="pedido-list"><div class="pedido-list-header"><span></span><span>Producto</span><span style="text-align:center">Cant.</span><span style="text-align:right">Subtotal</span></div>${itemsHtml}</div><div class="pedido-total-box"><div class="pedido-total-inner"><div class="pedido-total-row"><span>${pedidos.length} productos</span><span>${pedidos.reduce((s, p) => s + p.cantidad, 0)} unidades</span></div><div class="pedido-total-row main"><span>Total</span><span>$<span>${formatPrice(total)}</span></span></div></div></div>`;
+      container.innerHTML = `${warningHtml}<div class="pedido-list"><div class="pedido-list-header"><span></span><span>Producto</span><span style="text-align:center">Cant.</span><span style="text-align:right">Subtotal</span></div>${itemsHtml}</div><div class="pedido-total-box"><div class="pedido-total-inner"><div class="pedido-total-row"><span>${pedidos.length} productos</span><span>${pedidos.reduce((s, p) => s + p.cantidad, 0)} unidades</span></div><div class="pedido-total-row main"><span>Total</span><span>$<span>${formatPrice(total)}</span></span></div></div></div>`;
     } catch (err) {
       const el = document.getElementById("result__container");
       if (el) el.innerHTML = '<p class="pedido-message">Error: ' + escapeHtml(err.message) + '</p>';

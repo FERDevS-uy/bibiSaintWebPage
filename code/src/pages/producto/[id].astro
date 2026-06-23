@@ -4,6 +4,7 @@ import { config } from "../../config";
 import { withBasePath } from "@utils/basePath";
 import NumberInput from "@components/NumberInput.astro";
 import ProductGallery from "@components/ProductGallery.jsx";
+import { ProductHydrator } from "@stores/ProductHydrator";
 import type Product from "../../types/product";
 import {
   getDisplayCategoryName,
@@ -28,6 +29,7 @@ const {
   paymentLink,
   description,
   colors,
+  enOferta,
   relacionados: relacionadosIds,
 } = product;
 
@@ -77,6 +79,14 @@ const pathname = Astro.url.pathname;
   description={description}
   pageImage={img[0]}
 >
+  <ProductHydrator
+    client:load
+    id={id}
+    name={name}
+    price={price}
+    img={img[0]}
+    enOferta={Boolean(enOferta)}
+  />
   <section class="productContainer">
     <!-- BREADCRUMB -->
     <div class="breadcrumb">
@@ -179,7 +189,7 @@ const pathname = Astro.url.pathname;
             type="button"
             id="addToCartBtn"
             class="buyBtn"
-            data-id={Astro.props.id}
+            data-id={id}
           >
             Añadir al Carrito
           </button>
@@ -922,8 +932,14 @@ const pathname = Astro.url.pathname;
       );
 
       window.updateCartCount && window.updateCartCount();
-      addBtn.textContent = "¡Agregado!";
-      setTimeout(() => (addBtn.textContent = "Agregar al carrito"), 1200);
+      addBtn.textContent = "✓ AGREGADO!";
+      addBtn.style.backgroundColor = "#388e3c";
+      addBtn.style.borderColor = "#388e3c";
+      setTimeout(() => {
+        addBtn.textContent = "Agregar al carrito";
+        addBtn.style.backgroundColor = "";
+        addBtn.style.borderColor = "";
+      }, 1200);
     });
 
     const checkStockBtn = document.getElementById("checkStockBtn") as HTMLButtonElement | null;
@@ -1067,6 +1083,18 @@ const pathname = Astro.url.pathname;
           }
           markUnavailableSizesForFallback(availableForColor);
         };
+
+        // Aplicar disponibilidad de talles del primer color al cargar la página
+        {
+          const firstSw = colorsSelector.querySelector<HTMLButtonElement>(".swatch");
+          if (firstSw) {
+            const cid = Number(firstSw.dataset.colorId);
+            if (Number.isFinite(cid)) {
+              selectedColorId = cid;
+              applySelectedColorAvailability();
+            }
+          }
+        }
 
         const selectColor = (sw: HTMLButtonElement) => {
           const cid = Number(sw.dataset.colorId);

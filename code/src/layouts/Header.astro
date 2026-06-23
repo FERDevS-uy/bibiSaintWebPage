@@ -2,10 +2,9 @@
 import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
 import type CategoryList from "src/types/categoryList";
 import { withBasePath } from "@utils/basePath";
-import { Image } from "astro:assets";
 import SearchInput from "@components/SearchInput.astro";
 
-import logo from "@assets/logo_blanco.png";
+import logo from "@assets/logo_blanco.webp";
 import cart from "@assets/cart.png"
 const { default: downSVG } = await import("@assets/down.svg?raw");
 
@@ -85,7 +84,7 @@ const isAbout = pathname.includes("/about");
       <MenuIcon class="menuIcon" />
       <div class="logoContainer">
         <a href={homeHref}>
-          <Image src={logo} alt="logo blanco" />
+          <img src={logo.src} alt="logo blanco" width="200" height="100" fetchpriority="high" />
         </a>
       </div>
 
@@ -102,7 +101,7 @@ const isAbout = pathname.includes("/about");
         </button>
 
         <a href={withBasePath("/carrito", pathname)} class="cartLink">
-          <Image src={cart} alt="Carrito" class="cart-icon" />
+          <img src={cart.src} alt="Carrito" class="cart-icon" />
           <div id="cartCount" class="cartCount hidden">
             <span></span>
           </div>
@@ -255,7 +254,7 @@ const isAbout = pathname.includes("/about");
 </header>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     const hasSubmenuLinks = document.querySelectorAll(
       ".has-submenu, .has-submenu-level2",
     );
@@ -269,7 +268,6 @@ const isAbout = pathname.includes("/about");
       "astronav-menu",
     ) as HTMLButtonElement;
     const mobileSearchBtn = document.getElementById("mobileSearchBtn");
-    const searchForm = document.querySelector(".navMenu form");
 
     const syncMobileSearchVisibility = () => {
       if (!mobileMenuHeader) return;
@@ -390,8 +388,8 @@ const isAbout = pathname.includes("/about");
     }
   }
 
-  // Ejecutar al cargar y al redimensionar
-  window.addEventListener("DOMContentLoaded", checkCategoryListWidth);
+  // Ejecutar al navegar y al redimensionar
+  document.addEventListener("astro:page-load", checkCategoryListWidth);
   window.addEventListener("resize", checkCategoryListWidth);
 </script>
 

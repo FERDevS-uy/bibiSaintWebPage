@@ -233,51 +233,58 @@ function parseColors(raw: string | undefined, images: string[]): ProductColor[] 
   }
 }
 
+export function parseCsvContent(csvContent: string): Product[] {
+  const res = Papa.parse<csvData>(csvContent, {
+    header: true,
+    skipEmptyLines: true,
+  });
+
+  if (res.errors.length > 0) {
+    console.error(res.errors);
+    throw new Error("Error al parsear CSV");
+  }
+
+  return res.data.map((d) => {
+    const images = parseImageList(d.imagen);
+    const paymentLinks = parseImageList(d.linkPago)
+      .map((lp, i) => ({ id: `${i}`, url: lp }));
+
+    return {
+      id: d.id.trim(),
+      name: d.name.trim(),
+      description: d.description.trim(),
+      price: d.precio.trim(),
+      img: images,
+      paymentLink: paymentLinks,
+      enOferta: d.oferta.toLowerCase() === "true" ? true : false,
+      relacionados: d.relacionados.trim() ? d.relacionados.split(/\s+/) : [],
+      categories: {
+        name: d.categorias.trim(),
+        count: 0,
+        subcategories: parseSubcategories(d.subcategorias, d.categorias, d.name),
+      },
+      colors: parseColors(d.colores, images),
+    };
+  });
+}
+
+let cachedProducts: Product[] | null = null;
+
 export function cargarProductos(): Product[] {
-  const parseProductsFromCsv = (csvPath: string): Product[] => {
-    if (!fs.existsSync(csvPath)) return [];
-
-    const file = fs.readFileSync(csvPath, "utf8");
-    const res = Papa.parse<csvData>(file, {
-      header: true,
-      skipEmptyLines: true,
-    });
-
-    if (res.errors.length > 0) {
-      console.error(res.errors);
-      throw new Error(`Error al parsear CSV: ${csvPath}`);
-    }
-
-    return res.data.map((d) => {
-      const images = parseImageList(d.imagen);
-      const paymentLinks = parseImageList(d.linkPago)
-        .map((lp, i) => ({ id: `${i}`, url: lp }));
-
-      return {
-        id: d.id.trim(),
-        name: d.name.trim(),
-        description: d.description.trim(),
-        price: d.precio.trim(),
-        img: images,
-        paymentLink: paymentLinks,
-        enOferta: d.oferta.toLowerCase() === "true" ? true : false,
-        relacionados: d.relacionados.trim() ? d.relacionados.split(/\s+/) : [],
-        categories: {
-          name: d.categorias.trim(),
-          count: 0,
-          subcategories: parseSubcategories(d.subcategorias, d.categorias, d.name),
-        },
-        colors: parseColors(d.colores, images),
-      };
-    });
-  };
+  if (cachedProducts) return cachedProducts;
 
   const productosBasePath = path.resolve("src/data/productos.csv");
   const productosCatalogoPath = path.resolve("src/data/productos_catalogo.csv");
 
-  const productosBase = parseProductsFromCsv(productosBasePath);
-  const productosCatalogo = parseProductsFromCsv(productosCatalogoPath);
+  const readCsv = (csvPath: string): Product[] => {
+    if (!fs.existsSync(csvPath)) return [];
+    return parseCsvContent(fs.readFileSync(csvPath, "utf8"));
+  };
+
+  const productosBase = readCsv(productosBasePath);
+  const productosCatalogo = readCsv(productosCatalogoPath);
 
   // Mantiene el pedido pedido por negocio: base primero y catalogo anexado al final.
-  return [...productosBase, ...productosCatalogo];
+  cachedProducts = [...productosBase, ...productosCatalogo];
+  return cachedProducts;
 }

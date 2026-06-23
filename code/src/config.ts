@@ -11,7 +11,7 @@ const pageData = {
   pageTitle: "Bibi's Ventasonline",
   pagesSubTitle: "Hogar & Deco",
   postPerPage: 10,
-  description: "Descripción temporal",
+  description: "Bibi's Ventasonline — Hogar & Deco en Paysandú, Uruguay. Encontrá sábanas, acolchados, almohadas, colchas, ropa y decoración para tu hogar con los mejores precios.",
   useSupabase: Boolean(import.meta.env.PUBLIC_USE_SUPABASE === "true"),
 };
 
