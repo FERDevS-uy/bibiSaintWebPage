@@ -101,13 +101,14 @@ export function useProductForm(productId?: string) {
   useEffect(() => {
     supabase
       .from("products")
-      .select("categories, img, id")
+      .select("categories, img, id, name")
       .then(({ data, error }) => {
         if (!error && data) {
           const catMap = new Map<string, Set<string>>();
           for (const row of data) {
             const product = {
               id: row.id ?? "",
+              name: row.name ?? "",
               categories: row.categories ?? { name: "", subcategories: [] },
               img: row.img ?? [],
             } as any;
@@ -127,7 +128,8 @@ export function useProductForm(productId?: string) {
           setAvailableCategories(cats);
         }
         setCategoriesLoading(false);
-      });
+      })
+      .catch(() => setCategoriesLoading(false));
   }, []);
 
   // Auto-assign ID for new products
@@ -156,6 +158,7 @@ export function useProductForm(productId?: string) {
           const rawCat = (data.categories as any) ?? {};
           const mockProduct = {
             id: data.id,
+            name: data.name ?? "",
             categories: rawCat,
             img: data.img ?? [],
           } as any;
@@ -186,7 +189,8 @@ export function useProductForm(productId?: string) {
           });
         }
         setLoading(false);
-      });
+      })
+      .catch(() => setLoading(false));
   }, [productId]);
 
   // Related products search
