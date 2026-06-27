@@ -115,9 +115,16 @@ export const GET: APIRoute = async ({ url }) => {
     );
   }
 
-  if (!parsedUrl.hostname.toLowerCase().includes("nuvex.uy")) {
+  const host = parsedUrl.hostname.toLowerCase();
+  if (host !== "nuvex.uy" && !host.endsWith(".nuvex.uy")) {
     return new Response(
       JSON.stringify({ error: "Only nuvex.uy urls are allowed" }),
+      { status: 400, headers: { "Content-Type": "application/json" } },
+    );
+  }
+  if (!parsedUrl.pathname.startsWith("/index.php")) {
+    return new Response(
+      JSON.stringify({ error: "Invalid nuvex.uy path" }),
       { status: 400, headers: { "Content-Type": "application/json" } },
     );
   }

@@ -6,7 +6,7 @@ interface AuthState {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error?: string }>;
+  signIn: (email: string, password: string, captchaToken?: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
 }
 
@@ -35,8 +35,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signIn = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const signIn = useCallback(async (email: string, password: string, captchaToken?: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+      options: { captchaToken: captchaToken ?? undefined },
+    });
     if (error) return { error: error.message };
     return {};
   }, []);

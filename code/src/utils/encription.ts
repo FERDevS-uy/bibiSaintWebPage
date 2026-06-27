@@ -1,6 +1,13 @@
 /////////////////////////
 // Utilidades de texto //
 /////////////////////////
+//
+// ADVERTENCIA DE SEGURIDAD:
+// Esto NO es criptografía segura. Es solo ofuscación para acortar URLs de pedido.
+// No debe usarse para proteger datos sensibles. XOR + PRNG con seed fijo ("elias")
+// es trivialmente reversible. Cualquier pedido token puede ser descifrado por
+// cualquiera que inspeccione el bundle JS del cliente.
+//
 
 // Aseguramos TextEncoder/TextDecoder en Node y navegador
 const _TextEncoder = (typeof TextEncoder !== "undefined")

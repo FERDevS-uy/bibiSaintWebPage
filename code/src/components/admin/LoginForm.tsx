@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { AuthProvider, useAuth } from "./AuthContext";
 import { ThemeProvider, useTheme } from "./ThemeContext";
 
@@ -8,6 +9,8 @@ function LoginFormInner() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaExpired, setCaptchaExpired] = useState(false);
 
   if (loading) {
     return (
@@ -30,9 +33,11 @@ function LoginFormInner() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    const result = await signIn(email, password);
+    const result = await signIn(email, password, captchaToken ?? undefined);
     if (result.error) setError(result.error);
     else window.location.href = "/admin";
+    setCaptchaToken(null);
+    setCaptchaExpired(false);
   };
 
   return (
@@ -85,7 +90,33 @@ function LoginFormInner() {
               />
             </div>
 
-            <button type="submit" style={submitBtn}>Ingresar</button>
+            {import.meta.env.PUBLIC_TURNSTILE_SITE_KEY && (
+              <>
+                <Turnstile
+                  siteKey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+                  onSuccess={(token) => {
+                    setCaptchaToken(token);
+                    setCaptchaExpired(false);
+                  }}
+                  onExpire={() => {
+                    setCaptchaToken(null);
+                    setCaptchaExpired(true);
+                  }}
+                  onError={() => {
+                    setCaptchaToken(null);
+                    setCaptchaExpired(true);
+                  }}
+                  options={{ theme: theme === "dark" ? "dark" : "light" }}
+                />
+                {captchaExpired && (
+                  <p role="alert" style={warningText}>
+                    Verificación expirada. Resolviendo nuevo desafío...
+                  </p>
+                )}
+              </>
+            )}
+
+            <button type="submit" disabled={!captchaToken} style={{ ...submitBtn, opacity: captchaToken ? 1 : 0.5, cursor: captchaToken ? "pointer" : "not-allowed" }}>Ingresar</button>
           </div>
 
           <button type="button" onClick={toggleTheme} style={themeBtn}>
@@ -218,9 +249,10 @@ const submitBtn: React.CSSProperties = {
   fontSize: "0.95rem",
   fontWeight: 700,
   cursor: "pointer",
-  transition: "background 0.15s",
+  transition: "background 0.15s, opacity 0.15s",
   marginTop: "0.25rem",
   fontFamily: "inherit",
+  opacity: 1,
 };
 
 const errorBox: React.CSSProperties = {
@@ -278,6 +310,13 @@ const skeletonLine: React.CSSProperties = {
   background: "var(--admin-border)",
   borderRadius: 6,
   animation: "pulse 1.5s ease-in-out infinite",
+};
+
+const warningText: React.CSSProperties = {
+  color: "#eab308",
+  fontSize: "0.8rem",
+  margin: 0,
+  textAlign: "center",
 };
 
 export default function LoginForm() {
