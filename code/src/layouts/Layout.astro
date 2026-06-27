@@ -5,12 +5,12 @@ import { detectBasePath, withBasePath } from "@utils/basePath";
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
 import { countCategories } from "@utils/countCategories";
-import { cargarProductosDesdeRaw } from "@utils/loadCSVRaw";
+import { loadProducts } from "@utils/loadProducts";
 import InstruccionesBar from "@components/InstruccionesBar.astro";
 import TopBar from "@components/TopBar.astro";
 import { ViewTransitions } from "astro:transitions";
 
-const productos = cargarProductosDesdeRaw();
+const productos = await loadProducts();
 const categories = countCategories(productos);
 const isDev = import.meta.env.tienda_DEV === "true";
 const url_href = Astro.url.href.endsWith("/")

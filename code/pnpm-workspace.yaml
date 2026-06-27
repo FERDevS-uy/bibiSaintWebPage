@@ -1,7 +1,7 @@
 packages:
   - '.'
-onlyBuiltDependencies:
-  - esbuild
-  - sharp
-  - workerd
-  - wrangler
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
+  wrangler: true

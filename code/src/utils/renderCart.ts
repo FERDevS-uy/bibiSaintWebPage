@@ -6,6 +6,10 @@ import { decryptIDs, encryptIDs } from "./encription";
 import { withBasePath } from "./basePath";
 import { formatPrice, parsePrice } from "./price";
 
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 const CART_IMAGE_FALLBACK =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%23f3f3f3'/%3E%3Crect x='18' y='18' width='84' height='84' rx='8' fill='%23e5e5e5'/%3E%3Cpath d='M37 78l16-17 13 12 17-20 12 25H37z' fill='%23c8c8c8'/%3E%3Ccircle cx='47' cy='46' r='7' fill='%23cfcfcf'/%3E%3C/svg%3E";
 
@@ -194,26 +198,29 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
   const colorIdFromVariant = parseColorFromVariantId(p.id);
   const productId = getBaseProductId(p.id);
   const productHref = withBasePath(`/producto/${productId}`);
-  const colorLabel = p.selectedColorName || (colorIdFromVariant !== null ? `ID ${colorIdFromVariant}` : "");
+  const colorLabel = escapeHtml(p.selectedColorName || (colorIdFromVariant !== null ? `ID ${colorIdFromVariant}` : ""));
   const imgSrc = normalizeCartImage(p.img);
   const colorMeta = colorLabel
     ? `<div class="cartMeta"><span class="metaLabel">Color</span><span class="metaValue">${colorLabel}</span></div>`
     : "";
 
+  const safeName = escapeHtml(p.name);
+  const safeId = escapeHtml(p.id);
+
   return `
       <tr>
         <td class="tdRemove">
-           <button class="removeBtn" title="Quitar todo" data-idx="${p.id}">X</button>
+           <button class="removeBtn" title="Quitar todo" data-idx="${safeId}">X</button>
         </td>
 
         <td class="tdImg">
-            <a href="${productHref}" class="cartThumbLink" title="Ver producto ${p.name}">
-              <img src="${imgSrc}" alt="${p.name}" width="60" onerror="this.onerror=null;this.src='${CART_IMAGE_FALLBACK}'" />
+            <a href="${productHref}" class="cartThumbLink" title="Ver producto ${safeName}">
+              <img src="${imgSrc}" alt="${safeName}" width="60" onerror="this.onerror=null;this.src='${CART_IMAGE_FALLBACK}'" />
             </a>
         </td>
 
         <td class="tdDesc">
-           <div class="cartName">${p.name}</div>
+           <div class="cartName">${safeName}</div>
             ${colorMeta}
            <div class="cartMeta">
              <span class="metaLabel">Precio</span>
@@ -222,22 +229,22 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
            <div class="cartMeta cartMetaQty">
              <span class="metaLabel">Cantidad</span>
              <div class="qtyControls">
-               <button class="qtyBtn removeOnce" data-idx="${p.id}">-</button>
-               <span class="qtyValue">${p.cantidad}</span>
-               <button class="qtyBtn addOnce" data-idx="${p.id}">+</button>
-             </div>
-           </div>
-           <div class="cartMeta">
-             <span class="metaLabel">Subtotal</span>
-             <span class="metaValue subtotalValue">$${formattedSubtotal}</span>
-           </div>
-        </td>
+              <button class="qtyBtn removeOnce" data-idx="${safeId}">-</button>
+                <span class="qtyValue">${p.cantidad}</span>
+                <button class="qtyBtn addOnce" data-idx="${safeId}">+</button>
+              </div>
+            </div>
+            <div class="cartMeta">
+              <span class="metaLabel">Subtotal</span>
+              <span class="metaValue subtotalValue">$${formattedSubtotal}</span>
+            </div>
+         </td>
 
-        <td class="tdQty">
-           <div class="qtyControls">
-             <button class="qtyBtn removeOnce" data-idx="${p.id}">-</button>
-             <span class="qtyValue">${p.cantidad}</span>
-             <button class="qtyBtn addOnce" data-idx="${p.id}">+</button>
+         <td class="tdQty">
+            <div class="qtyControls">
+              <button class="qtyBtn removeOnce" data-idx="${safeId}">-</button>
+              <span class="qtyValue">${p.cantidad}</span>
+              <button class="qtyBtn addOnce" data-idx="${safeId}">+</button>
            </div>
         </td>
 

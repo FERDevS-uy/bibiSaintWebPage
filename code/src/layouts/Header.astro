@@ -361,9 +361,6 @@ const isAbout = pathname.includes("/about");
     }
   };
 
-  // Llama una vez al cargar
-  window.updateCartCount();
-
   // Opcional: actualiza en tiempo real si el carrito cambia en otra pestaña
   window.addEventListener("storage", (e) => {
     if (e.key === "carrito") window.updateCartCount();
@@ -388,8 +385,11 @@ const isAbout = pathname.includes("/about");
     }
   }
 
-  // Ejecutar al navegar y al redimensionar
-  document.addEventListener("astro:page-load", checkCategoryListWidth);
+  // Ejecutar al navegar, al cargar, y al redimensionar
+  document.addEventListener("astro:page-load", () => {
+    window.updateCartCount();
+    checkCategoryListWidth();
+  });
   window.addEventListener("resize", checkCategoryListWidth);
 </script>
 

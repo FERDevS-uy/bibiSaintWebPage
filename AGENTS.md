@@ -13,12 +13,17 @@
 - **Admin**: React SPA (AuthContext, LoginForm, ProductForm, ProductList) inside Astro pages at `src/pages/admin/`. Uses Supabase Auth with `supabaseClient.ts` (anon key, client-side). Server-side writes use `getSupabaseAdmin()` (service role key).
 - **Live prices**: Server Islands in `src/server/livePrice.ts` — fetches from provider APIs (Martina di Trento, Kai, Alondra, Nuvex) with 6s timeout, applies markup, falls back silently.
 - **Search**: Fuse.js client-side, URL-synced via debounced `searchurlchange` custom event.
-- **Rate limiter**: in-memory Map in `src/middleware.ts` — 120 req/min per IP, exempts `/admin`, `/_astro`, `/assets`.
+- **Category pages**: `loadCategoryProducts()` en `src/utils/loadProducts.ts` — server-side filter + pagination (10/page). Module-level TTL cache (60s) evita re-fetch de 1000+ productos en cada request.
+- **Subcategorías Tecno**: `inferTecnoSubcategory()` + `isTecnoProduct()` en `categoryNormalization.ts` — fallback runtime para productos de Supabase sin subcategorías inferidas. Se llama desde `getDisplaySubcategories()` cuando stored subcategories están vacías y el producto es Tecno.
+- **Rate limiter**: in-memory Map in `src/middleware.ts` — 300 req/min per IP, exempts `/admin`, `/_astro`, `/assets`.
 - **Cart**: client-side only (`addToCart.ts`, `removeToCart.ts`, `renderCart.ts`).
+- **Client cache**: Nano Stores (`@nanostores/persistent`) en `src/stores/` — `product-store.ts` cachea `name, price, img, enOferta` en localStorage. `ProductHydrator.tsx` (island React `client:load`) hidrata al montar. `useProduct.tsx` hook con fallback a Supabase.
+- **View Transitions**: `<ViewTransitions />` en `Layout.astro`. Prefetch `viewport` config en `astro.config.mjs`.
+- **Script pattern**: Todo script cliente debe escuchar `astro:page-load`, NO `DOMContentLoaded` — este último no se dispara con View Transitions. Componentes migrados: `ListarProductos`, `NavPag`, `SideBardCategories`, `AddToCartButton`, `Header`, `SearchInput`, `pedido`.
 
 ## Path aliases (tsconfig.json)
 
-`@components/*`, `@layouts/*`, `@utils/*`, `@assets/*`, `@server/*` — all resolve from `code/src/`.
+`@components/*`, `@layouts/*`, `@utils/*`, `@assets/*`, `@server/*`, `@stores/*` — all resolve from `code/src/`.
 
 ## Commands
 
@@ -48,11 +53,19 @@ All public. Never commit secrets. Template at `code/.env.template`.
 
 `wrangler.jsonc` has NO `vars` section — all Cloudflare env vars set via `wrangler secret put`.
 
+## pnpm v11
+
+- Build scripts bloqueados por defecto. Aprobados via `allowBuilds` en `pnpm-workspace.yaml`: `esbuild`, `sharp`, `workerd`, `wrangler`. Formato mapa (`package: true/false`), no lista.
+- `pnpm approve-builds --all` para aprobar builds pendientes no interactivamente (v10.32+).
+- Si CI falla con `ERR_PNPM_IGNORED_BUILDS`, correr `pnpm approve-builds --all` local y commitear lockfile.
+- `PNPM_CONFIG_ALLOW_BUILDS` env var **pisa** la config del workspace — no usarla en CI.
+
 ## Deploy
 
 - **GitHub Actions** (`.github/workflows/cloudflare-deploy.yml`): on push to `impladmin` or `main`, builds and deploys to Workers.
 - Build creates a copy at `dist-deploy/` with `.assetsignore` (prevents Pages from tripping on `_worker.js/`).
-- Requires GitHub secrets: `CLOUDFLARE_API_TOKEN`, `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`.
+- Secrets (`CLOUDFLARE_API_TOKEN`, `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`) deben estar en un **GitHub Environment** llamado `production` — el job lo requiere con `environment: production`.
+- También se puede necesitar `CLOUDFLARE_ACCOUNT_ID` en algunos contextos.
 - Old `deploy.yml` (GitHub Pages, CSV-based) is obsolete but preserved.
 
 ## Cloudflare Workers

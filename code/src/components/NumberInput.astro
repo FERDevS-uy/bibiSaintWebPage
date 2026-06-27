@@ -137,9 +137,5 @@ const uniqueId =
     });
   }
 
-  // Ejecutar al cargar
-  initNumberInputs();
-
-  // Si usas Astro View Transitions, descomenta la siguiente línea:
-  // document.addEventListener('astro:page-load', initNumberInputs);
+  document.addEventListener('astro:page-load', initNumberInputs);
 </script>

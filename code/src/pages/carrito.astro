@@ -77,10 +77,7 @@ const pathname = Astro.url.pathname;
 <script>
   import { initCartPage } from "../scripts/pages/carrito";
 
-  // Initialize on load
-  initCartPage();
-
-  // Re-initialize for View Transitions
+  // Re-initialize for View Transitions (also covers initial load)
   document.addEventListener("astro:page-load", () => {
     initCartPage();
   });

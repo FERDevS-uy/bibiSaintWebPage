@@ -117,26 +117,26 @@ create policy "product_related_select_public"
   on public.product_related for select
   using (true);
 
--- Admin: full CRUD sobre products (necesita estar autenticado y ser admin)
+-- Admin: full CRUD sobre products (solo admins de admin_profiles)
 create policy "products_admin_all"
   on public.products for all
-  using (auth.role() = 'authenticated')
-  with check (auth.role() = 'authenticated');
+  using (auth.uid() IN (SELECT id FROM public.admin_profiles))
+  with check (auth.uid() IN (SELECT id FROM public.admin_profiles));
 
 create policy "product_images_admin_all"
   on public.product_images for all
-  using (auth.role() = 'authenticated')
-  with check (auth.role() = 'authenticated');
+  using (auth.uid() IN (SELECT id FROM public.admin_profiles))
+  with check (auth.uid() IN (SELECT id FROM public.admin_profiles));
 
 create policy "product_related_admin_all"
   on public.product_related for all
-  using (auth.role() = 'authenticated')
-  with check (auth.role() = 'authenticated');
+  using (auth.uid() IN (SELECT id FROM public.admin_profiles))
+  with check (auth.uid() IN (SELECT id FROM public.admin_profiles));
 
 create policy "scraper_diffs_admin_all"
   on public.scraper_diffs for all
-  using (auth.role() = 'authenticated')
-  with check (auth.role() = 'authenticated');
+  using (auth.uid() IN (SELECT id FROM public.admin_profiles))
+  with check (auth.uid() IN (SELECT id FROM public.admin_profiles));
 
 create policy "admin_profiles_select_self"
   on public.admin_profiles for select

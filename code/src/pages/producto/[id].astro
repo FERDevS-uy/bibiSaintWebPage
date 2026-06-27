@@ -116,7 +116,7 @@ const pathname = Astro.url.pathname;
     <div class="product_layout">
       <!-- LEFT IMAGE SECTION (isla React, carga lazy) -->
       {/* Galería como isla React: carga lazy, marca producto como no disponible si fallan las imágenes */}
-      <ProductGallery images={img} name={name} description={description} id={id} client:visible />
+      <ProductGallery images={img} name={name} description={description} id={id} client:load />
       <div id="productImagesData" data-images={JSON.stringify(img)} style="display:none"></div>
 
       <!-- RIGHT INFO -->
@@ -1956,13 +1956,10 @@ const pathname = Astro.url.pathname;
         }
       }
     }
-  }
 
-  initProductDetail();
   // Solo para Nuvex enviamos set inicial manual a la galería.
   // Para Martina/Kai dejamos el render SSR original sin tocar.
-  const globalProductId =
-    document.getElementById("addToCartBtn")?.getAttribute("data-id") || "";
+  const globalProductId = addBtn?.getAttribute("data-id") || "";
   const globalPidLower = globalProductId.toLowerCase();
   const globalIsNuvex =
     !globalPidLower.startsWith("mdt-")
@@ -2006,5 +2003,6 @@ const pathname = Astro.url.pathname;
       }
     }, 350);
   }
-  document.addEventListener("astro:page-load", initProductDetail);
+}
+document.addEventListener("astro:page-load", initProductDetail);
 </script>

@@ -23,6 +23,10 @@ function getRecipient(subject: string) {
   return CONTACT_TO_EMAIL;
 }
 
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 function formatMessage({ name, email, phone, subject, message }: Record<string, string>) {
   return `Nuevo mensaje desde el formulario de contacto:\n\nNombre: ${name}\nEmail: ${email}\nTeléfono: ${phone}\nAsunto: ${subject}\n\nMensaje:\n${message}`;
 }
@@ -65,12 +69,12 @@ export async function POST({ request }: { request: Request }) {
       subject: `Contacto desde Bibi Saint Web - ${subject}`,
       text: bodyText,
       html: `<p>Nuevo mensaje desde el formulario de contacto.</p>
-        <p><strong>Nombre:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Teléfono:</strong> ${phone}</p>
-        <p><strong>Asunto:</strong> ${subject}</p>
+        <p><strong>Nombre:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Teléfono:</strong> ${escapeHtml(phone)}</p>
+        <p><strong>Asunto:</strong> ${escapeHtml(subject)}</p>
         <p><strong>Mensaje:</strong></p>
-        <p>${message.replace(/\n/g, '<br/>')}</p>`,
+        <p>${escapeHtml(message).replace(/\n/g, '<br/>')}</p>`,
     });
 
     return new Response(JSON.stringify({ message: 'Correo enviado correctamente.' }), {

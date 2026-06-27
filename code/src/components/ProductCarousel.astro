@@ -381,10 +381,5 @@ const pathname = Astro.url.pathname;
     initCarousel(carousel as HTMLElement);
   });
 
-  // Re-inicializar en caso de navegación SPA / Astro transition
-  document.addEventListener("astro:after-swap", () => {
-    document.querySelectorAll(".carousel-container").forEach((carousel) => {
-      initCarousel(carousel as HTMLElement);
-    });
-  });
+
 </script>

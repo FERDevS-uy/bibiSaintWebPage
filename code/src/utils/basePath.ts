@@ -26,7 +26,7 @@ export function detectBasePath(pathname?: string): string {
   const segments = currentPath.split("/").filter(Boolean);
   const routeIndex = segments.findIndex((segment) => KNOWN_ROUTE_SEGMENTS.has(segment));
 
-  if (routeIndex === -1) return currentPath;
+  if (routeIndex === -1) return "";
   if (routeIndex === 0) return "";
 
   return `/${segments.slice(0, routeIndex).join("/")}`;
