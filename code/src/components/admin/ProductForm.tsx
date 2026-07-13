@@ -252,7 +252,7 @@ const formStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   gap: "1.25rem",
-  animation: "slideUp 0.3s ease",
+  animation: "slideUp 0.35s cubic-bezier(0.23, 1, 0.32, 1)",
 };
 
 const loadingWrap: React.CSSProperties = {

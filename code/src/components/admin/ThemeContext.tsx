@@ -301,7 +301,7 @@ body {
   flex: 1;
   min-height: 100dvh;
   overflow-y: auto;
-  animation: fadeIn 0.35s ease;
+  animation: fadeIn 0.35s var(--admin-ease-out);
 }
 
 .admin-main-inner {

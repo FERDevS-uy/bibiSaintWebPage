@@ -22,7 +22,7 @@ const ProductCard = React.memo(function ProductCard({ product, index, onToggleAc
         display: "flex",
         flexDirection: "column",
         gap: "0.65rem",
-        animation: `slideUp 0.3s ease ${index * 30}ms both`,
+        animation: `slideUp 0.35s cubic-bezier(0.23, 1, 0.32, 1) ${index * 50}ms both`,
       }}
     >
       {/* Top: thumbnail + info */}

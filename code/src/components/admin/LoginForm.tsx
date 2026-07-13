@@ -162,7 +162,7 @@ const card: React.CSSProperties = {
   boxShadow: "var(--admin-shadow-xl)",
   width: "100%",
   maxWidth: 400,
-  animation: "slideUp 0.35s ease",
+  animation: "slideUp 0.35s cubic-bezier(0.23, 1, 0.32, 1)",
 };
 
 const cardInner: React.CSSProperties = {
