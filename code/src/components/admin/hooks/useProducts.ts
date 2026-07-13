@@ -1,26 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { supabase } from "../../../lib/supabaseClient";
+import {
+  listProducts,
+  toggleProductActive,
+} from "../../../utils/adminApi";
+import type { AdminProduct } from "../../../utils/adminApi";
 import {
   getDisplayCategoryName,
   getDisplaySubcategories,
 } from "../../../utils/categoryNormalization";
 import { setPendingToast } from "../toastUtils";
-
-export interface AdminProduct {
-  id: string;
-  name: string;
-  price: string;
-  en_oferta: boolean;
-  active: boolean;
-  source: string;
-  updated_at: string;
-  img: string[];
-  categories: {
-    name: string;
-    count: number;
-    subcategories: { name: string; count: number }[];
-  };
-}
 
 export interface FilterState {
   category: string;
@@ -47,15 +35,11 @@ export function useProducts() {
   // Fetch ALL products once on mount
   useEffect(() => {
     (async () => {
-      const { data, error } = await supabase
-        .from("products")
-        .select("id, name, price, en_oferta, active, source, updated_at, img, categories")
-        .order("updated_at", { ascending: false });
-
-      if (error) {
-        console.error("Error loading products:", error);
-      } else {
-        setAllProducts((data as AdminProduct[]) ?? []);
+      try {
+        const data = await listProducts();
+        setAllProducts(data ?? []);
+      } catch (e: any) {
+        console.error("Error loading products:", e?.message || e);
       }
       setLoading(false);
     })();
@@ -157,19 +141,14 @@ export function useProducts() {
   }, []);
 
   const toggleActive = useCallback(async (id: string, current: boolean) => {
-    const { error } = await supabase
-      .from("products")
-      .update({ active: !current })
-      .eq("id", id);
-
-    if (error) {
-      setPendingToast({ type: "error", text: "Error al actualizar: " + error.message });
-      return;
+    try {
+      await toggleProductActive(id, !current);
+      setAllProducts((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, active: !current } : p)),
+      );
+    } catch (e: any) {
+      setPendingToast({ type: "error", text: "Error al actualizar: " + (e?.message || "Error desconocido") });
     }
-
-    setAllProducts((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, active: !current } : p)),
-    );
   }, []);
 
   return {

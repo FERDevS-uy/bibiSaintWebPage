@@ -1,5 +1,14 @@
 import { useEffect, useState, useCallback, useRef } from "react";
-import { supabase } from "../../../lib/supabaseClient";
+import {
+  getNextId,
+  getCategories,
+  getProduct,
+  searchProducts,
+  uploadImage as uploadImageApi,
+  createProduct,
+  updateProduct,
+} from "../../../utils/adminApi";
+import type { CategoryOption } from "../../../utils/adminApi";
 import {
   getDisplayCategoryName,
   getDisplaySubcategories,
@@ -29,11 +38,6 @@ export interface ProductFormData {
   relacionados: string[];
 }
 
-export interface CategoryOption {
-  name: string;
-  subcategories: string[];
-}
-
 export const COMMON_SIZES = ["XS", "S", "M", "L", "XL", "XXL", "Talle único"];
 
 function emptyForm(): ProductFormData {
@@ -51,20 +55,6 @@ function emptyForm(): ProductFormData {
     colors: [],
     relacionados: [],
   };
-}
-
-async function getNextNumericId(): Promise<string> {
-  try {
-    const { data } = await supabase.from("products").select("id");
-    if (!data) return "1";
-    const nums = data
-      .map((r) => parseInt(r.id, 10))
-      .filter((n) => Number.isFinite(n) && n > 0);
-    const max = nums.length > 0 ? Math.max(...nums) : 0;
-    return String(max + 1);
-  } catch {
-    return String(Date.now()).slice(-6);
-  }
 }
 
 export function useProductForm(productId?: string) {
@@ -101,35 +91,8 @@ export function useProductForm(productId?: string) {
   useEffect(() => {
     (async () => {
       try {
-        const { data, error } = await supabase
-          .from("products")
-          .select("categories, img, id, name");
-
-        if (!error && data) {
-          const catMap = new Map<string, Set<string>>();
-          for (const row of data) {
-            const product = {
-              id: row.id ?? "",
-              name: row.name ?? "",
-              categories: row.categories ?? { name: "", subcategories: [] },
-              img: row.img ?? [],
-            } as any;
-            const catName = getDisplayCategoryName(product);
-            if (!catName) continue;
-            if (!catMap.has(catName)) catMap.set(catName, new Set());
-            const subs = getDisplaySubcategories(product);
-            for (const s of subs) {
-              if (s) catMap.get(catName)!.add(s);
-            }
-          }
-          const cats: CategoryOption[] = [];
-          for (const [name, subs] of catMap) {
-            cats.push({ name, subcategories: [...subs].sort() });
-          }
-          cats.sort((a, b) => a.name.localeCompare(b.name));
-          setAvailableCategories(cats);
-        }
-
+        const cats = await getCategories();
+        setAvailableCategories(cats);
         setCategoriesLoading(false);
       } catch {
         setCategoriesLoading(false);
@@ -140,9 +103,12 @@ export function useProductForm(productId?: string) {
   // Auto-assign ID for new products
   useEffect(() => {
     if (isEditing) return;
-    getNextNumericId().then((nextId) =>
-      setForm((prev) => ({ ...prev, id: nextId }))
-    );
+    getNextId()
+      .then((nextId) => setForm((prev) => ({ ...prev, id: nextId })))
+      .catch(() => {
+        const fallback = String(Date.now()).slice(-6);
+        setForm((prev) => ({ ...prev, id: fallback }));
+      });
   }, [isEditing]);
 
   // Load existing product data
@@ -150,51 +116,41 @@ export function useProductForm(productId?: string) {
     if (!productId) return;
     (async () => {
       try {
-        const { data, error } = await supabase
-          .from("products")
-          .select("*")
-          .eq("id", productId)
-          .single();
+        const data = await getProduct(productId);
 
-        if (error) {
-          setNotification({ type: "error", text: "Error al cargar producto: " + error.message });
-          setLoading(false);
-          return;
-        }
-        if (data) {
-          const rawCat = (data.categories as any) ?? {};
-          const mockProduct = {
-            id: data.id,
-            name: data.name ?? "",
-            categories: rawCat,
-            img: data.img ?? [],
-          } as any;
-          const displayCategoryName = getDisplayCategoryName(mockProduct);
-          const displaySubcategories = getDisplaySubcategories(mockProduct);
+        const rawCat = (data.categories as any) ?? {};
+        const mockProduct = {
+          id: data.id,
+          name: data.name ?? "",
+          categories: rawCat,
+          img: data.img ?? [],
+        } as any;
 
-          const allImgs = new Set<string>();
-          if (Array.isArray(data.img)) data.img.forEach((u: string) => allImgs.add(u));
-          if (Array.isArray(data.colors)) {
-            data.colors.forEach((c: any) => {
-              if (Array.isArray(c.images)) c.images.forEach((u: string) => allImgs.add(u));
-            });
-          }
+        const displayCategoryName = getDisplayCategoryName(mockProduct);
+        const displaySubcategories = getDisplaySubcategories(mockProduct);
 
-          setForm({
-            id: data.id,
-            name: data.name ?? "",
-            description: data.description ?? "",
-            price: data.price ?? "",
-            category: displayCategoryName,
-            subcategory: displaySubcategories[0] ?? "",
-            en_oferta: data.en_oferta ?? false,
-            active: data.active ?? true,
-            auto_update_price: data.auto_update_price ?? false,
-            images: Array.from(allImgs),
-            colors: Array.isArray(data.colors) ? data.colors : [],
-            relacionados: Array.isArray(data.relacionados) ? data.relacionados : [],
+        const allImgs = new Set<string>();
+        if (Array.isArray(data.img)) data.img.forEach((u: string) => allImgs.add(u));
+        if (Array.isArray(data.colors)) {
+          data.colors.forEach((c: any) => {
+            if (Array.isArray(c.images)) c.images.forEach((u: string) => allImgs.add(u));
           });
         }
+
+        setForm({
+          id: data.id,
+          name: data.name ?? "",
+          description: data.description ?? "",
+          price: data.price ?? "",
+          category: displayCategoryName,
+          subcategory: displaySubcategories[0] ?? "",
+          en_oferta: data.en_oferta ?? false,
+          active: data.active ?? true,
+          auto_update_price: data.auto_update_price ?? false,
+          images: Array.from(allImgs),
+          colors: Array.isArray(data.colors) ? data.colors : [],
+          relacionados: Array.isArray(data.relacionados) ? data.relacionados : [],
+        });
 
         setLoading(false);
       } catch {
@@ -209,35 +165,18 @@ export function useProductForm(productId?: string) {
       setRelatedResults([]);
       return;
     }
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       const term = relatedSearch.trim();
-
-      Promise.all([
-        supabase
-          .from("products")
-          .select("id, name")
-          .ilike("name", `%${term}%`)
-          .eq("active", true)
-          .limit(10),
-        supabase
-          .from("products")
-          .select("id, name")
-          .ilike("id", `%${term}%`)
-          .eq("active", true)
-          .limit(10),
-      ]).then(([byName, byId]) => {
-        const merged = [...(byName.data ?? []), ...(byId.data ?? [])];
-        const uniqueById = new Map<string, { id: string; name: string }>();
-
-        for (const item of merged) {
-          if (!item?.id) continue;
-          if (!uniqueById.has(item.id)) {
-            uniqueById.set(item.id, { id: item.id, name: item.name ?? "" });
-          }
-        }
-
-        setRelatedResults(Array.from(uniqueById.values()).slice(0, 10));
-      });
+      if (term.length < 2) {
+        setRelatedResults([]);
+        return;
+      }
+      try {
+        const results = await searchProducts(term);
+        setRelatedResults(results);
+      } catch {
+        setRelatedResults([]);
+      }
     }, 250);
     return () => clearTimeout(timer);
   }, [relatedSearch]);
@@ -317,21 +256,12 @@ export function useProductForm(productId?: string) {
       return;
     }
     setUploadingImage(true);
-    const fileName = `${Date.now()}_${file.name}`;
-    const { error: uploadError } = await supabase.storage
-      .from("product-images")
-      .upload(fileName, file);
-    if (uploadError) {
-      notify("error", "Error al subir imagen: " + uploadError.message);
-      setUploadingImage(false);
-      return;
-    }
-    const { data: urlData } = supabase.storage
-      .from("product-images")
-      .getPublicUrl(fileName);
-    if (urlData?.publicUrl) {
-      addImage(urlData.publicUrl);
+    try {
+      const url = await uploadImageApi(file);
+      addImage(url);
       notify("ok", "Imagen subida correctamente");
+    } catch (e: any) {
+      notify("error", "Error al subir imagen: " + (e?.message || "Error desconocido"));
     }
     setUploadingImage(false);
   };
@@ -435,8 +365,8 @@ export function useProductForm(productId?: string) {
     }));
   };
 
-  const availableSubcategories =
-    availableCategories.find((c) => c.name === form.category)?.subcategories ?? [];
+  const availableSubcategories: string[] =
+    availableCategories.find((c) => c.name === form.category)?.subcategories.map((s) => s.name) ?? [];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -476,25 +406,22 @@ export function useProductForm(productId?: string) {
       colors: form.colors,
     };
 
-    let error;
-    if (isEditing) {
-      const res = await supabase.from("products").update(productData).eq("id", productId);
-      error = res.error;
-    } else {
-      const res = await supabase.from("products").insert({ id: form.id, ...productData });
-      error = res.error;
-    }
-
-    setSaving(false);
-    if (error) {
-      notify("error", "Error al guardar: " + error.message);
-    } else {
+    try {
+      if (isEditing) {
+        await updateProduct(productId!, productData);
+      } else {
+        await createProduct(form.id, productData);
+      }
       const msg = isEditing ? "Producto actualizado correctamente" : "Producto creado correctamente";
       setPendingToast({ type: "ok", text: msg });
       setTimeout(() => {
         window.location.href = "/admin";
       }, 400);
+    } catch (e: any) {
+      notify("error", "Error al guardar: " + (e?.message || "Error desconocido"));
     }
+
+    setSaving(false);
   };
 
   return {
