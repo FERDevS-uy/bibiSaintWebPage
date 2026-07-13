@@ -421,6 +421,14 @@ body {
   transform: scale(0.97);
 }
 
+.admin-btn svg {
+  transition: transform 0.2s var(--admin-ease-out);
+}
+
+.admin-btn:hover svg {
+  transform: translateX(1px);
+}
+
 .admin-btn-primary {
   background: var(--admin-accent);
   color: #fff;
@@ -474,12 +482,17 @@ body {
 /* ── Cards ── */
 
 .admin-card {
+  position: relative;
   background: var(--admin-surface);
   border-radius: var(--admin-radius);
   padding: 1.5rem;
   border: 1px solid var(--admin-border);
-  box-shadow: var(--admin-shadow-sm);
+  box-shadow: var(--admin-shadow-sm), inset 0 1px 0 oklch(1 0 0 / 0.7);
   transition: transform 0.25s var(--admin-ease-out), box-shadow 0.25s var(--admin-ease-out), border-color 0.25s var(--admin-ease-out);
+}
+
+[data-admin-theme="dark"] .admin-card {
+  box-shadow: var(--admin-shadow-sm), inset 0 1px 0 oklch(1 0 0 / 0.04);
 }
 
 .admin-card-hover {
@@ -487,9 +500,13 @@ body {
 }
 
 .admin-card-hover:hover {
-  box-shadow: var(--admin-shadow-lg);
+  box-shadow: var(--admin-shadow-lg), inset 0 1px 0 oklch(1 0 0 / 0.7);
   transform: translateY(-3px);
   border-color: var(--admin-accent);
+}
+
+[data-admin-theme="dark"] .admin-card-hover:hover {
+  box-shadow: var(--admin-shadow-lg), inset 0 1px 0 oklch(1 0 0 / 0.04);
 }
 
 /* ── Inputs ── */
