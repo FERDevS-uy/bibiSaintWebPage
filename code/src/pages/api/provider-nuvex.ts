@@ -137,7 +137,7 @@ export const GET: APIRoute = async ({ url }) => {
   try {
     const response = await fetch(targetUrl.toString(), {
       method: "GET",
-      redirect: "follow",
+      redirect: "manual",
       headers: NUVEX_HEADERS,
       signal: controller.signal,
     });

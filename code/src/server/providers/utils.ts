@@ -214,7 +214,6 @@ export async function martinaFetch(url: string, timeoutMs = 30000): Promise<any>
     const req = https.get(
       url,
       {
-        rejectUnauthorized: false,
         headers: {
           accept: "application/json, text/plain, */*",
           Referer: "https://tienda.martinaditrento.com/",
