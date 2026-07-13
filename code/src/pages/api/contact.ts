@@ -1,6 +1,7 @@
 // Esta ruta API funciona solo en un servidor Node.js (Vercel/Netlify/Railway/etc.).
 // En GitHub Pages el sitio es estático y el formulario debe usar un servicio externo como Formspree.
 import nodemailer from 'nodemailer';
+import { hasTrustedOrigin } from '../../server/security/origin';
 
 const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || 'bibisventasysserviciosonline@gmail.com';
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.gmail.com';
@@ -33,6 +34,13 @@ function formatMessage({ name, email, phone, subject, message }: Record<string, 
 
 export async function POST({ request }: { request: Request }) {
   try {
+    if (!hasTrustedOrigin(request)) {
+      return new Response(JSON.stringify({ message: 'Origen no permitido.' }), {
+        status: 403,
+        headers: { 'content-type': 'application/json' },
+      });
+    }
+
     const data = await request.json();
     const { name, email, phone, subject, message } = data || {};
 
@@ -43,8 +51,30 @@ export async function POST({ request }: { request: Request }) {
       });
     }
 
+    const normalizedEmail = String(email).trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail);
+    if (!emailOk) {
+      return new Response(JSON.stringify({ message: 'Email inválido.' }), {
+        status: 400,
+        headers: { 'content-type': 'application/json' },
+      });
+    }
+
+    const fieldsWithinBounds =
+      String(name).length <= 120
+      && String(phone).length <= 40
+      && String(subject).length <= 180
+      && String(message).length <= 4000;
+
+    if (!fieldsWithinBounds) {
+      return new Response(JSON.stringify({ message: 'El contenido excede el máximo permitido.' }), {
+        status: 400,
+        headers: { 'content-type': 'application/json' },
+      });
+    }
+
     const recipient = getRecipient(subject);
-    const bodyText = formatMessage({ name, email, phone, subject, message });
+    const bodyText = formatMessage({ name, email: normalizedEmail, phone, subject, message });
 
     if (!SMTP_USER || !SMTP_PASS) {
       return new Response(JSON.stringify({ message: 'SMTP no configurado.', code: 'SMTP_NOT_CONFIGURED' }), {
@@ -70,7 +100,7 @@ export async function POST({ request }: { request: Request }) {
       text: bodyText,
       html: `<p>Nuevo mensaje desde el formulario de contacto.</p>
         <p><strong>Nombre:</strong> ${escapeHtml(name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(normalizedEmail)}</p>
         <p><strong>Teléfono:</strong> ${escapeHtml(phone)}</p>
         <p><strong>Asunto:</strong> ${escapeHtml(subject)}</p>
         <p><strong>Mensaje:</strong></p>
