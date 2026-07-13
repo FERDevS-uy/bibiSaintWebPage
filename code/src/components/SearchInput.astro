@@ -280,10 +280,37 @@
 </style>
 
 <script>
+  // @ts-nocheck
   const BASE_URL = document.documentElement.dataset.basePath || "";
 
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function sanitizeImageUrl(value) {
+    const fallback = `${BASE_URL || ""}/assets/no-image.png`;
+    const raw = String(value ?? "").trim();
+    if (!raw) return fallback;
+
+    try {
+      const parsed = new URL(raw, window.location.origin);
+      if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return fallback;
+      return parsed.href;
+    } catch {
+      return fallback;
+    }
+  }
+
+  /** @type {any} */
   let fuseInstance = null;
+  /** @type {any} */
   let productsCache = null;
+  /** @type {Promise<void> | null} */
   let fusePromise = null;
 
   async function ensureFuse() {
@@ -307,17 +334,21 @@
     const urlQuery = params.get("q");
 
     document.querySelectorAll(".searchForm").forEach((form) => {
+      const root = /** @type {HTMLElement} */ (form);
+      const formEl = /** @type {HTMLFormElement} */ (form);
       if (form.dataset.searchBound === "true") return;
       form.dataset.searchBound = "true";
 
-      const input = form.querySelector(".searchInput");
-      const resultContainer = form.querySelector(".searchResults");
-      const viewAllBtn = form.querySelector(".viewAllBtn");
-      const clearBtn = form.querySelector(".clearBtn");
+      const input = /** @type {HTMLInputElement | null} */ (form.querySelector(".searchInput"));
+      const resultContainer = /** @type {HTMLElement | null} */ (form.querySelector(".searchResults"));
+      const viewAllBtn = /** @type {HTMLAnchorElement | null} */ (form.querySelector(".viewAllBtn"));
+      const clearBtn = /** @type {HTMLButtonElement | null} */ (form.querySelector(".clearBtn"));
+
+      if (!input || !resultContainer) return;
 
       const updateInputState = () => {
         const query = input.value.trim();
-        form.classList.toggle("has-text", !!query);
+        root.classList.toggle("has-text", !!query);
       };
 
       if (urlQuery) {
@@ -325,6 +356,7 @@
         updateInputState();
       }
 
+      /** @type {ReturnType<typeof setTimeout> | null} */
       let debounceTimer = null;
 
       const updateSearchUrl = (query) => {
@@ -332,7 +364,7 @@
         if (!isSearchPage) return;
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
-          if (!document.contains(form)) return;
+          if (!document.contains(formEl)) return;
           const searchParams = new URLSearchParams(window.location.search);
           if (query) searchParams.set("q", query);
           else searchParams.delete("q");
@@ -358,8 +390,8 @@
         clearBtn.addEventListener("click", () => {
           input.value = "";
           resultContainer.innerHTML = "";
-          form.classList.remove("active");
-          form.classList.remove("has-text");
+          root.classList.remove("active");
+          root.classList.remove("has-text");
           input.focus();
           updateSearchUrl("");
         });
@@ -372,7 +404,7 @@
 
         if (!query) {
           resultContainer.innerHTML = "";
-          form.classList.remove("active");
+          root.classList.remove("active");
           return;
         }
 
@@ -381,24 +413,26 @@
 
         const results = fuseInstance.search(query).slice(0, 4);
 
-        form.classList.toggle("active", results.length > 0);
+        root.classList.toggle("active", results.length > 0);
 
         if (viewAllBtn) {
           viewAllBtn.href = `${BASE_URL}/search/page/1/?q=${encodeURIComponent(query)}`;
         }
 
         resultContainer.innerHTML = results
-          .map((r) => {
-            const src = Array.isArray(r.item.img) && r.item.img.length ? r.item.img[0] : '/assets/no-image.png';
-            const price = r.item.price || '';
+          .map((/** @type {any} */ r) => {
+            const src = sanitizeImageUrl(Array.isArray(r.item.img) && r.item.img.length ? r.item.img[0] : "");
+            const price = escapeHtml(r.item.price || "");
+            const name = escapeHtml(r.item.name || "");
+            const safeId = encodeURIComponent(String(r.item.id || ""));
             return `
           <li class="searchResultItem">
-              <a href="${BASE_URL}/producto/${r.item.id}">
+              <a href="${BASE_URL}/producto/${safeId}">
               <div class="searchResultImage">
-                <img src="${src}" alt="${r.item.name}" />
+                <img src="${src}" alt="${name}" />
               </div>
               <div class="searchResultInfo">
-                <span class="searchResultName">${r.item.name}</span>
+                <span class="searchResultName">${name}</span>
                 <span class="searchResultPrice">$${price}</span>
               </div>
             </a>

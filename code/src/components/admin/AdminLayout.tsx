@@ -1,13 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AuthProvider, useAuth } from "./AuthContext";
 import { ThemeProvider, useTheme } from "./ThemeContext";
+import { supabase } from "../../lib/supabaseClient";
 
 function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const { user, loading, signOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [navOpen, setNavOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
-  if (loading) {
+  useEffect(() => {
+    let mounted = true;
+
+    if (!user) {
+      setIsAdmin(null);
+      return () => {
+        mounted = false;
+      };
+    }
+
+    supabase
+      .from("admin_profiles")
+      .select("id")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then(({ data, error }) => {
+        if (!mounted) return;
+        setIsAdmin(!error && !!data);
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setIsAdmin(false);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [user]);
+
+  if (loading || (user && isAdmin === null)) {
     return (
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100dvh", background: "var(--admin-bg)" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: 200 }}>
@@ -18,7 +49,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
     );
   }
 
-  if (!user) {
+  if (!user || !isAdmin) {
     window.location.href = "/admin/login";
     return null;
   }

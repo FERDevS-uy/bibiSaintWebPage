@@ -99,10 +99,12 @@ export function useProductForm(productId?: string) {
 
   // Load categories
   useEffect(() => {
-    supabase
-      .from("products")
-      .select("categories, img, id, name")
-      .then(({ data, error }) => {
+    (async () => {
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select("categories, img, id, name");
+
         if (!error && data) {
           const catMap = new Map<string, Set<string>>();
           for (const row of data) {
@@ -127,9 +129,12 @@ export function useProductForm(productId?: string) {
           cats.sort((a, b) => a.name.localeCompare(b.name));
           setAvailableCategories(cats);
         }
+
         setCategoriesLoading(false);
-      })
-      .catch(() => setCategoriesLoading(false));
+      } catch {
+        setCategoriesLoading(false);
+      }
+    })();
   }, []);
 
   // Auto-assign ID for new products
@@ -143,12 +148,14 @@ export function useProductForm(productId?: string) {
   // Load existing product data
   useEffect(() => {
     if (!productId) return;
-    supabase
-      .from("products")
-      .select("*")
-      .eq("id", productId)
-      .single()
-      .then(({ data, error }) => {
+    (async () => {
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select("*")
+          .eq("id", productId)
+          .single();
+
         if (error) {
           setNotification({ type: "error", text: "Error al cargar producto: " + error.message });
           setLoading(false);
@@ -188,9 +195,12 @@ export function useProductForm(productId?: string) {
             relacionados: Array.isArray(data.relacionados) ? data.relacionados : [],
           });
         }
+
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      } catch {
+        setLoading(false);
+      }
+    })();
   }, [productId]);
 
   // Related products search
@@ -200,13 +210,34 @@ export function useProductForm(productId?: string) {
       return;
     }
     const timer = setTimeout(() => {
-      supabase
-        .from("products")
-        .select("id, name")
-        .or(`name.ilike.%${relatedSearch}%,id.ilike.%${relatedSearch}%`)
-        .eq("active", true)
-        .limit(10)
-        .then(({ data }) => setRelatedResults(data ?? []));
+      const term = relatedSearch.trim();
+
+      Promise.all([
+        supabase
+          .from("products")
+          .select("id, name")
+          .ilike("name", `%${term}%`)
+          .eq("active", true)
+          .limit(10),
+        supabase
+          .from("products")
+          .select("id, name")
+          .ilike("id", `%${term}%`)
+          .eq("active", true)
+          .limit(10),
+      ]).then(([byName, byId]) => {
+        const merged = [...(byName.data ?? []), ...(byId.data ?? [])];
+        const uniqueById = new Map<string, { id: string; name: string }>();
+
+        for (const item of merged) {
+          if (!item?.id) continue;
+          if (!uniqueById.has(item.id)) {
+            uniqueById.set(item.id, { id: item.id, name: item.name ?? "" });
+          }
+        }
+
+        setRelatedResults(Array.from(uniqueById.values()).slice(0, 10));
+      });
     }, 250);
     return () => clearTimeout(timer);
   }, [relatedSearch]);
