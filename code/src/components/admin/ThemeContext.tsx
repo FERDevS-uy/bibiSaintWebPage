@@ -39,32 +39,37 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 function GlobalStyles() {
   return (
     <style>{`
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --admin-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --admin-font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --admin-font-serif: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --admin-font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', monospace;
 
-  --admin-bg: #f8fafc;
+  --admin-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --admin-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --admin-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --admin-bg: #f4f6fa;
   --admin-surface: #ffffff;
-  --admin-text: #0f172a;
-  --admin-text-secondary: #64748b;
-  --admin-border: #e2e8f0;
-  --admin-border-light: #f1f5f9;
+  --admin-text: #0b1120;
+  --admin-text-secondary: #5b677b;
+  --admin-border: #dce1eb;
+  --admin-border-light: #eef1f6;
 
   --admin-accent: #4f46e5;
   --admin-accent-hover: #4338ca;
   --admin-accent-subtle: rgba(79, 70, 229, 0.08);
 
-  --admin-sidebar-bg: #0f172a;
-  --admin-sidebar-text: #94a3b8;
+  --admin-sidebar-bg: #0b1120;
+  --admin-sidebar-text: #8b95a6;
   --admin-sidebar-hover: rgba(255, 255, 255, 0.06);
   --admin-sidebar-active: #6366f1;
 
-  --admin-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --admin-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --admin-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-  --admin-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --admin-shadow-sm: 0 1px 3px 0 oklch(0.02 0.01 270 / 0.06), 0 1px 2px -1px oklch(0.02 0.01 270 / 0.04);
+  --admin-shadow: 0 4px 8px -2px oklch(0.02 0.01 270 / 0.08), 0 2px 4px -2px oklch(0.02 0.01 270 / 0.04);
+  --admin-shadow-lg: 0 12px 24px -6px oklch(0.02 0.01 270 / 0.10), 0 4px 8px -4px oklch(0.02 0.01 270 / 0.06);
+  --admin-shadow-xl: 0 24px 48px -12px oklch(0.02 0.01 270 / 0.14), 0 8px 16px -6px oklch(0.02 0.01 270 / 0.06);
 
   --admin-radius-sm: 8px;
   --admin-radius: 12px;
@@ -79,7 +84,7 @@ function GlobalStyles() {
   --admin-warning-bg: #fffbeb;
   --admin-warning-text: #b45309;
 
-  --admin-chip-bg: #f1f5f9;
+  --admin-chip-bg: #eef1f6;
   --admin-chip-text: #475569;
 
   --admin-offer-bg: #fef3c7;
@@ -87,26 +92,26 @@ function GlobalStyles() {
 }
 
 [data-admin-theme="dark"] {
-  --admin-bg: #09090b;
-  --admin-surface: #18181b;
-  --admin-text: #fafafa;
-  --admin-text-secondary: #a1a1aa;
-  --admin-border: #27272a;
-  --admin-border-light: #202023;
+  --admin-bg: #050508;
+  --admin-surface: #121216;
+  --admin-text: #f5f5f7;
+  --admin-text-secondary: #8b8b98;
+  --admin-border: #222228;
+  --admin-border-light: #1a1a1f;
 
   --admin-accent: #818cf8;
   --admin-accent-hover: #93c5fd;
   --admin-accent-subtle: rgba(129, 140, 248, 0.12);
 
-  --admin-sidebar-bg: #09090b;
-  --admin-sidebar-text: #71717a;
+  --admin-sidebar-bg: #050508;
+  --admin-sidebar-text: #6b6b78;
   --admin-sidebar-hover: rgba(255, 255, 255, 0.04);
   --admin-sidebar-active: #818cf8;
 
-  --admin-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-  --admin-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
-  --admin-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.6);
-  --admin-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.7);
+  --admin-shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.35), 0 1px 2px -1px oklch(0 0 0 / 0.25);
+  --admin-shadow: 0 4px 8px -2px oklch(0 0 0 / 0.45), 0 2px 4px -2px oklch(0 0 0 / 0.30);
+  --admin-shadow-lg: 0 12px 24px -6px oklch(0 0 0 / 0.55), 0 4px 8px -4px oklch(0 0 0 / 0.35);
+  --admin-shadow-xl: 0 24px 48px -12px oklch(0 0 0 / 0.65), 0 8px 16px -6px oklch(0 0 0 / 0.35);
 
   --admin-success: #34d399;
   --admin-success-bg: #064e3b;
@@ -117,8 +122,8 @@ function GlobalStyles() {
   --admin-warning-bg: #78350f;
   --admin-warning-text: #fbbf24;
 
-  --admin-chip-bg: #27272a;
-  --admin-chip-text: #e4e4e7;
+  --admin-chip-bg: #222228;
+  --admin-chip-text: #d4d4d8;
 
   --admin-offer-bg: #78350f;
   --admin-offer-text: #fbbf24;
@@ -126,6 +131,10 @@ function GlobalStyles() {
 
 html {
   transition: background 0.3s ease, color 0.3s ease;
+}
+
+@supports (font-variation-settings: normal) {
+  :root { --admin-font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 }
 
 body {
@@ -227,6 +236,15 @@ body {
   to { transform: scale(4); opacity: 0; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.15s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ── Skeleton shimmer ── */
 
 .admin-skeleton {
@@ -302,7 +320,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 0.2s var(--admin-ease-out), color 0.2s var(--admin-ease-out), padding-left 0.25s var(--admin-ease-out);
   border: none;
   background: transparent;
   cursor: pointer;
@@ -323,7 +341,7 @@ body {
   height: 50%;
   background: var(--admin-sidebar-active);
   border-radius: 0 4px 4px 0;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s var(--admin-ease-out);
 }
 
 .admin-nav-link:hover {
@@ -356,7 +374,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 0.2s var(--admin-ease-out), color 0.2s var(--admin-ease-out), padding-left 0.25s var(--admin-ease-out);
   border: none;
   background: transparent;
   cursor: pointer;
@@ -372,7 +390,7 @@ body {
 }
 
 .admin-sidebar-btn:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
 /* ── Buttons ── */
@@ -389,7 +407,7 @@ body {
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.16s var(--admin-ease-out), box-shadow 0.25s var(--admin-ease-out), background 0.2s var(--admin-ease-out), color 0.2s var(--admin-ease-out), border-color 0.2s var(--admin-ease-out);
   font-family: inherit;
   position: relative;
   overflow: hidden;
@@ -400,18 +418,18 @@ body {
 }
 
 .admin-btn:active {
-  transform: translateY(0) scale(0.97);
+  transform: scale(0.97);
 }
 
 .admin-btn-primary {
   background: var(--admin-accent);
   color: #fff;
-  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+  box-shadow: 0 4px 10px oklch(0.45 0.22 270 / 0.25);
 }
 
 .admin-btn-primary:hover {
   background: var(--admin-accent-hover);
-  box-shadow: 0 6px 14px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 8px 20px oklch(0.45 0.22 270 / 0.35);
 }
 
 .admin-btn-secondary {
@@ -461,7 +479,7 @@ body {
   padding: 1.5rem;
   border: 1px solid var(--admin-border);
   box-shadow: var(--admin-shadow-sm);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.25s var(--admin-ease-out), box-shadow 0.25s var(--admin-ease-out), border-color 0.25s var(--admin-ease-out);
 }
 
 .admin-card-hover {
@@ -470,7 +488,7 @@ body {
 
 .admin-card-hover:hover {
   box-shadow: var(--admin-shadow-lg);
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: var(--admin-accent);
 }
 
@@ -487,12 +505,17 @@ body {
   background: var(--admin-surface);
   color: var(--admin-text);
   font-family: inherit;
+  transition: border-color 0.2s var(--admin-ease-out), box-shadow 0.2s var(--admin-ease-out), background 0.2s ease;
 }
 
 .admin-input:focus {
   border-color: var(--admin-accent);
   box-shadow: 0 0 0 4px var(--admin-accent-subtle);
   background: var(--admin-surface);
+}
+
+.admin-input:active {
+  transform: scale(0.99);
 }
 
 .admin-input::placeholder {
@@ -552,7 +575,7 @@ select.admin-input {
   cursor: pointer;
   z-index: 40;
   box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s var(--admin-ease-out), box-shadow 0.2s var(--admin-ease-out), background 0.2s var(--admin-ease-out);
   animation: float 3s ease-in-out infinite;
   align-items: center;
   justify-content: center;
@@ -561,6 +584,7 @@ select.admin-input {
 .admin-fab:hover {
   background: var(--admin-accent-hover);
   transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 32px rgba(79, 70, 229, 0.35);
 }
 
 .admin-fab:active {
@@ -591,7 +615,7 @@ select.admin-input {
   width: 100%;
   border: 1px solid var(--admin-border);
   box-shadow: var(--admin-shadow-xl);
-  animation: bounceIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: bounceIn 0.3s var(--admin-ease-out);
   text-align: center;
   position: relative;
 }
@@ -647,7 +671,7 @@ select.admin-input {
     left: 0;
     bottom: 0;
     transform: translateX(-100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.35s var(--admin-ease-drawer);
     box-shadow: none;
     z-index: 100;
   }
