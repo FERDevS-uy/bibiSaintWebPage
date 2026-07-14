@@ -1,5 +1,5 @@
 ---
-import OfertasBanner from "@components/OfertasBanner.astro";
+import HeroBannerCarousel from "@components/HeroBannerCarousel.astro";
 import Layout from "@layouts/Layout.astro";
 import ProductCarousel from "@components/ProductCarousel.astro";
 import { loadProducts } from "@utils/loadProducts";
@@ -33,7 +33,7 @@ const hydratorProducts = [...new Set([...novedades, ...destacados, ...ofertas])]
 
 <Layout pageId="index">
   <ProductListHydrator client:load products={hydratorProducts} />
-  <OfertasBanner />
+  <HeroBannerCarousel />
   <ProductCarousel products={novedades} title="¡Novedades!" id="novedades" />
   <ProductCarousel products={destacados} title="¡Destacados!" id="destacados" />
   <ProductCarousel products={ofertas} title="¡Ofertas!" id="ofertas" />
