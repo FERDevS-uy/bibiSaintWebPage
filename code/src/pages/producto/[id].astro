@@ -10,8 +10,8 @@ import {
   getDisplayCategoryName,
   getDisplaySubcategories,
 } from "@utils/categoryNormalization";
-import { isTallBoot } from "@utils/isTallBoot";
 import { loadProductById, loadRelatedProducts } from "../../utils/loadProducts";
+import RelatedProductCarousel from "@components/RelatedProductCarousel.astro";
 
 const { id } = Astro.params;
 
@@ -220,26 +220,11 @@ const pathname = Astro.url.pathname;
 
     {
       relacionados && relacionados.length > 0 && (
-        <div class="related">
-          <h2>Productos Relacionados</h2>
-
-          <div class="relatedList">
-            {relacionados.map((prod: any) => {
-              const tall = isTallBoot(prod.name, prod.description, prod.id);
-              return (
-              <div class="card">
-                <a href={withBasePath(`/producto/${prod.id}`, pathname)}>
-                  <div class={`cardImg${tall ? " cardImg--tall" : ""}`}>
-                    <img loading="lazy" class={`cardImg${tall ? " cardImg--tall" : ""}`} src={prod.img[0]} alt={prod.name} />
-                  </div>
-                  <span class="cardTitle">{prod.name}</span>
-                  <span class="cardPrice">${prod.price}</span>
-                </a>
-              </div>
-              );
-            })}
-          </div>
-        </div>
+        <RelatedProductCarousel
+          products={relacionados}
+          title="Productos Relacionados"
+          id="related-carousel"
+        />
       )
     }
   </section>
@@ -648,76 +633,6 @@ const pathname = Astro.url.pathname;
     color: #157f3b;
   }
 
-  /**** Related Products *****/
-  .related {
-    margin-top: 50px;
-    border-top: 1px solid #000;
-    padding-top: 20px;
-  }
-
-  .related h2 {
-    font-size: 24px;
-    font-weight: 800;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .relatedList {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-  }
-
-  .card {
-    background: white;
-    text-align: center;
-  }
-
-  .card a {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-  }
-
-  .cardImg {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: contain;
-    object-position: top;
-    margin-bottom: 10px;
-  }
-
-  /* Botas largas: que la imagen se vea completa (sin recorte) */
-  .cardImg--tall {
-    object-fit: contain;
-    object-position: center;
-    background: #fcfcfc;
-  }
-
-  .cardTitle {
-    font-size: 14px;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  .cardPrice {
-    font-size: 16px;
-    font-weight: 800;
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  .cardBtn {
-    background: transparent; /* Or keep black if desired, but reference focuses on main product */
-    color: #000;
-    text-decoration: underline;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0;
-  }
-
   /**** Desktop Media Query *****/
   @media (max-width: 767px) {
     .productContainer {
@@ -807,10 +722,6 @@ const pathname = Astro.url.pathname;
 
     .checkStockStatus {
       font-size: 0.82rem;
-    }
-
-    .relatedList {
-      grid-template-columns: repeat(4, 1fr);
     }
   }
 </style>

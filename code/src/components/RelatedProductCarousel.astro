@@ -1,0 +1,468 @@
+---
+import type Product from "../types/product";
+import { withBasePath } from "@utils/basePath";
+import { isTallBoot } from "@utils/isTallBoot";
+
+interface Props {
+  products: Product[];
+  title?: string;
+  id: string;
+}
+
+const { products, title = "Productos Relacionados", id } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<div class="related" id={id} data-carousel="">
+  <div class="related__header">
+    <h2 class="related__title">{title}</h2>
+    <span class="related__count">{products.length} {products.length === 1 ? "producto" : "productos"}</span>
+  </div>
+
+  <div class="related__viewport">
+    <button class="related__arrow related__arrow--prev" aria-label="Anterior" type="button">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+
+    <div class="related__track" role="list">
+      {products.map((p, index) => {
+        const tall = isTallBoot(p.name, p.description, p.id);
+        return (
+          <article
+            class={`related__item${tall ? " related__item--tall" : ""}`}
+            role="listitem"
+            data-index={index}
+          >
+            <a
+              href={withBasePath(`/producto/${p.id}`, pathname)}
+              class="related__link"
+              title={p.name}
+              tabindex="0"
+            >
+              <div
+                class={`related__img-wrap${tall ? " related__img-wrap--tall" : ""}`}
+              >
+                <img
+                  src={p.img[0]}
+                  alt={p.name}
+                  loading="lazy"
+                  decoding="async"
+                  class={tall ? "related__img--tall" : undefined}
+                />
+              </div>
+              <div class="related__info">
+                <span class="related__name">{p.name}</span>
+                <span class="related__price">${p.price}</span>
+              </div>
+            </a>
+          </article>
+        );
+      })}
+    </div>
+
+    <button class="related__arrow related__arrow--next" aria-label="Siguiente" type="button">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .related {
+    margin-top: 60px;
+    padding-block: 40px;
+    background: rgba(0, 0, 0, 0.015);
+    border-radius: 16px;
+  }
+
+  .related__header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding-inline: max(15vw, 1.5rem);
+    margin-bottom: 24px;
+  }
+
+  .related__title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--principal-text-color);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .related__count {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--principal-text-color);
+    opacity: 0.35;
+  }
+
+  .related__viewport {
+    position: relative;
+    width: 100%;
+  }
+
+  .related__track {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    width: 100%;
+    padding-block: 8px;
+    padding-inline: max(15vw, 1.5rem);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .related__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .related__item {
+    flex: 0 0 65vw;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    will-change: transform;
+  }
+
+  .related__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+  }
+
+  .related__link:focus-visible {
+    outline: 2px solid var(--p-b-color, #c11010);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  .related__img-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid #e8e6df;
+    transition: box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+
+  .related__item--tall {
+    background: transparent;
+  }
+
+  .related__img-wrap--tall {
+    background: #fcfcfc;
+  }
+
+  .related__item:hover .related__img-wrap {
+    border-color: var(--line-color, #f0b13e);
+    box-shadow: 0 0 0 2px rgba(240, 177, 62, 0.15);
+  }
+
+  .related__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .related__item:hover .related__img:not(.related__img--tall) {
+    transform: scale(1.03);
+  }
+
+  .related__img--tall {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .related__info {
+    width: 100%;
+    padding: 10px 4px 4px;
+    text-align: center;
+  }
+
+  .related__name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--principal-text-color);
+    line-height: 1.3;
+    height: 2.1em;
+    transition: color 0.25s ease;
+  }
+
+  .related__item:hover .related__name {
+    color: var(--line-color, #f0b13e);
+  }
+
+  .related__price {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--principal-text-color);
+    margin-top: 3px;
+  }
+
+  .related__arrow {
+    display: none;
+  }
+
+  @media (min-width: 1000px) {
+    .related {
+      margin-top: 80px;
+      padding-block: 48px;
+    }
+
+    .related__header {
+      padding-inline: max(15vw, 2rem);
+      margin-bottom: 28px;
+    }
+
+    .related__title {
+      font-size: 1.6rem;
+    }
+
+    .related__track {
+      gap: 16px;
+      padding-inline: max(15vw, 2rem);
+    }
+
+    .related__item {
+      flex: 0 0 18vw;
+    }
+
+    .related__info {
+      padding: 12px 6px 6px;
+    }
+
+    .related__name {
+      font-size: 0.82rem;
+    }
+
+    .related__price {
+      font-size: 0.92rem;
+    }
+
+    .related__arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 35%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: #ffffff;
+      color: var(--principal-text-color);
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+      transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .related:hover .related__arrow {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .related__arrow:hover {
+      background: var(--line-color, #f0b13e);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(240, 177, 62, 0.35);
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    .related__arrow--prev {
+      left: -18px;
+    }
+
+    .related__arrow--next {
+      right: -18px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .related__track {
+      scroll-behavior: auto;
+    }
+
+    .related__item img {
+      transition: none;
+    }
+
+    .related__item:hover img {
+      transform: none;
+    }
+
+    .related__arrow {
+      transition: none;
+    }
+
+    .related__arrow:hover {
+      transform: translateY(-50%);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll("[data-carousel]").forEach((el) => {
+      initRelated(el);
+    });
+  });
+
+  function initRelated(container) {
+    if (container.dataset.initialized) return;
+    container.dataset.initialized = "true";
+
+    const track = container.querySelector(".related__track");
+    const items = container.querySelectorAll(".related__item");
+    const prevBtn = container.querySelector(".related__arrow--prev");
+    const nextBtn = container.querySelector(".related__arrow--next");
+
+    if (!track || items.length === 0) return;
+
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    function getItemWidth() {
+      if (items.length === 0) return 0;
+      const first = items[0];
+      const style = getComputedStyle(first);
+      const margin =
+        parseFloat(style.marginLeft || "0") +
+        parseFloat(style.marginRight || "0");
+      return first.getBoundingClientRect().width + margin;
+    }
+
+    function smoothScrollTo(targetScrollLeft) {
+      if (prefersReduced) {
+        track.scrollLeft = targetScrollLeft;
+        return;
+      }
+      const start = track.scrollLeft;
+      const distance = targetScrollLeft - start;
+      if (Math.abs(distance) < 1) return;
+      const duration = Math.min(Math.max(Math.abs(distance) * 0.5, 200), 500);
+      const startTime = performance.now();
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        track.scrollLeft = start + distance * eased;
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function scrollByAmount(amount) {
+      smoothScrollTo(track.scrollLeft + amount);
+    }
+
+    // IntersectionObserver para hover de borde dorado en el ítem activo
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle("is-active", entry.isIntersecting);
+        });
+      },
+      {
+        root: track,
+        threshold: prefersReduced ? 0.3 : 0.55,
+      },
+    );
+
+    items.forEach((item) => observer.observe(item));
+
+    // Click: si no está activo, scrollear a él; si está activo, navegar
+    track.addEventListener("click", (e) => {
+      const link = e.target.closest("a");
+      if (!link) return;
+
+      const item = link.closest(".related__item");
+      if (!item) return;
+
+      if (!item.classList.contains("is-active")) {
+        e.preventDefault();
+        item.scrollIntoView({
+          behavior: prefersReduced ? "auto" : "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }
+    });
+
+    // Arrow navigation: scroll por ancho de ítem + gap
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        const gap = parseInt(getComputedStyle(track).gap || "0", 10);
+        const w = getItemWidth();
+        scrollByAmount(-(w + gap));
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        const gap = parseInt(getComputedStyle(track).gap || "0", 10);
+        const w = getItemWidth();
+        scrollByAmount(w + gap);
+      });
+    }
+
+    // Touch swipe
+    let touchStartX = 0;
+    track.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      },
+      { passive: true },
+    );
+
+    track.addEventListener(
+      "touchend",
+      (e) => {
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 40) {
+          const gap = parseInt(getComputedStyle(track).gap || "0", 10);
+          const w = getItemWidth();
+          scrollByAmount(diff > 0 ? w + gap : -(w + gap));
+        }
+      },
+      { passive: true },
+    );
+
+    // Teclado
+    document.addEventListener("keydown", (e) => {
+      if (!container.contains(document.activeElement)) return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.preventDefault();
+        const gap = parseInt(getComputedStyle(track).gap || "0", 10);
+          const w = getItemWidth();
+          scrollByAmount(e.key === "ArrowLeft" ? -(w + gap) : w + gap);
+      }
+    });
+  }
+</script>
