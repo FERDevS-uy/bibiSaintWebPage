@@ -26,6 +26,7 @@ const FilterBar = React.memo(function FilterBar({
         <div className="admin-filter-group" style={group}>
           <label style={label}>Categoría</label>
           <select
+            className="admin-input"
             value={filters.category}
             onChange={(e) => {
               onFilterChange("category", e.target.value);
@@ -46,6 +47,7 @@ const FilterBar = React.memo(function FilterBar({
         <div className="admin-filter-group" style={group}>
           <label style={label}>Subcategoría</label>
           <select
+            className="admin-input"
             value={filters.subcategory}
             onChange={(e) => onFilterChange("subcategory", e.target.value)}
             style={select}
@@ -68,6 +70,7 @@ const FilterBar = React.memo(function FilterBar({
         <div className="admin-filter-group" style={group}>
           <label style={label}>Estado</label>
           <select
+            className="admin-input"
             value={filters.status}
             onChange={(e) => onFilterChange("status", e.target.value as FilterState["status"])}
             style={select}
@@ -139,7 +142,7 @@ const select: React.CSSProperties = {
   fontFamily: "inherit",
   outline: "none",
   cursor: "pointer",
-  transition: "border-color 0.2s",
+  transition: "border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease",
   minWidth: 130,
 };
 

@@ -15,14 +15,20 @@ const ProductCard = React.memo(function ProductCard({ product, index, onToggleAc
 
   return (
     <div
-      className="admin-card admin-card-hover"
+      className="admin-card-shell"
       style={{
         opacity: p.active ? 1 : 0.45,
+        animation: `slideUp 0.3s cubic-bezier(0.23, 1, 0.32, 1) ${index * 50}ms both`,
+        borderRadius: "calc(var(--admin-radius) + 2px)",
+      }}
+    >
+    <div
+      className="admin-card"
+      style={{
         padding: "1.25rem",
         display: "flex",
         flexDirection: "column",
         gap: "0.65rem",
-        animation: `slideUp 0.35s cubic-bezier(0.23, 1, 0.32, 1) ${index * 50}ms both`,
       }}
     >
       {/* Top: thumbnail + info */}
@@ -80,6 +86,7 @@ const ProductCard = React.memo(function ProductCard({ product, index, onToggleAc
           {p.active ? "Desactivar" : "Activar"}
         </button>
       </div>
+    </div>
     </div>
   );
 });

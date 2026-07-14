@@ -1,3 +1,10 @@
+import { supabase } from "../lib/supabaseClient";
+
+async function getAccessToken(): Promise<string | null> {
+  const { data } = await supabase.auth.getSession();
+  return data.session?.access_token ?? null;
+}
+
 export interface AdminProduct {
   id: string;
   name: string;
@@ -39,9 +46,17 @@ async function request<T>(
   url: string,
   options?: RequestInit,
 ): Promise<T> {
+  const token = await getAccessToken();
+  const headers: Record<string, string> = {
+    ...(options?.headers as Record<string, string>),
+  } as Record<string, string>;
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
   const res = await fetch(url, {
     credentials: "same-origin",
     ...options,
+    headers,
   });
   const json = await res.json();
   if (!res.ok) {

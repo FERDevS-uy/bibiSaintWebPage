@@ -1,5 +1,11 @@
 ---
+import { verifyAdmin } from "../../server/auth";
 import LoginForm from "../../components/admin/LoginForm.tsx";
+
+if (await verifyAdmin(Astro.request)) {
+  return Astro.redirect("/admin");
+}
+
 const siteTitle = "Bibi's Admin - Iniciar sesión";
 ---
 

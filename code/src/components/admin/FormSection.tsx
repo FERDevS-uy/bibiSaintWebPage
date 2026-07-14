@@ -2,12 +2,14 @@ import React from "react";
 
 export function Section({ title, children, loading }: { title: string; children: React.ReactNode; loading?: boolean }) {
   return (
-    <div className="admin-card">
-      <div style={cardHeader}>
-        <h2 style={cardTitle}>{title}</h2>
-        {loading && <span style={{ fontSize: "0.75rem", color: "var(--admin-text-secondary)" }}>Cargando...</span>}
+    <div className="admin-card-shell" style={{ borderRadius: "calc(var(--admin-radius) + 2px)" }}>
+      <div className="admin-card">
+        <div style={cardHeader}>
+          <h2 style={cardTitle}>{title}</h2>
+          {loading && <span style={{ fontSize: "0.75rem", color: "var(--admin-text-secondary)" }}>Cargando...</span>}
+        </div>
+        <div style={sectionActionsInner}>{children}</div>
       </div>
-      <div style={sectionActionsInner}>{children}</div>
     </div>
   );
 }
@@ -111,19 +113,20 @@ const flagToggleVisual: React.CSSProperties = {
   height: 20,
   borderRadius: 10,
   background: "var(--admin-border)",
-  transition: "background 0.2s",
+  transition: "background 0.2s var(--admin-ease-out)",
   flexShrink: 0,
 };
 
 const flagToggleDot = (checked: boolean): React.CSSProperties => ({
   position: "absolute",
   top: 2,
-  left: checked ? 18 : 2,
+  left: 2,
   width: 16,
   height: 16,
   borderRadius: "50%",
   background: checked ? "var(--admin-accent)" : "#fff",
-  transition: "left 0.2s, background 0.2s",
+  transition: "transform 0.2s var(--admin-ease-out), background 0.2s",
+  transform: checked ? "translateX(16px)" : "translateX(0)",
   boxShadow: "0 1px 2px rgba(0,0,0,0.15)",
 });
 

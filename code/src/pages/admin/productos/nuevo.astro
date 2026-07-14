@@ -1,11 +1,6 @@
 ---
-import { verifyAdmin } from "../../../server/auth";
 import AdminLayout from "../../../components/admin/AdminLayout.tsx";
 import ProductForm from "../../../components/admin/ProductForm.tsx";
-
-if (!await verifyAdmin(Astro.request)) {
-  return Astro.redirect("/admin/login");
-}
 ---
 
 <!doctype html>

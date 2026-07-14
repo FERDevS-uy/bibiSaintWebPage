@@ -23,12 +23,24 @@ function getAuthToken(request: Request): string | null {
 export async function verifyAdmin(request: Request): Promise<boolean> {
   try {
     const token = getAuthToken(request);
-    if (!token) return false;
+    if (!token) {
+      console.warn("[auth] No auth token found in request");
+      return false;
+    }
 
     const supabase = getSupabaseAdmin();
     const { data, error } = await supabase.auth.getUser(token);
+
+    if (error) {
+      console.error("[auth] getUser error:", error.message);
+      return false;
+    }
+
     const userId = data?.user?.id;
-    if (error || !userId) return false;
+    if (!userId) {
+      console.warn("[auth] No user in token");
+      return false;
+    }
 
     const { data: adminProfile } = await supabase
       .from("admin_profiles")
@@ -36,8 +48,13 @@ export async function verifyAdmin(request: Request): Promise<boolean> {
       .eq("id", userId)
       .maybeSingle();
 
+    if (!adminProfile) {
+      console.warn("[auth] User not in admin_profiles:", userId);
+    }
+
     return !!adminProfile;
-  } catch {
+  } catch (e: any) {
+    console.error("[auth] verifyAdmin exception:", e?.message || e);
     return false;
   }
 }

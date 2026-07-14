@@ -25,11 +25,6 @@ function LoginFormInner() {
     );
   }
 
-  if (user) {
-    window.location.href = "/admin";
-    return null;
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -148,24 +143,29 @@ const bgPattern: React.CSSProperties = {
   position: "absolute",
   inset: 0,
   background: `
-    radial-gradient(ellipse at 20% 50%, var(--admin-accent-subtle) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 50%, var(--admin-accent-subtle) 0%, transparent 60%)
+    radial-gradient(ellipse at 20% 40%, var(--admin-accent-subtle) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 60%, var(--admin-accent-subtle) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 80%, rgba(79,70,229,0.03) 0%, transparent 45%)
   `,
-  opacity: 0.5,
+  opacity: 0.6,
   pointerEvents: "none",
 };
 
 const card: React.CSSProperties = {
   position: "relative",
-  background: "var(--admin-surface)",
-  borderRadius: "var(--admin-radius-lg)",
-  boxShadow: "var(--admin-shadow-xl)",
   width: "100%",
   maxWidth: 400,
-  animation: "slideUp 0.35s cubic-bezier(0.23, 1, 0.32, 1)",
+  padding: "1.5px",
+  background: "var(--admin-shell-bg)",
+  border: "1px solid var(--admin-shell-border)",
+  borderRadius: "calc(var(--admin-radius-lg) + 2px)",
+  animation: "slideUp 0.3s var(--admin-ease-out)",
 };
 
 const cardInner: React.CSSProperties = {
+  background: "var(--admin-surface)",
+  borderRadius: "var(--admin-radius-lg)",
+  boxShadow: "var(--admin-shadow-xl), var(--admin-inset-light)",
   padding: "2.5rem",
   display: "flex",
   flexDirection: "column",
