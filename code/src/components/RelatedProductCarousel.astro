@@ -47,7 +47,7 @@ const pathname = Astro.url.pathname;
                   alt={p.name}
                   loading="lazy"
                   decoding="async"
-                  class={tall ? "related__img--tall" : undefined}
+                  class={`related__img${tall ? " related__img--tall" : ""}`}
                 />
               </div>
               <div class="related__info">
@@ -107,7 +107,6 @@ const pathname = Astro.url.pathname;
     gap: 12px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
     scrollbar-width: none;
     width: 100%;
     padding-block: 8px;
@@ -167,7 +166,7 @@ const pathname = Astro.url.pathname;
     box-shadow: 0 0 0 2px rgba(240, 177, 62, 0.15);
   }
 
-  .related__item img {
+  .related__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -181,8 +180,8 @@ const pathname = Astro.url.pathname;
   }
 
   .related__img--tall {
-    object-fit: contain;
-    object-position: center;
+    object-fit: contain !important;
+    object-position: center !important;
   }
 
   .related__info {
@@ -303,11 +302,11 @@ const pathname = Astro.url.pathname;
       scroll-behavior: auto;
     }
 
-    .related__item img {
+    .related__img {
       transition: none;
     }
 
-    .related__item:hover img {
+    .related__item:hover .related__img {
       transform: none;
     }
 
@@ -339,45 +338,48 @@ const pathname = Astro.url.pathname;
 
     if (!track || items.length === 0) return;
 
+    let scrollAnimFrame = null;
+
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    function getItemWidth() {
-      if (items.length === 0) return 0;
-      const first = items[0];
-      const style = getComputedStyle(first);
-      const margin =
-        parseFloat(style.marginLeft || "0") +
-        parseFloat(style.marginRight || "0");
-      return first.getBoundingClientRect().width + margin;
-    }
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const snaps = Array.from(items).map((item) => {
+      const itemCenter = item.offsetLeft + item.getBoundingClientRect().width / 2;
+      return Math.max(0, Math.min(itemCenter - track.clientWidth / 2, maxScroll));
+    });
 
-    function smoothScrollTo(targetScrollLeft) {
+    function scrollToSnap(snapScroll) {
+      if (scrollAnimFrame) {
+        cancelAnimationFrame(scrollAnimFrame);
+        scrollAnimFrame = null;
+      }
       if (prefersReduced) {
-        track.scrollLeft = targetScrollLeft;
+        track.scrollLeft = snapScroll;
         return;
       }
       const start = track.scrollLeft;
-      const distance = targetScrollLeft - start;
-      if (Math.abs(distance) < 1) return;
-      const duration = Math.min(Math.max(Math.abs(distance) * 0.5, 200), 500);
+      const distance = snapScroll - start;
+      if (Math.abs(distance) < 2) return;
+
+      track.style.scrollSnapType = "none";
+
+      const duration = Math.min(Math.max(Math.abs(distance) * 0.65, 350), 600);
       const startTime = performance.now();
 
       function step(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        track.scrollLeft = start + distance * eased;
+        track.scrollLeft = start + distance * (1 - Math.pow(1 - progress, 3));
         if (progress < 1) {
-          requestAnimationFrame(step);
+          scrollAnimFrame = requestAnimationFrame(step);
+        } else {
+          track.style.scrollSnapType = "";
+          scrollAnimFrame = null;
         }
       }
-      requestAnimationFrame(step);
-    }
-
-    function scrollByAmount(amount) {
-      smoothScrollTo(track.scrollLeft + amount);
+      scrollAnimFrame = requestAnimationFrame(step);
     }
 
     // IntersectionObserver para hover de borde dorado en el ítem activo
@@ -413,21 +415,33 @@ const pathname = Astro.url.pathname;
       }
     });
 
-    // Arrow navigation: scroll por ancho de ítem + gap
+    function navigateSnap(forward) {
+      const cur = track.scrollLeft;
+
+      if (forward) {
+        for (let i = 0; i < snaps.length; i++) {
+          if (snaps[i] > cur + 10) {
+            scrollToSnap(snaps[i]);
+            return;
+          }
+        }
+      } else {
+        for (let i = snaps.length - 1; i >= 0; i--) {
+          if (snaps[i] < cur - 10) {
+            scrollToSnap(snaps[i]);
+            return;
+          }
+        }
+      }
+    }
+
+    // Arrow navigation
     if (prevBtn) {
-      prevBtn.addEventListener("click", () => {
-        const gap = parseInt(getComputedStyle(track).gap || "0", 10);
-        const w = getItemWidth();
-        scrollByAmount(-(w + gap));
-      });
+      prevBtn.addEventListener("click", () => navigateSnap(false));
     }
 
     if (nextBtn) {
-      nextBtn.addEventListener("click", () => {
-        const gap = parseInt(getComputedStyle(track).gap || "0", 10);
-        const w = getItemWidth();
-        scrollByAmount(w + gap);
-      });
+      nextBtn.addEventListener("click", () => navigateSnap(true));
     }
 
     // Touch swipe
@@ -445,9 +459,7 @@ const pathname = Astro.url.pathname;
       (e) => {
         const diff = touchStartX - e.changedTouches[0].screenX;
         if (Math.abs(diff) > 40) {
-          const gap = parseInt(getComputedStyle(track).gap || "0", 10);
-          const w = getItemWidth();
-          scrollByAmount(diff > 0 ? w + gap : -(w + gap));
+          navigateSnap(diff > 0);
         }
       },
       { passive: true },
@@ -456,12 +468,9 @@ const pathname = Astro.url.pathname;
     // Teclado
     document.addEventListener("keydown", (e) => {
       if (!container.contains(document.activeElement)) return;
-
       if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
         e.preventDefault();
-        const gap = parseInt(getComputedStyle(track).gap || "0", 10);
-          const w = getItemWidth();
-          scrollByAmount(e.key === "ArrowLeft" ? -(w + gap) : w + gap);
+        navigateSnap(e.key === "ArrowRight");
       }
     });
   }
