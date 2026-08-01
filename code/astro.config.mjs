@@ -23,6 +23,9 @@ export default defineConfig({
   }),
   integrations: [icon(), react()],
   vite: {
+    build: {
+      sourcemap: "hidden",
+    },
     ssr: {
       // Evitar que paquetes pensados para Node arruinen el bundle de Workers.
       external: ["nodemailer"],
