@@ -9,14 +9,10 @@
       <p>Añadí al carrito todos los<br />productos que desees</p>
     </div>
 
-    <div class="divisor"></div>
-
     <div class="paso">
       <span class="numero">2</span>
       <p>Revisá tu compra y<br />finalizá tu pedido</p>
     </div>
-
-    <div class="divisor"></div>
 
     <div class="paso">
       <span class="numero">3</span>
@@ -25,9 +21,10 @@
   </div>
 </div>
 
+
 <style>
   .instrucciones-bar {
-    background-color: #c6c6c6; 
+    background: linear-gradient(135deg, #e43f3f 0%, #b81c1c 100%);
     width: 100%;
     padding: 14px 1rem;
   }
@@ -39,47 +36,44 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 0;
+    gap: 14px;
     flex-wrap: wrap;
   }
 
   .paso {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px 20px;
+    gap: 10px;
+    padding: 6px 14px;
     flex: 1;
     min-width: 200px;
     justify-content: center;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
   }
 
   .numero {
     flex-shrink: 0;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    border: 2px solid #333;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #333;
-    background: transparent;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #b81c1c;
+    background: #fff;
   }
 
   .paso p {
     margin: 0;
-    font-size: 0.88rem;
-    color: #333;
+    font-size: 0.86rem;
+    font-weight: 650;
+    color: #ffffff;
     line-height: 1.4;
-  }
-
-  .divisor {
-    width: 1px;
-    height: 40px;
-    background-color: #bbb;
-    flex-shrink: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    letter-spacing: 0.01em;
   }
 
   @media (max-width: 999px) {
@@ -98,7 +92,7 @@
       flex-direction: column;
       flex-wrap: nowrap;
       justify-content: flex-start;
-      gap: 0;
+      gap: 8px;
       width: max-content;
       padding-inline: 10px;
     }
@@ -106,10 +100,6 @@
       min-width: 250px;
       padding: 4px 10px;
       justify-content: flex-start;
-    }
-    .divisor {
-      width: 1px;
-      height: 30px;
     }
   }
 </style>

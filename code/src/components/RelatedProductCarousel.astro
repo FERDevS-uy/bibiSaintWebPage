@@ -14,57 +14,56 @@ const pathname = Astro.url.pathname;
 ---
 
 <div class="related" id={id} data-carousel="">
-  <div class="related__header">
-    <h2 class="related__title">{title}</h2>
-    <span class="related__count">{products.length} {products.length === 1 ? "producto" : "productos"}</span>
-  </div>
-
-  <div class="related__viewport">
-    <button class="related__arrow related__arrow--prev" aria-label="Anterior" type="button">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-
-    <div class="related__track" role="list">
-      {products.map((p, index) => {
-        const tall = isTallBoot(p.name, p.description, p.id);
-        return (
-          <article
-            class={`related__item${tall ? " related__item--tall" : ""}`}
-            role="listitem"
-            data-index={index}
-          >
-            <a
-              href={withBasePath(`/producto/${p.id}`, pathname)}
-              class="related__link"
-              title={p.name}
-              tabindex="0"
-            >
-              <div
-                class={`related__img-wrap${tall ? " related__img-wrap--tall" : ""}`}
-              >
-                <img
-                  src={p.img[0]}
-                  alt={p.name}
-                  loading="lazy"
-                  decoding="async"
-                  class={`related__img${tall ? " related__img--tall" : ""}`}
-                />
-              </div>
-              <div class="related__info">
-                <span class="related__name">{p.name}</span>
-                <span class="related__price">${p.price}</span>
-              </div>
-            </a>
-          </article>
-        );
-      })}
+    <div class="related__header">
+      <h2 class="related__title">{title}</h2>
+      <span class="related__count">{products.length} {products.length === 1 ? "producto" : "productos"}</span>
     </div>
 
-    <button class="related__arrow related__arrow--next" aria-label="Siguiente" type="button">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
+    <div class="related__viewport">
+      <button class="related__arrow related__arrow--prev" aria-label="Anterior" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+  <div class="related__track" role="list">
+    {products.map((p, index) => {
+      const tall = isTallBoot(p.name, p.description, p.id);
+      return (
+        <article
+          class={`related__item${tall ? " related__item--tall" : ""}`}
+          role="listitem"
+          data-index={index}
+        >
+          <a
+            href={withBasePath(`/producto/${p.id}`, pathname)}
+            class="related__link"
+            title={p.name}
+            tabindex="0"
+          >
+            <div
+              class={`related__img-wrap${tall ? " related__img-wrap--tall" : ""}`}
+            >
+              <img
+                src={p.img[0]}
+                alt={p.name}
+                loading="lazy"
+                decoding="async"
+                class={`related__img${tall ? " related__img--tall" : ""}`}
+              />
+            </div>
+            <div class="related__info">
+              <span class="related__name">{p.name}</span>
+              <span class="related__price">${p.price}</span>
+            </div>
+          </a>
+        </article>
+      );
+    })}
   </div>
-</div>
+      <button class="related__arrow related__arrow--next" aria-label="Siguiente" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
 
 <style>
   .related {
@@ -76,25 +75,27 @@ const pathname = Astro.url.pathname;
 
   .related__header {
     display: flex;
-    align-items: baseline;
-    gap: 12px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    text-align: center;
     padding-inline: max(15vw, 1.5rem);
-    margin-bottom: 24px;
+    margin-bottom: 22px;
   }
 
   .related__title {
-    font-size: 1.35rem;
+    font-size: clamp(1.6rem, 2.4vw, 2.2rem);
     font-weight: 700;
     color: var(--principal-text-color);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     margin: 0;
   }
 
   .related__count {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: var(--principal-text-color);
-    opacity: 0.35;
+    opacity: 0.6;
   }
 
   .related__viewport {
@@ -104,13 +105,13 @@ const pathname = Astro.url.pathname;
 
   .related__track {
     display: flex;
-    gap: 12px;
+    gap: 20px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     width: 100%;
     padding-block: 8px;
-    padding-inline: max(15vw, 1.5rem);
+    padding-inline: max(1.5rem, 5vw);
     -webkit-overflow-scrolling: touch;
   }
 
@@ -120,7 +121,7 @@ const pathname = Astro.url.pathname;
 
   .related__item {
     flex: 0 0 65vw;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     scroll-snap-stop: always;
     display: flex;
     flex-direction: column;
@@ -133,8 +134,9 @@ const pathname = Astro.url.pathname;
   .related__link {
     text-decoration: none;
     color: inherit;
-    display: block;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .related__link:focus-visible {
@@ -147,7 +149,7 @@ const pathname = Astro.url.pathname;
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 14px;
     background: #ffffff;
     border: 1px solid #e8e6df;
     transition: box-shadow 0.35s ease, border-color 0.35s ease;
@@ -188,31 +190,31 @@ const pathname = Astro.url.pathname;
     width: 100%;
     padding: 10px 4px 4px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .related__name {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.85rem;
+    font-weight: 650;
     color: var(--principal-text-color);
-    line-height: 1.3;
-    height: 2.1em;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
     transition: color 0.25s ease;
   }
 
   .related__item:hover .related__name {
-    color: var(--line-color, #f0b13e);
+    color: #c11010;
   }
 
   .related__price {
     display: block;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--principal-text-color);
-    margin-top: 3px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #c11010;
+    margin-top: auto;
+    padding-top: 3px;
   }
 
   .related__arrow {
@@ -227,20 +229,19 @@ const pathname = Astro.url.pathname;
 
     .related__header {
       padding-inline: max(15vw, 2rem);
-      margin-bottom: 28px;
     }
 
     .related__title {
-      font-size: 1.6rem;
+      font-size: clamp(1.6rem, 2.4vw, 2.2rem);
     }
 
     .related__track {
-      gap: 16px;
-      padding-inline: max(15vw, 2rem);
+      gap: 20px;
+      padding-inline: max(1.5rem, 5vw);
     }
 
     .related__item {
-      flex: 0 0 18vw;
+      flex: 0 0 calc((100% - 2 * 20px) / 3);
     }
 
     .related__info {
@@ -248,11 +249,11 @@ const pathname = Astro.url.pathname;
     }
 
     .related__name {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
     }
 
     .related__price {
-      font-size: 0.92rem;
+      font-size: 1.1rem;
     }
 
     .related__arrow {
@@ -260,7 +261,7 @@ const pathname = Astro.url.pathname;
       align-items: center;
       justify-content: center;
       position: absolute;
-      top: 35%;
+      top: 50%;
       transform: translateY(-50%);
       width: 42px;
       height: 42px;
@@ -321,37 +322,73 @@ const pathname = Astro.url.pathname;
 </style>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
-    document.querySelectorAll("[data-carousel]").forEach((el) => {
-      initRelated(el);
+  const SEL = {
+    carousel: ".related[data-carousel]",
+    track: ".related__track",
+    item: ".related__item",
+    prevBtn: ".related__arrow--prev",
+    nextBtn: ".related__arrow--next",
+  } as const;
+
+  const ACTIVE_CLASS = "is-active";
+  const SWIPE_THRESHOLD = 40;
+  const SNAP_EPSILON = 10;
+  const MIN_ANIM_DURATION = 350;
+  const MAX_ANIM_DURATION = 600;
+  const DURATION_PER_PX = 0.65;
+
+  function clamp(value: number, min: number, max: number): number {
+    return Math.max(min, Math.min(value, max));
+  }
+
+  function easeOutCubic(t: number): number {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function getSnapPoints(track: HTMLElement, items: Element[]): number[] {
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const trackCenter = track.clientWidth / 2;
+    return items.map((item) => {
+      const itemCenter = item.getBoundingClientRect().width / 2;
+      return clamp(item.offsetLeft + itemCenter - trackCenter, 0, maxScroll);
     });
+  }
+
+  function findSnap(snaps: number[], current: number, forward: boolean): number | null {
+    if (forward) {
+      for (let i = 0; i < snaps.length; i++) {
+        if (snaps[i] > current + SNAP_EPSILON) return snaps[i];
+      }
+    } else {
+      for (let i = snaps.length - 1; i >= 0; i--) {
+        if (snaps[i] < current - SNAP_EPSILON) return snaps[i];
+      }
+    }
+    return null;
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll<HTMLElement>(SEL.carousel).forEach(initRelated);
   });
 
-  function initRelated(container) {
+  function initRelated(container: HTMLElement): void {
     if (container.dataset.initialized) return;
     container.dataset.initialized = "true";
 
-    const track = container.querySelector(".related__track");
-    const items = container.querySelectorAll(".related__item");
-    const prevBtn = container.querySelector(".related__arrow--prev");
-    const nextBtn = container.querySelector(".related__arrow--next");
+    const track = container.querySelector<HTMLElement>(SEL.track);
+    const items = Array.from(container.querySelectorAll<HTMLElement>(SEL.item));
+    const prevBtn = container.querySelector<HTMLButtonElement>(SEL.prevBtn);
+    const nextBtn = container.querySelector<HTMLButtonElement>(SEL.nextBtn);
 
     if (!track || items.length === 0) return;
 
-    let scrollAnimFrame = null;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const snaps = getSnapPoints(track, items);
 
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    let scrollAnimFrame: number | null = null;
 
-    const maxScroll = track.scrollWidth - track.clientWidth;
-    const snaps = Array.from(items).map((item) => {
-      const itemCenter = item.offsetLeft + item.getBoundingClientRect().width / 2;
-      return Math.max(0, Math.min(itemCenter - track.clientWidth / 2, maxScroll));
-    });
-
-    function scrollToSnap(snapScroll) {
-      if (scrollAnimFrame) {
+    function scrollToSnap(snapScroll: number): void {
+      if (scrollAnimFrame !== null) {
         cancelAnimationFrame(scrollAnimFrame);
         scrollAnimFrame = null;
       }
@@ -365,28 +402,33 @@ const pathname = Astro.url.pathname;
 
       track.style.scrollSnapType = "none";
 
-      const duration = Math.min(Math.max(Math.abs(distance) * 0.65, 350), 600);
+      const duration = Math.min(Math.max(Math.abs(distance) * DURATION_PER_PX, MIN_ANIM_DURATION), MAX_ANIM_DURATION);
       const startTime = performance.now();
 
-      function step(currentTime) {
+      const step = (currentTime: number): void => {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        track.scrollLeft = start + distance * (1 - Math.pow(1 - progress, 3));
+        track.scrollLeft = start + distance * easeOutCubic(progress);
         if (progress < 1) {
           scrollAnimFrame = requestAnimationFrame(step);
         } else {
           track.style.scrollSnapType = "";
           scrollAnimFrame = null;
         }
-      }
+      };
       scrollAnimFrame = requestAnimationFrame(step);
     }
 
-    // IntersectionObserver para hover de borde dorado en el ítem activo
+    function navigateSnap(forward: boolean): void {
+      const snap = findSnap(snaps, track.scrollLeft, forward);
+      if (snap !== null) scrollToSnap(snap);
+    }
+
+    // Resalta el ítem centrado (hover de borde dorado)
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          entry.target.classList.toggle("is-active", entry.isIntersecting);
+          entry.target.classList.toggle(ACTIVE_CLASS, entry.isIntersecting);
         });
       },
       {
@@ -399,13 +441,13 @@ const pathname = Astro.url.pathname;
 
     // Click: si no está activo, scrollear a él; si está activo, navegar
     track.addEventListener("click", (e) => {
-      const link = e.target.closest("a");
+      const link = (e.target as HTMLElement).closest("a");
       if (!link) return;
 
-      const item = link.closest(".related__item");
+      const item = link.closest<HTMLElement>(SEL.item);
       if (!item) return;
 
-      if (!item.classList.contains("is-active")) {
+      if (!item.classList.contains(ACTIVE_CLASS)) {
         e.preventDefault();
         item.scrollIntoView({
           behavior: prefersReduced ? "auto" : "smooth",
@@ -415,34 +457,8 @@ const pathname = Astro.url.pathname;
       }
     });
 
-    function navigateSnap(forward) {
-      const cur = track.scrollLeft;
-
-      if (forward) {
-        for (let i = 0; i < snaps.length; i++) {
-          if (snaps[i] > cur + 10) {
-            scrollToSnap(snaps[i]);
-            return;
-          }
-        }
-      } else {
-        for (let i = snaps.length - 1; i >= 0; i--) {
-          if (snaps[i] < cur - 10) {
-            scrollToSnap(snaps[i]);
-            return;
-          }
-        }
-      }
-    }
-
-    // Arrow navigation
-    if (prevBtn) {
-      prevBtn.addEventListener("click", () => navigateSnap(false));
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener("click", () => navigateSnap(true));
-    }
+    prevBtn?.addEventListener("click", () => navigateSnap(false));
+    nextBtn?.addEventListener("click", () => navigateSnap(true));
 
     // Touch swipe
     let touchStartX = 0;
@@ -458,7 +474,7 @@ const pathname = Astro.url.pathname;
       "touchend",
       (e) => {
         const diff = touchStartX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > 40) {
+        if (Math.abs(diff) > SWIPE_THRESHOLD) {
           navigateSnap(diff > 0);
         }
       },

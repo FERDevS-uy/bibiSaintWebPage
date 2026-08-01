@@ -4,6 +4,8 @@ const DEFAULT_WINDOW_MS = 60_000;
 const DEFAULT_MAX_REQUESTS = 180;
 const CLEANUP_INTERVAL = 120_000;
 
+const DEV_LIVE_CSP = import.meta.env.DEV ? " http://localhost:8400" : "";
+
 const SECURITY_HEADERS: Record<string, string> = {
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
   "X-Frame-Options": "DENY",
@@ -12,11 +14,11 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
   "Content-Security-Policy": [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+    `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com${DEV_LIVE_CSP}`,
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com data:",
     "img-src 'self' data: https:",
-    "connect-src 'self' https://*.supabase.co https://challenges.cloudflare.com https://pol21.martinaditrento.com",
+    `connect-src 'self' https://*.supabase.co https://challenges.cloudflare.com https://pol21.martinaditrento.com${DEV_LIVE_CSP}`,
     "frame-src https://challenges.cloudflare.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",
