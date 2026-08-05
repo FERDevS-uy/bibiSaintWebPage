@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { getSupabaseAdmin } from "../../../../server/supabase";
 import { verifyAdmin } from "../../../../server/auth";
+import { pickWritable } from "../../../../server/adminWhitelist";
 
 export const GET: APIRoute = async ({ request, params }) => {
   if (!await verifyAdmin(request)) {
@@ -51,10 +52,17 @@ export const PUT: APIRoute = async ({ request, params }) => {
 
   try {
     const body = await request.json();
+    if (body?.id != null && String(body.id) !== String(params.id)) {
+      return new Response(JSON.stringify({ error: "ID inválido" }), {
+        status: 400,
+        headers: { "content-type": "application/json" },
+      });
+    }
+
     const supabase = getSupabaseAdmin();
     const { data, error } = await supabase
       .from("products")
-      .update(body)
+      .update(pickWritable(body))
       .eq("id", params.id!)
       .select()
       .single();

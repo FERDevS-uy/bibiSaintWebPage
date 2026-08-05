@@ -14,16 +14,20 @@ const CART_IMAGE_FALLBACK =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%23f3f3f3'/%3E%3Crect x='18' y='18' width='84' height='84' rx='8' fill='%23e5e5e5'/%3E%3Cpath d='M37 78l16-17 13 12 17-20 12 25H37z' fill='%23c8c8c8'/%3E%3Ccircle cx='47' cy='46' r='7' fill='%23cfcfcf'/%3E%3C/svg%3E";
 
 function sanitizeImageUrl(value: string): string {
-  return String(value ?? "")
+  const cleaned = String(value ?? "")
     .trim()
     .replace(/[\s,;]+$/g, "")
     .replace(/^['\"]+|['\"]+$/g, "");
+  // Reject anything that could break out of an attribute; allow http(s) or same-origin paths.
+  if (/["'<>\s\\`]/u.test(cleaned)) return "";
+  if (!/^(https?:)?(\/\/|\/)/u.test(cleaned)) return "";
+  return cleaned;
 }
 
 function normalizeCartImage(raw: unknown): string {
   if (Array.isArray(raw)) {
     const first = raw.find((value) => typeof value === "string" && value.trim());
-    return typeof first === "string" ? sanitizeImageUrl(first) : CART_IMAGE_FALLBACK;
+    return typeof first === "string" ? sanitizeImageUrl(first) || CART_IMAGE_FALLBACK : CART_IMAGE_FALLBACK;
   }
 
   const value = String(raw ?? "").trim();
@@ -34,7 +38,7 @@ function normalizeCartImage(raw: unknown): string {
       const parsed = JSON.parse(value);
       if (Array.isArray(parsed)) {
         const first = parsed.find((item) => typeof item === "string" && item.trim());
-        if (typeof first === "string") return sanitizeImageUrl(first);
+        if (typeof first === "string") return sanitizeImageUrl(first) || CART_IMAGE_FALLBACK;
       }
     } catch {
       // noop
@@ -48,7 +52,7 @@ function normalizeCartImage(raw: unknown): string {
   }
 
   const urlMatches = value.match(/https?:\/\/.*?(?=https?:\/\/|$)/g);
-  if (urlMatches && urlMatches.length > 0) return sanitizeImageUrl(urlMatches[0]);
+  if (urlMatches && urlMatches.length > 0) return sanitizeImageUrl(urlMatches[0]) || CART_IMAGE_FALLBACK;
 
   return sanitizeImageUrl(value) || CART_IMAGE_FALLBACK;
 }

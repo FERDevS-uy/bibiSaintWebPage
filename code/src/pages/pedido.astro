@@ -477,6 +477,13 @@ export const prerender = true;
     }[c]));
   }
 
+  function safeImageSrc(value) {
+    const raw = String(value ?? "").trim();
+    if (/["'<>\s\\`]/u.test(raw)) return "";
+    if (/^(https?:)?(\/\/|\/)/u.test(raw)) return escapeHtml(raw);
+    return "";
+  }
+
   document.addEventListener("astro:page-load", async () => {
     const params = new URLSearchParams(window.location.search);
     const tokenId = params.get("id");
@@ -587,7 +594,7 @@ export const prerender = true;
         const colorBadge = hasColor
           ? `<span class="pedido-color-badge"><span class="pedido-color-swatch" style="background:${escapeHtml(p.selectedColorHex || '#cccccc')}"></span>${escapeHtml(p.selectedColorName || ("ID " + p.selectedColorId))}</span>`
           : "";
-        return `<div class="pedido-item" data-row-key="${i}" data-cantidad="${p.cantidad}" data-unit-price="${p.currentUnitPrice}"><img src="${img}" alt="${escapeHtml(p.name)}" loading="lazy" /><div class="pedido-item-info"><span class="pedido-item-name">${escapeHtml(p.name)}</span>${variantBadge}${colorBadge}<span class="pedido-item-price">$<span>${formatPrice(p.currentUnitPrice)}</span> c/u</span><p class="pedido-check-status">Stock verificar manualmente</p></div><div class="pedido-qty-wrap"><span class="pedido-qty">${p.cantidad}</span></div><div class="pedido-subtotal">$<span>${formatPrice(p.currentUnitPrice * p.cantidad)}</span></div></div>`;
+        return `<div class="pedido-item" data-row-key="${i}" data-cantidad="${p.cantidad}" data-unit-price="${p.currentUnitPrice}"><img src="${safeImageSrc(img)}" alt="${escapeHtml(p.name)}" loading="lazy" /><div class="pedido-item-info"><span class="pedido-item-name">${escapeHtml(p.name)}</span>${variantBadge}${colorBadge}<span class="pedido-item-price">$<span>${formatPrice(p.currentUnitPrice)}</span> c/u</span><p class="pedido-check-status">Stock verificar manualmente</p></div><div class="pedido-qty-wrap"><span class="pedido-qty">${p.cantidad}</span></div><div class="pedido-subtotal">$<span>${formatPrice(p.currentUnitPrice * p.cantidad)}</span></div></div>`;
       }).join("");
 
       container.innerHTML = `${warningHtml}<div class="pedido-list"><div class="pedido-list-header"><span></span><span>Producto</span><span style="text-align:center">Cant.</span><span style="text-align:right">Subtotal</span></div>${itemsHtml}</div><div class="pedido-total-box"><div class="pedido-total-inner"><div class="pedido-total-row"><span>${pedidos.length} productos</span><span>${pedidos.reduce((s, p) => s + p.cantidad, 0)} unidades</span></div><div class="pedido-total-row main"><span>Total</span><span>$<span>${formatPrice(total)}</span></span></div></div></div>`;

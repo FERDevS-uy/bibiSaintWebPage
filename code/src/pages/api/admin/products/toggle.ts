@@ -18,6 +18,12 @@ export const POST: APIRoute = async ({ request }) => {
         headers: { "content-type": "application/json" },
       });
     }
+    if (typeof active !== "boolean") {
+      return new Response(JSON.stringify({ error: "Estado inválido" }), {
+        status: 400,
+        headers: { "content-type": "application/json" },
+      });
+    }
 
     const supabase = getSupabaseAdmin();
     const { data, error } = await supabase

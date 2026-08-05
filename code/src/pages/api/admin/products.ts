@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { getSupabaseAdmin } from "../../../server/supabase";
 import { verifyAdmin } from "../../../server/auth";
+import { pickWritable } from "../../../server/adminWhitelist";
 
 export const GET: APIRoute = async ({ request }) => {
   if (!await verifyAdmin(request)) {
@@ -44,7 +45,8 @@ export const POST: APIRoute = async ({ request }) => {
     const supabase = getSupabaseAdmin();
 
     const { id, ...productData } = body;
-    const insertData = id ? { id, ...productData } : productData;
+    const clean = pickWritable(productData);
+    const insertData = id ? { id, ...clean } : clean;
 
     const { data, error } = await supabase
       .from("products")

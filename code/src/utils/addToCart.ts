@@ -1,10 +1,14 @@
 import type ProductInCart from "src/types/productInCart";
 
 function sanitizeImageUrl(value: string): string {
-  return String(value ?? "")
+  const cleaned = String(value ?? "")
     .trim()
     .replace(/[\s,;]+$/g, "")
     .replace(/^['\"]+|['\"]+$/g, "");
+  // Reject anything that could break out of an attribute; allow http(s) or same-origin paths.
+  if (/["'<>\s\\`]/u.test(cleaned)) return "";
+  if (!/^(https?:)?(\/\/|\/)/u.test(cleaned)) return "";
+  return cleaned;
 }
 
 function pickFirstImage(raw: unknown): string {
