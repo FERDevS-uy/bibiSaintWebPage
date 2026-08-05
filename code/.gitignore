@@ -49,7 +49,6 @@ dev-console-errors.log
 .impeccable/live/accept-receipts/
 .impeccable/live/locks/
 .impeccable/live/cache/
-.impeccable/live/config.json
 .impeccable/live/manual-edit-apply-transaction.json
 .impeccable/live/manual-edit-events.jsonl
 .impeccable/live/manual-edit-evidence/

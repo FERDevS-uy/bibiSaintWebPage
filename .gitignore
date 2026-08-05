@@ -1,2 +1,23 @@
+# Tooling / skills (impeccable & other skill kits) — not project code
+.agents/
+.claude/
+.opencode/
+.codex/
+agent/
+data/skills/
+skills-lock.json
+.github/skills/
+.github/hooks/
+
+# Impeccable runtime state
+.impeccable/
+PRODUCT.md
+DESIGN.md
+
+# Editor / local
 .playwright-mcp/
-.impeccable/design.json
+.claude/settings.local.json
+
+# screenshots / scratch (root only)
+/*.png
+/*.png/
