@@ -8,7 +8,6 @@ import {
   getDisplayCategoryName,
   getDisplaySubcategories,
 } from "../../../utils/categoryNormalization";
-import { setPendingToast } from "../toastUtils";
 
 export interface FilterState {
   category: string;
@@ -100,24 +99,27 @@ export function useProducts() {
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
 
-  // Extract display category names (after normalization) for filter dropdown
+  // Extract display category names (after normalization) for filter dropdown.
+  // Each product belongs to exactly one display category, so category counts
+  // are unique products (not subcategory pairs) and their sum equals the total.
   const displayCategories = useMemo(() => {
-    const catMap = new Map<string, Map<string, number>>();
+    const catMap = new Map<string, { productCount: number; subMap: Map<string, number> }>();
     for (const p of allProducts) {
-      const catName = getDisplayCategoryName(p);
-      if (!catMap.has(catName)) catMap.set(catName, new Map());
-      const subs = getDisplaySubcategories(p);
-      const subMap = catMap.get(catName)!;
-      for (const s of subs) {
-        subMap.set(s, (subMap.get(s) ?? 0) + 1);
+      const rawCat = getDisplayCategoryName(p);
+      const catName = rawCat.trim() ? rawCat : "Sin categoría";
+      const entry = catMap.get(catName) ?? { productCount: 0, subMap: new Map<string, number>() };
+      entry.productCount += 1;
+      for (const s of getDisplaySubcategories(p)) {
+        entry.subMap.set(s, (entry.subMap.get(s) ?? 0) + 1);
       }
+      catMap.set(catName, entry);
     }
     const result: { name: string; count: number; subcategories: { name: string; count: number }[] }[] = [];
-    for (const [name, subMap] of catMap) {
+    for (const [name, { productCount, subMap }] of catMap) {
       const subs = Array.from(subMap.entries())
         .map(([n, c]) => ({ name: n, count: c }))
         .sort((a, b) => a.name.localeCompare(b.name));
-      result.push({ name, count: subs.reduce((acc, s) => acc + s.count, 0), subcategories: subs });
+      result.push({ name, count: productCount, subcategories: subs });
     }
     result.sort((a, b) => a.name.localeCompare(b.name));
     return result;
@@ -140,14 +142,20 @@ export function useProducts() {
     });
   }, []);
 
+  // Optimistic toggle with rollback. Returns true on success, false on failure.
   const toggleActive = useCallback(async (id: string, current: boolean) => {
+    const next = !current;
+    setAllProducts((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, active: next } : p)),
+    );
     try {
-      await toggleProductActive(id, !current);
+      await toggleProductActive(id, next);
+      return true;
+    } catch {
       setAllProducts((prev) =>
-        prev.map((p) => (p.id === id ? { ...p, active: !current } : p)),
+        prev.map((p) => (p.id === id ? { ...p, active: current } : p)),
       );
-    } catch (e: any) {
-      setPendingToast({ type: "error", text: "Error al actualizar: " + (e?.message || "Error desconocido") });
+      return false;
     }
   }, []);
 

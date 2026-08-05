@@ -7,6 +7,7 @@ interface FilterBarProps {
   onFilterChange: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
   onClear: () => void;
   hasFilters: boolean;
+  totalCount: number;
 }
 
 const FilterBar = React.memo(function FilterBar({
@@ -15,9 +16,12 @@ const FilterBar = React.memo(function FilterBar({
   onFilterChange,
   onClear,
   hasFilters,
+  totalCount,
 }: FilterBarProps) {
   const selectedCat = displayCategories.find((c) => c.name === filters.category);
   const subcategories = selectedCat?.subcategories ?? [];
+
+  const total = displayCategories.reduce((a, c) => a + c.count, 0) || totalCount;
 
   return (
     <div className="admin-filter-bar" style={bar}>
@@ -34,7 +38,7 @@ const FilterBar = React.memo(function FilterBar({
             }}
             style={select}
           >
-            <option value="">Todas ({displayCategories.reduce((a, c) => a + c.count, 0)})</option>
+            <option value="">Todas ({total})</option>
             {displayCategories.map((c) => (
               <option key={c.name} value={c.name}>
                 {c.name} ({c.count})

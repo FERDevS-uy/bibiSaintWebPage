@@ -51,26 +51,26 @@ function GlobalStyles() {
   --admin-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --admin-ease-magnetic: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  --admin-bg: #f4f6fa;
-  --admin-surface: #ffffff;
-  --admin-text: #0b1120;
-  --admin-text-secondary: #5b677b;
-  --admin-border: #dce1eb;
-  --admin-border-light: #eef1f6;
+  --admin-bg: #f7f5f0;
+  --admin-surface: #fffdf8;
+  --admin-text: #24100c;
+  --admin-text-secondary: #62574a;
+  --admin-border: #e7ddd0;
+  --admin-border-light: #f0eae0;
 
-  --admin-accent: #4f46e5;
-  --admin-accent-hover: #4338ca;
-  --admin-accent-subtle: rgba(79, 70, 229, 0.08);
+  --admin-accent: #c9301f;
+  --admin-accent-hover: #a82818;
+  --admin-accent-subtle: rgba(201, 48, 31, 0.08);
 
-  --admin-sidebar-bg: #0b1120;
-  --admin-sidebar-text: #8b95a6;
+  --admin-sidebar-bg: #24100c;
+  --admin-sidebar-text: #cbb6a8;
   --admin-sidebar-hover: rgba(255, 255, 255, 0.06);
-  --admin-sidebar-active: #6366f1;
+  --admin-sidebar-active: #f0b13e;
 
-  --admin-shadow-sm: 0 1px 3px 0 oklch(0.02 0.01 270 / 0.06), 0 1px 2px -1px oklch(0.02 0.01 270 / 0.04);
-  --admin-shadow: 0 4px 8px -2px oklch(0.02 0.01 270 / 0.08), 0 2px 4px -2px oklch(0.02 0.01 270 / 0.04);
-  --admin-shadow-lg: 0 12px 24px -6px oklch(0.02 0.01 270 / 0.10), 0 4px 8px -4px oklch(0.02 0.01 270 / 0.06);
-  --admin-shadow-xl: 0 24px 48px -12px oklch(0.02 0.01 270 / 0.14), 0 8px 16px -6px oklch(0.02 0.01 270 / 0.06);
+  --admin-shadow-sm: 0 1px 3px 0 oklch(0.02 0.01 35 / 0.06), 0 1px 2px -1px oklch(0.02 0.01 35 / 0.04);
+  --admin-shadow: 0 4px 8px -2px oklch(0.02 0.01 35 / 0.08), 0 2px 4px -2px oklch(0.02 0.01 35 / 0.04);
+  --admin-shadow-lg: 0 12px 24px -6px oklch(0.02 0.01 35 / 0.10), 0 4px 8px -4px oklch(0.02 0.01 35 / 0.06);
+  --admin-shadow-xl: 0 24px 48px -12px oklch(0.02 0.01 35 / 0.14), 0 8px 16px -6px oklch(0.02 0.01 35 / 0.06);
 
   --admin-radius-sm: 8px;
   --admin-radius: 12px;
@@ -80,41 +80,41 @@ function GlobalStyles() {
 
   /* Double-bezel tokens */
   --admin-shell-padding: 1.5px;
-  --admin-shell-bg: oklch(0.96 0.005 270);
-  --admin-shell-border: oklch(0.9 0.008 270 / 0.5);
+  --admin-shell-bg: #efe9e0;
+  --admin-shell-border: rgba(196, 166, 138, 0.45);
 
-  --admin-success: #10b981;
+  --admin-success: #047857;
   --admin-success-bg: #ecfdf5;
-  --admin-error: #ef4444;
+  --admin-error: #b91c1c;
   --admin-error-bg: #fef2f2;
-  --admin-info: #0ea5e9;
+  --admin-info: #0369a1;
   --admin-info-bg: #f0f9ff;
   --admin-warning-bg: #fffbeb;
   --admin-warning-text: #b45309;
 
-  --admin-chip-bg: #eef1f6;
-  --admin-chip-text: #475569;
+  --admin-chip-bg: #f0eae0;
+  --admin-chip-text: #5a4a3a;
 
   --admin-offer-bg: #fef3c7;
-  --admin-offer-text: #d97706;
+  --admin-offer-text: #92400e;
 }
 
 [data-admin-theme="dark"] {
-  --admin-bg: #050508;
-  --admin-surface: #121216;
-  --admin-text: #f5f5f7;
-  --admin-text-secondary: #8b8b98;
-  --admin-border: #222228;
-  --admin-border-light: #1a1a1f;
+  --admin-bg: #100b09;
+  --admin-surface: #1a1410;
+  --admin-text: #f5f1ec;
+  --admin-text-secondary: #b3a89b;
+  --admin-border: #2c241d;
+  --admin-border-light: #201a15;
 
-  --admin-accent: #818cf8;
-  --admin-accent-hover: #93c5fd;
-  --admin-accent-subtle: rgba(129, 140, 248, 0.12);
+  --admin-accent: #e86c1a;
+  --admin-accent-hover: #f08a3c;
+  --admin-accent-subtle: rgba(232, 108, 26, 0.14);
 
-  --admin-sidebar-bg: #050508;
-  --admin-sidebar-text: #6b6b78;
+  --admin-sidebar-bg: #0c0705;
+  --admin-sidebar-text: #b3a89b;
   --admin-sidebar-hover: rgba(255, 255, 255, 0.04);
-  --admin-sidebar-active: #818cf8;
+  --admin-sidebar-active: #f0b13e;
 
   --admin-shadow-sm: 0 1px 3px 0 oklch(0 0 0 / 0.35), 0 1px 2px -1px oklch(0 0 0 / 0.25);
   --admin-shadow: 0 4px 8px -2px oklch(0 0 0 / 0.45), 0 2px 4px -2px oklch(0 0 0 / 0.30);
@@ -124,20 +124,20 @@ function GlobalStyles() {
   --admin-success: #34d399;
   --admin-success-bg: #064e3b;
   --admin-error: #f87171;
-  --admin-error-bg: #451a03;
+  --admin-error-bg: #3f1d1b;
   --admin-info: #38bdf8;
   --admin-info-bg: #0c4a6e;
   --admin-warning-bg: #78350f;
   --admin-warning-text: #fbbf24;
 
-  --admin-chip-bg: #222228;
-  --admin-chip-text: #d4d4d8;
+  --admin-chip-bg: #2c241d;
+  --admin-chip-text: #d9cdc0;
 
   --admin-offer-bg: #78350f;
   --admin-offer-text: #fbbf24;
 
-  --admin-shell-bg: oklch(0.14 0.005 270);
-  --admin-shell-border: oklch(0.22 0.008 270 / 0.6);
+  --admin-shell-bg: #201a15;
+  --admin-shell-border: rgba(255, 255, 255, 0.06);
 }
 
 html {
@@ -441,7 +441,7 @@ body {
 
 .admin-btn-primary:hover {
   background: var(--admin-accent-hover);
-  box-shadow: 0 8px 20px oklch(0.45 0.22 270 / 0.35);
+  box-shadow: 0 8px 20px oklch(0.4 0.16 35 / 0.35);
 }
 
 .admin-btn-secondary {
@@ -451,7 +451,7 @@ body {
 
 .admin-btn-secondary:hover {
   background: var(--admin-accent-subtle);
-  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.1);
+  box-shadow: 0 4px 10px rgba(3, 105, 161, 0.12);
 }
 
 .admin-btn-ghost {
@@ -558,7 +558,7 @@ body {
 
 .admin-input::placeholder {
   color: var(--admin-text-secondary);
-  opacity: 0.5;
+  opacity: 0.75;
 }
 
 select.admin-input {
@@ -583,6 +583,11 @@ select.admin-input {
   font-weight: 600;
   color: var(--admin-chip-text);
   animation: scaleIn 0.2s ease;
+}
+
+.admin-chip-inactive {
+  background: var(--admin-error-bg);
+  color: var(--admin-error);
 }
 
 /* ── Overlay ── */
@@ -612,7 +617,7 @@ select.admin-input {
   border: none;
   cursor: pointer;
   z-index: 40;
-  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 8px 24px rgba(201, 48, 31, 0.3);
   transition: transform 0.2s var(--admin-ease-out), box-shadow 0.2s var(--admin-ease-out), background 0.2s var(--admin-ease-out);
   animation: float 3s ease-in-out infinite;
   align-items: center;
@@ -622,7 +627,7 @@ select.admin-input {
 .admin-fab:hover {
   background: var(--admin-accent-hover);
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 12px 32px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 12px 32px rgba(201, 48, 31, 0.35);
 }
 
 .admin-fab:active {
@@ -692,6 +697,17 @@ select.admin-input {
   justify-content: center;
   padding: 0.75rem 1.5rem;
   font-size: 0.925rem;
+}
+
+.admin-modal-footer {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: -0.75rem;
+}
+
+.admin-modal .admin-modal-body:last-child {
+  margin-bottom: 0;
 }
 
 /* ── Responsive ── */

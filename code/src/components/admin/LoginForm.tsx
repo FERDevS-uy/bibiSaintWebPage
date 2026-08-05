@@ -11,6 +11,9 @@ function LoginFormInner() {
   const [error, setError] = useState("");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaExpired, setCaptchaExpired] = useState(false);
+  const [captchaError, setCaptchaError] = useState(false);
+  const [captchaKey, setCaptchaKey] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
 
   if (loading) {
     return (
@@ -28,11 +31,20 @@ function LoginFormInner() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setSubmitting(true);
     const result = await signIn(email, password, captchaToken ?? undefined);
+    setSubmitting(false);
     if (result.error) setError(result.error);
     else window.location.href = "/admin";
     setCaptchaToken(null);
     setCaptchaExpired(false);
+  };
+
+  const retryCaptcha = () => {
+    setCaptchaToken(null);
+    setCaptchaExpired(false);
+    setCaptchaError(false);
+    setCaptchaKey((k) => k + 1);
   };
 
   return (
@@ -88,10 +100,12 @@ function LoginFormInner() {
             {import.meta.env.PUBLIC_TURNSTILE_SITE_KEY && (
               <>
                 <Turnstile
+                  key={captchaKey}
                   siteKey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
                   onSuccess={(token) => {
                     setCaptchaToken(token);
                     setCaptchaExpired(false);
+                    setCaptchaError(false);
                   }}
                   onExpire={() => {
                     setCaptchaToken(null);
@@ -99,19 +113,37 @@ function LoginFormInner() {
                   }}
                   onError={() => {
                     setCaptchaToken(null);
-                    setCaptchaExpired(true);
+                    setCaptchaExpired(false);
+                    setCaptchaError(true);
                   }}
                   options={{ theme: theme === "dark" ? "dark" : "light" }}
                 />
                 {captchaExpired && (
                   <p role="alert" style={warningText}>
-                    Verificación expirada. Resolviendo nuevo desafío...
+                    El captcha expiró. Se está cargando un desafío nuevo.
                   </p>
+                )}
+                {captchaError && (
+                  <div role="alert" style={warningBox}>
+                    <p style={{ margin: 0 }}>
+                      No se pudo cargar el captcha. Probá recargarlo, o si el problema
+                      persiste puede que tu navegador bloquee este tipo de verificación.
+                    </p>
+                    <button type="button" onClick={retryCaptcha} style={retryBtn}>
+                      Recargar captcha
+                    </button>
+                  </div>
                 )}
               </>
             )}
 
-            <button type="submit" disabled={!captchaToken} style={{ ...submitBtn, opacity: captchaToken ? 1 : 0.5, cursor: captchaToken ? "pointer" : "not-allowed" }}>Ingresar</button>
+            <button
+              type="submit"
+              disabled={!captchaToken || submitting}
+              style={{ ...submitBtn, opacity: captchaToken ? 1 : 0.5, cursor: captchaToken ? "pointer" : "not-allowed" }}
+            >
+              {submitting ? "Ingresando…" : "Ingresar"}
+            </button>
           </div>
 
           <button type="button" onClick={toggleTheme} style={themeBtn}>
@@ -145,7 +177,7 @@ const bgPattern: React.CSSProperties = {
   background: `
     radial-gradient(ellipse at 20% 40%, var(--admin-accent-subtle) 0%, transparent 55%),
     radial-gradient(ellipse at 80% 60%, var(--admin-accent-subtle) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 80%, rgba(79,70,229,0.03) 0%, transparent 45%)
+    radial-gradient(ellipse at 50% 80%, rgba(201, 48, 31, 0.03) 0%, transparent 45%)
   `,
   opacity: 0.6,
   pointerEvents: "none",
@@ -313,10 +345,37 @@ const skeletonLine: React.CSSProperties = {
 };
 
 const warningText: React.CSSProperties = {
-  color: "#eab308",
+  color: "var(--admin-warning-text)",
   fontSize: "0.8rem",
   margin: 0,
   textAlign: "center",
+};
+
+const warningBox: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "0.5rem",
+  padding: "0.75rem",
+  background: "var(--admin-warning-bg)",
+  border: "1px solid var(--admin-warning-text)",
+  color: "var(--admin-warning-text)",
+  fontSize: "0.82rem",
+  borderRadius: "var(--admin-radius-sm)",
+  textAlign: "center",
+};
+
+const retryBtn: React.CSSProperties = {
+  background: "transparent",
+  border: "1px solid var(--admin-warning-text)",
+  color: "var(--admin-warning-text)",
+  padding: "0.35rem 0.75rem",
+  borderRadius: "var(--admin-radius-sm)",
+  cursor: "pointer",
+  fontSize: "0.8rem",
+  fontWeight: 600,
+  fontFamily: "inherit",
+  transition: "all 0.15s",
 };
 
 export default function LoginForm() {

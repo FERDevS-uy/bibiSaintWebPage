@@ -6,6 +6,7 @@ import FilterBar from "./FilterBar";
 import Pagination from "./Pagination";
 import ProductCard from "./ProductCard";
 import Modal from "./Modal";
+import type { AdminProduct } from "../../../utils/adminApi";
 
 export default function ProductList() {
   const { toast: pendingToast, dismiss: dismissToast } = usePendingToast();
@@ -24,6 +25,11 @@ export default function ProductList() {
     hasFilters,
   } = useProducts();
 
+  // Deactivate confirmation + live result feedback
+  const [deactivateTarget, setDeactivateTarget] = React.useState<AdminProduct | null>(null);
+  const [confirming, setConfirming] = React.useState(false);
+  const [resultToast, setResultToast] = React.useState<{ type: "ok" | "error"; text: string } | null>(null);
+
   // Debounce search input
   const [searchInput, setSearchInput] = React.useState("");
   const debouncedSearch = useDebounce(searchInput, 300);
@@ -32,6 +38,81 @@ export default function ProductList() {
   React.useEffect(() => {
     updateFilter("search", debouncedSearch);
   }, [debouncedSearch, updateFilter]);
+
+  const handleToggle = React.useCallback(
+    async (product: AdminProduct) => {
+      const ok = await toggleActive(product.id, product.active);
+      if (ok) {
+        setResultToast({
+          type: "ok",
+          text: product.active
+            ? `"${product.name}" se desactivó. Ya no se muestra en la web.`
+            : `"${product.name}" se activó. Ya está visible en la web.`,
+        });
+      } else {
+        setResultToast({
+          type: "error",
+          text: "No pudimos actualizar el producto. Revisá tu conexión e intentá de nuevo.",
+        });
+      }
+    },
+    [toggleActive],
+  );
+
+  const handleDeactivateClick = (product: AdminProduct) => {
+    setDeactivateTarget(product);
+  };
+
+  const confirmDeactivate = async () => {
+    if (!deactivateTarget) return;
+    setConfirming(true);
+    await handleToggle(deactivateTarget);
+    setConfirming(false);
+    setDeactivateTarget(null);
+  };
+
+  const resultModal = resultToast ? (
+    <Modal
+      open={!!resultToast}
+      onClose={() => setResultToast(null)}
+      type={resultToast.type}
+      title={resultToast.type === "ok" ? "Listo" : "Error"}
+    >
+      {resultToast.text}
+    </Modal>
+  ) : null;
+
+  const confirmModal = deactivateTarget ? (
+    <Modal
+      open={!!deactivateTarget}
+      onClose={() => setDeactivateTarget(null)}
+      type="info"
+      title="¿Desactivar producto?"
+      showFooter={false}
+    >
+      <p style={{ margin: "0 0 1rem" }}>
+        {`"${deactivateTarget.name}"`} se va a quitar de la tienda web.
+        Podés volver a activarlo cuando quieras desde esta misma lista.
+      </p>
+      <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center" }}>
+        <button
+          className="admin-btn admin-btn-ghost"
+          onClick={() => setDeactivateTarget(null)}
+          disabled={confirming}
+        >
+          Cancelar
+        </button>
+        <button
+          className="admin-btn admin-btn-danger"
+          onClick={confirmDeactivate}
+          disabled={confirming}
+          autoFocus
+        >
+          {confirming ? "Desactivando…" : "Desactivar"}
+        </button>
+      </div>
+    </Modal>
+  ) : null;
 
   return (
     <div style={wrap}>
@@ -75,6 +156,11 @@ export default function ProductList() {
         </Modal>
       )}
 
+      {/* Live result feedback */}
+      {resultModal}
+      {/* Deactivate confirmation */}
+      {confirmModal}
+
       {/* Filters */}
       <FilterBar
         filters={filters}
@@ -82,6 +168,7 @@ export default function ProductList() {
         onFilterChange={updateFilter}
         onClear={clearFilters}
         hasFilters={hasFilters}
+        totalCount={totalCount}
       />
 
       {/* Loading skeleton */}
@@ -105,7 +192,8 @@ export default function ProductList() {
               key={p.id}
               product={p}
               index={idx}
-              onToggleActive={toggleActive}
+              onDeactivate={handleDeactivateClick}
+              onActivate={handleToggle}
             />
           ))}
         </div>

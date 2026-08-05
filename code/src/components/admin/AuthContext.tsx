@@ -41,7 +41,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       password,
       options: { captchaToken: captchaToken ?? undefined },
     });
-    if (error) return { error: error.message };
+    if (error) return { error: mapSupabaseAuthError(error.message, email) };
     return {};
   }, []);
 
@@ -62,4 +62,21 @@ export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuth debe usarse dentro de AuthProvider");
   return ctx;
+}
+
+function mapSupabaseAuthError(raw: string, email: string): string {
+  const m = raw.toLowerCase();
+  if (m.includes("invalid login credentials") || m.includes("invalid email or password") || m.includes("password does not match"))
+    return "El correo o la contraseña no son correctos.";
+  if (m.includes("email not confirmed"))
+    return `El correo ${email} todavía no fue confirmado. Revisá tu bandeja de entrada.`;
+  if (m.includes("too many requests") || m.includes("rate limit") || m.includes("security purposes"))
+    return "Hubo demasiados intentos. Esperá unos minutos y probá de nuevo.";
+  if (m.includes("captcha") || m.includes("robot"))
+    return "No pudimos verificar que seas humano. Recargá la página y resolvé el captcha.";
+  if (m.includes("network") || m.includes("fetch") || m.includes("timeout"))
+    return "No se pudo conectar. Revisá tu internet e intentá de nuevo.";
+  if (m.includes("not verified") || m.includes("not allowed"))
+    return "Este usuario no tiene permiso para ingresar al panel.";
+  return "No se pudo iniciar sesión. Intentá de nuevo.";
 }

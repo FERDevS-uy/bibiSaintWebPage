@@ -119,7 +119,7 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
               }}>B</span>
               <div>
                 <h1 style={{ fontFamily: "var(--admin-font-serif)", fontSize: "1.15rem", fontWeight: 400, color: "#fff", margin: 0, lineHeight: 1.2 }}>Bibi's</h1>
-                <p style={{ fontSize: "0.65rem", color: "var(--admin-sidebar-text)", textTransform: "uppercase", letterSpacing: "0.15em", margin: "0.1rem 0 0 0" }}>Admin</p>
+                <p style={{ fontSize: "0.72rem", color: "var(--admin-sidebar-text)", textTransform: "uppercase", letterSpacing: "0.15em", margin: "0.1rem 0 0 0" }}>Admin</p>
               </div>
             </div>
 

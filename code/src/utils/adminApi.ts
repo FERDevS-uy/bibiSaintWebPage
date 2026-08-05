@@ -60,7 +60,7 @@ async function request<T>(
   });
   const json = await res.json();
   if (!res.ok) {
-    throw new Error(json.error || `Error ${res.status}`);
+    throw new Error(json.error || `Error del servidor (${res.status})`);
   }
   return json.data as T;
 }

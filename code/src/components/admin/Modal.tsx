@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 interface ModalProps {
   open: boolean;
@@ -6,9 +6,58 @@ interface ModalProps {
   type?: "ok" | "error" | "info";
   title?: string;
   children: React.ReactNode;
+  showFooter?: boolean;
 }
 
-export default function Modal({ open, onClose, type = "info", title, children }: ModalProps) {
+export default function Modal({ open, onClose, type = "info", title, children, showFooter = true }: ModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab" || !dialogRef.current) return;
+
+      const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    // Move focus into the dialog after the next paint
+    requestAnimationFrame(() => {
+      const auto = dialogRef.current?.querySelector<HTMLElement>("[autoFocus], .admin-modal-btn");
+      (auto ?? dialogRef.current)?.focus();
+    });
+
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handleKeyDown);
+      previouslyFocused.current?.focus();
+    };
+  }, [open, onClose]);
+
   if (!open) return null;
 
   const icon = type === "ok" ? (
@@ -33,6 +82,7 @@ export default function Modal({ open, onClose, type = "info", title, children }:
   return (
     <div className="admin-modal-overlay" onClick={onClose}>
       <div
+        ref={dialogRef}
         className={`admin-modal ${type === "ok" ? "admin-modal-ok" : type === "error" ? "admin-modal-error" : ""}`}
         onClick={(e) => e.stopPropagation()}
         role="alertdialog"
@@ -42,11 +92,13 @@ export default function Modal({ open, onClose, type = "info", title, children }:
         <div className="admin-modal-icon">{icon}</div>
         {title && <h3 className="admin-modal-title">{title}</h3>}
         <div className="admin-modal-body">{children}</div>
-        <div className="admin-modal-footer">
-          <button className="admin-btn admin-btn-primary admin-modal-btn" onClick={onClose} autoFocus>
-            Aceptar
-          </button>
-        </div>
+        {showFooter && (
+          <div className="admin-modal-footer">
+            <button className="admin-btn admin-btn-primary admin-modal-btn" onClick={onClose}>
+              Aceptar
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

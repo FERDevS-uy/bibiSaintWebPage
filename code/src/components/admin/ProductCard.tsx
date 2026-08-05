@@ -5,10 +5,11 @@ import type { AdminProduct } from "./hooks/useProducts";
 interface ProductCardProps {
   product: AdminProduct;
   index: number;
-  onToggleActive: (id: string, current: boolean) => void;
+  onDeactivate: (product: AdminProduct) => void;
+  onActivate: (product: AdminProduct) => void;
 }
 
-const ProductCard = React.memo(function ProductCard({ product, index, onToggleActive }: ProductCardProps) {
+const ProductCard = React.memo(function ProductCard({ product, index, onDeactivate, onActivate }: ProductCardProps) {
   const p = product;
   const displayCat = getDisplayCategoryName(p);
   const displaySubs = getDisplaySubcategories(p);
@@ -17,7 +18,6 @@ const ProductCard = React.memo(function ProductCard({ product, index, onToggleAc
     <div
       className="admin-card-shell"
       style={{
-        opacity: p.active ? 1 : 0.45,
         animation: `slideUp 0.3s cubic-bezier(0.23, 1, 0.32, 1) ${index * 50}ms both`,
         borderRadius: "calc(var(--admin-radius) + 2px)",
       }}
@@ -47,8 +47,9 @@ const ProductCard = React.memo(function ProductCard({ product, index, onToggleAc
             <span style={idText}>{p.id}</span>
             {p.source === "scraper" && <span className="admin-chip">Scraper</span>}
             {p.en_oferta && <span style={offerBadge}>Oferta</span>}
+            {!p.active && <span className="admin-chip admin-chip-inactive">Inactivo</span>}
           </div>
-          <p style={name}>{p.name}</p>
+          <p style={{ ...name, color: p.active ? "var(--admin-text)" : "var(--admin-text-secondary)" }}>{p.name}</p>
           {/* Category breadcrumb */}
           <div style={breadcrumb}>
             <span style={breadcrumbItem}>{displayCat}</span>
@@ -78,7 +79,7 @@ const ProductCard = React.memo(function ProductCard({ product, index, onToggleAc
           Editar
         </a>
         <button
-          onClick={() => onToggleActive(p.id, p.active)}
+          onClick={() => (p.active ? onDeactivate(p) : onActivate(p))}
           className={`admin-btn ${p.active ? "admin-btn-danger" : "admin-btn-secondary"}`}
           style={{ flex: 1, justifyContent: "center" }}
           aria-label={p.active ? `Desactivar ${p.name}` : `Activar ${p.name}`}
@@ -173,7 +174,7 @@ const breadcrumb: React.CSSProperties = {
 };
 
 const breadcrumbItem: React.CSSProperties = {
-  fontSize: "0.7rem",
+  fontSize: "0.72rem",
   color: "var(--admin-chip-text)",
   background: "var(--admin-chip-bg)",
   padding: "0.1rem 0.4rem",
@@ -182,13 +183,13 @@ const breadcrumbItem: React.CSSProperties = {
 };
 
 const breadcrumbSep: React.CSSProperties = {
-  fontSize: "0.65rem",
+  fontSize: "0.75rem",
   color: "var(--admin-text-secondary)",
-  opacity: 0.5,
+  opacity: 0.6,
 };
 
 const breadcrumbMore: React.CSSProperties = {
-  fontSize: "0.65rem",
+  fontSize: "0.75rem",
   color: "var(--admin-text-secondary)",
 };
 

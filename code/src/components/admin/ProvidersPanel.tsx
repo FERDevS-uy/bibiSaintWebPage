@@ -36,7 +36,7 @@ export default function ProvidersPanel() {
       });
       if (!resp.ok) {
         const body = await resp.json().catch(() => null);
-        throw new Error(body?.error || `Error HTTP ${resp.status}`);
+        throw new Error(body?.error || `Error del servidor (${resp.status})`);
       }
       const data: SyncResponse = await resp.json();
       setResult(data);

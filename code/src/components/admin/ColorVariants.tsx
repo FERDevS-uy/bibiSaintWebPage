@@ -358,7 +358,7 @@ const colorPicker: React.CSSProperties = {
 };
 
 const colorHexLabel: React.CSSProperties = {
-  fontSize: "0.65rem",
+  fontSize: "0.75rem",
   fontFamily: "ui-monospace, 'SF Mono', monospace",
   color: "var(--admin-text-secondary)",
 };
