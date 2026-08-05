@@ -24,8 +24,9 @@
 
 <style>
   .instrucciones-bar {
-    background: linear-gradient(135deg, #e43f3f 0%, #b81c1c 100%);
+    background: linear-gradient(120deg, #c62828 0%, #8e1414 100%);
     width: 100%;
+    box-sizing: border-box;
     padding: 14px 1rem;
   }
 
@@ -49,7 +50,8 @@
     min-width: 200px;
     justify-content: center;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
   }
 
   .numero {
@@ -62,7 +64,7 @@
     justify-content: center;
     font-size: 1.15rem;
     font-weight: 800;
-    color: #b81c1c;
+    color: #8e1414;
     background: #fff;
   }
 
@@ -78,7 +80,6 @@
 
   @media (max-width: 999px) {
     .instrucciones-bar {
-      margin-bottom: 0;
       padding: 10px 0;
       overflow-x: auto;
       /* Hide scrollbar for a cleaner look */
