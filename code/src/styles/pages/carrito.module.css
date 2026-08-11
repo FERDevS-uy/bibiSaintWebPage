@@ -5,6 +5,7 @@
   font-family: "Poppins", "Poppins Fallback", Arial, sans-serif;
   color: #222;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
   gap: 2rem;
 }
@@ -36,6 +37,11 @@
 .cartTable {
   width: 100%;
   border-collapse: collapse;
+}
+
+/* Mobile: allow the table to shrink below its content width */
+.cartTable {
+  min-width: 0;
 }
 
 .cartTable th {
@@ -284,7 +290,7 @@
 /* Responsive */
 @media screen and (min-width: 1000px) {
   .cartContainer {
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: minmax(0, 1fr) 350px;
   }
 
   .cartHeader {
@@ -294,6 +300,27 @@
   .cartSummary {
     grid-column: 2;
     grid-row: 2;
+  }
+
+  /* Fixed column widths keep the table from resizing with content */
+  .cartTable {
+    table-layout: fixed;
+  }
+
+  .cartTable :global(col.cartColRemove) {
+    width: 60px;
+  }
+
+  .cartTable :global(col.cartColImg) {
+    width: 105px;
+  }
+
+  .cartTable :global(col.cartColQty) {
+    width: 128px;
+  }
+
+  .cartTable :global(col.cartColSubtotal) {
+    width: 130px;
   }
 }
 

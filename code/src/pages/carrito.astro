@@ -19,6 +19,13 @@ const pathname = Astro.url.pathname;
 
     <!-- Tabla de productos -->
     <table id="cartTable" class={`${styles.cartTable} hidden`}>
+      <colgroup>
+        <col class="cartColRemove" />
+        <col class="cartColImg" />
+        <col class="cartColDesc" />
+        <col class="cartColQty" />
+        <col class="cartColSubtotal" />
+      </colgroup>
       <thead>
         <tr>
           <th></th>
