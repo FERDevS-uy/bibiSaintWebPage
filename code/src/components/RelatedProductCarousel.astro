@@ -239,10 +239,13 @@ const pathname = Astro.url.pathname;
     .related__track {
       gap: 20px;
       padding-inline: max(1.5rem, 5vw);
+      scroll-snap-type: none;
     }
 
     .related__item {
       flex: 0 0 calc((100% - 2 * 20px) / 3);
+      scroll-snap-align: unset;
+      scroll-snap-stop: unset;
     }
 
     .related__info {
