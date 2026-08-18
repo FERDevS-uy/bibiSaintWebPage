@@ -4,6 +4,7 @@ import { withBasePath } from "@utils/basePath";
 import AddToCartButton from "./AddToCartButton.astro";
 import getColors from "@utils/getColors";
 import { isTallBoot } from "@utils/isTallBoot";
+import { formatPrice, parsePrice } from "@utils/price";
 
 export interface Props {
   producto: Product;
@@ -30,7 +31,7 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
 
   <div class="card-info">
     <span class="p-name">{p.name}</span>
-    <span class="p-price">${p.price}</span>
+    <span class="p-price">${formatPrice(parsePrice(p.price))}</span>
     <div class="add-btn-wrapper">
       <AddToCartButton producto={p} variant="full" />
     </div>

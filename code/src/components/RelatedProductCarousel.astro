@@ -2,6 +2,7 @@
 import type Product from "../types/product";
 import { withBasePath } from "@utils/basePath";
 import { isTallBoot } from "@utils/isTallBoot";
+import { formatPrice, parsePrice } from "@utils/price";
 
 interface Props {
   products: Product[];
@@ -52,7 +53,7 @@ const pathname = Astro.url.pathname;
             </div>
             <div class="related__info">
               <span class="related__name">{p.name}</span>
-              <span class="related__price">${p.price}</span>
+              <span class="related__price">${formatPrice(parsePrice(p.price))}</span>
             </div>
           </a>
         </article>

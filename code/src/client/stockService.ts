@@ -52,6 +52,16 @@ function parseLoosePrice(rawPrice: unknown): number {
   const hasDot = value.includes(".");
 
   if (hasComma && hasDot) {
+    // Detectamos cuál separador aparece último:
+    // - "1.234,56": punto de miles, coma decimal
+    // - "1,200.9": coma de miles, punto decimal
+    const lastComma = value.lastIndexOf(",");
+    const lastDot = value.lastIndexOf(".");
+    if (lastDot > lastComma) {
+      // Punto decimal al final: la coma es de miles → quitar comas
+      return Number(value.replace(/,/g, ""));
+    }
+    // Coma decimal al final: el punto es de miles → quitar puntos y usar coma
     return Number(value.replace(/\./g, "").replace(",", "."));
   }
 

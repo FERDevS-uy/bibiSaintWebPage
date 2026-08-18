@@ -349,6 +349,7 @@ export const prerender = true;
 </style>
 
 <script>
+  import { parsePrice, formatPrice } from "@utils/price";
   // Base64URL encode/decode inline
   function base64UrlEncode(bytes) {
     let binary = "";
@@ -403,15 +404,7 @@ export const prerender = true;
     return JSON.parse(json);
   }
   
-  // Price parsing inline
-  function parsePrice(priceStr) {
-    const cleanStr = String(priceStr).replace(/[^\d.,]/g, "").replace(/\./g, "").replace(",", ".");
-    return parseFloat(cleanStr) || 0;
-  }
-  
-  function formatPrice(price) {
-    return new Intl.NumberFormat("es-UY", { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(price);
-  }
+  // Price parsing (canonical imports from @utils/price)
 
   // Normaliza talles para variantes (XS..XXXL, GG/XG, 0..5, 40..50)
   function normalizeSize(rawSize) {

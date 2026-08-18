@@ -253,6 +253,8 @@ const emptyList = !productos || productos.length === 0;
 
 <script>
   // @ts-nocheck
+  import { parsePrice } from "@utils/price";
+
   const SORT_LABELS = {
     default: "Más Vendidos",
     "price-asc": "Precio: menor a mayor",
@@ -265,31 +267,6 @@ const emptyList = !productos || productos.length === 0;
     if (!item) return null;
     if (item.classList?.contains("producto_card")) return item;
     return item.querySelector?.(".producto_card") ?? null;
-  }
-
-  function parsePrice(rawPrice) {
-    const clean = (rawPrice || "").replace(/[^\d.,-]/g, "").trim();
-    if (!clean) return 0;
-
-    const lastDot = clean.lastIndexOf(".");
-    const lastComma = clean.lastIndexOf(",");
-    const lastSeparator = Math.max(lastDot, lastComma);
-
-    if (lastSeparator === -1) {
-      return Number(clean) || 0;
-    }
-
-    const decimals = clean.length - lastSeparator - 1;
-
-    if (decimals === 2) {
-      const decimalSeparator = clean[lastSeparator];
-      const normalized = decimalSeparator === ","
-        ? clean.replace(/\./g, "").replace(",", ".")
-        : clean.replace(/,/g, "");
-      return Number(normalized) || 0;
-    }
-
-    return Number(clean.replace(/[.,]/g, "")) || 0;
   }
 
   function getNameFromItem(item) {

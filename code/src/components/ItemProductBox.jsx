@@ -2,6 +2,7 @@ import React from "react";
 import AddToCartButton from "./AddToCartButton.jsx";
 import { withBasePath } from "../utils/basePath";
 import { isTallBoot } from "../utils/isTallBoot";
+import { formatPrice, parsePrice } from "../utils/price";
 import "../styles/components/ItemProductBoxReact.css";
 
 export default function ItemProductoBox({ producto: p }) {
@@ -17,7 +18,7 @@ export default function ItemProductoBox({ producto: p }) {
 
       <div className="card-info">
         <span className="p-name">{p.name}</span>
-        <span className="p-price">${p.price}</span>
+        <span className="p-price">${formatPrice(parsePrice(p.price))}</span>
         <div className="add-btn-wrapper">
           <AddToCartButton producto={p} variant="full" />
         </div>

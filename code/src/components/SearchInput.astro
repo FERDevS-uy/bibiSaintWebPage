@@ -281,6 +281,7 @@
 
 <script>
   // @ts-nocheck
+  import { formatPrice, parsePrice } from "@utils/price";
   const BASE_URL = document.documentElement.dataset.basePath || "";
 
   function escapeHtml(value) {
@@ -422,7 +423,7 @@
         resultContainer.innerHTML = results
           .map((/** @type {any} */ r) => {
             const src = sanitizeImageUrl(Array.isArray(r.item.img) && r.item.img.length ? r.item.img[0] : "");
-            const price = escapeHtml(r.item.price || "");
+            const price = escapeHtml(formatPrice(parsePrice(r.item.price || "")));
             const name = escapeHtml(r.item.name || "");
             const safeId = encodeURIComponent(String(r.item.id || ""));
             return `

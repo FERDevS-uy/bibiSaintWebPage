@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ItemProductoBox from "./ItemProductBox.jsx";
 import NavPag from "./NavPag.jsx";
+import { parsePrice } from "../utils/price";
 
 const BASE_URL = import.meta.env.BASE_URL || "/";
 const PRODUCTS_JSON_URL = `${BASE_URL.replace(/\/$/, "")}/productos.json`;
@@ -12,13 +13,6 @@ const SORT_OPTIONS = [
   { value: "name-asc", label: "Nombre: A - Z" },
   { value: "name-desc", label: "Nombre: Z - A" },
 ];
-
-function parsePrice(value) {
-  if (value === undefined || value === null) return 0;
-  const normalized = String(value).replace(/\./g, "").replace(",", ".");
-  const num = parseFloat(normalized);
-  return Number.isFinite(num) ? num : 0;
-}
 
 export default function ListarProductos({ pageSize = 10 }) {
   const [productos, setProductos] = useState([]);

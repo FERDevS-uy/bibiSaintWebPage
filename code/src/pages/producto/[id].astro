@@ -12,6 +12,7 @@ import {
 } from "@utils/categoryNormalization";
 import { loadProductById, loadRelatedProducts } from "../../utils/loadProducts";
 import RelatedProductCarousel from "@components/RelatedProductCarousel.astro";
+import { formatPrice, parsePrice } from "@utils/price";
 
 const { id } = Astro.params;
 
@@ -177,7 +178,7 @@ const pathname = Astro.url.pathname;
         </div>
 
         <div class="priceRow">
-          <span id="productPrice" class="price">${price}</span>
+          <span id="productPrice" class="price">${formatPrice(parsePrice(price))}</span>
           <NumberInput
             id="cartQty"
             name="pasajeros"
