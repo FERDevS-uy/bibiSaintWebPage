@@ -11,7 +11,8 @@
   }
 
   :root {
-    --max-width-container: 1100px; /* Más ancho para tarjetas y contenido */
+    /* Eje único de alineación horizontal. Referencia: instrucciones-inner (1000px). */
+    --max-width-container: 1000px;
     --principal-background-color: #f7f6f2;
     --principal-background-color-dark: #d5c4a4;
     --principal-background-color-light: #fff9ed;
@@ -30,6 +31,16 @@
 
     --colums-of-products: 4;
     --product-square-size: 200px;
+  }
+
+  /* Contenedor único reutilizable para el eje de alineación horizontal.
+     El padding interno se contempla dentro del ancho (box-sizing: border-box),
+     no aumenta el ancho efectivo del contenedor. */
+  .app-container {
+    width: 100%;
+    max-width: var(--max-width-container);
+    margin: 0 auto;
+    box-sizing: border-box;
   }
 
   html {

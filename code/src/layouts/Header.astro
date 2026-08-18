@@ -408,6 +408,9 @@ const isAbout = pathname.includes("/about");
     header {
       border-bottom: 3px solid var(--line-color);
     }
+    .headerContainer {
+      padding-inline: 1rem;
+    }
     .navMenu .searchForm {
       display: none !important;
     }
@@ -420,13 +423,12 @@ const isAbout = pathname.includes("/about");
     color: var(--secondary-text-color);
     margin: auto;
     width: 100%;
-    max-width: 1000px;
+    max-width: var(--max-width-container);
     height: var(--header-height);
 
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding-inline: 1rem;
   }
 
   .logoContainer {
@@ -688,6 +690,31 @@ const isAbout = pathname.includes("/about");
   @media screen and (min-width: 1000px) {
     header {
       /* --header-icon-size: 7rem; */
+      position: relative;
+      z-index: 50;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--header-height);
+      height: 2px;
+      background: var(--line-color);
+      pointer-events: none;
+    }
+
+    /* Degradado diagonal del menú, full width (heredado del --h-gradient) */
+    header::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--header-height);
+      bottom: 0;
+      background: var(--h-gradient);
+      pointer-events: none;
     }
 
     .logoContainer {
@@ -737,25 +764,30 @@ const isAbout = pathname.includes("/about");
     /* --- ITEMS BOX --- */
     .itemsBox,
     .itemsBox.hidden {
-      border-top: 2px solid var(--line-color);
       box-shadow: none;
       transition: none;
       transform: none !important;
-      background-color: transparent;
+      background: transparent;
 
       display: flex !important;
-      justify-content: center;
-      margin: auto;
+      justify-content: space-between;
+      margin: 0 auto;
       flex-direction: row;
+      gap: 1rem;
 
-      position: static;
-      width: auto;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: var(--max-width-container);
       height: auto;
-      max-width: none;
       overflow: visible;
     }
     .itemsBox > ul {
       display: flex;
+    }
+    .itemsBox .categoryList {
+      flex: 1;
+      justify-content: space-between;
     }
     .itemsBox ul.mainNav {
       margin-left: 0;
