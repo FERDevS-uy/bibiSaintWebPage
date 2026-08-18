@@ -10,7 +10,7 @@ import {
   getDisplayCategoryName,
   getDisplaySubcategories,
 } from "@utils/categoryNormalization";
-import { loadProductById, loadRelatedProducts } from "../../utils/loadProducts";
+import { loadProductById, loadRelatedProducts, loadRelatedProductsFallback } from "../../utils/loadProducts";
 import RelatedProductCarousel from "@components/RelatedProductCarousel.astro";
 import { formatPrice, parsePrice } from "@utils/price";
 
@@ -34,7 +34,9 @@ const {
   relacionados: relacionadosIds,
 } = product;
 
-const relacionados = await loadRelatedProducts(relacionadosIds);
+const relacionados = relacionadosIds && relacionadosIds.length > 0
+  ? await loadRelatedProducts(relacionadosIds)
+  : await loadRelatedProductsFallback(product);
 
 const productForCategoryPath: Product = {
   id,
