@@ -331,42 +331,8 @@ const pathname = Astro.url.pathname;
     nextBtn: ".related__arrow--next",
   } as const;
 
-  const ACTIVE_CLASS = "is-active";
   const SWIPE_THRESHOLD = 40;
-  const SNAP_EPSILON = 10;
-  const MIN_ANIM_DURATION = 350;
-  const MAX_ANIM_DURATION = 600;
-  const DURATION_PER_PX = 0.65;
-
-  function clamp(value: number, min: number, max: number): number {
-    return Math.max(min, Math.min(value, max));
-  }
-
-  function easeOutCubic(t: number): number {
-    return 1 - Math.pow(1 - t, 3);
-  }
-
-  function getSnapPoints(track: HTMLElement, items: Element[]): number[] {
-    const maxScroll = track.scrollWidth - track.clientWidth;
-    const trackCenter = track.clientWidth / 2;
-    return items.map((item) => {
-      const itemCenter = item.getBoundingClientRect().width / 2;
-      return clamp(item.offsetLeft + itemCenter - trackCenter, 0, maxScroll);
-    });
-  }
-
-  function findSnap(snaps: number[], current: number, forward: boolean): number | null {
-    if (forward) {
-      for (let i = 0; i < snaps.length; i++) {
-        if (snaps[i] > current + SNAP_EPSILON) return snaps[i];
-      }
-    } else {
-      for (let i = snaps.length - 1; i >= 0; i--) {
-        if (snaps[i] < current - SNAP_EPSILON) return snaps[i];
-      }
-    }
-    return null;
-  }
+  const GAP = 20;
 
   document.addEventListener("astro:page-load", () => {
     document.querySelectorAll<HTMLElement>(SEL.carousel).forEach(initRelated);
@@ -377,89 +343,19 @@ const pathname = Astro.url.pathname;
     container.dataset.initialized = "true";
 
     const track = container.querySelector<HTMLElement>(SEL.track);
-    const items = Array.from(container.querySelectorAll<HTMLElement>(SEL.item));
     const prevBtn = container.querySelector<HTMLButtonElement>(SEL.prevBtn);
     const nextBtn = container.querySelector<HTMLButtonElement>(SEL.nextBtn);
 
-    if (!track || items.length === 0) return;
+    if (!track) return;
 
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const snaps = getSnapPoints(track, items);
-
-    let scrollAnimFrame: number | null = null;
-
-    function scrollToSnap(snapScroll: number): void {
-      if (scrollAnimFrame !== null) {
-        cancelAnimationFrame(scrollAnimFrame);
-        scrollAnimFrame = null;
-      }
-      if (prefersReduced) {
-        track.scrollLeft = snapScroll;
-        return;
-      }
-      const start = track.scrollLeft;
-      const distance = snapScroll - start;
-      if (Math.abs(distance) < 2) return;
-
-      track.style.scrollSnapType = "none";
-
-      const duration = Math.min(Math.max(Math.abs(distance) * DURATION_PER_PX, MIN_ANIM_DURATION), MAX_ANIM_DURATION);
-      const startTime = performance.now();
-
-      const step = (currentTime: number): void => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        track.scrollLeft = start + distance * easeOutCubic(progress);
-        if (progress < 1) {
-          scrollAnimFrame = requestAnimationFrame(step);
-        } else {
-          track.style.scrollSnapType = "";
-          scrollAnimFrame = null;
-        }
-      };
-      scrollAnimFrame = requestAnimationFrame(step);
+    // --- Navegación por flechas/teclado/swipe: mismo patrón que el home (2 ítems por paso) ---
+    function scrollStep(forward: boolean): void {
+      const itemWidth = (track.querySelector(SEL.item) as HTMLElement)?.offsetWidth || 250;
+      track.scrollBy({ left: (forward ? 1 : -1) * (itemWidth + GAP) * 2, behavior: "smooth" });
     }
 
-    function navigateSnap(forward: boolean): void {
-      const snap = findSnap(snaps, track.scrollLeft, forward);
-      if (snap !== null) scrollToSnap(snap);
-    }
-
-    // Resalta el ítem centrado (hover de borde dorado)
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          entry.target.classList.toggle(ACTIVE_CLASS, entry.isIntersecting);
-        });
-      },
-      {
-        root: track,
-        threshold: prefersReduced ? 0.3 : 0.55,
-      },
-    );
-
-    items.forEach((item) => observer.observe(item));
-
-    // Click: si no está activo, scrollear a él; si está activo, navegar
-    track.addEventListener("click", (e) => {
-      const link = (e.target as HTMLElement).closest("a");
-      if (!link) return;
-
-      const item = link.closest<HTMLElement>(SEL.item);
-      if (!item) return;
-
-      if (!item.classList.contains(ACTIVE_CLASS)) {
-        e.preventDefault();
-        item.scrollIntoView({
-          behavior: prefersReduced ? "auto" : "smooth",
-          inline: "center",
-          block: "nearest",
-        });
-      }
-    });
-
-    prevBtn?.addEventListener("click", () => navigateSnap(false));
-    nextBtn?.addEventListener("click", () => navigateSnap(true));
+    prevBtn?.addEventListener("click", () => scrollStep(false));
+    nextBtn?.addEventListener("click", () => scrollStep(true));
 
     // Touch swipe
     let touchStartX = 0;
@@ -476,7 +372,7 @@ const pathname = Astro.url.pathname;
       (e) => {
         const diff = touchStartX - e.changedTouches[0].screenX;
         if (Math.abs(diff) > SWIPE_THRESHOLD) {
-          navigateSnap(diff > 0);
+          scrollStep(diff > 0);
         }
       },
       { passive: true },
@@ -487,7 +383,7 @@ const pathname = Astro.url.pathname;
       if (!container.contains(document.activeElement)) return;
       if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
         e.preventDefault();
-        navigateSnap(e.key === "ArrowRight");
+        scrollStep(e.key === "ArrowRight");
       }
     });
   }

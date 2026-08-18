@@ -289,17 +289,21 @@ const pathname = Astro.url.pathname;
       width: 46px;
       height: 46px;
       border-radius: 50%;
-      border: 1.5px solid #1a1a1a;
-      background: #ffffff;
-      color: #1a1a1a;
+      border: 1.5px solid var(--line-color);
+      background: var(--line-color);
+      color: #ffffff;
       cursor: pointer;
       z-index: 10;
       transition: all 0.2s ease-in-out;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
+    .carousel-arrow svg {
+      stroke: #ffffff;
+    }
+
     .carousel-arrow:hover {
-      background: #1a1a1a;
+      background: var(--line-color);
       color: #ffffff;
       transform: translateY(-50%) scale(1.05);
     }
