@@ -10,12 +10,14 @@
 
 - **SSR (not static)**: `output: "server"`, adapter `@astrojs/cloudflare`. Pages opt-in to prerender with `export const prerender = true`. Most dynamic pages (product, categories, search, offers, pagination) are SSR — no `getStaticPaths`.
 - **Supabase + CSV dual-read**: `loadProducts()`/`loadProductById()`/`loadRelatedProducts()` in `src/utils/loadProducts.ts` try Supabase first (`PUBLIC_USE_SUPABASE === "true"`), fall back to CSV on failure. Admin panel requires Supabase.
-- **Admin**: React SPA (AuthContext, LoginForm, ProductForm, ProductList) inside Astro pages at `src/pages/admin/`. Uses Supabase Auth with `supabaseClient.ts` (anon key, client-side). Server-side writes use `getSupabaseAdmin()` (service role key).
+- **Admin**: React SPA (AuthContext, LoginForm, ProductForm, ProductList, ProvidersPanel, ColorVariants, FilterBar, Modal, etc.) inside Astro pages at `src/pages/admin/`. Uses Supabase Auth with `supabaseClient.ts` (anon key, client-side). Server-side writes use `getSupabaseAdmin()` (service role key). Login protegido con Cloudflare Turnstile CAPTCHA (`LoginForm.tsx`).
+- **Admin security hardening**: mass-assignment protection via `pickWritable()` (`src/server/adminWhitelist.ts`) — solo columnas permitidas llegan a Supabase en writes de productos. `hasTrustedOrigin()` (`src/server/security/origin.ts`) valida Origin/Referer en API admin. RLS + storage hardening en `002_security_hardening.sql`.
 - **Live prices**: Server Islands in `src/server/livePrice.ts` — fetches from provider APIs (Martina di Trento, Kai, Alondra, Nuvex) with 6s timeout, applies markup, falls back silently.
 - **Search**: Fuse.js client-side, URL-synced via debounced `searchurlchange` custom event.
 - **Category pages**: `loadCategoryProducts()` en `src/utils/loadProducts.ts` — server-side filter + pagination (10/page). Module-level TTL cache (60s) evita re-fetch de 1000+ productos en cada request.
 - **Subcategorías Tecno**: `inferTecnoSubcategory()` + `isTecnoProduct()` en `categoryNormalization.ts` — fallback runtime para productos de Supabase sin subcategorías inferidas. Se llama desde `getDisplaySubcategories()` cuando stored subcategories están vacías y el producto es Tecno.
-- **Rate limiter**: in-memory Map in `src/middleware.ts` — 300 req/min per IP, exempts `/admin`, `/_astro`, `/assets`.
+- **Carousels**: `HeroBannerCarousel.astro` (hero, 5 slides con fade), `ProductCarousel.astro` (home), `RelatedProductCarousel.astro` (producto, scroll-snap + smooth scroll propio). `InstruccionesBar.astro` para barras promocionales.
+- **Rate limiter + security headers**: in-memory Map in `src/middleware.ts` — default 180 req/min per IP; `/_astro` y `/assets` exempts. Políticas por path: `/api/admin/providers/sync` 10/h, `/api/contact` 8/min, `/admin` y `/api/admin` 60/min. El middleware también inyecta CSP, HSTS, X-Frame-Options, Referrer-Policy, etc.
 - **Cart**: client-side only (`addToCart.ts`, `removeToCart.ts`, `renderCart.ts`).
 - **Client cache**: Nano Stores (`@nanostores/persistent`) en `src/stores/` — `product-store.ts` cachea `name, price, img, enOferta` en localStorage. `ProductHydrator.tsx` (island React `client:load`) hidrata al montar. `useProduct.tsx` hook con fallback a Supabase.
 - **View Transitions**: `<ViewTransitions />` en `Layout.astro`. Prefetch `viewport` config en `astro.config.mjs`.
@@ -33,8 +35,10 @@ pnpm build        # astro build → dist/
 pnpm deploy       # build → dist-deploy/ → wrangler deploy (Cloudflare Workers)
 pnpm cf:preview   # build → dist-deploy/ → wrangler dev (local Cloudflare preview)
 pnpm run providers:sync  # run scraper from webScrappingTool/
+pnpm run build:with-sync # providers:sync + astro build
 pnpm run db:migrate      # CSV → Supabase migration script
 pnpm run scrap           # legacy node scraper
+pnpm run images:remove-bg:boots # remove background from boots images
 ```
 
 ## Env vars (code/.env)
@@ -46,6 +50,7 @@ All public. Never commit secrets. Template at `code/.env.template`.
 | `PUBLIC_USE_SUPABASE` | build (inlined) | `"true"` to enable Supabase data source |
 | `PUBLIC_SUPABASE_URL` | build (inlined) | Public, needed by Vite |
 | `PUBLIC_SUPABASE_ANON_KEY` | build (inlined) | Public anon key |
+| `PUBLIC_TURNSTILE_SITE_KEY` | build (inlined) | Cloudflare Turnstile site key (admin login CAPTCHA) |
 | `SUPABASE_URL` | Cloudflare runtime | Server-only `getSupabase()` |
 | `SUPABASE_ANON_KEY` | Cloudflare runtime | Server-only |
 | `SUPABASE_SERVICE_ROLE_KEY` | Cloudflare runtime | Server-only, for admin writes |
@@ -73,7 +78,7 @@ All public. Never commit secrets. Template at `code/.env.template`.
 - Worker name: `bibisaintwebpage`
 - Site: `https://bibisaintwebpage.franccesco-giordano11.workers.dev`
 - Env vars set via `wrangler secret put` or Cloudflare Dashboard → Worker → Settings → Variables and Secrets.
-- `wrangler.jsonc` uses `assets.binding` for static assets from `dist/`.
+- `wrangler.jsonc` uses `assets.binding` for static assets from `dist/`, `observability` enabled (Wrangler logs).
 
 ## Supabase
 
@@ -81,7 +86,7 @@ All public. Never commit secrets. Template at `code/.env.template`.
 - Auth: admin user `bibisventasyserviciosonline@gmail.com`
 - RLS: public can only SELECT `active=true` products; all writes require `auth.role()='authenticated'`
 - Tables: `products`, `product_images`, `product_related`, `scraper_diffs`, `admin_profiles`
-- Migration: `code/supabase/migrations/001_initial_schema.sql`
+- Migrations: `code/supabase/migrations/001_initial_schema.sql`, `002_security_hardening.sql`
 
 ## Credentials policy
 
