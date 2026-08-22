@@ -91,3 +91,201 @@ All public. Never commit secrets. Template at `code/.env.template`.
 ## Credentials policy
 
 Repo is public. **Never commit credentials, secrets, tokens, or passwords.** Use GitHub Actions secrets, `wrangler secret put`, or Cloudflare Dashboard. The `.env` file is gitignored.
+
+---
+
+# Multi-Agent Orchestration System
+
+## Architecture
+
+```
+┌─────────────────────────────────────┐
+│   User Request / @bibi-coordinator  │  ← Entry point (Coordinator Agent)
+└──────────────────┬──────────────────┘
+                   │ Routes based on task type
+        ┌──────────┼──────────┬──────────┬───────────┐
+        │          │          │          │           │
+   Design     Implementation  Testing   Database  Research
+        │          │          │          │           │
+    ┌───▼──┐   ┌───▼──┐   ┌──▼──┐   ┌──▼───┐   ┌──▼──┐
+    │Design│   │Impl. │   │ QA  │   │ DBA  │   │Brain│
+    └──────┘   └──────┘   └─────┘   └──────┘   └─────┘
+        │          │          │          │           │
+        └──────────┼──────────┼──────────┼───────────┘
+                   │
+           Coordinator integrates results
+```
+
+## Specialist Agents
+
+### 🎨 @bibi-designer
+**Mission**: Visual & interaction design decisions  
+**Owns**:
+- UI layouts, typography, color systems
+- Design system components
+- Animation/motion effects
+- Accessibility & responsive design
+- Design spec generation
+
+**When to invoke**:
+```
+✓ "Rediseña la página de producto"
+✓ "Hazme un componente de carrusel"
+✓ "¿Qué tipo de animación usarías aquí?"
+✓ Cualquier solicitud visual/UX
+```
+
+**Skills loaded**: 
+- `design-taste-frontend`
+- `high-end-visual-design`
+- `imagegen-frontend-web`
+- `apple-design`
+- `animation-vocabulary`
+
+**Token optimization**: Skips backend code context, loads design-focused skills only
+
+---
+
+### 💻 @bibi-implementer
+**Mission**: Code implementation & architecture  
+**Owns**:
+- Astro components, TypeScript, CSS
+- API endpoints & server logic
+- Feature implementation from specs
+- Refactoring & code quality
+- Performance optimization
+
+**When to invoke**:
+```
+✓ "Implementa el carrito de compras"
+✓ "Arregla el bug del header"
+✓ "Refactoriza ProductCarousel.astro"
+✓ Cualquier cambio de código
+```
+
+**Skills loaded**:
+- `supabase-postgres-best-practices` (si es DB work)
+- Project architecture context
+
+**Token optimization**: Keeps full codebase context, skips design philosophy
+
+---
+
+### 🧪 @bibi-qa
+**Mission**: Testing, validation, bug reproduction  
+**Owns**:
+- Test writing (Playwright, integration tests)
+- Bug reproduction & debugging
+- Performance validation
+- Deployment smoke tests
+- QA sign-off
+
+**When to invoke**:
+```
+✓ "Escribe tests para la búsqueda"
+✓ "¿Por qué no funciona el carrito?"
+✓ "Verifica que la migración funcione"
+```
+
+**Skills loaded**:
+- `runtime-validation`
+
+**Token optimization**: Focused test context only, minimal codebase
+
+---
+
+### 📊 @bibi-dba
+**Mission**: Database schema, migrations, performance  
+**Owns**:
+- Supabase migrations & RLS policies
+- Schema design & optimization
+- Query performance tuning
+- Data integrity
+
+**When to invoke**:
+```
+✓ "Crea una migración para productos relacionados"
+✓ "¿Cuál es la mejor forma de indexar esta tabla?"
+✓ "Hardened el RLS del panel admin"
+```
+
+**Skills loaded**:
+- `supabase-postgres-best-practices`
+
+**Token optimization**: Ultra-focused database-only context
+
+---
+
+### 🧠 @bibi-coordinator
+**Mission**: Route requests, optimize token flow  
+**Owns**:
+- Request analysis & routing
+- Multi-agent orchestration
+- Result integration
+- Token efficiency decisions
+
+**When to invoke**:
+```
+✓ All requests START here (unless direct specialist mention)
+✓ "Quiero rediseñar toda la página de inicio"
+✓ Complex multi-discipline tasks
+```
+
+**Process**:
+1. Analyze request complexity
+2. Identify specialist(s) needed
+3. Pass minimal context to each
+4. Integrate results into deliverable
+
+---
+
+## How to Use
+
+### Direct Specialist (Fast Path)
+If you know who you need:
+```
+@bibi-designer Rediseña la navegación
+@bibi-implementer Arregla el bug del carrito
+```
+
+### Coordinator (Recommended)
+For complex or uncertain requests:
+```
+Me gustaría mejorar el flujo de checkout
+```
+→ Coordinator analyzes → Routes to Designer + Implementer → Integrates
+
+### Token Optimization Checklist
+
+- [ ] Coordinator routes, not monolithic agent
+- [ ] Each specialist gets ONLY relevant context
+- [ ] File excerpts, not full codebase
+- [ ] Reuse specialist context in same conversation
+- [ ] Load skills only when needed
+- [ ] One agent per task (avoid multi-discipline in single agent)
+
+---
+
+## Skill Availability
+
+**Active** (9 skills):
+- `design-taste-frontend` — Anti-slop frontend design
+- `high-end-visual-design` — Premium visual system
+- `imagegen-frontend-web` — Design reference generation
+- `image-to-code` — Visual implementation
+- `apple-design` — iOS/Fluid interface patterns
+- `animation-vocabulary` — Motion naming
+- `emil-design-eng` — UI polish & details
+- `improve-animations` — Motion audit & planning
+- `redesign-existing-projects` — Full redesigns
+- `supabase-postgres-best-practices` — DB best practices
+- `frontend-design` — Intentional design guidance
+
+**Removed** (irrelevant to e-commerce):
+- brandkit, imagegen-frontend-mobile, industrial-brutalist-ui, minimalist-ui, gpt-taste, stitch-design-taste, design-taste-frontend-v1, full-output-enforcement
+
+---
+
+**Last Updated**: 2026-08-22  
+**System Type**: Coordinator + 4 Specialists  
+**Token Strategy**: Narrow context per agent
