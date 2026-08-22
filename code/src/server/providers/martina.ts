@@ -1,4 +1,7 @@
-import { delay, normalizeText, cleanDescription, parsePrice, martinaFetch, type ProductRow } from "./utils";
+import { delay, normalizeText, cleanDescription, martinaFetch, type ProductRow } from "./utils";
+import { normalizeProductPrice } from "./martinaNormalizer";
+import { normalizeSizes } from "../../utils/sizes";
+import { parseCampaign } from "./martinaCampaign";
 
 const MARTINA_STORE_PRODUCT_BASE = "https://pol21.martinaditrento.com/mdt-services/resources/store/product";
 const MARTINA_CONFIG_URL = "https://pol21.martinaditrento.com/mdt-services/resources/ecommerce/config";
@@ -70,9 +73,13 @@ function groupMartinaImagesByColor(
   return grouped;
 }
 
+export async function fetchMartinaConfig(country: string = "598"): Promise<any> {
+  return martinaFetch(`${MARTINA_CONFIG_URL}?countryId=${country}`, 20000);
+}
+
 async function fetchMartinaCodes(country: string): Promise<string[]> {
   try {
-    const data = await martinaFetch(`${MARTINA_CONFIG_URL}?countryId=${country}`, 20000);
+    const data = await fetchMartinaConfig(country);
     const payload = data && data.data ? data.data : data || {};
     const found: Set<string> = new Set();
     const walk = (obj: any) => {
@@ -159,6 +166,60 @@ async function fetchStoreProductByProductId(
   }
 }
 
+/** Consulta un producto puntual de Martina con la campaña/código indicados. */
+export async function fetchMartinaProductById(
+  productId: string,
+  code: string,
+  countryId = "598",
+): Promise<any[]> {
+  return fetchStoreProductByProductId(countryId, code, productId);
+}
+
+export interface MartinaColorDetail {
+  id: number;
+  hex: string;
+  name: string;
+  rawSizes: string[];
+  sizes: string[];
+}
+
+/** Extrae colores + talles de las entries de store/product (formato cliente). */
+export function extractMartinaColorDetails(entries: any[]): MartinaColorDetail[] {
+  const colorMap = new Map<number, { id: number; hex: string; name: string; rawSizes: Set<string> }>();
+
+  entries.forEach((entry) => {
+    const tipoVentas = entry?.variation?.variationValues ?? [];
+    tipoVentas.forEach((tv: any) => {
+      const colorVariations = tv?.variation?.variationValues ?? [];
+      colorVariations.forEach((color: any) => {
+        const colorId = Number(color?.id);
+        if (!Number.isFinite(colorId)) return;
+        if (!colorMap.has(colorId)) {
+          colorMap.set(colorId, {
+            id: colorId,
+            hex: String(color?.colorHex ?? "#cccccc"),
+            name: String(color?.description ?? "").trim(),
+            rawSizes: new Set<string>(),
+          });
+        }
+        const sizeVariations = color?.variation?.variationValues ?? [];
+        sizeVariations.forEach((sz: any) => {
+          const desc = String(sz?.description ?? "").trim();
+          if (desc) colorMap.get(colorId)!.rawSizes.add(desc);
+        });
+      });
+    });
+  });
+
+  return Array.from(colorMap.values()).map((c) => ({
+    id: c.id,
+    hex: c.hex,
+    name: c.name,
+    rawSizes: Array.from(c.rawSizes),
+    sizes: normalizeSizes(Array.from(c.rawSizes)),
+  }));
+}
+
 function detectCodeFromEntry(entry: any): string | null {
   if (!entry || typeof entry !== "object") return null;
   if (entry.code) return String(entry.code);
@@ -176,7 +237,19 @@ function detectCodeFromEntry(entry: any): string | null {
   return null;
 }
 
-export async function syncMartina(): Promise<{ products: ProductRow[]; count: number }> {
+/** Elige la entry más informativa para precio: prefiere la que trae descuento (price1 > price). */
+function pickPricingEntry(entries: any[]): any {
+  const withPrice = entries.filter((e) => e && e.price != null && String(e.price) !== "");
+  if (withPrice.length === 0) return entries[0] || null;
+  const discounted = withPrice.find((e) => {
+    const p = parseFloat(String(e?.price ?? ""));
+    const p1 = parseFloat(String(e?.price1 ?? ""));
+    return Number.isFinite(p) && Number.isFinite(p1) && p1 > p;
+  });
+  return discounted || withPrice[0];
+}
+
+export async function syncMartina(campaignCode?: string): Promise<{ products: ProductRow[]; count: number }> {
   console.log("Martina: iniciando sync...");
 
   const countryId = "598";
@@ -186,6 +259,16 @@ export async function syncMartina(): Promise<{ products: ProductRow[]; count: nu
     codes = await fetchMartinaCodes(countryId);
   } catch {
     codes = [];
+  }
+
+  let resolvedCampaignCode = campaignCode ?? "";
+  if (!resolvedCampaignCode) {
+    try {
+      const configRaw = await fetchMartinaConfig(countryId);
+      resolvedCampaignCode = parseCampaign(configRaw).code;
+    } catch (e: any) {
+      console.warn("Martina: no se pudo resolver la campaña vigente:", e?.message || e);
+    }
   }
 
   const allFetchedItems: any[] = [];
@@ -213,7 +296,10 @@ export async function syncMartina(): Promise<{ products: ProductRow[]; count: nu
 
   if (allFetchedItems.length === 0) {
     console.log("Martina: sin codes, usando catálogo por productLine");
-    const codeToUse = "202605";
+    const codeToUse = resolvedCampaignCode || "202605";
+    if (!resolvedCampaignCode) {
+      console.warn("Martina: usando code de respaldo 202605 (campaña no resuelta)");
+    }
     const productLines = [
       { productLineId: "3325", category: "HOMBRE" },
       { productLineId: "3324", category: "MUJER" },
@@ -280,10 +366,11 @@ export async function syncMartina(): Promise<{ products: ProductRow[]; count: nu
     const description = cleanDescription(
       [first?.description, first?.description2, first?.description3].filter(Boolean).join(" "),
     );
-    const price = parsePrice(first?.price ?? "", 1);
-    const enOferta = first?.price1
-      ? parseFloat(String(first.price1)) > parseFloat(String(first.price ?? 0))
-      : false;
+    const pricing = pickPricingEntry(entries);
+    const { price, originalPrice, enOferta } = normalizeProductPrice(
+      pricing?.price ?? "",
+      pricing?.price1 ?? "",
+    );
 
     const categoryName = String(
       first?.productLine?.parent?.name || first?.productLine?.name || "Ropa",
@@ -365,6 +452,7 @@ export async function syncMartina(): Promise<{ products: ProductRow[]; count: nu
       payment_link: [{ id: "0", url: "" }],
       relacionados: [],
       en_oferta: enOferta,
+      original_price: originalPrice,
       colors: colorsData,
       source: "scraper",
       active: true,

@@ -192,11 +192,31 @@ export function inferSubcategory(productName: string, categoria: string): string
 
 const isNode = typeof process !== "undefined" && !!process.versions?.node;
 
-export async function fetchJson(url: string, timeoutMs = 25000): Promise<any> {
+// Headers que Martina espera del navegador. Antes los enviaba el frontend
+// directo; ahora el servidor los replica para mantener la compatibilidad con
+// el upstream externo.
+const MARTINA_HEADERS = {
+  accept: "application/json, text/plain, */*",
+  Referer: "https://tienda.martinaditrento.com/",
+};
+
+const MARTINA_HOST = "pol21.martinaditrento.com";
+
+// Solo en el runtime Node local (astro dev) el cliente HTTPS valida la cadena
+// de pol21 y falla con "unable to verify the first certificate". La excepción
+// TLS queda acotada a ese host y solo en desarrollo; en Cloudflare (fetch) se
+// mantiene la validación TLS estándar.
+const isDevRuntime = import.meta.env?.DEV === true;
+
+export async function fetchJson(
+  url: string,
+  timeoutMs = 25000,
+  headers?: Record<string, string>,
+): Promise<any> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const resp = await fetch(url, { signal: controller.signal });
+    const resp = await fetch(url, { signal: controller.signal, headers });
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     return await resp.json();
   } finally {
@@ -206,18 +226,23 @@ export async function fetchJson(url: string, timeoutMs = 25000): Promise<any> {
 
 export async function martinaFetch(url: string, timeoutMs = 30000): Promise<any> {
   if (!isNode) {
-    return fetchJson(url, timeoutMs);
+    return fetchJson(url, timeoutMs, MARTINA_HEADERS);
   }
 
   const https = await import("node:https");
+  let isMartinaHost = false;
+  try {
+    isMartinaHost = new URL(url).host === MARTINA_HOST;
+  } catch {
+    isMartinaHost = false;
+  }
+
   return new Promise((resolve, reject) => {
     const req = https.get(
       url,
       {
-        headers: {
-          accept: "application/json, text/plain, */*",
-          Referer: "https://tienda.martinaditrento.com/",
-        },
+        rejectUnauthorized: isMartinaHost && isDevRuntime ? false : undefined,
+        headers: MARTINA_HEADERS,
         timeout: timeoutMs,
       },
       (res) => {
@@ -255,6 +280,8 @@ export interface ProductRow {
   payment_link: Array<{ id: string; url: string }>;
   relacionados: string[];
   en_oferta: boolean;
+  /** Precio original (para tachar) cuando hay descuento; null/undefined si no. */
+  original_price?: string | null;
   colors?: Array<{ id: number; hex: string; name: string; images: string[]; sizes?: string[] }>;
   source: string;
   active: boolean;

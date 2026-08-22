@@ -15,10 +15,67 @@ interface SyncResponse {
   totalErrors: number;
 }
 
+interface MartinaPlanItem {
+  id: string;
+  name: string;
+  price: string;
+  originalPrice: string | null;
+  enOferta: boolean;
+  action: "create" | "update" | "unchanged";
+}
+
+interface MartinaPreviewResponse {
+  ok: boolean;
+  error?: string;
+  campaign?: {
+    code: string;
+    countryId: string;
+    validFrom: string;
+    validTill: string;
+    vigente: boolean;
+  };
+  summary?: { create: number; update: number; unchanged: number };
+  plan?: MartinaPlanItem[];
+  totalItems?: number;
+  changedCount?: number;
+  truncated?: boolean;
+  hash?: string;
+  token?: string;
+  writeEnabled?: boolean;
+  expiresAt?: number;
+}
+
+interface MartinaApplyResponse {
+  ok: boolean;
+  error?: string;
+  upserted?: number;
+  errors?: number;
+  summary?: { create: number; update: number; unchanged: number };
+  campaignCode?: string;
+}
+
+async function getAccessToken(): Promise<string | null> {
+  const { data } = await supabase.auth.getSession();
+  return data.session?.access_token ?? null;
+}
+
+const ACTION_LABEL: Record<MartinaPlanItem["action"], string> = {
+  create: "Crear",
+  update: "Actualizar",
+  unchanged: "Sin cambios",
+};
+
 export default function ProvidersPanel() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SyncResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Flujo Martina: preview obligatorio → apply
+  const [previewing, setPreviewing] = useState(false);
+  const [applying, setApplying] = useState(false);
+  const [preview, setPreview] = useState<MartinaPreviewResponse | null>(null);
+  const [applyResult, setApplyResult] = useState<MartinaApplyResponse | null>(null);
+  const [martinaError, setMartinaError] = useState<string | null>(null);
 
   const handleSync = async () => {
     setLoading(true);
@@ -26,8 +83,7 @@ export default function ProvidersPanel() {
     setResult(null);
 
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const token = session?.access_token;
+      const token = await getAccessToken();
       const resp = await fetch("/api/admin/providers/sync", {
         method: "POST",
         headers: {
@@ -44,6 +100,60 @@ export default function ProvidersPanel() {
       setError(e?.message || "Error al sincronizar");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleMartinaPreview = async () => {
+    setPreviewing(true);
+    setMartinaError(null);
+    setApplyResult(null);
+
+    try {
+      const token = await getAccessToken();
+      const resp = await fetch("/api/admin/providers/martina/preview", {
+        method: "POST",
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      });
+      const body: MartinaPreviewResponse = await resp.json();
+      if (!resp.ok || !body.ok) {
+        throw new Error(body?.error || `Error del servidor (${resp.status})`);
+      }
+      setPreview(body);
+    } catch (e: any) {
+      setMartinaError(e?.message || "Error al generar el preview");
+      setPreview(null);
+    } finally {
+      setPreviewing(false);
+    }
+  };
+
+  const handleMartinaApply = async () => {
+    if (!preview?.token) return;
+    setApplying(true);
+    setMartinaError(null);
+    setApplyResult(null);
+
+    try {
+      const token = await getAccessToken();
+      const resp = await fetch("/api/admin/providers/martina/apply", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ token: preview.token }),
+      });
+      const body: MartinaApplyResponse = await resp.json();
+      if (!resp.ok || !body.ok) {
+        throw new Error(body?.error || `Error del servidor (${resp.status})`);
+      }
+      setApplyResult(body);
+    } catch (e: any) {
+      setMartinaError(e?.message || "Error al aplicar los cambios");
+    } finally {
+      setApplying(false);
     }
   };
 
@@ -150,9 +260,167 @@ export default function ProvidersPanel() {
           </p>
         </div>
       )}
+
+      {/* ---- Martina: campaña + preview/apply ---- */}
+      <div
+        style={{
+          marginTop: "2rem",
+          borderTop: "1px solid var(--admin-border, #e5e7eb)",
+          paddingTop: "1.5rem",
+        }}
+      >
+        <div style={headerStyle}>
+          <div>
+            <h2 style={{ ...pageTitle, fontSize: "1.3rem", margin: 0 }}>Martina di Trento — Campaña</h2>
+            <p style={pageSub}>
+              Flujo seguro: generar preview (solo lectura) → revisar → aplicar cambios.
+            </p>
+          </div>
+          <button
+            onClick={handleMartinaPreview}
+            disabled={previewing || applying}
+            className="admin-btn admin-btn-secondary"
+          >
+            {previewing ? "Generando preview..." : "Generar preview"}
+          </button>
+        </div>
+
+        {preview?.writeEnabled === false && (
+          <div
+            style={{
+              background: "var(--admin-surface)",
+              border: "1px solid #e2b93b",
+              borderRadius: "var(--admin-radius)",
+              padding: "0.75rem 1.25rem",
+              marginBottom: "1rem",
+              fontSize: "0.85rem",
+              color: "#8a6d1a",
+            }}
+          >
+            La escritura está deshabilitada: <code>MARTINA_SYNC_APPLY_ENABLED</code> no es{" "}
+            <code>"true"</code>. Podés generar y revisar el preview, pero no aplicar cambios.
+          </div>
+        )}
+
+        <Modal open={!!martinaError} onClose={() => setMartinaError(null)} type="error" title="Error Martina">
+          {martinaError}
+        </Modal>
+
+        {preview?.ok && (
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            <div
+              style={{
+                background: "var(--admin-surface)",
+                borderRadius: "var(--admin-radius)",
+                padding: "1rem 1.25rem",
+                boxShadow: "var(--admin-shadow)",
+              }}
+            >
+              <strong>Campaña {preview.campaign?.code}</strong>
+              <div style={{ fontSize: "0.85rem", color: "var(--admin-text-secondary)", marginTop: "0.25rem" }}>
+                {preview.campaign?.validFrom} → {preview.campaign?.validTill}
+                {preview.campaign?.vigente === false && (
+                  <span style={{ color: "#8a6d1a", marginLeft: "0.5rem" }}>(no vigente)</span>
+                )}
+              </div>
+              <div style={{ display: "flex", gap: "1rem", marginTop: "0.75rem", flexWrap: "wrap" }}>
+                <span style={{ color: "var(--admin-success)" }}>▲ {preview.summary?.create ?? 0} crear</span>
+                <span style={{ color: "var(--admin-primary, #e67e22)" }}>● {preview.summary?.update ?? 0} actualizar</span>
+                <span style={{ color: "var(--admin-text-secondary)" }}>= {preview.summary?.unchanged ?? 0} sin cambios</span>
+              </div>
+              {preview.changedCount !== undefined && preview.changedCount > (preview.plan?.length ?? 0) && (
+                <div style={{ fontSize: "0.8rem", color: "var(--admin-text-secondary)", marginTop: "0.5rem" }}>
+                  Mostrando {preview.plan?.length ?? 0} de {preview.changedCount} cambios.
+                </div>
+              )}
+            </div>
+
+            {preview.plan && preview.plan.length > 0 && (
+              <div
+                style={{
+                  background: "var(--admin-surface)",
+                  borderRadius: "var(--admin-radius)",
+                  padding: "0.5rem 1.25rem",
+                  boxShadow: "var(--admin-shadow)",
+                  maxHeight: 320,
+                  overflowY: "auto",
+                }}
+              >
+                <table style={{ width: "100%", fontSize: "0.82rem", borderCollapse: "collapse" }}>
+                  <thead>
+                    <tr style={{ textAlign: "left", color: "var(--admin-text-secondary)" }}>
+                      <th style={thStyle}>Acción</th>
+                      <th style={thStyle}>Producto</th>
+                      <th style={thStyle}>Precio</th>
+                      <th style={thStyle}>Antes</th>
+                      <th style={thStyle}>Oferta</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {preview.plan.map((item) => (
+                      <tr key={item.id} style={{ borderTop: "1px solid var(--admin-border, #f1f2f4)" }}>
+                        <td style={tdStyle}>
+                          <span
+                            style={{
+                              fontWeight: 700,
+                              color: item.action === "create" ? "var(--admin-success)" : item.action === "update" ? "var(--admin-primary, #e67e22)" : "var(--admin-text-secondary)",
+                            }}
+                          >
+                            {ACTION_LABEL[item.action]}
+                          </span>
+                        </td>
+                        <td style={tdStyle}>
+                          {item.name} <span style={{ color: "var(--admin-text-secondary)" }}>({item.id})</span>
+                        </td>
+                        <td style={tdStyle}>${item.price}</td>
+                        <td style={tdStyle}>
+                          {item.originalPrice ? <s>${item.originalPrice}</s> : "—"}
+                        </td>
+                        <td style={tdStyle}>{item.enOferta ? "Sí" : "No"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+              <button
+                onClick={handleMartinaApply}
+                disabled={!preview.writeEnabled || applying || previewing}
+                className="admin-btn admin-btn-primary"
+                title={preview.writeEnabled ? "Aplicar los cambios del preview" : "Escritura deshabilitada"}
+              >
+                {applying ? "Aplicando..." : "Aplicar cambios"}
+              </button>
+
+              {applyResult?.ok && (
+                <span style={{ color: "var(--admin-success)", fontSize: "0.85rem" }}>
+                  ✓ Aplicado: {applyResult.upserted} productos
+                  {(applyResult.errors ?? 0) > 0 && `, ${applyResult.errors} errores`}
+                  {applyResult.summary && ` (${applyResult.summary.create} crear, ${applyResult.summary.update} actualizar)`}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
+const thStyle: React.CSSProperties = {
+  padding: "0.4rem 0.6rem",
+  fontWeight: 700,
+  textTransform: "uppercase",
+  fontSize: "0.72rem",
+  letterSpacing: "0.02em",
+};
+
+const tdStyle: React.CSSProperties = {
+  padding: "0.4rem 0.6rem",
+  verticalAlign: "top",
+};
 
 const wrap: React.CSSProperties = {
   animation: "slideUp 0.35s cubic-bezier(0.23, 1, 0.32, 1)",
