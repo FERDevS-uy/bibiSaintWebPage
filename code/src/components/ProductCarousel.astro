@@ -42,7 +42,12 @@ const pathname = Astro.url.pathname;
           </a>
           <div class="carousel-info">
             <span class="p-name">{p.name}</span>
-            <span class="p-price">${formatPrice(parsePrice(p.price))}</span>
+            <span class="p-price-row">
+              {p.enOferta && p.originalPrice && (
+                <span class="p-price-original">${formatPrice(parsePrice(p.originalPrice))}</span>
+              )}
+              <span class="p-price">${formatPrice(parsePrice(p.price))}</span>
+            </span>
             <div class="add-btn-wrapper">
               <AddToCartButton producto={p} variant="full" />
             </div>
@@ -184,6 +189,21 @@ const pathname = Astro.url.pathname;
     -webkit-box-orient: vertical;
     overflow: hidden;
     height: 2.7em;
+  }
+
+  .p-price-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    line-height: 1.15;
+  }
+
+  .p-price-original {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #8a8f98;
+    text-decoration: line-through;
   }
 
   .p-price {

@@ -9,7 +9,7 @@ export async function GET(): Promise<Response> {
     status: 200,
     headers: {
       "Content-Type": "application/json",
-      "Cache-Control": "public, max-age=300, s-maxage=600",
+      "Cache-Control": "public, max-age=60, s-maxage=120",
     },
   });
 }

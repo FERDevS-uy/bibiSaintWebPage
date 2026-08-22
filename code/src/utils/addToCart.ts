@@ -1,4 +1,5 @@
 import type ProductInCart from "src/types/productInCart";
+import { getMartinaVerifiedPrice } from "../client/martinaVerification";
 
 function sanitizeImageUrl(value: string): string {
   const cleaned = String(value ?? "")
@@ -43,7 +44,7 @@ function pickFirstImage(raw: unknown): string {
   return sanitizeImageUrl(value);
 }
 
-function addToCart(
+async function addToCart(
   id: string,
   name: string,
   price: string,
@@ -52,10 +53,19 @@ function addToCart(
   selectedColorId: number | null = null,
   selectedColorName: string | null = null,
 ) {
+  // Para productos Martina el carrito usa el precio verificado oficial.
+  // Reutiliza la verificación en curso (misma promesa) y cae al precio
+  // sincronizado como fallback si la verificación falló o no existe.
+  const baseId = String(id).split("__")[0];
+  let unitPrice = price;
+  if (baseId.toLowerCase().startsWith("mdt-")) {
+    unitPrice = await getMartinaVerifiedPrice(id, price);
+  }
+
   const product: ProductInCart = {
     id,
     name,
-    price,
+    price: unitPrice,
     cantidad: qty,
     img: pickFirstImage(img),
     selectedColorId,

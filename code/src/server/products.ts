@@ -12,6 +12,7 @@ interface SupabaseProductRow {
   payment_link: Array<{ id: string; url: string }>;
   relacionados: string[];
   en_oferta: boolean;
+  original_price: string | null;
   colors: Array<{ id: number; hex: string; name: string; images: string[]; sizes?: string[] }>;
 }
 
@@ -26,6 +27,7 @@ function rowToProduct(row: SupabaseProductRow): Product {
     paymentLink: Array.isArray(row.payment_link) ? row.payment_link : [],
     relacionados: Array.isArray(row.relacionados) ? row.relacionados : [],
     enOferta: Boolean(row.en_oferta),
+    originalPrice: row.original_price == null ? null : String(row.original_price),
     colors: Array.isArray(row.colors) ? row.colors : [],
   };
 }

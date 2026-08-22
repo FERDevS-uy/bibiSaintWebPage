@@ -31,6 +31,7 @@ const {
   description,
   colors,
   enOferta,
+  originalPrice,
   relacionados: relacionadosIds,
 } = product;
 
@@ -62,8 +63,6 @@ const isRopa = displayCategoryName === "Ropa";
 const disableColorSelection = /^tal-/i.test(String(id || ""));
 const runtimeStockCheckEnabled = import.meta.env.PUBLIC_ENABLE_STOCK_CHECK !== "false";
 const primaryProviderLink = paymentLink?.[0]?.url ?? "";
-const martinaCode = import.meta.env.PUBLIC_MARTINA_CODE || "202605";
-const martinaCountryId = import.meta.env.PUBLIC_MARTINA_COUNTRY_ID || "598";
 const isMartinaProduct = String(id).toLowerCase().startsWith("mdt-");
 const isKaiProduct = String(id).toLowerCase().startsWith("kai-") || primaryProviderLink.includes("kaideco.uy/products/");
 const isNuvexProduct = primaryProviderLink.includes("nuvex.uy");
@@ -180,7 +179,16 @@ const pathname = Astro.url.pathname;
         </div>
 
         <div class="priceRow">
-          <span id="productPrice" class="price">${formatPrice(parsePrice(price))}</span>
+          <div class="price-block">
+            <span
+              id="productOriginalPrice"
+              class={`price-original${enOferta && originalPrice ? "" : " hidden"}`}
+            >${originalPrice ? `$${formatPrice(parsePrice(originalPrice))}` : ""}</span>
+            <span
+              id="productPrice"
+              class={`price${enOferta && originalPrice ? " price--offer" : ""}`}
+            >${formatPrice(parsePrice(price))}</span>
+          </div>
           <NumberInput
             id="cartQty"
             name="pasajeros"
@@ -207,8 +215,6 @@ const pathname = Astro.url.pathname;
                 class="checkStockBtn"
                 data-product-id={id}
                 data-provider-link={primaryProviderLink}
-                data-martina-code={martinaCode}
-                data-martina-country-id={martinaCountryId}
               >
                 Verificar stock y precio
               </button>
@@ -574,6 +580,29 @@ const pathname = Astro.url.pathname;
     min-width: 140px;
   }
 
+  .price-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 140px;
+  }
+
+  .price-original {
+    font-size: 18px;
+    font-weight: 600;
+    color: #999;
+    text-decoration: line-through;
+  }
+
+  .price-original.hidden {
+    display: none;
+  }
+
+  .price.price--offer {
+    color: var(--p-b-color);
+  }
+
   /* Adjust NumberInput styling overlap if possible, otherwise wrapper */
   /* Assuming NumberInput generates a wrapper, we might need to target it deep or adjacent */
 
@@ -731,6 +760,7 @@ const pathname = Astro.url.pathname;
 
 <script>
   import addToCart from "../../utils/addToCart";
+  import { fetchMartinaProductPrice } from "../../client/martinaVerification";
   function initProductDetail() {
     const addBtn = document.getElementById("addToCartBtn") as HTMLButtonElement | null;
     if (!addBtn || addBtn.dataset.bound === "true") return;
@@ -794,9 +824,9 @@ const pathname = Astro.url.pathname;
       });
     }
 
-    addBtn.addEventListener("click", () => {
+    addBtn.addEventListener("click", async () => {
       const qtyInput = document.getElementById("cartQty") as HTMLInputElement;
-      const price = document.querySelector(".price") as HTMLSpanElement;
+      const price = document.getElementById("productPrice") as HTMLSpanElement;
       const name = document.querySelector(".name") as HTMLHeadingElement;
       const id = addBtn.getAttribute("data-id") ?? "";
       const img = document.querySelector(".gallery .mainImg") as HTMLImageElement | null;
@@ -835,14 +865,14 @@ const pathname = Astro.url.pathname;
         ? `${name.innerText} (Talle ${selectedSize})`
         : name.innerText;
 
-      addToCart(
+      await addToCart(
         idToCart,
         nameToCart,
         price.innerText.replace("$", "").replace(",", "."),
         qty,
         img?.src ?? "",
-          selectedColorId,
-          selectedColorName,
+        selectedColorId,
+        selectedColorName,
       );
 
       window.updateCartCount && window.updateCartCount();
@@ -860,6 +890,7 @@ const pathname = Astro.url.pathname;
     const statusEl = document.getElementById("stockCheckStatus") as HTMLParagraphElement | null;
     const stockBadge = document.getElementById("stockBadge") as HTMLSpanElement | null;
     const priceEl = document.getElementById("productPrice") as HTMLSpanElement | null;
+    const originalPriceEl = document.getElementById("productOriginalPrice") as HTMLSpanElement | null;
 
     // Fallback de colores para proveedores sin verificación en vivo (ej: Nuvex).
     // En Martina/Kai la lógica completa vive más abajo junto al checkStock.
@@ -1079,8 +1110,6 @@ const pathname = Astro.url.pathname;
 
     if (checkStockBtn && statusEl && stockBadge && priceEl) {
       const providerLink = checkStockBtn.dataset.providerLink ?? "";
-      const martinaCodeValue = checkStockBtn.dataset.martinaCode ?? "202605";
-      const martinaCountryIdValue = checkStockBtn.dataset.martinaCountryId ?? "598";
 
       const normalizeSize = (rawSize: string): string | null => {
         const map: Record<string, string> = {
@@ -1418,95 +1447,13 @@ const pathname = Astro.url.pathname;
         }
       }
 
+      // Verificación de precio/stock Martina a través del endpoint interno.
+      // El navegador ya no consulta Martina directamente: el servidor resuelve
+      // la campaña vigente (sin código fijo compilado en el cliente).
       const fetchMartinaLive = async (productId: string) => {
-        const productIdNumber = productId.replace(/^mdt-/i, "");
-        const endpoint = new URL("https://pol21.martinaditrento.com/mdt-services/resources/store/product");
-        endpoint.searchParams.set("productId", productIdNumber);
-        endpoint.searchParams.set("code", martinaCodeValue);
-        endpoint.searchParams.set("countryId", martinaCountryIdValue);
-
-        const controller = new AbortController();
-        const timeout = window.setTimeout(() => controller.abort(), 6000);
-        try {
-          const response = await fetch(endpoint.toString(), {
-            cache: "no-store",
-            signal: controller.signal,
-            headers: {
-              Accept: "application/json, text/plain, */*",
-            },
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-          }
-
-          const payload = await response.json();
-          const dataArray: any[] = Array.isArray(payload?.data) ? payload.data : [];
-
-          // data vacío => sin stock disponible en el proveedor
-          if (dataArray.length === 0) {
-            return {
-              provider: "martina" as const,
-              price: "",
-              inStock: false,
-              colors: [] as Array<{ id: number; hex: string; name: string; sizes: string[]; rawSizes: string[] }>,
-              sizes: [] as string[],
-            };
-          }
-
-          const colorMap = new Map<
-            number,
-            { id: number; hex: string; name: string; rawSizes: Set<string> }
-          >();
-
-          dataArray.forEach((entry) => {
-            const tipoVentas = entry?.variation?.variationValues ?? [];
-            tipoVentas.forEach((tv: any) => {
-              const colorVariations = tv?.variation?.variationValues ?? [];
-              colorVariations.forEach((color: any) => {
-                const colorId = Number(color?.id);
-                if (!Number.isFinite(colorId)) return;
-                if (!colorMap.has(colorId)) {
-                  colorMap.set(colorId, {
-                    id: colorId,
-                    hex: String(color?.colorHex ?? "#cccccc"),
-                    name: String(color?.description ?? "").trim(),
-                    rawSizes: new Set<string>(),
-                  });
-                }
-                const sizeVariations = color?.variation?.variationValues ?? [];
-                sizeVariations.forEach((sz: any) => {
-                  const desc = String(sz?.description ?? "").trim();
-                  if (desc) colorMap.get(colorId)!.rawSizes.add(desc);
-                });
-              });
-            });
-          });
-
-          const colors = Array.from(colorMap.values()).map((c) => ({
-            id: c.id,
-            hex: c.hex,
-            name: c.name,
-            rawSizes: Array.from(c.rawSizes),
-            sizes: normalizeSizes(Array.from(c.rawSizes)),
-          }));
-
-          const allSizes = normalizeSizes(
-            colors.flatMap((c) => c.rawSizes),
-          );
-
-          const firstEntry = dataArray[0] ?? {};
-
-          return {
-            provider: "martina" as const,
-            price: String(firstEntry?.price ?? "").trim(),
-            inStock: colors.some((c) => c.sizes.length > 0),
-            colors,
-            sizes: allSizes,
-          };
-        } finally {
-          window.clearTimeout(timeout);
-        }
+        const res = await fetchMartinaProductPrice(productId);
+        if (!res) throw new Error("No se pudo verificar el precio oficial");
+        return res;
       };
 
       const formatKaiPrice = (raw: unknown) => {
@@ -1718,6 +1665,19 @@ const pathname = Astro.url.pathname;
             const nextPrice = applyProviderMarkup(data?.price, provider);
             if (nextPrice) {
               priceEl.textContent = `$${nextPrice}`;
+            }
+
+            // Precio original tachado + precio vigente destacado cuando hay descuento
+            if (data?.isDiscount && data.originalPrice) {
+              const nextOriginal = applyProviderMarkup(data.originalPrice, provider);
+              if (originalPriceEl && nextOriginal) {
+                originalPriceEl.textContent = `$${nextOriginal}`;
+                originalPriceEl.classList.remove("hidden");
+              }
+              priceEl.classList.add("price--offer");
+            } else {
+              originalPriceEl?.classList.add("hidden");
+              priceEl.classList.remove("price--offer");
             }
 
             // sin colores => producto sin stock disponible

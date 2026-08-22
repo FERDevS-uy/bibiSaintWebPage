@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { productCache, type ProductCacheEntry } from "./product-store";
 import { supabase } from "../lib/supabaseClient";
+import { hasVerifiedPrice } from "../client/martinaVerification";
 
 export function useProduct(id: string) {
   const [product, setProduct] = useState<ProductCacheEntry | null | "loading">("loading");
@@ -11,6 +12,9 @@ export function useProduct(id: string) {
       setProduct(cached);
       return;
     }
+
+    // Precio verificado en sesión: no pisarlo con el precio sincronizado.
+    if (hasVerifiedPrice(id)) return;
 
     supabase
       .from("products")

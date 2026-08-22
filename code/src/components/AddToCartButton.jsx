@@ -20,11 +20,11 @@ export default function AddToCartButton({ producto: p, variant = "icon" }) {
     categoryName === "MUJER" ||
     categoryName === "HOMBRE";
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    addToCart(p.id, p.name, p.price, undefined, p.img);
+    await addToCart(p.id, p.name, p.price, undefined, p.img);
 
     setChecked(true);
     setTimeout(() => setChecked(false), 1500);

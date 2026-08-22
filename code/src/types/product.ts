@@ -19,6 +19,8 @@ export default interface Product {
   paymentLink: PaymentMethod[]; // [<id>=<link>] (ej: ws="https://wa.me/..." mp="https://mpago...")
   relacionados: string[],
   enOferta: Boolean,
+  /** Precio anterior (para mostrar tachado) cuando el producto está en oferta. */
+  originalPrice?: string | null,
   /** Colores disponibles cuando el proveedor los expone (ej: Martina di Trento). */
   colors?: ProductColor[];
 }

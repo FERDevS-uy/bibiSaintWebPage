@@ -132,14 +132,14 @@ const requiresSizeSelection =
 
   document.addEventListener("astro:page-load", () => {
     document.querySelectorAll(".addToCart[data-id]").forEach((btn) => {
-      btn.addEventListener("click", (e: Event) => {
+      btn.addEventListener("click", async (e: Event) => {
         const target = e.currentTarget as HTMLButtonElement;
         const id = target.getAttribute("data-id") ?? "";
         const name = target.getAttribute("data-name") ?? "";
         const price = target.getAttribute("data-price") ?? "";
         const img = target.getAttribute("data-img") ?? "";
 
-        addToCart(id, name, price, undefined, img);
+        await addToCart(id, name, price, undefined, img);
 
         const isFull = target.classList.contains("addToCartFull");
         const originalContent = target.innerHTML;

@@ -16,7 +16,7 @@ const SECURITY_HEADERS: Record<string, string> = {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com data:",
     "img-src 'self' data: https:",
-    `connect-src 'self' https://*.supabase.co https://challenges.cloudflare.com https://pol21.martinaditrento.com`,
+    `connect-src 'self' https://*.supabase.co https://challenges.cloudflare.com https://pol21.martinaditrento.com https://alondra-ecommerce-be.sitios.uy https://kaideco.uy`,
     "frame-src https://challenges.cloudflare.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",

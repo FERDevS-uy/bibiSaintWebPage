@@ -56,31 +56,6 @@ async function fetchJson(url: string, init?: RequestInit) {
   return response.json();
 }
 
-async function getMartinaPrice(productId: string): Promise<{ price: number; inStock: boolean | null }> {
-  const productIdNumber = productId.replace(/^mdt-/i, "");
-  const code = (import.meta.env.PUBLIC_MARTINA_CODE as string | undefined) || "202605";
-  const countryId = (import.meta.env.PUBLIC_MARTINA_COUNTRY_ID as string | undefined) || "598";
-
-  const endpoint = new URL("https://pol21.martinaditrento.com/mdt-services/resources/store/product");
-  endpoint.searchParams.set("productId", productIdNumber);
-  endpoint.searchParams.set("code", code);
-  endpoint.searchParams.set("countryId", countryId);
-
-  const payload = await fetchJson(endpoint.toString(), {
-    headers: { Accept: "application/json, text/plain, */*" },
-  });
-
-  const dataArray: any[] = Array.isArray(payload?.data) ? payload.data : [];
-  if (dataArray.length === 0) return { price: 0, inStock: false };
-
-  const firstEntry = dataArray[0] ?? {};
-  const rawPrice = String(firstEntry?.price ?? "").trim();
-  return {
-    price: Number(rawPrice.replace(/[^\d.]/g, "")) || 0,
-    inStock: dataArray.some((entry) => Number(entry?.stock ?? 1) > 0),
-  };
-}
-
 async function getKaiPrice(providerUrl: string): Promise<{ price: number; inStock: boolean | null }> {
   const productUrl = new URL(providerUrl);
   const segments = productUrl.pathname.split("/").filter(Boolean);
@@ -173,15 +148,10 @@ export async function getLivePrice({
 
   try {
     if (provider === "martina") {
-      const live = await withTimeout(getMartinaPrice(productId), PROVIDER_TIMEOUT_MS);
-      const adjusted = applyProviderMarkupValue(live.price, provider);
-      return {
-        provider,
-        price: formatUy(adjusted) || fallbackResult.price,
-        priceValue: adjusted || fallbackValue,
-        inStock: live.inStock,
-        source: adjusted > 0 ? "live" : "fallback",
-      };
+      // Martina ya no consulta precio runtime acá: el precio live lo resuelve
+      // la verificación por producto (endpoint /api/martina/product-price).
+      // Aquí se muestra el precio sincronizado como fallback visual.
+      return fallbackResult;
     }
 
     if (provider === "kaideco") {

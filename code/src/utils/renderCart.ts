@@ -138,13 +138,13 @@ export default function renderCart() {
 
   // Botón agregar uno (+)
   cartList.querySelectorAll<HTMLButtonElement>(".addOnce").forEach((btn) => {
-    btn.onclick = (e) => {
+    btn.onclick = async (e) => {
       const idx = btn.getAttribute("data-idx");
       if (idx) {
         // Find product to get details for re-adding
         const product = storage.find((p: ProductInCart) => p.id === idx);
         if (product) {
-            addToCart(
+            await addToCart(
               product.id,
               product.name,
               product.price,

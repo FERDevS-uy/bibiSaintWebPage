@@ -9,6 +9,7 @@ export const PRODUCT_WRITABLE_COLUMNS = [
   "payment_link",
   "relacionados",
   "en_oferta",
+  "original_price",
   "colors",
   "source",
   "active",

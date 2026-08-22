@@ -18,7 +18,12 @@ export default function ItemProductoBox({ producto: p }) {
 
       <div className="card-info">
         <span className="p-name">{p.name}</span>
-        <span className="p-price">${formatPrice(parsePrice(p.price))}</span>
+        <span className="p-price-row">
+          {p.enOferta && p.originalPrice && (
+            <span className="p-price-original">${formatPrice(parsePrice(p.originalPrice))}</span>
+          )}
+          <span className="p-price">${formatPrice(parsePrice(p.price))}</span>
+        </span>
         <div className="add-btn-wrapper">
           <AddToCartButton producto={p} variant="full" />
         </div>
