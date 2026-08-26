@@ -13,6 +13,10 @@
     "providers:sync": "pnpm --dir ../webScrappingTool exec ts-node --prefer-ts-exts src/index.ts",
     "images:remove-bg:boots": "node scripts/removeBootBackgrounds.mjs",
     "db:migrate": "node scripts/migrateToSupabase.mjs",
+    "test": "playwright test",
+    "test:unit": "node --experimental-strip-types --test \"tests/*.test.ts\"",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
     "deploy": "astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && echo '_worker.js' > dist-deploy/.assetsignore && wrangler deploy ./dist-deploy/_worker.js/index.js --assets ./dist-deploy",
     "cf:preview": "astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && echo '_worker.js' > dist-deploy/.assetsignore && wrangler dev ./dist-deploy/_worker.js/index.js --assets ./dist-deploy",
     "cf-typegen": "wrangler types"
@@ -38,9 +42,14 @@
     "string-similarity-js": "2.1.4"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@playwright/test": "^1.48.2",
     "@types/papaparse": "5.3.16",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^6.0.3",
     "wrangler": "^4.100.0"
   }
 }

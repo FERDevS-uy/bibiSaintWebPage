@@ -28,8 +28,6 @@
       "@stores/*": [
         "src/stores/*"
       ]
-    },
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    }
   }
 }
