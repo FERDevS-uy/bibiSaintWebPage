@@ -18,3 +18,4 @@ DESIGN.md
 # screenshots / scratch (root only)
 /*.png
 /*.png/
+.pnpm-store/
