@@ -502,6 +502,8 @@ const pathname = Astro.url.pathname;
   :global(.swatch) {
     width: 32px;
     height: 32px;
+    box-sizing: border-box;
+    flex: 0 0 32px;
     border-radius: 50%;
     border: 2px solid #e5e5e5;
     background: #ccc;
@@ -516,6 +518,10 @@ const pathname = Astro.url.pathname;
     border-color: #111;
     transform: scale(1.1);
   }
+  :global(.swatch):focus-visible {
+    outline: 2px solid var(--p-b-color, #e67e22);
+    outline-offset: 2px;
+  }
   .colors-block.hidden {
     display: none;
   }
@@ -528,23 +534,6 @@ const pathname = Astro.url.pathname;
     gap: 8px;
     margin-top: 6px;
     flex-wrap: wrap;
-  }
-  .swatch {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 2px solid #e5e5e5;
-    background: #ccc;
-    cursor: pointer;
-    padding: 0;
-    transition: transform 0.15s ease, border-color 0.15s ease;
-  }
-  .swatch:hover {
-    transform: scale(1.1);
-  }
-  .swatch.selected {
-    border-color: #111;
-    transform: scale(1.1);
   }
 
   .size-feedback {
@@ -697,7 +686,15 @@ const pathname = Astro.url.pathname;
       overflow-y: hidden;
       overscroll-behavior-x: contain;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 2px;
+      padding: 5px;
+    }
+
+    /* En mobile el swatch seleccionado no crece con scale: sin transform,
+       el borde de selección y el focus quedan dentro del contenedor y no
+       se recortan contra el overflow. */
+    :global(.swatch:hover),
+    :global(.swatch).selected {
+      transform: none;
     }
   }
 
