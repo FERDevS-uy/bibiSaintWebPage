@@ -1,48 +1,111 @@
 # Routing Matrix — Bibi Saint
 
-Matriz de routing entre agentes del marco agéntico. Referencia para el coordinator y los especialistas.
+Matriz de routing del pipeline **DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY**.
+Los modelos NO viven aquí: están centralizados en `code/.opencode/opencode.json`.
 
 ## Agentes
 
-| Agente | Modo | Modelo | Skills principales |
-|---|---|---|---|
-| `coordinator` | primary | `opencode-go/gpt-5.6-luna` | — (routing) |
-| `designer` | subagent | `opencode-go/mimo-v2.5` | design-taste, high-end-visual, apple-design, animation-vocabulary, impeccable |
-| `implementer` | subagent | `opencode-go/deepseek-v4-flash` | astro, react-best-practices, typescript-advanced-types, cloudflare-deploy, web-perf |
-| `qa` | subagent | `opencode-go/minimax-m3` | playwright, runtime-validation |
-| `dba` | subagent | `opencode-go/qwen3.7-plus` | supabase-postgres-best-practices |
-| `security` | subagent | `opencode-go/qwen3.8-max` | (auditoría read-only) |
-| `provider-scraper` | subagent | `opencode-go/glm-5.3-flash` | — (scraping/transporte) |
+| Agente | Modo | Rol |
+|---|---|---|
+| `coordinator` | primary | Router. Clasifica, delega en orden, integra, controla ciclos. No explora ni implementa. |
+| `locator` | subagent | Localiza archivos/símbolos/líneas. Presupuesto 6 steps. Solo ubicación. |
+| `diagnostic` | subagent | Causa probable, complejidad, riesgo y decisión `DIRECT`/`ESCALATE_TO_EXPERT`. Presupuesto 10 steps. |
+| `expert` | subagent | Planner de escalación. Produce un contrato ejecutable. Presupuesto 12 steps. |
+| `implementer` | subagent | Aplica el contrato. Solo archivos autorizados. Presupuesto 20 steps. |
+| `qa` | subagent | Verificación con evidencia. `PASS`/`FAIL`/`BLOCKED`. Presupuesto 15 steps. |
+| `dba` | subagent | Rama excepcional: schema/RLS/migraciones. Presupuesto 15 steps. |
+| `security` | subagent | Rama excepcional: auditoría read-only. Presupuesto 15 steps. |
+| `provider-scraper` | subagent | Rama excepcional: scrapers/transporte. Presupuesto 15 steps. |
 
-## Reglas de routing
+`designer` está **desactivado** (`disable: true`). Las decisiones de diseño pasan por `expert`.
 
-| Si la petición es... | Ruta |
-|---|---|
-| Visual/UX/animación/accesibilidad | `designer` |
-| Código/features/bugs/refactor | `implementer` |
-| Tests/validación/reproducción | `qa` |
-| Schema/migraciones/RLS/performance DB | `dba` |
-| Auditoría de seguridad | `security` |
-| Scrapers/transporte proveedores | `provider-scraper` |
-| Trivial (< 5 min) | directo al agente, sin coordinator |
-| Compleja (3+ disciplinas) | coordinator → paralelo → integración |
+## Rutas
 
-## Secuencias típicas
+### Tarea simple (mayoría de bugs/features normales)
 
-- **Feature full-stack**: designer → implementer → qa
-- **Bug report**: qa (diagnosis) → implementer (fix) → qa (regresión)
-- **Cambio de datos**: dba (migración) → implementer (aplicar) → qa (validar)
-- **Scraper nuevo**: provider-scraper (implementación) → qa (validación de datos)
+```text
+coordinator → locator → diagnostic (DIRECT) → implementer → qa
+```
+
+### Tarea compleja / incierta / alto riesgo
+
+```text
+coordinator → locator → diagnostic (ESCALATE_TO_EXPERT) → expert → implementer → qa
+```
+
+### Bug visual
+
+```text
+coordinator → locator → diagnostic
+                          ├─ DIRECT → implementer → qa
+                          └─ EXPERT → expert → implementer → qa
+```
+
+### Auditoría de seguridad
+
+```text
+coordinator → security
+```
+
+### Schema/RLS/migraciones
+
+```text
+coordinator → locator → diagnostic → dba → implementer → qa
+```
+
+### Scrapers/transporte
+
+```text
+coordinator → locator → diagnostic → provider-scraper → qa
+```
+
+## Reglas
+
+1. `locator` siempre primero. El coordinator no explora antes de delegar.
+2. `expert` solo cuando el `DIAGNOSTIC HANDOFF` diga `ESCALATE_TO_EXPERT`. Nunca por defecto.
+3. El implementer NO rediagnostica: aplica el contrato.
+4. El expert NO reexplora: recibe archivos/líneas ya localizados por locator.
+5. Escritura secuencial: un solo agente edita a la vez. Prohibido paralelizar editores sobre los mismos archivos.
+6. Revisores independientes pueden correr en paralelo SOLO si no editan y evalúan sin ver la opinión del otro (evita "agreement bias").
+7. Máximo **2 ciclos** de QA. Si el ciclo 2 falla, el coordinator escala al usuario con evidencia.
+8. Un retry sin evidencia nueva está prohibido.
+9. Todo handoff usa el bloque estructurado del agente receptor (ver `instructions/harness.md`).
+10. El coordinator solo puede invocar los agentes de su whitelist (`permission.task`).
+11. Si un agente alcanza su presupuesto de steps sin progreso, debe escalar o terminar; nunca continuar explorando indefinidamente.
+
+## Contratos de handoff
+
+Cada delegación incluye el bloque del agente receptor:
+
+- Locator → `LOCATOR HANDOFF`.
+- Diagnostic → `DIAGNOSTIC HANDOFF`.
+- Expert → `EXPERT IMPLEMENTATION CONTRACT`.
+- Implementer → recibe el contrato (`DIAGNOSTIC HANDOFF` o `EXPERT IMPLEMENTATION CONTRACT`).
+- QA → `QA REPORT`.
+
+Sin el bloque correspondiente, el agente receptor NO debe empezar y debe pedirlo.
 
 ## Permisos de git
 
 | Agente | commit | push |
 |---|---|---|
-| Todos | Solo bajo solicitud explícita del usuario | Solo bajo orden explícita e inequívoca |
-| `implementer` | Solo bajo solicitud explícita | **Nunca** sin orden explícita |
-| `security` | deny | deny |
+| coordinator, locator, diagnostic, expert | deny | deny |
+| implementer | solo con autorización explícita del usuario | solo con orden explícita e inequívoca |
+| qa | deny | deny |
+| dba, provider-scraper | solo con autorización explícita del usuario | solo con orden explícita e inequívoca |
+| security | deny | deny |
 
-## Handoff
+## Task permissions del coordinator
 
-- Cada agente guarda su output/checkpoint en `code/.opencode/autosave/resu.md`.
-- El coordinator verifica que el agente siguiente tenga el contexto mínimo antes de delegar.
+```yaml
+task:
+  "*": deny
+  locator: allow
+  diagnostic: allow
+  expert: allow
+  implementer: allow
+  qa: allow
+  dba: allow
+  security: allow
+  provider-scraper: allow
+```

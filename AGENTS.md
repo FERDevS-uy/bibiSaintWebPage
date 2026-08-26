@@ -12,6 +12,7 @@
 - **Supabase + CSV dual-read**: `loadProducts()`/`loadProductById()`/`loadRelatedProducts()` in `src/utils/loadProducts.ts` try Supabase first (`PUBLIC_USE_SUPABASE === "true"`), fall back to CSV on failure. Admin panel requires Supabase.
 - **Admin**: React SPA (AuthContext, LoginForm, ProductForm, ProductList, ProvidersPanel, ColorVariants, FilterBar, Modal, etc.) inside Astro pages at `src/pages/admin/`. Uses Supabase Auth with `supabaseClient.ts` (anon key, client-side). Server-side writes use `getSupabaseAdmin()` (service role key). Login protegido con Cloudflare Turnstile CAPTCHA (`LoginForm.tsx`).
 - **Admin security hardening**: mass-assignment protection via `pickWritable()` (`src/server/adminWhitelist.ts`) — solo columnas permitidas llegan a Supabase en writes de productos. `hasTrustedOrigin()` (`src/server/security/origin.ts`) valida Origin/Referer en API admin. RLS + storage hardening en `002_security_hardening.sql`.
+- **Nuvex sync (panel admin)**: flujo independiente del CSV. `src/server/providers/nuvexSync.ts` hace login server-side contra Nuvex (credenciales `NUVEX_USER_EMAIL`/`NUVEX_USER_PASS`, nunca al frontend), genera un preview firmado (HMAC + TTL + `jti` one-shot + actor + decision set) y aplica con revalidación. Endpoints `POST /api/admin/providers/nuvex/{preview,apply}` (rate limit 10/h en apply). Parser/transporte en `src/server/providers/nuvex/` (`client.ts`, `parser.ts`, `security.ts`) — Worker-friendly, sin cheerio, con anti-SSRF y límites. Migraciones `004_nuvex_sync.sql` (`preview_tokens`, `products.temporary_price`). El GitHub Action `catalog-sync` sigue generando solo `productos.csv` (fallback).
 - **Live prices**: Server Islands in `src/server/livePrice.ts` — fetches from provider APIs (Martina di Trento, Kai, Alondra, Nuvex) with 6s timeout, applies markup, falls back silently.
 - **Search**: Fuse.js client-side, URL-synced via debounced `searchurlchange` custom event.
 - **Category pages**: `loadCategoryProducts()` en `src/utils/loadProducts.ts` — server-side filter + pagination (10/page). Module-level TTL cache (60s) evita re-fetch de 1000+ productos en cada request.
@@ -96,207 +97,75 @@ Repo is public. **Never commit credentials, secrets, tokens, or passwords.** Use
 
 # Multi-Agent Orchestration System
 
-## Architecture
+## Pipeline
+
+**DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY**
 
 ```
-┌─────────────────────────────────────┐
-│   User Request / @bibi-coordinator  │  ← Entry point (Coordinator Agent)
-└──────────────────┬──────────────────┘
-                   │ Routes based on task type
-        ┌──────────┼──────────┬──────────┬───────────┐
-        │          │          │          │           │
-   Design     Implementation  Testing   Database  Research
-        │          │          │          │           │
-    ┌───▼──┐   ┌───▼──┐   ┌──▼──┐   ┌──▼───┐   ┌──▼──┐
-    │Design│   │Impl. │   │ QA  │   │ DBA  │   │Brain│
-    └──────┘   └──────┘   └─────┘   └──────┘   └─────┘
-        │          │          │          │           │
-        └──────────┼──────────┼──────────┼───────────┘
-                   │
-           Coordinator integrates results
+┌────────────────────────────────────────────────────────────────┐
+│  User Request → @bibi-coordinator (router ligero)              │
+└────────────────────────┬───────────────────────────────────────┘
+                         ▼
+   ┌──────────┐    ┌────────────┐    ┌────────────┐    ┌────────────┐    ┌─────┐
+   │  locator │───▶│ diagnostic │───▶│   expert   │───▶│ implementer│───▶│ qa  │
+   │  (ubica) │    │  (decide)  │    │ (escala)   │    │ (ejecuta)  │    │(valida│
+   │  barato  │    │ intermedio │    │  caro      │    │ intermedio │    │intermedio│
+   └──────────┘    └────────────┘    └────────────┘    └────────────┘    └─────┘
+     solo read        solo read         solo read         único editor       solo tests
 ```
 
-## Specialist Agents
+- **Tarea simple**: `coordinator → locator → diagnostic → implementer → qa` (sin Expert).
+- **Tarea compleja/incierta/alto riesgo**: `coordinator → locator → diagnostic → expert → implementer → qa`.
+- **Ramas excepcionales**: `security` (auditoría read-only), `dba` (schema/RLS), `provider-scraper` (scrapers) — solo cuando el diagnóstico lo indique.
 
-### 🎨 @bibi-designer
-**Mission**: Visual & interaction design decisions  
-**Owns**:
-- UI layouts, typography, color systems
-- Design system components
-- Animation/motion effects
-- Accessibility & responsive design
-- Design spec generation
+## Agentes
 
-**When to invoke**:
-```
-✓ "Rediseña la página de producto"
-✓ "Hazme un componente de carrusel"
-✓ "¿Qué tipo de animación usarías aquí?"
-✓ Cualquier solicitud visual/UX
-```
+| Agente | Rol | Presupuesto (steps) | Permisos |
+|---|---|---|---|
+| `coordinator` | Router ligero: clasifica, delega, integra, controla ciclos | 10 | edit/bash/web deny; solo delega |
+| `locator` | DISCOVER: ubica archivos/líneas/símbolos | 6 | read-only |
+| `diagnostic` | DIAGNOSE: causa probable + decisión `DIRECT`/`ESCALATE_TO_EXPERT` | 10 | read-only |
+| `expert` | PLAN: planner de escalación, produce contrato | 12 | read-only |
+| `implementer` | IMPLEMENT: aplica el contrato | 20 | único editor de producción |
+| `qa` | VERIFY: evidencia obligatoria (screenshot+interacción) | 15 | solo tests/evidencia (`edit: ask`) |
+| `dba` | Rama excepcional: schema/RLS/migraciones | 15 | editor (solo DB) |
+| `security` | Rama excepcional: auditoría read-only | 15 | read-only |
+| `provider-scraper` | Rama excepcional: scrapers/transporte | 15 | editor (solo scraper) |
 
-**Skills loaded**: 
-- `design-taste-frontend`
-- `high-end-visual-design`
-- `imagegen-frontend-web`
-- `apple-design`
-- `animation-vocabulary`
+`designer` está **desactivado** (`disable: true`). Las decisiones de diseño pasan por `expert`; las visuales acotadas se resuelven en `diagnostic`.
 
-**Token optimization**: Skips backend code context, loads design-focused skills only
+## Modelos
 
----
+Los modelos viven **solo** en `code/.opencode/opencode.json` (campo `agent.<name>.model`), desacoplados de los roles. Asignación inicial:
 
-### 💻 @bibi-implementer
-**Mission**: Code implementation & architecture  
-**Owns**:
-- Astro components, TypeScript, CSS
-- API endpoints & server logic
-- Feature implementation from specs
-- Refactoring & code quality
-- Performance optimization
+| Rol | Modelo | Lógica de costo |
+|---|---|---|
+| coordinator | `opencode-go/glm-5.3-flash` | barato: solo rutea |
+| locator | `opencode-go/glm-5.3-flash` | barato: solo ubica |
+| diagnostic | `opencode-go/deepseek-v4-flash` | intermedio: razona sobre evidencia localizada |
+| expert | `opencode-go/gpt-5.6-luna` | caro: SOLO escalación |
+| implementer | `opencode-go/deepseek-v4-flash` | intermedio: ejecuta contrato |
+| qa | `opencode-go/minimax-m3` | intermedio: verifica con evidencia |
+| dba | `opencode-go/qwen3.7-plus` | intermedio |
+| security | `opencode-go/qwen3.8-max` | caro (cuota baja): solo auditoría |
+| provider-scraper | `opencode-go/glm-5.3-flash` | barato |
 
-**When to invoke**:
-```
-✓ "Implementa el carrito de compras"
-✓ "Arregla el bug del header"
-✓ "Refactoriza ProductCarousel.astro"
-✓ Cualquier cambio de código
-```
+## Reglas
 
-**Skills loaded**:
-- `supabase-postgres-best-practices` (si es DB work)
-- Project architecture context
+- **Barato localiza → intermedio diagnostica → caro solo cuando aporta valor → intermedio ejecuta → intermedio verifica.**
+- El modelo caro (`gpt-5.6-luna`) nunca localiza archivos ni hace exploración básica.
+- El `expert` no reexplora lo que ya localizó `locator`; recibe los handoffs.
+- El `implementer` no rediagnostica: aplica el contrato.
+- Cada agente tiene un objetivo único y presupuesto estricto de steps. Si se agota sin progreso → **escala o termina**, nunca explora indefinidamente.
+- Escritura secuencial: un solo agente edita a la vez. Sin `designer + implementer` en paralelo.
+- Máximo **2 ciclos** de QA. Retry sin evidencia nueva prohibido.
+- QA independiente: para UI exige viewport exacto + screenshot real + interacción. No aceptar "parece funcionar".
+- Coordinator sin capacidad de implementar (edit/bash deny).
+- `git commit`/`git push` únicamente con autorización explícita del usuario.
 
-**Token optimization**: Keeps full codebase context, skips design philosophy
+## Contratos de handoff
 
----
-
-### 🧪 @bibi-qa
-**Mission**: Testing, validation, bug reproduction  
-**Owns**:
-- Test writing (Playwright, integration tests)
-- Bug reproduction & debugging
-- Performance validation
-- Deployment smoke tests
-- QA sign-off
-
-**When to invoke**:
-```
-✓ "Escribe tests para la búsqueda"
-✓ "¿Por qué no funciona el carrito?"
-✓ "Verifica que la migración funcione"
-```
-
-**Skills loaded**:
-- `runtime-validation`
-
-**Token optimization**: Focused test context only, minimal codebase
-
----
-
-### 📊 @bibi-dba
-**Mission**: Database schema, migrations, performance  
-**Owns**:
-- Supabase migrations & RLS policies
-- Schema design & optimization
-- Query performance tuning
-- Data integrity
-
-**When to invoke**:
-```
-✓ "Crea una migración para productos relacionados"
-✓ "¿Cuál es la mejor forma de indexar esta tabla?"
-✓ "Hardened el RLS del panel admin"
-```
-
-**Skills loaded**:
-- `supabase-postgres-best-practices`
-
-**Token optimization**: Ultra-focused database-only context
-
----
-
-### 🧠 @bibi-coordinator
-**Mission**: Route requests, optimize token flow  
-**Owns**:
-- Request analysis & routing
-- Multi-agent orchestration
-- Result integration
-- Token efficiency decisions
-
-**When to invoke**:
-```
-✓ All requests START here (unless direct specialist mention)
-✓ "Quiero rediseñar toda la página de inicio"
-✓ Complex multi-discipline tasks
-```
-
-**Process**:
-1. Analyze request complexity
-2. Identify specialist(s) needed
-3. Pass minimal context to each
-4. Integrate results into deliverable
-
----
-
-## How to Use
-
-### Direct Specialist (Fast Path)
-If you know who you need:
-```
-@bibi-designer Rediseña la navegación
-@bibi-implementer Arregla el bug del carrito
-```
-
-### Coordinator (Recommended)
-For complex or uncertain requests:
-```
-Me gustaría mejorar el flujo de checkout
-```
-→ Coordinator analyzes → Routes to Designer + Implementer → Integrates
-
-### Token Optimization Checklist
-
-- [ ] Coordinator routes, not monolithic agent
-- [ ] Each specialist gets ONLY relevant context
-- [ ] File excerpts, not full codebase
-- [ ] Reuse specialist context in same conversation
-- [ ] Load skills only when needed
-- [ ] One agent per task (avoid multi-discipline in single agent)
-
----
-
-## Skill Availability
-
-Skills físicas en `code/.opencode/skills/`:
-
-**Diseño/UX**:
-- `design-taste-frontend` — Anti-slop frontend design
-- `high-end-visual-design` — Premium visual system
-- `imagegen-frontend-web` — Design reference generation
-- `image-to-code` — Visual implementation
-- `apple-design` — iOS/Fluid interface patterns
-- `animation-vocabulary` — Motion naming
-- `emil-design-eng` — UI polish & details
-- `improve-animations` — Motion audit & planning
-- `redesign-existing-projects` — Full redesigns
-- `frontend-design` — Intentional design guidance
-- `impeccable` — UI critique / design review
-- `review-animations` — Motion review (high bar)
-
-**Base de datos**:
-- `supabase-postgres-best-practices` — DB best practices
-
-**Stack (Astro/Cloudflare/React)**:
-- `astro`, `cloudflare-deploy`, `workers-best-practices`, `wrangler`, `react-best-practices`, `typescript-advanced-types`, `seo`, `accessibility`, `web-perf`
-
-**Workflow OpenSpec** (en `code/.opencode/skills/`):
-- `openspec-propose`, `openspec-explore`, `openspec-apply-change`, `openspec-update-change`, `openspec-sync-specs`, `openspec-archive-change`
-
-**Removed** (irrelevant to e-commerce):
-- brandkit, imagegen-frontend-mobile, industrial-brutalist-ui, minimalist-ui, gpt-taste, stitch-design-taste, design-taste-frontend-v1, full-output-enforcement
-
----
+Cada delegación incluye el bloque del agente receptor (`LOCATOR HANDOFF`, `DIAGNOSTIC HANDOFF`, `EXPERT IMPLEMENTATION CONTRACT`, `QA REPORT`). Sin el bloque, el receptor no empieza y lo pide.
 
 ## Harness & Config Files
 
@@ -304,13 +173,17 @@ Capa de agentes/orquestación consolidada en `code/.opencode/` (gitignored — t
 
 ```
 code/.opencode/
-├── README.md                        # Índice de la capa
-├── agents/                          # Agentes/subagentes individuales (.md)
+├── opencode.json                    # Modelos por agente (única fuente)
+├── agents/                          # Roles, permisos, steps (.md)
 ├── orchestration/
-│   ├── routing.yaml                 # Matriz de routing entre agentes
-│   └── model-policy.md              # Política de modelos por agente
-├── instructions/                    # Principios core + harness
-├── autosave/                        # Auto-save + resu.md (checkpoints)
+│   ├── routing.yaml                 # Matriz de rutas del pipeline
+│   ├── model-policy.md              # Política de costo por rol
+│   ├── system-integration.md        # Integración pipeline + autosave + OpenSpec
+│   └── openspec-orchestration.md    # Pipeline + OpenSpec
+├── instructions/
+│   ├── project.md                   # Principios core
+│   └── harness.md                   # Contratos, presupuestos, puerta de QA
+├── autosave/                        # Checkpoints opcionales
 ├── commands/                        # Comandos OpenCode (opsx-*)
 └── skills/                          # Colección única de skills
 ```
@@ -323,5 +196,5 @@ Configuraciones de herramientas en sus carpetas estándar (no se mueven):
 ---
 
 **Last Updated**: 2026-08-26  
-**System Type**: Coordinator + 4 Specialists  
-**Token Strategy**: Narrow context per agent
+**System Type**: Pipeline DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY  
+**Token Strategy**: modelo barato localiza → intermedio diagnostica → caro solo escala → intermedio ejecuta y verifica

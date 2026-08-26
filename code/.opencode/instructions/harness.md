@@ -1,218 +1,135 @@
-# Bibi Saint — Copilot Orchestration Harness
+# Bibi Saint — Harness de Orquestación
 
-## Quick Reference
+Pipeline operativo del marco agéntico. Los agentes se rigen por `routing.yaml`, `model-policy.md` y este documento.
 
-```
-┌─────────────────────────────────────────────────────────┐
-│ COORDINATOR DECISION TREE                               │
-├─────────────────────────────────────────────────────────┤
-│                                                          │
-│ Request → Is it about visual/UX/animation?              │
-│    YES → @bibi-designer + load design-taste skills    │
-│    NO  → Next question                                  │
-│                                                          │
-│       → Is it about code/features/bugs?                 │
-│    YES → @bibi-implementer + full codebase context     │
-│    NO  → Next question                                  │
-│                                                          │
-│       → Is it about testing/validation?                 │
-│    YES → @bibi-qa + runtime-validation skill           │
-│    NO  → Next question                                  │
-│                                                          │
-│       → Is it about database/schema/RLS?                │
-│    YES → @bibi-dba + supabase-postgres-best-practices  │
-│    NO  → Uncertain → Ask for clarification             │
-│                                                          │
-└─────────────────────────────────────────────────────────┘
+## Pipeline
+
+**DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY**
+
+```text
+Ruta simple:   coordinator → locator → diagnostic → implementer → qa
+Ruta compleja: coordinator → locator → diagnostic → expert → implementer → qa
 ```
 
-## Context Management Per Agent
+## Presupuestos por agente (steps)
 
-### 🎨 Designer Context (Minimal)
-```
-Load: Design skills only
-Skip: Backend code, database schema, implementation details
-Include: Design system, color palette, existing UI patterns
-Keep: Visual consistency rules, brand guidelines
-```
+| Agente | steps | Lecturas máx | Escalación si se agota |
+|---|---|---|---|
+| `locator` | 6 | 8 | `NOT_FOUND` / `BLOCKED` |
+| `diagnostic` | 10 | 6 | `ESCALATE_TO_EXPERT` o termina |
+| `expert` | 12 | 5 | `ESCALATE_TO_USER` |
+| `implementer` | 20 | — | `BLOCKED` si el contrato está incompleto |
+| `qa` | 15 | — | `FAIL` con evidencia |
+| `dba` / `security` / `provider-scraper` | 15 | — | reporte |
 
-### 💻 Implementer Context (Full)
-```
-Load: Full codebase context, architecture
-Skip: Detailed design specs (link to design output)
-Include: AGENTS.md (architecture), tsconfig, build config
-Keep: API contracts, data models, deployment architecture
-```
+Regla general: si un agente alcanza su presupuesto de steps sin progreso significativo, **escala o termina**; nunca continúa explorando indefinidamente.
 
-### 🧪 QA Context (Focused)
-```
-Load: runtime-validation skill, test examples
-Skip: Non-test code, design philosophy
-Include: Test file locations, existing test patterns
-Keep: Deployment config, environment setup
-```
+## Contratos de handoff (obligatorios)
 
-### 📊 DBA Context (Ultra-Narrow)
-```
-Load: supabase-postgres-best-practices skill
-Skip: Frontend code, UI components
-Include: Migration files, RLS policies, schema
-Keep: Performance requirements, data integrity rules
+Cada delegación incluye el bloque del agente receptor. Sin él, el agente receptor NO debe empezar y debe pedirlo.
+
+### LOCATOR HANDOFF → diagnostic
+
+```text
+Status: FOUND | NOT_FOUND | BLOCKED
+Request summary:
+Relevant files: (path + lines + symbols)
+Why relevant:
+Minimal excerpts/context:
+Observed constraints:
+Unknowns:
+Suggested next agent:
+Stop reason:
 ```
 
-## Token Optimization Decisions
+### DIAGNOSTIC HANDOFF → implementer (DIRECT) o expert (ESCALATE_TO_EXPERT)
 
-### ✅ These SAVE tokens:
-1. **Route early**: Don't load full context if one agent handles it
-2. **Specialist skills only**: Designer doesn't need DBA skill
-3. **File excerpts**: Pass line ranges, not entire files
-4. **Reuse context**: Same specialist across multiple tasks in conversation
-5. **Direct mentions**: `@bibi-implementer` skips coordinator overhead
-
-### ❌ These WASTE tokens:
-1. Monolithic agent handling 3 disciplines
-2. Loading all 11 skills upfront
-3. Passing 10KB files when 200B excerpt suffices
-4. Coordinator re-analyzing every message
-5. Asking one agent to learn full stack context
-
-## Multi-Task Integration Pattern
-
-When ONE REQUEST needs MULTIPLE specialists:
-
-```
-User: "Rediseña el flujo de checkout Y arregla el bug del carrito"
-
-Coordinator:
-1. Parse: 2 tasks (design + implementation)
-2. Route designer: "Spec the checkout flow visually"
-3. Route implementer: "Fix bug + implement new checkout"
-4. Wait for both outputs
-5. Integrate: 
-   - Designer output → CSS + component structure
-   - Implementer output → TypeScript + server logic
-   - Result: One coherent checkout feature
+```text
+Decision: DIRECT | ESCALATE_TO_EXPERT
+Problem:
+Evidence:
+Probable cause:
+Confidence: HIGH | MEDIUM | LOW
+Complexity: SIMPLE | NORMAL | COMPLEX
+Risk: LOW | MEDIUM | HIGH
+Authorized files:
+Minimal solution:
+Do not touch:
+Acceptance criteria:
+Verification commands:
+Why Expert is unnecessary:
 ```
 
-## When Task Spans Disciplines
+### EXPERT IMPLEMENTATION CONTRACT → implementer
 
-Example: "El carrito no guarda datos entre pestañas"
-
-1. **Initial diagnosis** (QA): Bug is localStorage not syncing
-2. **Root cause** (Implementer): `renderCart.ts` missing storage listener
-3. **Integration test** (QA): Verify multi-tab sync works
-4. **Final validation**: Deploy to staging
-
-→ Route: QA → Implementer → QA (not monolithic)
-
-## Rules for Each Agent Role
-
-### Coordinator MUST
-- [ ] Analyze before routing
-- [ ] Pass minimal context to specialists
-- [ ] Confirm specialist has what they need
-- [ ] Integrate outputs without re-running work
-- [ ] Track which specialist owns what
-
-### Designer MUST
-- [ ] Load design-taste + image-gen skills
-- [ ] Output: Figma spec OR design document OR images
-- [ ] NOT write production code
-- [ ] Provide clear CSS/Astro implementation notes
-- [ ] Flag accessibility issues
-
-### Implementer MUST
-- [ ] Load full architecture context
-- [ ] Output: Working code + tests
-- [ ] Follow design spec from Designer
-- [ ] NOT re-design (defer to Designer)
-- [ ] Optimize for performance & bundle size
-
-### QA MUST
-- [ ] Load runtime-validation skill
-- [ ] Output: Test suite + validation report
-- [ ] Verify across browsers & devices
-- [ ] NOT write feature code (defer to Implementer)
-- [ ] Confirm design intent is met
-
-### DBA MUST
-- [ ] Load Postgres best practices skill
-- [ ] Output: Migration + tests + performance analysis
-- [ ] Maintain RLS security model
-- [ ] NOT write application code
-- [ ] Document all schema changes
-
-## Conversation State
-
-Track across messages:
-```json
-{
-  "current_agents": ["@bibi-designer"],
-  "active_specialists": {
-    "designer": "working on checkout redesign",
-    "implementer": "idle",
-    "qa": "idle",
-    "dba": "idle"
-  },
-  "context_loaded": ["design-taste-frontend", "imagegen-frontend-web"],
-  "reuse_next": ["designer context", "checkout files"]
-}
+```text
+Decision:
+Problem:
+Confirmed evidence:
+Files authorized:
+Exact change:
+Implementation steps:
+Do not touch:
+Acceptance criteria:
+Functional tests:
+UI evidence required:
+Verification commands:
+Expected risks:
+Rollback boundary:
 ```
 
-**Action**: On NEXT request, reuse designer context if related to checkout
+### QA REPORT → coordinator
 
-## Example: Full Workflow
+```text
+Verdict: PASS | FAIL | BLOCKED
+Criteria checked:
+Evidence files:
+Viewport:
+Interactions tested:
+Commands:
+Real results:
+Failures:
+Regression status:
+Next action:
+```
 
-**User**: "Necesito un nuevo panel de administrador de pedidos"
+## Puerta de QA (no se pasa sin evidencia)
 
-**Coordinator decides**:
-- Complexity: HIGH (UI + backend + tests)
-- Route: Designer → Implementer → QA
+Para declarar **PASS** en bugs visuales:
 
-**Step 1 - Designer** (20 min, 8K tokens)
-- Load: `design-taste-frontend`, `imagegen-frontend-web`
-- Output: 3 design images (list view, detail view, bulk actions)
-- Writes: CSS structure, component blueprint, accessibility notes
-- Saves: Implementer doesn't re-design
+- Screenshot en el viewport exacto del reporte.
+- Verificación visual: el defecto desapareció (borde completo, sin recorte, alineación correcta).
+- Comportamiento interactivo: selección, focus y scroll funcionan.
+- Comandos de verificación ejecutados con su resultado real.
 
-**Step 2 - Implementer** (40 min, 20K tokens)
-- Load: Full codebase, designer output (linked)
-- Takes: Design CSS + blueprint
-- Writes: React components, admin API endpoints, server logic
-- Tests: Unit tests for main logic
-- Saves: QA has working code to validate
+Se marca **FAIL** si:
 
-**Step 3 - QA** (15 min, 10K tokens)
-- Load: runtime-validation skill, test examples
-- Takes: Implementer code
-- Writes: E2E tests (Playwright), edge case tests
-- Tests: Multi-user concurrent access, permission matrix
-- Output: QA report + test suite
+- La captura aún muestra el defecto aunque las métricas DOM "pasen".
+- No hay screenshot o se usó un viewport distinto al reportado.
+- Solo se aportan tamaños/rects/ausencia de errores JS sin evidencia visual.
+- Se dice "parece funcionar" sin evidencia.
 
-**Total**: 38K tokens vs. 60K+ for monolithic agent
+## Reglas de control
 
----
+1. Escritura secuencial: un solo agente edita a la vez. No paralelizar editores sobre los mismos archivos.
+2. Revisores independientes en paralelo SOLO si no editan y evalúan sin ver la opinión del otro (evita "agreement bias").
+3. Máximo **2 ciclos** de corrección por bug. Si QA falla 2 veces, escalar al usuario con evidencia. Un retry sin evidencia nueva está prohibido.
+4. Los subagentes corren en sesiones aisladas: todo contexto necesario va en el prompt de `task`, nunca "recordar" de la conversación padre.
+5. El coordinator no explora, no diagnostica, no implementa: solo rutea y controla ciclos.
+6. Sin loops `coordinator → agente → coordinator`: cada agente entrega su handoff y termina.
+7. El `expert` solo se invoca cuando `diagnostic` decide `ESCALATE_TO_EXPERT`.
+8. El implementer no rediagnostica: aplica el contrato.
 
-## When to Break This Pattern
+## Anti-patrones (prohibidos)
 
-1. **Trivial requests** (< 5 min): Skip coordinator, go direct
-   ```
-   "Cambia el color del botón a rojo" → Just implement
-   ```
+- El `expert` reexplorando archivos que el `locator` ya localizó.
+- El implementer volviendo a diagnosticar o reexplorar de forma amplia.
+- QA aprobando por `boundingClientRect` o ausencia de errores JS sin screenshot.
+- Agentes explorando sin presupuesto o reejecutando la misma hipótesis sin evidencia nueva.
+- Modelo caro haciendo trabajo de localización o exploración básica.
+- Mandar un bug visual directo al implementer sin diagnóstico.
+- Handoff ambiguo vía archivos compartidos (`resu.md`) sin contrato estructurado en el prompt de `task`.
+- Ignorar el timing de `astro:page-load`: los clicks inmediatos post-carga pueden no responder hasta que el script engancha los listeners.
 
-2. **Emergency fix**: Implementer handles alone
-   ```
-   "¿Por qué no cargan los productos?" → Quick debug
-   ```
-
-3. **One-discipline tasks**: No routing needed
-   ```
-   "Crea un test para la búsqueda" → QA directly
-   ```
-
----
-
-**Version**: 1.0  
-**Effective**: 2026-08-22  
-**Token Baseline**: ~15-40K per feature (vs. 50K+ monolithic)  
-**Target**: 30-40% reduction in token consumption
+**Version**: 3.0
+**Effective**: 2026-08-26

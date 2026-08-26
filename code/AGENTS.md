@@ -54,13 +54,17 @@ Todas públicas en build (`PUBLIC_*`) o runtime en Cloudflare (`SUPABASE_*`, `SM
 
 ## Marco agéntico
 
-- **Agentes**: `code/.opencode/agents/` — `coordinator` (primary), `designer`, `implementer`, `qa`, `dba`, `security`, `provider-scraper` (subagents).
+- **Pipeline**: `DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY`. Ruta simple: `coordinator → locator → diagnostic → implementer → qa`. Ruta compleja: `coordinator → locator → diagnostic → expert → implementer → qa`.
+- **Agentes**: `code/.opencode/agents/` — `coordinator` (primary, router ligero), `locator`, `diagnostic`, `expert`, `implementer`, `qa`, `dba`, `security`, `provider-scraper` (subagents). `designer` desactivado.
 - **Routing**: `code/.opencode/orchestration/routing.yaml`.
-- **Modelos**: `code/.opencode/orchestration/model-policy.md` — modelo por agente en su frontmatter.
+- **Modelos**: solo en `code/.opencode/opencode.json` (`agent.<name>.model`), desacoplados de los roles. `expert` = `gpt-5.6-luna` (caro, solo escalación); `locator`/`coordinator` baratos; `diagnostic`/`implementer` intermedios.
+- **Presupuestos**: `steps` estrictos por agente (locator 6, diagnostic 10, expert 12, implementer 20, qa 15). Si un agente se agota sin progreso → escala o termina.
 - **Reglas**:
   - El implementer puede hacer `git commit` SOLO cuando el usuario lo solicita explícitamente.
   - Ningún agente hace `git push` sin orden explícita del usuario.
-  - Coordinador rutea por disciplina; contexto narrow por agente.
+  - Coordinator sin capacidad de implementar (edit/bash deny); solo rutea y controla máx 2 ciclos de QA.
+  - Escritura secuencial; sin ejecución paralela de editores.
+  - QA con evidencia obligatoria para UI (viewport exacto + screenshot + interacción).
 - **Skills**: `code/.opencode/skills/` — colección única (diseño, stack, OpenSpec, supabase).
 
 ## Convenciones de código

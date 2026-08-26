@@ -1,204 +1,61 @@
-# Auto-Save & Context Preservation System
+# Auto-Save & Context Preservation Rules
 
 ## Objetivo
-Guardar automáticamente lo **relevante** cada 5-10 mensajes, ahorrando tokens y manteniendo contexto entre sesiones.
+Guardar lo **relevante** para no perder contexto entre sesiones. Los checkpoints son opcionales; el handoff entre agentes viaja en el prompt de `task`, no en estos archivos.
 
-## Trigger de Auto-Save
+## Cuándo guardar
 
-**Cada 5-10 mensajes** O cuando ocurra:
-- Decisión arquitectónica importante
-- Cambio de proyecto/tarea
-- Investigación completada
-- Bug reproducido/resuelto
-- Fin de sesión inminente
+- Fin de sesión inminente.
+- Decisión arquitectónica importante.
+- Cambio de proyecto/tarea.
+- Investigación completada.
+- Bug reproducido o resuelto.
 
-## Extracción de Información
+## Qué guardar
 
-### ✅ GUARDA en `code/.opencode/autosave/` (breveedad)
-```
-- Decisiones clave (2-3 líneas)
-- URLs/paths importantes
-- Estados de pendientes
-- Próximos pasos
-- Números clave (versiones, IDs, quotes)
-```
+### En `code/.opencode/autosave/*.md` (breve)
 
-**Límite**: 3-5 bullets por sección, máx 200 palabras totales
+- Decisiones clave (2-3 líneas).
+- URLs/paths importantes.
+- Estados de pendientes.
+- Próximos pasos.
 
-### 📄 GUARDA en `resu.md` (extenso)
-```
-- Investigaciones profundas
-- Logs de errores largos
-- Análisis de código > 100 líneas
-- Múltiples opciones evaluadas
-- Evidencia técnica / pruebas
-- Conversaciones que tomaron > 20 mensajes
-```
+**Límite**: 3-5 bullets por sección, máx 200 palabras.
 
-**Formato**: Markdown ordenado, linkeable desde memory
+### En `resu.md` (extenso)
 
-### 🗑️ DESCARTA
-- Saludos / pequeña charla
-- Confirmaciones ("ok", "hecho")
-- Preguntas retóricas
-- Explicaciones que se repiten
+- Investigaciones profundas.
+- Reportes de QA / evidencia técnica.
+- Análisis de código > 100 líneas.
+- Múltiples opciones evaluadas.
 
----
+### Descartar
 
-## Sistema de References
+- Saludos, confirmaciones, explicaciones repetidas.
 
-### En `code/.opencode/autosave/*.md`:
-```markdown
-# Tema: [X]
-
-**Decisión**: Usar @bibi-coordinator para routing
-**Razón**: Reduce tokens 30-40%
-
-→ **Ver detalles**: `resu.md#sistema-multi-agente`
-
-**Status**: ✅ Implementado
-**Próximo**: Probar con primer task real
-```
-
-### Estructura de `resu.md`:
+## Estructura recomendada de `resu.md`
 
 ```markdown
 # Resumen Session [Fecha]
 
-## Sección 1: Multi-Agent System
-**Decisión**: Crear 4 especialistas + coordinator
-**Evidencia**: 
-- [links a convo relevante]
-- Ratios de token: 38K vs 60K+ monolítico
-
-### Detalles técnicos
-[Contenido extenso acá]
-
-### Próximas acciones
-1. Probar routing en primer feature real
-2. Medir actual vs baseline
-
----
-
-## Sección 2: Header.astro Issues
-**Problema**: White border con scrollbar toggle
-**Solución**: Revertir cambios, mantener original
-
-[Análisis extenso si aplica]
-
----
+## Sección: <tema>
+**Decisión**: ...
+**Evidencia**: ...
+**Próximas acciones**:
+1. ...
 ```
 
----
+## Integración con el pipeline
 
-## Workflow Auto-Save
+- Cada agente entrega su handoff estructurado (LOCATOR/DIAGNOSTIC/CONTRACT/QA) en el prompt de `task`.
+- `resu.md` puede enlazar el output de especialistas para continuar en otra sesión, pero nunca reemplaza un contrato.
+- No usar archivos compartidos como canal de coordinación implícito.
 
-### Al finalizar sección temática:
+## Reglas de limpieza
 
-```json
-{
-  "checkpoint": "multi-agent-system-v1",
-  "timestamp": "2026-08-22T14:30Z",
-  "summary": "Completado sistema orchestration: 
-    - code/.opencode/instructions/project.md ✅
-    - AGENTS.md ✅  
-    - code/.opencode/instructions/harness.md ✅",
-  
-  "memory_files_saved": [
-    "code/.opencode/autosave/multi-agent-system.md",
-    "resu.md#sistema-multi-agente"
-  ],
-  
-  "context_for_next_session": {
-    "active_files": ["code/src/layouts/Header.astro"],
-    "pending_tasks": ["Test routing with design task"],
-    "token_baseline": "~8K per design task"
-  },
-  
-  "skip_on_reload": [
-    "Skill cleanup (done)",
-    "Initial coordinator research (done)"
-  ]
-}
-```
+- Mergear checkpoints viejos → `resu.md`.
+- Archivar completados a `autosave/archive/`.
+- Nunca borrar: decisiones críticas, bug reports, patrones aprendidos.
 
----
-
-## Cómo el Chat Lee Context
-
-### Entrada (start de sesión):
-```
-1. Lee code/.opencode/autosave/*.md (< 1K tokens)
-2. Si hay references → Lee sections de resu.md
-3. Si hay checkpoint → Carga estado directo
-4. ¿Task nueva? → Olvida skip items
-```
-
-### Durante sesión:
-```
-- Cada ~5 mensajes: "Auto-guardando checkpoint..."
-- Usuario ve resumen brevísimo (1 línea)
-- Memory actualiza, resu.md crece
-```
-
-### Salida (end sesión):
-```
-- Última checkpoint se guarda
-- Pending tasks listados
-- Next specialist agent sugerido
-- Cleanup automático de memory temporal
-```
-
----
-
-## Integración con Multi-Agent System
-
-### Cuando cambias de agente:
-```
-✅ Checkpoint automático:
-  - Lo que @bibi-designer produjo → resu.md
-  - Decisión de routing → memory
-  - Next handoff a @bibi-implementer → ready
-  - Tokens ahorrados: Designer no recarga diseñador history
-```
-
----
-
-## Reglas de Limpieza
-
-### Cada semana:
-- [ ] Mergear checkpoints viejos → `resu.md`
-- [ ] Archivar completados a `code/.opencode/autosave/archive/`
-- [ ] Purgar memory duplicada
-
-### Nunca borres:
-- Decisiones críticas
-- Bug reports
-- Learned patterns
-
----
-
-## Formato Quick-Reference
-
-```markdown
-# Auto-Save Checklist
-
-Every 5 messages:
-- [ ] ¿Hay decision arquitectónica? → memory
-- [ ] ¿Hay investigación > 10 líneas? → resu.md
-- [ ] ¿Hay blocker/learnings? → memory
-- [ ] ¿Hay próximos pasos claros? → memory
-
-On session end:
-- [ ] Final checkpoint created
-- [ ] Pending tasks listed
-- [ ] Next session entry point clear
-- [ ] References working (no broken links)
-```
-
----
-
-**Version**: 1.0  
-**Effective**: Próxima sesión  
-**Token Savings**: ~25-35% per conversation  
-**Setup Time**: 2-3 messages para estableder pattern
+**Version**: 2.0
+**Effective**: 2026-08-26

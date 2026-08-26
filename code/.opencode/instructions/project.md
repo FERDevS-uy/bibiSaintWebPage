@@ -1,81 +1,52 @@
-# Bibi Saint — Copilot Instructions
+# Bibi Saint — Core Principles
 
-## Core Principles
+## Principios core
 
-- **Token Efficiency First**: Multi-agent orchestration with a coordinator routing to specialists
-- **Spanish Communication**: Responder siempre en español
-- **No Slop**: Anti-generic design, premium quality output
-- **Semantic Alignment**: Mantener coherencia visual y arquitectónica en todo el proyecto
+- **Token Efficiency First**: pipeline agéntico donde el modelo caro solo se usa cuando aporta valor.
+- **Spanish Communication**: responder siempre en español.
+- **No Slop**: anti-generic design, premium quality output.
+- **Semantic Alignment**: mantener coherencia visual y arquitectónica en todo el proyecto.
 
-## System Architecture
+## Pipeline agéntico
 
-This workspace uses a **coordinator-specialist** agent pattern:
-- **Coordinator Agent** (`@bibi-coordinator`): Analyzes requests, routes to specialists
-- **Specialist Agents**: Frontend Designer, Implementation Engineer, QA/Testing, Database Expert
-- **Skills**: Domain knowledge modules (design, animations, Supabase, etc.)
+Este workspace usa el pipeline **DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY**:
 
-## When to Route Tasks
+- `coordinator` (router ligero): clasifica y delega en orden. No explora ni implementa.
+- `locator`: localiza archivos/líneas/símbolos (barato, read-only).
+- `diagnostic`: causa probable + decisión `DIRECT` / `ESCALATE_TO_EXPERT` (intermedio, read-only).
+- `expert`: planner de escalación, produce contrato ejecutable (caro, solo cuando diagnostic lo decide).
+- `implementer`: aplica el contrato (único editor de producción).
+- `qa`: verifica con evidencia (solo tests/evidencia).
+- Ramas excepcionales: `security` (read-only), `dba`, `provider-scraper`.
 
-### 🎨 Frontend Design Tasks
-Route to `@bibi-designer` if task includes:
-- UI/UX design, layout, typography, colors
-- Design system decisions
-- Visual hierarchy, responsiveness
-- Animation/motion effects
-- Accessibility review
+Ruta simple: `coordinator → locator → diagnostic → implementer → qa`
+Ruta compleja: `coordinator → locator → diagnostic → expert → implementer → qa`
 
-**Token savings**: Designer uses image-gen skills + design-taste, skips backend context
+## Cuándo delegar
 
-### 💻 Implementation Tasks  
-Route to `@bibi-implementer` if task includes:
-- Code changes, refactoring, new features
-- Astro components, TypeScript, CSS
-- API integration, server logic
-- Database migrations (with Supabase skill)
+- **Bug/feature normal** → pipeline simple.
+- **Complejo/incierto/alto riesgo/ambigüedad visual** → pipeline con `expert`.
+- **Database/schema/RLS** → pipeline con `dba`.
+- **Scrapers/transporte** → pipeline con `provider-scraper`.
+- **Auditoría de seguridad** → `security` directo.
 
-**Token savings**: Implementer focuses on code, skips design philosophy
+Regla de oro: **barato localiza → intermedio diagnostica → caro solo escala → intermedio ejecuta → intermedio verifica.**
 
-### 🧪 Testing & Validation Tasks
-Route to `@bibi-qa` if task includes:
-- Test writing (Playwright, integration tests)
-- Bug reproduction, debugging
-- Performance validation
-- Deployment verification
+## Modelos
 
-### 📊 Database & Schema Tasks
-Route to `@bibi-dba` if task includes:
-- Supabase migrations, RLS policies
-- Schema design, indexes, queries
-- Data integrity, performance tuning
+Los modelos viven solo en `code/.opencode/opencode.json` (`agent.<name>.model`), desacoplados de los roles. Para cambiar un modelo, se edita `opencode.json`, no los agentes.
 
-**Token savings**: DBA uses Postgres best practices skill, focuses narrowly
+## Reglas operativas
 
-## Coordinator Responsibilities
+1. Presupuestos de `steps` estrictos por agente. Si un agente se agota sin progreso → escala o termina.
+2. Escritura secuencial: un solo agente edita a la vez.
+3. Máximo 2 ciclos de QA. Retry sin evidencia nueva prohibido.
+4. QA independiente con evidencia obligatoria para UI (viewport exacto + screenshot + interacción).
+5. El coordinator solo delega; no implementa.
+6. `git commit`/`git push` únicamente con autorización explícita del usuario.
+7. Contexto narrow: pasar extractos y handoffs, no el repo completo.
 
-When a request comes in, the **Coordinator** must:
-
-1. **Analyze complexity**: Is this multi-discipline? Can it be handled by one specialist?
-2. **Route efficiently**: Pick ONE primary agent + optional dependencies
-3. **Provide context**: Pass only relevant AGENTS.md + skills to downstream agents
-4. **Avoid redundancy**: Don't pass full codebase to every agent
-5. **Verify handoff**: Confirm specialist has what they need before handing off
-6. **Integrate results**: Combine specialist outputs into final deliverable
-
-## Token Optimization Rules
-
-### ✅ DO
-- Use `@mention` to route tasks (agents have focused context)
-- Load skills ONLY when needed (e.g., supabase-postgres-best-practices for schema work)
-- Pass file excerpts, not entire files
-- Reuse specialist context across similar tasks in same conversation
-
-### ❌ DON'T
-- Load all skills upfront
-- Pass entire AGENTS.md to every agent (coordinator only)
-- Ask one agent to be full-stack (violates specialist principle)
-- Copy-paste code between agents without explicit routing
-
-## Project Context (Always Available)
+## Contexto del proyecto
 
 **Stack**: Astro 5 SSR + Cloudflare Workers + Supabase + React Islands
 **Root**: `/Users/franccesco.giordano/Documents/proyectos personales/bibiSaintWebPage`
@@ -83,15 +54,13 @@ When a request comes in, the **Coordinator** must:
 **Deploy**: GitHub Actions → Cloudflare Workers
 **Design System**: Red gradient hero, beige/tan background, yellow accents
 
-## Communication Style
+## Estilo de comunicación
 
-- **Spanish first** (user preference)
-- **Concise**: Skip unnecessary preamble
-- **Action-oriented**: "Aquí está hecho" not "Voy a hacer"
-- **Show work**: Explain token-saving decisions when coordinating
+- **Spanish first** (preferencia del usuario).
+- **Conciso**: sin preámbulos innecesarios.
+- **Action-oriented**: "Aquí está hecho" no "Voy a hacer".
 
 ---
 
-**Last Updated**: 2026-08-22  
-**Coordinator Agent**: `@bibi-coordinator`  
-**Skill Cleanup**: Removed 8 irrelevant skills (see AGENTS.md)
+**Last Updated**: 2026-08-26
+**System**: Pipeline DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY
