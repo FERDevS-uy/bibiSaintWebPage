@@ -357,6 +357,9 @@ const pathname = Astro.url.pathname;
 
 <script>
   function initCarousel(container: HTMLElement) {
+    if (container.dataset.carouselInitialized) return;
+    container.dataset.carouselInitialized = "true";
+
     const track = container.querySelector(".carousel-track") as HTMLElement;
     const prevBtn = container.querySelector(".prev-arrow") as HTMLButtonElement;
     const nextBtn = container.querySelector(".next-arrow") as HTMLButtonElement;
@@ -401,9 +404,11 @@ const pathname = Astro.url.pathname;
     }
   }
 
-  // Inicializar todos los carruseles de la página
-  document.querySelectorAll(".carousel-container").forEach((carousel) => {
-    initCarousel(carousel as HTMLElement);
+  // Inicializar todos los carruseles de la página (se re-ejecuta con View Transitions)
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll(".carousel-container").forEach((carousel) => {
+      initCarousel(carousel as HTMLElement);
+    });
   });
 
 
