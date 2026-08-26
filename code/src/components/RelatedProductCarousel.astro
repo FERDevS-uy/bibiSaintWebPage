@@ -68,8 +68,8 @@ const pathname = Astro.url.pathname;
 
 <style>
   .related {
-    margin-top: 60px;
-    padding-block: 40px;
+    margin-top: 48px;
+    padding-block: 32px;
     background: rgba(0, 0, 0, 0.015);
     border-radius: 16px;
   }
@@ -81,11 +81,11 @@ const pathname = Astro.url.pathname;
     gap: 2px;
     text-align: center;
     padding-inline: max(15vw, 1.5rem);
-    margin-bottom: 22px;
+    margin-bottom: 16px;
   }
 
   .related__title {
-    font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+    font-size: clamp(1.35rem, 2.1vw, 1.85rem);
     font-weight: 700;
     color: var(--principal-text-color);
     letter-spacing: -0.02em;
@@ -93,7 +93,7 @@ const pathname = Astro.url.pathname;
   }
 
   .related__count {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--principal-text-color);
     opacity: 0.6;
@@ -106,12 +106,12 @@ const pathname = Astro.url.pathname;
 
   .related__track {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     width: 100%;
-    padding-block: 8px;
+    padding-block: 6px;
     padding-inline: max(1.5rem, 5vw);
     -webkit-overflow-scrolling: touch;
   }
@@ -121,9 +121,9 @@ const pathname = Astro.url.pathname;
   }
 
   .related__item {
-    flex: 0 0 65vw;
+    flex: 0 0 60vw;
     scroll-snap-align: start;
-    scroll-snap-stop: always;
+    scroll-snap-stop: normal;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -150,7 +150,7 @@ const pathname = Astro.url.pathname;
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    border-radius: 14px;
+    border-radius: 12px;
     background: #ffffff;
     border: 1px solid #e8e6df;
     transition: box-shadow 0.35s ease, border-color 0.35s ease;
@@ -189,7 +189,7 @@ const pathname = Astro.url.pathname;
 
   .related__info {
     width: 100%;
-    padding: 10px 4px 4px;
+    padding: 8px 4px 2px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -197,7 +197,7 @@ const pathname = Astro.url.pathname;
   }
 
   .related__name {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 650;
     color: var(--principal-text-color);
     line-height: 1.35;
@@ -211,7 +211,7 @@ const pathname = Astro.url.pathname;
 
   .related__price {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 800;
     color: #c11010;
     margin-top: auto;
@@ -224,8 +224,8 @@ const pathname = Astro.url.pathname;
 
   @media (min-width: 1000px) {
     .related {
-      margin-top: 80px;
-      padding-block: 48px;
+      margin-top: 64px;
+      padding-block: 36px;
     }
 
     .related__header {
@@ -233,31 +233,31 @@ const pathname = Astro.url.pathname;
     }
 
     .related__title {
-      font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+      font-size: clamp(1.35rem, 2.1vw, 1.85rem);
     }
 
     .related__track {
-      gap: 20px;
+      gap: 16px;
       padding-inline: max(1.5rem, 5vw);
       scroll-snap-type: none;
     }
 
     .related__item {
-      flex: 0 0 calc((100% - 2 * 20px) / 3);
+      flex: 0 0 calc((100% - 2 * 16px) / 3);
       scroll-snap-align: unset;
       scroll-snap-stop: unset;
     }
 
     .related__info {
-      padding: 12px 6px 6px;
+      padding: 8px 4px 2px;
     }
 
     .related__name {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
 
     .related__price {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     .related__arrow {
@@ -267,8 +267,8 @@ const pathname = Astro.url.pathname;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       border: none;
       background: #ffffff;
@@ -294,11 +294,11 @@ const pathname = Astro.url.pathname;
     }
 
     .related__arrow--prev {
-      left: -18px;
+      left: -16px;
     }
 
     .related__arrow--next {
-      right: -18px;
+      right: -16px;
     }
   }
 
@@ -328,18 +328,34 @@ const pathname = Astro.url.pathname;
 <script>
   const SEL = {
     carousel: ".related[data-carousel]",
+    viewport: ".related__viewport",
     track: ".related__track",
     item: ".related__item",
+    imgWrap: ".related__img-wrap",
     prevBtn: ".related__arrow--prev",
     nextBtn: ".related__arrow--next",
   } as const;
 
-  const SWIPE_THRESHOLD = 40;
-  const GAP = 20;
+  const GAP = 16;
 
   document.addEventListener("astro:page-load", () => {
     document.querySelectorAll<HTMLElement>(SEL.carousel).forEach(initRelated);
   });
+
+  // Centra las flechas verticalmente respecto a la imagen (sin contar título ni precio).
+  function positionArrowsOnImage(container: HTMLElement): void {
+    const viewport = container.querySelector<HTMLElement>(SEL.viewport);
+    const firstImg = container.querySelector<HTMLElement>(SEL.imgWrap);
+    const prevBtn = container.querySelector<HTMLElement>(SEL.prevBtn);
+    const nextBtn = container.querySelector<HTMLElement>(SEL.nextBtn);
+    if (!viewport || !firstImg || !prevBtn || !nextBtn) return;
+
+    const vRect = viewport.getBoundingClientRect();
+    const iRect = firstImg.getBoundingClientRect();
+    const center = iRect.top - vRect.top + iRect.height / 2;
+    prevBtn.style.top = `${center}px`;
+    nextBtn.style.top = `${center}px`;
+  }
 
   function initRelated(container: HTMLElement): void {
     if (container.dataset.initialized) return;
@@ -351,35 +367,28 @@ const pathname = Astro.url.pathname;
 
     if (!track) return;
 
-    // --- Navegación por flechas/teclado/swipe: mismo patrón que el home (2 ítems por paso) ---
+    positionArrowsOnImage(container);
+    if ("ResizeObserver" in window) {
+      const ro = new ResizeObserver(() => positionArrowsOnImage(container));
+      ro.observe(container);
+    }
+    window.addEventListener("resize", () => positionArrowsOnImage(container), { passive: true });
+
+    // --- Navegación por flechas/teclado: mismo patrón que el home (2 ítems por paso) ---
+    // El swipe táctil queda a cargo del scroll nativo + scroll snap (sin scrollBy custom),
+    // para evitar la doble animación y las paradas rígidas en mobile.
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     function scrollStep(forward: boolean): void {
       const itemWidth = (track.querySelector(SEL.item) as HTMLElement)?.offsetWidth || 250;
-      track.scrollBy({ left: (forward ? 1 : -1) * (itemWidth + GAP) * 2, behavior: "smooth" });
+      track.scrollBy({
+        left: (forward ? 1 : -1) * (itemWidth + GAP) * 2,
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+      });
     }
 
     prevBtn?.addEventListener("click", () => scrollStep(false));
     nextBtn?.addEventListener("click", () => scrollStep(true));
-
-    // Touch swipe
-    let touchStartX = 0;
-    track.addEventListener(
-      "touchstart",
-      (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      },
-      { passive: true },
-    );
-
-    track.addEventListener(
-      "touchend",
-      (e) => {
-        const diff = touchStartX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > SWIPE_THRESHOLD) {
-          scrollStep(diff > 0);
-        }
-      },
-      { passive: true },
-    );
 
     // Teclado
     document.addEventListener("keydown", (e) => {
