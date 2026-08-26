@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import Modal from "./Modal";
+import NuvexSyncPanel from "./NuvexSyncPanel";
 
 interface SyncResult {
   provider: string;
@@ -405,6 +406,8 @@ export default function ProvidersPanel() {
           </div>
         )}
       </div>
+
+      <NuvexSyncPanel />
     </div>
   );
 }

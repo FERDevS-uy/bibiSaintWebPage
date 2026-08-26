@@ -298,6 +298,7 @@ export class SupabaseProductRepository implements ProductRepository {
           relacionados: p.relacionados,
           en_oferta: enOferta,
           original_price: originalPrice,
+          temporary_price: p.temporary_price ?? null,
           colors: p.colors || [],
           source: p.source,
           active: p.active,

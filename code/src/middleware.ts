@@ -29,7 +29,7 @@ const hits = new Map<string, { count: number; resetAt: number }>();
 let lastCleanup = Date.now();
 
 function getRatePolicy(path: string): { bucket: string; maxRequests: number; windowMs: number } {
-  if (path === "/api/admin/providers/sync") {
+  if (path === "/api/admin/providers/sync" || path === "/api/admin/providers/nuvex/apply") {
     return { bucket: "api-admin-sync", maxRequests: 10, windowMs: 3_600_000 };
   }
   if (path === "/api/contact") {

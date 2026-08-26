@@ -20,12 +20,12 @@ function getAuthToken(request: Request): string | null {
   return null;
 }
 
-export async function verifyAdmin(request: Request): Promise<boolean> {
+export async function getAuthenticatedAdminId(request: Request): Promise<string | null> {
   try {
     const token = getAuthToken(request);
     if (!token) {
       console.warn("[auth] No auth token found in request");
-      return false;
+      return null;
     }
 
     const supabase = getSupabaseAdmin();
@@ -33,13 +33,13 @@ export async function verifyAdmin(request: Request): Promise<boolean> {
 
     if (error) {
       console.error("[auth] getUser error:", error.message);
-      return false;
+      return null;
     }
 
     const userId = data?.user?.id;
     if (!userId) {
       console.warn("[auth] No user in token");
-      return false;
+      return null;
     }
 
     const { data: adminProfile } = await supabase
@@ -52,9 +52,13 @@ export async function verifyAdmin(request: Request): Promise<boolean> {
       console.warn("[auth] User not in admin_profiles:", userId);
     }
 
-    return !!adminProfile;
+    return adminProfile ? userId : null;
   } catch (e: any) {
-    console.error("[auth] verifyAdmin exception:", e?.message || e);
-    return false;
+    console.error("[auth] getAuthenticatedAdminId exception:", e?.message || e);
+    return null;
   }
+}
+
+export async function verifyAdmin(request: Request): Promise<boolean> {
+  return (await getAuthenticatedAdminId(request)) !== null;
 }

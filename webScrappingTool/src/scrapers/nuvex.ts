@@ -13,46 +13,24 @@ const accountUrl = "https://nuvex.uy/index.php?route=account/account";
 
 const jar = new CookieJar();
 const client = wrapper(axios.create({ jar } as any));
-let tlsRelaxedEnabled = false;
 
 const browserHeaders = {
   'User-Agent': 'Mozilla/5.0',
   Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 };
 
-function isTlsCertError(err: any): boolean {
-  const code = err?.code || err?.cause?.code;
-  return [
-    'UNABLE_TO_VERIFY_LEAF_SIGNATURE',
-    'SELF_SIGNED_CERT_IN_CHAIN',
-    'DEPTH_ZERO_SELF_SIGNED_CERT',
-  ].includes(String(code));
-}
-
+// NOTA DE SEGURIDAD: no se desactiva la verificación de certificados TLS.
+// Ante un certificado inválido, la petición falla de forma cerrada.
 async function runWithTlsFallback<T>(
   executor: () => Promise<T>,
-  contextLabel: string,
+  _contextLabel: string,
 ): Promise<T> {
-  try {
-    return await executor();
-  } catch (err: any) {
-    if (!isTlsCertError(err)) throw err;
-
-    if (!tlsRelaxedEnabled) {
-      console.warn(
-        `[Nuvex] Certificado TLS no verificable en ${contextLabel}. Activando modo TLS relajado para esta ejecucion.`,
-      );
-      process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-      tlsRelaxedEnabled = true;
-    }
-
-    return executor();
-  }
+  return executor();
 }
 
 function resolveNuvexCredentials() {
-  const email = process.env.USER_EMAIL || process.env.NUVEX_USER_EMAIL || '';
-  const password = process.env.USER_PASS || process.env.NUVEX_USER_PASS || '';
+  const email = process.env.NUVEX_USER_EMAIL || '';
+  const password = process.env.NUVEX_USER_PASS || '';
   return { email, password };
 }
 
@@ -63,6 +41,35 @@ function normalizeNuvexImageUrl(url: string): string {
     .replace(/-\d+x\d+\.(jpg|jpeg|png|webp|gif)$/i, '.$1')
     .replace('/image/cache/catalog/', '/image/catalog/');
 }
+
+// Anti-SSRF: solo permite https://nuvex.uy (y subdominios), sin IPs privadas ni
+// puertos no estándar. Todo scraping de Nuvex debe pasar por acá.
+const NUVEX_HOST = 'nuvex.uy';
+function isValidNuvexUrl(raw: string): boolean {
+  try {
+    const u = new URL(String(raw || '').trim());
+    if (u.protocol !== 'https:') return false;
+    const host = u.hostname.toLowerCase();
+    if (host !== NUVEX_HOST && !host.endsWith('.' + NUVEX_HOST)) return false;
+    if (u.port && u.port !== '443') return false;
+    if (host === 'localhost' || /^\d{1,3}(\.\d{1,3}){3}$/.test(host)) return false;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function nuvexAbsolute(url: string, base = 'https://' + NUVEX_HOST + '/'): string {
+  if (!url) return '';
+  try {
+    const abs = new URL(String(url).trim(), base).toString();
+    return isValidNuvexUrl(abs) ? abs : '';
+  } catch {
+    return '';
+  }
+}
+
+const MAX_NUVEX_PRODUCTS = 2000;
 
 function stripAccents(text: string): string {
   return text
@@ -398,6 +405,14 @@ async function getCategories(): Promise<string[]> {
 }
 
 export async function scrapNuvexProducts(): Promise<Product[]> {
+  // Aislamiento de sesión por ejecución: limpia cookies previas para no
+  // reutilizar sesiones entre corridas (evita cookies viejas/contaminadas).
+  try {
+    await jar.removeAllCookies();
+  } catch {
+    /* noop */
+  }
+
   const requestTimeoutMs = Math.max(
     5000,
     Number.parseInt(String(process.env.NUVEX_REQUEST_TIMEOUT_MS || '15000'), 10) || 15000,
@@ -461,7 +476,10 @@ export async function scrapNuvexProducts(): Promise<Product[]> {
         catName = catName.charAt(0).toUpperCase() + catName.slice(1).toLowerCase();
         $layouts.each((_, el) => {
           const productHref = $(el).find('.caption h4 a').attr('href');
-          if (productHref) productQueue.push({ url: productHref.replace(/&amp;/g, '&'), catName });
+          if (productHref) {
+            const abs = nuvexAbsolute(productHref.replace(/&amp;/g, '&'));
+            if (abs) productQueue.push({ url: abs, catName });
+          }
         });
       } catch (err: any) {
         console.error(`Error recogiendo enlaces en ${catUrl} página ${page}:`, err.message);
@@ -471,7 +489,9 @@ export async function scrapNuvexProducts(): Promise<Product[]> {
       if (pagePauseMs > 0) await delay(pagePauseMs);
     }
   }
-  const uniqueQueue = Array.from(new Map(productQueue.map((item) => [item.url, item])).values());
+  const uniqueQueue = Array.from(new Map(productQueue.map((item) => [item.url, item])).values())
+    .filter((item) => isValidNuvexUrl(item.url))
+    .slice(0, MAX_NUVEX_PRODUCTS);
   console.log(`=== Se recorrerán ${uniqueQueue.length} páginas de productos individuales de Nuvex ===`);
   const allProductsMap = new Map<string, Product>();
   // Procesar productos en paralelo por lotes configurables

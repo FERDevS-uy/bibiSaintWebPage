@@ -4,15 +4,21 @@ updates:
     directory: "/code"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 10
-    labels:
-      - "dependencies"
-      - "security"
+    open-pull-requests-limit: 5
+    groups:
+      astro:
+        patterns: ["astro", "@astrojs/*"]
+      supabase:
+        patterns: ["@supabase/*"]
+
+  - package-ecosystem: "npm"
+    directory: "/webScrappingTool"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-    labels:
-      - "dependencies"
-      - "security"
+    open-pull-requests-limit: 5

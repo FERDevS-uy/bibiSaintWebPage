@@ -41,9 +41,6 @@ jobs:
     needs: validate-data
     runs-on: ubuntu-latest
     environment: production
-    env:
-      USER_EMAIL: ${{ secrets.NUVEX_USER_EMAIL }}
-      USER_PASS: ${{ secrets.NUVEX_USER_PASS }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

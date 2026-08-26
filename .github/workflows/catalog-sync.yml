@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      USER_EMAIL: ${{ secrets.NUVEX_USER_EMAIL }}
-      USER_PASS: ${{ secrets.NUVEX_USER_PASS }}
+      NUVEX_USER_EMAIL: ${{ secrets.NUVEX_USER_EMAIL }}
+      NUVEX_USER_PASS: ${{ secrets.NUVEX_USER_PASS }}
       ENABLE_EMAIL_NOTIFICATIONS: ${{ vars.ENABLE_EMAIL_NOTIFICATIONS || 'false' }}
     steps:
       - name: Checkout repository

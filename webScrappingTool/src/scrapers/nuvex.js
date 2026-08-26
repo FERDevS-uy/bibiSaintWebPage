@@ -58,40 +58,20 @@ const loginUrl = "https://nuvex.uy/index.php?route=account/login";
 const accountUrl = "https://nuvex.uy/index.php?route=account/account";
 const jar = new tough_cookie_1.CookieJar();
 const client = (0, axios_cookiejar_support_1.wrapper)(axios_1.default.create({ jar }));
-let tlsRelaxedEnabled = false;
 const browserHeaders = {
     'User-Agent': 'Mozilla/5.0',
     Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 };
-function isTlsCertError(err) {
-    var _a;
-    const code = (err === null || err === void 0 ? void 0 : err.code) || ((_a = err === null || err === void 0 ? void 0 : err.cause) === null || _a === void 0 ? void 0 : _a.code);
-    return [
-        'UNABLE_TO_VERIFY_LEAF_SIGNATURE',
-        'SELF_SIGNED_CERT_IN_CHAIN',
-        'DEPTH_ZERO_SELF_SIGNED_CERT',
-    ].includes(String(code));
-}
-function runWithTlsFallback(executor, contextLabel) {
+// NOTA DE SEGURIDAD: no se desactiva la verificación de certificados TLS.
+// Ante un certificado inválido, la petición falla de forma cerrada.
+function runWithTlsFallback(executor, _contextLabel) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            return yield executor();
-        }
-        catch (err) {
-            if (!isTlsCertError(err))
-                throw err;
-            if (!tlsRelaxedEnabled) {
-                console.warn(`[Nuvex] Certificado TLS no verificable en ${contextLabel}. Activando modo TLS relajado para esta ejecucion.`);
-                process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-                tlsRelaxedEnabled = true;
-            }
-            return executor();
-        }
+        return executor();
     });
 }
 function resolveNuvexCredentials() {
-    const email = process.env.USER_EMAIL || process.env.NUVEX_USER_EMAIL || '';
-    const password = process.env.USER_PASS || process.env.NUVEX_USER_PASS || '';
+    const email = process.env.NUVEX_USER_EMAIL || '';
+    const password = process.env.NUVEX_USER_PASS || '';
     return { email, password };
 }
 function normalizeNuvexImageUrl(url) {
@@ -102,6 +82,39 @@ function normalizeNuvexImageUrl(url) {
         .replace(/-\d+x\d+\.(jpg|jpeg|png|webp|gif)$/i, '.$1')
         .replace('/image/cache/catalog/', '/image/catalog/');
 }
+// Anti-SSRF: solo permite https://nuvex.uy (y subdominios), sin IPs privadas ni
+// puertos no estándar. Todo scraping de Nuvex debe pasar por acá.
+const NUVEX_HOST = 'nuvex.uy';
+function isValidNuvexUrl(raw) {
+    try {
+        const u = new URL(String(raw || '').trim());
+        if (u.protocol !== 'https:')
+            return false;
+        const host = u.hostname.toLowerCase();
+        if (host !== NUVEX_HOST && !host.endsWith('.' + NUVEX_HOST))
+            return false;
+        if (u.port && u.port !== '443')
+            return false;
+        if (host === 'localhost' || /^\d{1,3}(\.\d{1,3}){3}$/.test(host))
+            return false;
+        return true;
+    }
+    catch (_a) {
+        return false;
+    }
+}
+function nuvexAbsolute(url, base = 'https://' + NUVEX_HOST + '/') {
+    if (!url)
+        return '';
+    try {
+        const abs = new URL(String(url).trim(), base).toString();
+        return isValidNuvexUrl(abs) ? abs : '';
+    }
+    catch (_a) {
+        return '';
+    }
+}
+const MAX_NUVEX_PRODUCTS = 2000;
 function stripAccents(text) {
     return text
         .normalize('NFD')
@@ -151,6 +164,46 @@ function colorHexFromName(name) {
         return '#d97745';
     return '#cccccc';
 }
+const NUVEX_CANONICAL_SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+function normalizeLegacySize(raw) {
+    const token = String(raw || '').trim().toUpperCase();
+    if (!token)
+        return null;
+    const map = {
+        XS: 'XS',
+        S: 'S',
+        P: 'S',
+        M: 'M',
+        L: 'L',
+        G: 'L',
+        XL: 'XL',
+        XG: 'XL',
+        GG: 'XL',
+        XXL: 'XXL',
+        XXXL: 'XXXL',
+    };
+    return map[token] || null;
+}
+function extractNuvexSizeHint(rawColorName) {
+    const match = String(rawColorName || '').toUpperCase().match(/\b(XXXL|XXL|XL|XS|GG|XG|G|M|P|S|L)\b/);
+    if (!match)
+        return null;
+    return normalizeLegacySize(match[1]);
+}
+function cleanNuvexColorName(rawColorName) {
+    const cleaned = String(rawColorName || '')
+        .replace(/\b(XXXL|XXL|XL|XS|GG|XG|G|M|P|S|L)\b/gi, ' ')
+        .replace(/\b\d{6,}\b/g, ' ')
+        .replace(/[\s_-]{2,}/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    return toTitleCase(cleaned);
+}
+function colorGroupingKey(name) {
+    return stripAccents(String(name || '').toLowerCase())
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim();
+}
 function extractNuvexColorsAndImages($) {
     const thumbnailUrls = $('.thumbnails li')
         .map((_, li) => {
@@ -172,10 +225,14 @@ function extractNuvexColorsAndImages($) {
         const parsed = parseNuvexOptionText($(el).text());
         if (!parsed)
             return null;
+        const sizeHint = extractNuvexSizeHint(parsed.color);
+        const cleanedColor = cleanNuvexColorName(parsed.color);
+        const finalColorName = cleanedColor || toTitleCase(parsed.color);
         return {
             id: Number.isFinite(value) ? value : null,
             code: parsed.code,
-            name: toTitleCase(parsed.color),
+            name: finalColorName,
+            sizeHint,
         };
     })
         .get()
@@ -235,14 +292,49 @@ function extractNuvexColorsAndImages($) {
             hex: colorHexFromName(opt.name),
             name: opt.name,
             images: matched ? [matched] : [],
+            sizes: opt.sizeHint ? [opt.sizeHint] : [],
         };
     });
+    // Unificar colores repetidos (ej: Terracota P/M/G -> Terracota con varios talles).
+    const groupedByColor = new Map();
+    colorsWithImages.forEach((entry, idx) => {
+        const key = colorGroupingKey(entry.name) || `color-${idx + 1}`;
+        const existing = groupedByColor.get(key);
+        if (!existing) {
+            groupedByColor.set(key, {
+                id: entry.id,
+                hex: entry.hex,
+                name: entry.name,
+                images: [...entry.images],
+                sizes: [...entry.sizes],
+            });
+            return;
+        }
+        const imageSet = new Set(existing.images);
+        entry.images.forEach((imageUrl) => {
+            if (!imageSet.has(imageUrl)) {
+                existing.images.push(imageUrl);
+                imageSet.add(imageUrl);
+            }
+        });
+        const sizeSet = new Set(existing.sizes);
+        entry.sizes.forEach((size) => {
+            if (!sizeSet.has(size)) {
+                existing.sizes.push(size);
+                sizeSet.add(size);
+            }
+        });
+    });
+    const groupedColors = Array.from(groupedByColor.values()).map((entry) => {
+        const orderedSizes = NUVEX_CANONICAL_SIZE_ORDER.filter((size) => entry.sizes.includes(size));
+        return Object.assign(Object.assign({}, entry), { sizes: orderedSizes });
+    });
     const allImages = Array.from(new Set([
-        ...colorsWithImages.flatMap((c) => c.images),
+        ...groupedColors.flatMap((c) => c.images),
         ...uniqueThumbs,
     ]));
     return {
-        serializedColors: JSON.stringify(colorsWithImages),
+        serializedColors: JSON.stringify(groupedColors),
         allImages,
     };
 }
@@ -310,6 +402,19 @@ function getCategories() {
 }
 function scrapNuvexProducts() {
     return __awaiter(this, void 0, void 0, function* () {
+        // Aislamiento de sesión por ejecución: limpia cookies previas para no
+        // reutilizar sesiones entre corridas (evita cookies viejas/contaminadas).
+        try {
+            yield jar.removeAllCookies();
+        }
+        catch (_a) {
+            /* noop */
+        }
+        const requestTimeoutMs = Math.max(5000, Number.parseInt(String(process.env.NUVEX_REQUEST_TIMEOUT_MS || '15000'), 10) || 15000);
+        const batchSize = Math.max(1, Number.parseInt(String(process.env.NUVEX_BATCH_SIZE || '12'), 10) || 12);
+        const batchPauseMs = Math.max(0, Number.parseInt(String(process.env.NUVEX_BATCH_PAUSE_MS || '20'), 10) || 20);
+        const pagePauseMs = Math.max(0, Number.parseInt(String(process.env.NUVEX_PAGE_PAUSE_MS || '20'), 10) || 20);
+        console.log(`[Nuvex] Performance profile: batch=${batchSize}, pause(batch)=${batchPauseMs}ms, pause(page)=${pagePauseMs}ms, timeout=${requestTimeoutMs}ms`);
         const loggedIn = yield login();
         if (!loggedIn) {
             console.warn('No se pudo iniciar sesión en Nuvex. El scraping se intentará, pero algunos datos pueden faltar.');
@@ -331,6 +436,7 @@ function scrapNuvexProducts() {
                 try {
                     const { data } = yield runWithTlsFallback(() => client.get(pageUrl, {
                         headers: browserHeaders,
+                        timeout: requestTimeoutMs,
                     }), `categoria page=${page}`);
                     const $ = cheerio.load(data);
                     const $layouts = $('.product-layout');
@@ -347,8 +453,11 @@ function scrapNuvexProducts() {
                     catName = catName.charAt(0).toUpperCase() + catName.slice(1).toLowerCase();
                     $layouts.each((_, el) => {
                         const productHref = $(el).find('.caption h4 a').attr('href');
-                        if (productHref)
-                            productQueue.push({ url: productHref.replace(/&amp;/g, '&'), catName });
+                        if (productHref) {
+                            const abs = nuvexAbsolute(productHref.replace(/&amp;/g, '&'));
+                            if (abs)
+                                productQueue.push({ url: abs, catName });
+                        }
                     });
                 }
                 catch (err) {
@@ -356,22 +465,25 @@ function scrapNuvexProducts() {
                     break;
                 }
                 page++;
-                yield (0, delay_1.delay)(50);
+                if (pagePauseMs > 0)
+                    yield (0, delay_1.delay)(pagePauseMs);
             }
         }
-        const uniqueQueue = Array.from(new Map(productQueue.map((item) => [item.url, item])).values());
-        console.log(`=== Se recorrerán lentamente ${uniqueQueue.length} páginas de productos individuales de Nuvex ===`);
+        const uniqueQueue = Array.from(new Map(productQueue.map((item) => [item.url, item])).values())
+            .filter((item) => isValidNuvexUrl(item.url))
+            .slice(0, MAX_NUVEX_PRODUCTS);
+        console.log(`=== Se recorrerán ${uniqueQueue.length} páginas de productos individuales de Nuvex ===`);
         const allProductsMap = new Map();
-        // Procesar productos en paralelo por lotes de 10
-        const BATCH_SIZE = 10;
-        for (let i = 0; i < uniqueQueue.length; i += BATCH_SIZE) {
-            const batch = uniqueQueue.slice(i, i + BATCH_SIZE);
+        // Procesar productos en paralelo por lotes configurables
+        for (let i = 0; i < uniqueQueue.length; i += batchSize) {
+            const batch = uniqueQueue.slice(i, i + batchSize);
             yield Promise.all(batch.map((_a, j_1) => __awaiter(this, [_a, j_1], void 0, function* ({ url, catName }, j) {
                 const idx = i + j;
                 console.log(`[${idx + 1}/${uniqueQueue.length}] Raspando Nuvex: ${url}`);
                 try {
                     const { data } = yield runWithTlsFallback(() => client.get(url, {
                         headers: browserHeaders,
+                        timeout: requestTimeoutMs,
                     }), `producto ${url}`);
                     const $ = cheerio.load(data);
                     let id = '';
@@ -423,7 +535,8 @@ function scrapNuvexProducts() {
                     console.error(`Error al revisar producto id ${url}:`, e.message);
                 }
             })));
-            yield (0, delay_1.delay)(80);
+            if (batchPauseMs > 0)
+                yield (0, delay_1.delay)(batchPauseMs);
         }
         return Array.from(allProductsMap.values());
     });

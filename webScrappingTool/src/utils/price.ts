@@ -35,8 +35,9 @@ export function parsePrice(value: string | number, multiplier = 1): string {
     const commaIndex = normalized.lastIndexOf(',');
     const decimals = normalized.length - commaIndex - 1;
     if (decimals === 3) {
-      // 2,699 -> separador de miles
-      return normalized.replace(/,/g, '.');
+      // 2,699 -> separador de miles (aplicar multiplier)
+      const n = parseFloat(normalized.replace(/,/g, ''));
+      return formatPriceNumber(n * (Number.isFinite(multiplier) ? multiplier : 1));
     }
     normalized = normalized.replace(/,/g, '.');
     if (normalized.endsWith('.00')) normalized = normalized.slice(0, -3);
@@ -44,8 +45,9 @@ export function parsePrice(value: string | number, multiplier = 1): string {
     const dotIndex = normalized.lastIndexOf('.');
     const decimals = normalized.length - dotIndex - 1;
     if (decimals === 3) {
-      // 2.699 -> separador de miles
-      return normalized;
+      // 2.699 -> separador de miles (aplicar multiplier)
+      const n = parseFloat(normalized.replace(/\./g, ''));
+      return formatPriceNumber(n * (Number.isFinite(multiplier) ? multiplier : 1));
     }
     if (normalized.endsWith('.00')) normalized = normalized.slice(0, -3);
   }
