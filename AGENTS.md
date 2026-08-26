@@ -268,7 +268,7 @@ Me gustaría mejorar el flujo de checkout
 
 ## Skill Availability
 
-Skills físicas en `.agents/skills/`:
+Skills físicas en `code/.opencode/skills/`:
 
 **Diseño/UX**:
 - `design-taste-frontend` — Anti-slop frontend design
@@ -287,7 +287,10 @@ Skills físicas en `.agents/skills/`:
 **Base de datos**:
 - `supabase-postgres-best-practices` — DB best practices
 
-**Workflow OpenSpec** (en `.agents/skills/` y `.opencode/skills/`):
+**Stack (Astro/Cloudflare/React)**:
+- `astro`, `cloudflare-deploy`, `workers-best-practices`, `wrangler`, `react-best-practices`, `typescript-advanced-types`, `seo`, `accessibility`, `web-perf`
+
+**Workflow OpenSpec** (en `code/.opencode/skills/`):
 - `openspec-propose`, `openspec-explore`, `openspec-apply-change`, `openspec-update-change`, `openspec-sync-specs`, `openspec-archive-change`
 
 **Removed** (irrelevant to e-commerce):
@@ -297,28 +300,25 @@ Skills físicas en `.agents/skills/`:
 
 ## Harness & Config Files
 
-Capa de agentes/orquestación consolidada en `.agents/` (gitignored — tooling, no código):
+Capa de agentes/orquestación consolidada en `code/.opencode/` (gitignored — tooling, no código). Se inicia con `cd code && opencode`:
 
 ```
-.agents/
+code/.opencode/
 ├── README.md                        # Índice de la capa
-├── instructions/
-│   ├── project.md                   # Principios core + routing
-│   └── harness.md                   # Decision tree + reglas operacionales
+├── agents/                          # Agentes/subagentes individuales (.md)
 ├── orchestration/
-│   ├── system-integration.md        # Integración agentes + OpenSpec + autosave
-│   └── openspec-orchestration.md    # División frontend/backend/full-stack
-├── autosave/
-│   ├── README.md                    # Sistema auto-save (checkpoints)
-│   ├── rules.md                     # Reglas detalladas de auto-save
-│   └── resu.md                      # Resumen ejecutivo / checkpoints
+│   ├── routing.yaml                 # Matriz de routing entre agentes
+│   └── model-policy.md              # Política de modelos por agente
+├── instructions/                    # Principios core + harness
+├── autosave/                        # Auto-save + resu.md (checkpoints)
+├── commands/                        # Comandos OpenCode (opsx-*)
 └── skills/                          # Colección única de skills
 ```
 
 Configuraciones de herramientas en sus carpetas estándar (no se mueven):
-- `.opencode/` — config de opencode (agents, commands, skills)
-- `.codex/hooks.json` — hooks de Codex
-- `.github/skills/`, `.github/hooks/`, `.github/prompts/` — GitHub/Copilot
+- `code/.opencode/` — config de OpenCode (agentes, commands, skills) [canónico]
+- `.github/` — adaptadores GitHub Copilot (agents, instructions, prompts, skills)
+- `.codex/hooks.json` — hooks de Codex (apunta a `code/.opencode/skills/impeccable/`)
 
 ---
 

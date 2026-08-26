@@ -1,0 +1,48 @@
+# Routing Matrix — Bibi Saint
+
+Matriz de routing entre agentes del marco agéntico. Referencia para el coordinator y los especialistas.
+
+## Agentes
+
+| Agente | Modo | Modelo | Skills principales |
+|---|---|---|---|
+| `coordinator` | primary | `opencode-go/gpt-5.6-luna` | — (routing) |
+| `designer` | subagent | `opencode-go/mimo-v2.5` | design-taste, high-end-visual, apple-design, animation-vocabulary, impeccable |
+| `implementer` | subagent | `opencode-go/deepseek-v4-flash` | astro, react-best-practices, typescript-advanced-types, cloudflare-deploy, web-perf |
+| `qa` | subagent | `opencode-go/minimax-m3` | playwright, runtime-validation |
+| `dba` | subagent | `opencode-go/qwen3.7-plus` | supabase-postgres-best-practices |
+| `security` | subagent | `opencode-go/qwen3.8-max` | (auditoría read-only) |
+| `provider-scraper` | subagent | `opencode-go/glm-5.3-flash` | — (scraping/transporte) |
+
+## Reglas de routing
+
+| Si la petición es... | Ruta |
+|---|---|
+| Visual/UX/animación/accesibilidad | `designer` |
+| Código/features/bugs/refactor | `implementer` |
+| Tests/validación/reproducción | `qa` |
+| Schema/migraciones/RLS/performance DB | `dba` |
+| Auditoría de seguridad | `security` |
+| Scrapers/transporte proveedores | `provider-scraper` |
+| Trivial (< 5 min) | directo al agente, sin coordinator |
+| Compleja (3+ disciplinas) | coordinator → paralelo → integración |
+
+## Secuencias típicas
+
+- **Feature full-stack**: designer → implementer → qa
+- **Bug report**: qa (diagnosis) → implementer (fix) → qa (regresión)
+- **Cambio de datos**: dba (migración) → implementer (aplicar) → qa (validar)
+- **Scraper nuevo**: provider-scraper (implementación) → qa (validación de datos)
+
+## Permisos de git
+
+| Agente | commit | push |
+|---|---|---|
+| Todos | Solo bajo solicitud explícita del usuario | Solo bajo orden explícita e inequívoca |
+| `implementer` | Solo bajo solicitud explícita | **Nunca** sin orden explícita |
+| `security` | deny | deny |
+
+## Handoff
+
+- Cada agente guarda su output/checkpoint en `code/.opencode/autosave/resu.md`.
+- El coordinator verifica que el agente siguiente tenga el contexto mínimo antes de delegar.

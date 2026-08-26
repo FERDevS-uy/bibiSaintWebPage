@@ -1,7 +1,5 @@
 # Tooling / skills (impeccable & other skill kits) — not project code
-.agents/
 .claude/
-.opencode/
 .codex/
 data/skills/
 skills-lock.json

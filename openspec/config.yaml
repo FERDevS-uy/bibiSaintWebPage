@@ -42,8 +42,8 @@ context: |
   - Environment: production (secrets required)
   
   **Auto-Save System**:
-  - Decisions + quick wins → .agents/autosave/ (brevedad)
-  - Design + code artifacts → .agents/autosave/resu.md (detalles linkeados)
+  - Decisions + quick wins → code/.opencode/autosave/ (brevedad)
+  - Design + code artifacts → code/.opencode/autosave/resu.md (detalles linkeados)
   - Cross-session jump via resu.md references
   
   **Testing Strategy** (Token-Optimized):
@@ -59,7 +59,7 @@ rules:
   proposal:
     - Analyze frontend vs backend vs database requirements upfront
     - Recommend parallel specialist routing if full-stack (saves 38% time)
-    - Always link to existing patterns in .agents/autosave/resu.md if available
+    - Always link to existing patterns in code/.opencode/autosave/resu.md if available
     - Include "Not included" section for scope clarity
     - Reference relevant design tokens or API contracts
   
@@ -68,22 +68,22 @@ rules:
     - Tag with @bibi-designer, @bibi-implementer, or @bibi-dba (specialist owner)
     - If full-stack: separate tasks per specialist, note dependencies
     - Include acceptance criteria (testable, measurable)
-    - Link to design mockup or API spec in .agents/autosave/resu.md
+    - Link to design mockup or API spec in code/.opencode/autosave/resu.md
 
 operations:
   propose:
     guidance:
-      - Use coordinator decision tree (see .agents/orchestration/openspec-orchestration.md)
+      - Use coordinator decision tree (see code/.opencode/orchestration/openspec-orchestration.md)
       - Identify specialist(s) needed before drafting tasks
       - For full-stack: recommend parallel execution + auto-save checkpoints
-      - Reference .agents/autosave/resu.md patterns if similar work exists
+      - Reference code/.opencode/autosave/resu.md patterns if similar work exists
       - Estimate token savings vs monolithic approach
   
   apply:
     guidance:
       - If full-stack: trigger designer and implementer tasks in parallel
-      - Designer creates mockups + CSS blueprint → saves to .agents/autosave/resu.md
-      - Implementer reads design from .agents/autosave/resu.md, creates API + types
+      - Designer creates mockups + CSS blueprint → saves to code/.opencode/autosave/resu.md
+      - Implementer reads design from code/.opencode/autosave/resu.md, creates API + types
       - Auto-checkpoint after each specialist milestone
       - For cross-session handoff: link tasks to resu.md sections
       - Run full test suite (E2E + unit) before sign-off
@@ -99,7 +99,7 @@ operations:
     guidance:
       - Merge specialist outputs into single coherent spec
       - Create comprehensive design → code → test summary
-      - Link .agents/autosave/resu.md sections for continuity across sessions
+      - Link code/.opencode/autosave/resu.md sections for continuity across sessions
       - Update design tokens or API guidelines if new patterns introduced
       - Note which specialist(s) touched this, for knowledge transfer
       - Close with "Ready for production" or "Next specialist: [name]"
