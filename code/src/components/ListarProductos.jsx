@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ItemProductoBox from "./ItemProductBox.jsx";
 import NavPag from "./NavPag.jsx";
 import { parsePrice } from "../utils/price";
@@ -21,6 +21,8 @@ export default function ListarProductos({ pageSize = 10 }) {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState("default");
   const [sortOpen, setSortOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   // ✅ leer query param del cliente
   useEffect(() => {
@@ -34,12 +36,25 @@ export default function ListarProductos({ pageSize = 10 }) {
     return () => window.removeEventListener("searchurlchange", readQueryFromURL);
   }, []);
 
-  // ✅ cargar JSON
-  useEffect(() => {
-    fetch(PRODUCTS_JSON_URL)
-      .then((res) => res.json())
-      .then((data) => setProductos(data));
+  // ✅ cargar JSON (función reutilizable para el reintento)
+  const loadCatalog = useCallback(async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch(PRODUCTS_JSON_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      setProductos(data);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    loadCatalog();
+  }, [loadCatalog]);
 
   // ✅ filtrar por búsqueda
   useEffect(() => {
@@ -92,11 +107,33 @@ export default function ListarProductos({ pageSize = 10 }) {
   };
 
   return (
-    <section className={`listaProductos${emptyList ? " centerBox" : ""}`}>
-      {emptyList && !query && <h3 style={{ color: "gray" }}>Sin Productos</h3>}
-      {emptyList && query && <h3 style={{ color: "gray" }}>No se encontraron resultados para "{query}"</h3>}
+    <section
+      className={`listaProductos${emptyList && !loading && !error ? " centerBox" : ""}`}
+    >
+      {loading && (
+        <div className="search-loading" role="status" aria-live="polite">
+          <span className="search-loading__spinner" aria-hidden="true" />
+          <span className="sr-only">Cargando productos</span>
+        </div>
+      )}
 
-      {!emptyList && (
+      {error && (
+        <div className="search-error" role="alert">
+          <p>No pudimos cargar los productos.</p>
+          <button type="button" className="search-error__retry" onClick={loadCatalog}>
+            Reintentar
+          </button>
+        </div>
+      )}
+
+      {!loading && !error && emptyList && !query && (
+        <h3 style={{ color: "gray" }}>Sin Productos</h3>
+      )}
+      {!loading && !error && emptyList && query && (
+        <h3 style={{ color: "gray" }}>No se encontraron resultados para "{query}"</h3>
+      )}
+
+      {!loading && !error && !emptyList && (
         <>
           <div className="products-toolbar">
             <button
@@ -182,6 +219,89 @@ export default function ListarProductos({ pageSize = 10 }) {
 
         .listaProductos ul > li {
           list-style: none;
+        }
+
+        .search-loading {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 50vh;
+          width: 100%;
+          max-width: var(--max-width-container);
+          margin-inline: auto;
+        }
+
+        .search-loading__spinner {
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          border: 4px solid rgba(0, 0, 0, 0.08);
+          border-top-color: #c11010;
+          border-right-color: #f0b13e;
+          animation: search-spin 0.8s linear infinite;
+        }
+
+        @keyframes search-spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0 0 0 0);
+          white-space: nowrap;
+          border: 0;
+        }
+
+        .search-error {
+          width: 100%;
+          max-width: var(--max-width-container);
+          margin-inline: auto;
+          padding: 4rem 1rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          text-align: center;
+        }
+
+        .search-error p {
+          color: var(--principal-text-color);
+          font-size: 1rem;
+          font-weight: 600;
+          margin: 0;
+        }
+
+        .search-error__retry {
+          border: none;
+          border-radius: 4px;
+          background: #c11010;
+          color: #fff;
+          font-family: inherit;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          font-size: 0.8rem;
+          padding: 10px 16px;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+        }
+
+        .search-error__retry:hover {
+          background: #b81c1c;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .search-loading__spinner {
+            animation: none;
+          }
         }
 
         @media screen and (min-width: 1000px) {
