@@ -3,7 +3,6 @@
 .claude/
 .opencode/
 .codex/
-agent/
 data/skills/
 skills-lock.json
 .github/skills/
@@ -21,6 +20,3 @@ DESIGN.md
 # screenshots / scratch (root only)
 /*.png
 /*.png/
-
-# Session-sensitive notes
-resu.md

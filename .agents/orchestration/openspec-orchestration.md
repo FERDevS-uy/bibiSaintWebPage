@@ -358,7 +358,7 @@ User: "Quiero agregar un carrusel de productos relacionados a la página de prod
 
 **Next**: @bibi-implementer reads this section, creates API
 
-→ **Link**: /resu.md#add-product-filters-design
+→ **Link**: ../autosave/resu.md#add-product-filters-design
 ```
 
 ### Implementer Completes
@@ -375,7 +375,7 @@ User: "Quiero agregar un carrusel de productos relacionados a la página de prod
 
 **For Designer**: API response shape for UI binding
 
-→ **Link**: /resu.md#add-product-filters-api
+→ **Link**: ../autosave/resu.md#add-product-filters-api
 ```
 
 ---

@@ -108,10 +108,10 @@ proposal:
 
 | Type | Where | Example |
 |------|-------|---------|
-| Quick decision | `/memories/session/` | "Use CSS Grid for layout" |
-| Complex analysis | `/resu.md` | "API response shape: {items[], total}" |
-| Design output | `/resu.md#section` | 3 figma images + CSS blueprint |
-| Code output | `/resu.md#section` | TypeScript types + endpoint |
+| Quick decision | `.agents/autosave/` | "Use CSS Grid for layout" |
+| Complex analysis | `.agents/autosave/resu.md` | "API response shape: {items[], total}" |
+| Design output | `.agents/autosave/resu.md#section` | 3 figma images + CSS blueprint |
+| Code output | `.agents/autosave/resu.md#section` | TypeScript types + endpoint |
 
 **No token waste**: Memory files < 200 words, resu.md referenced only when needed
 
@@ -286,14 +286,14 @@ Savings: 42%
 
 | File | Purpose | Read When |
 |------|---------|-----------|
-| [AGENTS.md](AGENTS.md) | Agent definitions (mission, skills) | Learning system architecture |
-| [.instructions.md](.instructions.md) | Core principles + routing | Debugging decisions |
-| [copilot-instructions.md](copilot-instructions.md) | Decision tree + harness | Making routing calls |
-| [OPENSPEC-ORCHESTRATION.md](OPENSPEC-ORCHESTRATION.md) | OpenSpec + multi-agent integration | Using openspec-propose |
-| [AUTOSAVE-SYSTEM.md](AUTOSAVE-SYSTEM.md) | Auto-save rules + checkpoint format | Understanding context preservation |
-| [.autosave-rules.md](.autosave-rules.md) | Detailed auto-save rules | Reference on what to save |
-| [resu.md](resu.md) | Execution summary + cross-references | Reading specialist outputs |
-| `/memories/session/` | Quick notes per session | Current session state |
+| [AGENTS.md](../../AGENTS.md) | Agent definitions (mission, skills) | Learning system architecture |
+| [project.md](../instructions/project.md) | Core principles + routing | Debugging decisions |
+| [harness.md](../instructions/harness.md) | Decision tree + harness | Making routing calls |
+| [openspec-orchestration.md](openspec-orchestration.md) | OpenSpec + multi-agent integration | Using openspec-propose |
+| [README.md](../autosave/README.md) | Auto-save rules + checkpoint format | Understanding context preservation |
+| [rules.md](../autosave/rules.md) | Detailed auto-save rules | Reference on what to save |
+| [resu.md](../autosave/resu.md) | Execution summary + cross-references | Reading specialist outputs |
+| `.agents/autosave/` | Quick notes per session | Current session state |
 
 ---
 
@@ -329,8 +329,8 @@ Savings: 42%
    - Link for next handoff
 
 3. **Memory duty**: Every 5-10 messages
-   - Extract decisions → /memories/session/
-   - Extract artifacts → /resu.md
+   - Extract decisions → .agents/autosave/
+   - Extract artifacts → .agents/autosave/resu.md
    - Link them together
 
 ---

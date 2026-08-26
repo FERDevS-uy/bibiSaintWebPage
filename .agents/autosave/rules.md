@@ -14,7 +14,7 @@ Guardar automáticamente lo **relevante** cada 5-10 mensajes, ahorrando tokens y
 
 ## Extracción de Información
 
-### ✅ GUARDA en `/memories/session/` (breveedad)
+### ✅ GUARDA en `.agents/autosave/` (breveedad)
 ```
 - Decisiones clave (2-3 líneas)
 - URLs/paths importantes
@@ -25,7 +25,7 @@ Guardar automáticamente lo **relevante** cada 5-10 mensajes, ahorrando tokens y
 
 **Límite**: 3-5 bullets por sección, máx 200 palabras totales
 
-### 📄 GUARDA en `/resu.md` (extenso)
+### 📄 GUARDA en `resu.md` (extenso)
 ```
 - Investigaciones profundas
 - Logs de errores largos
@@ -47,20 +47,20 @@ Guardar automáticamente lo **relevante** cada 5-10 mensajes, ahorrando tokens y
 
 ## Sistema de References
 
-### En `/memories/session/*.md`:
+### En `.agents/autosave/*.md`:
 ```markdown
 # Tema: [X]
 
 **Decisión**: Usar @bibi-coordinator para routing
 **Razón**: Reduce tokens 30-40%
 
-→ **Ver detalles**: `/resu.md#sistema-multi-agente`
+→ **Ver detalles**: `resu.md#sistema-multi-agente`
 
 **Status**: ✅ Implementado
 **Próximo**: Probar con primer task real
 ```
 
-### Estructura de `/resu.md`:
+### Estructura de `resu.md`:
 
 ```markdown
 # Resumen Session [Fecha]
@@ -100,13 +100,13 @@ Guardar automáticamente lo **relevante** cada 5-10 mensajes, ahorrando tokens y
   "checkpoint": "multi-agent-system-v1",
   "timestamp": "2026-08-22T14:30Z",
   "summary": "Completado sistema orchestration: 
-    - .instructions.md ✅
+    - .agents/instructions/project.md ✅
     - AGENTS.md ✅  
-    - copilot-instructions.md ✅",
+    - .agents/instructions/harness.md ✅",
   
   "memory_files_saved": [
-    "/memories/session/multi-agent-system.md",
-    "/resu.md#sistema-multi-agente"
+    ".agents/autosave/multi-agent-system.md",
+    "resu.md#sistema-multi-agente"
   ],
   
   "context_for_next_session": {
@@ -128,8 +128,8 @@ Guardar automáticamente lo **relevante** cada 5-10 mensajes, ahorrando tokens y
 
 ### Entrada (start de sesión):
 ```
-1. Lee /memories/session/*.md (< 1K tokens)
-2. Si hay references → Lee sections de /resu.md
+1. Lee .agents/autosave/*.md (< 1K tokens)
+2. Si hay references → Lee sections de resu.md
 3. Si hay checkpoint → Carga estado directo
 4. ¿Task nueva? → Olvida skip items
 ```
@@ -167,8 +167,8 @@ Guardar automáticamente lo **relevante** cada 5-10 mensajes, ahorrando tokens y
 ## Reglas de Limpieza
 
 ### Cada semana:
-- [ ] Mergear checkpoints viejos → `/resu.md`
-- [ ] Archivar completados a `/memories/archive/`
+- [ ] Mergear checkpoints viejos → `resu.md`
+- [ ] Archivar completados a `.agents/autosave/archive/`
 - [ ] Purgar memory duplicada
 
 ### Nunca borres:

@@ -268,7 +268,9 @@ Me gustaría mejorar el flujo de checkout
 
 ## Skill Availability
 
-**Active** (9 skills):
+Skills físicas en `.agents/skills/`:
+
+**Diseño/UX**:
 - `design-taste-frontend` — Anti-slop frontend design
 - `high-end-visual-design` — Premium visual system
 - `imagegen-frontend-web` — Design reference generation
@@ -278,14 +280,48 @@ Me gustaría mejorar el flujo de checkout
 - `emil-design-eng` — UI polish & details
 - `improve-animations` — Motion audit & planning
 - `redesign-existing-projects` — Full redesigns
-- `supabase-postgres-best-practices` — DB best practices
 - `frontend-design` — Intentional design guidance
+- `impeccable` — UI critique / design review
+- `review-animations` — Motion review (high bar)
+
+**Base de datos**:
+- `supabase-postgres-best-practices` — DB best practices
+
+**Workflow OpenSpec** (en `.agents/skills/` y `.opencode/skills/`):
+- `openspec-propose`, `openspec-explore`, `openspec-apply-change`, `openspec-update-change`, `openspec-sync-specs`, `openspec-archive-change`
 
 **Removed** (irrelevant to e-commerce):
 - brandkit, imagegen-frontend-mobile, industrial-brutalist-ui, minimalist-ui, gpt-taste, stitch-design-taste, design-taste-frontend-v1, full-output-enforcement
 
 ---
 
-**Last Updated**: 2026-08-22  
+## Harness & Config Files
+
+Capa de agentes/orquestación consolidada en `.agents/` (gitignored — tooling, no código):
+
+```
+.agents/
+├── README.md                        # Índice de la capa
+├── instructions/
+│   ├── project.md                   # Principios core + routing
+│   └── harness.md                   # Decision tree + reglas operacionales
+├── orchestration/
+│   ├── system-integration.md        # Integración agentes + OpenSpec + autosave
+│   └── openspec-orchestration.md    # División frontend/backend/full-stack
+├── autosave/
+│   ├── README.md                    # Sistema auto-save (checkpoints)
+│   ├── rules.md                     # Reglas detalladas de auto-save
+│   └── resu.md                      # Resumen ejecutivo / checkpoints
+└── skills/                          # Colección única de skills
+```
+
+Configuraciones de herramientas en sus carpetas estándar (no se mueven):
+- `.opencode/` — config de opencode (agents, commands, skills)
+- `.codex/hooks.json` — hooks de Codex
+- `.github/skills/`, `.github/hooks/`, `.github/prompts/` — GitHub/Copilot
+
+---
+
+**Last Updated**: 2026-08-26  
 **System Type**: Coordinator + 4 Specialists  
 **Token Strategy**: Narrow context per agent

@@ -13,8 +13,8 @@ Implementamos **3 sistemas integrados**:
 ├─────────────────────────────────────────────────────────┤
 │ 2. AUTO-SAVE CHECKPOINT SYSTEM                          │
 │ ├─ Cada 5-10 mensajes → guarda automáticamente         │
-│ ├─ Relevante → /memories/session/ (breveedad)          │
-│ └─ Extenso → /resu.md (detalles linkeados)             │
+│ ├─ Relevante → .agents/autosave/ (breveedad)           │
+│ └─ Extenso → .agents/autosave/resu.md (detalles linkeados) │
 ├─────────────────────────────────────────────────────────┤
 │ 3. CONTEXT JUMP BETWEEN SESSIONS                        │
 │ ├─ Memory files < 1K tokens (fast load)                │
@@ -29,11 +29,11 @@ Implementamos **3 sistemas integrados**:
 
 | Archivo | Propósito | Tamaño | Cuándo leer |
 |---------|-----------|--------|-----------|
-| `.autosave-rules.md` | Guía de auto-save | ~300 líneas | First time setup |
+| `rules.md` | Guía de auto-save | ~300 líneas | First time setup |
 | `resu.md` | Contexto extenso + referencias | Growing | Próximas sesiones, on-demand |
-| `copilot-instructions.md` | Harness operacional | ~200 líneas | Referencia durante work |
-| `.instructions.md` | Principios core | ~150 líneas | Debugging issues |
-| `AGENTS.md` | Definiciones de agentes | ~250 líneas | Training/validation |
+| `../instructions/harness.md` | Harness operacional | ~200 líneas | Referencia durante work |
+| `../instructions/project.md` | Principios core | ~150 líneas | Debugging issues |
+| `../../AGENTS.md` | Definiciones de agentes | ~250 líneas | Training/validation |
 
 ---
 
@@ -45,7 +45,7 @@ Implementamos **3 sistemas integrados**:
 Usuario: "Rediseña el checkout"
 
 1. Chat lee:
-   - decision tree (copilot-instructions.md) → "es design"
+   - decision tree (../instructions/harness.md) → "es design"
    - auto-routes a @bibi-designer
    
 2. @bibi-designer carga:
@@ -57,8 +57,8 @@ Usuario: "Rediseña el checkout"
 3. Designer produce: 3 design images + CSS blueprint
    
 4. Auto-save checkpoint:
-   - Brief decision → /memories/session/
-   - Images + análisis → /resu.md
+   - Brief decision → .agents/autosave/
+   - Images + análisis → resu.md
    - "Próximo: implementer" → ready
    
 5. Tokens used: ~8K (vs 15-20K sin orchestration)
@@ -70,7 +70,7 @@ Usuario: "Rediseña el checkout"
 Usuario entra con browser, hace pregunta
 
 1. Chat carga memory:
-   - /memories/session/*.md (< 500 bytes)
+   - .agents/autosave/*.md (< 500 bytes)
    - Lee: "Multi-agent system ✅", "Checkout design done"
    - Ve reference → "Ver detalles: resu.md#checkout-design"
    
@@ -163,7 +163,7 @@ Session A: User pide rediseño del header
 
 Session B (2 días después): User vuelve
 
-[Load] Chat reads /memories/session/
+[Load] Chat reads .agents/autosave/
 → "Multi-agent system ✅, Header redesign ✅"
 
 [Lookup] User asks: "¿Puedo modificar el header colores?"
@@ -254,11 +254,11 @@ User: "Implementa los cambios"
 
 ## Quick Links
 
-📄 **Reglas detalladas**: [.autosave-rules.md](.autosave-rules.md)  
+📄 **Reglas detalladas**: [rules.md](rules.md)  
 📋 **Resumen ejecutivo**: [resu.md](resu.md)  
-🎯 **Decision tree**: [copilot-instructions.md](copilot-instructions.md#quick-reference)  
-🤖 **Agent definitions**: [AGENTS.md](AGENTS.md#specialist-agents)  
-🔧 **Core principles**: [.instructions.md](.instructions.md#core-principles)  
+🎯 **Decision tree**: [harness.md](../instructions/harness.md#quick-reference)  
+🤖 **Agent definitions**: [AGENTS.md](../../AGENTS.md#specialist-agents)  
+🔧 **Core principles**: [project.md](../instructions/project.md#core-principles)  
 
 ---
 

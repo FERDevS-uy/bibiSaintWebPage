@@ -96,7 +96,7 @@ test.describe('Product Page', () => {
 1. Write test file in `/tests/`
 2. Run locally: `pnpm exec playwright test --watch`
 3. Use UI mode to debug: `pnpm exec playwright test --ui`
-4. When done, save test file + report to resu.md
+4. When done, save test file + report to .agents/autosave/resu.md
 5. CI validates via `pnpm exec playwright test`
 
 **Zero tokens spent on Playwright MCP** ✅
@@ -107,7 +107,7 @@ test.describe('Product Page', () => {
 1. Write implementation code
 2. @bibi-qa writes tests (parallel or sequential)
 3. Run: `pnpm exec playwright test tests/[feature].spec.ts`
-4. Both push to resu.md
+4. Both push to .agents/autosave/resu.md
 
 **No token overhead** ✅
 
