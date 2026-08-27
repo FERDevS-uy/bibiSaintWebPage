@@ -296,6 +296,13 @@ export const prerender = true;
     color: #d32f2f;
   }
 
+  :global(.pedido-total-note) {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #8a6d3b;
+    line-height: 1.4;
+  }
+
   /* ------- Error / empty ------- */
   :global(.pedido-message) {
     padding: 48px 0;
@@ -350,6 +357,14 @@ export const prerender = true;
 
 <script>
   import { parsePrice, formatPrice } from "@utils/price";
+  import {
+    providerFrom,
+    fetchMartinaLive,
+    fetchKaiLive,
+    fetchNuvexLive,
+    fetchAlondraLive,
+  } from "../client/stockService";
+  import { supabase } from "../lib/supabaseClient";
   // Base64URL encode/decode inline
   function base64UrlEncode(bytes) {
     let binary = "";
@@ -477,6 +492,9 @@ export const prerender = true;
     return "";
   }
 
+  const PEDIDO_IMG_FALLBACK =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%23f3f3f3'/%3E%3Crect x='18' y='18' width='84' height='84' rx='8' fill='%23e5e5e5'/%3E%3Cpath d='M37 78l16-17 13 12 17-20 12 25H37z' fill='%23c8c8c8'/%3E%3C/svg%3E";
+
   document.addEventListener("astro:page-load", async () => {
     const params = new URLSearchParams(window.location.search);
     const tokenId = params.get("id");
@@ -490,24 +508,8 @@ export const prerender = true;
     try {
       const decrypted = decryptIDs(tokenId, "elias");
 
-      // Fetch productos.json
-      const runtimeBasePath = (document.documentElement.dataset.basePath || "").replace(/\/+$/, "");
-      const urls = [`${runtimeBasePath}/productos.json`, "/productos.json", "productos.json"];
-      let productos = [];
-      for (const url of urls) {
-        try {
-          const res = await fetch(url);
-          if (res.ok) {
-            productos = await res.json();
-            break;
-          }
-        } catch (e) { }
-      }
-
-      if (productos.length === 0) throw new Error("No se pudo obtener productos.json");
-
       // Parse items from decrypted array
-      // Soporta payload JSON ({id, cantidad, selectedColorId, selectedColorName})
+      // Soporta payload JSON ({id, cantidad, selectedColorId, selectedColorName, price})
       // y formato legacy "id-cantidad".
       const items = decrypted.map((item) => {
         const trimmed = String(item || "").trim();
@@ -519,11 +521,13 @@ export const prerender = true;
             const cantVal = Number(parsed?.cantidad);
             if (!idVal || Number.isNaN(cantVal)) return null;
             const cId = Number(parsed?.selectedColorId);
+            const rawPrice = parsed?.price;
             return {
               id: idVal,
               cantidad: cantVal,
               selectedColorId: Number.isFinite(cId) ? cId : null,
               selectedColorName: parsed?.selectedColorName ? String(parsed.selectedColorName) : null,
+              price: typeof rawPrice === "string" && rawPrice.trim() ? rawPrice.trim() : null,
             };
           } catch { return null; }
         }
@@ -532,28 +536,59 @@ export const prerender = true;
         const id = trimmed.slice(0, lastDash).trim();
         const cant = Number(trimmed.slice(lastDash + 1).trim());
         if (!id || Number.isNaN(cant)) return null;
-        return { id, cantidad: cant, selectedColorId: null, selectedColorName: null };
+        return { id, cantidad: cant, selectedColorId: null, selectedColorName: null, price: null };
       }).filter(Boolean);
 
       if (items.length === 0) throw new Error("El pedido no tiene productos");
+
+      // Enriquecimiento opcional desde productos.json (img/name/link del proveedor).
+      // Degradado: si el archivo no existe o falla, el render continúa con los datos del token.
+      let productos = [];
+      try {
+        const runtimeBasePath = (document.documentElement.dataset.basePath || "").replace(/\/+$/, "");
+        const urls = [`${runtimeBasePath}/productos.json`, "/productos.json", "productos.json"];
+        for (const url of urls) {
+          try {
+            const res = await fetch(url);
+            if (res.ok) {
+              const parsed = await res.json();
+              if (Array.isArray(parsed)) {
+                productos = parsed;
+                break;
+              }
+            }
+          } catch (e) { }
+        }
+      } catch (e) { /* enriquecimiento opcional: nunca rompe el render */ }
 
       // Build pedido list - busca por baseId (sin variante)
       const foundItems = items.map((item) => {
         const parsed = parseTokenId(item.id);
         const prod = productos.find((p) => p.id === parsed.baseId);
-        if (!prod) return null;
         const colorId = item.selectedColorId !== null ? item.selectedColorId : parsed.colorId;
         let colorName = item.selectedColorName;
         let colorHex = null;
-        if (Array.isArray(prod.colors) && colorId !== null && colorId !== undefined) {
+        if (prod && Array.isArray(prod.colors) && colorId !== null && colorId !== undefined) {
           const c = prod.colors.find((c) => c.id === colorId);
           if (c) {
             if (!colorName) colorName = c.name;
             colorHex = c.hex || null;
           }
         }
+
+        // Precio: prioridad al token (fuente única de verdad). Fallback al catálogo.
+        let currentUnitPrice = null;
+        if (item.price !== null && item.price !== undefined) {
+          const tokenPrice = parsePrice(item.price);
+          if (Number.isFinite(tokenPrice) && tokenPrice > 0) currentUnitPrice = tokenPrice;
+        }
+        if (currentUnitPrice === null && prod) {
+          const catalogPrice = parsePrice(prod.price);
+          if (Number.isFinite(catalogPrice) && catalogPrice > 0) currentUnitPrice = catalogPrice;
+        }
+
         return {
-          ...prod,
+          ...(prod || {}),
           cantidad: item.cantidad,
           requestedId: item.id,
           baseId: parsed.baseId,
@@ -561,10 +596,11 @@ export const prerender = true;
           selectedColorId: colorId,
           selectedColorName: colorName,
           selectedColorHex: colorHex,
-          currentUnitPrice: parsePrice(prod.price),
+          currentUnitPrice,
+          priceUnavailable: currentUnitPrice === null,
+          providerLink: prod?.provider_link || null,
         };
       });
-      const missingCount = foundItems.filter((p) => p === null).length;
       const pedidos = foundItems.filter(Boolean);
 
       const container = document.getElementById("result__container");
@@ -575,10 +611,22 @@ export const prerender = true;
         return;
       }
 
-      const total = pedidos.reduce((s, p) => s + p.currentUnitPrice * p.cantidad, 0);
-      const warningHtml = missingCount > 0
-        ? `<p style="color:#b42318;font-size:0.85rem;font-weight:600;margin:0 0 12px;padding:10px 16px;background:#fff2f0;border-radius:8px;">${missingCount} producto${missingCount > 1 ? "s" : ""} del pedido no se encontraron en el catálogo actual.</p>`
+      const pricedItems = pedidos.filter((p) => !p.priceUnavailable);
+      const priceMissingCount = pedidos.filter((p) => p.priceUnavailable).length;
+      const allUnavailable = pricedItems.length === 0;
+      const partialPrices = priceMissingCount > 0 && pricedItems.length > 0;
+      // Total: solo suma items con precio válido. Si NINGUNO lo tiene, se muestra "—", nunca $0.
+      const total = pricedItems.reduce((s, p) => s + p.currentUnitPrice * p.cantidad, 0);
+      const totalValueHtml = allUnavailable
+        ? `<span title="Precio no disponible">—</span>`
+        : `<span>$<span>${formatPrice(total)}</span></span>`;
+      const totalNoteHtml = partialPrices
+        ? `<small class="pedido-total-note">(precios parciales: ${priceMissingCount} producto${priceMissingCount > 1 ? "s" : ""} sin precio)</small>`
         : "";
+      const warningHtml = priceMissingCount > 0
+        ? `<p style="color:#b42318;font-size:0.85rem;font-weight:600;margin:0 0 12px;padding:10px 16px;background:#fff2f0;border-radius:8px;">${priceMissingCount} producto${priceMissingCount > 1 ? "s" : ""} del pedido no tiene precio disponible (el catálogo no respondió).</p>`
+        : "";
+      const initialBadge = pedidos.length <= 5 ? "Verificando…" : "Sin verificar";
       const itemsHtml = pedidos.map((p, i) => {
         const img = Array.isArray(p.img) ? p.img[0] : p.img;
         const badgeClass = p.variantBadgeText && p.variantBadgeText.startsWith("Talle ") ? "pedido-size-badge" : "pedido-variant-badge";
@@ -587,10 +635,142 @@ export const prerender = true;
         const colorBadge = hasColor
           ? `<span class="pedido-color-badge"><span class="pedido-color-swatch" style="background:${escapeHtml(p.selectedColorHex || '#cccccc')}"></span>${escapeHtml(p.selectedColorName || ("ID " + p.selectedColorId))}</span>`
           : "";
-        return `<div class="pedido-item" data-row-key="${i}" data-cantidad="${p.cantidad}" data-unit-price="${p.currentUnitPrice}"><img src="${safeImageSrc(img)}" alt="${escapeHtml(p.name)}" loading="lazy" /><div class="pedido-item-info"><span class="pedido-item-name">${escapeHtml(p.name)}</span>${variantBadge}${colorBadge}<span class="pedido-item-price">$<span>${formatPrice(p.currentUnitPrice)}</span> c/u</span><p class="pedido-check-status">Stock verificar manualmente</p></div><div class="pedido-qty-wrap"><span class="pedido-qty">${p.cantidad}</span></div><div class="pedido-subtotal">$<span>${formatPrice(p.currentUnitPrice * p.cantidad)}</span></div></div>`;
+        const priceHtml = p.priceUnavailable
+          ? `<span class="pedido-item-price">Precio no disponible</span>`
+          : `<span class="pedido-item-price">$<span>${formatPrice(p.currentUnitPrice)}</span> c/u</span>`;
+        const subtotalHtml = p.priceUnavailable
+          ? `<span class="pedido-subtotal">—</span>`
+          : `<span class="pedido-subtotal">$<span>${formatPrice(p.currentUnitPrice * p.cantidad)}</span></span>`;
+        const itemName = p.name || p.baseId || p.requestedId;
+        return `<div class="pedido-item" data-row-key="${i}" data-cantidad="${p.cantidad}" data-unit-price="${p.currentUnitPrice ?? ""}" data-base-id="${escapeHtml(p.baseId)}" data-provider-link="${escapeHtml(p.providerLink || "")}"><img src="${safeImageSrc(img) || PEDIDO_IMG_FALLBACK}" alt="${escapeHtml(itemName)}" loading="lazy" /><div class="pedido-item-info"><span class="pedido-item-name">${escapeHtml(itemName)}</span>${variantBadge}${colorBadge}${priceHtml}<div class="pedido-check-row"><button type="button" class="pedido-check-btn">Verificar stock</button><span class="pedido-stock-badge pending">${initialBadge}</span></div><p class="pedido-check-status"></p></div><div class="pedido-qty-wrap"><span class="pedido-qty">${p.cantidad}</span></div>${subtotalHtml}</div>`;
       }).join("");
 
-      container.innerHTML = `${warningHtml}<div class="pedido-list"><div class="pedido-list-header"><span></span><span>Producto</span><span style="text-align:center">Cant.</span><span style="text-align:right">Subtotal</span></div>${itemsHtml}</div><div class="pedido-total-box"><div class="pedido-total-inner"><div class="pedido-total-row"><span>${pedidos.length} productos</span><span>${pedidos.reduce((s, p) => s + p.cantidad, 0)} unidades</span></div><div class="pedido-total-row main"><span>Total</span><span>$<span>${formatPrice(total)}</span></span></div></div></div>`;
+      const verifyAllHtml = pedidos.length > 5
+        ? `<div style="margin-top:12px;text-align:right"><button type="button" id="pedidoVerifyAll" class="pedido-check-btn">Verificar todo</button></div>`
+        : "";
+
+      container.innerHTML = `${warningHtml}<div class="pedido-list"><div class="pedido-list-header"><span></span><span>Producto</span><span style="text-align:center">Cant.</span><span style="text-align:right">Subtotal</span></div>${itemsHtml}</div><div class="pedido-total-box"><div class="pedido-total-inner"><div class="pedido-total-row"><span>${pedidos.length} productos</span><span>${pedidos.reduce((s, p) => s + p.cantidad, 0)} unidades</span></div><div class="pedido-total-row main"><span>Total</span>${totalValueHtml}</div>${totalNoteHtml}</div></div>${verifyAllHtml}`;
+
+      // --- Verificación de stock por proveedor ---
+      const itemEls = Array.from(container.querySelectorAll<HTMLElement>(".pedido-item"));
+
+      // Resolver links de proveedor desde Supabase (anon, client-side).
+      // Si falla o no hay link para Kai/Nuvex → badge pending, nunca bloquear.
+      const resolveProviderLinks = async (baseIds) => {
+        const uniqueIds = [...new Set(baseIds.filter(Boolean))];
+        if (uniqueIds.length === 0) return new Map();
+        try {
+          const { data, error } = await supabase
+            .from("products")
+            .select("id, provider_link")
+            .in("id", uniqueIds);
+          if (error) return new Map();
+          const map = new Map();
+          (data || []).forEach((row) => {
+            if (row?.id) map.set(String(row.id), row.provider_link || "");
+          });
+          return map;
+        } catch {
+          return new Map();
+        }
+      };
+
+      const linkMap = await resolveProviderLinks(itemEls.map((el) => el.dataset.baseId || ""));
+      itemEls.forEach((el) => {
+        const baseId = el.dataset.baseId || "";
+        const link = linkMap.get(baseId) || el.dataset.providerLink || "";
+        el.dataset.providerLink = link;
+      });
+
+      const verifyItemStock = async (itemEl) => {
+        const badgeEl = itemEl.querySelector(".pedido-stock-badge");
+        const statusEl = itemEl.querySelector(".pedido-check-status");
+        const btnEl = itemEl.querySelector(".pedido-check-btn");
+        const baseId = itemEl.dataset.baseId || "";
+        const providerLink = itemEl.dataset.providerLink || "";
+        if (!baseId || !badgeEl || !statusEl || !btnEl) return;
+
+        const setBadge = (state, text) => {
+          badgeEl.className = `pedido-stock-badge ${state}`;
+          badgeEl.textContent = text;
+        };
+        const setStatus = (text, tone) => {
+          statusEl.textContent = text;
+          statusEl.className = tone ? `pedido-check-status ${tone}` : "pedido-check-status";
+        };
+
+        const provider = providerFrom(baseId, providerLink);
+
+        if (provider === "unknown") {
+          setBadge("pending", "Sin verificación");
+          setStatus("Proveedor sin verificación en vivo.", "");
+          return;
+        }
+        if ((provider === "kaideco" || provider === "nuvex") && !providerLink) {
+          setBadge("pending", "Sin verificación");
+          setStatus("No hay link del proveedor para verificar en vivo.", "");
+          return;
+        }
+
+        btnEl.disabled = true;
+        setBadge("pending", "Verificando…");
+        setStatus("Consultando proveedor en vivo...", "");
+
+        try {
+          let result = null;
+          if (provider === "martina") {
+            result = await fetchMartinaLive(baseId);
+          } else if (provider === "alondra") {
+            result = await fetchAlondraLive(baseId);
+          } else if (provider === "kaideco") {
+            result = await fetchKaiLive(providerLink);
+          } else if (provider === "nuvex") {
+            result = await fetchNuvexLive(providerLink);
+          }
+
+          if (result && result.inStock === true) {
+            setBadge("ok", "En stock");
+            setStatus("Stock confirmado en el proveedor.", "ok");
+          } else if (result && result.inStock === false) {
+            setBadge("error", "Sin stock");
+            setStatus("Sin stock en el proveedor.", "error");
+          } else {
+            setBadge("pending", "Sin verificación");
+            setStatus("No se pudo confirmar stock en vivo.", "");
+          }
+        } catch {
+          setBadge("pending", "Sin verificación");
+          setStatus("No se pudo verificar ahora. Se mantiene la información del catálogo.", "");
+        } finally {
+          btnEl.disabled = false;
+        }
+      };
+
+      // Botón manual por item (siempre disponible para re-verificar)
+      itemEls.forEach((el) => {
+        el.querySelector(".pedido-check-btn")?.addEventListener("click", () => verifyItemStock(el));
+      });
+
+      // Auto-check secuencial solo si hay ≤5 items; si hay más, botón global "Verificar todo"
+      const autoCheck = itemEls.length <= 5;
+      if (autoCheck) {
+        for (const el of itemEls) {
+          await verifyItemStock(el);
+          await new Promise((r) => setTimeout(r, 300));
+        }
+      } else {
+        const verifyAllBtn = document.getElementById("pedidoVerifyAll");
+        if (verifyAllBtn) {
+          verifyAllBtn.addEventListener("click", async () => {
+            verifyAllBtn.disabled = true;
+            for (const el of itemEls) {
+              await verifyItemStock(el);
+              await new Promise((r) => setTimeout(r, 300));
+            }
+            verifyAllBtn.disabled = false;
+          });
+        }
+      }
     } catch (err) {
       const el = document.getElementById("result__container");
       if (el) el.innerHTML = '<p class="pedido-message">Error: ' + escapeHtml(err.message) + '</p>';

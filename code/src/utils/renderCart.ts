@@ -81,6 +81,7 @@ function serializePedidoItem(product: ProductInCart): string {
     cantidad: Number(product.cantidad) || 1,
     selectedColorId: colorId,
     selectedColorName: product.selectedColorName || null,
+    price: product.price ?? null,
   };
   return JSON.stringify(payload);
 }

@@ -1282,6 +1282,38 @@ const pathname = Astro.url.pathname;
         clearSelectedSize();
         sizeFeedback?.classList.add("hidden");
 
+        // Edge case: color elegido sin talles disponibles → "Sin stock" + talles bloqueados.
+        // Se omite cuando el producto no requiere selección de talle
+        // (ej: Kai "sin talles pero en stock" vía setSizeRequirement(false)).
+        if (requiresSizeSelection) {
+          if (set.size === 0) {
+            if (stockBadge) {
+              stockBadge.textContent = "Sin stock";
+              stockBadge.style.background = "#a33a3a";
+            }
+            if (sizesSelector) {
+              sizesSelector
+                .querySelectorAll<HTMLButtonElement>(".size")
+                .forEach((btn) => {
+                  btn.classList.add("unavailable");
+                  btn.classList.remove("selected");
+                  btn.disabled = true;
+                });
+            }
+            if (sizeFeedback) {
+              sizeFeedback.textContent = "Este color no tiene talles disponibles.";
+              sizeFeedback.classList.remove("hidden");
+            }
+          } else {
+            // Color con talles → restaurar estado previo
+            if (stockBadge) {
+              stockBadge.textContent = "En Stock";
+              stockBadge.style.background = "#27ae60";
+            }
+            if (sizeFeedback) sizeFeedback.classList.add("hidden");
+          }
+        }
+
         // marcar swatch seleccionado y nombre
         let selectedImages: string[] = [];
         if (colorsSelector) {
