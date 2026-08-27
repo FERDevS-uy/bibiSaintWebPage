@@ -16,6 +16,27 @@ export interface LivePriceResult {
 
 const PROVIDER_TIMEOUT_MS = 6000;
 
+/** TTL de la caché de precios en vivo (5 min, alineado con la caché de productos). */
+const LIVE_PRICE_CACHE_TTL = 300_000;
+/** Límite de entradas antes de purgar expiradas (evita crecimiento ilimitado en isolates longevos). */
+const LIVE_PRICE_CACHE_MAX = 500;
+
+const livePriceCache = new Map<string, { value: LivePriceResult; expires: number }>();
+
+function pruneLivePriceCache(): void {
+  if (livePriceCache.size < LIVE_PRICE_CACHE_MAX) return;
+  const now = Date.now();
+  for (const [key, entry] of livePriceCache) {
+    if (entry.expires <= now) livePriceCache.delete(key);
+  }
+  // Si aún supera el límite (todo vigente), descarta la entrada más antigua.
+  while (livePriceCache.size >= LIVE_PRICE_CACHE_MAX) {
+    const oldest = livePriceCache.keys().next();
+    if (oldest.done) break;
+    livePriceCache.delete(oldest.value);
+  }
+}
+
 const NUVEX_HEADERS: Record<string, string> = {
   Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
   "Accept-Language": "es-419,es;q=0.9,en;q=0.8",
@@ -146,6 +167,15 @@ export async function getLivePrice({
 
   if (provider === "unknown") return fallbackResult;
 
+  // Caché module-level: solo resultados "live" (un fallo de red no se cachea).
+  const cacheKey = `${provider}|${productId}|${providerLink}`;
+  const cached = livePriceCache.get(cacheKey);
+  if (cached && cached.expires > Date.now()) {
+    return cached.value;
+  }
+
+  let liveResult: LivePriceResult | null = null;
+
   try {
     if (provider === "martina") {
       // Martina ya no consulta precio runtime acá: el precio live lo resuelve
@@ -157,31 +187,27 @@ export async function getLivePrice({
     if (provider === "kaideco") {
       const live = await withTimeout(getKaiPrice(providerLink), PROVIDER_TIMEOUT_MS);
       const adjusted = applyProviderMarkupValue(live.price, provider);
-      return {
+      liveResult = {
         provider,
         price: formatUy(adjusted) || fallbackResult.price,
         priceValue: adjusted || fallbackValue,
         inStock: live.inStock,
         source: adjusted > 0 ? "live" : "fallback",
       };
-    }
-
-    if (provider === "alondra") {
+    } else if (provider === "alondra") {
       const live = await withTimeout(getAlondraPrice(productId), PROVIDER_TIMEOUT_MS);
       const adjusted = applyProviderMarkupValue(live.price, provider);
-      return {
+      liveResult = {
         provider,
         price: formatUy(adjusted) || fallbackResult.price,
         priceValue: adjusted || fallbackValue,
         inStock: live.inStock,
         source: adjusted > 0 ? "live" : "fallback",
       };
-    }
-
-    if (provider === "nuvex") {
+    } else if (provider === "nuvex") {
       // Política: para Nuvex solo verificamos stock en vivo, precio se mantiene del CSV.
       const inStock = await withTimeout(getNuvexStock(providerLink), PROVIDER_TIMEOUT_MS);
-      return {
+      liveResult = {
         ...fallbackResult,
         inStock,
         source: inStock === null ? "fallback" : "live",
@@ -189,6 +215,17 @@ export async function getLivePrice({
     }
   } catch {
     // Cualquier error => fallback silencioso (no romper UI).
+  }
+
+  // Solo se cachean resultados "live" exitosos; los fallbacks (proveedor caído,
+  // timeout, error de red) se resuelven de nuevo en cada request.
+  if (liveResult && liveResult.source === "live") {
+    pruneLivePriceCache();
+    livePriceCache.set(cacheKey, {
+      value: liveResult,
+      expires: Date.now() + LIVE_PRICE_CACHE_TTL,
+    });
+    return liveResult;
   }
 
   return fallbackResult;

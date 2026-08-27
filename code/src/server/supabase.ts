@@ -9,6 +9,7 @@ const SUPABASE_ANON_KEY =
   (typeof process !== "undefined" ? process.env.SUPABASE_ANON_KEY : undefined);
 
 let client: ReturnType<typeof createClient> | null = null;
+let adminClient: ReturnType<typeof createClient> | null = null;
 
 export function getSupabase() {
   if (client) return client;
@@ -30,6 +31,8 @@ export function getSupabase() {
 }
 
 export function getSupabaseAdmin() {
+  if (adminClient) return adminClient;
+
   const serviceKey =
     (import.meta.env.SUPABASE_SERVICE_ROLE_KEY as string | undefined) ||
     (typeof process !== "undefined" ? process.env.SUPABASE_SERVICE_ROLE_KEY : undefined);
@@ -43,7 +46,7 @@ export function getSupabaseAdmin() {
     throw new Error("SUPABASE_URL not configured");
   }
 
-  return createClient(
+  adminClient = createClient(
     url,
     serviceKey,
     {
@@ -53,4 +56,6 @@ export function getSupabaseAdmin() {
       },
     },
   );
+
+  return adminClient;
 }

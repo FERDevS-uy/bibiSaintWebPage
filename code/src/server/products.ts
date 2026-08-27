@@ -1,6 +1,25 @@
 import type Product from "../types/product";
 import type Category from "../types/categoryList";
 import { getSupabase } from "./supabase";
+import { invalidateProductsCache } from "../utils/loadProducts";
+
+/** TTL de cachés de categoría/counts (5 min, alineado con la caché de productos). */
+const CATEGORY_CACHE_TTL = 300_000;
+
+interface CacheEntry<T> {
+  value: T;
+  expires: number;
+}
+
+const categoryProductsCache = new Map<string, CacheEntry<{ products: Product[]; total: number }>>();
+let categoryCountsCache: CacheEntry<Category[]> | null = null;
+
+/** Invalida todas las cachés de productos (listado + categoría + counts). Per-isolate, best-effort. */
+export function invalidateAllProductCaches(): void {
+  categoryProductsCache.clear();
+  categoryCountsCache = null;
+  invalidateProductsCache();
+}
 
 interface SupabaseProductRow {
   id: string;
@@ -55,6 +74,12 @@ export async function fetchCategoryProducts(options: {
   page: number;
   pageSize: number;
 }): Promise<{ products: Product[]; total: number }> {
+  const cacheKey = `cat|${options.category}|${options.subcategory ?? ""}|${options.page}|${options.pageSize}`;
+  const cached = categoryProductsCache.get(cacheKey);
+  if (cached && cached.expires > Date.now()) {
+    return cached.value;
+  }
+
   const supabase = getSupabase();
   const start = (options.page - 1) * options.pageSize;
   const end = start + options.pageSize - 1;
@@ -78,13 +103,27 @@ export async function fetchCategoryProducts(options: {
     return { products: [], total: 0 };
   }
 
-  return {
+  const result = {
     products: (data ?? []).map((row) => rowToProduct(row as unknown as SupabaseProductRow)),
     total: count ?? 0,
   };
+
+  // Solo se cachean resultados exitosos con items (un fallo no debe quedar 5 min).
+  if (result.products.length > 0) {
+    categoryProductsCache.set(cacheKey, {
+      value: result,
+      expires: Date.now() + CATEGORY_CACHE_TTL,
+    });
+  }
+
+  return result;
 }
 
 export async function fetchCategoryCounts(): Promise<Category[]> {
+  if (categoryCountsCache && categoryCountsCache.expires > Date.now()) {
+    return categoryCountsCache.value;
+  }
+
   const supabase = getSupabase();
 
   const { data, error } = await supabase.rpc("get_category_counts");
@@ -94,7 +133,7 @@ export async function fetchCategoryCounts(): Promise<Category[]> {
     return [];
   }
 
-  return (data ?? []).map((row: any) => ({
+  const counts: Category[] = (data ?? []).map((row: any) => ({
     name: row.name ?? row.category_name ?? "",
     count: Number(row.count ?? row.product_count ?? 0),
     subcategories: Array.isArray(row.subcategories) ? row.subcategories.map((s: any) => ({
@@ -102,6 +141,16 @@ export async function fetchCategoryCounts(): Promise<Category[]> {
       count: Number(s.count ?? 0),
     })) : [],
   }));
+
+  // Solo se cachean resultados exitosos con datos.
+  if (counts.length > 0) {
+    categoryCountsCache = {
+      value: counts,
+      expires: Date.now() + CATEGORY_CACHE_TTL,
+    };
+  }
+
+  return counts;
 }
 
 export async function fetchProductById(id: string): Promise<Product | null> {

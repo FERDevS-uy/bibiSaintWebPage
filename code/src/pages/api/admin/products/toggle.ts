@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { getSupabaseAdmin } from "../../../../server/supabase";
 import { verifyAdmin } from "../../../../server/auth";
+import { invalidateAllProductCaches } from "../../../../server/products";
 
 export const POST: APIRoute = async ({ request }) => {
   if (!await verifyAdmin(request)) {
@@ -34,6 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
       .single();
 
     if (error) throw error;
+    invalidateAllProductCaches();
     return new Response(JSON.stringify({ data }), {
       status: 200,
       headers: { "content-type": "application/json" },

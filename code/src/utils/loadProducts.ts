@@ -22,7 +22,13 @@ const useSupabase = () => {
 
 let productsCache: Product[] | null = null;
 let cacheTime = 0;
-const CACHE_TTL = 60_000;
+const CACHE_TTL = 300_000;
+
+/** Invalida el cache de listado de productos (per-isolate, best-effort). */
+export function invalidateProductsCache(): void {
+  productsCache = null;
+  cacheTime = 0;
+}
 
 export async function loadProducts(): Promise<Product[]> {
   if (productsCache && Date.now() - cacheTime < CACHE_TTL) {
