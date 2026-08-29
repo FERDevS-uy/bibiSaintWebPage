@@ -18,6 +18,6 @@ const products = allProducts.slice(start, start + CANT_PRODUCTOS);
   <ListarProductos
     products={products}
     totalPages={totalPages}
-    actualPage={pag}
+    actualPage={Number(pag)}
   />
 </Layout>

@@ -1,3 +1,12 @@
+export function toTitleCase(value: string): string {
+  return value
+    .toLowerCase()
+    .split(' ')
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 export function normalizeText(text: string): string {
   if (!text) return "";
   return text.replace(/\*/g, ' x ').replace(/\s+/g, ' ').trim();

@@ -279,9 +279,12 @@ const emptyList = !productos || productos.length === 0;
     return parsePrice(card?.dataset.price ?? "0");
   }
 
-  let sortInitialized = false;
+  let sortAbort = new AbortController();
 
   document.addEventListener("astro:page-load", () => {
+    sortAbort.abort();
+    sortAbort = new AbortController();
+
     const root = document.querySelector("[data-sort-root]");
     const trigger = document.getElementById("products-sort-trigger");
     const currentLabel = document.getElementById("products-sort-current");
@@ -289,16 +292,6 @@ const emptyList = !productos || productos.length === 0;
     const list = document.getElementById("products-list-grid");
 
     if (!root || !trigger || !currentLabel || !menu || !list) return;
-
-    if (sortInitialized) {
-      const paramsSort = new URLSearchParams(window.location.search).get("sort") || "default";
-      const vs = SORT_LABELS[paramsSort] ? paramsSort : "default";
-      currentLabel.textContent = SORT_LABELS[vs];
-      applySort(vs);
-      return;
-    }
-
-    sortInitialized = true;
 
     const originalItems = Array.from(
       list.querySelectorAll(":scope > .producto_card, :scope > li")
@@ -343,7 +336,7 @@ const emptyList = !productos || productos.length === 0;
       const isHidden = menu.hidden;
       menu.hidden = !isHidden;
       trigger.setAttribute("aria-expanded", isHidden ? "true" : "false");
-    });
+    }, { signal: sortAbort.signal });
 
     optionButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -351,7 +344,7 @@ const emptyList = !productos || productos.length === 0;
         currentLabel.textContent = SORT_LABELS[value] || SORT_LABELS.default;
         applySort(value);
         closeMenu();
-      });
+      }, { signal: sortAbort.signal });
     });
 
     document.addEventListener("click", (event) => {
@@ -359,13 +352,13 @@ const emptyList = !productos || productos.length === 0;
       if (target && !root.contains(target) && !menu.hidden) {
         closeMenu();
       }
-    });
+    }, { signal: sortAbort.signal });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && !menu.hidden) {
         closeMenu();
       }
-    });
+    }, { signal: sortAbort.signal });
 
     const initialSort = new URLSearchParams(window.location.search).get("sort") || "default";
     const validSort = SORT_LABELS[initialSort] ? initialSort : "default";

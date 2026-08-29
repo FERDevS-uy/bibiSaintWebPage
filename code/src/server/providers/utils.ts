@@ -1,5 +1,11 @@
+import { toTitleCase } from "../../utils/categoryNormalization.ts";
+
 export function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export function normalizeCategoryName(value: string, fallback = "General"): string {
+  return toTitleCase(value.trim()) || fallback;
 }
 
 export function normalizeText(text: string): string {

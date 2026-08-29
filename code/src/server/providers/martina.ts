@@ -1,4 +1,4 @@
-import { delay, normalizeText, cleanDescription, martinaFetch, type ProductRow } from "./utils";
+import { delay, normalizeText, cleanDescription, martinaFetch, normalizeCategoryName, type ProductRow } from "./utils";
 import { normalizeProductPrice } from "./martinaNormalizer";
 import { normalizeSizes } from "../../utils/sizes";
 import { parseCampaign } from "./martinaCampaign";
@@ -372,10 +372,11 @@ export async function syncMartina(campaignCode?: string): Promise<{ products: Pr
       pricing?.price1 ?? "",
     );
 
-    const categoryName = String(
-      first?.productLine?.parent?.name || first?.productLine?.name || "Ropa",
+    const categoryName = normalizeCategoryName(
+      String(first?.productLine?.parent?.name || first?.productLine?.name || "Ropa"),
+      "Ropa",
     );
-    const subcategoria = String(first?.productLine?.name || "");
+    const subcategoria = normalizeCategoryName(String(first?.productLine?.name || ""), "");
 
     const colorById = new Map<number, { id: number; hex: string; name: string; sizes: string[]; images: string[] }>();
     entries.forEach((entry) => {

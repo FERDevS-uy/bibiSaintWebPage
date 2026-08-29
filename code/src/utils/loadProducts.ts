@@ -4,12 +4,14 @@ import {
   fetchProducts,
   fetchProductById,
   fetchRelatedProducts,
+  fetchCategoryProducts,
 } from "../server/products";
 import {
   productMatchesCategory,
   productMatchesSubcategory,
   getDisplayCategoryName,
   getDisplaySubcategories,
+  LEGACY_CATEGORIES,
 } from "./categoryNormalization";
 
 const useSupabase = () => {
@@ -171,6 +173,19 @@ export async function loadCategoryProducts(options: {
   page: number;
   pageSize: number;
 }): Promise<{ products: Product[]; total: number }> {
+  // Fast path: categorías no legacy con Supabase activo consultan la RPC
+  // (evita cargar el catálogo completo en cada request — error 1102 CPU).
+  if (isSupabaseEnabled() && !LEGACY_CATEGORIES.has(options.category.toLowerCase())) {
+    try {
+      const result = await fetchCategoryProducts(options);
+      if (result.products.length > 0 || result.total > 0) {
+        return result;
+      }
+    } catch {
+      // continuar al fallback en memoria
+    }
+  }
+
   const all = await loadProducts();
 
   const filtered = all.filter((p) => {

@@ -7,7 +7,7 @@
 //  - Apply: revalidación contra Nuvex + validación de decisiones + anti-replay + límites.
 import { getSupabaseAdmin } from "../supabase";
 import type { ProductRow } from "./utils";
-import { parsePrice } from "./utils";
+import { parsePrice, normalizeCategoryName } from "./utils";
 import { NuvexClient } from "./nuvex/client";
 import type { NuvexProductDraft } from "./nuvex/parser";
 import { NUVEX_LIMITS } from "./nuvex/security";
@@ -123,7 +123,7 @@ function draftToProductRow(d: NuvexProductDraft): ProductRow {
     price: d.price,
     img: d.images,
     categories: {
-      name: d.categoryName || "General",
+      name: normalizeCategoryName(d.categoryName, "General"),
       count: 0,
       subcategories: [],
     },
@@ -306,6 +306,34 @@ export class NuvexRepository {
     return true;
   }
 
+  /**
+   * Lee las categorías (JSONB) existentes de los productos afectados para
+   * preservar subcategorías en el upsert (onConflict: "id" sobrescribe el
+   * JSONB completo). Solo lectura de id + categories.
+   */
+  private async readExistingCategories(
+    ids: string[],
+  ): Promise<Map<string, { name?: string; count?: number; subcategories?: Array<{ name: string; count: number }> }>> {
+    const supabase = getSupabaseAdmin();
+    const map = new Map<string, { name?: string; count?: number; subcategories?: Array<{ name: string; count: number }> }>();
+    if (ids.length === 0) return map;
+    const BATCH = 50;
+    for (let i = 0; i < ids.length; i += BATCH) {
+      const batchIds = ids.slice(i, i + BATCH);
+      const { data, error } = await supabase
+        .from("products")
+        .select("id, categories")
+        .in("id", batchIds);
+      if (error) throw new Error(`readExistingCategories: ${error.message}`);
+      for (const row of data ?? []) {
+        const cats = row?.categories;
+        if (!cats || typeof cats !== "object") continue;
+        map.set(String(row.id), cats as { name?: string; count?: number; subcategories?: Array<{ name: string; count: number }> });
+      }
+    }
+    return map;
+  }
+
   /** Aplica el plan (upsert) y desactivaciones. Devuelve resumen. */
   async applyProducts(
     toUpsert: ProductRow[],
@@ -316,9 +344,22 @@ export class NuvexRepository {
     let deactivated = 0;
     let errors = 0;
 
+    // Merge de subcategorías: el upsert con onConflict: "id" sobrescribe el
+    // JSONB categories completo. Si el draft trae subcategorías NO vacías se
+    // usan las del draft (el sync actualiza); si trae vacías se preservan las
+    // existentes de la fila (si no hay fila previa, quedan [] como hoy).
+    const existingCategories = await this.readExistingCategories(toUpsert.map((r) => r.id));
+    const rows = toUpsert.map((r) => {
+      if (r.categories.subcategories.length > 0) return r;
+      const prev = existingCategories.get(r.id);
+      const prevSubs = prev?.subcategories;
+      if (!prevSubs || prevSubs.length === 0) return r;
+      return { ...r, categories: { ...r.categories, subcategories: prevSubs } };
+    });
+
     const BATCH = 50;
-    for (let i = 0; i < toUpsert.length; i += BATCH) {
-      const batch = toUpsert.slice(i, i + BATCH);
+    for (let i = 0; i < rows.length; i += BATCH) {
+      const batch = rows.slice(i, i + BATCH);
       const seenIds = new Set<string>();
       const deduped = batch.filter((r) => {
         if (seenIds.has(r.id)) return false;

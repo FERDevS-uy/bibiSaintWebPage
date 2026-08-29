@@ -2,7 +2,15 @@ import type Product from "../types/product";
 
 const MARTINA_HOST = "martinaditrento.com";
 
-function toTitleCase(value: string): string {
+/**
+ * Categorías que aplican transformaciones display que la RPC `get_category_counts`
+ * NO replica (prefijo "Mujer - X" de Martina→Ropa, inferencia Tecno en runtime).
+ * Para estas, sidebar y header deben seguir derivando desde el catálogo completo.
+ * Vive acá (y no en sidebarCategories) para evitar imports circulares.
+ */
+export const LEGACY_CATEGORIES = new Set(["ropa", "tecno"]);
+
+export function toTitleCase(value: string): string {
   return value
     .toLowerCase()
     .split(" ")

@@ -31,20 +31,41 @@ arrayCategorys.forEach((subcat) => {
     const parentName = subcat.name.slice(0, sepIdx);
     const childLabel = subcat.name.slice(sepIdx + 3);
 
-    if (!parentMap.has(parentName)) {
-      const node: TreeNode = {
-        name: parentName,
-        href: withBasePath(`/categories/${categoryFather}/${parentName}`, pathname),
-        children: [],
-      };
-      parentMap.set(parentName, node);
-      treeNodes.push(node);
+    // Solo crear nodo padre (acordeón) si el prefijo existe como subcategoría
+    // independiente (ej. "Mujer"/"Hombre" en Ropa). Si no existe, el prefijo
+    // no es una categoría real y su link matchearía 0 productos.
+    const parentExists = arrayCategorys.some(
+      (s) => s.name.toLowerCase() === parentName.toLowerCase()
+    );
+
+    if (parentExists) {
+      if (!parentMap.has(parentName)) {
+        const node: TreeNode = {
+          name: parentName,
+          href: withBasePath(`/categories/${categoryFather}/${parentName}`, pathname),
+          children: [],
+        };
+        parentMap.set(parentName, node);
+        treeNodes.push(node);
+      }
+      parentMap.get(parentName)!.children.push({
+        name: subcat.name,
+        label: childLabel,
+        href: withBasePath(`/categories/${categoryFather}/${subcat.name}`, pathname),
+      });
+    } else {
+      // Prefijo no es subcategoría real → nodo simple apuntando al NOMBRE
+      // COMPLETO (comportamiento del header no-Ropa).
+      if (!parentMap.has(subcat.name)) {
+        const node: TreeNode = {
+          name: subcat.name,
+          href: withBasePath(`/categories/${categoryFather}/${subcat.name}`, pathname),
+          children: [],
+        };
+        parentMap.set(subcat.name, node);
+        treeNodes.push(node);
+      }
     }
-    parentMap.get(parentName)!.children.push({
-      name: subcat.name,
-      label: childLabel,
-      href: withBasePath(`/categories/${categoryFather}/${subcat.name}`, pathname),
-    });
   } else {
     if (!parentMap.has(subcat.name)) {
       const node: TreeNode = {

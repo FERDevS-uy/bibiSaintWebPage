@@ -2,7 +2,7 @@ import axios from 'axios';
 import fs from 'fs/promises';
 import path from 'path';
 import https from 'https';
-import { normalizeText, cleanDescription } from '../utils/text';
+import { normalizeText, cleanDescription, toTitleCase } from '../utils/text';
 import { parsePrice } from '../utils/price';
 import { delay } from '../utils/delay';
 import { Product } from '../utils/product';
@@ -384,10 +384,10 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
           ? 'true'
           : '';
 
-      const categoryName = String(
-        first?.productLine?.parent?.name || first?.productLine?.name || 'Ropa',
+      const categoryName = toTitleCase(
+        String(first?.productLine?.parent?.name || first?.productLine?.name || 'Ropa').trim(),
       );
-      const subcategoria = String(first?.productLine?.name || '');
+      const subcategoria = toTitleCase(String(first?.productLine?.name || '').trim());
 
       // Unión de colores extraídos del árbol de variaciones de todos los items
       const colorById = new Map<number, { id: number; hex: string; name: string; sizes: string[]; images: string[] }>();

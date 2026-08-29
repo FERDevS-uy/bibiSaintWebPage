@@ -1,8 +1,8 @@
 ---
 import ListarProductos from "@components/ListarProductos.astro";
 import Layout from "@layouts/Layout.astro";
-import { loadProducts, loadCategoryProducts } from "@utils/loadProducts";
-import { countCategories } from "@utils/countCategories";
+import { loadCategoryProducts } from "@utils/loadProducts";
+import { getSidebarCategories } from "@server/sidebarCategories";
 import { config } from "src/config";
 import SideBardCategories from "@components/SideBardCategories.astro";
 import { withBasePath } from "@utils/basePath";
@@ -11,10 +11,7 @@ import "../../../style.css";
 const CANT_PRODUCTOS = config.postPerPage;
 const { id, subcat, pag } = Astro.params;
 
-const allProducts = await loadProducts();
-const categories = countCategories(allProducts);
-const category = categories.find((c) => c.name === id);
-const subCats = category?.subcategories ?? [];
+const subCats = await getSidebarCategories(id ?? "");
 
 const { products, total } = await loadCategoryProducts({
   category: id!,
@@ -33,14 +30,14 @@ const baseUrl = withBasePath(`/categories/${id}/${subcat}`, Astro.url.pathname);
 >
   <div class="categories__container">
     <SideBardCategories
-      categoryFather={id}
+      categoryFather={id!}
       arrayCategorys={subCats}
       products={products}
     />
     <ListarProductos
       products={products}
       totalPages={totalPages}
-      actualPage={pag}
+      actualPage={Number(pag)}
       baseURL={baseUrl}
     />
   </div>
