@@ -30,6 +30,9 @@ skills-lock.json
 # opencode deps (local plugin install only)
 .opencode/node_modules/
 
+# SDD generated registry
+.atl/
+
 # dev console logs
 dev-console-errors.log
 

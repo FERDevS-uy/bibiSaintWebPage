@@ -15,9 +15,12 @@
     "db:migrate": "node scripts/migrateToSupabase.mjs",
     "test": "playwright test",
     "test:unit": "node --experimental-strip-types --test \"tests/*.test.ts\"",
+    "test:integration": "supabase db reset --local && node --experimental-strip-types tests/integration/catalog-integration.test.ts",
+    "test:load:local": "node scripts/catalog-load-local.mjs",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "deploy": "astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && echo '_worker.js' > dist-deploy/.assetsignore && wrangler deploy ./dist-deploy/_worker.js/index.js --assets ./dist-deploy",
+    "deploy:dev": "astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && printf '_worker.js\\n' > dist-deploy/.assetsignore && wrangler deploy ./dist-deploy/_worker.js/index.js --assets ./dist-deploy --env dev",
     "cf:preview": "astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && echo '_worker.js' > dist-deploy/.assetsignore && wrangler dev ./dist-deploy/_worker.js/index.js --assets ./dist-deploy",
     "cf-typegen": "wrangler types"
   },

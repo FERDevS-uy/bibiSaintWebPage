@@ -364,7 +364,6 @@ export const prerender = true;
     fetchNuvexLive,
     fetchAlondraLive,
   } from "../client/stockService";
-  import { supabase } from "../lib/supabaseClient";
   // Base64URL encode/decode inline
   function base64UrlEncode(bytes) {
     let binary = "";
@@ -659,20 +658,34 @@ export const prerender = true;
       const resolveProviderLinks = async (baseIds) => {
         const uniqueIds = [...new Set(baseIds.filter(Boolean))];
         if (uniqueIds.length === 0) return new Map();
+        const rowsToMap = (rows) => {
+          const map = new Map();
+          (rows || []).forEach((row) => {
+            if (row?.id) map.set(String(row.id), row.provider_link || "");
+          });
+          return map;
+        };
         try {
+          const { supabase } = await import("../lib/supabaseClient");
           const { data, error } = await supabase
             .from("products")
             .select("id, provider_link")
             .in("id", uniqueIds);
-          if (error) return new Map();
-          const map = new Map();
-          (data || []).forEach((row) => {
-            if (row?.id) map.set(String(row.id), row.provider_link || "");
+          if (!error) return rowsToMap(data);
+        } catch { }
+        try {
+          const supabaseUrl = ((import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL || "") + "").replace(/\/+$/, "");
+          const anonKey = (import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY || "") + "";
+          const query = new URLSearchParams({
+            select: "id,provider_link",
+            id: `in.(${uniqueIds.join(",")})`,
           });
-          return map;
-        } catch {
-          return new Map();
-        }
+          const response = await fetch(`${supabaseUrl}/rest/v1/products?${query.toString()}`, {
+            headers: anonKey ? { apikey: anonKey, Authorization: `Bearer ${anonKey}` } : undefined,
+          });
+          if (response.ok) return rowsToMap(await response.json());
+        } catch { }
+        return new Map();
       };
 
       const linkMap = await resolveProviderLinks(itemEls.map((el) => el.dataset.baseId || ""));

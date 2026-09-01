@@ -59,5 +59,5 @@ Ruta compleja: coordinator → locator → diagnostic → expert → implementer
 ## Convención
 
 - Todo lo operacional del marco agéntico vive aquí, bajo `code/.opencode/`.
-- Los agentes son archivos `.md` individuales con frontmatter (mode, steps, permission). El modelo se define en `opencode.json`, no en el frontmatter.
+- Los agentes son archivos `.md` individuales con frontmatter de identidad y comportamiento. Modelos, steps y permisos viven en `opencode.json`.
 - Las rutas de navegación entre documentos usan referencias relativas.

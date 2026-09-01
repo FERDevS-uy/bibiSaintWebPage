@@ -2,25 +2,18 @@
 import HeroBannerCarousel from "@components/HeroBannerCarousel.astro";
 import Layout from "@layouts/Layout.astro";
 import ProductCarousel from "@components/ProductCarousel.astro";
-import { loadProducts } from "@utils/loadProducts";
 import { ProductListHydrator } from "@stores/ProductListHydrator";
+import { loadFeaturedProducts } from "@server/catalog/facade";
+import { toCardProduct } from "@server/catalog/mappers";
+import { getSupabase } from "@server/supabase";
+import { catalogReadEnv } from "@server/catalog/http";
 
-const todosLosProductos = await loadProducts();
+const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
 
-// 1. ¡Novedades!: Los últimos 8 productos agregados (en orden inverso)
-const novedades = [...todosLosProductos].reverse().slice(0, 8);
-
-// 2. ¡Destacados!: Los primeros 8 productos del catálogo
-const destacados = todosLosProductos.slice(0, 8);
-
-// 3. ¡Ofertas!: Productos marcados con enOferta = true, con fallback
-let ofertas = todosLosProductos.filter(p => p.enOferta);
-if (ofertas.length < 4) {
-  const fallbacks = todosLosProductos.filter(p => !p.enOferta).slice(0, 8 - ofertas.length);
-  ofertas = [...ofertas, ...fallbacks];
-} else {
-  ofertas = ofertas.slice(0, 8);
-}
+const featured = await loadFeaturedProducts(env, getSupabase);
+const novedades = featured.novedades.map(toCardProduct);
+const destacados = featured.destacados.map(toCardProduct);
+const ofertas = featured.ofertas.map(toCardProduct);
 
 const hydratorProducts = [...new Set([...novedades, ...destacados, ...ofertas])].map(p => ({
   id: p.id,

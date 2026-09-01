@@ -23,4 +23,8 @@ export default interface Product {
   originalPrice?: string | null,
   /** Colores disponibles cuando el proveedor los expone (ej: Martina di Trento). */
   colors?: ProductColor[];
+  /** Fecha de creación en Supabase (recencia real; usada por "Novedades" legacy). */
+  createdAt?: string;
+  /** Fecha de última actualización en Supabase (fallback de recencia cuando falta created_at). */
+  updatedAt?: string;
 }

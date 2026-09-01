@@ -307,27 +307,19 @@
     }
   }
 
-  /** @type {any} */
-  let fuseInstance = null;
-  /** @type {any} */
-  let productsCache = null;
-  /** @type {Promise<void> | null} */
-  let fusePromise = null;
+  /** @type {AbortController | null} */
+  let activeController = null;
 
-  async function ensureFuse() {
-    if (fuseInstance) return;
-    if (fusePromise) return fusePromise;
-    fusePromise = (async () => {
-      const [Fuse, products] = await Promise.all([
-        import("fuse.js"),
-        productsCache || fetch("/api/search-products").then(r => r.json()).then(data => { productsCache = data; return data; }),
-      ]);
-      fuseInstance = new Fuse.default(products, {
-        keys: ["name", "description", "id", "categories.name", "categories.subcategories.name"],
-        threshold: 0.3,
-      });
-    })();
-    return fusePromise;
+  async function fetchSuggestions(query) {
+    if (activeController) activeController.abort();
+    activeController = new AbortController();
+    const res = await fetch(
+      `${BASE_URL}/api/search-products?q=${encodeURIComponent(query)}&limit=4`,
+      { signal: activeController.signal },
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return data.items || [];
   }
 
   function initSearch() {
@@ -376,7 +368,7 @@
       };
 
       input.addEventListener("focus", () => {
-        ensureFuse();
+        // sin índice Fuse: las sugerencias se resuelven server-side al escribir
       });
 
       form.addEventListener("submit", (e) => {
@@ -409,10 +401,14 @@
           return;
         }
 
-        await ensureFuse();
+        let results = [];
+        try {
+          results = await fetchSuggestions(query);
+        } catch (err) {
+          if (err && err.name === "AbortError") return;
+          results = [];
+        }
         if (input.value.trim() !== query) return;
-
-        const results = fuseInstance.search(query).slice(0, 4);
 
         root.classList.toggle("active", results.length > 0);
 
@@ -421,11 +417,11 @@
         }
 
         resultContainer.innerHTML = results
-          .map((/** @type {any} */ r) => {
-            const src = sanitizeImageUrl(Array.isArray(r.item.img) && r.item.img.length ? r.item.img[0] : "");
-            const price = escapeHtml(formatPrice(parsePrice(r.item.price || "")));
-            const name = escapeHtml(r.item.name || "");
-            const safeId = encodeURIComponent(String(r.item.id || ""));
+          .map((/** @type {any} */ item) => {
+            const src = sanitizeImageUrl(Array.isArray(item.img) && item.img.length ? item.img[0] : "");
+            const price = escapeHtml(formatPrice(parsePrice(item.price || "")));
+            const name = escapeHtml(item.name || "");
+            const safeId = encodeURIComponent(String(item.id || ""));
             return `
           <li class="searchResultItem">
               <a href="${BASE_URL}/producto/${safeId}">

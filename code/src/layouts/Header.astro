@@ -138,6 +138,7 @@ const isAbout = pathname.includes("/about");
             <li class={`categoryItem ${categorySelected === c.name ? "is-current" : ""}`}>
               <a
                 href={withBasePath(`/categories/${c.name}`, pathname)}
+                data-astro-prefetch="hover"
                 class={`navLink categoryLink ${categorySelected === c.name ? "selected" : ""} ${c.subcategories && c.subcategories.length > 0 ? "has-submenu" : ""}`}
                 data-submenu-target={`submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}`}
               >
@@ -164,6 +165,7 @@ const isAbout = pathname.includes("/about");
                     <li>
                       <a
                         href={withBasePath(`/categories/${c.name}`, pathname)}
+                        data-astro-prefetch="hover"
                         class="principal navLink subcategoryLink"
                         style="font-weight: bold;"
                       >
@@ -175,6 +177,7 @@ const isAbout = pathname.includes("/about");
                         <li>
                           <a
                             href={withBasePath(`/categories/${c.name}/${sub.name}`, pathname)}
+                            data-astro-prefetch="hover"
                             class="navLink subcategoryLink"
                           >
                             {sub.name}
@@ -191,6 +194,7 @@ const isAbout = pathname.includes("/about");
                           <li class="nestedCategoryItem">
                             <a
                               href={withBasePath(`/categories/${c.name}/${groupData.group}`, pathname)}
+                              data-astro-prefetch="hover"
                               class={`navLink subcategoryLink ${groupData.items.length > 0 ? "has-submenu-level2" : ""}`}
                               data-submenu-target={groupData.items.length > 0 ? nestedId : undefined}
                             >
@@ -213,6 +217,7 @@ const isAbout = pathname.includes("/about");
                                   <li>
                                     <a
                                       href={withBasePath(`/categories/${c.name}/${groupData.group}`, pathname)}
+                                      data-astro-prefetch="hover"
                                       class="principal navLink subcategoryLink"
                                       style="font-weight: bold;"
                                     >
@@ -224,6 +229,7 @@ const isAbout = pathname.includes("/about");
                                     <li>
                                       <a
                                         href={withBasePath(`/categories/${c.name}/${subName}`, pathname)}
+                                        data-astro-prefetch="hover"
                                         class="navLink subcategoryLink"
                                       >
                                         {subName.replace(`${groupData.group} - `, "")}

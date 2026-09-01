@@ -1,17 +1,37 @@
 ---
 import ListarProductos from "@components/ListarProductos.astro";
 import Layout from "@layouts/Layout.astro";
-import { loadProducts } from "@utils/loadProducts";
 import { config } from "src/config";
+import { withBasePath } from "@utils/basePath";
+import { loadCatalogPage, isReadModel } from "@server/catalog/facade";
+import { toCardProduct } from "@server/catalog/mappers";
+import { getSupabase } from "@server/supabase";
+import { catalogReadEnv } from "@server/catalog/http";
 
 const CANT_PRODUCTOS = config.postPerPage;
-const allProducts = await loadProducts();
 const { pag } = Astro.params;
 
-const totalPages = Math.ceil(allProducts.length / CANT_PRODUCTOS);
+const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+
 const pageNum = Number(pag);
-const start = (pageNum - 1) * CANT_PRODUCTOS;
-const products = allProducts.slice(start, start + CANT_PRODUCTOS);
+const cursor = Astro.url.searchParams.get("cursor") ?? undefined;
+
+// El cursor opaco viaja como query param. En read model, [pag] > 1 SIN cursor
+// (URL indexada antigua) no puede derivar el cursor keyset → redirigir a
+// página 1 (riesgo R1 del contrato). En legacy los números de página son
+// válidos y no se redirige.
+if (isReadModel(env) && pageNum > 1 && !cursor) {
+  return Astro.redirect(withBasePath("/page/1", Astro.url.pathname));
+}
+
+const res = await loadCatalogPage(
+  { sort: "nombre", pageSize: CANT_PRODUCTOS, cursor, page: pageNum },
+  env,
+  getSupabase,
+);
+const products = res.items.map(toCardProduct);
+const totalPages = Math.ceil(res.total / CANT_PRODUCTOS);
+const baseUrl = withBasePath("/page", Astro.url.pathname);
 ---
 
 <Layout pageId="index">
@@ -19,5 +39,8 @@ const products = allProducts.slice(start, start + CANT_PRODUCTOS);
     products={products}
     totalPages={totalPages}
     actualPage={Number(pag)}
+    baseURL={baseUrl}
+    nextCursor={res.nextCursor ?? undefined}
+    prevCursor={cursor}
   />
 </Layout>

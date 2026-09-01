@@ -8,12 +8,18 @@ interface Props {
   totalPages: number;
   actualPage?: number;
   baseURL?: string;
+  /** Cursor opaco para la página siguiente (read model keyset). */
+  nextCursor?: string;
+  /** Cursor opaco usado para llegar a esta página (link "anterior"). */
+  prevCursor?: string;
 }
 const {
   products: productos,
   totalPages,
   actualPage = 1,
   baseURL,
+  nextCursor,
+  prevCursor,
 } = Astro.props;
 
 const emptyList = !productos || productos.length === 0;
@@ -65,6 +71,8 @@ const emptyList = !productos || productos.length === 0;
               actualPage={actualPage}
               totalPages={totalPages}
               baseURL={baseURL}
+              nextCursor={nextCursor}
+              prevCursor={prevCursor}
             />
           )}
         </>

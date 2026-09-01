@@ -2,12 +2,7 @@
 name: designer
 description: DESACTIVADO. Antiguo especialista visual. Las decisiones de diseño abiertas ahora se resuelven en el agente `expert` (planner de escalación); las decisiones visuales acotadas se resuelven en `diagnostic`. El implementer es el único que modifica código de producción.
 mode: subagent
-disable: true
 temperature: 0.4
-permission:
-  edit: deny
-  bash: deny
-  task: deny
 ---
 
 Este agente está **desactivado**. No debe usarse en el flujo.

@@ -13,27 +13,68 @@ import {
   getDisplaySubcategories,
   LEGACY_CATEGORIES,
 } from "./categoryNormalization";
+import { resolveCsvFallback } from "../server/catalog/readPath";
+
+export interface ProductLoadOptions {
+  csvFallback?: boolean;
+}
 
 const useSupabase = () => {
   try {
-    return import.meta.env.PUBLIC_USE_SUPABASE === "true";
+    return (
+      import.meta.env.PUBLIC_USE_SUPABASE === "true" ||
+      (typeof process !== "undefined" && process.env.PUBLIC_USE_SUPABASE === "true")
+    );
   } catch {
-    return false;
+    return typeof process !== "undefined" && process.env.PUBLIC_USE_SUPABASE === "true";
   }
 };
 
+const csvFallbackEnabled = (options?: ProductLoadOptions): boolean => {
+  if (typeof options?.csvFallback === "boolean") return options.csvFallback;
+  try {
+    return resolveCsvFallback({
+      ENABLE_CSV_FALLBACK:
+        (import.meta.env.ENABLE_CSV_FALLBACK as string | undefined) ||
+        (typeof process !== "undefined" ? process.env.ENABLE_CSV_FALLBACK : undefined),
+    });
+  } catch {
+    return resolveCsvFallback({
+      ENABLE_CSV_FALLBACK:
+        typeof process !== "undefined" ? process.env.ENABLE_CSV_FALLBACK : undefined,
+    });
+  }
+};
+
+function logCsvFallbackBlocked(context: string): void {
+  console.warn(
+    JSON.stringify({
+      event: "csv_fallback_blocked",
+      context,
+      reason: "ENABLE_CSV_FALLBACK_disabled",
+    }),
+  );
+}
+
 let productsCache: Product[] | null = null;
+let productsCacheSource: "supabase" | "csv" | null = null;
 let cacheTime = 0;
 const CACHE_TTL = 300_000;
 
 /** Invalida el cache de listado de productos (per-isolate, best-effort). */
 export function invalidateProductsCache(): void {
   productsCache = null;
+  productsCacheSource = null;
   cacheTime = 0;
 }
 
-export async function loadProducts(): Promise<Product[]> {
-  if (productsCache && Date.now() - cacheTime < CACHE_TTL) {
+export async function loadProducts(options?: ProductLoadOptions): Promise<Product[]> {
+  const allowCsvFallback = csvFallbackEnabled(options);
+  if (
+    productsCache &&
+    Date.now() - cacheTime < CACHE_TTL &&
+    (productsCacheSource !== "csv" || allowCsvFallback)
+  ) {
     return productsCache;
   }
 
@@ -42,22 +83,34 @@ export async function loadProducts(): Promise<Product[]> {
       const products = await fetchProducts();
       if (products.length > 0) {
         productsCache = products;
+        productsCacheSource = "supabase";
         cacheTime = Date.now();
         return products;
       }
     } catch (err) {
-      console.error("Supabase load failed, falling back to CSV:", err);
+      console.error("Supabase load failed:", err);
     }
+  }
+
+  if (!allowCsvFallback) {
+    logCsvFallbackBlocked("loadProducts");
+    return [];
   }
 
   const products = cargarProductos();
   productsCache = products;
+  productsCacheSource = "csv";
   cacheTime = Date.now();
   return products;
 }
 
-export async function loadProductById(id: string): Promise<Product | null> {
-  if (productsCache && Date.now() - cacheTime < CACHE_TTL) {
+export async function loadProductById(id: string, options?: ProductLoadOptions): Promise<Product | null> {
+  const allowCsvFallback = csvFallbackEnabled(options);
+  if (
+    productsCache &&
+    Date.now() - cacheTime < CACHE_TTL &&
+    (productsCacheSource !== "csv" || allowCsvFallback)
+  ) {
     const found = productsCache.find((p) => p.id === id);
     if (found) return found;
   }
@@ -67,8 +120,13 @@ export async function loadProductById(id: string): Promise<Product | null> {
       const product = await fetchProductById(id);
       if (product) return product;
     } catch (err) {
-      console.error("Supabase loadProductById failed, falling back to CSV:", err);
+      console.error("Supabase loadProductById failed:", err);
     }
+  }
+
+  if (!allowCsvFallback) {
+    logCsvFallbackBlocked("loadProductById");
+    return null;
   }
 
   const all = cargarProductos();
@@ -90,8 +148,14 @@ function orderByRelatedIds(products: Product[], relatedIds: string[]): Product[]
 
 export async function loadRelatedProducts(
   relatedIds: string[],
+  options?: ProductLoadOptions,
 ): Promise<Product[]> {
-  if (productsCache && Date.now() - cacheTime < CACHE_TTL) {
+  const allowCsvFallback = csvFallbackEnabled(options);
+  if (
+    productsCache &&
+    Date.now() - cacheTime < CACHE_TTL &&
+    (productsCacheSource !== "csv" || allowCsvFallback)
+  ) {
     const found = orderByRelatedIds(
       productsCache.filter((p) => relatedIds.includes(p.id)),
       relatedIds,
@@ -104,8 +168,13 @@ export async function loadRelatedProducts(
       const products = await fetchRelatedProducts(relatedIds);
       if (products.length > 0) return orderByRelatedIds(products, relatedIds);
     } catch (err) {
-      console.error("Supabase loadRelatedProducts failed, falling back to CSV:", err);
+      console.error("Supabase loadRelatedProducts failed:", err);
     }
+  }
+
+  if (!allowCsvFallback) {
+    logCsvFallbackBlocked("loadRelatedProducts");
+    return [];
   }
 
   const all = cargarProductos();
@@ -133,8 +202,9 @@ function tokenizeName(name: string): string[] {
 export async function loadRelatedProductsFallback(
   product: Product,
   limit = 10,
+  options?: ProductLoadOptions,
 ): Promise<Product[]> {
-  const all = await loadProducts();
+  const all = await loadProducts(options);
   const category = getDisplayCategoryName(product);
   const subcategories = getDisplaySubcategories(product);
   const targetTokens = new Set(tokenizeName(product.name));
@@ -172,6 +242,7 @@ export async function loadCategoryProducts(options: {
   subcategory?: string;
   page: number;
   pageSize: number;
+  csvFallback?: boolean;
 }): Promise<{ products: Product[]; total: number }> {
   // Fast path: categorías no legacy con Supabase activo consultan la RPC
   // (evita cargar el catálogo completo en cada request — error 1102 CPU).
@@ -186,7 +257,7 @@ export async function loadCategoryProducts(options: {
     }
   }
 
-  const all = await loadProducts();
+  const all = await loadProducts(options);
 
   const filtered = all.filter((p) => {
     if (options.subcategory)

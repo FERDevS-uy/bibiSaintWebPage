@@ -1,9 +1,7 @@
 ---
-import Layout from "@layouts/Layout.astro";
-import ListarProductos from "../../../components/ListarProductos.jsx";
-
+// La búsqueda es top-N por ranking (la RPC no soporta cursor), por lo que
+// la paginación no aplica. Redirigimos a /search preservando el query param.
+const q = Astro.url.searchParams.get("q") ?? "";
+const target = q ? `/search?q=${encodeURIComponent(q)}` : "/search";
+return Astro.redirect(target, 302);
 ---
-
-<Layout>
-  <ListarProductos client:load pageSize={10} />
-</Layout>

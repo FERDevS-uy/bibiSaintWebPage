@@ -8,15 +8,15 @@ Para cambiar un modelo, se edita `opencode.json`; no hace falta tocar el harness
 
 | Rol | Modelo | Lógica de costo |
 |---|---|---|
-| `coordinator` | `opencode-go/glm-5.3-flash` | barato: solo rutea |
-| `locator` | `opencode-go/glm-5.3-flash` | barato: solo ubica |
-| `diagnostic` | `opencode-go/deepseek-v4-flash` | intermedio: razona sobre evidencia localizada |
-| `expert` | `opencode-go/gpt-5.6-luna` | caro: SOLO escalación |
-| `implementer` | `opencode-go/deepseek-v4-flash` | intermedio: ejecuta contrato |
-| `qa` | `opencode-go/minimax-m3` | intermedio: verifica con evidencia |
-| `dba` | `opencode-go/qwen3.7-plus` | intermedio: rama excepcional DB |
-| `security` | `opencode-go/qwen3.8-max` | caro (cuota baja): solo auditoría read-only |
-| `provider-scraper` | `opencode-go/glm-5.3-flash` | barato: rama excepcional |
+| `coordinator` | `openai/gpt-5.4-mini-fast` | barato: solo rutea |
+| `locator` | `openai/gpt-5.4-mini-fast` | barato: solo ubica |
+| `diagnostic` | `openai/gpt-5.5-fast` | intermedio: razona sobre evidencia localizada |
+| `expert` | `openai/gpt-5.6-luna` | caro: SOLO escalación |
+| `implementer` | `openai/gpt-5.5-fast` | intermedio: ejecuta contrato |
+| `qa` | `openai/gpt-5.5-fast` | intermedio: verifica con evidencia y matriz de runtime |
+| `dba` | `openai/gpt-5.5` | intermedio: rama excepcional DB |
+| `security` | `openai/gpt-5.6-luna` | caro: solo auditoría read-only |
+| `provider-scraper` | `openai/gpt-5.4-mini-fast` | barato: rama excepcional |
 
 ## Principio de costo
 

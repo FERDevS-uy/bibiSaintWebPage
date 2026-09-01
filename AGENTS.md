@@ -123,14 +123,14 @@ Repo is public. **Never commit credentials, secrets, tokens, or passwords.** Use
 | Agente | Rol | Presupuesto (steps) | Permisos |
 |---|---|---|---|
 | `coordinator` | Router ligero: clasifica, delega, integra, controla ciclos | 10 | edit/bash/web deny; solo delega |
-| `locator` | DISCOVER: ubica archivos/líneas/símbolos | 6 | read-only |
+| `locator` | DISCOVER: ubica archivos/líneas/símbolos y alcance read-only del worktree | 6 | read-only + preflight git |
 | `diagnostic` | DIAGNOSE: causa probable + decisión `DIRECT`/`ESCALATE_TO_EXPERT` | 10 | read-only |
 | `expert` | PLAN: planner de escalación, produce contrato | 12 | read-only |
 | `implementer` | IMPLEMENT: aplica el contrato | 20 | único editor de producción |
-| `qa` | VERIFY: evidencia obligatoria (screenshot+interacción) | 15 | solo tests/evidencia (`edit: ask`) |
-| `dba` | Rama excepcional: schema/RLS/migraciones | 15 | editor (solo DB) |
+| `qa` | VERIFY: evidencia obligatoria, matriz de runtime (screenshot+interacción) | 25 | solo tests/evidencia (`edit: ask`) |
+| `dba` | Rama excepcional: schema/RLS/migraciones | 15 | read-only, produce contrato |
 | `security` | Rama excepcional: auditoría read-only | 15 | read-only |
-| `provider-scraper` | Rama excepcional: scrapers/transporte | 15 | editor (solo scraper) |
+| `provider-scraper` | Rama excepcional: scrapers/transporte | 15 | read-only, produce contrato |
 
 `designer` está **desactivado** (`disable: true`). Las decisiones de diseño pasan por `expert`; las visuales acotadas se resuelven en `diagnostic`.
 
@@ -140,15 +140,15 @@ Los modelos viven **solo** en `code/.opencode/opencode.json` (campo `agent.<name
 
 | Rol | Modelo | Lógica de costo |
 |---|---|---|
-| coordinator | `opencode-go/glm-5.3-flash` | barato: solo rutea |
-| locator | `opencode-go/glm-5.3-flash` | barato: solo ubica |
-| diagnostic | `opencode-go/deepseek-v4-flash` | intermedio: razona sobre evidencia localizada |
-| expert | `opencode-go/gpt-5.6-luna` | caro: SOLO escalación |
-| implementer | `opencode-go/deepseek-v4-flash` | intermedio: ejecuta contrato |
-| qa | `opencode-go/minimax-m3` | intermedio: verifica con evidencia |
-| dba | `opencode-go/qwen3.7-plus` | intermedio |
-| security | `opencode-go/qwen3.8-max` | caro (cuota baja): solo auditoría |
-| provider-scraper | `opencode-go/glm-5.3-flash` | barato |
+| coordinator | `openai/gpt-5.4-mini-fast` | barato: solo rutea |
+| locator | `openai/gpt-5.4-mini-fast` | barato: solo ubica |
+| diagnostic | `openai/gpt-5.5-fast` | intermedio: razona sobre evidencia localizada |
+| expert | `openai/gpt-5.6-luna` | caro: SOLO escalación |
+| implementer | `openai/gpt-5.5-fast` | intermedio: ejecuta contrato |
+| qa | `openai/gpt-5.5-fast` | intermedio: verifica con evidencia |
+| dba | `openai/gpt-5.5` | intermedio |
+| security | `openai/gpt-5.6-luna` | caro: solo auditoría |
+| provider-scraper | `openai/gpt-5.4-mini-fast` | barato |
 
 ## Reglas
 
@@ -174,7 +174,7 @@ Capa de agentes/orquestación consolidada en `code/.opencode/` (gitignored — t
 ```
 code/.opencode/
 ├── opencode.json                    # Modelos por agente (única fuente)
-├── agents/                          # Roles, permisos, steps (.md)
+├── agents/                          # Roles y prompts (.md); permisos/steps en opencode.json
 ├── orchestration/
 │   ├── routing.yaml                 # Matriz de rutas del pipeline
 │   ├── model-policy.md              # Política de costo por rol

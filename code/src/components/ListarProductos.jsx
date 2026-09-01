@@ -1,109 +1,322 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  getEntry,
+  setEntry,
+  clearEntry,
+  abortKey,
+  resetKey,
+  getAbortController,
+  makeSearchKey,
+  getInFlightRequest,
+  setInFlightRequest,
+  clearInFlightRequest,
+} from "../stores/results-store";
 import ItemProductoBox from "./ItemProductBox.jsx";
-import NavPag from "./NavPag.jsx";
-import { parsePrice } from "../utils/price";
 
 const BASE_URL = import.meta.env.BASE_URL || "/";
-const PRODUCTS_JSON_URL = `${BASE_URL.replace(/\/$/, "")}/productos.json`;
+const SEARCH_URL = `${BASE_URL.replace(/\/$/, "")}/api/search-products`;
 
-const SORT_OPTIONS = [
-  { value: "default", label: "Más Vendidos" },
-  { value: "price-asc", label: "Precio: menor a mayor" },
-  { value: "price-desc", label: "Precio: mayor a menor" },
-  { value: "name-asc", label: "Nombre: A - Z" },
-  { value: "name-desc", label: "Nombre: Z - A" },
-];
-
-export default function ListarProductos({ pageSize = 10 }) {
-  const [productos, setProductos] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
-  const [sort, setSort] = useState("default");
-  const [sortOpen, setSortOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  // ✅ leer query param del cliente
-  useEffect(() => {
-    const readQueryFromURL = () => {
-      const params = new URLSearchParams(window.location.search);
-      const q = params.get("q")?.toLowerCase() ?? "";
-      setQuery(q);
+// Listado de resultados de búsqueda (top-N por ranking).
+// Tarea 3.5 — scalable-catalog-read-pipeline — Grupo 3.
+//
+// - Fetch a /api/search-products?q=...&limit=... cuando existe query.
+// - Usa NanoStore indexado por key compuesto (query + sort + cursor + version)
+//   para preservar estados de carga, error, vacío y reintento.
+// - Deduplicación de requests en vuelo con AbortController (mismo patrón que
+//   SearchInput.astro: abortar fetch previo de mismo scope antes de iniciar uno nuevo).
+// - Estados: loading, error (con retry), empty.
+// - `initialItems` (SSR, Fase 5): si el servidor ya renderizó resultados para
+//   `query`, se usan como estado inicial y se omite el fetch del primer mount
+//   (evita doble fetch). El fetch incremental sigue funcionando ante
+//   searchurlchange con una query distinta.
+export default function ListarProductos({
+  query: initialQuery = "",
+  pageSize = 10,
+  initialItems = null,
+  initialNextCursor = null,
+  initialHasMore = false,
+  initialVersion = null,
+  initialTotal = null,
+}) {
+  const getSearchStateFromUrl = () => {
+    if (typeof window === "undefined") {
+      return {
+        query: initialQuery || "",
+        sort: null,
+        cursor: null,
+        version: null,
+      };
+    }
+    const params = new URLSearchParams(window.location.search);
+    return {
+      query: params.get("q") ?? "",
+      sort: params.get("sort") ?? null,
+      cursor: params.get("cursor") ?? null,
+      version: params.get("v") ?? null,
     };
+  };
+
+  const initialSearchState = getSearchStateFromUrl();
+
+  // ---------- Key compuesto para indexar en el NanoStore ----------
+  // Incluye query, sortKey, cursor, version. Para search top-N, cursor y version son null.
+  const [searchKey, setSearchKey] = useState(
+    () => makeSearchKey(
+      initialSearchState.query,
+      initialSearchState.sort,
+      initialSearchState.cursor,
+      initialSearchState.version,
+    ),
+  );
+
+  // ---------- Leer entrada del store para el key actual ----------
+  const storeEntry = getEntry(searchKey);
+
+  // ---------- Estado sincronizado con el store ----------
+  // Usamos el store como fuente de verdad; caemos back a props/initialState si no hay entry.
+  const [query, setQuery] = useState(initialSearchState.query);
+  const [items, setItems] = useState(
+    storeEntry?.items ?? initialItems ?? [],
+  );
+  const [nextCursor, setNextCursor] = useState(
+    storeEntry?.nextCursor ?? initialNextCursor,
+  );
+  const [hasMore, setHasMore] = useState(
+    storeEntry?.hasMore ?? initialHasMore,
+  );
+  const [version, setVersion] = useState(
+    storeEntry?.version ?? initialVersion,
+  );
+  const [total, setTotal] = useState(
+    storeEntry?.total ?? initialTotal,
+  );
+  const [loading, setLoading] = useState(
+    storeEntry?.loading ?? false,
+  );
+  const [error, setError] = useState(storeEntry?.error ?? false);
+  const mountedRef = useRef(false);
+  const searchKeyRef = useRef(searchKey);
+  const generationRef = useRef(0);
+  const initialKeyRef = useRef(
+    makeSearchKey(
+      initialSearchState.query,
+      initialSearchState.sort,
+      initialSearchState.cursor,
+      initialSearchState.version,
+    ),
+  );
+
+  // ---------- Escuchar searchurlchange del cliente ----------
+  // Sincroniza la query desde la URL y dispara un fetch con el nuevo key.
+  // Abortamos cualquier fetch previo con el mismo scope para evitar duplicados.
+  useEffect(() => {
+    mountedRef.current = true;
+    const readQueryFromURL = () => {
+      const current = getSearchStateFromUrl();
+      setQuery(current.query);
+      const newKey = makeSearchKey(
+        current.query,
+        current.sort,
+        current.cursor,
+        current.version,
+      );
+      if (newKey === searchKeyRef.current) return;
+      abortKey(searchKeyRef.current);
+      searchKeyRef.current = newKey;
+      generationRef.current += 1;
+      setSearchKey(newKey);
+      setError(false);
+    };
+
     readQueryFromURL();
     window.addEventListener("searchurlchange", readQueryFromURL);
-    return () => window.removeEventListener("searchurlchange", readQueryFromURL);
+    return () => {
+      window.removeEventListener("searchurlchange", readQueryFromURL);
+      mountedRef.current = false;
+      abortKey(searchKeyRef.current);
+    };
   }, []);
 
-  // ✅ cargar JSON (función reutilizable para el reintento)
-  const loadCatalog = useCallback(async () => {
-    setLoading(true);
-    setError(false);
-    try {
-      const res = await fetch(PRODUCTS_JSON_URL);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      setProductos(data);
-    } catch {
-      setError(true);
-    } finally {
+  // ---------- Función de fetch con AbortController dedup ----------
+  const loadSearch = useCallback(
+    async (q) => {
+      const key = searchKeyRef.current;
+      const generation = generationRef.current;
+      const requestState = getSearchStateFromUrl();
+      const isCurrent = () => mountedRef.current && searchKeyRef.current === key && generationRef.current === generation;
+      const cachedInFlight = getInFlightRequest(key);
+      if (cachedInFlight) {
+        try {
+          const inflightPayload = await cachedInFlight;
+          if (!isCurrent()) return;
+          setItems(inflightPayload.items ?? []);
+          setNextCursor(inflightPayload.nextCursor ?? null);
+          setHasMore(Boolean(inflightPayload.hasMore));
+          setVersion(inflightPayload.version ?? null);
+          setTotal(inflightPayload.total ?? null);
+          setLoading(false);
+          setError(false);
+        } catch {
+          if (isCurrent()) {
+            setLoading(false);
+            setError(true);
+          }
+        }
+        return;
+      }
+
+      // Abortar cualquier fetch previo con el mismo key antes de iniciar uno nuevo
+      abortKey(key);
+
+      // Crear nuevo controlador y registralo para este key
+      const controller = getAbortController(key);
+      setLoading(true);
+      setError(false);
+      setItems([]);
+      setNextCursor(null);
+      setHasMore(false);
+      setVersion(null);
+      setTotal(null);
+
+      let requestPromise;
+      try {
+        requestPromise = (async () => {
+          const params = new URLSearchParams();
+          params.set("q", q);
+          params.set("limit", String(pageSize));
+          if (requestState.sort) params.set("sort", requestState.sort);
+          if (requestState.cursor) params.set("cursor", requestState.cursor);
+          if (requestState.version) params.set("v", requestState.version);
+          const url = `${SEARCH_URL}?${params.toString()}`;
+          const res = await fetch(url, { signal: controller.signal });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const data = await res.json();
+          return {
+            items: data.items ?? [],
+            nextCursor: data.nextCursor ?? null,
+            hasMore: Boolean(data.hasMore),
+            version: data.version ?? null,
+            total: typeof data.total === "number" ? data.total : null,
+          };
+        })();
+
+        setInFlightRequest(key, requestPromise);
+
+        const data = await requestPromise;
+        if (!isCurrent() || controller.signal.aborted) return;
+        setItems(data.items ?? []);
+        setNextCursor(data.nextCursor ?? null);
+        setHasMore(Boolean(data.hasMore));
+        setVersion(data.version ?? null);
+        setTotal(data.total ?? null);
+        // Persistir resultado en el store para este key
+        setEntry(key, {
+          items: data.items ?? [],
+          nextCursor: data.nextCursor ?? null,
+          hasMore: Boolean(data.hasMore),
+          version: data.version ?? null,
+          total: data.total ?? null,
+          loading: false,
+          error: null,
+          query: q,
+        });
+      } catch (e) {
+        if (e instanceof DOMException && e.name === "AbortError") {
+          // Fetch abortado por dedup — no hacer nada, el nuevo fetch ya correrá
+          return;
+        }
+        if (!isCurrent()) return;
+        setError(true);
+        setEntry(key, {
+          items: [], nextCursor: null, hasMore: false, version: null, total: null,
+          loading: false, error: true, query: q,
+        });
+      } finally {
+        if (requestPromise) clearInFlightRequest(key, requestPromise);
+        // Remove only this request's controller; a newer request may own the key.
+        resetKey(key, controller);
+        // Solo resetear el controlador si el fetch terminó naturalmente (no por abort)
+        // El caller puede llamar a resetKey si quiere, pero aquí solo limpiamos la bandera de loading
+        if (isCurrent()) setLoading(false);
+      }
+    },
+    [pageSize],
+  );
+
+  // ---------- Efecto principal: SSR-first + fetch ----------
+  useEffect(() => {
+    if (!query) {
+      setItems([]);
+      setNextCursor(null);
+      setHasMore(false);
+      setVersion(null);
+      setTotal(null);
       setLoading(false);
+      setError(false);
+      // Clear store entry for empty query
+      clearEntry(searchKey);
+      return;
     }
-  }, []);
 
-  useEffect(() => {
-    loadCatalog();
-  }, [loadCatalog]);
-
-  // ✅ filtrar por búsqueda
-  useEffect(() => {
-    const result = query
-      ? productos.filter((p) =>
-          p.name.toLowerCase().includes(query.toLowerCase())
-        )
-      : productos;
-
-    setFiltered(result);
-    setPage(1);
-  }, [query, productos]);
-
-  // ✅ ordenar
-  const sorted = useMemo(() => {
-    if (sort === "default") return filtered;
-    const copy = [...filtered];
-    switch (sort) {
-      case "price-asc":
-        copy.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
-        break;
-      case "price-desc":
-        copy.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
-        break;
-      case "name-asc":
-        copy.sort((a, b) => a.name.localeCompare(b.name, "es"));
-        break;
-      case "name-desc":
-        copy.sort((a, b) => b.name.localeCompare(a.name, "es"));
-        break;
-      default:
-        break;
+    // SSR ya proveyó resultados para esta query → no re-fetch en el primer mount
+    // (evita doble fetch). Si hay storeEntry con datos, úsalos y listo.
+    const storeEntry = getEntry(searchKey);
+    if (storeEntry) {
+      setItems(storeEntry.items);
+      setNextCursor(storeEntry.nextCursor ?? null);
+      setHasMore(Boolean(storeEntry.hasMore));
+      setVersion(storeEntry.version ?? null);
+      setTotal(storeEntry.total ?? null);
+      setLoading(false);
+      setError(false);
+      return;
     }
-    return copy;
-  }, [filtered, sort]);
 
-  // ✅ paginación
-  const startIndex = (page - 1) * pageSize;
-  const paginated = sorted.slice(startIndex, startIndex + pageSize);
-  const totalPages = Math.ceil(sorted.length / pageSize);
+    if (searchKey === initialKeyRef.current && initialItems !== null && initialItems.length > 0) {
+      setEntry(searchKey, {
+        items: initialItems,
+        nextCursor: initialNextCursor,
+        hasMore: Boolean(initialHasMore),
+        version: initialVersion,
+        total: initialTotal,
+        loading: false,
+        error: null,
+        query,
+        timestamp: Date.now(),
+      });
+      setItems(initialItems);
+      setNextCursor(initialNextCursor);
+      setHasMore(Boolean(initialHasMore));
+      setVersion(initialVersion);
+      setTotal(initialTotal);
+      setLoading(false);
+      setError(false);
+      return;
+    }
 
-  const emptyList = paginated.length === 0;
-  const currentSortLabel =
-    SORT_OPTIONS.find((opt) => opt.value === sort)?.label ?? "Más Vendidos";
+    // Fetch incremental (o primer fetch) ante searchurlchange con query distinta
+    loadSearch(query);
+  }, [
+    query,
+    loadSearch,
+    searchKey,
+    initialItems,
+    initialNextCursor,
+    initialHasMore,
+    initialVersion,
+    initialTotal,
+  ]);
 
-  const handleSortSelect = (value) => {
-    setSort(value);
-    setSortOpen(false);
-    setPage(1);
+  // ---------- Empty states ----------
+  const emptyList = items.length === 0;
+
+  const goToNextPage = () => {
+    if (typeof window === "undefined" || !nextCursor) return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("cursor", nextCursor);
+    if (version) url.searchParams.set("v", version);
+    window.history.pushState({}, "", url);
+    window.dispatchEvent(new CustomEvent("searchurlchange"));
   };
 
   return (
@@ -120,7 +333,11 @@ export default function ListarProductos({ pageSize = 10 }) {
       {error && (
         <div className="search-error" role="alert">
           <p>No pudimos cargar los productos.</p>
-          <button type="button" className="search-error__retry" onClick={loadCatalog}>
+          <button
+            type="button"
+            className="search-error__retry"
+            onClick={() => loadSearch(query)}
+          >
             Reintentar
           </button>
         </div>
@@ -135,61 +352,21 @@ export default function ListarProductos({ pageSize = 10 }) {
 
       {!loading && !error && !emptyList && (
         <>
-          <div className="products-toolbar">
-            <button
-              type="button"
-              className="products-sort-trigger"
-              aria-haspopup="listbox"
-              aria-expanded={sortOpen}
-              onClick={() => setSortOpen((v) => !v)}
-            >
-              <span className="products-sort-current">{currentSortLabel}</span>
-              <svg
-                className="products-sort-icon"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path d="M9 18L9 9" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" />
-                <path d="M5.5 14.2L9 18L12.5 14.2" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M19 10L19 19" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" />
-                <path d="M15.5 13.8L19 10L22.5 13.8" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-
-            {sortOpen && (
-              <ul className="products-sort-menu" role="listbox">
-                {SORT_OPTIONS.map((opt) => (
-                  <li key={opt.value}>
-                    <button
-                      type="button"
-                      className="products-sort-option"
-                      onClick={() => handleSortSelect(opt.value)}
-                    >
-                      {opt.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-
           <ul>
-            {paginated.map((prod, idx) => (
-              <ItemProductoBox
-                producto={prod}
-                key={`${prod.id}-${startIndex + idx}`}
-              />
+            {items.map((prod, idx) => (
+              <ItemProductoBox producto={prod} key={`${prod.id}-${idx}`} />
             ))}
           </ul>
-
-          {totalPages !== 1 && (
-            <NavPag
-              actualPage={page}
-              totalPages={totalPages}
-              onChangePage={(newPage) => setPage(newPage)}
-            />
+          {hasMore && nextCursor && (
+            <div className="search-pagination" aria-label="Paginación de búsqueda">
+              <button
+                type="button"
+                className="search-pagination__next"
+                onClick={goToNextPage}
+              >
+                Cargar más
+              </button>
+            </div>
           )}
         </>
       )}
@@ -295,6 +472,31 @@ export default function ListarProductos({ pageSize = 10 }) {
         }
 
         .search-error__retry:hover {
+          background: #b81c1c;
+        }
+
+        .search-pagination {
+          display: flex;
+          justify-content: center;
+          padding: 2rem 1rem 0;
+        }
+
+        .search-pagination__next {
+          border: none;
+          border-radius: 4px;
+          background: #c11010;
+          color: #fff;
+          font-family: inherit;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          font-size: 0.8rem;
+          padding: 10px 16px;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+        }
+
+        .search-pagination__next:hover {
           background: #b81c1c;
         }
 

@@ -8,11 +8,11 @@ Los modelos NO viven aquí: están centralizados en `code/.opencode/opencode.jso
 | Agente | Modo | Rol |
 |---|---|---|
 | `coordinator` | primary | Router. Clasifica, delega en orden, integra, controla ciclos. No explora ni implementa. |
-| `locator` | subagent | Localiza archivos/símbolos/líneas. Presupuesto 6 steps. Solo ubicación. |
+| `locator` | subagent | Localiza archivos/símbolos/líneas y revisa el alcance read-only del worktree. Presupuesto 6 steps. |
 | `diagnostic` | subagent | Causa probable, complejidad, riesgo y decisión `DIRECT`/`ESCALATE_TO_EXPERT`. Presupuesto 10 steps. |
 | `expert` | subagent | Planner de escalación. Produce un contrato ejecutable. Presupuesto 12 steps. |
 | `implementer` | subagent | Aplica el contrato. Solo archivos autorizados. Presupuesto 20 steps. |
-| `qa` | subagent | Verificación con evidencia. `PASS`/`FAIL`/`BLOCKED`. Presupuesto 15 steps. |
+| `qa` | subagent | Verificación con evidencia y matriz de runtime. `PASS`/`FAIL`/`BLOCKED`. Presupuesto 25 steps. |
 | `dba` | subagent | Rama excepcional: schema/RLS/migraciones. Presupuesto 15 steps. |
 | `security` | subagent | Rama excepcional: auditoría read-only. Presupuesto 15 steps. |
 | `provider-scraper` | subagent | Rama excepcional: scrapers/transporte. Presupuesto 15 steps. |
@@ -56,12 +56,12 @@ coordinator → locator → diagnostic → dba → implementer → qa
 ### Scrapers/transporte
 
 ```text
-coordinator → locator → diagnostic → provider-scraper → qa
+coordinator → locator → diagnostic → provider-scraper → implementer → qa
 ```
 
 ## Reglas
 
-1. `locator` siempre primero. El coordinator no explora antes de delegar.
+1. `locator` siempre primero. En regresiones y cambios sin commit debe hacer preflight read-only del worktree; el coordinator no explora antes de delegar.
 2. `expert` solo cuando el `DIAGNOSTIC HANDOFF` diga `ESCALATE_TO_EXPERT`. Nunca por defecto.
 3. El implementer NO rediagnostica: aplica el contrato.
 4. El expert NO reexplora: recibe archivos/líneas ya localizados por locator.
@@ -72,6 +72,7 @@ coordinator → locator → diagnostic → provider-scraper → qa
 9. Todo handoff usa el bloque estructurado del agente receptor (ver `instructions/harness.md`).
 10. El coordinator solo puede invocar los agentes de su whitelist (`permission.task`).
 11. Si un agente alcanza su presupuesto de steps sin progreso, debe escalar o terminar; nunca continuar explorando indefinidamente.
+12. `BLOCKED_SETUP` de QA no equivale a `FAIL` y no habilita declarar `PASS`; requiere resolver el entorno o escalar con evidencia.
 
 ## Contratos de handoff
 

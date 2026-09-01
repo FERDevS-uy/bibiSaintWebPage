@@ -5,12 +5,31 @@ interface Props {
   totalPages: number;
   actualPage: number;
   baseURL?: string;
+  /** Cursor opaco para la página siguiente (páginas 2+ del read model keyset). */
+  nextCursor?: string;
+  /** Cursor opaco usado para llegar a esta página (para el link "anterior"). */
+  prevCursor?: string;
 }
 
-const { totalPages, actualPage, baseURL = "" } = Astro.props;
+const { totalPages, actualPage, baseURL = "", nextCursor, prevCursor } = Astro.props;
 
-const nextUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${+actualPage + 1}`) : `${baseURL}/page/${+actualPage + 1}`;
-const prevUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/${+actualPage - 1}`) : `${baseURL}/page/${+actualPage - 1}`;
+// Construye la URL de una página del read model keyset:
+//   - página 1 → sin cursor
+//   - páginas 2+ → ?cursor=<opaco>
+// El param [pag] se mantiene en el path para SEO/URLs existentes; el cursor
+// viaja como query param (opaco, no se puede derivar de [pag]).
+function buildPageUrl(page: number, cursor?: string): string {
+  const path = baseURL.includes("page/")
+    ? baseURL.replace(/page\/\d+/, `page/${page}`)
+    : `${baseURL}/page/${page}`;
+  if (cursor) {
+    return `${path}?cursor=${encodeURIComponent(cursor)}`;
+  }
+  return path;
+}
+
+const nextUrl = buildPageUrl(+actualPage + 1, nextCursor);
+const prevUrl = buildPageUrl(+actualPage - 1, prevCursor);
 ---
 
 <nav class={styles.pagination} id="products-pagination" aria-label="Paginación">
@@ -20,7 +39,7 @@ const prevUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
       </span>
     ) : (
-      <a href={prevUrl} class={styles.arrow} aria-label="Página anterior">
+      <a href={prevUrl} data-astro-prefetch="hover" class={styles.arrow} aria-label="Página anterior">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
       </a>
     )
@@ -36,7 +55,7 @@ const prevUrl = baseURL.includes("page/") ?  baseURL.replace(/page\/\d+/, `page/
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
       </span>
     ) : (
-      <a href={nextUrl} class={styles.arrow} aria-label="Página siguiente">
+      <a href={nextUrl} data-astro-prefetch="hover" class={styles.arrow} aria-label="Página siguiente">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
       </a>
     )

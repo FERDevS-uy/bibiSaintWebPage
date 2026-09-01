@@ -1,28 +1,27 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import ListarProductos from "@components/ListarProductos.astro";
-import { loadProducts } from "@utils/loadProducts";
-import { parsePrice } from "@utils/price";
 import { config } from "src/config";
 import { withBasePath } from "@utils/basePath";
+import { loadCatalogPage } from "@server/catalog/facade";
+import { toCardProduct } from "@server/catalog/mappers";
+import { getSupabase } from "@server/supabase";
+import { catalogReadEnv } from "@server/catalog/http";
 
-const allProducts = await loadProducts();
+const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
 
-const topBaratos = [...allProducts]
-  .map((product) => ({
-    product,
-    numericPrice: parsePrice(product.price),
-  }))
-  .filter(({ numericPrice }) => Number.isFinite(numericPrice) && numericPrice > 0)
-  .sort((a, b) => {
-    if (a.numericPrice !== b.numericPrice) return a.numericPrice - b.numericPrice;
-    return a.product.name.localeCompare(b.product.name, "es", { sensitivity: "base" });
-  })
-  .slice(0, 50)
-  .map(({ product }) => product);
+// Top de ofertas: universo enOferta=true ordenado por precio (mismo universo
+// que las páginas paginadas /ofertas/page/[pag] — coherente en todas las
+// páginas). La facade resuelve read model o legacy según la bandera.
+const res = await loadCatalogPage(
+  { sort: "precio", enOferta: true, pageSize: config.postPerPage, page: 1 },
+  env,
+  getSupabase,
+);
+const topBaratos = res.items.map(toCardProduct);
 
 const productsPerPage = config.postPerPage;
-const totalPages = Math.ceil(topBaratos.length / productsPerPage);
+const totalPages = Math.ceil(res.total / productsPerPage);
 const products = topBaratos.slice(0, productsPerPage);
 const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
 ---
@@ -43,6 +42,7 @@ const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
     totalPages={totalPages}
     actualPage={1}
     baseURL={offersBaseUrl}
+    nextCursor={res.nextCursor ?? undefined}
   />
 </Layout>
 

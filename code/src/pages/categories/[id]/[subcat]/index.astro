@@ -1,24 +1,31 @@
 ---
 import ListarProductos from "@components/ListarProductos.astro";
 import Layout from "@layouts/Layout.astro";
-import { loadCategoryProducts } from "@utils/loadProducts";
 import { getSidebarCategories } from "@server/sidebarCategories";
 import { config } from "src/config";
 import SideBardCategories from "@components/SideBardCategories.astro";
 import { withBasePath } from "@utils/basePath";
+import { loadCategoryProducts } from "@server/catalog/facade";
+import { toCardProduct } from "@server/catalog/mappers";
+import { getSupabase } from "@server/supabase";
+import { catalogReadEnv } from "@server/catalog/http";
 import "../../style.css";
 
 const CANT_PRODUCTOS = config.postPerPage;
 const { id, subcat } = Astro.params;
 
-const subCats = await getSidebarCategories(id ?? "");
+const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
 
-const { products, total } = await loadCategoryProducts({
-  category: id!,
-  subcategory: subcat,
-  page: 1,
-  pageSize: CANT_PRODUCTOS,
-});
+const [subCats, res] = await Promise.all([
+  getSidebarCategories(id ?? ""),
+  loadCategoryProducts(
+    { category: id!, subcategory: subcat, page: 1, pageSize: CANT_PRODUCTOS },
+    env,
+    getSupabase,
+  ),
+]);
+const products = res.items.map(toCardProduct);
+const total = res.total;
 
 const totalPages = Math.ceil(total / CANT_PRODUCTOS);
 const baseUrl = withBasePath(`/categories/${id}/${subcat}`, Astro.url.pathname);

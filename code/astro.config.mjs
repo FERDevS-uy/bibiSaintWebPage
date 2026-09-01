@@ -16,7 +16,8 @@ export default defineConfig({
   site: url,
   output: "server",
   prefetch: {
-    defaultStrategy: "viewport",
+    prefetchAll: false,
+    defaultStrategy: "hover",
   },
   adapter: cloudflare({
     imageService: "passthrough",

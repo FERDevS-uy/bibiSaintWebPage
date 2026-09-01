@@ -1,24 +1,44 @@
 ---
 import ListarProductos from "@components/ListarProductos.astro";
 import Layout from "@layouts/Layout.astro";
-import { loadCategoryProducts } from "@utils/loadProducts";
 import { getSidebarCategories } from "@server/sidebarCategories";
 import { config } from "src/config";
 import SideBardCategories from "@components/SideBardCategories.astro";
 import { withBasePath } from "@utils/basePath";
+import { loadCatalogPage, isReadModel } from "@server/catalog/facade";
+import { toCardProduct } from "@server/catalog/mappers";
+import { getSupabase } from "@server/supabase";
+import { catalogReadEnv } from "@server/catalog/http";
 import "../../../style.css";
 
 const CANT_PRODUCTOS = config.postPerPage;
 const { id, subcat, pag } = Astro.params;
 
-const subCats = await getSidebarCategories(id ?? "");
+const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
 
-const { products, total } = await loadCategoryProducts({
-  category: id!,
-  subcategory: subcat,
-  page: Number(pag),
-  pageSize: CANT_PRODUCTOS,
-});
+const pageNum = Number(pag);
+const cursor = Astro.url.searchParams.get("cursor") ?? undefined;
+
+// El cursor opaco viaja como query param. En read model, [pag] > 1 SIN cursor
+// (URL indexada antigua) no puede derivar el cursor keyset → redirigir a
+// página 1 (riesgo R1 del contrato). En legacy los números de página son
+// válidos y no se redirige.
+if (isReadModel(env) && pageNum > 1 && !cursor) {
+  return Astro.redirect(
+    withBasePath(`/categories/${id}/${subcat}/page/1`, Astro.url.pathname),
+  );
+}
+
+const [subCats, res] = await Promise.all([
+  getSidebarCategories(id ?? ""),
+  loadCatalogPage(
+    { category: id, subcategory: subcat, sort: "nombre", pageSize: CANT_PRODUCTOS, cursor, page: pageNum },
+    env,
+    getSupabase,
+  ),
+]);
+const products = res.items.map(toCardProduct);
+const total = res.total;
 
 const totalPages = Math.ceil(total / CANT_PRODUCTOS);
 const baseUrl = withBasePath(`/categories/${id}/${subcat}`, Astro.url.pathname);
@@ -39,6 +59,8 @@ const baseUrl = withBasePath(`/categories/${id}/${subcat}`, Astro.url.pathname);
       totalPages={totalPages}
       actualPage={Number(pag)}
       baseURL={baseUrl}
+      nextCursor={res.nextCursor ?? undefined}
+      prevCursor={cursor}
     />
   </div>
 </Layout>

@@ -3,31 +3,50 @@
   "default_agent": "coordinator",
   "agent": {
     "coordinator": {
-      "model": "opencode-go/glm-5.3-flash"
+      "model": "openai/gpt-5.4-mini-fast"
     },
     "locator": {
-      "model": "opencode-go/glm-5.3-flash"
+      "model": "openai/gpt-5.4-mini-fast"
     },
     "diagnostic": {
-      "model": "opencode-go/deepseek-v4-flash"
+      "model": "openai/gpt-5.5-fast"
     },
     "expert": {
-      "model": "opencode-go/gpt-5.6-luna"
+      "model": "openai/gpt-5.6-luna"
     },
     "implementer": {
-      "model": "opencode-go/deepseek-v4-flash"
+      "model": "openai/gpt-5.5-fast"
     },
     "qa": {
-      "model": "opencode-go/minimax-m3"
+      "model": "openai/gpt-5.5-fast"
     },
     "dba": {
-      "model": "opencode-go/qwen3.7-plus"
+      "model": "openai/gpt-5.5"
     },
     "security": {
-      "model": "opencode-go/qwen3.8-max"
+      "model": "openai/gpt-5.6-luna"
     },
     "provider-scraper": {
-      "model": "opencode-go/glm-5.3-flash"
+      "model": "openai/gpt-5.4-mini-fast"
+    }
+  },
+  "mcp": {
+    "supabase": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@supabase/mcp-server-supabase@0.10.0",
+        "--project-ref",
+        "deilsclvheqcrqswiafa",
+        "--read-only",
+        "--features",
+        "database,debugging"
+      ],
+      "enabled": true,
+      "environment": {
+        "SUPABASE_ACCESS_TOKEN": "{env:SUPABASE_ACCESS_TOKEN}"
+      }
     }
   }
 }

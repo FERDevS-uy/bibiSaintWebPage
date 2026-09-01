@@ -1,8 +1,67 @@
 ---
+// Búsqueda SSR (Fase 5 — scalable-catalog-read-pipeline).
+// Primera carga con resultados server-side (no vacía): la facade resuelve la
+// ruta (readmodel RPC | legacy loadProducts) y los items se pasan a
+// ListarProductos como `initialItems`, que los renderiza en el HTML inicial y
+// NO re-fetcha en el primer mount (evita doble fetch). El cliente continúa con
+// su lógica actual (searchurlchange → fetch incremental).
 import Layout from "@layouts/Layout.astro";
 import ListarProductos from "@components/ListarProductos.jsx";
+import { searchProducts } from "@server/catalog/facade";
+import { catalogReadEnv } from "@server/catalog/http";
+import { runCatalogQuery } from "@server/catalog/queries";
+import { getSupabase } from "@server/supabase";
+
+const q = (Astro.url.searchParams.get("q") ?? "").trim();
+const sort = Astro.url.searchParams.get("sort") ?? "nombre";
+const cursor = Astro.url.searchParams.get("cursor") || undefined;
+const PAGE_SIZE = 10;
+
+let initialItems: Array<Record<string, unknown>> | null = null;
+let initialNextCursor: string | null = null;
+let initialHasMore = false;
+let initialVersion: string | null = null;
+let initialTotal: number | null = null;
+if (q) {
+  try {
+    const env = catalogReadEnv(
+      (Astro.locals as { runtime?: { env?: Record<string, string | undefined> } })
+        .runtime?.env,
+    );
+    const result = env.CATALOG_READ_MODEL === "true"
+      ? await runCatalogQuery({ query: q, sort, cursor, pageSize: PAGE_SIZE }, env, getSupabase())
+      : await searchProducts(q, PAGE_SIZE, env, getSupabase);
+    initialItems = result.items.map((p) => ({
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      originalPrice: p.originalPrice ?? null,
+      imageUrl: p.imageUrl,
+      img: [p.imageUrl],
+      enOferta: p.enOferta,
+      category: p.category,
+      subcategory: p.subcategory,
+    }));
+    initialNextCursor = result.nextCursor;
+    initialHasMore = result.hasMore;
+    initialVersion = result.version;
+    initialTotal = result.total;
+  } catch {
+    // SSR degradado: sin resultados iniciales, el cliente fetchea normalmente.
+    initialItems = null;
+  }
+}
 ---
 
 <Layout pageId="search">
-  <ListarProductos client:load pageSize={10} />
+  <ListarProductos
+    client:load
+    query={q}
+    pageSize={PAGE_SIZE}
+    initialItems={initialItems}
+    initialNextCursor={initialNextCursor}
+    initialHasMore={initialHasMore}
+    initialVersion={initialVersion}
+    initialTotal={initialTotal}
+  />
 </Layout>

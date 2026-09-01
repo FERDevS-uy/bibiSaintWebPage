@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "base": "http://localhost:4321",
+    "date": "2026-08-31T01:55:28.948Z",
+    "samples": 12,
+    "node": "v22.23.1",
+    "routes": [
+      "/",
+      "/page/2",
+      "/categories/Cama",
+      "/categories/Tecno",
+      "/ofertas",
+      "/api/search-products"
+    ]
+  },
+  "summary": {
+    "cache": {
+      "hit": 0,
+      "miss": 0,
+      "bypass": 12,
+      "other": 60,
+      "hitRatio": 0
+    }
+  },
+  "results": [
+    {
+      "route": "/",
+      "statuses": [
+        200
+      ],
+      "cache": {
+        "hit": 0,
+        "miss": 0,
+        "bypass": 0,
+        "other": 12
+      },
+      "cacheHitRatio": 0,
+      "bytes": {
+        "min": 314376,
+        "max": 314376,
+        "avg": 314376
+      },
+      "latenciesMs": {
+        "p50": 10.64325000000008,
+        "p95": 2198.225459,
+        "p99": 2198.225459
+      }
+    },
+    {
+      "route": "/page/2",
+      "statuses": [
+        200
+      ],
+      "cache": {
+        "hit": 0,
+        "miss": 0,
+        "bypass": 0,
+        "other": 12
+      },
+      "cacheHitRatio": 0,
+      "bytes": {
+        "min": 230377,
+        "max": 230377,
+        "avg": 230377
+      },
+      "latenciesMs": {
+        "p50": 844.9045830000014,
+        "p95": 942.5297919999994,
+        "p99": 942.5297919999994
+      }
+    },
+    {
+      "route": "/categories/Cama",
+      "statuses": [
+        200
+      ],
+      "cache": {
+        "hit": 0,
+        "miss": 0,
+        "bypass": 0,
+        "other": 12
+      },
+      "cacheHitRatio": 0,
+      "bytes": {
+        "min": 246191,
+        "max": 246191,
+        "avg": 246191
+      },
+      "latenciesMs": {
+        "p50": 840.9518749999988,
+        "p95": 983.2387500000004,
+        "p99": 983.2387500000004
+      }
+    },
+    {
+      "route": "/categories/Tecno",
+      "statuses": [
+        200
+      ],
+      "cache": {
+        "hit": 0,
+        "miss": 0,
+        "bypass": 0,
+        "other": 12
+      },
+      "cacheHitRatio": 0,
+      "bytes": {
+        "min": 242203,
+        "max": 242203,
+        "avg": 242203
+      },
+      "latenciesMs": {
+        "p50": 973.601999999999,
+        "p95": 1937.3719999999994,
+        "p99": 1937.3719999999994
+      }
+    },
+    {
+      "route": "/ofertas",
+      "statuses": [
+        200
+      ],
+      "cache": {
+        "hit": 0,
+        "miss": 0,
+        "bypass": 0,
+        "other": 12
+      },
+      "cacheHitRatio": 0,
+      "bytes": {
+        "min": 235890,
+        "max": 235890,
+        "avg": 235890
+      },
+      "latenciesMs": {
+        "p50": 916.255541999999,
+        "p95": 1022.4266250000001,
+        "p99": 1022.4266250000001
+      }
+    },
+    {
+      "route": "/api/search-products",
+      "statuses": [
+        200
+      ],
+      "cache": {
+        "hit": 0,
+        "miss": 0,
+        "bypass": 12,
+        "other": 0
+      },
+      "cacheHitRatio": 0,
+      "bytes": {
+        "min": 46,
+        "max": 46,
+        "avg": 46
+      },
+      "latenciesMs": {
+        "p50": 275.11158299999806,
+        "p95": 401.19837499999994,
+        "p99": 401.19837499999994
+      }
+    }
+  ]
+}

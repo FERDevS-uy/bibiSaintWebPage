@@ -2,6 +2,7 @@ import type Product from "../types/product";
 import type Category from "../types/categoryList";
 import { getSupabase } from "./supabase";
 import { invalidateProductsCache } from "../utils/loadProducts";
+import { resetCachedCatalogVersion } from "./catalog/edgeCache";
 
 /** TTL de cachés de categoría/counts (5 min, alineado con la caché de productos). */
 const CATEGORY_CACHE_TTL = 300_000;
@@ -14,11 +15,12 @@ interface CacheEntry<T> {
 const categoryProductsCache = new Map<string, CacheEntry<{ products: Product[]; total: number }>>();
 let categoryCountsCache: CacheEntry<Category[]> | null = null;
 
-/** Invalida todas las cachés de productos (listado + categoría + counts). Per-isolate, best-effort. */
+/** Invalida todas las cachés de productos (listado + categoría + counts + edge catalog version). Per-isolate, best-effort. */
 export function invalidateAllProductCaches(): void {
   categoryProductsCache.clear();
   categoryCountsCache = null;
   invalidateProductsCache();
+  resetCachedCatalogVersion();
 }
 
 interface SupabaseProductRow {
@@ -33,6 +35,8 @@ interface SupabaseProductRow {
   en_oferta: boolean;
   original_price: string | null;
   colors: Array<{ id: number; hex: string; name: string; images: string[]; sizes?: string[] }>;
+  created_at?: string | null;
+  updated_at?: string | null;
 }
 
 function rowToProduct(row: SupabaseProductRow): Product {
@@ -48,6 +52,8 @@ function rowToProduct(row: SupabaseProductRow): Product {
     enOferta: Boolean(row.en_oferta),
     originalPrice: row.original_price == null ? null : String(row.original_price),
     colors: Array.isArray(row.colors) ? row.colors : [],
+    createdAt: row.created_at ?? undefined,
+    updatedAt: row.updated_at ?? undefined,
   };
 }
 

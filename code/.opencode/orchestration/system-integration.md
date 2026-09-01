@@ -18,7 +18,7 @@ USER REQUEST
 ┌─────────┐    ┌───────────┐    ┌───────────┐    ┌──────────────┐    ┌──────┐
 │ locator │───▶│ diagnostic│───▶│  expert   │───▶│  implementer │───▶│  qa  │
 │ (ubica) │    │ (decide)  │    │ (escala)  │    │ (ejecuta)    │    │(valida│
-│  6 st.  │    │  10 st.   │    │  12 st.   │    │  20 st.      │    │15 st.│
+│  6 st.  │    │  10 st.   │    │  12 st.   │    │  20 st.      │    │25 st.│
 └─────────┘    └───────────┘    └───────────┘    └──────────────┘    └──────┘
    solo read      solo read      solo read          único editor        solo tests
 ```
@@ -32,11 +32,11 @@ USER REQUEST
 
 | Fase | Agente | Modelo | Salida |
 |---|---|---|---|
-| DISCOVER | `locator` | barato (`glm-5.3-flash`) | `LOCATOR HANDOFF` (archivos/líneas/símbolos) |
-| DIAGNOSE | `diagnostic` | intermedio (`deepseek-v4-flash`) | `DIAGNOSTIC HANDOFF` + decisión `DIRECT`/`ESCALATE_TO_EXPERT` |
-| PLAN | `expert` | caro (`gpt-5.6-luna`) | `EXPERT IMPLEMENTATION CONTRACT` |
-| IMPLEMENT | `implementer` | intermedio (`deepseek-v4-flash`) | cambio mínimo en archivos autorizados |
-| VERIFY | `qa` | intermedio (`minimax-m3`) | `QA REPORT` con evidencia (screenshot+interacción) |
+| DISCOVER | `locator` | `openai/gpt-5.4-mini-fast` | `LOCATOR HANDOFF` (archivos/líneas/símbolos) |
+| DIAGNOSE | `diagnostic` | `openai/gpt-5.5-fast` | `DIAGNOSTIC HANDOFF` + decisión `DIRECT`/`ESCALATE_TO_EXPERT` |
+| PLAN | `expert` | `openai/gpt-5.6-luna` | `EXPERT IMPLEMENTATION CONTRACT` |
+| IMPLEMENT | `implementer` | `openai/gpt-5.5-fast` | cambio mínimo en archivos autorizados |
+| VERIFY | `qa` | `openai/gpt-5.5-fast` | `QA REPORT` con evidencia (screenshot+interacción) |
 
 Modelos centralizados en `code/.opencode/opencode.json`. No duplicar en frontmatter.
 
@@ -45,6 +45,12 @@ Modelos centralizados en `code/.opencode/opencode.json`. No duplicar en frontmat
 - Los checkpoints en `code/.opencode/autosave/` son **opcionales** y complementarios, NO el canal de coordinación.
 - El handoff entre agentes viaja SIEMPRE en el prompt de `task` (contrato estructurado).
 - `resu.md` puede guardar decisiones y evidencia para cruzar sesiones, pero nunca sustituye un contrato.
+
+## Recuperación de contexto
+
+- En solicitudes de reanudación, el `coordinator` consulta primero `engram_mem_context` y usa `engram_mem_search` para recuperar decisiones o trabajo específico cuando sea necesario.
+- La memoria persistente orienta la reanudación, pero no sustituye la localización actual del worktree ni los handoffs estructurados.
+- El `coordinator` no escribe memoria durante el pipeline; la sesión principal conserva la responsabilidad de persistir el resultado.
 
 ## OpenSpec
 
@@ -69,7 +75,7 @@ Modelos centralizados en `code/.opencode/opencode.json`. No duplicar en frontmat
 | Archivo | Propósito |
 |---|---|
 | `opencode.json` | Modelos por agente (única fuente) |
-| `agents/*.md` | Roles, permisos, steps, prompts |
+| `agents/*.md` | Roles y prompts de comportamiento |
 | `orchestration/routing.yaml` | Matriz de rutas |
 | `orchestration/model-policy.md` | Política de costo por rol |
 | `instructions/harness.md` | Contratos, presupuestos, puerta de QA |

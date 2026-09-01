@@ -1,0 +1,86 @@
+<div id="navigation-progress" class="navigation-progress" aria-hidden="true" transition:persist>
+  <span></span>
+</div>
+
+<div id="navigation-status" class="navigation-status" role="status" aria-live="polite" aria-atomic="true" transition:persist>
+  Cargando…
+</div>
+
+<style is:global>
+  .navigation-progress {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 10000;
+    height: 3px;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 100ms ease;
+  }
+  .navigation-progress span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: linear-gradient(90deg, #e86c1a, #f0b13e);
+    box-shadow: 0 0 8px rgb(232 108 26 / 55%);
+  }
+  .navigation-status {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    z-index: 10001;
+    padding: 7px 13px;
+    border-radius: 999px;
+    transform: translate(-50%, -8px);
+    background: rgb(35 41 70 / 92%);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 18%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms ease, transform 120ms ease;
+  }
+  html.is-navigating { cursor: progress; }
+  html.is-navigating .navigation-progress { opacity: 1; }
+  html.is-navigating .navigation-progress span {
+    animation: navigation-progress 2.5s cubic-bezier(0.1, 0.5, 0.2, 1) forwards;
+  }
+  html.is-navigating.navigation-is-slow .navigation-status {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  @keyframes navigation-progress {
+    0% { transform: scaleX(0.08); }
+    35% { transform: scaleX(0.55); }
+    70% { transform: scaleX(0.78); }
+    100% { transform: scaleX(0.92); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .navigation-progress, .navigation-progress span, .navigation-status {
+      animation: none !important;
+      transition: none !important;
+    }
+    html.is-navigating .navigation-progress span { transform: scaleX(0.75); }
+  }
+</style>
+
+<script>
+  let slowTimer: number | undefined;
+  const startNavigationFeedback = () => {
+    window.clearTimeout(slowTimer);
+    document.documentElement.classList.add("is-navigating");
+    slowTimer = window.setTimeout(() => {
+      document.documentElement.classList.add("navigation-is-slow");
+    }, 350);
+  };
+  const stopNavigationFeedback = () => {
+    window.clearTimeout(slowTimer);
+    document.documentElement.classList.remove("is-navigating", "navigation-is-slow");
+  };
+  document.addEventListener("astro:before-preparation", startNavigationFeedback);
+  document.addEventListener("astro:page-load", stopNavigationFeedback);
+  window.addEventListener("pageshow", stopNavigationFeedback);
+</script>

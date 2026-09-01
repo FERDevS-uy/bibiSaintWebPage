@@ -35,7 +35,7 @@ El coordinator recibe las tareas del cambio y rutea el pipeline:
 | Frontend/UI | `locator → diagnostic → (expert si escala) → implementer → qa` |
 | Backend/API | `locator → diagnostic → (expert si escala) → implementer → qa` |
 | Schema/RLS | `locator → diagnostic → dba → implementer → qa` |
-| Scrapers/transporte | `locator → diagnostic → provider-scraper → qa` |
+| Scrapers/transporte | `locator → diagnostic → provider-scraper → implementer → qa` |
 | Auditoría de seguridad | `security` (read-only) |
 
 La escritura es **secuencial**: un solo agente edita a la vez. No hay ejecución paralela de editores sobre los mismos archivos.

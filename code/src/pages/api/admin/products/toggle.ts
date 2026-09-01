@@ -2,8 +2,9 @@ import type { APIRoute } from "astro";
 import { getSupabaseAdmin } from "../../../../server/supabase";
 import { verifyAdmin } from "../../../../server/auth";
 import { invalidateAllProductCaches } from "../../../../server/products";
+import { bumpCatalogVersion } from "../../../../server/catalog/edgeCache";
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   if (!await verifyAdmin(request)) {
     return new Response(JSON.stringify({ error: "No autorizado" }), {
       status: 401,
@@ -36,6 +37,8 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (error) throw error;
     invalidateAllProductCaches();
+    const kv = (locals as { runtime?: { env?: { CATALOG_KV?: any } } })?.runtime?.env?.CATALOG_KV;
+    await bumpCatalogVersion({ supabaseAdmin: supabase, kv });
     return new Response(JSON.stringify({ data }), {
       status: 200,
       headers: { "content-type": "application/json" },

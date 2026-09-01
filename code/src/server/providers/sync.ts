@@ -3,6 +3,8 @@ import { syncKaiDeco } from "./kaideco";
 import { syncAlondra } from "./alondra";
 import { SupabaseProductRepository } from "./martinaSync";
 import type { ProductRow } from "./utils";
+import { invalidateAllProductCaches } from "../products";
+import { bumpCatalogVersion } from "../catalog/edgeCache";
 
 interface SyncResult {
   provider: string;
@@ -84,5 +86,15 @@ export async function syncAllProviders(): Promise<{
     console.error("Alondra sync failed:", e?.message || e);
   }
 
+  if (totalUpserted > 0) {
+    invalidateAllProductCaches();
+    try {
+      await bumpCatalogVersion();
+    } catch (e: any) {
+      console.error("Error bumping catalog version after provider sync:", e?.message || e);
+    }
+  }
+
   return { results, totalUpserted, totalErrors };
 }
+

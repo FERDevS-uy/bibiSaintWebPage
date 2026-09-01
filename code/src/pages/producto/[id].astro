@@ -10,13 +10,21 @@ import {
   getDisplayCategoryName,
   getDisplaySubcategories,
 } from "@utils/categoryNormalization";
-import { loadProductById, loadRelatedProducts, loadRelatedProductsFallback } from "../../utils/loadProducts";
+import { loadProductById, loadRelatedProductsFallback } from "../../utils/loadProducts";
 import RelatedProductCarousel from "@components/RelatedProductCarousel.astro";
 import { formatPrice, parsePrice } from "@utils/price";
+import { loadRelatedProducts } from "@server/catalog/facade";
+import { toCardProduct } from "@server/catalog/mappers";
+import { getSupabase } from "@server/supabase";
+import { catalogReadEnv } from "@server/catalog/http";
+import { resolveCsvFallback } from "@server/catalog/readPath";
 
 const { id } = Astro.params;
 
-const product = await loadProductById(id!);
+const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+const csvFallbackOptions = { csvFallback: resolveCsvFallback(env) };
+
+const product = await loadProductById(id!, csvFallbackOptions);
 
 if (!product) {
   return Astro.redirect("/404", 404);
@@ -36,8 +44,8 @@ const {
 } = product;
 
 const relacionados = relacionadosIds && relacionadosIds.length > 0
-  ? await loadRelatedProducts(relacionadosIds)
-  : await loadRelatedProductsFallback(product);
+  ? (await loadRelatedProducts(relacionadosIds, env, getSupabase)).map(toCardProduct)
+  : await loadRelatedProductsFallback(product, 10, csvFallbackOptions);
 
 const productForCategoryPath: Product = {
   id: id!,
@@ -1836,7 +1844,7 @@ const pathname = Astro.url.pathname;
               setStatus("Sin stock en Nuvex. El precio se mantiene según catálogo.", "error");
             } else if (data?.source === "nuvex-static-no-api") {
               setStatus(
-                "En GitHub Pages no se puede verificar Nuvex en vivo (hosting estático + CORS). Se mantiene stock de catálogo.",
+                "Consultar con vendedor.",
               );
             } else {
               setStatus("Ten presente que puede ser que este producto no este disponible.");

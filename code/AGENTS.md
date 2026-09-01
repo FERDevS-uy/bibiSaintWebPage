@@ -58,7 +58,7 @@ Todas públicas en build (`PUBLIC_*`) o runtime en Cloudflare (`SUPABASE_*`, `SM
 - **Agentes**: `code/.opencode/agents/` — `coordinator` (primary, router ligero), `locator`, `diagnostic`, `expert`, `implementer`, `qa`, `dba`, `security`, `provider-scraper` (subagents). `designer` desactivado.
 - **Routing**: `code/.opencode/orchestration/routing.yaml`.
 - **Modelos**: solo en `code/.opencode/opencode.json` (`agent.<name>.model`), desacoplados de los roles. `expert` = `gpt-5.6-luna` (caro, solo escalación); `locator`/`coordinator` baratos; `diagnostic`/`implementer` intermedios.
-- **Presupuestos**: `steps` estrictos por agente (locator 6, diagnostic 10, expert 12, implementer 20, qa 15). Si un agente se agota sin progreso → escala o termina.
+- **Presupuestos**: `steps` estrictos por agente (locator 6 + preflight git read-only, diagnostic 10, expert 12, implementer 20, qa 25). Si un agente se agota sin progreso → escala o termina.
 - **Reglas**:
   - El implementer puede hacer `git commit` SOLO cuando el usuario lo solicita explícitamente.
   - Ningún agente hace `git push` sin orden explícita del usuario.

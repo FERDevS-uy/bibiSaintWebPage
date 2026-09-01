@@ -1,13 +1,20 @@
 import type Category from "../types/categoryList";
 import type { subCategory } from "../types/categoryList";
-import { toTitleCase, LEGACY_CATEGORIES } from "../utils/categoryNormalization";
+import { toTitleCase } from "../utils/categoryNormalization";
 import { countCategories } from "../utils/countCategories";
 import { loadProducts } from "../utils/loadProducts";
 import { fetchCategoryCounts } from "./products";
+import { recordLegacyFallback } from "@server/catalog/legacyTelemetry";
+
+const SIDEBAR_CACHE_TTL_MS = 30_000;
+const sidebarCache = new Map<string, { expiresAt: number; value: subCategory[] }>();
+const HEADER_CACHE_TTL_MS = 30_000;
+let headerCache: { expiresAt: number; value: Category[] } | null = null;
+let headerInFlight: Promise<Category[]> | null = null;
 
 /** Camino legacy: replica exactamente lo que las páginas hacían con countCategories(loadProducts()). */
 async function legacySidebarCategories(categoryFather: string): Promise<subCategory[]> {
-  const allProducts = await loadProducts();
+  const allProducts = await loadProducts({ csvFallback: false });
   const categories = countCategories(allProducts);
   const category = categories.find(
     (c) => c.name.toLowerCase() === categoryFather.toLowerCase(),
@@ -15,60 +22,93 @@ async function legacySidebarCategories(categoryFather: string): Promise<subCateg
   return category?.subcategories ?? [];
 }
 
+async function rpcHeaderCategories(): Promise<Category[]> {
+  const now = Date.now();
+  if (headerCache && headerCache.expiresAt > now) {
+    return headerCache.value;
+  }
+  if (headerInFlight) return headerInFlight;
+
+  headerInFlight = (async () => {
+    const categories = transformRpcCategories(await fetchCategoryCounts());
+    headerCache = {
+      value: categories,
+      expiresAt: Date.now() + HEADER_CACHE_TTL_MS,
+    };
+    return categories;
+  })();
+
+  try {
+    return await headerInFlight;
+  } finally {
+    headerInFlight = null;
+  }
+}
+
 /**
  * Subcategorías del sidebar para una categoría padre.
- * - Ropa/Tecno → camino legacy (transformaciones display).
- * - Resto → RPC `get_category_counts` (con caché TTL 300s). La RPC puede
- *   lanzar (ej. modo CSV sin credenciales Supabase) o devolver vacío/sin la
- *   categoría → en ambos casos fallback legacy (mismo comportamiento que hoy,
- *   cubre producción robusta y tests E2E donde Supabase es inalcanzable).
+ * Primario: RPC agregada `get_category_counts`, compartida con Header/Footer y
+ * transformada para conservar la jerarquía visual de Ropa. Solo si falla o no
+ * contiene la categoría se usa el camino legacy.
  */
 export async function getSidebarCategories(categoryFather: string): Promise<subCategory[]> {
   const normalized = (categoryFather ?? "").trim();
   if (!normalized) return [];
 
   const key = normalized.toLowerCase();
-
-  if (LEGACY_CATEGORIES.has(key)) {
-    return legacySidebarCategories(normalized);
+  const now = Date.now();
+  const cached = sidebarCache.get(key);
+  if (cached && cached.expiresAt > now) {
+    return cached.value;
   }
 
-  let counts: Category[] = [];
+  // La RPC devuelve conteos agregados y el transform conserva las rutas visuales
+  // de Ropa ("Hombre - Buzos", etc.) sin volver a cargar todo el catálogo.
   try {
-    counts = await fetchCategoryCounts();
+    const categories = await rpcHeaderCategories();
+    const category = categories.find((c) => c.name.toLowerCase() === key);
+    if (category) {
+      const value = category.subcategories
+        .map((s) => ({ ...s, name: toTitleCase(s.name.trim()) }))
+        .filter((s) => Boolean(s.name));
+      sidebarCache.set(key, { value, expiresAt: now + SIDEBAR_CACHE_TTL_MS });
+      return value;
+    }
   } catch (err) {
-    console.error("fetchCategoryCounts failed, falling back to legacy:", err);
-  }
-  const category = counts.find((c) => c.name.toLowerCase() === key);
-  if (category) {
-    return category.subcategories
-      .map((s) => ({ ...s, name: toTitleCase(s.name.trim()) }))
-      .filter((s) => Boolean(s.name));
+    console.error("rpcHeaderCategories failed, falling back to legacy:", err);
+    recordLegacyFallback({ route: "sidebar", category: normalized, reason: "supabase-error" });
   }
 
-  return legacySidebarCategories(normalized);
+  recordLegacyFallback({ route: "sidebar", category: normalized, reason: "supabase-empty" });
+  const value = await legacySidebarCategories(normalized);
+  sidebarCache.set(key, { value, expiresAt: now + SIDEBAR_CACHE_TTL_MS });
+  return value;
 }
 
 /**
  * Categorías para Header/Footer (dropdown global).
  * Primario: RPC `get_category_counts` con post-proceso display (MUJER+HOMBRE → Ropa,
  * prefijos "Mujer - X"/"Hombre - X", Tecno sin inferencia regex).
- * Fallback: countCategories(loadProducts()) — mismo comportamiento legacy.
- * Nunca propaga errores de RPC al render SSR.
+ * Si Supabase falla devuelve vacío para no descargar el catálogo completo en SSR.
  */
 export async function getHeaderCategories(): Promise<Category[]> {
-  let counts: Category[] = [];
+  const now = Date.now();
+  if (headerCache && headerCache.expiresAt > now) {
+    return headerCache.value;
+  }
+
   try {
-    counts = await fetchCategoryCounts();
+    const categories = await rpcHeaderCategories();
+    if (categories.length > 0) return categories;
   } catch (err) {
-    console.error("fetchCategoryCounts failed, falling back to legacy:", err);
+    console.error("rpcHeaderCategories failed:", err);
+    recordLegacyFallback({ route: "header", category: "all", reason: "supabase-error" });
   }
 
-  if (counts.length > 0) {
-    return transformRpcCategories(counts);
-  }
-
-  return countCategories(await loadProducts());
+  // Evitar fallback O(n) en SSR del header. Si no hay datos de Supabase,
+  // devolvemos vacío para proteger CPU/memoria del worker.
+  recordLegacyFallback({ route: "header", category: "all", reason: "supabase-empty" });
+  return [];
 }
 
 /**

@@ -3,9 +3,10 @@ import { isTallBoot } from "../utils/isTallBoot";
 import "../styles/components/ProductGallery.css";
 
 /**
- * Galeria de imagenes del producto, cargada como isla React (lazy).
+ * Galeria de imagenes del producto, cargada como isla React.
  * - Imagen principal + miniaturas clickeables.
- * - loading="lazy" en todas las imagenes.
+ * - La imagen principal es eager/high porque es contenido above-the-fold y LCP;
+ *   solo las miniaturas usan lazy loading.
  * - Si TODAS las imagenes fallan al cargar, muestra un mensaje indicando
  *   que el producto puede no estar en venta.
  */
@@ -71,7 +72,8 @@ export default function ProductGallery({ images = [], name = "", description = "
         className={`mainImg${tall ? " mainImg--tall" : ""}`}
         src={activeSrc}
         alt={name}
-        loading="lazy"
+        loading="eager"
+        fetchPriority="high"
         decoding="async"
         onError={() => markBroken(activeIndex)}
       />

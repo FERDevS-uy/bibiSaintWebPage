@@ -163,6 +163,7 @@ const uniqueColors = Array.from(colorChipsMap.values());
                       <li>
                         <a
                           href={node.href}
+                          data-astro-prefetch="hover"
                           class={`sf-child-link${isExactSelected ? " is-selected" : ""}`}
                         >
                           Ver todos
@@ -172,6 +173,7 @@ const uniqueColors = Array.from(colorChipsMap.values());
                         <li>
                           <a
                             href={child.href}
+                            data-astro-prefetch="hover"
                             class={`sf-child-link${selected === child.name ? " is-selected" : ""}`}
                           >
                             {child.label}
@@ -183,6 +185,7 @@ const uniqueColors = Array.from(colorChipsMap.values());
                 ) : (
                   <a
                     href={node.href}
+                    data-astro-prefetch="hover"
                     class={`sf-link${isExactSelected ? " is-selected" : ""}`}
                   >
                     {node.name}

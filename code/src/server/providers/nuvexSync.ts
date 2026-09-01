@@ -12,6 +12,8 @@ import { NuvexClient } from "./nuvex/client";
 import type { NuvexProductDraft } from "./nuvex/parser";
 import { NUVEX_LIMITS } from "./nuvex/security";
 import { getServerEnv } from "./martinaSync";
+import { invalidateAllProductCaches } from "../products";
+import { bumpCatalogVersion } from "../catalog/edgeCache";
 import {
   buildPlan,
   type NuvexActionType,
@@ -585,6 +587,15 @@ async function applyNuvexSyncLocked(
   }
 
   const result = await repo.applyProducts(toUpsert, toDeactivate);
+
+  if (result.upserted > 0 || result.deactivated > 0) {
+    invalidateAllProductCaches();
+    try {
+      await bumpCatalogVersion();
+    } catch (e: any) {
+      console.error("Error bumping catalog version after nuvex apply:", e?.message || e);
+    }
+  }
 
   // Auditoría server-side (sin credenciales ni datos sensibles).
   console.info(

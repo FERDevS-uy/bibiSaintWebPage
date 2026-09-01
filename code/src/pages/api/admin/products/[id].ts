@@ -3,6 +3,7 @@ import { getSupabaseAdmin } from "../../../../server/supabase";
 import { verifyAdmin } from "../../../../server/auth";
 import { pickWritable } from "../../../../server/adminWhitelist";
 import { invalidateAllProductCaches } from "../../../../server/products";
+import { bumpCatalogVersion } from "../../../../server/catalog/edgeCache";
 
 export const GET: APIRoute = async ({ request, params }) => {
   if (!await verifyAdmin(request)) {
@@ -43,7 +44,7 @@ export const GET: APIRoute = async ({ request, params }) => {
   }
 };
 
-export const PUT: APIRoute = async ({ request, params }) => {
+export const PUT: APIRoute = async ({ request, params, locals }) => {
   if (!await verifyAdmin(request)) {
     return new Response(JSON.stringify({ error: "No autorizado" }), {
       status: 401,
@@ -70,6 +71,8 @@ export const PUT: APIRoute = async ({ request, params }) => {
 
     if (error) throw error;
     invalidateAllProductCaches();
+    const kv = (locals as { runtime?: { env?: { CATALOG_KV?: any } } })?.runtime?.env?.CATALOG_KV;
+    await bumpCatalogVersion({ supabaseAdmin: supabase, kv });
     return new Response(JSON.stringify({ data }), {
       status: 200,
       headers: { "content-type": "application/json" },

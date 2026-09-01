@@ -1,3 +1,21 @@
+// ============================================================================
+// FUENTE DE VERDAD — NORMALIZACIÓN DE CATEGORÍAS (path LEGACY)
+// ============================================================================
+// Este módulo es la fuente de verdad para la **normalización de input /
+// presentación** de categorías y subcategorías en el path LEGACY (CSV y
+// derivación en runtime desde el catálogo completo).
+//
+// IMPORTANTE — DRIFT RISK entre JS y SQL:
+// - La **persistencia** en el read model replica esta lógica en SQL dentro del
+//   trigger `catalog_products_trigger_fn()` (migraciones 007 y 010): el CASE
+//   Martina/Tecno duplica la transformación de `getDisplayCategoryName()` /
+//   `getDisplaySubcategories()` / `inferTecnoSubcategory()`.
+//   => Si cambiás la lógica acá, actualizá el SQL del trigger también.
+// - La **presentación** del árbol de categorías (fusión de catalog_taxonomy +
+//   catalog_categories con conteos) vive en `buildCategoryTree()`
+//   (`src/server/catalog/http.ts`), no acá.
+// ============================================================================
+
 import type Product from "../types/product";
 
 const MARTINA_HOST = "martinaditrento.com";
@@ -105,8 +123,38 @@ export function productMatchesSubcategory(
   categoryName: string,
   subcategoryName: string,
 ): boolean {
-  return (
-    productMatchesCategory(product, categoryName) &&
-    getDisplaySubcategories(product).includes(subcategoryName)
+  const filter = resolveSubcategoryFilter(categoryName, subcategoryName);
+  if (!productMatchesCategory(product, filter.category)) return false;
+
+  const subcategories = getDisplaySubcategories(product);
+  if (filter.kind === "exact") return subcategories.includes(filter.value);
+
+  return subcategories.some(
+    (subcategory) =>
+      subcategory === filter.value || subcategory.startsWith(`${filter.value} - `),
   );
+}
+
+/**
+ * The public category tree has two gender groups under Ropa. Only those
+ * explicit group routes expand to prefixed children; every other subcategory
+ * remains an exact match (for example, "Hombre - Remeras").
+ */
+export type SubcategoryFilter =
+  | { kind: "exact"; category: string; value: string }
+  | { kind: "group"; category: "Ropa"; value: "Hombre" | "Mujer" };
+
+export function resolveSubcategoryFilter(
+  categoryName: string,
+  subcategoryName: string,
+): SubcategoryFilter {
+  const category = categoryName.trim();
+  const value = subcategoryName.trim();
+  if (
+    category === "Ropa" &&
+    (value === "Hombre" || value === "Mujer")
+  ) {
+    return { kind: "group", category: "Ropa", value };
+  }
+  return { kind: "exact", category, value };
 }

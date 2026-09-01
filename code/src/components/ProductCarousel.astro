@@ -13,6 +13,11 @@ interface Props {
 
 const { products, title, id } = Astro.props;
 const pathname = Astro.url.pathname;
+const PRODUCT_IMG_FALLBACK =
+  "data:image/svg+xml;charset=UTF-8," +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640"><rect width="640" height="640" fill="#f3f4f6"/><g fill="#9ca3af"><circle cx="250" cy="248" r="64"/><path d="M116 448l110-118 86 90 56-58 156 86v52H116z"/></g><text x="320" y="566" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" fill="#6b7280">Imagen no disponible</text></svg>',
+  );
 ---
 
 <div class="carousel-container" id={id}>
@@ -36,7 +41,9 @@ const pathname = Astro.url.pathname;
                 src={p.img[0]}
                 alt={p.name}
                 loading="lazy"
-                class={isTallBoot(p.name, p.description, p.id) ? "carousel-img--tall" : undefined}
+                class={`carousel-img${isTallBoot(p.name, p.description, p.id) ? " carousel-img--tall" : ""}`}
+                data-fallback-src={PRODUCT_IMG_FALLBACK}
+                onerror="window.__bibiProductImgFallback && window.__bibiProductImgFallback(this)"
               />
             </div>
           </a>
@@ -141,12 +148,18 @@ const pathname = Astro.url.pathname;
     height: 100%;
   }
 
-  img {
+  .carousel-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: top;
     display: block;
+  }
+
+  .carousel-img.is-fallback {
+    object-fit: contain;
+    object-position: center;
+    background: #f9fafb;
   }
 
   /* Misma regla que ProductGallery/ItemProductoBox: tal-* y botas altas no se recortan */
@@ -225,9 +238,6 @@ const pathname = Astro.url.pathname;
 
   /* --- DESKTOP VIEW --- */
   @media screen and (min-width: 1000px) {
-    .carousel-container {
-      padding-inline: 4rem;
-    }
 
     .carousel-title {
       font-size: 2.5rem;
@@ -356,16 +366,46 @@ const pathname = Astro.url.pathname;
 </style>
 
 <script>
+  function ensureFallbackHandler() {
+    const w = window as any;
+    if (typeof w.__bibiProductImgFallback === "function") return;
+
+    w.__bibiProductImgFallback = (img: HTMLImageElement) => {
+      if (!img || img.dataset.fallbackApplied === "true") return;
+      const fallbackSrc = img.dataset.fallbackSrc || "";
+      if (!fallbackSrc) return;
+      img.dataset.fallbackApplied = "true";
+      img.classList.add("is-fallback");
+      img.src = fallbackSrc;
+    };
+  }
+
   function initCarousel(container: HTMLElement) {
     if (container.dataset.carouselInitialized) return;
     container.dataset.carouselInitialized = "true";
+
+    ensureFallbackHandler();
 
     const track = container.querySelector(".carousel-track") as HTMLElement;
     const prevBtn = container.querySelector(".prev-arrow") as HTMLButtonElement;
     const nextBtn = container.querySelector(".next-arrow") as HTMLButtonElement;
     const items = container.querySelectorAll(".carousel-item");
+    const images = container.querySelectorAll(".carousel-img");
 
     if (!track) return;
+
+    // Fallback defensivo para timeouts largos del proveedor.
+      images.forEach((img) => {
+      window.setTimeout(() => {
+        const target = img as HTMLImageElement;
+        if (!target.complete || target.naturalWidth === 0) {
+          const w = window as any;
+          if (typeof w.__bibiProductImgFallback === "function") {
+            w.__bibiProductImgFallback(target);
+          }
+        }
+        }, 3000);
+    });
 
     // --- Navegación por flechas (Desktop) ---
     if (prevBtn && nextBtn) {
