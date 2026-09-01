@@ -36,7 +36,16 @@
 				"directory": "./dist",
 				"binding": "ASSETS"
 			},
-			"kv_namespaces": []
+			"kv_namespaces": [
+				{
+					"binding": "CATALOG_KV",
+					"id": "eab3cdb8f79f49e49f3eeddc903e106f"
+				},
+				{
+					"binding": "SESSION",
+					"id": "ad2a966d1e0c4176aa34b848b948b2fe"
+				}
+			]
 		}
 	},
 	"observability": {
