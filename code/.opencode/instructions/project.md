@@ -2,65 +2,63 @@
 
 ## Principios core
 
-- **Token Efficiency First**: pipeline agéntico donde el modelo caro solo se usa cuando aporta valor.
+- **Token Efficiency First**: usar la ruta mínima suficiente y reservar modelos caros para revisión/escalación.
 - **Spanish Communication**: responder siempre en español.
 - **No Slop**: anti-generic design, premium quality output.
-- **Semantic Alignment**: mantener coherencia visual y arquitectónica en todo el proyecto.
+- **Semantic Alignment**: mantener coherencia visual y arquitectónica.
 
-## Pipeline agéntico
+## Pipeline agéntico v4
 
-Este workspace usa el pipeline **DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY**:
+Roles:
 
-- `coordinator` (router ligero): clasifica y delega en orden. No explora ni implementa.
-- `locator`: localiza archivos/líneas/símbolos (barato, read-only).
-- `diagnostic`: causa probable + decisión `DIRECT` / `ESCALATE_TO_EXPERT` (intermedio, read-only).
-- `expert`: planner de escalación, produce contrato ejecutable (caro, solo cuando diagnostic lo decide).
-- `implementer`: aplica el contrato (único editor de producción).
-- `qa`: verifica con evidencia (solo tests/evidencia).
-- Ramas excepcionales: `security` (read-only), `dba`, `provider-scraper`.
+- `coordinator`: clasifica y rutea. No explora ni implementa.
+- `locator`: ubica targets read-only.
+- `diagnostic`: confirma causa cuando realmente hace falta.
+- `expert`: planner senior solo por escalación.
+- `implementer`: único editor de producción.
+- `qa`: verificación mecánica/evidencia con modelo barato.
+- `reviewer`: firma semántica final con modelo fuerte para cambios no triviales.
+- ramas excepcionales: `security`, `dba`, `provider-scraper`.
 
-Ruta simple: `coordinator → locator → diagnostic → implementer → qa`
-Ruta compleja: `coordinator → locator → diagnostic → expert → implementer → qa`
+Rutas:
 
-## Cuándo delegar
+```text
+FAST_KNOWN:     implementer → qa
+FAST_LOCATE:    locator → implementer → qa
+PRE_DIAGNOSED:  implementer → qa → reviewer
+NORMAL:         locator → diagnostic → implementer → qa → reviewer
+COMPLEX:        locator → diagnostic → expert → implementer → qa → reviewer
+```
 
-- **Bug/feature normal** → pipeline simple.
-- **Complejo/incierto/alto riesgo/ambigüedad visual** → pipeline con `expert`.
-- **Database/schema/RLS** → pipeline con `dba`.
-- **Scrapers/transporte** → pipeline con `provider-scraper`.
-- **Auditoría de seguridad** → `security` directo.
-
-Regla de oro: **barato localiza → intermedio diagnostica → caro solo escala → intermedio ejecuta → intermedio verifica.**
+Regla de oro: **gratis hace el trabajo repetitivo; Luna entra solo donde aporta juicio final o resolución difícil**.
 
 ## Modelos
 
-Los modelos viven solo en `code/.opencode/opencode.json` (`agent.<name>.model`), desacoplados de los roles. Para cambiar un modelo, se edita `opencode.json`, no los agentes.
+La única fuente de modelos es `code/.opencode/opencode.json`.
 
 ## Reglas operativas
 
-1. Presupuestos de `steps` estrictos por agente. Si un agente se agota sin progreso → escala o termina.
-2. Escritura secuencial: un solo agente edita a la vez.
-3. Máximo 2 ciclos de QA. Retry sin evidencia nueva prohibido.
-4. QA independiente con evidencia obligatoria para UI (viewport exacto + screenshot + interacción).
-5. El coordinator solo delega; no implementa.
-6. `git commit`/`git push` únicamente con autorización explícita del usuario.
-7. Contexto narrow: pasar extractos y handoffs, no el repo completo.
+1. `steps` reales configurados por agente.
+2. No duplicar diagnóstico ya entregado por el usuario.
+3. Escritura secuencial: un solo editor.
+4. Máximo 2 ciclos de corrección.
+5. QA proporcional al riesgo; reviewer no rediagnostica.
+6. `git commit`/`git push` solo con autorización explícita.
+7. Contexto narrow: handoffs compactos, no dumps del repo.
 
 ## Contexto del proyecto
 
-**Stack**: Astro 5 SSR + Cloudflare Workers + Supabase + React Islands
-**Root**: `/Users/franccesco.giordano/Documents/proyectos personales/bibiSaintWebPage`
-**App Root**: `code/` (all source code lives here)
-**Deploy**: GitHub Actions → Cloudflare Workers
+**Stack**: Astro 5 SSR + Cloudflare Workers + Supabase + React Islands  
+**Root**: `/Users/franccesco.giordano/Documents/proyectos personales/bibiSaintWebPage`  
+**App Root**: `code/`  
+**Deploy**: GitHub Actions → Cloudflare Workers  
 **Design System**: Red gradient hero, beige/tan background, yellow accents
 
-## Estilo de comunicación
+## Estilo
 
-- **Spanish first** (preferencia del usuario).
-- **Conciso**: sin preámbulos innecesarios.
-- **Action-oriented**: "Aquí está hecho" no "Voy a hacer".
+- Español.
+- Conciso.
+- Action-oriented.
 
----
-
-**Last Updated**: 2026-08-26
-**System**: Pipeline DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY
+**Last Updated**: 2026-09-03
+**System**: Free-first adaptive pipeline + senior review gate

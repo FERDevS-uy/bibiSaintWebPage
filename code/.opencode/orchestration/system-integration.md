@@ -1,81 +1,52 @@
-# 🎯 System Integration Guide
+# System Integration Guide — v4
 
-**Sistema**: Pipeline agéntico `DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY` + Auto-Save (checkpoints opcionales) + OpenSpec.
+Sistema: routing adaptativo free-first + editor único + QA barato + reviewer senior selectivo.
 
----
+## Arquitectura
 
-## La Arquitectura
-
-```
-USER REQUEST
-      │
-      ▼
-┌─────────────┐
-│ coordinator │  Router ligero. Clasifica, delega en orden, controla ciclos.
-└──────┬──────┘
-       │
-       ▼
-┌─────────┐    ┌───────────┐    ┌───────────┐    ┌──────────────┐    ┌──────┐
-│ locator │───▶│ diagnostic│───▶│  expert   │───▶│  implementer │───▶│  qa  │
-│ (ubica) │    │ (decide)  │    │ (escala)  │    │ (ejecuta)    │    │(valida│
-│  6 st.  │    │  10 st.   │    │  12 st.   │    │  20 st.      │    │25 st.│
-└─────────┘    └───────────┘    └───────────┘    └──────────────┘    └──────┘
-   solo read      solo read      solo read          único editor        solo tests
+```text
+                         ┌──────── FAST_KNOWN ──────── implementer(FREE) → qa(FREE)
+                         │
+USER → coordinator(FREE) ├──────── FAST_LOCATE ─ locator(FREE) → implementer(FREE) → qa(FREE)
+                         │
+                         ├──────── PRE_DIAGNOSED ─ implementer(FREE) → qa(FREE) → reviewer(Luna)
+                         │
+                         ├──────── NORMAL ─ locator(FREE) → diagnostic(FREE) → implementer(FREE) → qa(FREE) → reviewer(Luna)
+                         │
+                         └──────── COMPLEX ─ locator(FREE) → diagnostic(FREE) → expert(Luna) → implementer(FREE) → qa(FREE) → reviewer(Luna)
 ```
 
-- **Tarea simple**: `locator → diagnostic (DIRECT) → implementer → qa`. Sin expert.
-- **Tarea compleja/incierta/alto riesgo**: `locator → diagnostic (ESCALATE_TO_EXPERT) → expert → implementer → qa`.
-- **Ramas excepcionales**: `security` (auditoría read-only), `dba` (schema/RLS), `provider-scraper` (scrapers) — solo cuando el diagnóstico lo indique.
-- **Escritura secuencial**: un solo agente edita a la vez.
+## Qué evita v4
 
-## Cuándo actúa cada componente
+- locator obligatorio para toda petición;
+- rediagnosticar contratos ya entregados;
+- GPT caro ejecutando grep/lecturas mecánicas;
+- QA de 25 pasos para cambios triviales;
+- reviewer rehaciendo la implementación.
 
-| Fase | Agente | Modelo | Salida |
-|---|---|---|---|
-| DISCOVER | `locator` | `openai/gpt-5.4-mini-fast` | `LOCATOR HANDOFF` (archivos/líneas/símbolos) |
-| DIAGNOSE | `diagnostic` | `openai/gpt-5.5-fast` | `DIAGNOSTIC HANDOFF` + decisión `DIRECT`/`ESCALATE_TO_EXPERT` |
-| PLAN | `expert` | `openai/gpt-5.6-luna` | `EXPERT IMPLEMENTATION CONTRACT` |
-| IMPLEMENT | `implementer` | `openai/gpt-5.5-fast` | cambio mínimo en archivos autorizados |
-| VERIFY | `qa` | `openai/gpt-5.5-fast` | `QA REPORT` con evidencia (screenshot+interacción) |
+## Responsabilidades
 
-Modelos centralizados en `code/.opencode/opencode.json`. No duplicar en frontmatter.
-
-## Auto-Save (checkpoints opcionales)
-
-- Los checkpoints en `code/.opencode/autosave/` son **opcionales** y complementarios, NO el canal de coordinación.
-- El handoff entre agentes viaja SIEMPRE en el prompt de `task` (contrato estructurado).
-- `resu.md` puede guardar decisiones y evidencia para cruzar sesiones, pero nunca sustituye un contrato.
-
-## Recuperación de contexto
-
-- En solicitudes de reanudación, el `coordinator` consulta primero `engram_mem_context` y usa `engram_mem_search` para recuperar decisiones o trabajo específico cuando sea necesario.
-- La memoria persistente orienta la reanudación, pero no sustituye la localización actual del worktree ni los handoffs estructurados.
-- El `coordinator` no escribe memoria durante el pipeline; la sesión principal conserva la responsabilidad de persistir el resultado.
+| Fase | Agente | Salida |
+|---|---|---|
+| ROUTE | `coordinator` | ruta mínima |
+| LOCATE | `locator` | targets compactos |
+| DIAGNOSE | `diagnostic` | causa + contrato |
+| PLAN | `expert` | contrato senior solo si escala |
+| IMPLEMENT | `implementer` | cambio + implementation report |
+| VERIFY | `qa` | evidencia mecánica |
+| REVIEW | `reviewer` | APPROVE/BLOCK semántico |
 
 ## OpenSpec
 
-- `openspec-propose` → genera artefactos de planificación (proposal, specs, design, tasks). No implementa.
-- `openspec-apply` → ejecuta tareas del cambio. Si el cambio toca múltiples disciplinas, aplica el pipeline: el coordinator rutea `locator → diagnostic` primero y delega la ejecución al `implementer` (y ramas excepcionales si aplica).
-- `openspec-archive` → cierra el cambio.
-- No hay ejecución paralela de editores: la escritura es secuencial.
+OpenSpec puede entregar suficiente especificación para tratar una tarea como PRE_DIAGNOSED si sus artefactos incluyen targets/write set, cambio exacto, aceptación y verificación. Si no, usa NORMAL/COMPLEX según incertidumbre.
 
-## Reglas transversales
+## Git
 
-1. Cada agente tiene un objetivo único y medible (ver tabla de fases).
-2. Presupuestos de `steps` estrictos por agente. Si se agotan sin progreso → escalar o terminar.
-3. Máximo 2 ciclos de QA. Retry sin evidencia nueva prohibido.
-4. El modelo caro nunca localiza ni explora: solo planifica cuando se lo escala.
-5. El implementer no rediagnostica; el expert no reexplora lo ya localizado.
-6. QA independiente con evidencia obligatoria para UI (viewport exacto + screenshot + interacción).
-7. git commit/push solo con autorización explícita del usuario.
-8. Coordinator sin capacidad de implementar (edit/bash deny).
+- solo implementer puede editar producción;
+- commit/push requieren autorización explícita;
+- operaciones destructivas de worktree están denegadas;
+- reviewer/qa son read-only.
 
-## Archivos de referencia
+## Contexto
 
-| Archivo | Propósito |
-|---|---|
-| `opencode.json` | Modelos por agente (única fuente) |
-| `agents/*.md` | Roles y prompts de comportamiento |
-| `orchestration/routing.yaml` | Matriz de rutas |
-| `orchestration/model-policy.md` | Política de costo por rol |
-| `instructions/harness.md` | Contratos, presupuestos, puerta de QA |
+Cada subagente corre en sesión aislada, pero los handoffs son deliberadamente compactos. No copiar el prompt completo: pasar únicamente objetivo, restricciones, targets y evidencia necesaria.

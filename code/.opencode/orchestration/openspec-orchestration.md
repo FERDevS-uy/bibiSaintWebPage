@@ -1,55 +1,45 @@
-# OpenSpec + Pipeline Agéntico
+# OpenSpec + Pipeline Agéntico v4
 
 ## Objetivo
 
-Cuando creás un cambio en OpenSpec, el pipeline agéntico lo procesa de forma secuencial:
+OpenSpec planifica; el harness ejecuta usando la ruta mínima suficiente.
 
-1. `openspec-propose` genera los artefactos de planificación.
-2. `openspec-apply` ejecuta las tareas siguiendo `DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY`.
-3. `openspec-archive` cierra el cambio.
+## Flujo
 
-## Flujo Integrado
-
-```
-User: "Quiero mejorar el flujo de checkout"
-        │
-        ▼
-[openspec-propose]  → proposal.md, specs/, design.md, tasks.md  (planificación, no implementa)
-        │
-        ▼
-[openspec-apply]
-        │
-        ▼
-coordinator → locator → diagnostic → (expert si escala) → implementer → qa
-        │
-        ▼
-[openspec-archive]  → cierra el cambio
+```text
+openspec-propose
+      ↓
+artefactos (proposal/specs/design/tasks)
+      ↓
+openspec-apply
+      ↓
+coordinator clasifica:
+  PRE_DIAGNOSED si los artefactos ya son ejecutables
+  NORMAL/COMPLEX si aún falta diagnóstico
+      ↓
+implementer / pipeline necesario
+      ↓
+qa [→ reviewer cuando corresponda]
+      ↓
+openspec-archive
 ```
 
-## Cómo el pipeline procesa un cambio
+## Routing
 
-El coordinator recibe las tareas del cambio y rutea el pipeline:
-
-| Cambio | Ruta |
+| Estado del cambio | Ruta |
 |---|---|
-| Frontend/UI | `locator → diagnostic → (expert si escala) → implementer → qa` |
-| Backend/API | `locator → diagnostic → (expert si escala) → implementer → qa` |
-| Schema/RLS | `locator → diagnostic → dba → implementer → qa` |
-| Scrapers/transporte | `locator → diagnostic → provider-scraper → implementer → qa` |
-| Auditoría de seguridad | `security` (read-only) |
-
-La escritura es **secuencial**: un solo agente edita a la vez. No hay ejecución paralela de editores sobre los mismos archivos.
-
-## Handoff con OpenSpec
-
-- Los artefactos de OpenSpec (design.md, tasks.md) son entrada para el pipeline, no canal de coordinación entre agentes.
-- El handoff entre agentes viaja en el prompt de `task` (contrato estructurado).
-- `resu.md` puede guardar checkpoints, pero nunca sustituye un contrato.
+| Spec ejecutable, bajo riesgo | `implementer → qa` |
+| Spec ejecutable, no trivial | `implementer → qa → reviewer` |
+| Falta ubicar targets | `locator → implementer → qa` si el cambio es mecánico |
+| Causa/solución incierta | `locator → diagnostic → implementer → qa → reviewer` |
+| Alto riesgo/arquitectura | `locator → diagnostic → expert → implementer → qa → reviewer` |
+| DB/RLS complejo | `locator → diagnostic → dba → implementer → qa → reviewer` |
+| Scraper/transporte | `locator → diagnostic → provider-scraper → implementer → qa → reviewer` |
 
 ## Reglas
 
-1. `openspec-propose` solo planifica; no implementa (guardrail del workflow).
-2. El `expert` solo se invoca cuando `diagnostic` decide `ESCALATE_TO_EXPERT`.
-3. Máximo 2 ciclos de QA; un retry sin evidencia nueva está prohibido.
-4. No prometer ahorros de tokens/minutos no verificables: la optimización se logra con presupuestos estrictos y sin exploración duplicada.
-5. Los modelos viven solo en `code/.opencode/opencode.json`.
+1. No ejecutar locator/diagnostic si OpenSpec ya proporciona un contrato suficiente.
+2. Expert solo por escalación real.
+3. Escritura secuencial.
+4. Máximo 2 ciclos de corrección.
+5. Handoffs compactos; artefactos OpenSpec son referencia, no excusa para repetir todo su contenido en cada task.

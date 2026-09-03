@@ -1,151 +1,182 @@
-# Bibi Saint — Harness de Orquestación
+# Bibi Saint — Harness de Orquestación v4
 
-Pipeline operativo del marco agéntico. Los agentes se rigen por `routing.yaml`, `model-policy.md` y este documento.
+Objetivo: **calidad con mínimo coste de contexto y mínimo número de subagentes**.
 
-## Pipeline
+## Regla principal
 
-**DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY**
+No existe una ruta obligatoria única. El `coordinator` selecciona la **ruta mínima suficiente**.
 
 ```text
-Ruta simple:   coordinator → locator → diagnostic → implementer → qa
-Ruta compleja: coordinator → locator → diagnostic → expert → implementer → qa
+PRE_DIAGNOSED: implementer → qa → reviewer
+FAST_KNOWN:     implementer → qa
+FAST_LOCATE:    locator → implementer → qa
+NORMAL:         locator → diagnostic → implementer → qa → reviewer
+COMPLEX:        locator → diagnostic → expert → implementer → qa → reviewer
 ```
 
-## Reanudación
-
-Cuando el usuario pide retomar trabajo previo, el `coordinator` debe consultar primero `engram_mem_context` y, si el contexto es insuficiente, `engram_mem_search`. Después debe ejecutar `locator` para confirmar que la memoria coincide con el estado actual del worktree.
-
-## Presupuestos por agente (steps)
-
-| Agente | steps | Lecturas máx | Escalación si se agota |
-|---|---|---|---|
-| `locator` | 6 | preflight git read-only | `NOT_FOUND` / `BLOCKED` |
-| `diagnostic` | 10 | dependencias directas | `ESCALATE_TO_EXPERT` o termina |
-| `expert` | 12 | contexto inmediato | `ESCALATE_TO_USER` |
-| `implementer` | 20 | — | `BLOCKED` si el contrato está incompleto |
-| `qa` | 25 | — | `FAIL` con evidencia; `BLOCKED_SETUP` si no puede iniciar el entorno |
-| `dba` / `security` / `provider-scraper` | 15 | — | reporte o contrato |
-
-Regla general: si un agente alcanza su presupuesto de steps sin progreso significativo, **escala o termina**; nunca continúa explorando indefinidamente.
-
-## Contratos de handoff (obligatorios)
-
-Cada delegación incluye el bloque del agente receptor. Sin él, el agente receptor NO debe empezar y debe pedirlo.
-
-### LOCATOR HANDOFF → diagnostic
+Ramas:
 
 ```text
+DB/RLS:      locator → diagnostic → dba → implementer → qa → reviewer
+Scrapers:    locator → diagnostic → provider-scraper → implementer → qa → reviewer
+Security:    security (read-only)
+```
+
+Un contrato PRE_DIAGNOSED completo puede saltar locator/diagnostic incluso en una rama especializada; en ese caso conservar `qa → reviewer` si no es trivial.
+
+## Presupuestos reales
+
+Los límites efectivos viven en `opencode.json` mediante `steps`.
+
+| Agente | Steps | Propósito |
+|---|---:|---|
+| coordinator | 5 | clasificar/rutear |
+| locator | 4 | ubicar targets |
+| diagnostic | 7 | causa + contrato |
+| expert | 8 | resolver escalación |
+| implementer | 14 | editar + verificar |
+| qa | 7 | evidencia mecánica |
+| reviewer | 6 | firma semántica final |
+| dba | 10 | DB excepcional |
+| security | 8 | auditoría |
+| provider-scraper | 9 | proveedor excepcional |
+
+Si un agente no progresa dentro del presupuesto, termina o escala. Nunca exploración indefinida.
+
+## Contratos
+
+### DIRECT EXECUTION CONTRACT
+
+Para FAST_KNOWN / FAST_LOCATE:
+
+```text
+DIRECT EXECUTION CONTRACT
+Goal:
+Targets:
+Exact requested change:
+Do not touch:
+Acceptance criteria:
+Verification:
+Preserve worktree: YES | NO
+Reviewer required: YES | NO
+```
+
+### LOCATOR HANDOFF
+
+```text
+LOCATOR HANDOFF
 Status: FOUND | NOT_FOUND | BLOCKED
-Request summary:
-Relevant files: (path + lines + symbols)
-Worktree scope: (modified + untracked files relevant to the request)
-Why relevant:
-Minimal excerpts/context:
-Observed constraints:
+Targets:
+- path:lines — symbol — motivo breve
+Worktree conflicts:
+Constraints:
 Unknowns:
-Suggested next agent:
 Stop reason:
 ```
 
-### DIAGNOSTIC HANDOFF → implementer (DIRECT) o expert (ESCALATE_TO_EXPERT)
+### DIAGNOSTIC HANDOFF
 
 ```text
+DIAGNOSTIC HANDOFF
 Decision: DIRECT | ESCALATE_TO_EXPERT
-Problem:
+Goal:
+Cause:
 Evidence:
-Probable cause:
 Confidence: HIGH | MEDIUM | LOW
-Complexity: SIMPLE | NORMAL | COMPLEX
 Risk: LOW | MEDIUM | HIGH
 Regression surface:
-Runtime modes / fallbacks:
 Authorized files:
-Minimal solution:
+Minimal change:
 Do not touch:
 Acceptance criteria:
-Verification commands:
-Why Expert is unnecessary:
+Verification:
+Reviewer required: YES | NO
+Escalation reason: none | ...
 ```
 
-### EXPERT IMPLEMENTATION CONTRACT → implementer
+### EXPERT IMPLEMENTATION CONTRACT
+
+Ver `agents/expert.md`.
+
+### IMPLEMENTATION REPORT
 
 ```text
-Decision:
-Problem:
-Confirmed evidence:
-Regression surface:
-Runtime modes / fallbacks:
-Files authorized:
-Exact change:
-Implementation steps:
-Do not touch:
-Acceptance criteria:
-Functional tests:
-UI evidence required:
-Verification commands:
-Expected risks:
-Rollback boundary:
+IMPLEMENTATION REPORT
+Status: DONE | BLOCKED | FAILED
+Changed files:
+Change summary:
+Verification:
+Worktree preserved: YES | NO | N/A
+Contract deviations: none | ...
+Remaining risk: none | ...
 ```
 
-### QA REPORT → coordinator
+### QA REPORT
 
 ```text
+QA REPORT
 Verdict: PASS | FAIL | BLOCKED
-Block type: NONE | BLOCKED_SETUP | BLOCKED_EVIDENCE
-Criteria checked:
-Evidence files:
-Viewport:
-Interactions tested:
+Write set: OK | VIOLATION
+Criteria:
 Commands:
-Real results:
-Failures:
-Regression status:
-Next action:
+UI evidence: N/A | details
+Failures: none | ...
+Next action: DONE | FIX_REQUIRED | BLOCKED_SETUP
 ```
 
-## Puerta de QA (no se pasa sin evidencia)
+### REVIEW REPORT
 
-Para declarar **PASS** en bugs visuales:
+```text
+REVIEW REPORT
+Verdict: APPROVE | BLOCK | BLOCKED_EVIDENCE
+Contract coverage: COMPLETE | INCOMPLETE
+Findings:
+QA evidence accepted: YES | NO + reason
+Next action: DONE | IMPLEMENTER_FIX | NEED_EVIDENCE
+```
 
-- Screenshot en el viewport exacto del reporte.
-- Verificación visual: el defecto desapareció (borde completo, sin recorte, alineación correcta).
-- Comportamiento interactivo: selección, focus y scroll funcionan.
-- Comandos de verificación ejecutados con su resultado real.
-- Para cambios de datos/SSR/fallbacks, cada modo de runtime definido en el contrato.
+## Cuándo se puede saltar fases
 
-Se marca **FAIL** si:
+- Si el usuario ya entrega diagnóstico + write set + acceptance + verify → **no Locator ni Diagnostic**.
+- Si el cambio es mecánico y el target es conocido → **no Locator ni Diagnostic ni Reviewer**.
+- Si solo falta localizar un cambio mecánico → **Locator sí; Diagnostic no**.
+- Si la causa es incierta → Diagnostic obligatorio.
+- Expert solo por `ESCALATE_TO_EXPERT`.
+- Reviewer obligatorio en NORMAL/COMPLEX y cambios no triviales PRE_DIAGNOSED.
 
-- La captura aún muestra el defecto aunque las métricas DOM "pasen".
-- No hay screenshot o se usó un viewport distinto al reportado.
-- Solo se aportan tamaños/rects/ausencia de errores JS sin evidencia visual.
-- Se dice "parece funcionar" sin evidencia.
-- Se prueba una sola fuente de datos cuando el cambio afecta fuentes alternativas o fallback.
+## QA proporcional
 
-## Reglas de control
+QA no ejecuta una matriz gigante por defecto.
 
-1. Escritura secuencial: un solo agente edita a la vez. No paralelizar editores sobre los mismos archivos.
-2. Revisores independientes en paralelo SOLO si no editan y evalúan sin ver la opinión del otro (evita "agreement bias").
-3. Máximo **2 ciclos** de corrección por bug. Si QA falla 2 veces, escalar al usuario con evidencia. Un retry sin evidencia nueva está prohibido.
-4. Los subagentes corren en sesiones aisladas: todo contexto necesario va en el prompt de `task`, nunca "recordar" de la conversación padre.
-5. El coordinator no explora, no diagnostica, no implementa: solo recupera contexto de Engram, rutea y controla ciclos.
-6. Sin loops `coordinator → agente → coordinator`: cada agente entrega su handoff y termina.
-7. El `expert` solo se invoca cuando `diagnostic` decide `ESCALATE_TO_EXPERT`.
-8. El implementer no rediagnostica: aplica el contrato.
-9. El `locator` debe reportar el alcance del worktree en bugs de regresión o cambios sin commit.
-10. El `diagnostic` debe revisar dependencias directas y declarar la superficie de regresión antes de autorizar implementación.
-11. `BLOCKED_SETUP` de QA no equivale a `FAIL` y no habilita declarar `PASS`; requiere resolver el entorno o escalarlo.
+- No visual: write set + criterios + comandos especificados.
+- Visual: viewport/screenshot/interacción cuando corresponda.
+- SSR/datos/fallbacks: solo modos enumerados por el contrato.
+- Build completo solo cuando el contrato lo requiere o el cambio realmente lo justifica.
 
-## Anti-patrones (prohibidos)
+## Control de ciclos
 
-- El `expert` reexplorando archivos que el `locator` ya localizó.
-- El implementer volviendo a diagnosticar o reexplorar de forma amplia.
-- QA aprobando por `boundingClientRect` o ausencia de errores JS sin screenshot.
-- QA aprobando un cambio SSR/datos solo con build y tests unitarios.
-- Agentes explorando sin presupuesto o reejecutando la misma hipótesis sin evidencia nueva.
-- Modelo caro haciendo trabajo de localización o exploración básica.
-- Mandar un bug visual directo al implementer sin diagnóstico.
-- Handoff ambiguo vía archivos compartidos (`resu.md`) sin contrato estructurado en el prompt de `task`.
-- Ignorar el timing de `astro:page-load`: los clicks inmediatos post-carga pueden no responder hasta que el script engancha los listeners.
+1. Un solo agente edita a la vez.
+2. QA/Reviewer son read-only.
+3. Máximo 2 ciclos `implementer → qa/reviewer`.
+4. El segundo bloqueo escala al usuario con evidencia.
+5. Retry sin evidencia nueva: prohibido.
 
-**Version**: 3.0
-**Effective**: 2026-08-26
+## Eficiencia de contexto
+
+- No repetir el prompt entero en cada handoff.
+- Locator: máximo 200 palabras.
+- Diagnostic: ~350 palabras salvo necesidad real.
+- QA: ~300 palabras.
+- Reviewer: máximo 3 findings.
+- Pasar paths/símbolos/criterios, no grandes dumps de código.
+- El reviewer inspecciona diff/targets; no vuelve a investigar el proyecto.
+
+## Git / worktree
+
+- Preservar cambios preexistentes cuando el usuario lo pida o el worktree esté sucio.
+- Sin commit salvo autorización explícita.
+- Sin push salvo orden explícita e inequívoca.
+- Nunca force push/reset hard/clean destructivo.
+
+**Version**: 4.0
+**Effective**: 2026-09-03

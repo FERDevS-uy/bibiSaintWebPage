@@ -1,102 +1,98 @@
-# Routing Matrix — Bibi Saint
+# Routing Matrix — Bibi Saint v4
 
-Matriz de routing del pipeline **DISCOVER → DIAGNOSE → PLAN → IMPLEMENT → VERIFY**.
-Los modelos NO viven aquí: están centralizados en `code/.opencode/opencode.json`.
+El coordinator usa la ruta mínima suficiente. Los modelos viven solo en `opencode.json`.
 
 ## Agentes
 
-| Agente | Modo | Rol |
-|---|---|---|
-| `coordinator` | primary | Router. Clasifica, delega en orden, integra, controla ciclos. No explora ni implementa. |
-| `locator` | subagent | Localiza archivos/símbolos/líneas y revisa el alcance read-only del worktree. Presupuesto 6 steps. |
-| `diagnostic` | subagent | Causa probable, complejidad, riesgo y decisión `DIRECT`/`ESCALATE_TO_EXPERT`. Presupuesto 10 steps. |
-| `expert` | subagent | Planner de escalación. Produce un contrato ejecutable. Presupuesto 12 steps. |
-| `implementer` | subagent | Aplica el contrato. Solo archivos autorizados. Presupuesto 20 steps. |
-| `qa` | subagent | Verificación con evidencia y matriz de runtime. `PASS`/`FAIL`/`BLOCKED`. Presupuesto 25 steps. |
-| `dba` | subagent | Rama excepcional: schema/RLS/migraciones. Presupuesto 15 steps. |
-| `security` | subagent | Rama excepcional: auditoría read-only. Presupuesto 15 steps. |
-| `provider-scraper` | subagent | Rama excepcional: scrapers/transporte. Presupuesto 15 steps. |
-
-`designer` está **desactivado** (`disable: true`). Las decisiones de diseño pasan por `expert`.
+| Agente | Rol | Steps |
+|---|---|---:|
+| `coordinator` | clasifica y rutea | 5 |
+| `locator` | ubica targets read-only | 4 |
+| `diagnostic` | confirma causa/contrato | 7 |
+| `expert` | resuelve escalaciones | 8 |
+| `implementer` | único editor | 14 |
+| `qa` | verificación mecánica | 7 |
+| `reviewer` | revisión semántica final | 6 |
+| `dba` | DB excepcional | 10 |
+| `security` | auditoría read-only | 8 |
+| `provider-scraper` | proveedor excepcional | 9 |
 
 ## Rutas
 
-### Tarea simple (mayoría de bugs/features normales)
+### PRE_DIAGNOSED
+
+El usuario ya entrega diagnóstico/contrato suficiente.
 
 ```text
-coordinator → locator → diagnostic (DIRECT) → implementer → qa
+coordinator → implementer → qa → reviewer
 ```
 
-### Tarea compleja / incierta / alto riesgo
+No locator. No diagnostic.
+
+### FAST_KNOWN
+
+Cambio mecánico, bajo riesgo, target conocido.
 
 ```text
-coordinator → locator → diagnostic (ESCALATE_TO_EXPERT) → expert → implementer → qa
+coordinator → implementer → qa
 ```
 
-### Bug visual
+### FAST_LOCATE
+
+Cambio mecánico, bajo riesgo, solución clara; falta ubicar target.
 
 ```text
-coordinator → locator → diagnostic
-                          ├─ DIRECT → implementer → qa
-                          └─ EXPERT → expert → implementer → qa
+coordinator → locator → implementer → qa
 ```
 
-### Auditoría de seguridad
+### NORMAL
+
+Causa no confirmada o superficie de regresión razonable.
 
 ```text
-coordinator → security
+coordinator → locator → diagnostic (DIRECT) → implementer → qa → reviewer
 ```
 
-### Schema/RLS/migraciones
+### COMPLEX / HIGH_RISK
 
 ```text
-coordinator → locator → diagnostic → dba → implementer → qa
+coordinator → locator → diagnostic (ESCALATE_TO_EXPERT) → expert → implementer → qa → reviewer
+```
+
+### DB/RLS/migraciones
+
+```text
+coordinator → locator → diagnostic → dba → implementer → qa → reviewer
 ```
 
 ### Scrapers/transporte
 
 ```text
-coordinator → locator → diagnostic → provider-scraper → implementer → qa
+coordinator → locator → diagnostic → provider-scraper → implementer → qa → reviewer
 ```
 
-## Reglas
+### Seguridad
 
-1. `locator` siempre primero. En regresiones y cambios sin commit debe hacer preflight read-only del worktree; el coordinator no explora antes de delegar.
-2. `expert` solo cuando el `DIAGNOSTIC HANDOFF` diga `ESCALATE_TO_EXPERT`. Nunca por defecto.
-3. El implementer NO rediagnostica: aplica el contrato.
-4. El expert NO reexplora: recibe archivos/líneas ya localizados por locator.
-5. Escritura secuencial: un solo agente edita a la vez. Prohibido paralelizar editores sobre los mismos archivos.
-6. Revisores independientes pueden correr en paralelo SOLO si no editan y evalúan sin ver la opinión del otro (evita "agreement bias").
-7. Máximo **2 ciclos** de QA. Si el ciclo 2 falla, el coordinator escala al usuario con evidencia.
-8. Un retry sin evidencia nueva está prohibido.
-9. Todo handoff usa el bloque estructurado del agente receptor (ver `instructions/harness.md`).
-10. El coordinator solo puede invocar los agentes de su whitelist (`permission.task`).
-11. Si un agente alcanza su presupuesto de steps sin progreso, debe escalar o terminar; nunca continuar explorando indefinidamente.
-12. `BLOCKED_SETUP` de QA no equivale a `FAIL` y no habilita declarar `PASS`; requiere resolver el entorno o escalar con evidencia.
+```text
+coordinator → security
+```
 
-## Contratos de handoff
+## Reglas de routing
 
-Cada delegación incluye el bloque del agente receptor:
-
-- Locator → `LOCATOR HANDOFF`.
-- Diagnostic → `DIAGNOSTIC HANDOFF`.
-- Expert → `EXPERT IMPLEMENTATION CONTRACT`.
-- Implementer → recibe el contrato (`DIAGNOSTIC HANDOFF` o `EXPERT IMPLEMENTATION CONTRACT`).
-- QA → `QA REPORT`.
-
-Sin el bloque correspondiente, el agente receptor NO debe empezar y debe pedirlo.
-
-## Permisos de git
-
-| Agente | commit | push |
-|---|---|---|
-| coordinator, locator, diagnostic, expert | deny | deny |
-| implementer | solo con autorización explícita del usuario | solo con orden explícita e inequívoca |
-| qa | deny | deny |
-| dba, provider-scraper | solo con autorización explícita del usuario | solo con orden explícita e inequívoca |
-| security | deny | deny |
+1. `locator` NO es obligatorio por defecto.
+2. Si el usuario entrega un contrato PRE_DIAGNOSED completo, no repetir discovery/diagnosis.
+3. `diagnostic` solo entra cuando la causa/solución no está suficientemente confirmada.
+4. `expert` solo entra por `ESCALATE_TO_EXPERT`.
+5. `reviewer` es obligatorio en PRE_DIAGNOSED no trivial, NORMAL, COMPLEX y ramas de riesgo; se omite en FAST salvo necesidad real.
+6. Escritura secuencial: solo `implementer` edita producción.
+7. QA y reviewer son independientes y read-only.
+8. Máximo 2 ciclos de corrección; el segundo bloqueo escala al usuario.
+9. Retry sin evidencia nueva: prohibido.
+10. Handoffs compactos según `instructions/harness.md`.
 
 ## Task permissions del coordinator
+
+La whitelist está enforced en `opencode.json`:
 
 ```yaml
 task:
@@ -106,6 +102,7 @@ task:
   expert: allow
   implementer: allow
   qa: allow
+  reviewer: allow
   dba: allow
   security: allow
   provider-scraper: allow

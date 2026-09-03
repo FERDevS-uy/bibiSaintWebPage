@@ -1,41 +1,49 @@
-# Model Policy — Bibi Saint
+# Model Policy — Bibi Saint v4
 
-Los modelos viven **solo** en `code/.opencode/opencode.json` (campo `agent.<name>.model`).
-Los archivos de agentes (`code/.opencode/agents/*.md`) NO declaran modelo: rol y modelo están desacoplados.
-Para cambiar un modelo, se edita `opencode.json`; no hace falta tocar el harness.
+Los modelos viven solo en `code/.opencode/opencode.json`.
 
-## Asignación
+## Asignación free-first
 
-| Rol | Modelo | Lógica de costo |
+| Rol | Modelo | Motivo |
 |---|---|---|
-| `coordinator` | `openai/gpt-5.4-mini-fast` | barato: solo rutea |
-| `locator` | `openai/gpt-5.4-mini-fast` | barato: solo ubica |
-| `diagnostic` | `openai/gpt-5.5-fast` | intermedio: razona sobre evidencia localizada |
-| `expert` | `openai/gpt-5.6-luna` | caro: SOLO escalación |
-| `implementer` | `openai/gpt-5.5-fast` | intermedio: ejecuta contrato |
-| `qa` | `openai/gpt-5.5-fast` | intermedio: verifica con evidencia y matriz de runtime |
-| `dba` | `openai/gpt-5.5` | intermedio: rama excepcional DB |
-| `security` | `openai/gpt-5.6-luna` | caro: solo auditoría read-only |
-| `provider-scraper` | `openai/gpt-5.4-mini-fast` | barato: rama excepcional |
+| `coordinator` | `opencode/nemotron-3.5-lightning-free` | routing corto y rápido |
+| `locator` | `opencode/nemotron-3.5-lightning-free` | búsquedas/localización |
+| `diagnostic` | `opencode/nemotron-3-ultra-free` | razonamiento gratuito más fuerte |
+| `implementer` | `opencode/ling-3.0-flash-fin-free` | ejecución mecánica/código |
+| `qa` | `opencode/nemotron-3.5-lightning-free` | verificación barata |
+| `reviewer` | `openai/gpt-5.6-luna#max` | firma semántica final |
+| `expert` | `openai/gpt-5.6-luna#max` | escalación difícil solamente |
+| `dba` | `opencode/nemotron-3-ultra-free` | análisis DB excepcional |
+| `security` | `openai/gpt-5.6-luna#max` | riesgo alto |
+| `provider-scraper` | `opencode/nemotron-3-ultra-free` | parsing/transporte no rutinario |
 
 ## Principio de costo
 
-- **Barato localiza** → **intermedio diagnostica** → **caro SOLO cuando aporta valor** → **intermedio ejecuta** → **intermedio verifica**.
-- El modelo caro (`gpt-5.6-luna`) NO se usa para localizar archivos, leer grandes cantidades de código ni exploración básica. Solo razona cuando `diagnostic` decide `ESCALATE_TO_EXPERT`.
-- Tarea simple: `Locator → Diagnostic → Implementer → QA` (sin Expert).
-- Tarea compleja: `Locator → Diagnostic → Expert → Implementer → QA`.
-- No usar Expert por defecto.
+```text
+FREE worker → FREE QA → Luna reviewer solo cuando importa
+```
 
-## Reglas
+- FAST: 0 llamadas a Luna por defecto.
+- PRE_DIAGNOSED/NORMAL: 1 llamada corta a Luna como reviewer.
+- COMPLEX: Luna puede entrar como expert y luego reviewer; esta ruta debe ser rara.
+- GPT-5.5 queda fuera del flujo normal para proteger cuota.
 
-1. `git commit`: solo con autorización explícita del usuario (controlado por `permission.bash`).
-2. `git push`: ningún agente sin orden explícita e inequívoca del usuario.
-3. Si una implementación falla 2 veces con el modelo económico, el coordinator escala al usuario (no insistir).
-4. Revisar esta política cuando cambien las cuotas de OpenCode Go (`opencode models`).
+## Reviewer discipline
 
-## Verificación
+Luna no recibe el repo entero. Recibe contrato + implementation report + QA report y solo inspecciona diff/targets si necesita validar algo.
+
+No usar reviewer para copy/typo/CSS mecánico salvo pedido explícito o riesgo real.
+
+## Nota sobre modelos Free
+
+Los modelos gratuitos de OpenCode Zen son promocionales y su disponibilidad puede cambiar. Además, algunos endpoints Free permiten uso de prompts/completions para mejora del modelo o logging de prueba. No enviar secretos, tokens, `.env`, datos personales ni material confidencial sin revisar la política vigente.
+
+## Verificación periódica
 
 ```sh
 cd code
-opencode models   # lista modelos disponibles con sus límites
+opencode models opencode --refresh
+opencode debug agents
 ```
+
+Confirmar que los IDs siguen disponibles y que cada agente resuelve al modelo esperado.
