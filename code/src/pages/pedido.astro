@@ -357,6 +357,7 @@ export const prerender = true;
 
 <script>
   import { parsePrice, formatPrice } from "@utils/price";
+  import { decodeOrderTokenV2, decodeOrderTokenV3, isOrderTokenV3 } from "@utils/orderToken";
   import {
     providerFrom,
     fetchMartinaLive,
@@ -496,47 +497,67 @@ export const prerender = true;
 
   document.addEventListener("astro:page-load", async () => {
     const params = new URLSearchParams(window.location.search);
+    const orderRef = params.get("ref");
+    const compactToken = params.get("p");
+    const hasCompactToken = params.has("p");
     const tokenId = params.get("id");
 
-    if (!tokenId) {
+    // Reserved for the future server-side order store. Do not invent or fetch
+    // references until a real ORDER_KV namespace is provisioned.
+    if (orderRef !== null) {
+      const el = document.getElementById("result__container");
+      if (el) el.innerHTML = '<p class="pedido-message">Este pedido ya no está disponible; solicita que lo reenvíen.</p>';
+      return;
+    }
+
+    if (!hasCompactToken && !tokenId) {
       const el = document.getElementById("result__container");
       if (el) el.innerHTML = '<p class="pedido-message">No hay id de pedido. Generá uno desde el carrito.</p>';
       return;
     }
 
     try {
-      const decrypted = decryptIDs(tokenId, "elias");
+      let items;
+      if (hasCompactToken) {
+        // V3 is the compressed form of the same binary snapshot. V2 remains
+        // synchronous and byte-compatible for existing compact links.
+        items = isOrderTokenV3(compactToken ?? "")
+          ? (await decodeOrderTokenV3(compactToken ?? "")).items
+          : decodeOrderTokenV2(compactToken ?? "").items;
+      } else {
+        const decrypted = decryptIDs(tokenId, "elias");
 
-      // Parse items from decrypted array
-      // Soporta payload JSON ({id, cantidad, selectedColorId, selectedColorName, price})
-      // y formato legacy "id-cantidad".
-      const items = decrypted.map((item) => {
-        const trimmed = String(item || "").trim();
-        if (!trimmed) return null;
-        if (trimmed.startsWith("{")) {
-          try {
-            const parsed = JSON.parse(trimmed);
-            const idVal = String(parsed?.id ?? "").trim();
-            const cantVal = Number(parsed?.cantidad);
-            if (!idVal || Number.isNaN(cantVal)) return null;
-            const cId = Number(parsed?.selectedColorId);
-            const rawPrice = parsed?.price;
-            return {
-              id: idVal,
-              cantidad: cantVal,
-              selectedColorId: Number.isFinite(cId) ? cId : null,
-              selectedColorName: parsed?.selectedColorName ? String(parsed.selectedColorName) : null,
-              price: typeof rawPrice === "string" && rawPrice.trim() ? rawPrice.trim() : null,
-            };
-          } catch { return null; }
-        }
-        const lastDash = trimmed.lastIndexOf("-");
-        if (lastDash === -1) return null;
-        const id = trimmed.slice(0, lastDash).trim();
-        const cant = Number(trimmed.slice(lastDash + 1).trim());
-        if (!id || Number.isNaN(cant)) return null;
-        return { id, cantidad: cant, selectedColorId: null, selectedColorName: null, price: null };
-      }).filter(Boolean);
+        // Parse items from decrypted array
+        // Soporta payload JSON ({id, cantidad, selectedColorId, selectedColorName, price})
+        // y formato legacy "id-cantidad".
+        items = decrypted.map((item) => {
+          const trimmed = String(item || "").trim();
+          if (!trimmed) return null;
+          if (trimmed.startsWith("{")) {
+            try {
+              const parsed = JSON.parse(trimmed);
+              const idVal = String(parsed?.id ?? "").trim();
+              const cantVal = Number(parsed?.cantidad);
+              if (!idVal || Number.isNaN(cantVal)) return null;
+              const cId = Number(parsed?.selectedColorId);
+              const rawPrice = parsed?.price;
+              return {
+                id: idVal,
+                cantidad: cantVal,
+                selectedColorId: Number.isFinite(cId) ? cId : null,
+                selectedColorName: parsed?.selectedColorName ? String(parsed.selectedColorName) : null,
+                price: typeof rawPrice === "string" && rawPrice.trim() ? rawPrice.trim() : null,
+              };
+            } catch { return null; }
+          }
+          const lastDash = trimmed.lastIndexOf("-");
+          if (lastDash === -1) return null;
+          const id = trimmed.slice(0, lastDash).trim();
+          const cant = Number(trimmed.slice(lastDash + 1).trim());
+          if (!id || Number.isNaN(cant)) return null;
+          return { id, cantidad: cant, selectedColorId: null, selectedColorName: null, price: null };
+        }).filter(Boolean);
+      }
 
       if (items.length === 0) throw new Error("El pedido no tiene productos");
 

@@ -4,7 +4,11 @@ import addToCart from "./addToCart";
 import trash from "../assets/trash.svg?raw";
 import { decryptIDs, encryptIDs } from "./encription";
 import { withBasePath } from "./basePath";
+import { createOrderSnapshot } from "./orderContract";
+import { encodeOrderTokenV2, encodeOrderTokenV3 } from "./orderToken";
 import { formatPrice, parsePrice } from "./price";
+
+let renderGeneration = 0;
 
 function escapeHtml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -86,7 +90,18 @@ function serializePedidoItem(product: ProductInCart): string {
   return JSON.stringify(payload);
 }
 
-export default function renderCart() {
+function orderItemInput(product: ProductInCart) {
+  return {
+    id: product.id,
+    cantidad: product.cantidad,
+    selectedColorId: product.selectedColorId ?? parseColorFromVariantId(product.id),
+    selectedColorName: product.selectedColorName || null,
+    price: product.price ?? null,
+  };
+}
+
+export default async function renderCart() {
+  const generation = ++renderGeneration;
   const storage = JSON.parse(localStorage.getItem("carrito") || "[]");
   let totalValue = 0;
 
@@ -98,6 +113,12 @@ export default function renderCart() {
   const copyBtn = document.getElementById("copyBtn") as HTMLElement
   const waBtn = document.getElementById("waBtn") as HTMLLinkElement;
   const clearBtn = document.getElementById("clearBtn") as HTMLButtonElement
+
+  // Compression is asynchronous. Remove the old link immediately so a stale
+  // render can never leave a clickable order URL while the new one is pending.
+  waBtn.removeAttribute("href");
+  waBtn.setAttribute("aria-disabled", "true");
+  waBtn.setAttribute("aria-busy", "true");
 
   /* ------------ Si no hay productos en el carrito oculta los elementos -----------*/
   if (!storage.length) {
@@ -176,25 +197,95 @@ export default function renderCart() {
   };
 
 
-  const encryption = encryptIDs(storage.map((p: ProductInCart) => serializePedidoItem(p)), "elias")
-  localStorage.setItem("lastPedidoToken", encryption);
+  // Keep the legacy token in localStorage for existing consumers. The link sent
+  // to WhatsApp uses v3/v2 whenever it can be generated safely.
+  let encryption = "";
+  try {
+    encryption = encryptIDs(storage.map((p: ProductInCart) => serializePedidoItem(p)), "elias");
+    localStorage.setItem("lastPedidoToken", encryption);
+  } catch {
+    // The compact link below can still work if only the legacy serializer fails.
+  }
+
   const pedidoPath = withBasePath("/pedido");
-  const pedidoUrl = `${window.location.origin}${pedidoPath}?id=${encryption}`;
+  let compactSnapshot: ReturnType<typeof createOrderSnapshot> | null = null;
+  let v2Token: string | null = null;
+  try {
+    compactSnapshot = createOrderSnapshot(storage.map((p: ProductInCart) => orderItemInput(p)));
+    v2Token = encodeOrderTokenV2(compactSnapshot);
+  } catch {
+    // v3/v2 are optional compact representations; the legacy token remains the
+    // final safe fallback and is already prepared above.
+  }
 
-  // Mensaje para copiar o enviar
-  const pedido = storage.map((p: ProductInCart) => `
-  - ${p.name} x${p.cantidad} ($${formatPrice(parsePrice(p.price))})`)
-    .join(" ") + `\nTotal: $${formatPrice(totalValue)}\n${pedidoUrl}`;
+  const lineCount = compactSnapshot?.lineCount ?? storage.length;
+  const unitCount = compactSnapshot?.unitCount ?? storage.reduce((sum, p: ProductInCart) => sum + Number(p.cantidad), 0);
 
-  // Copy func logic kept but button is hidden in UI
-  copyBtn.title = `Copiar: ${pedido}`
-  copyBtn.onclick = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(pedido);
+  const buildPedidoMessage = (pedidoUrl: string): string =>
+    `Hola, quiero hacer un pedido.\n\n${lineCount} productos · ${unitCount} unidades\nTotal: $${formatPrice(totalValue)}\nVer pedido: ${pedidoUrl}`;
+
+  const applyPedidoLink = (pedidoUrl: string): void => {
+    if (generation !== renderGeneration) return;
+    const pedido = buildPedidoMessage(pedidoUrl);
+
+    // Copy func logic kept but button is hidden in UI
+    copyBtn.title = `Copiar: ${pedido}`;
+    copyBtn.onclick = () => {
+      if (navigator.clipboard) navigator.clipboard.writeText(pedido);
+    };
+
+    waBtn.href = `https://wa.me/59891361706?text=${encodeURIComponent(pedido)}`;
+    waBtn.removeAttribute("aria-disabled");
+    waBtn.removeAttribute("aria-busy");
+  };
+
+  const ensureLegacyToken = (): string | null => {
+    if (encryption) return encryption;
+    try {
+      encryption = encryptIDs(storage.map((p: ProductInCart) => serializePedidoItem(p)), "elias");
+      localStorage.setItem("lastPedidoToken", encryption);
+      return encryption;
+    } catch {
+      return null;
     }
   };
 
-  waBtn.href = `https://wa.me/59891361706?text=${encodeURIComponent("Hola, quiero pedir: " + pedido)}`;
+  const preparePedidoLink = async (): Promise<void> => {
+    let selectedQuery = "";
+    let selectedToken: string | null = null;
+
+    if (compactSnapshot) {
+      try {
+        const v3Token = await encodeOrderTokenV3(compactSnapshot);
+        if (generation !== renderGeneration) return;
+        if (!v2Token || v3Token.length < v2Token.length) {
+          selectedQuery = "p";
+          selectedToken = v3Token;
+        }
+      } catch {
+        // CompressionStream may be unavailable; use v2 or legacy below.
+      }
+    }
+
+    if (generation !== renderGeneration) return;
+    if (!selectedToken && v2Token) {
+      selectedQuery = "p";
+      selectedToken = v2Token;
+    }
+    if (!selectedToken) {
+      const legacyToken = ensureLegacyToken();
+      if (legacyToken) {
+        selectedQuery = "id";
+        selectedToken = legacyToken;
+      }
+    }
+
+    if (generation !== renderGeneration || !selectedToken) return;
+    applyPedidoLink(`${window.location.origin}${pedidoPath}?${selectedQuery}=${selectedToken}`);
+  };
+
+  // Existing callers intentionally do not need to await renderCart().
+  void preparePedidoLink();
 }
 
 const productRow = (p: ProductInCart, subtotal: number): String => {

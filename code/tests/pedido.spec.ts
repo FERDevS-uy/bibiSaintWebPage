@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import { encryptIDs } from "../src/utils/encription";
+import { encodeOrderTokenV2, encodeOrderTokenV3 } from "../src/utils/orderToken";
 
 /**
  * Spec: Página /pedido (render 100% client-side, prerender estática)
@@ -47,6 +48,15 @@ function cartPayload(id: string, cantidad: number, price: string | null) {
 
 function makeToken(payloads: Array<Record<string, unknown>>): string {
   return encryptIDs(payloads.map((p) => JSON.stringify(p)), "elias");
+}
+
+function captureBrowserErrors(page: Page): string[] {
+  const errors: string[] = [];
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(`console.error: ${message.text()}`);
+  });
+  page.on("pageerror", (error) => errors.push(`pageerror: ${error.message}`));
+  return errors;
 }
 
 function kaiShopifyFixture(): object {
@@ -106,6 +116,57 @@ async function registerProviderRoutes(page: Page) {
 }
 
 test.describe("Pedido (/pedido)", () => {
+  test("token compacto v2: renderiza variantes, colores y total desde el snapshot", async ({ page }) => {
+    await registerCommonRoutes(page);
+
+    const token = encodeOrderTokenV2([
+      { id: "mdt-compacto__M_c7", cantidad: 2, price: "100", selectedColorId: 7, selectedColorName: "Azul" },
+      { id: "kai-compacto__L_c8", cantidad: 1, price: "50", selectedColorId: 8, selectedColorName: "Rojo" },
+    ]);
+
+    await page.goto(`/pedido?p=${token}`, { waitUntil: "domcontentloaded" });
+
+    await expect
+      .poll(async () => page.locator(".pedido-item").count(), { timeout: 15_000 })
+      .toBe(2);
+    await expect(page.locator(".pedido-item-price")).toHaveText(["$100 c/u", "$50 c/u"]);
+    await expect(page.locator(".pedido-color-badge")).toHaveText(["Azul", "Rojo"]);
+    await expect
+      .poll(
+        async () => parseMoney(await page.locator(".pedido-total-row.main").innerText().catch(() => "")),
+        { timeout: 15_000 },
+      )
+      .toBe(250);
+  });
+
+  test("token gzip v3: renderiza variantes, colores, decimales y total", async ({ page }) => {
+    const browserErrors = captureBrowserErrors(page);
+    await registerCommonRoutes(page);
+
+    const token = await encodeOrderTokenV3([
+      { id: "mdt-v3__M_c7", cantidad: 1, price: "100", selectedColorId: 7, selectedColorName: "Azul ñandú" },
+      { id: "kai-v3__L_c8", cantidad: 2, price: "200.50", selectedColorId: 8, selectedColorName: "Rojo" },
+    ]);
+
+    await page.goto(`/pedido?p=${token}`, { waitUntil: "domcontentloaded" });
+
+    try {
+      await expect
+        .poll(async () => page.locator(".pedido-item").count(), { timeout: 15_000 })
+        .toBe(2);
+    } catch (error) {
+      throw new Error(`${String(error)}\nBrowser errors:\n${browserErrors.join("\n") || "(none)"}`);
+    }
+    await expect(page.locator(".pedido-item-price")).toHaveText(["$100 c/u", "$201 c/u"]);
+    await expect(page.locator(".pedido-color-badge")).toHaveText(["Azul ñandú", "Rojo"]);
+    await expect
+      .poll(
+        async () => parseMoney(await page.locator(".pedido-total-row.main").innerText().catch(() => "")),
+        { timeout: 15_000 },
+      )
+      .toBe(501);
+  });
+
   test("token válido: renderiza items, precios, total, warning y auto-check", async ({ page }) => {
     await registerProviderRoutes(page);
 
@@ -162,6 +223,14 @@ test.describe("Pedido (/pedido)", () => {
     await page.goto("/pedido", { waitUntil: "domcontentloaded" });
 
     await expect(page.locator(".pedido-message")).toContainText("No hay id de pedido", { timeout: 10_000 });
+  });
+
+  test("ref reservado muestra indisponibilidad controlada", async ({ page }) => {
+    await registerCommonRoutes(page);
+
+    await page.goto("/pedido?ref=pendiente", { waitUntil: "domcontentloaded" });
+
+    await expect(page.locator(".pedido-message")).toContainText("no está disponible", { timeout: 10_000 });
   });
 
   test("7 items: sin auto-check, botón verificar todo y badges pending", async ({ page }) => {
