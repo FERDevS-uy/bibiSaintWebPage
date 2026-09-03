@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import Modal from "./Modal";
 
@@ -101,6 +101,56 @@ export default function NuvexSyncPanel() {
   const [deactivateIds, setDeactivateIds] = useState<Set<string>>(new Set());
   const [nameMatches, setNameMatches] = useState<Record<string, string>>({});
   const [priceModalOpen, setPriceModalOpen] = useState(false);
+  const [catalogEnabled, setCatalogEnabled] = useState(true);
+  const [catalogLoading, setCatalogLoading] = useState(true);
+  const [catalogUpdating, setCatalogUpdating] = useState(false);
+  const [catalogConfirmOpen, setCatalogConfirmOpen] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const token = await getAccessToken();
+        const resp = await fetch("/api/admin/providers/catalog-settings", {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+        const body = await resp.json();
+        if (!cancelled && resp.ok && body.ok) setCatalogEnabled(body.nuvexEnabled !== false);
+      } finally {
+        if (!cancelled) setCatalogLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
+  const updateCatalog = async (next: boolean) => {
+    setCatalogUpdating(true);
+    setError(null);
+    try {
+      const token = await getAccessToken();
+      const resp = await fetch("/api/admin/providers/catalog-settings", {
+        method: "POST",
+        headers: { "content-type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        body: JSON.stringify({ enabled: next }),
+      });
+      const body = await resp.json();
+      if (!resp.ok || !body.ok) throw new Error(body?.error || `Error del servidor (${resp.status})`);
+      setCatalogEnabled(next);
+      setPreview(null);
+    } catch (e: any) {
+      setError(e?.message || "No se pudo cambiar el estado del catálogo");
+    } finally {
+      setCatalogUpdating(false);
+    }
+  };
+
+  const requestCatalogToggle = () => {
+    if (catalogEnabled) {
+      setCatalogConfirmOpen(true);
+      return;
+    }
+    void updateCatalog(true);
+  };
 
   const handlePreview = async () => {
     setPreviewing(true);
@@ -178,7 +228,7 @@ export default function NuvexSyncPanel() {
   };
 
   return (
-    <div style={{ marginTop: "2rem", borderTop: "1px solid var(--admin-border, #e5e7eb)", paddingTop: "1.5rem" }}>
+    <div style={{ marginTop: 0 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem", flexWrap: "wrap", gap: "1rem" }}>
         <div>
           <h2 style={{ fontFamily: "var(--admin-font-serif)", fontSize: "1.3rem", margin: 0, color: "var(--admin-text)" }}>
@@ -193,8 +243,30 @@ export default function NuvexSyncPanel() {
         </button>
       </div>
 
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", flexWrap: "wrap", background: "var(--admin-surface)", border: "1px solid var(--admin-border, #e5e7eb)", borderRadius: "var(--admin-radius)", padding: "1rem 1.15rem", marginBottom: "1rem" }}>
+        <div>
+          <strong style={{ display: "block", fontSize: "0.95rem" }}>Catálogo Nuvex</strong>
+          <div style={{ fontSize: "0.8rem", color: "var(--admin-text-secondary)", marginTop: "0.2rem" }}>
+            {catalogEnabled ? "Visible y habilitado para sincronizar." : "Apagado: sus productos numéricos están ocultos."}
+          </div>
+        </div>
+        <button onClick={requestCatalogToggle} disabled={catalogLoading || catalogUpdating} className={`admin-btn ${catalogEnabled ? "admin-btn-danger" : "admin-btn-primary"}`}>
+          {catalogUpdating ? "Actualizando..." : catalogEnabled ? "Desactivar catálogo" : "Activar catálogo"}
+        </button>
+      </div>
+
       <Modal open={!!error} onClose={() => setError(null)} type="error" title="Error Nuvex">
         {error}
+      </Modal>
+
+      <Modal open={catalogConfirmOpen} onClose={() => setCatalogConfirmOpen(false)} type="info" title="Desactivar catálogo Nuvex" showFooter={false}>
+        <p style={{ margin: "0 0 1rem", lineHeight: 1.55 }}>
+          Se ocultarán todos los productos de Nuvex y no se podrán sincronizar mientras el catálogo esté desactivado. ¿Querés continuar?
+        </p>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.6rem" }}>
+          <button className="admin-btn admin-btn-secondary" onClick={() => setCatalogConfirmOpen(false)}>Cancelar</button>
+          <button className="admin-btn admin-btn-danger" onClick={() => { setCatalogConfirmOpen(false); void updateCatalog(false); }}>Sí, desactivar</button>
+        </div>
       </Modal>
 
       {preview?.ok && preview.summary && (

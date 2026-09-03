@@ -160,29 +160,62 @@ export default function ProvidersPanel() {
 
   return (
     <div style={wrap}>
-      <div style={headerStyle}>
+      <style>{`
+        .providers-hero { margin-bottom: 1.25rem; }
+        .provider-action-card, .provider-workflow-card {
+          background: var(--admin-surface);
+          border: 1px solid var(--admin-border, #e5e7eb);
+          border-radius: var(--admin-radius-lg, 16px);
+          box-shadow: var(--admin-shadow);
+        }
+        .provider-action-card {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1.25rem;
+          padding: 1rem 1.25rem;
+          margin-bottom: 1.5rem;
+        }
+        .provider-action-copy { display: flex; align-items: center; gap: 0.8rem; }
+        .provider-action-icon {
+          width: 2.35rem; height: 2.35rem; flex: 0 0 auto;
+          display: grid; place-items: center;
+          color: var(--admin-accent, #c9301f);
+          background: var(--admin-accent-subtle, rgba(201,48,31,.08));
+          border-radius: 0.7rem;
+        }
+        .provider-workflow-card { padding: 1.25rem; margin-top: 1.5rem; }
+        .provider-workflow-card .provider-workflow-card { margin-top: 0; box-shadow: none; border: 0; padding: 0; }
+        @media (max-width: 640px) {
+          .provider-action-card { align-items: stretch; flex-direction: column; }
+          .provider-action-card .admin-btn { width: 100%; }
+        }
+      `}</style>
+      <div className="providers-hero" style={headerStyle}>
         <div>
           <h1 style={pageTitle}>Proveedores</h1>
           <p style={pageSub}>Sincronizar productos desde proveedores externos</p>
         </div>
-        <button
-          onClick={handleSync}
-          disabled={loading}
-          className="admin-btn admin-btn-primary"
-          style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}
-        >
-          {loading ? (
-            <span className="admin-spinner" style={{ width: 14, height: 14, border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", borderRadius: "50%", animation: "adminSpin 0.6s linear infinite" }} />
-          ) : (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="23 4 23 10 17 10" />
-              <polyline points="1 20 1 14 7 14" />
+      </div>
+
+      <section className="provider-action-card" aria-label="Sincronización general">
+        <div className="provider-action-copy">
+          <span className="provider-action-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="23 4 23 10 17 10" /><polyline points="1 20 1 14 7 14" />
               <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
             </svg>
-          )}
+          </span>
+          <div>
+            <strong style={{ display: "block", fontSize: "0.95rem" }}>Sincronización general</strong>
+            <span style={{ color: "var(--admin-text-secondary)", fontSize: "0.8rem" }}>Importa productos de Martina, Kai Deco y Alondra en una sola operación.</span>
+          </div>
+        </div>
+        <button onClick={handleSync} disabled={loading} className="admin-btn admin-btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", flexShrink: 0 }}>
+          {loading ? <span className="admin-spinner" style={{ width: 14, height: 14, border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", borderRadius: "50%", animation: "adminSpin 0.6s linear infinite" }} /> : null}
           {loading ? "Sincronizando..." : "Sincronizar todos"}
         </button>
-      </div>
+      </section>
 
       {loading && (
         <div style={{ padding: "2rem 0", textAlign: "center", color: "var(--admin-text-secondary)" }}>
@@ -263,11 +296,9 @@ export default function ProvidersPanel() {
       )}
 
       {/* ---- Martina: campaña + preview/apply ---- */}
-      <div
+      <section className="provider-workflow-card"
         style={{
-          marginTop: "2rem",
-          borderTop: "1px solid var(--admin-border, #e5e7eb)",
-          paddingTop: "1.5rem",
+          marginTop: "1.5rem",
         }}
       >
         <div style={headerStyle}>
@@ -405,9 +436,11 @@ export default function ProvidersPanel() {
             </div>
           </div>
         )}
-      </div>
+      </section>
 
-      <NuvexSyncPanel />
+      <section className="provider-workflow-card">
+        <NuvexSyncPanel />
+      </section>
     </div>
   );
 }
