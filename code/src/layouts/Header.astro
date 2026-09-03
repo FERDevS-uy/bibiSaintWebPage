@@ -799,7 +799,9 @@ const isAbout = pathname.includes("/about");
       margin-left: 0;
     }
     .mainNavBottom {
-      margin-left: 20px !important;
+      /* El bloque Inicio/Quienes Somos queda ópticamente centrado junto al
+         carril de categorías, sin el desplazamiento extra de 20px. */
+      margin-left: 0 !important;
     }
 
     .mobileMenuHeader {
@@ -823,6 +825,7 @@ const isAbout = pathname.includes("/about");
       text-overflow: ellipsis;
       font-weight: normal;
       font-size: 1rem;
+      cursor: pointer;
     }
     .navLink.principal {
       display: none;

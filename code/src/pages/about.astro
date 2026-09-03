@@ -8,33 +8,36 @@ export const prerender = true;
 <Layout pageTitle={`${config.pageTitle} - Sobre nosotros`}>
   <section class="contact-container">
     <div class="contact-info">
-      <h2>Quienes somos</h2>
-      <hr />
-
-      <p class="intro-text">
-        Bibi´s Tienda & Bienestar! Descubre una tienda online diferente, donde encontrarás
-        productos para eI hogar, vestimenta, accesorios y mucho más. Nos
-        apasiona brindarte calidad, novedades y soluciones para tu día a día.
-      </p>
-
-      <p class="intro-text">
-        ¿Buscas bienestar? Ofrecemos servicios holísticos personalizados para tu
-        crecimiento personal
-      </p>
-
-      <div class="services-list">
-        <strong> Comercializamos los siguientes servicios: </strong>
-        <ul>
-          <li>De Codificación Biológica por 80 dólares.</li>
-          <li>Carta Numerológica por 80 dólares.</li>
-          <li>Tutorías individuales ONLINE para estudiantes de EUTM | Medicina y Agronomia por 50 dólares la hora.</li>
-        </ul>
+      <div class="section-heading">
+        <span class="section-kicker">Bibi’s Tienda & Bienestar</span>
+        <h1>Quiénes somos</h1>
+        <span class="heading-rule" aria-hidden="true"></span>
       </div>
 
+      <div class="story-copy">
+        <p>
+          Descubrí una tienda online diferente, donde encontrás productos para el hogar,
+          vestimenta, accesorios y mucho más. Nos apasiona acercarte calidad, novedades y
+          soluciones para tu día a día.
+        </p>
+        <p>
+          También ofrecemos servicios holísticos personalizados para acompañarte en tu
+          crecimiento personal.
+        </p>
+      </div>
+
+      <section class="services-list" aria-labelledby="services-title">
+        <h2 id="services-title">Servicios</h2>
+        <ul>
+          <li><span>Codificación Biológica</span><strong>USD 80</strong></li>
+          <li><span>Carta Numerológica</span><strong>USD 80</strong></li>
+          <li><span>Tutorías individuales online para estudiantes de EUTM, Medicina y Agronomía</span><strong>USD 50<span class="per-hour"> / hora</span></strong></li>
+        </ul>
+      </section>
+
       <p class="cta-text">
-        Te invitamos a completar el formulario de contacto si tenes alguna duda,
-        consulta o buscas algún Producto o Servicio particular, a la brevedad
-        nos pondremos en contacto.
+        ¿Tenés una duda, consulta o buscás un producto o servicio particular? Escribinos y
+        nos pondremos en contacto a la brevedad.
       </p>
     </div>
 
@@ -59,62 +62,66 @@ export const prerender = true;
 
 <style>
   .contact-container {
-    width: 100%;
-    max-width: 940px;
-    overflow-x: hidden;
-    margin: 2.2rem auto;
-    padding: 0 16px;
-    display: flex;
-    gap: 2.4rem;
+    width: min(1120px, 100%);
+    box-sizing: border-box;
+    margin: clamp(2rem, 5vw, 4.5rem) auto;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap: clamp(2.5rem, 7vw, 6rem);
     font-family: "Poppins", "Poppins Fallback", sans-serif;
-    color: #232946;
+    color: var(--principal-text-color);
   }
 
-  /* Left Column */
-  .contact-info {
-    flex: 1;
-  }
-
-  h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-
-  hr {
-    border: 0;
-    border-top: 1px solid #e0e0e0;
-    margin-bottom: 2rem;
-  }
-
-  hr.separator {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .intro-text {
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    font-size: 0.95rem;
-  }
-
-  .services-list {
-    margin-bottom: 2rem;
-    font-size: 0.95rem;
-  }
-
-  .services-list strong {
+  .section-heading { margin-bottom: 2rem; }
+  .section-kicker {
     display: block;
-    margin-bottom: 0.2rem;
+    color: var(--orange-color);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
   }
-
-  .services-list ul {
-    padding-left: 20px;
+  h1 {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    margin: 0;
   }
-
-  .cta-text {
-    font-size: 0.95rem;
+  .heading-rule {
+    display: block;
+    width: 4.5rem;
+    height: 0.28rem;
+    border-radius: 0.25rem;
+    background: var(--line-color);
+    margin-top: 1.2rem;
   }
+  .story-copy { max-width: 62ch; }
+  .story-copy p, .cta-text {
+    font-size: clamp(1rem, 1.4vw, 1.08rem);
+    line-height: 1.8;
+    margin: 0 0 1.35rem;
+  }
+  .services-list {
+    margin: 2.5rem 0 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(35, 41, 70, 0.16);
+  }
+  .services-list h2 { font-size: 1.15rem; margin: 0 0 1rem; }
+  .services-list ul { list-style: none; padding: 0; margin: 0; }
+  .services-list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(35, 41, 70, 0.1);
+    line-height: 1.5;
+  }
+  .services-list li strong { white-space: nowrap; color: var(--orange-color); }
+  .per-hour { font-size: 0.78em; font-weight: 600; }
+  .cta-text { margin-top: 2rem; }
 
   .contact-details {
     display: flex;
@@ -178,7 +185,13 @@ export const prerender = true;
   /* Right Column - Form */
   .contact-form-wrapper {
     flex: 1;
-    padding-top: 3rem; /* Align with text start approximately */
+    align-self: start;
+    margin-top: clamp(0rem, 4vw, 2.7rem);
+    padding: clamp(1.4rem, 3vw, 2.25rem);
+    background: #fffdf8;
+    border: 1px solid rgba(35, 41, 70, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 14px 35px rgba(35, 41, 70, 0.08);
   }
 
   .contact-form {
@@ -191,11 +204,11 @@ export const prerender = true;
   textarea {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid #777;
-    border-radius: 25px; /* Pill shape */
+    border: 1px solid rgba(35, 41, 70, 0.28);
+    border-radius: 10px;
     font-size: 1rem;
     color: #555;
-    background: transparent;
+    background: #fff;
     outline: none;
     font-family: inherit;
   }
@@ -237,13 +250,15 @@ export const prerender = true;
 
   @media (max-width: 768px) {
     .contact-container {
-      flex-direction: column;
+      grid-template-columns: 1fr;
       gap: 2rem;
     }
 
     .contact-form-wrapper {
-      padding-top: 0;
+      margin-top: 0;
     }
+
+    .services-list li { align-items: flex-start; }
   }
 
   @media screen and (min-width: 1000px) {

@@ -4,7 +4,7 @@ import { withBasePath } from "@utils/basePath";
 import AddToCartButton from "./AddToCartButton.astro";
 import getColors from "@utils/getColors";
 import { isTallBoot } from "@utils/isTallBoot";
-import { formatPrice, parsePrice } from "@utils/price";
+import { formatPrice, normalizeOfferOriginalPrice, parsePrice } from "@utils/price";
 
 export interface Props {
   producto: Product;
@@ -13,6 +13,8 @@ export interface Props {
 const { producto: p } = Astro.props;
 const pathname = Astro.url.pathname;
 const tall = isTallBoot(p.name, p.description, p.id);
+const priceValue = parsePrice(p.price);
+const validOriginalPrice = normalizeOfferOriginalPrice(p.originalPrice, priceValue);
 
 const colorKeysFromProvider = Array.isArray(p.colors)
   ? p.colors
@@ -32,10 +34,10 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
   <div class="card-info">
     <span class="p-name">{p.name}</span>
     <span class="p-price-row">
-      {p.enOferta && p.originalPrice && (
-        <span class="p-price-original">${formatPrice(parsePrice(p.originalPrice))}</span>
+      {p.enOferta && validOriginalPrice !== null && (
+        <span class="p-price-original">${formatPrice(validOriginalPrice)}</span>
       )}
-      <span class="p-price">${formatPrice(parsePrice(p.price))}</span>
+      <span class="p-price">${formatPrice(priceValue)}</span>
     </span>
     <div class="add-btn-wrapper">
       <AddToCartButton producto={p} variant="full" />

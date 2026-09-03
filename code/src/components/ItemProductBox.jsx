@@ -2,7 +2,7 @@ import React from "react";
 import AddToCartButton from "./AddToCartButton.jsx";
 import { withBasePath } from "../utils/basePath";
 import { isTallBoot } from "../utils/isTallBoot";
-import { formatPrice, parsePrice } from "../utils/price";
+import { formatPrice, normalizeOfferOriginalPrice, parsePrice } from "../utils/price";
 import "../styles/components/ItemProductBoxReact.css";
 
 const PRODUCT_IMG_FALLBACK =
@@ -39,6 +39,8 @@ export default function ItemProductoBox({ producto: p }) {
   const image = Array.isArray(p.img) ? p.img[0] : p.img ?? "";
   const tall = isTallBoot(p.name, p.description, p.id);
   const productHref = withBasePath(`/producto/${p.id}`);
+  const priceValue = parsePrice(p.price);
+  const validOriginalPrice = normalizeOfferOriginalPrice(p.originalPrice, priceValue);
 
   return (
     <article className={`producto_card${tall ? " producto_card--tall" : ""}`}>
@@ -55,10 +57,10 @@ export default function ItemProductoBox({ producto: p }) {
       <div className="card-info">
         <span className="p-name">{p.name}</span>
         <span className="p-price-row">
-          {p.enOferta && p.originalPrice && (
-            <span className="p-price-original">${formatPrice(parsePrice(p.originalPrice))}</span>
+          {p.enOferta && validOriginalPrice !== null && (
+            <span className="p-price-original">${formatPrice(validOriginalPrice)}</span>
           )}
-          <span className="p-price">${formatPrice(parsePrice(p.price))}</span>
+          <span className="p-price">${formatPrice(priceValue)}</span>
         </span>
         <div className="add-btn-wrapper">
           <AddToCartButton producto={p} variant="full" />
