@@ -32,6 +32,10 @@
 		"dev": {
 			"name": "bibisaintwebpage-dev",
 			"main": "./dist/_worker.js/index.js",
+			"vars": {
+				"CATALOG_READ_MODEL": "true",
+				"ENABLE_CSV_FALLBACK": "false"
+			},
 			"assets": {
 				"directory": "./dist",
 				"binding": "ASSETS"

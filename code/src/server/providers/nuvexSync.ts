@@ -14,6 +14,8 @@ import { NUVEX_LIMITS } from "./nuvex/security";
 import { getServerEnv } from "./martinaSync";
 import { invalidateAllProductCaches } from "../products";
 import { bumpCatalogVersion } from "../catalog/edgeCache";
+import { isNuvexCatalogEnabled } from "./catalogSettings";
+import { normalizeOfferOriginalPrice } from "../../utils/price";
 import {
   buildPlan,
   type NuvexActionType,
@@ -116,8 +118,9 @@ export interface NuvexPreviewTokenPayload {
 // ---------------------------------------------------------------------------
 
 function draftToProductRow(d: NuvexProductDraft): ProductRow {
-  const originalPrice =
+  const parsedOriginalPrice =
     d.hasOffer && d.originalPriceRaw ? parsePrice(d.originalPriceRaw, NUVEX_MARKUP) : null;
+  const originalPrice = normalizeOfferOriginalPrice(parsedOriginalPrice, d.price);
   return {
     id: d.id,
     name: d.name,
@@ -131,8 +134,8 @@ function draftToProductRow(d: NuvexProductDraft): ProductRow {
     },
     payment_link: [{ id: "0", url: d.linkPago }],
     relacionados: [],
-    en_oferta: d.hasOffer,
-    original_price: originalPrice,
+    en_oferta: originalPrice !== null,
+    original_price: originalPrice === null ? null : String(originalPrice),
     colors: d.colors,
     source: "scraper",
     active: true,
@@ -417,6 +420,9 @@ export interface NuvexPreviewResult {
 
 /** Genera un preview read-only (NO escribe y NO usa service role de escritura). */
 export async function generateNuvexPreview(actor: string): Promise<NuvexPreviewResult> {
+  if (!(await isNuvexCatalogEnabled())) {
+    throw new Error("El catálogo Nuvex está desactivado desde Proveedores.");
+  }
   const { products } = await collectNuvexData();
   if (products.length === 0) {
     throw new Error("Nuvez devolvió 0 productos. Revisa credenciales o conectividad.");
@@ -496,6 +502,9 @@ async function applyNuvexSyncLocked(
 ): Promise<NuvexApplyResult> {
   if (!isWriteEnabled()) {
     return { ok: false, status: 403, error: "Escritura deshabilitada: NUVEX_SYNC_APPLY_ENABLED no es \"true\"." };
+  }
+  if (!(await isNuvexCatalogEnabled())) {
+    return { ok: false, status: 403, error: "El catálogo Nuvex está desactivado desde Proveedores." };
   }
   if (!decisionSet || typeof decisionSet !== "object") {
     return { ok: false, status: 400, error: "Falta decisionSet válido." };

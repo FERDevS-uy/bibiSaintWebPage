@@ -52,9 +52,13 @@ export function recordLegacyFallback(event: LegacyFallbackEvent): void {
   }
   fallbackCount += 1;
   const category = sanitizeCategory(event.category);
-  console.warn(
-    `[catalog:legacy-fallback] route=${event.route} category=${category} reason=${event.reason}`,
-  );
+  try {
+    console.warn(
+      `[catalog:legacy-fallback] route=${event.route} category=${category} reason=${event.reason}`,
+    );
+  } catch {
+    // Telemetry is best-effort and must never change the legacy response path.
+  }
 }
 
 /** Contador acumulado de ejecuciones del camino legacy (tests/observabilidad). */

@@ -7,8 +7,10 @@ import { loadCatalogPage, isReadModel } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
 import { catalogReadEnv } from "@server/catalog/http";
+import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 
 const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+const telemetry = createCatalogQueryTelemetry("offers-page");
 
 const productsPerPage = config.postPerPage;
 const { pag } = Astro.params;
@@ -27,6 +29,7 @@ const res = await loadCatalogPage(
   { sort: "precio", enOferta: true, pageSize: productsPerPage, cursor, page: pageNum },
   env,
   getSupabase,
+  { telemetry },
 );
 const topBaratos = res.items.map(toCardProduct);
 const total = res.total;

@@ -11,6 +11,7 @@ import type { APIRoute } from "astro";
 import { getSupabase } from "@server/supabase";
 import { CatalogError } from "@server/catalog/contracts";
 import { runCatalogQuery } from "@server/catalog/queries";
+import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 import { loadCatalogPage, isReadModel } from "@server/catalog/facade";
 import {
   parseCatalogPageRequest,
@@ -21,6 +22,7 @@ import {
 } from "@server/catalog/http";
 
 export const GET: APIRoute = async ({ request, locals }) => {
+  const telemetry = createCatalogQueryTelemetry("api-products");
   return withEdgeCache({
     route: "products",
     request,
@@ -31,7 +33,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
         const parsed = parseCatalogPageRequest(url);
         const env = catalogReadEnv((locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
         if (!isReadModel(env)) {
-          const result = await loadCatalogPage(parsed, env, getSupabase);
+          const result = await loadCatalogPage(parsed, env, getSupabase, { telemetry });
           return new Response(
             JSON.stringify({
               items: result.items,
@@ -47,7 +49,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
         }
 
         const supabase = getSupabase();
-        const result = await runCatalogQuery(parsed, env, supabase);
+        const result = await runCatalogQuery(parsed, env, supabase, { telemetry });
 
         return new Response(
           JSON.stringify({
@@ -82,4 +84,3 @@ export const GET: APIRoute = async ({ request, locals }) => {
     },
   });
 };
-

@@ -17,13 +17,17 @@ import type { CatalogCardProjection, CatalogPageRequest } from "./contracts.ts";
 import { CatalogError, clampPageSize } from "./contracts.ts";
 import { resolveCatalogReadPath, resolveCsvFallback } from "./readPath.ts";
 import { runCatalogQuery } from "./queries.ts";
+import {
+  observeCatalogQuery,
+  type CatalogQueryTelemetry,
+} from "./queryTelemetry.ts";
 import { recordLegacyFallback } from "./legacyTelemetry.ts";
 import {
   loadProducts,
   loadCategoryProducts as legacyLoadCategoryProducts,
   loadRelatedProducts as legacyLoadRelatedProducts,
 } from "@utils/loadProducts";
-import { parsePrice } from "@utils/price";
+import { normalizeOfferOriginalPrice, parsePrice } from "@utils/price";
 import { getDisplaySubcategories } from "@utils/categoryNormalization";
 import type Product from "../../types/product";
 
@@ -76,9 +80,13 @@ export interface SearchProductsResult {
   hasMore: false;
 }
 
+export interface CatalogFacadeOptions {
+  telemetry?: CatalogQueryTelemetry;
+}
+
 /** Cliente Supabase mínimo para la RPC de búsqueda. */
 interface SearchSupabase {
-  rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown; error: unknown }>;
+  rpc: (...args: any[]) => PromiseLike<{ data: unknown; error: unknown }>;
 }
 
 type SupabaseSource<T> = T | (() => T);
@@ -107,13 +115,15 @@ function resolveSupabase<T>(source: SupabaseSource<T>): T {
 
 /** Proyección legacy (Product) → CatalogCardProjection. */
 function toCatalogProjection(p: Product): CatalogCardProjection {
+  const price = parsePrice(p.price);
+  const originalPrice = normalizeOfferOriginalPrice(p.originalPrice, price);
   return {
     id: p.id,
     name: p.name,
-    price: parsePrice(p.price),
-    originalPrice: p.originalPrice != null ? parsePrice(p.originalPrice) : undefined,
+    price,
+    originalPrice: originalPrice ?? undefined,
     imageUrl: p.img[0] ?? "",
-    enOferta: Boolean(p.enOferta),
+    enOferta: Boolean(p.enOferta) && originalPrice !== null,
     category: p.categories?.name ?? "",
     subcategory: getDisplaySubcategories(p).join("|"),
   };
@@ -164,9 +174,12 @@ export async function loadCatalogPage(
   request: CatalogPageFacadeRequest,
   env: CatalogFacadeEnv,
   supabase: SupabaseSource<{ from: (table: string) => any }>,
+  options?: CatalogFacadeOptions,
 ): Promise<CatalogPageResult> {
   if (isReadModel(env)) {
-    const res = await runCatalogQuery(request, env, resolveSupabase(supabase));
+    const res = await runCatalogQuery(request, env, resolveSupabase(supabase), {
+      telemetry: options?.telemetry,
+    });
     return {
       items: res.items,
       nextCursor: res.nextCursor,
@@ -236,6 +249,7 @@ export async function loadCategoryProducts(
   options: { category: string; subcategory?: string; page: number; pageSize: number },
   env: CatalogFacadeEnv,
   supabase: SupabaseSource<{ from: (table: string) => any }>,
+  facadeOptions?: CatalogFacadeOptions,
 ): Promise<CategoryProductsResult> {
   if (isReadModel(env)) {
     const client = resolveSupabase(supabase);
@@ -248,6 +262,7 @@ export async function loadCategoryProducts(
       },
       env,
       client,
+      { telemetry: facadeOptions?.telemetry },
     );
     return { items: res.items, nextCursor: res.nextCursor, total: res.total };
   }
@@ -288,25 +303,34 @@ export async function searchProducts(
   limit: number,
   env: CatalogFacadeEnv,
   supabase: SupabaseSource<SearchSupabase>,
+  options?: CatalogFacadeOptions,
 ): Promise<SearchProductsResult> {
   if (isReadModel(env)) {
-    const { data, error } = await resolveSupabase(supabase).rpc("catalog_search_products", {
-      p_query: query,
-      p_limit: limit,
-    });
+    const { data, error } = await observeCatalogQuery<{ data: unknown; error: unknown }>(
+      options?.telemetry,
+      "catalog_search",
+      async () => await resolveSupabase(supabase).rpc("catalog_search_products", {
+        p_query: query,
+        p_limit: limit,
+      }),
+    );
     if (error) {
       throw new CatalogError("UPSTREAM_ERROR", "Error de búsqueda en el read model");
     }
-    const items = ((data ?? []) as SearchRow[]).map((row) => ({
-      id: row.product_id,
-      name: row.name,
-      price: Number(row.numeric_price),
-      originalPrice: row.original_price == null ? undefined : Number(row.original_price),
-      imageUrl: row.image_url,
-      enOferta: Boolean(row.en_oferta),
-      category: row.category,
-      subcategory: row.subcategory || undefined,
-    }));
+    const items = ((data ?? []) as SearchRow[]).map((row) => {
+      const price = Number(row.numeric_price);
+      const originalPrice = normalizeOfferOriginalPrice(row.original_price, price);
+      return {
+        id: row.product_id,
+        name: row.name,
+        price,
+        originalPrice: originalPrice ?? undefined,
+        imageUrl: row.image_url,
+        enOferta: Boolean(row.en_oferta) && originalPrice !== null,
+        category: row.category,
+        subcategory: row.subcategory || undefined,
+      };
+    });
     return { items, nextCursor: null, hasMore: false };
   }
 
@@ -332,6 +356,7 @@ export async function searchProducts(
 export async function loadFeaturedProducts(
   env: CatalogFacadeEnv,
   supabase: SupabaseSource<{ from: (table: string) => any }>,
+  options?: CatalogFacadeOptions,
 ): Promise<FeaturedProductsResult> {
   const cacheKey = `${isReadModel(env) ? "readmodel" : "legacy"}:${resolveCsvFallback(env) ? "csv-on" : "csv-off"}`;
   const now = Date.now();
@@ -347,13 +372,13 @@ export async function loadFeaturedProducts(
         { sort: "recientes", pageSize: 8 },
         env,
         client,
-        { includeTotal: false },
+        { includeTotal: false, telemetry: options?.telemetry },
       ),
       runCatalogQuery(
         { sort: "nombre", pageSize: 16 },
         env,
         client,
-        { includeTotal: false },
+        { includeTotal: false, telemetry: options?.telemetry },
       ),
     ]);
 
@@ -406,29 +431,38 @@ export async function loadRelatedProducts(
   relatedIds: string[],
   env: CatalogFacadeEnv,
   supabase: SupabaseSource<{ from: (table: string) => any }>,
+  options?: CatalogFacadeOptions,
 ): Promise<CatalogCardProjection[]> {
   if (relatedIds.length === 0) return [];
 
   if (isReadModel(env)) {
-    const { data, error } = await resolveSupabase(supabase)
-      .from("catalog_products")
-      .select(
-        "id:product_id, name, price:numeric_price, originalPrice:original_price, imageUrl:image_url, enOferta:en_oferta, category, subcategory",
-      )
-      .in("product_id", relatedIds)
-      .eq("active", true)
-      .limit(10);
+    const { data, error } = await observeCatalogQuery<{ data: unknown; error: unknown }>(
+      options?.telemetry,
+      "catalog_related_products",
+      async () => await resolveSupabase(supabase)
+        .from("catalog_products")
+        .select(
+          "id:product_id, name, price:numeric_price, originalPrice:original_price, imageUrl:image_url, enOferta:en_oferta, category, subcategory",
+        )
+        .in("product_id", relatedIds)
+        .eq("active", true)
+        .limit(10),
+    );
     if (error) return [];
-    return ((data ?? []) as RelatedRow[]).map((row) => ({
-      id: row.id,
-      name: row.name,
-      price: Number(row.price),
-      originalPrice: row.originalPrice == null ? undefined : Number(row.originalPrice),
-      imageUrl: row.imageUrl,
-      enOferta: Boolean(row.enOferta),
-      category: row.category,
-      subcategory: row.subcategory || undefined,
-    }));
+    return ((data ?? []) as RelatedRow[]).map((row) => {
+      const price = Number(row.price);
+      const originalPrice = normalizeOfferOriginalPrice(row.originalPrice, price);
+      return {
+        id: row.id,
+        name: row.name,
+        price,
+        originalPrice: originalPrice ?? undefined,
+        imageUrl: row.imageUrl,
+        enOferta: Boolean(row.enOferta) && originalPrice !== null,
+        category: row.category,
+        subcategory: row.subcategory || undefined,
+      };
+    });
   }
 
   recordLegacyFallback({ route: "product", category: "all", reason: "legacy-path" });

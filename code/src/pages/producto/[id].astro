@@ -12,16 +12,18 @@ import {
 } from "@utils/categoryNormalization";
 import { loadProductById, loadRelatedProductsFallback } from "../../utils/loadProducts";
 import RelatedProductCarousel from "@components/RelatedProductCarousel.astro";
-import { formatPrice, parsePrice } from "@utils/price";
+import { formatPrice, normalizeOfferOriginalPrice, parsePrice } from "@utils/price";
 import { loadRelatedProducts } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
 import { catalogReadEnv } from "@server/catalog/http";
 import { resolveCsvFallback } from "@server/catalog/readPath";
+import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 
 const { id } = Astro.params;
 
 const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+const telemetry = createCatalogQueryTelemetry("product");
 const csvFallbackOptions = { csvFallback: resolveCsvFallback(env) };
 
 const product = await loadProductById(id!, csvFallbackOptions);
@@ -44,7 +46,7 @@ const {
 } = product;
 
 const relacionados = relacionadosIds && relacionadosIds.length > 0
-  ? (await loadRelatedProducts(relacionadosIds, env, getSupabase)).map(toCardProduct)
+  ? (await loadRelatedProducts(relacionadosIds, env, getSupabase, { telemetry })).map(toCardProduct)
   : await loadRelatedProductsFallback(product, 10, csvFallbackOptions);
 
 const productForCategoryPath: Product = {
@@ -82,6 +84,9 @@ const showRuntimeStockCheck =
   runtimeStockCheckEnabled
   && (isMartinaProduct || isKaiProduct || isNuvexProduct || isAlondraProduct);
 const pathname = Astro.url.pathname;
+const priceValue = parsePrice(price);
+const validOriginalPrice = normalizeOfferOriginalPrice(originalPrice, priceValue);
+const hasValidOffer = Boolean(enOferta) && validOriginalPrice !== null;
 ---
 
 <Layout
@@ -95,7 +100,7 @@ const pathname = Astro.url.pathname;
     name={name}
     price={price}
     img={img[0]}
-    enOferta={Boolean(enOferta)}
+    enOferta={hasValidOffer}
   />
   <section class="productContainer">
     <!-- BREADCRUMB -->
@@ -190,12 +195,12 @@ const pathname = Astro.url.pathname;
           <div class="price-block">
             <span
               id="productOriginalPrice"
-              class={`price-original${enOferta && originalPrice ? "" : " hidden"}`}
-            >${originalPrice ? `$${formatPrice(parsePrice(originalPrice))}` : ""}</span>
+              class={`price-original${hasValidOffer ? "" : " hidden"}`}
+            >{validOriginalPrice !== null ? `$${formatPrice(validOriginalPrice)}` : ""}</span>
             <span
               id="productPrice"
-              class={`price${enOferta && originalPrice ? " price--offer" : ""}`}
-            >${formatPrice(parsePrice(price))}</span>
+              class={`price${hasValidOffer ? " price--offer" : ""}`}
+            >${formatPrice(priceValue)}</span>
           </div>
           <NumberInput
             id="cartQty"
@@ -647,19 +652,57 @@ const pathname = Astro.url.pathname;
 
   .checkStockBtn {
     width: fit-content;
+    min-width: 200px;
     max-width: 100%;
-    border: 1px solid #222;
-    background: #fff;
-    color: #222;
-    font-weight: 600;
+    border: 1px solid #d4d4d4;
+    background: #fafafa;
+    color: #333;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
     border-radius: 999px;
-    padding: 8px 14px;
+    padding: 9px 20px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .checkStockBtn:hover {
-    background: #f4f4f4;
+    background: #f0f0f0;
+    border-color: #bbb;
+  }
+
+  .checkStockBtn:active {
+    background: #e8e8e8;
+  }
+
+  .checkStockBtn:disabled {
+    cursor: default;
+    opacity: 1;
+  }
+
+  /* Loading spinner — pure CSS, no extra elements */
+  .checkStockBtn.is-loading::after {
+    content: "";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    border: 2px solid #d4d4d4;
+    border-top-color: #555;
+    border-radius: 50%;
+    animation: stockBtnSpin 0.6s linear infinite;
+  }
+
+  .checkStockBtn.is-loading {
+    padding-right: 36px;
+  }
+
+  @keyframes stockBtnSpin {
+    to { transform: rotate(360deg); }
   }
 
   .checkStockStatus {
@@ -780,6 +823,7 @@ const pathname = Astro.url.pathname;
 <script>
   import addToCart from "../../utils/addToCart";
   import { fetchMartinaProductPrice } from "../../client/martinaVerification";
+  import { normalizeOfferOriginalPrice } from "../../utils/price";
   function initProductDetail() {
     const addBtn = document.getElementById("addToCartBtn") as HTMLButtonElement | null;
     if (!addBtn || addBtn.dataset.bound === "true") return;
@@ -1726,6 +1770,7 @@ const pathname = Astro.url.pathname;
 
         const originalText = checkStockBtn.textContent;
         checkStockBtn.disabled = true;
+        checkStockBtn.classList.add("is-loading");
         checkStockBtn.textContent = "Verificando...";
         setStatus("Consultando proveedor en vivo...");
 
@@ -1743,11 +1788,15 @@ const pathname = Astro.url.pathname;
             // Precio original tachado + precio vigente destacado cuando hay descuento
             if (data?.isDiscount && data.originalPrice) {
               const nextOriginal = applyProviderMarkup(data.originalPrice, provider);
-              if (originalPriceEl && nextOriginal) {
-                originalPriceEl.textContent = `$${nextOriginal}`;
+              const validOriginal = normalizeOfferOriginalPrice(nextOriginal, nextPrice);
+              if (originalPriceEl && validOriginal !== null) {
+                originalPriceEl.textContent = `$${validOriginal.toLocaleString("es-UY")}`;
                 originalPriceEl.classList.remove("hidden");
+                priceEl.classList.add("price--offer");
+              } else {
+                originalPriceEl?.classList.add("hidden");
+                priceEl.classList.remove("price--offer");
               }
-              priceEl.classList.add("price--offer");
             } else {
               originalPriceEl?.classList.add("hidden");
               priceEl.classList.remove("price--offer");
@@ -1878,6 +1927,7 @@ const pathname = Astro.url.pathname;
           setStatus("No se pudo verificar ahora. Se mantiene informacion estatica.", "error");
         } finally {
           checkStockBtn.disabled = false;
+          checkStockBtn.classList.remove("is-loading");
           checkStockBtn.textContent = originalText || "Verificar stock y precio";
         }
       });

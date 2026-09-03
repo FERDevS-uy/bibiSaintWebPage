@@ -3,6 +3,7 @@ import type Category from "../types/categoryList";
 import { getSupabase } from "./supabase";
 import { invalidateProductsCache } from "../utils/loadProducts";
 import { resetCachedCatalogVersion } from "./catalog/edgeCache";
+import { normalizeOfferOriginalPrice } from "../utils/price";
 
 /** TTL de cachés de categoría/counts (5 min, alineado con la caché de productos). */
 const CATEGORY_CACHE_TTL = 300_000;
@@ -40,6 +41,7 @@ interface SupabaseProductRow {
 }
 
 function rowToProduct(row: SupabaseProductRow): Product {
+  const normalizedOriginalPrice = normalizeOfferOriginalPrice(row.original_price, row.price);
   return {
     id: row.id,
     name: row.name,
@@ -49,8 +51,8 @@ function rowToProduct(row: SupabaseProductRow): Product {
     categories: row.categories as Product["categories"],
     paymentLink: Array.isArray(row.payment_link) ? row.payment_link : [],
     relacionados: Array.isArray(row.relacionados) ? row.relacionados : [],
-    enOferta: Boolean(row.en_oferta),
-    originalPrice: row.original_price == null ? null : String(row.original_price),
+    enOferta: Boolean(row.en_oferta) && normalizedOriginalPrice !== null,
+    originalPrice: normalizedOriginalPrice === null ? null : String(normalizedOriginalPrice),
     colors: Array.isArray(row.colors) ? row.colors : [],
     createdAt: row.created_at ?? undefined,
     updatedAt: row.updated_at ?? undefined,

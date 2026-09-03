@@ -23,6 +23,15 @@ import {
 } from "@server/catalog/http";
 import { loadProducts } from "@utils/loadProducts";
 import { getDisplayCategoryName, getDisplaySubcategories } from "@utils/categoryNormalization";
+import {
+  createCatalogQueryTelemetry,
+  observeCatalogQuery,
+} from "@server/catalog/queryTelemetry";
+
+interface CatalogReadResponse {
+  data: unknown;
+  error: unknown;
+}
 
 function buildLegacyCategoryTree(products: Awaited<ReturnType<typeof loadProducts>>) {
   const byCategory = new Map<string, { count: number; subcategories: Map<string, number> }>();
@@ -48,6 +57,7 @@ function buildLegacyCategoryTree(products: Awaited<ReturnType<typeof loadProduct
 }
 
 export const GET: APIRoute = async ({ request, locals }) => {
+  const telemetry = createCatalogQueryTelemetry("api-categories");
   return withEdgeCache({
     route: "categories",
     request,
@@ -66,13 +76,21 @@ export const GET: APIRoute = async ({ request, locals }) => {
         const supabase = getSupabase();
 
         const [taxonomyRes, countsRes] = await Promise.all([
-          supabase
-            .from("catalog_taxonomy")
-            .select("category_name, subcategory_name, display_order, visible")
-            .order("display_order", { ascending: true }),
-          supabase
-            .from("catalog_categories")
-            .select("category_name, subcategory_name, product_count"),
+          observeCatalogQuery<CatalogReadResponse>(
+            telemetry,
+            "catalog_taxonomy",
+            async () => await supabase
+              .from("catalog_taxonomy")
+              .select("category_name, subcategory_name, display_order, visible")
+              .order("display_order", { ascending: true }),
+          ),
+          observeCatalogQuery<CatalogReadResponse>(
+            telemetry,
+            "catalog_categories",
+            async () => await supabase
+              .from("catalog_categories")
+              .select("category_name, subcategory_name, product_count"),
+          ),
         ]);
 
         if (taxonomyRes.error || countsRes.error) {
@@ -109,4 +127,3 @@ export const GET: APIRoute = async ({ request, locals }) => {
     },
   });
 };
-

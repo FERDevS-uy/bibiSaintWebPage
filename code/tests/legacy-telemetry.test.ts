@@ -49,6 +49,26 @@ test("log: formato EXACTO [catalog:legacy-fallback] route=... category=... reaso
   ]);
 });
 
+test("log: propaga route, category y reason para sidebar y header", () => {
+  resetLegacyTelemetry();
+  const warnings: string[] = [];
+  const originalWarn = console.warn;
+  console.warn = (msg: string) => {
+    warnings.push(msg);
+  };
+  try {
+    recordLegacyFallback({ route: "sidebar", category: "Ropa", reason: "supabase-error" });
+    recordLegacyFallback({ route: "header", category: "all", reason: "supabase-empty" });
+  } finally {
+    console.warn = originalWarn;
+  }
+  assert.deepEqual(warnings, [
+    "[catalog:legacy-fallback] route=sidebar category=Ropa reason=supabase-error",
+    "[catalog:legacy-fallback] route=header category=all reason=supabase-empty",
+  ]);
+  assert.equal(getLegacyFallbackCount(), 2);
+});
+
 // ---------------------------------------------------------------------------
 // Sin PII
 // ---------------------------------------------------------------------------
@@ -110,4 +130,25 @@ test("recordLegacyFallback: razón inválida lanza TypeError", () => {
       }),
     TypeError,
   );
+});
+
+test("recordLegacyFallback: un fallo del logger no interrumpe el camino legacy", () => {
+  resetLegacyTelemetry();
+  const originalWarn = console.warn;
+  console.warn = () => {
+    throw new Error("logger unavailable");
+  };
+
+  try {
+    assert.doesNotThrow(() => {
+      recordLegacyFallback({
+        route: "sidebar",
+        category: "Tecno",
+        reason: "supabase-error",
+      });
+    });
+    assert.equal(getLegacyFallbackCount(), 1);
+  } finally {
+    console.warn = originalWarn;
+  }
 });

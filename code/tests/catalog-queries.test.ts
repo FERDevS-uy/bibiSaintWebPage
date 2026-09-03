@@ -18,6 +18,7 @@ import {
   runCatalogQuery,
   type CatalogQueryRequest,
 } from "../src/server/catalog/queries.ts";
+import { createCatalogQueryTelemetry } from "../src/server/catalog/queryTelemetry.ts";
 
 const ENV = { CATALOG_READ_MODEL: "true" };
 
@@ -423,4 +424,82 @@ test("runCatalogQuery: round-trip encode/decode del nextCursor", async () => {
   assert.equal(decoded.s, "b");
   assert.equal(decoded.p, "p2");
   assert.equal(decoded.v, "v1");
+});
+
+test("runCatalogQuery: correlates version and product SQL calls to the route", async () => {
+  const logs: string[] = [];
+  const originalInfo = console.info;
+  console.info = (message: string) => logs.push(message);
+
+  try {
+    const telemetry = createCatalogQueryTelemetry("api-products", "request-query-1");
+    const { chain } = makeSupabaseMock([
+      {
+        id: "p1",
+        name: "A",
+        price: 10,
+        imageUrl: "a.jpg",
+        enOferta: false,
+        category: "Tecno",
+        sort_name: "a",
+      },
+    ]);
+    await runCatalogQuery({ sort: "nombre", pageSize: 1 }, ENV, chain, { telemetry });
+  } finally {
+    console.info = originalInfo;
+  }
+
+  const events = logs.map((message) => JSON.parse(message));
+  assert.deepEqual(events.map((event) => event.operation).sort(), [
+    "catalog_products_page",
+    "catalog_version",
+  ]);
+  assert.ok(events.every((event) => event.route === "api-products"));
+  assert.ok(events.every((event) => event.request_id === "request-query-1"));
+  assert.ok(events.every((event) => event.query_count === 1));
+});
+
+test("runCatalogQuery: correlates the count query on cursor pages", async () => {
+  const logs: string[] = [];
+  const originalInfo = console.info;
+  console.info = (message: string) => logs.push(message);
+
+  try {
+    const telemetry = createCatalogQueryTelemetry("category-page", "request-query-2");
+    const cursor = encodeCursor({
+      s: "a",
+      p: "p0",
+      f: filterFingerprint({}),
+      v: "v1",
+    });
+    const { chain } = makeSupabaseMock([
+      {
+        id: "p1",
+        name: "B",
+        price: 10,
+        imageUrl: "b.jpg",
+        enOferta: false,
+        category: "Tecno",
+        sort_name: "b",
+      },
+    ]);
+    await runCatalogQuery(
+      { sort: "nombre", cursor, pageSize: 1 },
+      ENV,
+      chain,
+      { telemetry },
+    );
+  } finally {
+    console.info = originalInfo;
+  }
+
+  const events = logs.map((message) => JSON.parse(message));
+  assert.deepEqual(events.map((event) => event.operation).sort(), [
+    "catalog_products_count",
+    "catalog_products_page",
+    "catalog_version",
+  ]);
+  assert.ok(events.every((event) => event.route === "category-page"));
+  assert.ok(events.every((event) => event.request_id === "request-query-2"));
+  assert.ok(events.every((event) => event.query_count === 1));
 });

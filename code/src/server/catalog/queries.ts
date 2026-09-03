@@ -23,6 +23,11 @@ import {
 } from "./contracts.ts";
 import { resolveCatalogReadPath } from "./readPath.ts";
 import { resolveSubcategoryFilter } from "../../utils/categoryNormalization.ts";
+import { normalizeOfferOriginalPrice } from "../../utils/price.ts";
+import {
+  observeCatalogQuery,
+  type CatalogQueryTelemetry,
+} from "./queryTelemetry.ts";
 
 // ---------------------------------------------------------------------------
 // Tipos de ayuda
@@ -230,14 +235,22 @@ interface CatalogRow {
   ingestedAt?: string;
 }
 
+interface CatalogQueryResponse {
+  data: unknown;
+  error: unknown;
+  count?: number | null;
+}
+
 function rowToProjection(row: CatalogRow): CatalogCardProjection {
+  const price = Number(row.price);
+  const originalPrice = normalizeOfferOriginalPrice(row.originalPrice, price);
   return {
     id: row.id,
     name: row.name,
-    price: Number(row.price),
-    originalPrice: row.originalPrice == null ? undefined : Number(row.originalPrice),
+    price,
+    originalPrice: originalPrice ?? undefined,
     imageUrl: row.imageUrl,
-    enOferta: Boolean(row.enOferta),
+    enOferta: Boolean(row.enOferta) && originalPrice !== null,
     category: row.category,
     subcategory: row.subcategory || undefined,
   };
@@ -265,7 +278,7 @@ export async function runCatalogQuery(
   supabase: {
     from: (table: string) => any;
   },
-  options?: { includeTotal?: boolean },
+  options?: { includeTotal?: boolean; telemetry?: CatalogQueryTelemetry },
 ): Promise<{
   items: CatalogCardProjection[];
   nextCursor: string | null;
@@ -287,22 +300,26 @@ export async function runCatalogQuery(
   // 1) Iniciar la lectura de versión sin bloquear la consulta principal. En la
   // primera página no hay cursor que validar, así que versión, filas y COUNT
   // pueden viajar a Supabase en el mismo round-trip lógico.
-  const versionPromise: Promise<string> = (async () => {
-    try {
-      const { data, error } = await supabase
-        .from("catalog_version")
-        .select("version")
-        .eq("id", 1)
-        .single();
-      if (error) {
-        throw new CatalogError("UPSTREAM_ERROR", "Error al leer la versión del catálogo");
+  const versionPromise: Promise<string> = observeCatalogQuery(
+    options?.telemetry,
+    "catalog_version",
+    async () => {
+      try {
+        const { data, error } = await supabase
+          .from("catalog_version")
+          .select("version")
+          .eq("id", 1)
+          .single();
+        if (error) {
+          throw new CatalogError("UPSTREAM_ERROR", "Error al leer la versión del catálogo");
+        }
+        return String(data?.version ?? 0);
+      } catch (err) {
+        if (err instanceof CatalogError) throw err;
+        throw new CatalogError("UPSTREAM_ERROR", "Error inesperado al leer la versión del catálogo");
       }
-      return String(data?.version ?? 0);
-    } catch (err) {
-      if (err instanceof CatalogError) throw err;
-      throw new CatalogError("UPSTREAM_ERROR", "Error inesperado al leer la versión del catálogo");
-    }
-  })();
+    },
+  );
 
   let version = "";
 
@@ -381,7 +398,11 @@ export async function runCatalogQuery(
   // 6/7) Ejecutar la página (limit + 1) y el COUNT en paralelo. Ambas
   // consultas son independientes; serializarlas añadía un round-trip completo
   // a Supabase en cada navegación SSR.
-  const rowsPromise = query.limit(limit + 1);
+  const rowsPromise = observeCatalogQuery<CatalogQueryResponse>(
+    options?.telemetry,
+    "catalog_products_page",
+    () => query.limit(limit + 1),
+  );
 
   // COUNT(*) sobre el MISMO filtro/universo del keyset (sin cursor) para
   //    exponer un `total` consistente en todas las páginas (riesgo R2).
@@ -407,7 +428,12 @@ export async function runCatalogQuery(
        }
       if (req.query) countQuery = countQuery.ilike("name", `%${escapeLike(req.query)}%`);
       if (req.enOferta === true) countQuery = countQuery.eq("en_oferta", true);
-      const [resolvedRows, countResult] = await Promise.all([rowsPromise, countQuery]);
+      const countPromise = observeCatalogQuery<CatalogQueryResponse>(
+        options?.telemetry,
+        "catalog_products_count",
+        () => countQuery,
+      );
+      const [resolvedRows, countResult] = await Promise.all([rowsPromise, countPromise]);
       rowsResult = resolvedRows;
       const { count, error: countError } = countResult;
       if (countError) {

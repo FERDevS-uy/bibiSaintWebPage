@@ -20,6 +20,15 @@ import { resolveCatalogReadPath, resolveCsvFallback } from "@server/catalog/read
 import { loadProductById, loadRelatedProductsFallback } from "@utils/loadProducts";
 import { parsePrice } from "@utils/price";
 import type Product from "../../../types/product";
+import {
+  createCatalogQueryTelemetry,
+  observeCatalogQuery,
+} from "@server/catalog/queryTelemetry";
+
+interface CatalogReadResponse {
+  data: unknown;
+  error: unknown;
+}
 
 /** Proyección mínima de tarjeta (misma forma que CatalogCardProjection). */
 interface RelatedRow {
@@ -61,6 +70,7 @@ function productToProjection(product: Product): CatalogCardProjection {
 const JSON_HEADERS = { "content-type": "application/json" };
 
 export const GET: APIRoute = async ({ request, locals }) => {
+  const telemetry = createCatalogQueryTelemetry("api-related");
   return withEdgeCache({
     route: "related",
     request,
@@ -87,18 +97,24 @@ export const GET: APIRoute = async ({ request, locals }) => {
         const supabase = getSupabase();
 
         // 1) IDs relacionados en orden de prioridad (position), máx 10.
-        const { data: relRows, error: relError } = await supabase
-          .from("product_related")
-          .select("related_id")
-          .eq("product_id", productId)
-          .order("position", { ascending: true })
-          .limit(10);
+        const { data: relRows, error: relError } = await observeCatalogQuery<CatalogReadResponse>(
+          telemetry,
+          "product_related",
+          async () => await supabase
+            .from("product_related")
+            .select("related_id")
+            .eq("product_id", productId)
+            .order("position", { ascending: true })
+            .limit(10),
+        );
 
         if (relError) {
           throw new CatalogError("UPSTREAM_ERROR", "Error upstream al leer relacionados");
         }
 
-        const relatedIds = (relRows ?? []).map((r) => r.related_id as string);
+        const relatedIds = (relRows as Array<{ related_id?: unknown }> ?? [])
+          .map((r) => r.related_id)
+          .filter((id): id is string => typeof id === "string" && id.length > 0);
         if (relatedIds.length === 0) {
           return new Response(JSON.stringify({ items: [] }), {
             status: 200,
@@ -107,14 +123,18 @@ export const GET: APIRoute = async ({ request, locals }) => {
         }
 
         // 2) Resolver datos desde catalog_products (proyección mínima, nunca *).
-        const { data: prodRows, error: prodError } = await supabase
-          .from("catalog_products")
-          .select(
-            "id:product_id, name, price:numeric_price, originalPrice:original_price, " +
-              "imageUrl:image_url, enOferta:en_oferta, category, subcategory",
-          )
-          .in("product_id", relatedIds)
-          .eq("active", true);
+        const { data: prodRows, error: prodError } = await observeCatalogQuery<CatalogReadResponse>(
+          telemetry,
+          "catalog_related_products",
+          async () => await supabase
+            .from("catalog_products")
+            .select(
+              "id:product_id, name, price:numeric_price, originalPrice:original_price, " +
+                "imageUrl:image_url, enOferta:en_oferta, category, subcategory",
+            )
+            .in("product_id", relatedIds)
+            .eq("active", true),
+        );
 
         if (prodError) {
           throw new CatalogError("UPSTREAM_ERROR", "Error upstream al resolver productos");
@@ -122,11 +142,11 @@ export const GET: APIRoute = async ({ request, locals }) => {
 
         // 3) Preservar el orden de prioridad de product_related.
         const byId = new Map<string, RelatedRow>(
-          ((prodRows ?? []) as RelatedRow[]).map((row) => [row.id, row]),
+          ((prodRows ?? []) as RelatedRow[]).map((row: RelatedRow) => [row.id, row]),
         );
         const items = relatedIds
-          .map((id) => byId.get(id))
-          .filter((r): r is RelatedRow => Boolean(r))
+          .map((id: string) => byId.get(id))
+          .filter((r: RelatedRow | undefined): r is RelatedRow => Boolean(r))
           .map(rowToProjection);
 
         return new Response(JSON.stringify({ items }), {
@@ -148,4 +168,3 @@ export const GET: APIRoute = async ({ request, locals }) => {
     },
   });
 };
-

@@ -9,12 +9,14 @@ import { loadCategoryProducts } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
 import { catalogReadEnv } from "@server/catalog/http";
+import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 import '../style.css';
 
 const CANT_PRODUCTOS = config.postPerPage;
 const { id } = Astro.params;
 
 const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+const telemetry = createCatalogQueryTelemetry("category");
 
 const [subCat, res] = await Promise.all([
   getSidebarCategories(id ?? ""),
@@ -22,6 +24,7 @@ const [subCat, res] = await Promise.all([
     { category: id!, page: 1, pageSize: CANT_PRODUCTOS },
     env,
     getSupabase,
+    { telemetry },
   ),
 ]);
 const products = res.items.map(toCardProduct);

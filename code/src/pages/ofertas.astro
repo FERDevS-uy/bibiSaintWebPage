@@ -7,8 +7,10 @@ import { loadCatalogPage } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
 import { catalogReadEnv } from "@server/catalog/http";
+import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 
 const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+const telemetry = createCatalogQueryTelemetry("offers");
 
 // Top de ofertas: universo enOferta=true ordenado por precio (mismo universo
 // que las páginas paginadas /ofertas/page/[pag] — coherente en todas las
@@ -17,6 +19,7 @@ const res = await loadCatalogPage(
   { sort: "precio", enOferta: true, pageSize: config.postPerPage, page: 1 },
   env,
   getSupabase,
+  { telemetry },
 );
 const topBaratos = res.items.map(toCardProduct);
 

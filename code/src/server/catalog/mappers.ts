@@ -9,12 +9,14 @@
 
 import type Product from "../../types/product";
 import type { CatalogCardProjection } from "./contracts.ts";
+import { normalizeOfferOriginalPrice } from "../../utils/price.ts";
 
 /**
  * Convierte una proyección del catálogo (read model o legacy normalizada)
  * a la tarjeta de producto legacy. Tipado estricto: sin `any`.
  */
 export function toCardProduct(p: CatalogCardProjection): Product {
+  const originalPrice = normalizeOfferOriginalPrice(p.originalPrice, p.price);
   return {
     id: p.id,
     name: p.name,
@@ -30,7 +32,7 @@ export function toCardProduct(p: CatalogCardProjection): Product {
     },
     paymentLink: [],
     relacionados: [],
-    enOferta: p.enOferta ?? false,
-    originalPrice: p.originalPrice == null ? null : String(p.originalPrice),
+    enOferta: Boolean(p.enOferta) && originalPrice !== null,
+    originalPrice: originalPrice === null ? null : String(originalPrice),
   };
 }

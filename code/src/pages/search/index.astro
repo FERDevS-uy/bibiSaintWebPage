@@ -11,11 +11,13 @@ import { searchProducts } from "@server/catalog/facade";
 import { catalogReadEnv } from "@server/catalog/http";
 import { runCatalogQuery } from "@server/catalog/queries";
 import { getSupabase } from "@server/supabase";
+import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 
 const q = (Astro.url.searchParams.get("q") ?? "").trim();
 const sort = Astro.url.searchParams.get("sort") ?? "nombre";
 const cursor = Astro.url.searchParams.get("cursor") || undefined;
 const PAGE_SIZE = 10;
+const telemetry = createCatalogQueryTelemetry("search-page");
 
 let initialItems: Array<Record<string, unknown>> | null = null;
 let initialNextCursor: string | null = null;
@@ -29,8 +31,13 @@ if (q) {
         .runtime?.env,
     );
     const result = env.CATALOG_READ_MODEL === "true"
-      ? await runCatalogQuery({ query: q, sort, cursor, pageSize: PAGE_SIZE }, env, getSupabase())
-      : await searchProducts(q, PAGE_SIZE, env, getSupabase);
+       ? await runCatalogQuery(
+         { query: q, sort, cursor, pageSize: PAGE_SIZE },
+         env,
+         getSupabase(),
+         { telemetry },
+       )
+       : await searchProducts(q, PAGE_SIZE, env, getSupabase, { telemetry });
     initialItems = result.items.map((p) => ({
       id: p.id,
       name: p.name,

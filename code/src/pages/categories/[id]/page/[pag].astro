@@ -9,12 +9,14 @@ import { loadCatalogPage, isReadModel } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
 import { catalogReadEnv } from "@server/catalog/http";
+import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 import "../../style.css";
 
 const CANT_PRODUCTOS = config.postPerPage;
 const { id, pag } = Astro.params;
 
 const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+const telemetry = createCatalogQueryTelemetry("category-page");
 
 const pageNum = Number(pag);
 const cursor = Astro.url.searchParams.get("cursor") ?? undefined;
@@ -33,6 +35,7 @@ const [subCat, res] = await Promise.all([
     { category: id, sort: "nombre", pageSize: CANT_PRODUCTOS, cursor, page: pageNum },
     env,
     getSupabase,
+    { telemetry },
   ),
 ]);
 const products = res.items.map(toCardProduct);

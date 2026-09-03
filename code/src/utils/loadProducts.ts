@@ -217,22 +217,26 @@ export async function loadRelatedProductsFallback(
     const sameSubcategory = hasSubcategory && subcategories.some((sub) =>
       getDisplaySubcategories(p).includes(sub),
     );
-    if (hasSubcategory && !sameSubcategory) return false;
+    const overlap = tokenizeName(p.name).filter((token) => targetTokens.has(token)).length;
 
-    const overlap = tokenizeName(p.name).filter((token) =>
-      targetTokens.has(token),
-    ).length;
-    return overlap > 0;
+    // La taxonomía es la señal principal: no descartes un hermano de la misma
+    // subcategoría solo porque su nombre no repita "alfombra", "baño", etc.
+    // El solapamiento nominal desempata dentro de la categoría/subcategoría y
+    // permite encontrar símiles cuando no hay suficientes hermanos exactos.
+    return sameSubcategory || overlap > 0;
   });
 
   return candidates
     .sort((a, b) => {
-      const score = (p: Product) =>
-        tokenizeName(p.name).reduce(
-          (acc, token) => acc + (targetTokens.has(token) ? token.length : 0),
-          0,
+      const score = (p: Product) => {
+        const candidateSubcategories = getDisplaySubcategories(p);
+        const sameSubcategory = subcategories.some((sub) => candidateSubcategories.includes(sub));
+        const nameScore = tokenizeName(p.name).reduce(
+          (acc, token) => acc + (targetTokens.has(token) ? token.length : 0), 0,
         );
-      return score(b) - score(a);
+        return (sameSubcategory ? 10_000 : 0) + nameScore;
+      };
+      return score(b) - score(a) || a.name.localeCompare(b.name, "es", { sensitivity: "base" });
     })
     .slice(0, limit);
 }

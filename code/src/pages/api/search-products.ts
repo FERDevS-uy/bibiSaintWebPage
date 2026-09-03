@@ -23,6 +23,7 @@ import {
 } from "@server/catalog/http";
 import { CatalogError } from "@server/catalog/contracts";
 import { runCatalogQuery } from "@server/catalog/queries";
+import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 
 const MAX_LIMIT = 48;
 
@@ -34,6 +35,7 @@ function clampLimit(raw: string | null, def: number): number {
 }
 
 export const GET: APIRoute = async ({ request, locals }) => {
+  const telemetry = createCatalogQueryTelemetry("api-search");
   return withEdgeCache({
     route: "search",
     request,
@@ -49,8 +51,13 @@ export const GET: APIRoute = async ({ request, locals }) => {
         const cursor = url.searchParams.get("cursor") || undefined;
         const supabase = getSupabase();
         const result = env.CATALOG_READ_MODEL === "true"
-          ? await runCatalogQuery({ query: q, sort, cursor, pageSize: limit }, env, supabase)
-          : await searchProducts(q, limit, env, getSupabase);
+          ? await runCatalogQuery(
+            { query: q, sort, cursor, pageSize: limit },
+            env,
+            supabase,
+            { telemetry },
+          )
+          : await searchProducts(q, limit, env, getSupabase, { telemetry });
         const items = result.items.map((p) => ({
           id: p.id,
           name: p.name,

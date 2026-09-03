@@ -7,10 +7,12 @@ import { loadFeaturedProducts } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
 import { catalogReadEnv } from "@server/catalog/http";
+import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 
 const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+const telemetry = createCatalogQueryTelemetry("home");
 
-const featured = await loadFeaturedProducts(env, getSupabase);
+const featured = await loadFeaturedProducts(env, getSupabase, { telemetry });
 const novedades = featured.novedades.map(toCardProduct);
 const destacados = featured.destacados.map(toCardProduct);
 const ofertas = featured.ofertas.map(toCardProduct);

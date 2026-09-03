@@ -38,6 +38,26 @@ export function parsePrice(rawPrice: string): number {
   return Number(value);
 }
 
+export type PriceInput = string | number | null | undefined;
+
+function parsePriceInput(rawPrice: PriceInput): number {
+  if (typeof rawPrice === "number") return rawPrice;
+  return parsePrice(String(rawPrice ?? ""));
+}
+
+export function normalizeOfferOriginalPrice(
+  rawOriginalPrice: PriceInput,
+  rawCurrentPrice: PriceInput,
+): number | null {
+  const currentPrice = parsePriceInput(rawCurrentPrice);
+  const originalPrice = parsePriceInput(rawOriginalPrice);
+
+  if (!Number.isFinite(currentPrice) || currentPrice <= 0) return null;
+  if (!Number.isFinite(originalPrice) || originalPrice <= currentPrice) return null;
+
+  return originalPrice;
+}
+
 export function formatPrice(value: number): string {
   const integerValue = Number.isFinite(value) ? Math.round(value) : 0;
   return integerValue.toLocaleString("es-UY");
