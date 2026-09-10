@@ -1,0 +1,17 @@
+0	code/src/components/ListarProductos.astro
+0	code/src/components/SideBardCategories.astro
+0	code/src/pages/api/catalog/categories.ts
+1	code/src/pages/api/catalog/products.ts
+0	code/src/pages/api/catalog/related.ts
+2	code/src/pages/api/search-products.ts
+2	code/src/pages/producto/[id].astro
+0	code/src/pages/productos.json.ts
+0	code/src/pages/search/index.astro
+0	code/src/server/catalog/facade.ts
+0	code/src/server/catalog/legacyTelemetry.ts
+1	code/src/server/catalog/queries.ts
+4	code/src/server/sidebarCategories.ts
+1	code/tests/catalog-queries.test.ts
+1	code/tests/catalog-regressions.spec.ts
+0	code/tests/price-offers.test.ts
+0	code/wrangler.jsonc
