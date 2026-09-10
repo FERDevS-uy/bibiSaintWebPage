@@ -43,9 +43,13 @@ export function percentiles(sorted, qs) {
   });
 }
 
+// Nota de drift: la ruta global /page/* (catálogo en grilla del home) se eliminó
+// por desuso el 2026-09-08: nació 2025-08-21 para paginar el home, quedó huérfana
+// el 2026-05-26 al pasar el home a carruseles y ahora responde 404. Por eso ya no
+// se lista aquí; /ofertas/page y /categories/*/page siguen vivas y cubiertas por su
+// propia paginación SSR. Ref: change scalable-catalog-read-pipeline task 3.3.
 const DEFAULT_ROUTES = [
   "/",
-  "/page/2",
   "/categories/Cama",
   "/categories/Tecno",
   "/ofertas",
