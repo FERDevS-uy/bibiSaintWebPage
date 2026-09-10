@@ -1,0 +1,768 @@
+---
+import { config } from "../../config";
+import { withBasePath } from "@utils/basePath";
+import NumberInput from "@components/NumberInput.astro";
+import ProductGallery from "@components/ProductGallery.jsx";
+import { ProductHydrator } from "@stores/ProductHydrator";
+import type Product from "../../types/product";
+import RelatedProductCarousel from "@components/RelatedProductCarousel.astro";
+import { formatPrice } from "@utils/price";
+
+interface Props {
+  product: Product;
+  relacionados: ReturnType<typeof import("@server/catalog/mappers").toCardProduct>[];
+  displayCategoryName: string;
+  groupSubcategory: string;
+  leafSubcategory: string;
+  isRopa: boolean;
+  disableColorSelection: boolean;
+  showRuntimeStockCheck: boolean;
+  primaryProviderLink: string;
+  pathname: string;
+  priceValue: number;
+  validOriginalPrice: number | null;
+  hasValidOffer: boolean;
+}
+
+const {
+  product,
+  relacionados,
+  displayCategoryName,
+  groupSubcategory,
+  leafSubcategory,
+  isRopa,
+  disableColorSelection,
+  showRuntimeStockCheck,
+  primaryProviderLink,
+  pathname,
+  priceValue,
+  validOriginalPrice,
+  hasValidOffer,
+} = Astro.props;
+
+const { id, name, img, price, categories, paymentLink, description, colors, enOferta, originalPrice } = product;
+---
+
+<ProductHydrator
+  client:load
+  id={id}
+  name={name}
+  price={price}
+  img={img[0]}
+  enOferta={hasValidOffer}
+/>
+<section class="productContainer">
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href={withBasePath(`/categories/${displayCategoryName}`, pathname)}>{displayCategoryName}</a>
+
+    {groupSubcategory && (
+      <>
+        {" / "}
+        <a href={withBasePath(`/categories/${displayCategoryName}/${groupSubcategory}`, pathname)}>
+          {groupSubcategory}
+        </a>
+      </>
+    )}
+
+    {leafSubcategory && leafSubcategory !== groupSubcategory && (
+      <>
+        {" / "}
+        <a href={withBasePath(`/categories/${displayCategoryName}/${leafSubcategory}`, pathname)}>
+          {leafSubcategory.replace(`${groupSubcategory} - `, "")}
+        </a>
+      </>
+    )}
+  </div>
+
+  <div class="product_layout">
+    <!-- LEFT IMAGE SECTION (isla React, carga lazy) -->
+    {/* Galería como isla React: carga lazy, marca producto como no disponible si fallan las imágenes */}
+    <ProductGallery images={img} name={name} description={description} id={id} client:load />
+    <div id="productImagesData" data-images={JSON.stringify(img)} style="display:none"></div>
+
+    <!-- RIGHT INFO -->
+    <div class="infoBox">
+      <span id="stockBadge" class="stock">En Stock</span>
+      <h1 class="name">{name}</h1>
+
+      <div class="meta">
+        <p><strong>ID:</strong> {id}</p>
+        <p><strong>Marca:</strong> {categories?.name}</p>
+      </div>
+
+      <div class="description-box">
+        <strong class="desc-title">Descripción del Producto:</strong>
+        <div class="desc-content">
+          {description.split('. ').map((sentence: string) =>
+             sentence.trim() ? <p>{sentence}.</p> : null
+          )}
+        </div>
+      </div>
+
+      <div
+        id="colorsBlock"
+        data-disable-selection={disableColorSelection ? "true" : "false"}
+        class={`colors-block${colors && colors.length > 0 && !disableColorSelection ? "" : " hidden"}`}
+      >
+        <strong>
+          Color: <span id="colorName" class="color-name">{colors?.[0]?.name ?? ""}</span>
+        </strong>
+        <div class="colors" id="colorsSelector">
+          {colors && colors.length > 0 && !disableColorSelection && colors.map((c, i) => (
+            <button
+              type="button"
+              class={`swatch${i === 0 ? " selected" : ""}`}
+              style={`background-color:${c.hex || "#cccccc"}`}
+              data-color-id={String(c.id)}
+              data-color-name={c.name}
+              data-color-hex={c.hex || "#cccccc"}
+              data-color-images={JSON.stringify(c.images || [])}
+              data-color-sizes={JSON.stringify(c.sizes || [])}
+              title={c.name}
+              aria-label={c.name}
+            ></button>
+          ))}
+        </div>
+      </div>
+
+      <div id="sizesBlock" class={`sizes-block${isRopa ? "" : " hidden"}`}>
+        <strong>Talle:</strong>
+        <div class="sizes" id="sizesSelector">
+          <button type="button" class="size" data-size="XS">XS</button>
+          <button type="button" class="size" data-size="S">S</button>
+          <button type="button" class="size" data-size="M">M</button>
+          <button type="button" class="size" data-size="L">L</button>
+          <button type="button" class="size" data-size="XL">XL</button>
+          <button type="button" class="size" data-size="XXL">XXL</button>
+        </div>
+        <p id="sizeFeedback" class="size-feedback hidden">Selecciona un talle disponible para continuar.</p>
+      </div>
+
+      <div class="priceRow">
+        <div class="price-block">
+          <span
+            id="productOriginalPrice"
+            class={`price-original${hasValidOffer ? "" : " hidden"}`}
+          >{validOriginalPrice !== null ? `$${formatPrice(validOriginalPrice)}` : ""}</span>
+          <span
+            id="productPrice"
+            class={`price${hasValidOffer ? " price--offer" : ""}`}
+          >${formatPrice(priceValue)}</span>
+        </div>
+        <NumberInput
+          id="cartQty"
+          name="pasajeros"
+          initialValue={1}
+          min={1}
+          max={10}
+        />
+        <button
+          type="button"
+          id="addToCartBtn"
+          class="buyBtn"
+          data-id={id}
+        >
+          Añadir al Carrito
+        </button>
+      </div>
+
+      {
+        showRuntimeStockCheck && (
+          <div class="runtimeStockCheck" id="runtimeStockCheck">
+            <button
+              type="button"
+              id="checkStockBtn"
+              class="checkStockBtn"
+              data-product-id={id}
+              data-provider-link={primaryProviderLink}
+            >
+              Verificar stock y precio
+            </button>
+            <p id="stockCheckStatus" class="stockCheckStatus">Consulta en vivo desde proveedor.</p>
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  <!-- RELATED PRODUCTS -->
+
+  {
+    relacionados && relacionados.length > 0 && (
+      <RelatedProductCarousel
+        products={relacionados}
+        title="Productos Relacionados"
+        id="related-carousel"
+      />
+    )
+  }
+</section>
+
+<style>
+  .productContainer {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--max-width-container);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: "Poppins", "Poppins Fallback", sans-serif;
+    margin-bottom: 3rem;
+    overflow-x: clip;
+  }
+
+  /**** Breadcrumb *****/
+  .breadcrumb {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4a4a4a;
+    margin-bottom: 25px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  .breadcrumb a {
+    text-decoration: none;
+    color: #4a4a4a;
+    transition: color 0.2s;
+  }
+  .breadcrumb a:hover {
+    color: #e67e22;
+  }
+
+  /**** Layout *****/
+  .product_layout {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    min-width: 0;
+  }
+
+  .infoBox,
+  .priceRow,
+  .colors,
+  .sizes {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /**** Gallery (estilos en src/styles/components/ProductGallery.css) *****/
+
+  /**** Info box *****/
+  .infoBox {
+    padding: 0;
+  }
+
+  .stock {
+    display: inline-block;
+    background: #27ae60;
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 6px 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    border-radius: 20px;
+  }
+
+  .name {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 15px 0;
+    color: #1a1a1a;
+  }
+
+  .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .meta p {
+    margin: 4px 0;
+  }
+
+  .meta strong {
+    font-weight: 700;
+    color: #333;
+  }
+
+  /* Description Box Estético */
+  .description-box {
+    background: #fafbfc;
+    border-left: 4px solid #e67e22;
+    padding: 20px 24px;
+    margin: 25px 0;
+    border-radius: 4px 12px 12px 4px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .desc-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .desc-content p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: #4b5563;
+    margin: 0 0 8px 0;
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .desc-content p::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #e67e22;
+    font-weight: bold;
+  }
+
+  .desc-content {
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+
+  .desc-content::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .desc-content::-webkit-scrollbar-thumb {
+    background: #d0d0d0;
+    border-radius: 10px;
+  }
+
+  strong {
+    font-weight: 800;
+  }
+
+  /**** Sizes *****/
+  .sizes-block.hidden {
+    display: none;
+  }
+
+  .sizes {
+    display: flex;
+    gap: 5px;
+    margin: 10px 0 20px 0;
+  }
+
+  .size {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 1px solid #000;
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  :global(.size) {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 1px solid #000;
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .size:hover {
+    background: #f0f0f0;
+  }
+
+  :global(.size:hover) {
+    background: #f0f0f0;
+  }
+
+  .size.selected {
+    background: var(--p-b-color);
+    border-color: var(--p-b-color);
+    color: #fff;
+  }
+
+  :global(.size.selected) {
+    background: var(--p-b-color);
+    border-color: var(--p-b-color);
+    color: #fff;
+  }
+
+  .size.unavailable,
+  .size[disabled] {
+    background: #f3f3f3;
+    color: #b1b1b1;
+    border-color: #e0e0e0;
+    cursor: not-allowed;
+    position: relative;
+  }
+
+  :global(.size.unavailable),
+  :global(.size[disabled]) {
+    background: #f3f3f3;
+    color: #b1b1b1;
+    border-color: #e0e0e0;
+    cursor: not-allowed;
+    position: relative;
+  }
+
+  .size.unavailable::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      #c9c9c9 calc(50% - 1px),
+      #c9c9c9 calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
+    pointer-events: none;
+  }
+
+  :global(.size.unavailable::after) {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      #c9c9c9 calc(50% - 1px),
+      #c9c9c9 calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
+    pointer-events: none;
+  }
+
+  /**** Colors *****/
+  .colors-block {
+    margin: 10px 0 16px 0;
+  }
+  /* Global rules to cover dynamically-inserted .swatch buttons (client or server without scoped attr) */
+  :global(.swatch) {
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    flex: 0 0 32px;
+    border-radius: 50%;
+    border: 2px solid #e5e5e5;
+    background: #ccc;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  :global(.swatch):hover {
+    transform: scale(1.1);
+  }
+  :global(.swatch).selected {
+    border-color: #111;
+    transform: scale(1.1);
+  }
+  :global(.swatch):focus-visible {
+    outline: 2px solid var(--p-b-color, #e67e22);
+    outline-offset: 2px;
+  }
+  .colors-block.hidden {
+    display: none;
+  }
+  .color-name {
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  .colors {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+
+  .size-feedback {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    color: var(--p-b-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .size-feedback.hidden,
+  .hidden {
+    display: none;
+  }
+
+  /**** Price & Actions *****/
+  .priceRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .priceRow .price {
+    display: block;
+    height: auto;
+    line-height: 1.2;
+    font-size: 32px;
+    font-weight: 800;
+    color: #000;
+    margin-right: 0;
+    min-width: 140px;
+  }
+
+  .price-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 140px;
+  }
+
+  .price-original {
+    font-size: 18px;
+    font-weight: 600,
+    color: #999;
+    text-decoration: line-through;
+  }
+
+  .price-original.hidden {
+    display: none;
+  }
+
+  .price.price--offer {
+    color: var(--p-b-color);
+  }
+
+  /* Adjust NumberInput styling overlap if possible, otherwise wrapper */
+  /* Assuming NumberInput generates a wrapper, we might need to target it deep or adjacent */
+
+  .buyBtn {
+    background: var(--p-b-color);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    height: 44px; /* Match typical touch target */
+    /*font-size: 16px;*/
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 4px;
+    flex: 1;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .buyBtn:hover {
+    background: var(--s-b-color);
+  }
+
+  .buyBtn:disabled,
+  .buyBtn.is-disabled {
+    background: #b7b7b7;
+    color: #f3f3f3;
+    border-color: #b7b7b7;
+    cursor: not-allowed;
+    opacity: 0.9;
+  }
+
+  .buyBtn:disabled:hover,
+  .buyBtn.is-disabled:hover {
+    background: #b7b7b7;
+  }
+
+  .runtimeStockCheck {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .checkStockBtn {
+    width: fit-content;
+    min-width: 200px;
+    max-width: 100%;
+    border: 1px solid #d4d4d4;
+    background: #fafafa;
+    color: #333;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-radius: 999px;
+    padding: 9px 20px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .checkStockBtn:hover {
+    background: #f0f0f0;
+    border-color: #bbb;
+  }
+
+  .checkStockBtn:active {
+    background: #e8e8e8;
+  }
+
+  .checkStockBtn:disabled {
+    cursor: default;
+    opacity: 1;
+  }
+
+  /* Loading spinner — pure CSS, no extra elements */
+  .checkStockBtn.is-loading::after {
+    content: "";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    border: 2px solid #d4d4d4;
+    border-top-color: #555;
+    border-radius: 50%;
+    animation: stockBtnSpin 0.6s linear infinite;
+  }
+
+  .checkStockBtn.is-loading {
+    padding-right: 36px;
+  }
+
+  @keyframes stockBtnSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  .checkStockStatus {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #5a5a5a;
+  }
+
+  .checkStockStatus.is-error {
+    color: #b42318;
+  }
+
+  .checkStockStatus.is-ok {
+    color: #157f3b;
+  }
+
+  /**** Desktop Media Query *****/
+  @media (max-width: 767px) {
+    .productContainer {
+      padding-inline: 14px;
+    }
+
+    .priceRow {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .priceRow .price {
+      min-width: 0;
+      font-size: 30px;
+    }
+
+    .buyBtn {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .sizes {
+      flex-wrap: wrap;
+      row-gap: 8px;
+    }
+
+    .colors {
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
+      padding: 5px;
+    }
+
+    /* En mobile el swatch seleccionado no crece con scale: sin transform,
+       el borde de selección y el focus quedan dentro del contenedor y no
+       se recortan contra el overflow. */
+    :global(.swatch:hover),
+    :global(.swatch).selected {
+      transform: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .product_layout {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .infoBox {
+      flex: 1;
+      padding-left: 20px;
+    }
+
+    .priceRow {
+      display: grid;
+      grid-template-columns: auto auto minmax(210px, 1fr);
+      align-items: center;
+      gap: 10px;
+    }
+
+    .priceRow :global(.number-control) {
+      width: 92px;
+      height: 44px;
+    }
+
+    .priceRow :global(.number-control .control-btn) {
+      width: 32px;
+      font-size: 21px;
+    }
+
+    .priceRow :global(.number-control input[type="number"]) {
+      font-size: 1.75rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .priceRow .price {
+      margin-right: 0;
+    }
+
+    .buyBtn {
+      width: 100%;
+      min-width: 210px;
+      height: 44px;
+      flex: initial;
+    }
+
+    .runtimeStockCheck {
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .checkStockStatus {
+      font-size: 0.82rem;
+    }
+  }
+</style>

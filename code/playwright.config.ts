@@ -14,7 +14,13 @@ export default defineConfig({
   retries: 0,
   workers: 1,
   reporter: [["list"]],
-  timeout: 45_000,
+  timeout: 60_000,
+  webServer: {
+    command: "pnpm dev --port 4321",
+    url: "http://localhost:4321",
+    reuseExistingServer: !process.env.CI,
+    timeout: 60_000,
+  },
   use: {
     baseURL: "http://localhost:4321",
     headless: true,
