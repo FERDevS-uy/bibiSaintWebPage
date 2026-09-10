@@ -13,23 +13,17 @@ import {
 // resolveCatalogReadPath
 // ---------------------------------------------------------------------------
 
-test("resolveCatalogReadPath: sin env → legacy (default seguro)", () => {
-  assert.equal(resolveCatalogReadPath({}), "legacy");
-  assert.equal(resolveCatalogReadPath({ CATALOG_READ_MODEL: undefined }), "legacy");
-});
-
-test("resolveCatalogReadPath: 'true' exacto → readmodel", () => {
-  assert.equal(resolveCatalogReadPath({ CATALOG_READ_MODEL: "true" }), "readmodel");
-});
-
-test("resolveCatalogReadPath: 'false', 'TRUE', '1', basura → legacy", () => {
+test("resolveCatalogReadPath: every runtime configuration uses the canonical read model", () => {
   const cases: Array<{ env: { CATALOG_READ_MODEL?: string }; expected: CatalogReadPath }> = [
-    { env: { CATALOG_READ_MODEL: "false" }, expected: "legacy" },
-    { env: { CATALOG_READ_MODEL: "TRUE" }, expected: "legacy" },
-    { env: { CATALOG_READ_MODEL: "1" }, expected: "legacy" },
-    { env: { CATALOG_READ_MODEL: "true " }, expected: "legacy" },
-    { env: { CATALOG_READ_MODEL: "readmodel" }, expected: "legacy" },
-    { env: { CATALOG_READ_MODEL: "basura" }, expected: "legacy" },
+    { env: {}, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: undefined }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "true" }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "false" }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "TRUE" }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "1" }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "true " }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "readmodel" }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "basura" }, expected: "readmodel" },
   ];
   for (const { env, expected } of cases) {
     assert.equal(resolveCatalogReadPath(env), expected, `env=${JSON.stringify(env)}`);
@@ -40,11 +34,7 @@ test("resolveCatalogReadPath: 'false', 'TRUE', '1', basura → legacy", () => {
 // resolveCsvFallback (opt-in estricto; nunca automático)
 // ---------------------------------------------------------------------------
 
-test("resolveCsvFallback: true solo con 'true' exacto", () => {
-  assert.equal(resolveCsvFallback({ ENABLE_CSV_FALLBACK: "true" }), true);
-});
-
-test("resolveCsvFallback: undefined, 'false', 'TRUE', '1', '' → false", () => {
+test("resolveCsvFallback: retired configuration is ignored", () => {
   const cases: Array<{ env: { ENABLE_CSV_FALLBACK?: string } }> = [
     { env: {} },
     { env: { ENABLE_CSV_FALLBACK: undefined } },
@@ -53,6 +43,7 @@ test("resolveCsvFallback: undefined, 'false', 'TRUE', '1', '' → false", () => 
     { env: { ENABLE_CSV_FALLBACK: "1" } },
     { env: { ENABLE_CSV_FALLBACK: "" } },
     { env: { ENABLE_CSV_FALLBACK: "true " } },
+    { env: { ENABLE_CSV_FALLBACK: "true" } },
   ];
   for (const { env } of cases) {
     assert.equal(resolveCsvFallback(env), false, `env=${JSON.stringify(env)}`);

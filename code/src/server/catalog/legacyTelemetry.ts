@@ -70,3 +70,32 @@ export function getLegacyFallbackCount(): number {
 export function resetLegacyTelemetry(): void {
   fallbackCount = 0;
 }
+
+export function recordCatalogDegraded(
+  consumer: LegacyFallbackRoute,
+  errorClass: "timeout" | "upstream" | "empty",
+  requestId: string = globalThis.crypto.randomUUID(),
+): void {
+  emitRuntimeEvent("catalog_degraded", consumer, "degraded", errorClass, requestId);
+}
+
+export function recordRetiredCatalogConfig(
+  consumer: "catalog" | "search" | "product",
+  requestId: string = globalThis.crypto.randomUUID(),
+): void {
+  emitRuntimeEvent("catalog_retired_config", consumer, "blocked", "retired_config", requestId);
+}
+
+function emitRuntimeEvent(
+  event: "catalog_degraded" | "catalog_retired_config",
+  consumer: string,
+  outcome: "degraded" | "blocked",
+  errorClass: "timeout" | "upstream" | "empty" | "retired_config",
+  requestId: string,
+): void {
+  try {
+    console.warn(JSON.stringify({ event, consumer, source: "supabase_read_model", outcome, error_class: errorClass, request_id: sanitizeCategory(requestId) }));
+  } catch {
+    // Structured telemetry must not alter the Worker response.
+  }
+}

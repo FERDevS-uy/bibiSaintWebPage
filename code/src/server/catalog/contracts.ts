@@ -12,6 +12,7 @@ export type CatalogErrorCode =
   | "INVALID_PAGE_SIZE"
   | "VERSION_MISMATCH"
   | "FILTER_MISMATCH"
+  | "PAGE_BOOTSTRAP_LIMIT"
   | "UPSTREAM_ERROR";
 
 /** Error tipado del pipeline de lectura de catálogo. */
