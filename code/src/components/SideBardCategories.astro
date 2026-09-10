@@ -125,7 +125,7 @@ const colorCSS: Record<string, string> = {
 const uniqueColors = Array.from(colorChipsMap.values());
 ---
 
-<nav class="sf-sidebar">
+<nav class={`sf-sidebar${treeNodes.length === 0 && uniqueColors.length === 0 ? " is-empty" : ""}`}>
   <!-- Mobile toggle -->
   <button class="sf-toggle" id="sf-toggle" aria-expanded="false" aria-controls="sf-body">
     <Fragment set:html={filterSVG} />
@@ -450,6 +450,8 @@ const uniqueColors = Array.from(colorChipsMap.values());
     }
 
     .sf-section { padding: 10px 18px 14px; }
+
+    .sf-sidebar.is-empty { display: none; }
   }
 </style>
 

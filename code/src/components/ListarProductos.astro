@@ -84,14 +84,29 @@ const emptyList = !productos || productos.length === 0;
 <style>
   section {
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .centerBox {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    min-height: clamp(420px, 62vh, 640px);
+    width: 100%;
+    max-width: 1000px;
+    margin-inline: auto;
+    padding: 2rem 1rem;
+    text-align: center;
   }
 
   .listaProductos > h3 {
     color: gray;
+    margin: 0;
+    font-size: 1.25rem;
+    letter-spacing: 0.01em;
   }
 
   .products-toolbar {
