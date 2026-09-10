@@ -174,6 +174,7 @@ export default async function renderCart() {
               product.img,
               product.selectedColorId ?? null,
               product.selectedColorName ?? null,
+              product.selectedColorHex ?? null,
             );
             renderCart();
         }
@@ -295,9 +296,14 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
   const productId = getBaseProductId(p.id);
   const productHref = withBasePath(`/producto/${productId}`);
   const colorLabel = escapeHtml(p.selectedColorName || (colorIdFromVariant !== null ? `ID ${colorIdFromVariant}` : ""));
+  const colorHex = p.selectedColorHex || "#cccccc";
   const imgSrc = normalizeCartImage(p.img);
-  const colorMeta = colorLabel
-    ? `<div class="cartMeta"><span class="metaLabel">Color</span><span class="metaValue">${colorLabel}</span></div>`
+
+  const colorSwatch = colorLabel
+    ? `<div class="cartColor">
+        <span class="cartColorSwatch" style="background-color:${escapeHtml(colorHex)}"></span>
+        <span class="cartColorName">${colorLabel}</span>
+      </div>`
     : "";
 
   const safeName = escapeHtml(p.name);
@@ -317,7 +323,7 @@ const productRow = (p: ProductInCart, subtotal: number): String => {
 
         <td class="tdDesc">
            <div class="cartName">${safeName}</div>
-            ${colorMeta}
+            ${colorSwatch}
            <div class="cartMeta">
              <span class="metaLabel">Precio</span>
              <span class="metaValue">$${formattedUnitPrice}</span>

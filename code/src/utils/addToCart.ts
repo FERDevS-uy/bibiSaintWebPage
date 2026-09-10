@@ -52,6 +52,7 @@ async function addToCart(
   img: string,
   selectedColorId: number | null = null,
   selectedColorName: string | null = null,
+  selectedColorHex: string | null = null,
 ) {
   // Para productos Martina el carrito usa el precio verificado oficial.
   // Reutiliza la verificación en curso (misma promesa) y cae al precio
@@ -70,6 +71,7 @@ async function addToCart(
     img: pickFirstImage(img),
     selectedColorId,
     selectedColorName,
+    selectedColorHex,
   };
   let carrito = [];
 
@@ -86,6 +88,7 @@ async function addToCart(
     productoEnCarrito.cantidad = cant;
     if (selectedColorId !== null) productoEnCarrito.selectedColorId = selectedColorId;
     if (selectedColorName) productoEnCarrito.selectedColorName = selectedColorName;
+    if (selectedColorHex) productoEnCarrito.selectedColorHex = selectedColorHex;
   } else {
     carrito.push(product);
   }

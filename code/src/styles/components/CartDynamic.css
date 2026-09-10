@@ -129,6 +129,29 @@
   font-weight: 500;
 }
 
+/* Color swatch en carrito */
+.cartColor {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0;
+}
+
+.cartColorSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08);
+}
+
+.cartColorName {
+  font-size: 0.82em;
+  color: #555;
+  line-height: 1;
+}
+
 .cartQty {
   text-align: center;
 }
