@@ -25,9 +25,13 @@
 	"kv_namespaces": [
 		{
 			"binding": "CATALOG_KV",
-			"id": "catalog_kv"
+			"id": "2aff9e8fa0dd402f93efce436f11124b"
 		}
 	],
+	"vars": {
+		"CATALOG_READ_MODEL": "true",
+		"ENABLE_CSV_FALLBACK": "false"
+	},
 	"env": {
 		"dev": {
 			"name": "bibisaintwebpage-dev",
