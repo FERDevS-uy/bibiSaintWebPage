@@ -19,8 +19,8 @@
     "test:load:local": "node scripts/catalog-load-local.mjs",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
-    "deploy": "astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && echo '_worker.js' > dist-deploy/.assetsignore && wrangler deploy ./dist-deploy/_worker.js/index.js --assets ./dist-deploy",
-    "deploy:dev": "astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && printf '_worker.js\\n' > dist-deploy/.assetsignore && wrangler deploy ./dist-deploy/_worker.js/index.js --assets ./dist-deploy --env dev",
+    "deploy": "node scripts/ensure-deploy-branch.mjs production && astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && echo '_worker.js' > dist-deploy/.assetsignore && wrangler deploy ./dist-deploy/_worker.js/index.js --assets ./dist-deploy",
+    "deploy:dev": "node scripts/ensure-deploy-branch.mjs development && astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && printf '_worker.js\\n' > dist-deploy/.assetsignore && wrangler deploy ./dist-deploy/_worker.js/index.js --assets ./dist-deploy --env dev",
     "cf:preview": "astro build && rm -rf dist-deploy && mkdir -p dist-deploy && rsync -a --delete dist/ dist-deploy/ && echo '_worker.js' > dist-deploy/.assetsignore && wrangler dev ./dist-deploy/_worker.js/index.js --assets ./dist-deploy",
     "cf-typegen": "wrangler types"
   },
