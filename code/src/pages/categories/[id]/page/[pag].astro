@@ -5,10 +5,11 @@ import { getSidebarCategories } from "@server/sidebarCategories";
 import { config } from "src/config";
 import SideBardCategories from "@components/SideBardCategories.astro";
 import { withBasePath } from "@utils/basePath";
-import { loadCatalogPage, isReadModel } from "@server/catalog/facade";
+import { loadCatalogPage } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
 import { catalogReadEnv } from "@server/catalog/http";
+import { CatalogError } from "@server/catalog/contracts";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 import "../../style.css";
 
@@ -21,27 +22,35 @@ const telemetry = createCatalogQueryTelemetry("category-page");
 const pageNum = Number(pag);
 const cursor = Astro.url.searchParams.get("cursor") ?? undefined;
 
-// El cursor opaco viaja como query param. En read model, [pag] > 1 SIN cursor
-// (URL indexada antigua) no puede derivar el cursor keyset → redirigir a
-// página 1 (riesgo R1 del contrato). En legacy los números de página son
-// válidos y no se redirige.
-if (isReadModel(env) && pageNum > 1 && !cursor) {
-  return Astro.redirect(withBasePath(`/categories/${id}/page/1`, Astro.url.pathname));
+if (!Number.isInteger(pageNum) || pageNum < 1) {
+  return Astro.redirect("/404", 404);
 }
 
-const [subCat, res] = await Promise.all([
-  getSidebarCategories(id ?? ""),
-  loadCatalogPage(
-    { category: id, sort: "nombre", pageSize: CANT_PRODUCTOS, cursor, page: pageNum },
-    env,
-    getSupabase,
-    { telemetry },
-  ),
-]);
+let subCat: Awaited<ReturnType<typeof getSidebarCategories>>;
+let res: Awaited<ReturnType<typeof loadCatalogPage>>;
+try {
+  [subCat, res] = await Promise.all([
+    getSidebarCategories(id ?? ""),
+    loadCatalogPage(
+      { category: id, sort: "nombre", pageSize: CANT_PRODUCTOS, cursor, page: pageNum },
+      env,
+      getSupabase,
+      { telemetry },
+    ),
+  ]);
+} catch (err) {
+  if (err instanceof CatalogError) {
+    return Astro.redirect("/404", 404);
+  }
+  throw err;
+}
 const products = res.items.map(toCardProduct);
 const total = res.total;
 
 const totalPages = Math.ceil(total / CANT_PRODUCTOS);
+if (totalPages >= 1 && pageNum > totalPages) {
+  return Astro.redirect("/404", 404);
+}
 const baseUrl = withBasePath(`/categories/${id}`, Astro.url.pathname);
 ---
 
@@ -62,7 +71,7 @@ const baseUrl = withBasePath(`/categories/${id}`, Astro.url.pathname);
       actualPage={Number(pag)}
       baseURL={baseUrl}
       nextCursor={res.nextCursor ?? undefined}
-      prevCursor={cursor}
+      prevCursor={res.previousCursor ?? undefined}
     />
   </div>
 </Layout>

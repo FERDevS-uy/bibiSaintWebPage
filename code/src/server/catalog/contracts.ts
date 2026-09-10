@@ -12,6 +12,8 @@ export type CatalogErrorCode =
   | "INVALID_PAGE_SIZE"
   | "VERSION_MISMATCH"
   | "FILTER_MISMATCH"
+  | "PAGE_BOOTSTRAP_LIMIT"
+  | "NOT_FOUND"
   | "UPSTREAM_ERROR";
 
 /** Error tipado del pipeline de lectura de catálogo. */
@@ -38,6 +40,8 @@ export interface CatalogCardProjection {
 }
 
 /** Request de página de catálogo (listados, categorías, ofertas, búsqueda). */
+export type CursorDirection = "after" | "before";
+
 export interface CatalogPageRequest {
   category?: string;
   subcategory?: string;
@@ -52,6 +56,7 @@ export interface CatalogPageResponse {
   items: CatalogCardProjection[];
   nextCursor: string | null;
   hasMore: boolean;
+  previousCursor: string | null;
   version: string;
   /** Total de productos activos que cumplen el MISMO filtro/universo del keyset
    *  (COUNT(*) sobre el filtro, sin cursor). Consistente en todas las páginas. */
@@ -68,6 +73,8 @@ export interface CursorPayload {
   f: string;
   /** Versión del catálogo en la que se generó el cursor. */
   v: string;
+  /** Absent cursors retain forward compatibility. */
+  d?: CursorDirection;
 }
 
 // ---------------------------------------------------------------------------
@@ -125,6 +132,7 @@ export function encodeCursor(payload: CursorPayload): string {
     p: payload.p,
     f: payload.f,
     v: payload.v,
+    ...(payload.d ? { d: payload.d } : {}),
   });
   return bytesToBase64Url(new TextEncoder().encode(json));
 }
@@ -140,7 +148,8 @@ function isCursorPayload(value: unknown): value is CursorPayload {
     typeof o.f === "string" &&
     o.f.length > 0 &&
     typeof o.v === "string" &&
-    o.v.length > 0
+    o.v.length > 0 &&
+    (o.d === undefined || o.d === "after" || o.d === "before")
   );
 }
 

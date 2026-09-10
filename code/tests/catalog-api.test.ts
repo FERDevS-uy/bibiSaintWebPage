@@ -17,6 +17,7 @@ import {
   buildCategoryTree,
   type ParsedCatalogRequest,
 } from "../src/server/catalog/http.ts";
+import { resolveCatalogReadPath, resolveCsvFallback } from "../src/server/catalog/readPath.ts";
 
 // ---------------------------------------------------------------------------
 // parseCatalogPageRequest
@@ -158,6 +159,17 @@ test("catalogReadEnv: prioriza env runtime sobre import.meta/process.env", () =>
     if (previousCsvFallback === undefined) delete process.env.ENABLE_CSV_FALLBACK;
     else process.env.ENABLE_CSV_FALLBACK = previousCsvFallback;
   }
+});
+
+test("catalog runtime configuration enables CSV only with the explicit operator flag", () => {
+  const env = catalogReadEnv({ CATALOG_READ_MODEL: "false", ENABLE_CSV_FALLBACK: "true" });
+  assert.equal(resolveCatalogReadPath(env), "readmodel");
+  assert.equal(resolveCsvFallback(env), true);
+});
+
+test("catalogErrorToStatus: a missing product is 404 and upstream remains retryable", () => {
+  assert.equal(catalogErrorToStatus(new CatalogError("NOT_FOUND", "missing")), 404);
+  assert.equal(catalogErrorToStatus(new CatalogError("UPSTREAM_ERROR", "retry")), 502);
 });
 
 // ---------------------------------------------------------------------------

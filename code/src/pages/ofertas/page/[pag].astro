@@ -3,10 +3,11 @@ import Layout from "@layouts/Layout.astro";
 import ListarProductos from "@components/ListarProductos.astro";
 import { config } from "src/config";
 import { withBasePath } from "@utils/basePath";
-import { loadCatalogPage, isReadModel } from "@server/catalog/facade";
+import { loadCatalogPage } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
 import { catalogReadEnv } from "@server/catalog/http";
+import { CatalogError } from "@server/catalog/contracts";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 
 const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
@@ -17,24 +18,31 @@ const { pag } = Astro.params;
 const pageNum = Number(pag);
 const cursor = Astro.url.searchParams.get("cursor") ?? undefined;
 
-// El cursor opaco viaja como query param. En read model, [pag] > 1 SIN cursor
-// (URL indexada antigua) no puede derivar el cursor keyset → redirigir a
-// página 1 (riesgo R1 del contrato). En legacy los números de página son
-// válidos y no se redirige.
-if (isReadModel(env) && pageNum > 1 && !cursor) {
-  return Astro.redirect(withBasePath("/ofertas/page/1", Astro.url.pathname));
+if (!Number.isInteger(pageNum) || pageNum < 1) {
+  return Astro.redirect("/404", 404);
 }
 
-const res = await loadCatalogPage(
-  { sort: "precio", enOferta: true, pageSize: productsPerPage, cursor, page: pageNum },
-  env,
-  getSupabase,
-  { telemetry },
-);
+let res: Awaited<ReturnType<typeof loadCatalogPage>>;
+try {
+  res = await loadCatalogPage(
+    { sort: "precio", enOferta: true, pageSize: productsPerPage, cursor, page: pageNum },
+    env,
+    getSupabase,
+    { telemetry },
+  );
+} catch (err) {
+  if (err instanceof CatalogError) {
+    return Astro.redirect("/404", 404);
+  }
+  throw err;
+}
 const topBaratos = res.items.map(toCardProduct);
 const total = res.total;
 
 const totalPages = Math.ceil(total / productsPerPage);
+if (totalPages >= 1 && pageNum > totalPages) {
+  return Astro.redirect("/404", 404);
+}
 const products = topBaratos;
 const actualPage = pageNum;
 const totalProducts = total;
@@ -58,7 +66,7 @@ const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
     actualPage={actualPage}
     baseURL={offersBaseUrl}
     nextCursor={res.nextCursor ?? undefined}
-    prevCursor={cursor}
+    prevCursor={res.previousCursor ?? undefined}
   />
 </Layout>
 

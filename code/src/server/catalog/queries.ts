@@ -11,7 +11,7 @@
 // coincide con el ORDER BY. En PostgREST la tupla `(a, b) > (x, y)` se expresa
 // como la forma lógica expandida: `a > x OR (a = x AND b > y)`.
 
-import type { CatalogCardProjection, CatalogPageRequest } from "./contracts.ts";
+import type { CatalogCardProjection, CatalogPageRequest, CursorDirection } from "./contracts.ts";
 import {
   CatalogError,
   encodeCursor,
@@ -36,6 +36,8 @@ import {
 /** Request de página con el filtro opcional `enOferta` (no está en el contrato base). */
 export interface CatalogQueryRequest extends CatalogPageRequest {
   enOferta?: boolean;
+  /** Página 1-based para URLs directas; el read model la resuelve por keyset. */
+  page?: number;
 }
 
 /** Cláusula ORDER BY soportada (debe coincidir con la condición de cursor). */
@@ -166,7 +168,11 @@ export function decodeCursorForOrder(
  * - Orden por recientes: `(ingested_at, product_id) < (ts, p)` (primera columna DESC)
  *   → `ingested_at.lt.ts OR (ingested_at.eq.ts AND product_id.gt.p)`
  */
-export function buildCursorCondition(decoded: DecodedCursor): CursorCondition {
+export function buildCursorCondition(
+  decoded: DecodedCursor,
+  direction: CursorDirection = "after",
+): CursorCondition {
+  const before = direction === "before";
   const pid = quoteText(decoded.productId);
 
   if (decoded.priceValue !== undefined) {
@@ -175,9 +181,9 @@ export function buildCursorCondition(decoded: DecodedCursor): CursorCondition {
     return {
       orderBy: "numeric_price ASC, sort_name ASC, product_id ASC",
       orFilter:
-        `numeric_price.gt.${price},` +
-        `and(numeric_price.eq.${price},sort_name.gt.${sortName}),` +
-        `and(numeric_price.eq.${price},sort_name.eq.${sortName},product_id.gt.${pid})`,
+        `numeric_price.${before ? "lt" : "gt"}.${price},` +
+        `and(numeric_price.eq.${price},sort_name.${before ? "lt" : "gt"}.${sortName}),` +
+        `and(numeric_price.eq.${price},sort_name.eq.${sortName},product_id.${before ? "lt" : "gt"}.${pid})`,
     };
   }
 
@@ -185,14 +191,14 @@ export function buildCursorCondition(decoded: DecodedCursor): CursorCondition {
     const ts = quoteText(decoded.ingestedAt);
     return {
       orderBy: "ingested_at DESC, product_id ASC",
-      orFilter: `ingested_at.lt.${ts},and(ingested_at.eq.${ts},product_id.gt.${pid})`,
+      orFilter: `ingested_at.${before ? "gt" : "lt"}.${ts},and(ingested_at.eq.${ts},product_id.${before ? "lt" : "gt"}.${pid})`,
     };
   }
 
   const sortName = quoteText(decoded.sortValue);
   return {
     orderBy: "sort_name ASC, product_id ASC",
-    orFilter: `sort_name.gt.${sortName},and(sort_name.eq.${sortName},product_id.gt.${pid})`,
+    orFilter: `sort_name.${before ? "lt" : "gt"}.${sortName},and(sort_name.eq.${sortName},product_id.${before ? "lt" : "gt"}.${pid})`,
   };
 }
 
@@ -284,35 +290,31 @@ export async function runCatalogQuery(
   nextCursor: string | null;
   hasMore: boolean;
   version: string;
-    total: number;
+  total: number;
+  previousCursor: string | null;
 }> {
-  // La ruta read model solo se ejecuta si la bandera está activa.
   if (resolveCatalogReadPath(env) !== "readmodel") {
-    throw new CatalogError(
-      "UPSTREAM_ERROR",
-      "El read model de catálogo no está habilitado",
-    );
+    throw new CatalogError("UPSTREAM_ERROR", "El read model de catálogo no está habilitado");
   }
 
   const req = request as CatalogQueryRequest;
   const limit = clampPageSize(request.pageSize);
+  const requestedPage = Math.max(1, Math.floor(req.page ?? 1));
+  const bootstrapCursor = !request.cursor && requestedPage > 1;
+  if (bootstrapCursor && requestedPage > 10) {
+    throw new CatalogError(
+      "PAGE_BOOTSTRAP_LIMIT",
+      "La página solicitada excede el límite de bootstrap keyset",
+    );
+  }
 
-  // 1) Iniciar la lectura de versión sin bloquear la consulta principal. En la
-  // primera página no hay cursor que validar, así que versión, filas y COUNT
-  // pueden viajar a Supabase en el mismo round-trip lógico.
   const versionPromise: Promise<string> = observeCatalogQuery(
     options?.telemetry,
     "catalog_version",
     async () => {
       try {
-        const { data, error } = await supabase
-          .from("catalog_version")
-          .select("version")
-          .eq("id", 1)
-          .single();
-        if (error) {
-          throw new CatalogError("UPSTREAM_ERROR", "Error al leer la versión del catálogo");
-        }
+        const { data, error } = await supabase.from("catalog_version").select("version").eq("id", 1).single();
+        if (error) throw new CatalogError("UPSTREAM_ERROR", "Error al leer la versión del catálogo");
         return String(data?.version ?? 0);
       } catch (err) {
         if (err instanceof CatalogError) throw err;
@@ -321,16 +323,14 @@ export async function runCatalogQuery(
     },
   );
 
-  let version = "";
-
-  // 2) Determinar ORDER BY y decodificar/validar el cursor.
   const orderBy = buildOrderByClause(request.sort);
   const filters = buildFilterRecord(req);
-
+  const includeTotal = options?.includeTotal !== false;
+  let version = "";
   let decoded: DecodedCursor | null = null;
+  let cursorDirection: CursorDirection = "after";
+
   if (request.cursor) {
-    // Las páginas posteriores sí deben validar la versión antes de aplicar el
-    // keyset; esta espera no afecta la navegación normal entre categorías.
     version = await versionPromise;
     let payload: CursorPayload;
     try {
@@ -339,161 +339,132 @@ export async function runCatalogQuery(
       if (err instanceof CatalogError) throw err;
       throw new CatalogError("INVALID_CURSOR", "Cursor inválido");
     }
-    // Valida fingerprint (FILTER_MISMATCH) y versión (VERSION_MISMATCH → 409).
     decoded = decodeCursorForOrder(payload, orderBy, filters, version);
+    cursorDirection = payload.d ?? "after";
   }
 
-  // 3) Construir la consulta sobre catalog_products (nunca products).
-  //
-  // FUENTE DE VERDAD de `category`/`subcategory`:
-  // - En el read model, estos valores ya vienen normalizados y persistidos por
-  //   el trigger `catalog_products_trigger_fn()` (migraciones 007 y 010), que
-  //   replica en SQL la lógica de `src/utils/categoryNormalization.ts`.
-  // - Para el path LEGACY (CSV / derivación runtime), la fuente de verdad es
-  //   `categoryNormalization.ts` (`getDisplayCategoryName` /
-  //   `getDisplaySubcategories` / `inferTecnoSubcategory`).
-  // - DRIFT RISK: si cambiás la normalización en JS, actualizá también el CASE
-  //   SQL del trigger; de lo contrario el read model y el path legacy divergen.
-  const includeTotal = options?.includeTotal !== false;
-  const countWithRows = includeTotal && !request.cursor;
-  let query = supabase
-    .from("catalog_products")
-    .select(SELECT_COLUMNS, countWithRows ? { count: "exact" } : undefined)
-    .eq("active", true);
-
-  if (req.category) query = query.eq("category", req.category);
-  if (req.subcategory) {
-    const filter = resolveSubcategoryFilter(req.category ?? "", req.subcategory);
-    if (filter.kind === "group") {
-      query = query.or(
-        `subcategory.eq."${filter.value}",subcategory.like."${filter.value} - %"`,
-      );
-    } else {
-      query = query.eq("subcategory", filter.value);
+  const applyFilters = (query: any) => {
+    query = query.eq("active", true);
+    if (req.category) query = query.eq("category", req.category);
+    if (req.subcategory) {
+      const filter = resolveSubcategoryFilter(req.category ?? "", req.subcategory);
+      query = filter.kind === "group"
+        ? query.or(`subcategory.eq."${filter.value}",subcategory.like."${filter.value} - %"`)
+        : query.eq("subcategory", filter.value);
     }
-  }
-  if (req.query) query = query.ilike("name", `%${escapeLike(req.query)}%`);
-  if (req.enOferta === true) query = query.eq("en_oferta", true);
+    if (req.query) query = query.ilike("name", `%${escapeLike(req.query)}%`);
+    if (req.enOferta === true) query = query.eq("en_oferta", true);
+    return query;
+  };
 
-  // 4) ORDER BY (multi-columna: encadenar .order() por columna).
-  if (orderBy === "numeric_price ASC, sort_name ASC, product_id ASC") {
-    query = query
-      .order("numeric_price", { ascending: true })
-      .order("sort_name", { ascending: true })
-      .order("product_id", { ascending: true });
-  } else if (orderBy === "ingested_at DESC, product_id ASC") {
-    query = query
-      .order("ingested_at", { ascending: false })
-      .order("product_id", { ascending: true });
-  } else {
-    query = query.order("sort_name", { ascending: true }).order("product_id", { ascending: true });
-  }
+  const buildRowsQuery = (cursor: DecodedCursor | null, countWithRows: boolean) => {
+    let query = applyFilters(
+      supabase.from("catalog_products").select(SELECT_COLUMNS, countWithRows ? { count: "exact" } : undefined),
+    );
+    const reverse = cursorDirection === "before" && cursor !== null;
+    if (orderBy === "numeric_price ASC, sort_name ASC, product_id ASC") {
+      query = query.order("numeric_price", { ascending: reverse ? false : true }).order("sort_name", { ascending: reverse ? false : true }).order("product_id", { ascending: reverse ? false : true });
+    } else if (orderBy === "ingested_at DESC, product_id ASC") {
+      query = query.order("ingested_at", { ascending: reverse ? true : false }).order("product_id", { ascending: reverse ? false : true });
+    } else {
+      query = query.order("sort_name", { ascending: reverse ? false : true }).order("product_id", { ascending: reverse ? false : true });
+    }
+    if (cursor) query = query.or(buildCursorCondition(cursor, cursorDirection).orFilter);
+    return query;
+  };
 
-  // 5) Condición de cursor keyset (nunca OFFSET).
-  if (decoded) {
-    const condition = buildCursorCondition(decoded);
-    query = query.or(condition.orFilter);
-  }
+  const readRows = (cursor: DecodedCursor | null, countWithRows: boolean) =>
+    observeCatalogQuery<CatalogQueryResponse>(
+      options?.telemetry,
+      "catalog_products_page",
+      () => buildRowsQuery(cursor, countWithRows).limit(limit + 1),
+    );
 
-  // 6/7) Ejecutar la página (limit + 1) y el COUNT en paralelo. Ambas
-  // consultas son independientes; serializarlas añadía un round-trip completo
-  // a Supabase en cada navegación SSR.
-  const rowsPromise = observeCatalogQuery<CatalogQueryResponse>(
-    options?.telemetry,
-    "catalog_products_page",
-    () => query.limit(limit + 1),
-  );
-
-  // COUNT(*) sobre el MISMO filtro/universo del keyset (sin cursor) para
-  //    exponer un `total` consistente en todas las páginas (riesgo R2).
-  //    Nunca carga el catálogo completo: es un COUNT con head:true.
-  let total = 0;
-  let rowsResult: { data: unknown; error: unknown; count?: number | null };
-  if (includeTotal && request.cursor) {
+  const readTotal = async () => {
     try {
-      let countQuery = supabase
-        .from("catalog_products")
-        .select("product_id", { count: "exact", head: true })
-        .eq("active", true);
-      if (req.category) countQuery = countQuery.eq("category", req.category);
-       if (req.subcategory) {
-         const filter = resolveSubcategoryFilter(req.category ?? "", req.subcategory);
-         if (filter.kind === "group") {
-           countQuery = countQuery.or(
-             `subcategory.eq."${filter.value}",subcategory.like."${filter.value} - %"`,
-           );
-         } else {
-           countQuery = countQuery.eq("subcategory", filter.value);
-         }
-       }
-      if (req.query) countQuery = countQuery.ilike("name", `%${escapeLike(req.query)}%`);
-      if (req.enOferta === true) countQuery = countQuery.eq("en_oferta", true);
-      const countPromise = observeCatalogQuery<CatalogQueryResponse>(
+      const countResult = await observeCatalogQuery<CatalogQueryResponse>(
         options?.telemetry,
         "catalog_products_count",
-        () => countQuery,
+        () => applyFilters(supabase.from("catalog_products").select("product_id", { count: "exact", head: true })),
       );
-      const [resolvedRows, countResult] = await Promise.all([rowsPromise, countPromise]);
-      rowsResult = resolvedRows;
-      const { count, error: countError } = countResult;
-      if (countError) {
-        throw new CatalogError("UPSTREAM_ERROR", "Error upstream al contar el catálogo");
-      }
-      total = Number(count ?? 0);
+      if (countResult.error) throw new CatalogError("UPSTREAM_ERROR", "Error upstream al contar el catálogo");
+      return Number(countResult.count ?? 0);
     } catch (err) {
       if (err instanceof CatalogError) throw err;
       throw new CatalogError("UPSTREAM_ERROR", "Error inesperado al contar el catálogo");
     }
+  };
+
+  const cursorFromRow = (row: CatalogRow): DecodedCursor => {
+    if (orderBy === "numeric_price ASC, sort_name ASC, product_id ASC") {
+      return { sortValue: row.sort_name, priceValue: Number(row.price), productId: row.id };
+    }
+    if (orderBy === "ingested_at DESC, product_id ASC") {
+      return { sortValue: String(row.ingestedAt ?? ""), ingestedAt: String(row.ingestedAt ?? ""), productId: row.id };
+    }
+    return { sortValue: row.sort_name, productId: row.id };
+  };
+
+  if (bootstrapCursor) {
+    version = await versionPromise;
+    for (let page = 1; page < requestedPage; page += 1) {
+      const result = await readRows(decoded, false);
+      if (result.error) throw new CatalogError("UPSTREAM_ERROR", "Error upstream al consultar el catálogo");
+      const rows = (result.data ?? []) as CatalogRow[];
+      const visibleRows = rows.slice(0, limit);
+      if (visibleRows.length === 0) {
+        return { items: [], nextCursor: null, previousCursor: null, hasMore: false, version, total: includeTotal ? await readTotal() : 0 };
+      }
+      decoded = cursorFromRow(visibleRows[visibleRows.length - 1]);
+    }
+  }
+
+  const countWithRows = includeTotal && !request.cursor && !bootstrapCursor;
+  const rowsPromise = readRows(decoded, countWithRows);
+  let rowsResult: CatalogQueryResponse;
+  let total = 0;
+  if (includeTotal && (request.cursor || bootstrapCursor)) {
+    const [resolvedRows, resolvedTotal] = await Promise.all([rowsPromise, readTotal()]);
+    rowsResult = resolvedRows;
+    total = resolvedTotal;
   } else {
-    // Primera página: el mismo SELECT devuelve filas + Content-Range exacto.
-    // La versión corre en paralelo, eliminando dos esperas seriales del SSR.
     const [resolvedRows, resolvedVersion] = await Promise.all([rowsPromise, versionPromise]);
     rowsResult = resolvedRows;
     version = resolvedVersion;
     if (includeTotal) total = Number(rowsResult.count ?? 0);
   }
 
-  const { data: rows, error } = rowsResult;
-  if (error) {
-    throw new CatalogError("UPSTREAM_ERROR", "Error upstream al consultar el catálogo");
-  }
-
-  const all = (rows ?? []) as CatalogRow[];
+  if (rowsResult.error) throw new CatalogError("UPSTREAM_ERROR", "Error upstream al consultar el catálogo");
+  const all = (rowsResult.data ?? []) as CatalogRow[];
   const hasMore = all.length > limit;
-  const page = hasMore ? all.slice(0, limit) : all;
-  if (!includeTotal) {
-    // En rutas sin paginador/total visible (ej. Home) evitamos COUNT exacto.
-    total = page.length;
-  }
+  const directionalPage = hasMore ? all.slice(0, limit) : all;
+  const page = cursorDirection === "before" ? [...directionalPage].reverse() : directionalPage;
+  if (!includeTotal) total = page.length;
 
-  // 8) Construir nextCursor desde el último elemento de la página (si hasMore).
   let nextCursor: string | null = null;
-  if (hasMore && page.length > 0) {
+  if (page.length > 0) {
     const last = page[page.length - 1];
-    const s =
-      orderBy === "numeric_price ASC, sort_name ASC, product_id ASC"
-        ? encodePriceSort(Number(last.price), last.sort_name)
-        : orderBy === "ingested_at DESC, product_id ASC"
-          ? String(last.ingestedAt ?? "")
-          : last.sort_name;
-    const payload: CursorPayload = {
-      s,
-      p: last.id,
-      f: filterFingerprint(filters),
-      v: version,
-    };
-    nextCursor = encodeCursor(payload);
+    const s = orderBy === "numeric_price ASC, sort_name ASC, product_id ASC"
+      ? encodePriceSort(Number(last.price), last.sort_name)
+      : orderBy === "ingested_at DESC, product_id ASC"
+        ? String(last.ingestedAt ?? "")
+        : last.sort_name;
+    nextCursor = encodeCursor({ s, p: last.id, f: filterFingerprint(filters), v: version, d: "after" });
   }
 
-  return {
-    items: page.map(rowToProjection),
-    nextCursor,
-    hasMore,
-    version,
-    total,
-  };
-}
+  let previousCursor: string | null = null;
+  if (request.cursor && page.length > 0 && (cursorDirection === "after" || hasMore)) {
+    const first = page[0];
+    const s = orderBy === "numeric_price ASC, sort_name ASC, product_id ASC"
+      ? encodePriceSort(Number(first.price), first.sort_name)
+      : orderBy === "ingested_at DESC, product_id ASC"
+        ? String(first.ingestedAt ?? "")
+        : first.sort_name;
+    previousCursor = encodeCursor({ s, p: first.id, f: filterFingerprint(filters), v: version, d: "before" });
+  }
 
+  return { items: page.map(rowToProjection), nextCursor: hasMore || cursorDirection === "before" ? nextCursor : null, previousCursor, hasMore, version, total };
+}
 function escapeLike(value: string): string {
   return value.replace(/[\\%_]/g, (char) => `\\${char}`);
 }

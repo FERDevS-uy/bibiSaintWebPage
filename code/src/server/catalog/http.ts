@@ -68,6 +68,7 @@ export function parseCatalogPageRequest(url: URL): ParsedCatalogRequest {
  * Mapea un `CatalogError` a su status HTTP.
  * - INVALID_CURSOR / INVALID_PAGE_SIZE → 400 (parámetros inválidos).
  * - VERSION_MISMATCH / FILTER_MISMATCH → 409 (cursor incompatible).
+ * - PAGE_BOOTSTRAP_LIMIT → 404 (requested page is out of range).
  * - UPSTREAM_ERROR → 502 (fallo del backend).
  * - Cualquier otro → 500.
  */
@@ -79,6 +80,9 @@ export function catalogErrorToStatus(err: CatalogError): number {
     case "VERSION_MISMATCH":
     case "FILTER_MISMATCH":
       return 409;
+    case "PAGE_BOOTSTRAP_LIMIT":
+    case "NOT_FOUND":
+      return 404;
     case "UPSTREAM_ERROR":
       return 502;
     default:

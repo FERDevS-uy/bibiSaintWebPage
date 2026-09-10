@@ -30,11 +30,16 @@ function buildPageUrl(page: number, cursor?: string): string {
 
 const nextUrl = buildPageUrl(+actualPage + 1, nextCursor);
 const prevUrl = buildPageUrl(+actualPage - 1, prevCursor);
+
+// Hoisted out of the markup: `<` / `>` inside template expressions is
+// parsed as Fragment shorthand, so keep comparisons in frontmatter.
+const isFirstPage = actualPage <= 1;
+const isLastPage = actualPage >= totalPages;
 ---
 
 <nav class={styles.pagination} id="products-pagination" aria-label="Paginación">
   {
-    actualPage == 1 ? (
+    isFirstPage ? (
       <span class={`${styles.arrow} ${styles.disabled}`} aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
       </span>
@@ -50,7 +55,7 @@ const prevUrl = buildPageUrl(+actualPage - 1, prevCursor);
   </span>
 
   {
-    actualPage == totalPages ? (
+    isLastPage ? (
       <span class={`${styles.arrow} ${styles.disabled}`} aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
       </span>
@@ -76,7 +81,9 @@ const prevUrl = buildPageUrl(+actualPage - 1, prevCursor);
       if (!href) return;
       const url = new URL(href, window.location.origin);
       currentParams.forEach((value, key) => {
-        if (!url.searchParams.has(key)) {
+        // The destination owns its cursor. Reusing the active one would make
+        // back/forward links display a URL that does not match its products.
+        if (key !== "cursor" && !url.searchParams.has(key)) {
           url.searchParams.set(key, value);
         }
       });

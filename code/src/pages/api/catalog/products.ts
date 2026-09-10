@@ -38,6 +38,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
             JSON.stringify({
               items: result.items,
               nextCursor: result.nextCursor,
+              previousCursor: result.previousCursor,
               hasMore: result.hasMore,
               catalogVersion: null,
             }),
@@ -49,12 +50,16 @@ export const GET: APIRoute = async ({ request, locals }) => {
         }
 
         const supabase = getSupabase();
-        const result = await runCatalogQuery(parsed, env, supabase, { telemetry });
+        const result = await runCatalogQuery(parsed, env, supabase, {
+          includeTotal: false,
+          telemetry,
+        });
 
         return new Response(
           JSON.stringify({
             items: result.items,
             nextCursor: result.nextCursor,
+            previousCursor: result.previousCursor,
             hasMore: result.hasMore,
             catalogVersion: result.version || catalogVersion,
           }),

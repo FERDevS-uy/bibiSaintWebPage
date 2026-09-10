@@ -46,6 +46,7 @@ export interface CatalogPageFacadeRequest extends CatalogPageRequest {
 export interface CatalogPageResult {
   items: CatalogCardProjection[];
   nextCursor: string | null;
+  previousCursor: string | null;
   hasMore: boolean;
   total: number;
   /** Página actual (1-based). En read model siempre 1 (el cursor avanza). */
@@ -183,6 +184,7 @@ export async function loadCatalogPage(
     return {
       items: res.items,
       nextCursor: res.nextCursor,
+      previousCursor: res.previousCursor,
       hasMore: res.hasMore,
       total: res.total,
       page: 1,
@@ -217,6 +219,7 @@ async function legacyCatalogPage(
     return {
       items: res.products.map(toCatalogProjection),
       nextCursor: null,
+      previousCursor: null,
       hasMore: page * pageSize < res.total,
       total: res.total,
       page,
@@ -235,6 +238,7 @@ async function legacyCatalogPage(
   return {
     items: universe.slice(start, start + pageSize).map(toCatalogProjection),
     nextCursor: null,
+    previousCursor: null,
     hasMore: page * pageSize < total,
     total,
     page,
