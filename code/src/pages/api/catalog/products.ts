@@ -8,11 +8,11 @@
 // Errores: 400 (parámetros inválidos), 409 (cursor incompatible), 502 (backend).
 
 import type { APIRoute } from "astro";
+import { recordRetiredCatalogConfig } from "@server/catalog/legacyTelemetry";
 import { getSupabase } from "@server/supabase";
 import { CatalogError } from "@server/catalog/contracts";
 import { runCatalogQuery } from "@server/catalog/queries";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
-import { loadCatalogPage, isReadModel } from "@server/catalog/facade";
 import {
   parseCatalogPageRequest,
   catalogErrorToStatus,
@@ -32,24 +32,12 @@ export const GET: APIRoute = async ({ request, locals }) => {
         const url = new URL(request.url);
         const parsed = parseCatalogPageRequest(url);
         const env = catalogReadEnv((locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
-        if (!isReadModel(env)) {
-          const result = await loadCatalogPage(parsed, env, getSupabase, { telemetry });
-          return new Response(
-            JSON.stringify({
-              items: result.items,
-              nextCursor: result.nextCursor,
-              hasMore: result.hasMore,
-              catalogVersion: null,
-            }),
-            {
-              status: 200,
-              headers: getCatalogCacheHeaders("products"),
-            },
-          );
-        }
-
+        if (env.ENABLE_CSV_FALLBACK === "true") recordRetiredCatalogConfig("catalog");
         const supabase = getSupabase();
-        const result = await runCatalogQuery(parsed, env, supabase, { telemetry });
+        const result = await runCatalogQuery(parsed, supabase, {
+          includeTotal: false,
+          telemetry,
+        });
 
         return new Response(
           JSON.stringify({

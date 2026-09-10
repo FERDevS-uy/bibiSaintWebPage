@@ -9,9 +9,9 @@
 // Devuelve JSON con categorías y subcategorías ordenadas por display_order.
 
 import type { APIRoute } from "astro";
+import { recordRetiredCatalogConfig } from "@server/catalog/legacyTelemetry";
 import { getSupabase } from "@server/supabase";
 import { CatalogError } from "@server/catalog/contracts";
-import { resolveCatalogReadPath, resolveCsvFallback } from "@server/catalog/readPath";
 import {
   buildCategoryTree,
   catalogErrorToStatus,
@@ -21,8 +21,6 @@ import {
   type TaxonomyEntry,
   type CategoryCountRow,
 } from "@server/catalog/http";
-import { loadProducts } from "@utils/loadProducts";
-import { getDisplayCategoryName, getDisplaySubcategories } from "@utils/categoryNormalization";
 import {
   createCatalogQueryTelemetry,
   observeCatalogQuery,
@@ -31,29 +29,6 @@ import {
 interface CatalogReadResponse {
   data: unknown;
   error: unknown;
-}
-
-function buildLegacyCategoryTree(products: Awaited<ReturnType<typeof loadProducts>>) {
-  const byCategory = new Map<string, { count: number; subcategories: Map<string, number> }>();
-  for (const product of products) {
-    const category = getDisplayCategoryName(product);
-    if (!category) continue;
-    const node = byCategory.get(category) ?? { count: 0, subcategories: new Map<string, number>() };
-    node.count += 1;
-    for (const subcategory of getDisplaySubcategories(product)) {
-      node.subcategories.set(subcategory, (node.subcategories.get(subcategory) ?? 0) + 1);
-    }
-    byCategory.set(category, node);
-  }
-  return [...byCategory.entries()]
-    .sort(([a], [b]) => a.localeCompare(b, "es", { sensitivity: "base" }))
-    .map(([name, node]) => ({
-      name,
-      count: node.count,
-      subcategories: [...node.subcategories.entries()]
-        .sort(([a], [b]) => a.localeCompare(b, "es", { sensitivity: "base" }))
-        .map(([subName, count]) => ({ name: subName, count })),
-    }));
 }
 
 export const GET: APIRoute = async ({ request, locals }) => {
@@ -65,14 +40,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
     handler: async () => {
       try {
         const env = catalogReadEnv((locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
-        if (resolveCatalogReadPath(env) !== "readmodel") {
-          const products = await loadProducts({ csvFallback: resolveCsvFallback(env) });
-          return new Response(JSON.stringify({ categories: buildLegacyCategoryTree(products) }), {
-            status: 200,
-            headers: getCatalogCacheHeaders("categories"),
-          });
-        }
-
+        if (env.ENABLE_CSV_FALLBACK === "true") recordRetiredCatalogConfig("catalog");
         const supabase = getSupabase();
 
         const [taxonomyRes, countsRes] = await Promise.all([

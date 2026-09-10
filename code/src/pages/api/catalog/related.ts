@@ -8,6 +8,7 @@
 // productos manteniendo el orden de prioridad de `product_related`.
 
 import type { APIRoute } from "astro";
+import { recordRetiredCatalogConfig } from "@server/catalog/legacyTelemetry";
 import { getSupabase } from "@server/supabase";
 import { CatalogError, type CatalogCardProjection } from "@server/catalog/contracts";
 import {
@@ -16,10 +17,6 @@ import {
   withEdgeCache,
   getCatalogCacheHeaders,
 } from "@server/catalog/http";
-import { resolveCatalogReadPath, resolveCsvFallback } from "@server/catalog/readPath";
-import { loadProductById, loadRelatedProductsFallback } from "@utils/loadProducts";
-import { parsePrice } from "@utils/price";
-import type Product from "../../../types/product";
 import {
   createCatalogQueryTelemetry,
   observeCatalogQuery,
@@ -55,18 +52,6 @@ function rowToProjection(row: RelatedRow): CatalogCardProjection {
   };
 }
 
-function productToProjection(product: Product): CatalogCardProjection {
-  return {
-    id: product.id,
-    name: product.name,
-    price: parsePrice(product.price),
-    originalPrice: product.originalPrice == null ? undefined : parsePrice(product.originalPrice),
-    imageUrl: product.img[0] ?? "",
-    enOferta: Boolean(product.enOferta),
-    category: product.categories?.name ?? "",
-  };
-}
-
 const JSON_HEADERS = { "content-type": "application/json" };
 
 export const GET: APIRoute = async ({ request, locals }) => {
@@ -84,16 +69,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
         }
 
         const env = catalogReadEnv((locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
-        if (resolveCatalogReadPath(env) !== "readmodel") {
-          const options = { csvFallback: resolveCsvFallback(env) };
-          const product = await loadProductById(productId, options);
-          const related = product ? await loadRelatedProductsFallback(product, 10, options) : [];
-          return new Response(JSON.stringify({ items: related.map(productToProjection) }), {
-            status: 200,
-            headers: getCatalogCacheHeaders("related"),
-          });
-        }
-
+        if (env.ENABLE_CSV_FALLBACK === "true") recordRetiredCatalogConfig("catalog");
         const supabase = getSupabase();
 
         // 1) IDs relacionados en orden de prioridad (position), máx 10.

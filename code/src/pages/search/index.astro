@@ -33,7 +33,6 @@ if (q) {
     const result = env.CATALOG_READ_MODEL === "true"
        ? await runCatalogQuery(
          { query: q, sort, cursor, pageSize: PAGE_SIZE },
-         env,
          getSupabase(),
          { telemetry },
        )
