@@ -27,6 +27,9 @@
       ],
       "@stores/*": [
         "src/stores/*"
+      ],
+      "@client/*": [
+        "src/client/*"
       ]
     }
   }
