@@ -64,7 +64,6 @@ test.describe("Catalog SSR regressions", () => {
     await expect(page.locator("#products-pagination")).toHaveCount(0);
     expect(page.url()).toContain("/categories/Tecno");
   });
-  });
 
   test("offers render ten products and paginate to a different page", async ({ page }) => {
     const response = await page.goto("/ofertas", { waitUntil: "domcontentloaded" });
