@@ -4,6 +4,7 @@
 // construir un ProductRow normalizado.
 import { parsePrice } from "../utils.ts";
 import { isValidNuvexImageUrl } from "./security.ts";
+import { DEFAULT_PROVIDER_MARKUP } from "../../../config/providerMargins.ts";
 
 export interface NuvexColor {
   id: number;
@@ -31,7 +32,10 @@ export interface NuvexProductDraft {
   linkPago: string;
 }
 
-const NUVEX_MARKUP = 1.4;
+// Pure-sync parser: uses the shared default markup (1.4). Runtime DB overrides
+// (provider_catalog_settings.markup) are applied at the collection layer
+// (nuvexSync.ts -> draftToProductRow), not inside this parser.
+const NUVEX_MARKUP = DEFAULT_PROVIDER_MARKUP.nuvex;
 
 const CANONICAL_SIZES = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"];
 

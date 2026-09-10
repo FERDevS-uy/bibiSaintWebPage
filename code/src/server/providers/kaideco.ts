@@ -1,4 +1,5 @@
 import { normalizeText, cleanDescription, parsePrice, getUniqueColors, appendColorsToName, inferSubcategory, fetchJson, type ProductRow } from "./utils";
+import { getProviderMarkup } from "./markupSettings";
 
 const KAI_JSON_URL = "https://kaideco.uy/products.json?limit=250";
 
@@ -28,6 +29,9 @@ export async function syncKaiDeco(): Promise<{ products: ProductRow[]; count: nu
   const products: any[] = data?.products ?? [];
   console.log(`Kai Deco: ${products.length} productos encontrados`);
 
+  // Markup configurable (default 1.2); nunca tumba el sync si la DB falla.
+  const kaidecoMarkup = await getProviderMarkup("kaideco");
+
   const result: ProductRow[] = products.map((product: any) => {
     const baseName = normalizeText(product.title || "");
     const colorCandidates = [
@@ -38,7 +42,7 @@ export async function syncKaiDeco(): Promise<{ products: ProductRow[]; count: nu
     const name = appendColorsToName(baseName, colors);
     const description = cleanDescription(product.body_html || "");
     const primaryVariant = product.variants?.[0] ?? {};
-    const price = parsePrice(primaryVariant.price ?? "", 1.2);
+    const price = parsePrice(primaryVariant.price ?? "", kaidecoMarkup);
     const enOferta = !!primaryVariant.compare_at_price;
     const images = [
       product.image?.src,

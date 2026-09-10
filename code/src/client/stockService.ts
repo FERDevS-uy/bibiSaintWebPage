@@ -1,14 +1,14 @@
 import { normalizeSizes } from "../utils/sizes";
 import { withBasePath } from "../utils/basePath";
 import { fetchMartinaProductPrice } from "./martinaVerification";
+import { DEFAULT_PROVIDER_MARKUP, type Provider } from "../config/providerMargins";
 
-export type Provider = "martina" | "nuvex" | "kaideco" | "alondra" | "unknown";
+export type { Provider } from "../config/providerMargins";
+export { providerFrom } from "../config/providerMargins";
 
+// Default markup per provider (single source of truth: config/providerMargins).
 const PROVIDER_MULTIPLIER: Record<Exclude<Provider, "unknown">, number> = {
-  martina: 1,
-  nuvex: 1.4,
-  kaideco: 1.2,
-  alondra: 1.22,
+  ...DEFAULT_PROVIDER_MARKUP,
 };
 
 let nuvexApiReachability: Promise<boolean> | null = null;
@@ -101,17 +101,6 @@ export function applyProviderMarkupValue(rawPrice: unknown, provider: Provider):
 export function applyProviderMarkup(rawPrice: unknown, provider: Provider): string {
   const adjusted = applyProviderMarkupValue(rawPrice, provider);
   return adjusted > 0 ? formatUyPrice(adjusted) : "";
-}
-
-export function providerFrom(id: string, link: string): Provider {
-  const idLower = id.toLowerCase();
-  const linkLower = link.toLowerCase();
-
-  if (idLower.startsWith("mdt-")) return "martina";
-  if (idLower.startsWith("kai-") || linkLower.includes("kaideco.uy")) return "kaideco";
-  if (idLower.startsWith("alo-") || linkLower.includes("alondra.com.uy") || linkLower.includes("alondra-ecommerce")) return "alondra";
-  if (linkLower.includes("nuvex.uy")) return "nuvex";
-  return "unknown";
 }
 
 /**
