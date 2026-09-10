@@ -1,64 +1,33 @@
-# Bibi Saint — Core Principles
+# Bibi Saint — Project Instructions
 
-## Principios core
+## Scope
 
-- **Token Efficiency First**: usar la ruta mínima suficiente y reservar modelos caros para revisión/escalación.
-- **Spanish Communication**: responder siempre en español.
-- **No Slop**: anti-generic design, premium quality output.
-- **Semantic Alignment**: mantener coherencia visual y arquitectónica.
+Este archivo define reglas locales del proyecto para trabajo diario en `code/`.
 
-## Pipeline agéntico v4
+## Core rules
 
-Roles:
+1. Mantener separacion entre capas.
+2. No commitear secretos ni mover credenciales a cliente.
+3. `git commit` y `git push` solo con orden explicita del usuario.
+4. Preservar SSR en Astro y fallbacks de datos/proveedores existentes.
 
-- `coordinator`: clasifica y rutea. No explora ni implementa.
-- `locator`: ubica targets read-only.
-- `diagnostic`: confirma causa cuando realmente hace falta.
-- `expert`: planner senior solo por escalación.
-- `implementer`: único editor de producción.
-- `qa`: verificación mecánica/evidencia con modelo barato.
-- `reviewer`: firma semántica final con modelo fuerte para cambios no triviales.
-- ramas excepcionales: `security`, `dba`, `provider-scraper`.
+## Separation of concerns
 
-Rutas:
+- Runtime global de agentes/modelos: fuera del repo.
+- Contexto local del repo: `code/.opencode/skills/` y documentacion local.
+- Adaptadores independientes: `.github/` y `.codex/`.
 
-```text
-FAST_KNOWN:     implementer → qa
-FAST_LOCATE:    locator → implementer → qa
-PRE_DIAGNOSED:  implementer → qa → reviewer
-NORMAL:         locator → diagnostic → implementer → qa → reviewer
-COMPLEX:        locator → diagnostic → expert → implementer → qa → reviewer
-```
+## Architecture guardrails
 
-Regla de oro: **gratis hace el trabajo repetitivo; Luna entra solo donde aporta juicio final o resolución difícil**.
+- `code/` es la app principal.
+- `webScrappingTool/` es paquete separado para scrapers.
+- Supabase + fallback CSV deben seguir funcionando.
+- Scripts cliente deben engancharse a `astro:page-load`.
 
-## Modelos
+## Domain skills
 
-La única fuente de modelos es `code/.opencode/opencode.json`.
+Cuando el cambio toque estas areas, cargar skill local correspondiente:
 
-## Reglas operativas
-
-1. `steps` reales configurados por agente.
-2. No duplicar diagnóstico ya entregado por el usuario.
-3. Escritura secuencial: un solo editor.
-4. Máximo 2 ciclos de corrección.
-5. QA proporcional al riesgo; reviewer no rediagnostica.
-6. `git commit`/`git push` solo con autorización explícita.
-7. Contexto narrow: handoffs compactos, no dumps del repo.
-
-## Contexto del proyecto
-
-**Stack**: Astro 5 SSR + Cloudflare Workers + Supabase + React Islands  
-**Root**: `/Users/franccesco.giordano/Documents/proyectos personales/bibiSaintWebPage`  
-**App Root**: `code/`  
-**Deploy**: GitHub Actions → Cloudflare Workers  
-**Design System**: Red gradient hero, beige/tan background, yellow accents
-
-## Estilo
-
-- Español.
-- Conciso.
-- Action-oriented.
-
-**Last Updated**: 2026-09-03
-**System**: Free-first adaptive pipeline + senior review gate
+- `bibi-database` para DB, migraciones y RLS.
+- `bibi-security` para seguridad de admin/APIs/headers/origin checks.
+- `bibi-providers` para scrapers, transporte y precios en vivo.
