@@ -121,7 +121,7 @@ export const prerender = true;
   }
   .services-list li strong { white-space: nowrap; color: var(--orange-color); }
   .per-hour { font-size: 0.78em; font-weight: 600; }
-  .cta-text { margin-top: 2rem; }
+  .cta-text { margin-top: 2rem; margin-bottom: 0; }
 
   .contact-details {
     display: flex;
@@ -185,10 +185,11 @@ export const prerender = true;
   /* Right Column - Form */
   .contact-form-wrapper {
     flex: 1;
-    align-self: start;
-    margin-top: clamp(0rem, 4vw, 2.7rem);
+    align-self: stretch;
+    /* Start beside the main heading and let the panel end with the copy. */
+    margin-top: 2rem;
     padding: clamp(1.4rem, 3vw, 2.25rem);
-    background: #fffdf8;
+    background: var(--principal-background-color-light);
     border: 1px solid rgba(35, 41, 70, 0.1);
     border-radius: 16px;
     box-shadow: 0 14px 35px rgba(35, 41, 70, 0.08);

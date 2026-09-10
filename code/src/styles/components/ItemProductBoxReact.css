@@ -68,9 +68,9 @@
   padding: 10px 12px 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.75rem;
   text-align: center;
-  align-items: center;
+  align-items: stretch;
 }
 
 .listaProductos .p-name {
@@ -92,6 +92,8 @@
   align-items: center;
   gap: 1px;
   line-height: 1.15;
+  min-height: 2.3em;
+  justify-content: center;
 }
 
 .listaProductos .p-price-original {
@@ -108,7 +110,7 @@
 }
 
 .listaProductos .add-btn-wrapper {
-  margin-top: 4px;
+  margin-top: 0;
   opacity: 1;
   transform: translateY(0);
   pointer-events: all;
@@ -272,4 +274,3 @@
     min-width: 0;
   }
 }
-

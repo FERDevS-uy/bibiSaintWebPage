@@ -951,8 +951,6 @@ const isAbout = pathname.includes("/about");
     /* Hide mobile search button on desktop */
   }
   @media screen and (min-width: 1000px) {
-    header .mobileSearchBtn {
-      display: none;
-    }
+    header .mobileSearchBtn { display: none !important; }
   }
 </style>

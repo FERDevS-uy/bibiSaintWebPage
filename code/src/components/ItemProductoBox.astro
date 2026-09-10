@@ -114,9 +114,9 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
     padding: 10px 12px 12px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0.75rem;
     text-align: center;
-    align-items: center;
+    align-items: stretch;
   }
 
   .p-name {
@@ -137,6 +137,8 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
     align-items: center;
     gap: 1px;
     line-height: 1.15;
+    min-height: 2.3em;
+    justify-content: center;
   }
 
   .p-price-original {
@@ -154,7 +156,7 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
 
   /* Add to cart button wrapper */
   .add-btn-wrapper {
-    margin-top: 4px;
+    margin-top: 0;
     /* Mobile: always visible */
     opacity: 1;
     transform: translateY(0);
