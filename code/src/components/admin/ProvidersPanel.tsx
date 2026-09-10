@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import Modal from "./Modal";
 import NuvexSyncPanel from "./NuvexSyncPanel";
@@ -55,6 +55,19 @@ interface MartinaApplyResponse {
   campaignCode?: string;
 }
 
+interface MarginsResponse {
+  ok: boolean;
+  error?: string;
+  defaults: Record<string, number>;
+  values: Record<string, number>;
+}
+
+const MARGIN_PROVIDERS: Array<{ key: string; label: string }> = [
+  { key: "kaideco", label: "Kai" },
+  { key: "nuvex", label: "Nuvex" },
+  { key: "martina", label: "Martina" },
+];
+
 async function getAccessToken(): Promise<string | null> {
   const { data } = await supabase.auth.getSession();
   return data.session?.access_token ?? null;
@@ -75,8 +88,103 @@ export default function ProvidersPanel() {
   const [previewing, setPreviewing] = useState(false);
   const [applying, setApplying] = useState(false);
   const [preview, setPreview] = useState<MartinaPreviewResponse | null>(null);
-  const [applyResult, setApplyResult] = useState<MartinaApplyResponse | null>(null);
+  const [applyResult, setApplyResult] = useState<MartinaApplyResponse | null>(null,);
   const [martinaError, setMartinaError] = useState<string | null>(null);
+
+  // Márgenes de ganancia por proveedor
+  const [marginsLoading, setMarginsLoading] = useState(true);
+  const [marginsError, setMarginsError] = useState<string | null>(null);
+  const [marginsDbValues, setMarginsDbValues] = useState<
+    Record<string, number>
+  >({});
+  const [marginsDraft, setMarginsDraft] = useState<Record<string, string>>({});
+  const [marginsSaving, setMarginsSaving] = useState(false);
+  const [marginsSaveMsg, setMarginsSaveMsg] = useState<{
+    ok: boolean;
+    text: string;
+  } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const token = await getAccessToken();
+        const resp = await fetch("/api/admin/providers/margins", {
+          headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        });
+        const body: MarginsResponse = await resp.json().catch(() => null);
+        if (!resp.ok || !body?.ok) {
+          throw new Error(body?.error || `Error del servidor (${resp.status})`);
+        }
+        if (cancelled) return;
+        setMarginsDbValues(body.values);
+        setMarginsDraft(
+          Object.fromEntries(
+            MARGIN_PROVIDERS.map((p) => [
+              p.key,
+              String(body.values[p.key] ?? body.defaults[p.key] ?? 1),
+            ]),
+          ),
+        );
+      } catch (e: any) {
+        if (!cancelled) {
+          setMarginsError(
+            e?.message ||
+              "No se pudieron cargar los márgenes. Se muestran los valores por defecto.",
+          );
+        }
+      } finally {
+        if (!cancelled) setMarginsLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const handleSaveMargins = async () => {
+    setMarginsSaving(true);
+    setMarginsSaveMsg(null);
+    try {
+      const markup: Record<string, number> = {};
+      for (const p of MARGIN_PROVIDERS) {
+        const raw = String(marginsDraft[p.key] ?? "").replace(",", ".");
+        const n = Number(raw);
+        if (!Number.isFinite(n) || n <= 0 || n > 5) {
+          throw new Error(
+            `Markup inválido para ${p.label}: debe ser mayor a 0 y hasta 5.`,
+          );
+        }
+        markup[p.key] = Math.round(n * 1000) / 1000;
+      }
+
+      const token = await getAccessToken();
+      const resp = await fetch("/api/admin/providers/margins", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ markup }),
+      });
+      const body: MarginsResponse = await resp.json().catch(() => null);
+      if (!resp.ok || !body?.ok) {
+        throw new Error(body?.error || `Error del servidor (${resp.status})`);
+      }
+      setMarginsSaveMsg({
+        ok: true,
+        text: "Márgenes guardados. Los precios en vivo y syncs usarán los nuevos valores.",
+      });
+      setMarginsDbValues(markup);
+    } catch (e: any) {
+      setMarginsSaveMsg({
+        ok: false,
+        text: e?.message || "Error al guardar los márgenes",
+      });
+    } finally {
+      setMarginsSaving(false);
+    }
+  };
 
   const handleSync = async () => {
     setLoading(true);
@@ -208,17 +316,18 @@ export default function ProvidersPanel() {
           </span>
           <div>
             <strong style={{ display: "block", fontSize: "0.95rem" }}>Sincronización general</strong>
-            <span style={{ color: "var(--admin-text-secondary)", fontSize: "0.8rem" }}>Importa productos de Martina, Kai Deco y Alondra en una sola operación.</span>
+            <span style={{ color: "var(--admin-text-secondary)", fontSize: "0.8rem", }}>Importa productos de Martina, Kai Deco y Alondra en una sola operación.</span>
           </div>
         </div>
-        <button onClick={handleSync} disabled={loading} className="admin-btn admin-btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", flexShrink: 0 }}>
-          {loading ? <span className="admin-spinner" style={{ width: 14, height: 14, border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", borderRadius: "50%", animation: "adminSpin 0.6s linear infinite" }} /> : null}
+        <button onClick={handleSync} disabled={loading} className="admin-btn admin-btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", flexShrink: 0, }}>
+          {loading ? ( <span className="admin-spinner" style={{ width: 14, height: 14, border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", borderRadius: "50%", animation: "adminSpin 0.6s linear infinite", }} />
+          ) : null}
           {loading ? "Sincronizando..." : "Sincronizar todos"}
         </button>
       </section>
 
       {loading && (
-        <div style={{ padding: "2rem 0", textAlign: "center", color: "var(--admin-text-secondary)" }}>
+        <div style={{ padding: "2rem 0", textAlign: "center", color: "var(--admin-text-secondary)", }}>
           <div className="admin-skeleton" style={{ height: 14, width: "60%", margin: "0 auto 0.5rem" }} />
           <div className="admin-skeleton" style={{ height: 14, width: "40%", margin: "0 auto" }} />
         </div>
@@ -246,11 +355,11 @@ export default function ProvidersPanel() {
               <div>
                 <strong>{r.provider}</strong>
                 {r.status === "ok" ? (
-                  <span style={{ color: "var(--admin-success)", marginLeft: "0.5rem", fontSize: "0.85rem" }}>
+                  <span style={{ color: "var(--admin-success)", marginLeft: "0.5rem", fontSize: "0.85rem", }}>
                     {r.count} productos sincronizados
                   </span>
                 ) : (
-                  <span style={{ color: "var(--admin-danger)", marginLeft: "0.5rem", fontSize: "0.85rem" }}>
+                  <span style={{ color: "var(--admin-danger)", marginLeft: "0.5rem", fontSize: "0.85rem", }}>
                     Error: {r.error}
                   </span>
                 )}
@@ -289,7 +398,7 @@ export default function ProvidersPanel() {
             <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
             <line x1="12" y1="22.08" x2="12" y2="12" />
           </svg>
-          <p style={{ margin: "0.5rem 0 0", color: "var(--admin-text-secondary)", fontSize: "0.9rem" }}>
+          <p style={{ margin: "0.5rem 0 0", color: "var(--admin-text-secondary)", fontSize: "0.9rem", }}>
             Presiona "Sincronizar todos" para importar productos de Martina, Kai Deco y Alondra.
           </p>
         </div>
@@ -329,7 +438,7 @@ export default function ProvidersPanel() {
               color: "#8a6d1a",
             }}
           >
-            La escritura está deshabilitada: <code>MARTINA_SYNC_APPLY_ENABLED</code> no es{" "}
+            La escritura está deshabilitada:{" "} <code>MARTINA_SYNC_APPLY_ENABLED</code> no es
             <code>"true"</code>. Podés generar y revisar el preview, pero no aplicar cambios.
           </div>
         )}
@@ -349,20 +458,21 @@ export default function ProvidersPanel() {
               }}
             >
               <strong>Campaña {preview.campaign?.code}</strong>
-              <div style={{ fontSize: "0.85rem", color: "var(--admin-text-secondary)", marginTop: "0.25rem" }}>
+              <div style={{ fontSize: "0.85rem", color: "var(--admin-text-secondary)", marginTop: "0.25rem", }}>
                 {preview.campaign?.validFrom} → {preview.campaign?.validTill}
                 {preview.campaign?.vigente === false && (
                   <span style={{ color: "#8a6d1a", marginLeft: "0.5rem" }}>(no vigente)</span>
                 )}
               </div>
-              <div style={{ display: "flex", gap: "1rem", marginTop: "0.75rem", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: "1rem", marginTop: "0.75rem", flexWrap: "wrap", }}>
                 <span style={{ color: "var(--admin-success)" }}>▲ {preview.summary?.create ?? 0} crear</span>
                 <span style={{ color: "var(--admin-primary, #e67e22)" }}>● {preview.summary?.update ?? 0} actualizar</span>
-                <span style={{ color: "var(--admin-text-secondary)" }}>= {preview.summary?.unchanged ?? 0} sin cambios</span>
+                <span style={{ color: "var(--admin-text-secondary)" }}>
+                  = {preview.summary?.unchanged ?? 0} sin cambios</span>
               </div>
               {preview.changedCount !== undefined && preview.changedCount > (preview.plan?.length ?? 0) && (
-                <div style={{ fontSize: "0.8rem", color: "var(--admin-text-secondary)", marginTop: "0.5rem" }}>
-                  Mostrando {preview.plan?.length ?? 0} de {preview.changedCount} cambios.
+                <div style={{ fontSize: "0.8rem", color: "var(--admin-text-secondary)", marginTop: "0.5rem", }}>
+                  Mostrando {preview.plan?.length ?? 0} de{" "} {preview.changedCount} cambios.
                 </div>
               )}
             </div>
@@ -378,9 +488,9 @@ export default function ProvidersPanel() {
                   overflowY: "auto",
                 }}
               >
-                <table style={{ width: "100%", fontSize: "0.82rem", borderCollapse: "collapse" }}>
+                <table style={{ width: "100%", fontSize: "0.82rem", borderCollapse: "collapse", }}>
                   <thead>
-                    <tr style={{ textAlign: "left", color: "var(--admin-text-secondary)" }}>
+                    <tr style={{ textAlign: "left", color: "var(--admin-text-secondary)", }}>
                       <th style={thStyle}>Acción</th>
                       <th style={thStyle}>Producto</th>
                       <th style={thStyle}>Precio</th>
@@ -390,7 +500,7 @@ export default function ProvidersPanel() {
                   </thead>
                   <tbody>
                     {preview.plan.map((item) => (
-                      <tr key={item.id} style={{ borderTop: "1px solid var(--admin-border, #f1f2f4)" }}>
+                      <tr key={item.id} style={{ borderTop: "1px solid var(--admin-border, #f1f2f4)", }}>
                         <td style={tdStyle}>
                           <span
                             style={{
@@ -402,11 +512,13 @@ export default function ProvidersPanel() {
                           </span>
                         </td>
                         <td style={tdStyle}>
-                          {item.name} <span style={{ color: "var(--admin-text-secondary)" }}>({item.id})</span>
+                          {item.name}{" "} <span style={{ color: "var(--admin-text-secondary)" }}>({item.id})</span>
                         </td>
                         <td style={tdStyle}>${item.price}</td>
                         <td style={tdStyle}>
-                          {item.originalPrice ? <s>${item.originalPrice}</s> : "—"}
+                          {item.originalPrice ? ( <s>${item.originalPrice}</s>
+                          ) : ( "—"
+                          )}
                         </td>
                         <td style={tdStyle}>{item.enOferta ? "Sí" : "No"}</td>
                       </tr>
@@ -416,7 +528,7 @@ export default function ProvidersPanel() {
               </div>
             )}
 
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap", }}>
               <button
                 onClick={handleMartinaApply}
                 disabled={!preview.writeEnabled || applying || previewing}
@@ -440,6 +552,164 @@ export default function ProvidersPanel() {
 
       <section className="provider-workflow-card">
         <NuvexSyncPanel />
+      </section>
+
+      {/* ---- Márgenes de ganancia por proveedor ---- */}
+      <section
+        className="provider-workflow-card"
+        aria-label="Márgenes de ganancia"
+      >
+        <div style={headerStyle}>
+          <div>
+            <h2 style={{ ...pageTitle, fontSize: "1.3rem", margin: 0 }}>
+              Márgenes de ganancia
+            </h2>
+            <p style={pageSub}>
+              Markup aplicado sobre el precio base del proveedor (ej: 1.22 =
+              +22%). Se usa en precios en vivo, syncs y scrapers. Alondra no se
+              edita porque su API ya devuelve precios aumentados. Los cambios se
+              guardan en Supabase.
+            </p>
+    </div>
+        </div>
+
+        {marginsLoading && (
+          <div
+            style={{
+              color: "var(--admin-text-secondary)",
+              fontSize: "0.85rem",
+              padding: "0.5rem 0",
+            }}
+          >
+            Cargando márgenes...
+          </div>
+        )}
+
+        {!marginsLoading && marginsError && (
+          <div
+            style={{
+              background: "var(--admin-surface)",
+              border: "1px solid #e2b93b",
+              borderRadius: "var(--admin-radius)",
+              padding: "0.75rem 1.25rem",
+              marginBottom: "0.75rem",
+              fontSize: "0.85rem",
+              color: "#8a6d1a",
+            }}
+          >
+            {marginsError}
+          </div>
+        )}
+
+        {!marginsLoading &&
+          MARGIN_PROVIDERS.map((p) => {
+            const value = Number(
+              String(marginsDraft[p.key] ?? "").replace(",", "."),
+  );
+            const pct = Number.isFinite(value)
+              ? Math.round((value - 1) * 100)
+              : 0;
+            const isDefault = marginsDbValues[p.key] === undefined;
+            return (
+              <div
+                key={p.key}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  padding: "0.5rem 0",
+                  borderTop: "1px solid var(--admin-border, #f1f2f4)",
+                }}
+              >
+                <label
+                  htmlFor={`margin-${p.key}`}
+                  style={{
+                    width: 110,
+                    flexShrink: 0,
+                    fontWeight: 600,
+                    fontSize: "0.9rem",
+                  }}
+                >
+                  {p.label}
+                </label>
+                <input
+                  id={`margin-${p.key}`}
+                  type="number"
+                  step="0.01"
+                  min="1"
+                  max="5"
+                  inputMode="decimal"
+                  value={marginsDraft[p.key] ?? ""}
+                  onChange={(e) =>
+                    setMarginsDraft((prev) => ({
+                      ...prev,
+                      [p.key]: e.target.value,
+                    }))
+}
+                  style={{
+                    width: 110,
+                    padding: "0.45rem 0.6rem",
+                    border: "1px solid var(--admin-border, #e5e7eb)",
+                    borderRadius: "var(--admin-radius, 10px)",
+                    background: "var(--admin-surface)",
+                    color: "var(--admin-text)",
+                    fontSize: "0.9rem",
+                  }}
+                />
+                <span
+                  style={{
+                    color: "var(--admin-text-secondary)",
+                    fontSize: "0.85rem",
+                    width: 70,
+                    flexShrink: 0,
+                  }}
+                >
+                  +{pct}%
+                </span>
+                {isDefault && (
+                  <span
+                    style={{
+                      fontSize: "0.78rem",
+                      color: "var(--admin-text-secondary)",
+                    }}
+                  >
+                    (default)
+                  </span>
+                )}
+              </div>
+            );
+          })}
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+            marginTop: "0.75rem",
+            flexWrap: "wrap",
+          }}
+        >
+          <button
+            onClick={handleSaveMargins}
+            disabled={marginsSaving || marginsLoading}
+            className="admin-btn admin-btn-primary"
+          >
+            {marginsSaving ? "Guardando..." : "Guardar márgenes"}
+          </button>
+          {marginsSaveMsg && (
+            <span
+              style={{
+                color: marginsSaveMsg.ok
+                  ? "var(--admin-success)"
+                  : "var(--admin-danger)",
+                fontSize: "0.85rem",
+              }}
+            >
+              {marginsSaveMsg.ok ? "✓ " : ""}
+              {marginsSaveMsg.text}
+            </span>
+          )}
+        </div>
       </section>
     </div>
   );
