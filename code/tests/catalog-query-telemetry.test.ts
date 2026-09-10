@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   createCatalogQueryTelemetry,
   observeCatalogQuery,
+  recordCatalogRuntimeEvent,
 } from "../src/server/catalog/queryTelemetry.ts";
 
 test("observeCatalogQuery logs a successful route-correlated query", async () => {
@@ -81,4 +82,34 @@ test("observeCatalogQuery leaves uninstrumented callers unchanged", async () => 
   );
 
   assert.equal(result, "unobserved-result");
+});
+
+test("recordCatalogRuntimeEvent emits a correlated retired-config event without configuration values", () => {
+  const logs: string[] = [];
+  const originalWarn = console.warn;
+  console.warn = (message: string) => logs.push(message);
+
+  try {
+    recordCatalogRuntimeEvent({
+      event: "catalog_retired_config",
+      consumer: "catalog",
+      source: "supabase_read_model",
+      outcome: "blocked",
+      errorClass: "retired_config",
+      requestId: "request-retired-1",
+    });
+  } finally {
+    console.warn = originalWarn;
+  }
+
+  assert.equal(logs.length, 1);
+  const event = JSON.parse(logs[0]);
+  assert.deepEqual(event, {
+    event: "catalog_retired_config",
+    consumer: "catalog",
+    source: "supabase_read_model",
+    outcome: "blocked",
+    error_class: "retired_config",
+    request_id: "request-retired-1",
+  });
 });

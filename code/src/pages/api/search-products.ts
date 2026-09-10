@@ -13,7 +13,6 @@
 // Respuesta cursor-paginada: { items, nextCursor, hasMore, version, total }.
 
 import type { APIRoute } from "astro";
-import { searchProducts } from "@server/catalog/facade";
 import { getSupabase } from "@server/supabase";
 import {
   catalogReadEnv,
@@ -50,14 +49,12 @@ export const GET: APIRoute = async ({ request, locals }) => {
         const sort = url.searchParams.get("sort") ?? "nombre";
         const cursor = url.searchParams.get("cursor") || undefined;
         const supabase = getSupabase();
-        const result = env.CATALOG_READ_MODEL === "true"
-          ? await runCatalogQuery(
-            { query: q, sort, cursor, pageSize: limit },
-            env,
-            supabase,
-            { telemetry },
-          )
-          : await searchProducts(q, limit, env, getSupabase, { telemetry });
+        const result = await runCatalogQuery(
+          { query: q, sort, cursor, pageSize: limit },
+          env,
+          supabase,
+          { telemetry },
+        );
         const items = result.items.map((p) => ({
           id: p.id,
           name: p.name,

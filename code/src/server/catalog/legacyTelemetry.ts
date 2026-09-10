@@ -13,18 +13,23 @@
 
 export type LegacyFallbackRoute = "sidebar" | "header" | "catalog" | "product";
 
-export type LegacyFallbackReason = "supabase-empty" | "supabase-error" | "legacy-path";
+export type LegacyFallbackReason = "supabase-empty" | "supabase-error" | "legacy-path" | "csv_fallback_attempt" | "csv_fallback_success" | "csv_fallback_limit" | "csv_fallback_error";
 
 export interface LegacyFallbackEvent {
   route: LegacyFallbackRoute;
   category: string;
   reason: LegacyFallbackReason;
+  rowCount?: number;
 }
 
 const VALID_REASONS: readonly LegacyFallbackReason[] = [
   "supabase-empty",
   "supabase-error",
   "legacy-path",
+  "csv_fallback_attempt",
+  "csv_fallback_success",
+  "csv_fallback_limit",
+  "csv_fallback_error",
 ];
 
 const MAX_CATEGORY_LENGTH = 64;
@@ -54,7 +59,7 @@ export function recordLegacyFallback(event: LegacyFallbackEvent): void {
   const category = sanitizeCategory(event.category);
   try {
     console.warn(
-      `[catalog:legacy-fallback] route=${event.route} category=${category} reason=${event.reason}`,
+      `[catalog:legacy-fallback] route=${event.route} category=${category} reason=${event.reason}${event.rowCount === undefined ? "" : ` row_count=${Math.max(0, Math.floor(event.rowCount))}`}`,
     );
   } catch {
     // Telemetry is best-effort and must never change the legacy response path.

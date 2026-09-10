@@ -13,23 +13,17 @@ import {
 // resolveCatalogReadPath
 // ---------------------------------------------------------------------------
 
-test("resolveCatalogReadPath: sin env → legacy (default seguro)", () => {
-  assert.equal(resolveCatalogReadPath({}), "legacy");
-  assert.equal(resolveCatalogReadPath({ CATALOG_READ_MODEL: undefined }), "legacy");
-});
-
-test("resolveCatalogReadPath: 'true' exacto → readmodel", () => {
-  assert.equal(resolveCatalogReadPath({ CATALOG_READ_MODEL: "true" }), "readmodel");
-});
-
-test("resolveCatalogReadPath: 'false', 'TRUE', '1', basura → legacy", () => {
+test("resolveCatalogReadPath: every runtime configuration uses the canonical read model", () => {
   const cases: Array<{ env: { CATALOG_READ_MODEL?: string }; expected: CatalogReadPath }> = [
-    { env: { CATALOG_READ_MODEL: "false" }, expected: "legacy" },
-    { env: { CATALOG_READ_MODEL: "TRUE" }, expected: "legacy" },
-    { env: { CATALOG_READ_MODEL: "1" }, expected: "legacy" },
-    { env: { CATALOG_READ_MODEL: "true " }, expected: "legacy" },
-    { env: { CATALOG_READ_MODEL: "readmodel" }, expected: "legacy" },
-    { env: { CATALOG_READ_MODEL: "basura" }, expected: "legacy" },
+    { env: {}, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: undefined }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "true" }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "false" }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "TRUE" }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "1" }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "true " }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "readmodel" }, expected: "readmodel" },
+    { env: { CATALOG_READ_MODEL: "basura" }, expected: "readmodel" },
   ];
   for (const { env, expected } of cases) {
     assert.equal(resolveCatalogReadPath(env), expected, `env=${JSON.stringify(env)}`);
@@ -40,11 +34,8 @@ test("resolveCatalogReadPath: 'false', 'TRUE', '1', basura → legacy", () => {
 // resolveCsvFallback (opt-in estricto; nunca automático)
 // ---------------------------------------------------------------------------
 
-test("resolveCsvFallback: true solo con 'true' exacto", () => {
+test("resolveCsvFallback: default-off and exact opt-in only", () => {
   assert.equal(resolveCsvFallback({ ENABLE_CSV_FALLBACK: "true" }), true);
-});
-
-test("resolveCsvFallback: undefined, 'false', 'TRUE', '1', '' → false", () => {
   const cases: Array<{ env: { ENABLE_CSV_FALLBACK?: string } }> = [
     { env: {} },
     { env: { ENABLE_CSV_FALLBACK: undefined } },
@@ -57,4 +48,20 @@ test("resolveCsvFallback: undefined, 'false', 'TRUE', '1', '' → false", () => 
   for (const { env } of cases) {
     assert.equal(resolveCsvFallback(env), false, `env=${JSON.stringify(env)}`);
   }
+});
+
+import {
+  MAX_CSV_FALLBACK_ROWS,
+  CsvFallbackLimitError,
+  parseBoundedCsvFallback,
+} from "../src/server/catalog/csvFallback.ts";
+
+test("parseBoundedCsvFallback: accepts a small authorized fixture", () => {
+  const result = parseBoundedCsvFallback("id,name\np1,Uno\np2,Dos", (row) => row.split(",")[0]);
+  assert.deepEqual(result, ["p1", "p2"]);
+});
+
+test("parseBoundedCsvFallback: row 513 aborts before materializing a catalog", () => {
+  const source = ["id", ...Array.from({ length: MAX_CSV_FALLBACK_ROWS + 1 }, (_, i) => `p${i}`)].join("\n");
+  assert.throws(() => parseBoundedCsvFallback(source, (row) => row), CsvFallbackLimitError);
 });

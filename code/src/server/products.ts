@@ -4,6 +4,7 @@ import { getSupabase } from "./supabase";
 import { invalidateProductsCache } from "../utils/loadProducts";
 import { resetCachedCatalogVersion } from "./catalog/edgeCache";
 import { normalizeOfferOriginalPrice } from "../utils/price";
+import { CatalogError } from "./catalog/contracts";
 
 /** TTL de cachés de categoría/counts (5 min, alineado con la caché de productos). */
 const CATEGORY_CACHE_TTL = 300_000;
@@ -161,9 +162,13 @@ export async function fetchCategoryCounts(): Promise<Category[]> {
   return counts;
 }
 
-export async function fetchProductById(id: string): Promise<Product | null> {
-  const supabase = getSupabase();
+export type ProductLookupResult =
+  | { kind: "found"; product: Product }
+  | { kind: "not_found" };
 
+/** Distinguishes an authoritative absence from a retryable provider failure. */
+export async function fetchProductByIdResult(id: string): Promise<ProductLookupResult> {
+  const supabase = getSupabase();
   const { data, error } = await supabase
     .from("products")
     .select("*")
@@ -171,14 +176,19 @@ export async function fetchProductById(id: string): Promise<Product | null> {
     .eq("active", true)
     .single();
 
-  if (error || !data) {
-    if (error?.code !== "PGRST116") {
-      console.error(`Supabase fetchProductById(${id}) error:`, error);
-    }
-    return null;
+  if (error) {
+    if (error.code === "PGRST116") return { kind: "not_found" };
+    console.error(`Supabase fetchProductById(${id}) error:`, error);
+    throw new CatalogError("UPSTREAM_ERROR", "Product source is temporarily unavailable");
   }
+  if (!data) return { kind: "not_found" };
+  return { kind: "found", product: rowToProduct(data as unknown as SupabaseProductRow) };
+}
 
-  return rowToProduct(data as unknown as SupabaseProductRow);
+/** Backward-compatible lookup for legacy consumers that already treat absence as null. */
+export async function fetchProductById(id: string): Promise<Product | null> {
+  const result = await fetchProductByIdResult(id);
+  return result.kind === "found" ? result.product : null;
 }
 
 export async function fetchRelatedProducts(relatedIds: string[]): Promise<Product[]> {

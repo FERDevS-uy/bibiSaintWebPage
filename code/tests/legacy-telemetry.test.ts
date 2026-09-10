@@ -152,3 +152,24 @@ test("recordLegacyFallback: un fallo del logger no interrumpe el camino legacy",
     console.warn = originalWarn;
   }
 });
+
+test("CSV fallback telemetry records bounded lifecycle events without request data", () => {
+  resetLegacyTelemetry();
+  const warnings: string[] = [];
+  const originalWarn = console.warn;
+  console.warn = (message: string) => warnings.push(message);
+  try {
+    recordLegacyFallback({ route: "catalog", category: "all", reason: "csv_fallback_attempt" });
+    recordLegacyFallback({ route: "catalog", category: "all", reason: "csv_fallback_success", rowCount: 12 });
+    recordLegacyFallback({ route: "catalog", category: "all", reason: "csv_fallback_limit", rowCount: 513 });
+    recordLegacyFallback({ route: "catalog", category: "all", reason: "csv_fallback_error" });
+  } finally {
+    console.warn = originalWarn;
+  }
+  assert.deepEqual(warnings, [
+    "[catalog:legacy-fallback] route=catalog category=all reason=csv_fallback_attempt",
+    "[catalog:legacy-fallback] route=catalog category=all reason=csv_fallback_success row_count=12",
+    "[catalog:legacy-fallback] route=catalog category=all reason=csv_fallback_limit row_count=513",
+    "[catalog:legacy-fallback] route=catalog category=all reason=csv_fallback_error",
+  ]);
+});

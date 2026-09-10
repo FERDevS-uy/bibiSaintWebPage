@@ -1,13 +1,5 @@
 import { test, expect, type Locator, type Page } from "@playwright/test";
 
-/**
- * Run the local server before this suite with:
- * CATALOG_READ_MODEL=false ENABLE_CSV_FALLBACK=true PUBLIC_USE_SUPABASE=false pnpm dev
- *
- * The Playwright config intentionally has no webServer entry so the same suite
- * can target an already-running SSR server.
- */
-
 async function getProductHrefs(cards: Locator): Promise<string[]> {
   return cards.evaluateAll((elements) =>
     elements.flatMap((card) => {
@@ -64,15 +56,13 @@ async function expectNextPageWithDifferentProducts(
 }
 
 test.describe("Catalog SSR regressions", () => {
-  test("Tecno renders ten products and paginates to a different page", async ({ page }) => {
+  test("Tecno renders the stable canonical empty state without fabricated cards", async ({ page }) => {
     const response = await page.goto("/categories/Tecno", { waitUntil: "domcontentloaded" });
-    await expectSSRResponse(response);
-
-    const firstPageHrefs = await expectProductPage(page, "/categories/Tecno");
-    await expect(page.locator("#actualPage")).toHaveText("1");
-    await expectPagination(page);
-
-    await expectNextPageWithDifferentProducts(page, firstPageHrefs, "/categories/Tecno/page/2");
+    expect(response?.status()).toBe(200);
+    await expect(page.getByText("Sin Productos")).toBeVisible();
+    await expect(page.locator("#products-list-grid .producto_card")).toHaveCount(0);
+    await expect(page.locator("#products-pagination")).toHaveCount(0);
+    expect(page.url()).toContain("/categories/Tecno");
   });
 
   test("offers render ten products and paginate to a different page", async ({ page }) => {
