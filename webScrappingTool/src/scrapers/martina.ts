@@ -378,7 +378,7 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
           .filter(Boolean)
           .join(' '),
       );
-      const precio = parsePrice(first?.price ?? '', 1);
+      const precio = parsePrice(first?.price ?? '', Number(process.env.MARKUP_MARTINA ?? 1));
       const oferta =
         first?.price1 && parseFloat(String(first.price1)) > parseFloat(String(first.price ?? 0))
           ? 'true'

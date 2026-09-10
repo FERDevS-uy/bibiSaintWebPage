@@ -33,16 +33,16 @@ function scrapKaiDeco() {
             const products = (_a = data === null || data === void 0 ? void 0 : data.products) !== null && _a !== void 0 ? _a : [];
             console.log(`Kai Deco: se encontraron ${products.length} productos.`);
             return products.map((product) => {
-                var _a, _b, _c, _d, _e, _f, _g, _h;
+                var _a, _b, _c, _d, _e, _f, _g, _h, _j;
                 const baseName = (0, text_1.normalizeText)(product.title || '');
                 const colorCandidates = [product.title, ...((_b = (_a = product.variants) === null || _a === void 0 ? void 0 : _a.map((v) => v.option1 || v.title || '')) !== null && _b !== void 0 ? _b : [])].join(' ');
                 const colors = (0, text_1.getUniqueColors)(colorCandidates);
                 const name = (0, text_1.appendColorsToName)(baseName, colors);
                 const description = (0, text_1.cleanDescription)(product.body_html || '');
                 const primaryVariant = (_d = (_c = product.variants) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : {};
-                const precio = (0, price_1.parsePrice)((_e = primaryVariant.price) !== null && _e !== void 0 ? _e : '', 1.2);
+                const precio = (0, price_1.parsePrice)((_e = primaryVariant.price) !== null && _e !== void 0 ? _e : '', Number((_f = process.env.MARKUP_KAIDECO) !== null && _f !== void 0 ? _f : 1.2));
                 const oferta = primaryVariant.compare_at_price ? 'true' : '';
-                const imagen = (((_f = product.image) === null || _f === void 0 ? void 0 : _f.src) || ((_h = (_g = product.images) === null || _g === void 0 ? void 0 : _g[0]) === null || _h === void 0 ? void 0 : _h.src) || '').replace(/\s+/g, '');
+                const imagen = (((_g = product.image) === null || _g === void 0 ? void 0 : _g.src) || ((_j = (_h = product.images) === null || _h === void 0 ? void 0 : _h[0]) === null || _j === void 0 ? void 0 : _j.src) || '').replace(/\s+/g, '');
                 const subcategorias = (0, text_1.inferSubcategory)(name, 'Hogar');
                 return {
                     id: `kai-${product.id}`,

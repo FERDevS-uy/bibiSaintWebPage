@@ -25,7 +25,7 @@ export async function scrapKaiDeco(): Promise<Product[]> {
       const name = appendColorsToName(baseName, colors);
       const description = cleanDescription(product.body_html || '');
       const primaryVariant = product.variants?.[0] ?? {};
-      const precio = parsePrice(primaryVariant.price ?? '', 1.2);
+      const precio = parsePrice(primaryVariant.price ?? '', Number(process.env.MARKUP_KAIDECO ?? 1.2));
       const oferta = primaryVariant.compare_at_price ? 'true' : '';
       const imagen = (product.image?.src || product.images?.[0]?.src || '').replace(/\s+/g, '');
       const subcategorias = inferSubcategory(name, 'Hogar');

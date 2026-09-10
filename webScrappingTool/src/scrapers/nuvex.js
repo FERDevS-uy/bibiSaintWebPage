@@ -478,6 +478,7 @@ function scrapNuvexProducts() {
         for (let i = 0; i < uniqueQueue.length; i += batchSize) {
             const batch = uniqueQueue.slice(i, i + batchSize);
             yield Promise.all(batch.map((_a, j_1) => __awaiter(this, [_a, j_1], void 0, function* ({ url, catName }, j) {
+                var _b;
                 const idx = i + j;
                 console.log(`[${idx + 1}/${uniqueQueue.length}] Raspando Nuvex: ${url}`);
                 try {
@@ -506,7 +507,7 @@ function scrapNuvexProducts() {
                     let oferta = $('.price-old').length > 0 ? 'true' : '';
                     let precioFinal = '';
                     if (rawPrice) {
-                        precioFinal = (0, price_1.parsePrice)(rawPrice, 1.4);
+                        precioFinal = (0, price_1.parsePrice)(rawPrice, Number((_b = process.env.MARKUP_NUVEX) !== null && _b !== void 0 ? _b : 1.4));
                     }
                     const extractedColors = extractNuvexColorsAndImages($);
                     const fallbackImage = normalizeNuvexImageUrl($('.thumbnails li:first-child a').attr('href') || $('.thumbnail').attr('href') || '');
