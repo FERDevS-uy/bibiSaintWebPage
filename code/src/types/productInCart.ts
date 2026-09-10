@@ -6,4 +6,5 @@ export default interface ProductInCart {
     img: string;
     selectedColorId?: number | null;
     selectedColorName?: string | null;
+    selectedColorHex?: string | null;
 }
