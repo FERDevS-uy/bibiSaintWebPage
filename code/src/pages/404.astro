@@ -1,14 +1,186 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import colibri404 from "@assets/colibri-404.png";
 
 export const prerender = true;
 ---
-<Layout><h1>Lo sentimos la URL especificada no existe :(</h1></Layout>
+
+<Layout pageTitle="Página no encontrada | Bibi Saint">
+  <section class="not-found app-container" aria-labelledby="not-found-title">
+    <div class="not-found-media" aria-hidden="true">
+      <img
+        class="not-found-figure"
+        src={colibri404.src}
+        width="1375"
+        height="1144"
+        alt=""
+        decoding="async"
+      />
+    </div>
+
+    <div class="not-found-copy">
+      <h1 id="not-found-title">Esta página no existe</h1>
+      <p class="not-found-text">
+        La dirección que busca no está disponible o fue movida. Puede volver al
+        inicio para seguir explorando la tienda.
+      </p>
+      <div class="not-found-actions">
+        <a class="btn btn-primary" href="/">Volver al inicio</a>
+      </div>
+    </div>
+  </section>
+</Layout>
 
 <style>
-  h1 {
-    text-align: center;
-    margin-top: 20rem;
-    font-size: 2rem;
-    color: #444;
-  }</style>
+  .not-found {
+    display: grid;
+    flex: 1;
+    gap: 1.5rem;
+    align-content: center;
+    align-items: center;
+    padding: 2rem 1.5rem 2.5rem;
+  }
+
+  .not-found-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .not-found-figure {
+    width: min(100%, 360px);
+    height: auto;
+    animation: float-figure 7s ease-in-out infinite;
+  }
+
+  .not-found-copy {
+    max-width: 34rem;
+  }
+
+  .not-found-copy h1 {
+    font-size: clamp(1.9rem, 4vw + 1rem, 3rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-wrap: balance;
+    margin-bottom: 0.9rem;
+    color: var(--principal-text-color);
+  }
+
+  .not-found-text {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    max-width: 65ch;
+    margin-bottom: 1.75rem;
+    color: var(--principal-text-color);
+  }
+
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.8rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-decoration: none;
+    transition:
+      background-color 180ms ease-out,
+      color 180ms ease-out,
+      border-color 180ms ease-out,
+      transform 180ms ease-out;
+  }
+
+  .btn-primary {
+    background: var(--principal-text-color);
+    color: #fff;
+    border: 2px solid var(--principal-text-color);
+  }
+
+  .btn-primary:hover {
+    background: #313a63;
+    border-color: #313a63;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--principal-text-color);
+    border: 2px solid var(--principal-text-color);
+  }
+
+  .btn-secondary:hover {
+    background: var(--secondary-background-color);
+    transform: translateY(-1px);
+  }
+
+  .btn:focus-visible {
+    outline: 3px solid var(--orange-color);
+    outline-offset: 3px;
+  }
+
+  @keyframes float-figure {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-7px);
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .not-found {
+      grid-template-columns: 1fr 1.05fr;
+      gap: 2rem;
+      padding: 2.5rem 1.5rem 2.5rem;
+    }
+
+    .not-found-media {
+      order: 2;
+    }
+
+    .not-found-copy {
+      order: 1;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .not-found-media {
+      transform: translateX(7.5rem);
+    }
+  }
+
+  @media (max-width: 999px) {
+    .not-found {
+      grid-template-columns: 1fr;
+      padding: 2rem 1.25rem;
+      text-align: center;
+    }
+
+    .not-found-copy {
+      margin-inline: auto;
+    }
+
+    .not-found-actions {
+      justify-content: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .not-found-figure {
+      animation: none;
+    }
+
+    .btn {
+      transition: none;
+    }
+  }
+</style>
