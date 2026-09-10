@@ -527,7 +527,7 @@ export async function scrapNuvexProducts(): Promise<Product[]> {
         let oferta = $('.price-old').length > 0 ? 'true' : '';
         let precioFinal = '';
         if (rawPrice) {
-          precioFinal = parsePrice(rawPrice, 1.4);
+          precioFinal = parsePrice(rawPrice, Number(process.env.MARKUP_NUVEX ?? 1.4));
         }
         const extractedColors = extractNuvexColorsAndImages($);
 

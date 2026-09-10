@@ -388,18 +388,18 @@ function scrapMartinaDiTrento() {
             }
             const result = [];
             byCode.forEach((entries, code) => {
-                var _a, _b, _c, _d, _e, _f, _g;
+                var _a, _b, _c, _d, _e, _f, _g, _h;
                 const first = entries[0];
                 const name = (0, text_1.normalizeText)((first === null || first === void 0 ? void 0 : first.name) || '');
                 const description = (0, text_1.cleanDescription)([first === null || first === void 0 ? void 0 : first.description, first === null || first === void 0 ? void 0 : first.description2, first === null || first === void 0 ? void 0 : first.description3]
                     .filter(Boolean)
                     .join(' '));
-                const precio = (0, price_1.parsePrice)((_a = first === null || first === void 0 ? void 0 : first.price) !== null && _a !== void 0 ? _a : '', 1);
-                const oferta = (first === null || first === void 0 ? void 0 : first.price1) && parseFloat(String(first.price1)) > parseFloat(String((_b = first.price) !== null && _b !== void 0 ? _b : 0))
+                const precio = (0, price_1.parsePrice)((_a = first === null || first === void 0 ? void 0 : first.price) !== null && _a !== void 0 ? _a : '', Number((_b = process.env.MARKUP_MARTINA) !== null && _b !== void 0 ? _b : 1));
+                const oferta = (first === null || first === void 0 ? void 0 : first.price1) && parseFloat(String(first.price1)) > parseFloat(String((_c = first.price) !== null && _c !== void 0 ? _c : 0))
                     ? 'true'
                     : '';
-                const categoryName = String(((_d = (_c = first === null || first === void 0 ? void 0 : first.productLine) === null || _c === void 0 ? void 0 : _c.parent) === null || _d === void 0 ? void 0 : _d.name) || ((_e = first === null || first === void 0 ? void 0 : first.productLine) === null || _e === void 0 ? void 0 : _e.name) || 'Ropa');
-                const subcategoria = String(((_f = first === null || first === void 0 ? void 0 : first.productLine) === null || _f === void 0 ? void 0 : _f.name) || '');
+                const categoryName = (0, text_1.toTitleCase)(String(((_e = (_d = first === null || first === void 0 ? void 0 : first.productLine) === null || _d === void 0 ? void 0 : _d.parent) === null || _e === void 0 ? void 0 : _e.name) || ((_f = first === null || first === void 0 ? void 0 : first.productLine) === null || _f === void 0 ? void 0 : _f.name) || 'Ropa').trim());
+                const subcategoria = (0, text_1.toTitleCase)(String(((_g = first === null || first === void 0 ? void 0 : first.productLine) === null || _g === void 0 ? void 0 : _g.name) || '').trim());
                 // Unión de colores extraídos del árbol de variaciones de todos los items
                 const colorById = new Map();
                 entries.forEach((entry) => {
@@ -458,7 +458,7 @@ function scrapMartinaDiTrento() {
                     images: c.images,
                 })));
                 const subcategorias = subcategoria && subcategoria !== categoryName ? subcategoria : '';
-                const providerId = String((_g = first === null || first === void 0 ? void 0 : first.id) !== null && _g !== void 0 ? _g : code).trim();
+                const providerId = String((_h = first === null || first === void 0 ? void 0 : first.id) !== null && _h !== void 0 ? _h : code).trim();
                 result.push({
                     id: `mdt-${providerId}`,
                     relacionados: '',

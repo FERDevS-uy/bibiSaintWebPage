@@ -1,10 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.toTitleCase = toTitleCase;
 exports.normalizeText = normalizeText;
 exports.cleanDescription = cleanDescription;
 exports.getUniqueColors = getUniqueColors;
 exports.appendColorsToName = appendColorsToName;
 exports.inferSubcategory = inferSubcategory;
+function toTitleCase(value) {
+    return value
+        .toLowerCase()
+        .split(' ')
+        .filter(Boolean)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
 function normalizeText(text) {
     if (!text)
         return "";
