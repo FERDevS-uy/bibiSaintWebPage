@@ -4,7 +4,7 @@
 
 - **Canonical runtime and telemetry:** canonical-only read-path, ignored CSV runtime configuration, structured retirement/degraded telemetry, full transactional detail reader, and safe uncached header/sidebar degradation.
 - **Canonical Tecno contract:** Nuvex/Tecno products are intentionally inactive. `/categories/Tecno` is therefore verified as a stable HTTP 200 empty canonical state (`Sin Productos`), without product cards or pagination. Active offers and Ropa Hombre retain positive pagination coverage.
-- **Delivery boundary:** feature-branch-chain remains future-only with `impladmin` as its target. The implementation is now partitioned into small commits on `catalog-dev`; no PR, push, or deploy was made. Future commits must remain small, detailed, and reviewable.
+- **Delivery boundary:** feature-branch-chain remains future-only with `impladmin` as its target. The implementation is now partitioned into small commits on `dev`; no PR, push, or deploy was made. Future commits must remain small, detailed, and reviewable.
 
 ## Completed Tasks
 
