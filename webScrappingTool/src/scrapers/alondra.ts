@@ -85,6 +85,11 @@ function pickDescription(customFields: Record<string, unknown> | undefined): str
   return '';
 }
 
+/** Alondra's API already returns increased prices; never apply another markup. */
+export function alondraApiPrice(rawPrice: string | number): string {
+  return parsePrice(rawPrice, 1);
+}
+
 export async function scrapAlondraProducts(): Promise<Product[]> {
   console.log('Iniciando scraping de Alondra...');
 
@@ -172,7 +177,7 @@ export async function scrapAlondraProducts(): Promise<Product[]> {
       const description = cleanDescription(rawDescription);
 
       const rawBasePrice = product.new_price ?? product.price ?? 0;
-      const precio = parsePrice(String(rawBasePrice), 1.3);
+      const precio = alondraApiPrice(String(rawBasePrice));
 
       const numericBase = Number(product.price ?? 0);
       const numericNew = Number(product.new_price ?? Number.NaN);

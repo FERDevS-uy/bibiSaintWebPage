@@ -15,6 +15,7 @@ import { getServerEnv } from "./martinaSync";
 import { invalidateAllProductCaches } from "../products";
 import { bumpCatalogVersion } from "../catalog/edgeCache";
 import { isNuvexCatalogEnabled } from "./catalogSettings";
+import { getProviderMarkup } from "./markupSettings";
 import { normalizeOfferOriginalPrice } from "../../utils/price";
 import {
   buildPlan,
@@ -35,7 +36,6 @@ export type {
 };
 export { matchByName, buildPlan } from "./nuvex/planner";
 
-const NUVEX_MARKUP = 1.4;
 const PREVIEW_TTL_MS = 10 * 60 * 1000;
 
 // ---------------------------------------------------------------------------
@@ -117,9 +117,9 @@ export interface NuvexPreviewTokenPayload {
 // Recolección y mapeo a ProductRow
 // ---------------------------------------------------------------------------
 
-function draftToProductRow(d: NuvexProductDraft): ProductRow {
+function draftToProductRow(d: NuvexProductDraft, nuvexMarkup: number): ProductRow {
   const parsedOriginalPrice =
-    d.hasOffer && d.originalPriceRaw ? parsePrice(d.originalPriceRaw, NUVEX_MARKUP) : null;
+    d.hasOffer && d.originalPriceRaw ? parsePrice(d.originalPriceRaw, nuvexMarkup) : null;
   const originalPrice = normalizeOfferOriginalPrice(parsedOriginalPrice, d.price);
   return {
     id: d.id,
@@ -177,7 +177,9 @@ export async function collectNuvexData(): Promise<{ products: ProductRow[]; draf
     );
     for (const r of results) if (r) drafts.push(r);
   }
-  const products = drafts.map(draftToProductRow);
+  // Markup configurable (default 1.4); nunca tumba el sync si la DB falla.
+  const nuvexMarkup = await getProviderMarkup("nuvex");
+  const products = drafts.map((d) => draftToProductRow(d, nuvexMarkup));
   // Dedupe por id: el mismo producto puede aparecer en varias categorías del
   // catálogo y un upsert con ids duplicados en un batch falla ("cannot affect
   // row a second time").

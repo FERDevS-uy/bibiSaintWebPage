@@ -6,6 +6,7 @@ import {
   fetchJson,
   type ProductRow,
 } from "./utils";
+import { getProviderMarkup } from "./markupSettings";
 
 const ALONDRA_API_BASE = "https://alondra-ecommerce-be.sitios.uy/api";
 const ALONDRA_CATALOGO_URL = "https://alondra.com.uy/catalogo";
@@ -79,9 +80,9 @@ function mapRootToInternalCategory(rootName: string): string {
   return "Hogar";
 }
 
-function pickDescription(customFields: Record<string, unknown> | undefined): string {
+function pickDescription(customFields: Record<string, unknown> | undefined,): string {
   if (!customFields || typeof customFields !== "object") return "";
-  const candidates = ["description", "descripcion", "detail", "detalle", "info"];
+  const candidates = ["description", "descripcion", "detail", "detalle", "info",];
   for (const key of candidates) {
     const value = customFields[key];
     if (typeof value === "string" && value.trim()) return value;
@@ -89,10 +90,10 @@ function pickDescription(customFields: Record<string, unknown> | undefined): str
   return "";
 }
 
-export async function syncAlondra(): Promise<{ products: ProductRow[]; count: number }> {
+export async function syncAlondra(): Promise<{ products: ProductRow[]; count: number; }> {
   console.log("Alondra: iniciando sync...");
 
-  const categoriesRaw: AlondraCategory[] = await fetchJson(`${ALONDRA_API_BASE}/categories`, 20000);
+  const categoriesRaw: AlondraCategory[] = await fetchJson(`${ALONDRA_API_BASE}/categories`, 20000,);
 
   const categoriesById = new Map<string, { id: string; name: string; parentId: string }>();
   (Array.isArray(categoriesRaw) ? categoriesRaw : []).forEach((category) => {
@@ -143,7 +144,12 @@ export async function syncAlondra(): Promise<{ products: ProductRow[]; count: nu
     });
   });
 
-  console.log(`Alondra: ${filtered.length} productos tras filtro de categorías`);
+  console.log(`Alondra: ${filtered.length} productos tras filtro de categorías`,
+  );
+
+  // Alondra already returns increased prices; the shared resolver enforces factor 1
+  // and ignores any legacy database override.
+  const alondraMarkup = await getProviderMarkup("alondra");
 
   const products: ProductRow[] = filtered.map((product) => {
     const id = extractId(product._id || product.id);
@@ -154,10 +160,10 @@ export async function syncAlondra(): Promise<{ products: ProductRow[]; count: nu
 
     const matchedCategories = categoryIds
       .map((catId) => categoriesById.get(catId))
-      .filter((cat): cat is { id: string; name: string; parentId: string } => Boolean(cat));
+      .filter((cat): cat is { id: string; name: string; parentId: string } => Boolean(cat),);
 
     const root = matchedCategories.map((cat) => findRootCategory(cat.id, categoriesById)).find(Boolean);
-    const categoria = mapRootToInternalCategory(root?.name || matchedCategories[0]?.name || "Hogar");
+    const categoria = mapRootToInternalCategory(root?.name || matchedCategories[0]?.name || "Hogar",);
     const explicitSubcategory = matchedCategories
       .map((cat) => cat.name)
       .find((catName) => Boolean(catName) && catName !== root?.name);
@@ -167,7 +173,7 @@ export async function syncAlondra(): Promise<{ products: ProductRow[]; count: nu
     const description = cleanDescription(rawDescription);
 
     const rawBasePrice = product.new_price ?? product.price ?? 0;
-    const price = parsePrice(String(rawBasePrice), 1.3);
+    const price = parsePrice(String(rawBasePrice), alondraMarkup);
 
     const numericBase = Number(product.price ?? 0);
     const numericNew = Number(product.new_price ?? Number.NaN);

@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.scrapAlondraProducts = scrapAlondraProducts;
+exports.alondraApiPrice = alondraApiPrice;
 const axios_1 = __importDefault(require("axios"));
 const text_1 = require("../utils/text");
 const price_1 = require("../utils/price");
@@ -77,6 +78,10 @@ function pickDescription(customFields) {
     }
     return '';
 }
+/** Alondra's API already returns increased prices; never apply another markup. */
+function alondraApiPrice(rawPrice) {
+    return (0, price_1.parsePrice)(rawPrice, 1);
+}
 function scrapAlondraProducts() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('Iniciando scraping de Alondra...');
@@ -137,7 +142,7 @@ function scrapAlondraProducts() {
             });
             console.log(`Alondra: ${filteredProducts.length} productos luego del filtro de categorías.`);
             return filteredProducts.map((product) => {
-                var _a, _b, _c, _d, _e;
+                var _a, _b, _c, _d, _e, _f;
                 const id = extractId(product._id || product.id);
                 const name = (0, text_1.normalizeText)(String(product.name || '').trim());
                 const categoryIds = Array.isArray(product.category_ids)
@@ -157,9 +162,9 @@ function scrapAlondraProducts() {
                 const rawDescription = pickDescription(product.custom_fields);
                 const description = (0, text_1.cleanDescription)(rawDescription);
                 const rawBasePrice = (_c = (_b = product.new_price) !== null && _b !== void 0 ? _b : product.price) !== null && _c !== void 0 ? _c : 0;
-                const precio = (0, price_1.parsePrice)(String(rawBasePrice), 1.3);
-                const numericBase = Number((_d = product.price) !== null && _d !== void 0 ? _d : 0);
-                const numericNew = Number((_e = product.new_price) !== null && _e !== void 0 ? _e : Number.NaN);
+                const precio = alondraApiPrice(String(rawBasePrice));
+                const numericBase = Number((_e = product.price) !== null && _e !== void 0 ? _e : 0);
+                const numericNew = Number((_f = product.new_price) !== null && _f !== void 0 ? _f : Number.NaN);
                 const oferta = Number.isFinite(numericNew) && Number.isFinite(numericBase) && numericNew < numericBase
                     ? 'true'
                     : '';

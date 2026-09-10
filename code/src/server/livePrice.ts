@@ -1,5 +1,6 @@
 /// <reference types="astro/client" />
-import { applyProviderMarkupValue, providerFrom, type Provider } from "../client/stockService";
+import { providerFrom, type Provider } from "../config/providerMargins";
+import { getProviderMarkup } from "./providers/markupSettings";
 
 /**
  * Resultado normalizado para Server Islands.
@@ -186,7 +187,8 @@ export async function getLivePrice({
 
     if (provider === "kaideco") {
       const live = await withTimeout(getKaiPrice(providerLink), PROVIDER_TIMEOUT_MS);
-      const adjusted = applyProviderMarkupValue(live.price, provider);
+      const markup = await getProviderMarkup(provider);
+      const adjusted = Math.round(live.price * markup);
       liveResult = {
         provider,
         price: formatUy(adjusted) || fallbackResult.price,
@@ -196,7 +198,8 @@ export async function getLivePrice({
       };
     } else if (provider === "alondra") {
       const live = await withTimeout(getAlondraPrice(productId), PROVIDER_TIMEOUT_MS);
-      const adjusted = applyProviderMarkupValue(live.price, provider);
+      const markup = await getProviderMarkup(provider);
+      const adjusted = Math.round(live.price * markup);
       liveResult = {
         provider,
         price: formatUy(adjusted) || fallbackResult.price,
