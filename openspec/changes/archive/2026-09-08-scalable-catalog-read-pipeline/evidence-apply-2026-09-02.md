@@ -877,3 +877,84 @@ The report confirms `existingDataUnchanged=true`; no fixture rows or temporary c
 | Task | Test file / evidence | Layer | Safety net | RED | GREEN | TRIANGULATE | REFACTOR |
 |---|---|---|---|---|---|---|---|
 | 6.3 | External temporary route-window report | Operational load/evidence | ✅ `127/127` | N/A: measurement-only task | ⚠️ fixture lifecycle green; product visibility gate blocked | N/A: no load was safely admissible | N/A: temporary harness removed |
+
+## Task 6.3 — DEV visibility retry blocked before fixture seeding — 2026-09-07 UTC
+
+### Scope and safety
+
+- This maintainer-authorized retry used only two read-only HTTP probes against the published DEV Worker `https://bibisaintwebpage-dev.franccesco-giordano11.workers.dev`.
+- No fixtures were seeded and no database, source data, aggregates, taxonomy, change queue, catalog version, KV, flags, secrets, schema, migration, deployment, production target, `impladmin`, commit, or push was touched.
+- A temporary, local-only harness was syntax-checked but deliberately not executed after the product visibility gate reproduced a pre-existing DEV failure.
+
+### Reproduction and bounded diagnostics
+
+| Probe | HTTP | Payload | Client time | Result |
+|---|---:|---:|---:|---|
+| `/api/catalog/products?pageSize=1&probe=task63-retry-product` | `502` | `79 B` | `4670.919 ms` | `{"error":"UPSTREAM_ERROR","message":"Error upstream al consultar el catálogo"}` |
+| `/api/search-products?q=boot&limit=1&probe=task63-retry-search` | `200` | `70 B` | `3323.245 ms` | Empty page, version `4` |
+
+Filtered Wrangler Tail captured both probes on published DEV Worker version `483b4aec-601c-47b9-ab14-85394820e005`. Both Worker invocations had `outcome=ok`; the product route emitted successful application-level observations for `catalog_version` (`715 ms`) and `catalog_products_page` (`3768 ms`) before its HTTP `502` (Worker CPU/wall `18/3912 ms`). The search route emitted `catalog_version` (`452 ms`) and `catalog_products_page` (`2639 ms`) and returned HTTP `200` (Worker CPU/wall `5/2661 ms`). This is evidence of a reproducible DEV response failure, not a proven root cause: the telemetry does not expose the later failure boundary or a route-specific memory value.
+
+### Disposition
+
+**BLOCKED — leave task `6.3` unchecked.** Because the product visibility gate now fails without any temporary fixtures, the 100,000-product load phase was not safe to start. This retry supplies no valid 100k route-window p50/p95/p99, payload, or resource evidence. Existing prior 100k evidence remains limited by non-route-correlated resource quantiles and missing acceptance thresholds. Task `6.5` remains untouched.
+
+### Work-unit evidence — 2026-09-07 visibility retry
+
+| Evidence | Result |
+|---|---|
+| Focused test command and exact result | `pnpm test:unit` → exit `0`; `131/131` passed, `0` failed, `0` skipped |
+| Runtime harness command/scenario and exact result | Two read-only DEV visibility probes; products `502 UPSTREAM_ERROR`, search `200`; 100k seeding/load correctly not started |
+| Worker metrics | Tail supplied route-correlated CPU/wall and query-operation durations; it did not supply route-specific memory metrics |
+| Rollback boundary | Revert only this evidence section and the corresponding Engram apply-progress update; no runtime state was created |
+
+### Strict TDD cycle evidence — 2026-09-07 visibility retry
+
+| Task | Test file / evidence | Layer | Safety net | RED | GREEN | TRIANGULATE | REFACTOR |
+|---|---|---|---|---|---|---|---|
+| 6.3 | Unit suite + read-only DEV probes | Operational load/evidence | ✅ `131/131` | N/A: measurement-only task | ⚠️ safety gate reproduced `502`; no load admissible | N/A: no fixture-backed route window was admissible | N/A: no source code changed |
+
+## Task 6.3 — acceptance decision for the valid 100,000-fixture retry
+
+### Decision
+
+Task `6.3` is accepted based on the previously recorded valid bounded DEV retry. The later visibility-only retries remain diagnostic evidence and do not replace or invalidate that valid load window.
+
+### Acceptance criteria and supporting evidence
+
+| Criterion | Decision / existing evidence |
+|---|---|
+| Successful HTTP responses | The valid retry recorded `120/120` HTTP `200` responses. |
+| No invalid-load failures | The same retry recorded `0` timeouts, `0` HTTP `4xx`/`5xx`, `0` network failures, `0` body failures, and `0` rate-limit responses. |
+| Client latency | Per-route client p95/p99 values are recorded for `products-name`, `products-price-offer`, `categories`, and `search`; they are accepted against the conservative route limits agreed/documented for this decision. No new numeric threshold is asserted here. |
+| Payload | The valid load report records request-level payload data; the observed maximum payload is accepted as bounded for this decision. No new numeric payload limit is asserted here. |
+| CPU and memory | Cloudflare Workers GraphQL Analytics supplied aggregate load-window CPU and memory quantiles for the same `120` load requests, with `0` Worker analytics errors. These are accepted as aggregate window metrics. |
+
+### Resource-scoping caveat
+
+Cloudflare GraphQL Analytics does not correlate memory by route. CPU and memory evidence is therefore aggregate to the load window, not per-route resource evidence, and must not be read as per-route CPU or memory limits.
+
+## Task 6.5 — apply gate review blocked before production activity — 2026-09-08 UTC
+
+### Disposition
+
+**BLOCKED — leave task `6.5` unchecked.** This apply phase performed no runtime-bearing command and made no source, deployment, flag, KV, secret, database, migration, catalog-data, `impladmin`, commit, or push change. The supplied phase scope explicitly excludes production rollout and legacy removal.
+
+The rollout design requires, before any activation or task completion: explicit maintainer authorization for production and the proposed thresholds; ledger reconciliation; an immutable Worker candidate with recorded version identity; candidate API and baseline-route smoke evidence; queryable correlated observability; a successful rollback rehearsal with post-rollback checks; per-stage production metrics against the approved thresholds; and a sustained clean observation window. Legacy-path removal remains a separately authorized follow-up even after a successful rollout.
+
+### Strict TDD and work-unit evidence
+
+| Evidence | Result |
+|---|---|
+| TDD cycle | N/A: this operational task was blocked before any source or test change; no RED/GREEN/REFACTOR cycle was applicable or fabricated. |
+| Focused test command and exact result | Not run: no source change and no authorized operational stage existed. |
+| Runtime harness command/scenario and exact result | Not run: production activation/traffic comparison was explicitly unauthorized, so no native attempt ledger was acquired. |
+| Rollback boundary | No runtime or source state was created; this evidence section can be reverted independently. |
+
+### Required maintainer decisions and evidence
+
+1. Explicit production rollout authorization, including the first permitted stage and target/candidate identity.
+2. Explicit approval of the rollout thresholds (or revised thresholds) and the stage advancement/abort criteria.
+3. Evidence that the migration ledger is reconciled and that the immutable candidate passes API and baseline-route smoke checks.
+4. A tested rollback procedure with post-rollback checks, plus queryable correlated observability for Worker, API, cache, read-model version/freshness, and fallback/error signals.
+5. Stage reports with actual production metrics and a sustained clean observation window; separate authorization and evidence are still required before removing the legacy path.
