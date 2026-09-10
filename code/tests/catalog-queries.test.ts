@@ -20,7 +20,17 @@ import {
 } from "../src/server/catalog/queries.ts";
 import { createCatalogQueryTelemetry } from "../src/server/catalog/queryTelemetry.ts";
 
-const ENV = { CATALOG_READ_MODEL: "true" };
+/** Explicit mock-chain type for the Supabase query builder used below. */
+type SupabaseMockChain = {
+  from: (table: string) => SupabaseMockChain;
+  select: (cols: string, opts?: unknown) => SupabaseMockChain;
+  eq: (col: string, val: unknown) => SupabaseMockChain;
+  ilike: (col: string, val: unknown) => SupabaseMockChain;
+  order: (col: string, opts: unknown) => SupabaseMockChain;
+  or: (filter: string) => SupabaseMockChain;
+  limit: (n: number) => Promise<{ data: unknown; error: unknown; count?: number | null }>;
+  single: () => Promise<{ data: { version: string }; error: unknown }>;
+};
 
 // ---------------------------------------------------------------------------
 // buildOrderByClause
@@ -165,9 +175,14 @@ test("decodeCursorForOrder: cursor de precio malformado → INVALID_CURSOR", () 
 // ---------------------------------------------------------------------------
 
 /** Construye un mock de Supabase que registra la consulta construida. */
+type RecordedSupabaseCall = {
+  method: string;
+  args: unknown[];
+};
+
 function makeSupabaseMock(rows: unknown[], version = "v1", totalCount = rows.length) {
-  const calls: Array<Record<string, unknown>> = [];
-  const chain: Record<string, any> = {};
+  const calls: RecordedSupabaseCall[] = [];
+  const chain = {} as SupabaseMockChain;
   let countWithRows = false;
 
   const record = (method: string, ...args: unknown[]) => {
@@ -216,7 +231,7 @@ test("runCatalogQuery: primer request sin cursor → sin condición or, limit+1,
     { id: "p3", name: "C", price: 30, imageUrl: "c.jpg", enOferta: false, category: "Tecno", subcategory: "Audio", sort_name: "c" },
   ];
   const { chain, calls } = makeSupabaseMock(rows);
-  const res = await runCatalogQuery({ sort: "nombre", pageSize: 2 }, ENV, chain);
+  const res = await runCatalogQuery({ sort: "nombre", pageSize: 2 }, chain);
 
   assert.equal(res.items.length, 2);
   assert.equal(res.hasMore, true);
@@ -234,7 +249,7 @@ test("runCatalogQuery: primer request sin cursor → sin condición or, limit+1,
 
 test("runCatalogQuery: primera página combina filas y COUNT exacto en un SELECT", async () => {
   const { chain, calls } = makeSupabaseMock([], "v1", 42);
-  const res = await runCatalogQuery({ sort: "nombre", category: "Ropa" }, ENV, chain);
+  const res = await runCatalogQuery({ sort: "nombre", category: "Ropa" }, chain);
 
   const exactSelects = calls.filter(
     (call) => call.method === "select" && (call.args[1] as { count?: string } | undefined)?.count === "exact",
@@ -243,9 +258,31 @@ test("runCatalogQuery: primera página combina filas y COUNT exacto en un SELECT
   assert.equal(res.total, 42);
 });
 
+test("runCatalogQuery: includeTotal:false omite COUNT y conserva una página válida", async () => {
+  const rows = [
+    { id: "p1", name: "A", price: 10, imageUrl: "a.jpg", enOferta: false, category: "Tecno", sort_name: "a" },
+  ];
+  const { chain, calls } = makeSupabaseMock(rows, "v1", 42);
+  const res = await runCatalogQuery(
+    { sort: "nombre", pageSize: 1 },
+    chain,
+    { includeTotal: false },
+  );
+
+  const exactSelects = calls.filter(
+    (call) => call.method === "select" && (call.args[1] as { count?: string } | undefined)?.count === "exact",
+  );
+  assert.equal(exactSelects.length, 0);
+  assert.deepEqual(res.items.map((item) => item.id), ["p1"]);
+  assert.equal(res.hasMore, false);
+  assert.equal(res.nextCursor, null);
+  assert.equal(res.version, "v1");
+  assert.equal(res.total, 1);
+});
+
 test("runCatalogQuery: proyección mínima (nunca select *)", async () => {
   const { chain, calls } = makeSupabaseMock([]);
-  await runCatalogQuery({ sort: "nombre" }, ENV, chain);
+  await runCatalogQuery({ sort: "nombre" }, chain);
   // El primer select es la validación de versión del read model ("version");
   // el select de la consulta de productos es el que proyecta las columnas.
   const selects = calls.filter((c) => c.method === "select").map((c) => String(c.args[0]));
@@ -260,7 +297,6 @@ test("runCatalogQuery: filtros category/subcategory/enOferta se aplican", async 
   const { chain, calls } = makeSupabaseMock([]);
   await runCatalogQuery(
     { sort: "nombre", category: "Tecno", subcategory: "Audio", enOferta: true },
-    ENV,
     chain,
   );
   const eqs = calls.filter((c) => c.method === "eq").map((c) => c.args);
@@ -278,7 +314,6 @@ test("runCatalogQuery: Ropa gender parent filters exact value and prefixed child
   const { chain, calls } = makeSupabaseMock(rows, "v1", 2);
   await runCatalogQuery(
     { sort: "nombre", category: "Ropa", subcategory: "Hombre" },
-    ENV,
     chain,
   );
 
@@ -292,7 +327,6 @@ test("runCatalogQuery: Ropa gender parent filters exact value and prefixed child
   assert.ok(!eqs.some(([col]) => col === "subcategory"), "group routes must not use exact equality");
   const result = await runCatalogQuery(
     { sort: "nombre", category: "Ropa", subcategory: "Hombre", pageSize: 1 },
-    ENV,
     makeSupabaseMock(rows, "v1", 2).chain,
   );
   assert.equal(decodeCursor(result.nextCursor!).f, filterFingerprint({ category: "Ropa", subcategory: "group:Hombre" }));
@@ -302,7 +336,6 @@ test("runCatalogQuery: concrete Ropa subcategory remains an exact equality filte
   const { chain, calls } = makeSupabaseMock([]);
   await runCatalogQuery(
     { sort: "nombre", category: "Ropa", subcategory: "Hombre - Remeras" },
-    ENV,
     chain,
   );
 
@@ -320,7 +353,7 @@ test("runCatalogQuery: query de búsqueda participa en filtro y fingerprint del 
     { id: "p3", name: "Bota C", price: 30, imageUrl: "c.jpg", enOferta: false, category: "Calzado", sort_name: "bota c" },
   ];
   const { chain, calls } = makeSupabaseMock(rows);
-  const res = await runCatalogQuery({ sort: "nombre", query: "bota", pageSize: 2 }, ENV, chain);
+  const res = await runCatalogQuery({ sort: "nombre", query: "bota", pageSize: 2 }, chain);
 
   assert.ok(calls.some((c) => c.method === "ilike" && c.args[0] === "name" && c.args[1] === "%bota%"));
   assert.ok(res.nextCursor);
@@ -330,14 +363,14 @@ test("runCatalogQuery: query de búsqueda participa en filtro y fingerprint del 
 
 test("runCatalogQuery: orden por nombre → order sort_name + product_id", async () => {
   const { chain, calls } = makeSupabaseMock([]);
-  await runCatalogQuery({ sort: "nombre" }, ENV, chain);
+  await runCatalogQuery({ sort: "nombre" }, chain);
   const orders = calls.filter((c) => c.method === "order").map((c) => c.args[0]);
   assert.deepEqual(orders, ["sort_name", "product_id"]);
 });
 
 test("runCatalogQuery: orden por precio → order numeric_price + sort_name + product_id", async () => {
   const { chain, calls } = makeSupabaseMock([]);
-  await runCatalogQuery({ sort: "precio" }, ENV, chain);
+  await runCatalogQuery({ sort: "precio" }, chain);
   const orders = calls.filter((c) => c.method === "order").map((c) => c.args[0]);
   assert.deepEqual(orders, ["numeric_price", "sort_name", "product_id"]);
 });
@@ -347,7 +380,7 @@ test("runCatalogQuery: con cursor aplica condición or (desempate por product_id
   const f = filterFingerprint(filters);
   const cursor = encodeCursor({ s: "zapatilla", p: "p1", f, v: "v1" });
   const { chain, calls } = makeSupabaseMock([]);
-  await runCatalogQuery({ sort: "nombre", category: "Tecno", cursor }, ENV, chain);
+  await runCatalogQuery({ sort: "nombre", category: "Tecno", cursor }, chain);
   const ors = calls.filter((c) => c.method === "or").map((c) => c.args[0]);
   assert.equal(ors.length, 1);
   assert.ok(ors[0].includes('sort_name.gt."zapatilla"'));
@@ -360,7 +393,7 @@ test("runCatalogQuery: cursor incompatible (versión distinta) → VERSION_MISMA
   const cursor = encodeCursor({ s: "zapatilla", p: "p1", f, v: "v0" }); // versión vieja
   const { chain } = makeSupabaseMock([], "v1");
   await assert.rejects(
-    () => runCatalogQuery({ sort: "nombre", cursor }, ENV, chain),
+    () => runCatalogQuery({ sort: "nombre", cursor }, chain),
     (err: unknown) => err instanceof CatalogError && err.code === "VERSION_MISMATCH",
   );
 });
@@ -370,45 +403,48 @@ test("runCatalogQuery: cursor incompatible (filtros distintos) → FILTER_MISMAT
   const cursor = encodeCursor({ s: "zapatilla", p: "p1", f, v: "v1" });
   const { chain } = makeSupabaseMock([], "v1");
   await assert.rejects(
-    () => runCatalogQuery({ sort: "nombre", category: "Ropa", cursor }, ENV, chain),
+    () => runCatalogQuery({ sort: "nombre", category: "Ropa", cursor }, chain),
     (err: unknown) => err instanceof CatalogError && err.code === "FILTER_MISMATCH",
   );
 });
 
 test("runCatalogQuery: clampPageSize — limit <1 y >48", async () => {
   const { chain, calls } = makeSupabaseMock([]);
-  await runCatalogQuery({ sort: "nombre", pageSize: 0 }, ENV, chain);
+  await runCatalogQuery({ sort: "nombre", pageSize: 0 }, chain);
   let limit = calls.find((c) => c.method === "limit");
   assert.equal(limit?.args[0], 13); // default 12 + 1
 
   const { chain: c2, calls: calls2 } = makeSupabaseMock([]);
-  await runCatalogQuery({ sort: "nombre", pageSize: 100 }, ENV, c2);
+  await runCatalogQuery({ sort: "nombre", pageSize: 100 }, c2);
   limit = calls2.find((c) => c.method === "limit");
   assert.equal(limit?.args[0], 49); // max 48 + 1
 });
 
 test("runCatalogQuery: error Supabase → CatalogError UPSTREAM_ERROR", async () => {
-  const chain: any = {
+  const chain: SupabaseMockChain = {
     from: () => chain,
     select: () => chain,
     eq: () => chain,
+    ilike: () => chain,
     order: () => chain,
     or: () => chain,
     single: () => Promise.resolve({ data: { version: "v1" }, error: null }),
     limit: () => Promise.resolve({ data: null, error: { message: "boom" } }),
   };
   await assert.rejects(
-    () => runCatalogQuery({ sort: "nombre" }, ENV, chain),
+    () => runCatalogQuery({ sort: "nombre" }, chain),
     (err: unknown) => err instanceof CatalogError && err.code === "UPSTREAM_ERROR",
   );
 });
 
-test("runCatalogQuery: read model deshabilitado → UPSTREAM_ERROR", async () => {
-  const { chain } = makeSupabaseMock([]);
-  await assert.rejects(
-    () => runCatalogQuery({ sort: "nombre" }, { CATALOG_READ_MODEL: "false" }, chain),
-    (err: unknown) => err instanceof CatalogError && err.code === "UPSTREAM_ERROR",
-  );
+test("runCatalogQuery: retired read-model selector still uses the canonical query", async () => {
+  const { chain, calls } = makeSupabaseMock([]);
+  const result = await runCatalogQuery({ sort: "nombre" }, chain);
+  assert.deepEqual(result.items, []);
+  const sources = calls.filter((call) => call.method === "from").map((call) => call.args[0]);
+  assert.ok(sources.includes("catalog_version"));
+  assert.ok(sources.includes("catalog_products"));
+  assert.ok(!sources.includes("products"));
 });
 
 test("runCatalogQuery: round-trip encode/decode del nextCursor", async () => {
@@ -418,7 +454,7 @@ test("runCatalogQuery: round-trip encode/decode del nextCursor", async () => {
     { id: "p3", name: "C", price: 30, imageUrl: "c.jpg", enOferta: false, category: "Tecno", subcategory: "Audio", sort_name: "c" },
   ];
   const { chain } = makeSupabaseMock(rows);
-  const res = await runCatalogQuery({ sort: "nombre", pageSize: 2 }, ENV, chain);
+  const res = await runCatalogQuery({ sort: "nombre", pageSize: 2 }, chain);
   assert.ok(res.nextCursor);
   const decoded = decodeCursor(res.nextCursor);
   assert.equal(decoded.s, "b");
@@ -444,7 +480,7 @@ test("runCatalogQuery: correlates version and product SQL calls to the route", a
         sort_name: "a",
       },
     ]);
-    await runCatalogQuery({ sort: "nombre", pageSize: 1 }, ENV, chain, { telemetry });
+    await runCatalogQuery({ sort: "nombre", pageSize: 1 }, chain, { telemetry });
   } finally {
     console.info = originalInfo;
   }
@@ -485,7 +521,6 @@ test("runCatalogQuery: correlates the count query on cursor pages", async () => 
     ]);
     await runCatalogQuery(
       { sort: "nombre", cursor, pageSize: 1 },
-      ENV,
       chain,
       { telemetry },
     );
@@ -502,4 +537,203 @@ test("runCatalogQuery: correlates the count query on cursor pages", async () => 
   assert.ok(events.every((event) => event.route === "category-page"));
   assert.ok(events.every((event) => event.request_id === "request-query-2"));
   assert.ok(events.every((event) => event.query_count === 1));
+});
+
+// RED contract for direct numbered pages in the read model. Ten is the
+// inclusive safety bound: page 11 must fail closed rather than widening the
+// keyset walk, falling back to CSV, or loading a full catalog.
+const MAX_KEYSET_BOOTSTRAP_PAGE = 10;
+
+/** Mock that returns the next ordered slice after each keyset condition. */
+function makeKeysetWalkMock(rows: unknown[], version = "v1") {
+  const calls: Array<Record<string, unknown>> = [];
+  const chain: Record<string, any> = {};
+  let keysetReads = 0;
+
+  const record = (method: string, ...args: unknown[]) => {
+    calls.push({ method, args });
+    return chain;
+  };
+
+  chain.from = (table: string) => record("from", table);
+  chain.select = (cols: string, opts?: unknown) => record("select", cols, opts);
+  chain.eq = (col: string, value: unknown) => record("eq", col, value);
+  chain.ilike = (col: string, value: unknown) => record("ilike", col, value);
+  chain.order = (col: string, opts: unknown) => record("order", col, opts);
+  chain.or = (filter: string) => {
+    keysetReads += 1;
+    return record("or", filter);
+  };
+  chain.limit = (n: number) => {
+    const pageSize = n - 1;
+    const start = keysetReads * pageSize;
+    calls.push({ method: "limit", args: [n] });
+    return Promise.resolve({ data: rows.slice(start, start + n), error: null, count: null });
+  };
+  chain.single = () => Promise.resolve({ data: { version }, error: null });
+
+  return { chain, calls };
+}
+
+function bootstrapRows() {
+  return [
+    { id: "p1", name: "A", price: 10, imageUrl: "a.jpg", enOferta: false, category: "Tecno", subcategory: "Audio", sort_name: "a" },
+    { id: "p2", name: "B", price: 20, imageUrl: "b.jpg", enOferta: true, category: "Tecno", subcategory: "Audio", sort_name: "b" },
+    { id: "p3", name: "C", price: 30, imageUrl: "c.jpg", enOferta: true, category: "Tecno", subcategory: "Audio", sort_name: "c" },
+    { id: "p4", name: "D", price: 40, imageUrl: "d.jpg", enOferta: true, category: "Tecno", subcategory: "Audio", sort_name: "d" },
+    { id: "p5", name: "E", price: 50, imageUrl: "e.jpg", enOferta: false, category: "Tecno", subcategory: "Audio", sort_name: "e" },
+  ];
+}
+
+test("runCatalogQuery: página 2 sin cursor hace bootstrap keyset acotado en las cuatro rutas", async () => {
+  const cases = [
+    {
+      name: "general",
+      request: { sort: "nombre", page: 2, pageSize: 2 },
+      order: ["sort_name", "product_id"],
+      filters: [] as Array<[string, unknown]>,
+    },
+    {
+      name: "offers",
+      request: { sort: "precio", enOferta: true, page: 2, pageSize: 2 },
+      order: ["numeric_price", "sort_name", "product_id"],
+      filters: [["en_oferta", true]] as Array<[string, unknown]>,
+    },
+    {
+      name: "category",
+      request: { sort: "nombre", category: "Tecno", page: 2, pageSize: 2 },
+      order: ["sort_name", "product_id"],
+      filters: [["category", "Tecno"]] as Array<[string, unknown]>,
+    },
+    {
+      name: "subcategory",
+      request: { sort: "nombre", category: "Tecno", subcategory: "Audio", page: 2, pageSize: 2 },
+      order: ["sort_name", "product_id"],
+      filters: [["category", "Tecno"], ["subcategory", "Audio"]] as Array<[string, unknown]>,
+    },
+  ];
+
+  for (const scenario of cases) {
+    const { chain, calls } = makeKeysetWalkMock(bootstrapRows());
+    const result = await runCatalogQuery(scenario.request, chain, { includeTotal: false });
+
+    assert.deepEqual(result.items.map((item) => item.id), ["p3", "p4"], scenario.name);
+    assert.equal(
+      calls.filter((call) => call.method === "from" && call.args?.[0] === "catalog_products").length,
+      2,
+      `${scenario.name}: bootstrap + target query`,
+    );
+    assert.deepEqual(
+      calls.filter((call) => call.method === "limit").map((call) => call.args?.[0]),
+      [3, 3],
+      `${scenario.name}: every bounded read uses pageSize + 1`,
+    );
+    assert.equal(calls.filter((call) => call.method === "or").length, 1, `${scenario.name}: target uses keyset`);
+    assert.ok(
+      String(calls.find((call) => call.method === "or")?.args?.[0]).includes('product_id.gt."p2"'),
+      `${scenario.name}: target starts after the last bootstrap row`,
+    );
+    assert.deepEqual(
+      calls.filter((call) => call.method === "order").map((call) => call.args?.[0]),
+      [...scenario.order, ...scenario.order],
+      `${scenario.name}: bootstrap and target preserve ORDER BY`,
+    );
+    assert.equal(
+      calls.some((call) => call.method === "offset" || call.method === "range"),
+      false,
+      `${scenario.name}: never uses OFFSET/range pagination`,
+    );
+
+    const activeFilters = calls
+      .filter((call) => call.method === "eq")
+      .map((call) => [call.args?.[0], call.args?.[1]] as [string, unknown]);
+    assert.equal(
+      activeFilters.filter(([column, value]) => column === "active" && value === true).length,
+      2,
+      `${scenario.name}: active filter is preserved`,
+    );
+    for (const [column, value] of scenario.filters) {
+      assert.equal(
+        activeFilters.filter(([actualColumn, actualValue]) => actualColumn === column && actualValue === value).length,
+        2,
+        `${scenario.name}: ${column} filter is preserved`,
+      );
+    }
+  }
+});
+
+test("runCatalogQuery: página sobre el máximo de bootstrap falla cerrado sin leer productos", async () => {
+  const rows = Array.from({ length: MAX_KEYSET_BOOTSTRAP_PAGE * 2 }, (_, index) => ({
+    id: `p${index + 1}`,
+    name: String.fromCharCode(65 + index),
+    price: (index + 1) * 10,
+    imageUrl: `${index + 1}.jpg`,
+    enOferta: true,
+    category: "Tecno",
+    subcategory: "Audio",
+    sort_name: String.fromCharCode(97 + index),
+  }));
+  const withinBound = makeKeysetWalkMock(rows);
+  const lastAllowed = await runCatalogQuery(
+    { sort: "nombre", page: MAX_KEYSET_BOOTSTRAP_PAGE, pageSize: 2 },
+    withinBound.chain,
+    { includeTotal: false },
+  );
+  assert.deepEqual(lastAllowed.items.map((item) => item.id), ["p19", "p20"]);
+  assert.equal(withinBound.calls.filter((call) => call.method === "limit").length, MAX_KEYSET_BOOTSTRAP_PAGE);
+
+  const overBound = makeKeysetWalkMock(rows);
+
+  await assert.rejects(
+    () =>
+      runCatalogQuery(
+        { sort: "nombre", page: MAX_KEYSET_BOOTSTRAP_PAGE + 1, pageSize: 2 },
+        overBound.chain,
+        { includeTotal: false },
+      ),
+    (err: unknown) =>
+      err instanceof CatalogError && String(err.code) === "PAGE_BOOTSTRAP_LIMIT",
+  );
+
+  assert.equal(
+    overBound.calls.some((call) => call.method === "from" && call.args?.[0] === "catalog_products"),
+    false,
+    "out-of-bound pages must not start a catalog read",
+  );
+  assert.equal(overBound.calls.some((call) => call.method === "limit"), false);
+});
+
+test("runCatalogQuery: cursor-bearing page skips bootstrap and keeps cursor validation", async () => {
+  const cursor = encodeCursor({
+    s: "b",
+    p: "p2",
+    f: filterFingerprint({}),
+    v: "v1",
+  });
+  const { chain, calls } = makeKeysetWalkMock(bootstrapRows());
+  const result = await runCatalogQuery(
+    { sort: "nombre", page: 2, pageSize: 2, cursor },
+    chain,
+    { includeTotal: false },
+  );
+
+  assert.deepEqual(result.items.map((item) => item.id), ["p3", "p4"]);
+  assert.equal(calls.filter((call) => call.method === "or").length, 1);
+  assert.deepEqual(calls.filter((call) => call.method === "limit").map((call) => call.args?.[0]), [3]);
+
+  const staleCursor = encodeCursor({
+    s: "b",
+    p: "p2",
+    f: filterFingerprint({}),
+    v: "stale",
+  });
+  await assert.rejects(
+    () =>
+      runCatalogQuery(
+        { sort: "nombre", page: 2, pageSize: 2, cursor: staleCursor },
+        makeKeysetWalkMock(bootstrapRows(), "v1").chain,
+        { includeTotal: false },
+      ),
+    (err: unknown) => err instanceof CatalogError && err.code === "VERSION_MISMATCH",
+  );
 });
