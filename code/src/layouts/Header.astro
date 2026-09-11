@@ -5,7 +5,7 @@ import { withBasePath } from "@utils/basePath";
 import SearchInput from "@components/SearchInput.astro";
 
 import logo from "@assets/logo_blanco.webp";
-import cart from "@assets/cart.png"
+import cart from "@assets/cart.png";
 const { default: downSVG } = await import("@assets/down.svg?raw");
 
 interface Props {
@@ -74,7 +74,8 @@ const sortedCategories = categories.sort((a, b) => {
 const pathname = Astro.url.pathname;
 const base = basePath;
 const homeHref = withBasePath("/", pathname);
-const isHome = pathname === base + "/" || pathname === base || pathname === base + "/index";
+const isHome =
+  pathname === base + "/" || pathname === base || pathname === base + "/index";
 const isAbout = pathname.includes("/about");
 ---
 
@@ -84,7 +85,13 @@ const isAbout = pathname.includes("/about");
       <MenuIcon class="menuIcon" />
       <div class="logoContainer">
         <a href={homeHref}>
-          <img src={logo.src} alt="logo blanco" width="200" height="100" fetchpriority="high" />
+          <img
+            src={logo.src}
+            alt="logo blanco"
+            width="200"
+            height="100"
+            fetchpriority="high"
+          />
         </a>
       </div>
 
@@ -93,10 +100,23 @@ const isAbout = pathname.includes("/about");
           <SearchInput />
         </div>
 
-        <button id="mobileSearchBtn" class="mobileSearchBtn" title="Buscar" aria-label="Abrir búsqueda">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        <button
+          id="mobileSearchBtn"
+          class="mobileSearchBtn"
+          title="Buscar"
+          aria-label="Abrir búsqueda"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </button>
 
@@ -135,7 +155,9 @@ const isAbout = pathname.includes("/about");
       {
         sortedCategories &&
           sortedCategories.map((c) => (
-            <li class={`categoryItem ${categorySelected === c.name ? "is-current" : ""}`}>
+            <li
+              class={`categoryItem ${categorySelected === c.name ? "is-current" : ""}`}
+            >
               <a
                 href={withBasePath(`/categories/${c.name}`, pathname)}
                 data-astro-prefetch="hover"
@@ -176,7 +198,10 @@ const isAbout = pathname.includes("/about");
                       c.subcategories.map((sub) => (
                         <li>
                           <a
-                            href={withBasePath(`/categories/${c.name}/${sub.name}`, pathname)}
+                            href={withBasePath(
+                              `/categories/${c.name}/${sub.name}`,
+                              pathname,
+                            )}
                             data-astro-prefetch="hover"
                             class="navLink subcategoryLink"
                           >
@@ -193,10 +218,17 @@ const isAbout = pathname.includes("/about");
                         return (
                           <li class="nestedCategoryItem">
                             <a
-                              href={withBasePath(`/categories/${c.name}/${groupData.group}`, pathname)}
+                              href={withBasePath(
+                                `/categories/${c.name}/${groupData.group}`,
+                                pathname,
+                              )}
                               data-astro-prefetch="hover"
                               class={`navLink subcategoryLink ${groupData.items.length > 0 ? "has-submenu-level2" : ""}`}
-                              data-submenu-target={groupData.items.length > 0 ? nestedId : undefined}
+                              data-submenu-target={
+                                groupData.items.length > 0
+                                  ? nestedId
+                                  : undefined
+                              }
                             >
                               {groupData.group}
                               {groupData.items.length > 0 && (
@@ -205,10 +237,18 @@ const isAbout = pathname.includes("/about");
                             </a>
 
                             {groupData.items.length > 0 && (
-                              <div class="subcategoryList nestedSubcategoryList" id={nestedId}>
+                              <div
+                                class="subcategoryList nestedSubcategoryList"
+                                id={nestedId}
+                              >
                                 <div class="submenuHeader">
-                                  <span class="submenuTitle">{groupData.group}</span>
-                                  <button class="backMenuBtn" data-submenu-close={nestedId}>
+                                  <span class="submenuTitle">
+                                    {groupData.group}
+                                  </span>
+                                  <button
+                                    class="backMenuBtn"
+                                    data-submenu-close={nestedId}
+                                  >
                                     &larr;
                                   </button>
                                 </div>
@@ -216,7 +256,10 @@ const isAbout = pathname.includes("/about");
                                 <ul>
                                   <li>
                                     <a
-                                      href={withBasePath(`/categories/${c.name}/${groupData.group}`, pathname)}
+                                      href={withBasePath(
+                                        `/categories/${c.name}/${groupData.group}`,
+                                        pathname,
+                                      )}
                                       data-astro-prefetch="hover"
                                       class="principal navLink subcategoryLink"
                                       style="font-weight: bold;"
@@ -228,11 +271,17 @@ const isAbout = pathname.includes("/about");
                                   {groupData.items.map((subName) => (
                                     <li>
                                       <a
-                                        href={withBasePath(`/categories/${c.name}/${subName}`, pathname)}
+                                        href={withBasePath(
+                                          `/categories/${c.name}/${subName}`,
+                                          pathname,
+                                        )}
                                         data-astro-prefetch="hover"
                                         class="navLink subcategoryLink"
                                       >
-                                        {subName.replace(`${groupData.group} - `, "")}
+                                        {subName.replace(
+                                          `${groupData.group} - `,
+                                          "",
+                                        )}
                                       </a>
                                     </li>
                                   ))}
@@ -251,9 +300,16 @@ const isAbout = pathname.includes("/about");
     </ul>
 
     <ul class="mainNav mainNavBottom">
-      <li><a class={`navLink ${isHome ? "active-page" : ""}`} href={homeHref}>Inicio</a></li>
       <li>
-        <a class={`navLink ${isAbout ? "active-page" : ""}`} href={withBasePath("/about", pathname)}>Quienes Somos</a>
+        <a class={`navLink ${isHome ? "active-page" : ""}`} href={homeHref}
+          >Inicio</a
+        >
+      </li>
+      <li>
+        <a
+          class={`navLink ${isAbout ? "active-page" : ""}`}
+          href={withBasePath("/about", pathname)}>Quienes Somos</a
+        >
       </li>
     </ul>
   </MenuItems>
@@ -332,7 +388,9 @@ const isAbout = pathname.includes("/about");
         }
         // Focus the search input inside the sidebar menu
         setTimeout(() => {
-          const sidebarInput = document.querySelector(".search__container.sideBar input") as HTMLInputElement;
+          const sidebarInput = document.querySelector(
+            ".search__container.sideBar input",
+          ) as HTMLInputElement;
           if (sidebarInput) {
             sidebarInput.focus();
             // Also move the cursor to the end if there's text
@@ -489,10 +547,10 @@ const isAbout = pathname.includes("/about");
 
   /* Mobile search button */
   .mobileSearchBtn {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -506,7 +564,7 @@ const isAbout = pathname.includes("/about");
     height: 20px;
   }
   .mobileSearchBtn:hover {
-    background: rgba(255,255,255,0.35);
+    background: rgba(255, 255, 255, 0.35);
   }
 
   /* --- CART --- */
@@ -521,7 +579,7 @@ const isAbout = pathname.includes("/about");
     flex-shrink: 0;
   }
   .cartLink:hover {
-    animation: shake 0.5s infinite;
+    animation: shake 0.55s ease-out 1;
   }
   .cart-icon {
     width: 100%;
@@ -945,6 +1003,9 @@ const isAbout = pathname.includes("/about");
   }
   /* Yellow burger lines on mobile */
   @media screen and (max-width: 999px) {
+    header .mobileSearchBtn {
+      display: flex;
+    }
     #astronav-menu svg line,
     #astronav-menu svg rect,
     #astronav-menu svg path {
