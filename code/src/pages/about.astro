@@ -16,13 +16,13 @@ export const prerender = true;
 
       <div class="story-copy">
         <p>
-          Descubrí una tienda online diferente, donde encontrás productos para el hogar,
-          vestimenta, accesorios y mucho más. Nos apasiona acercarte calidad, novedades y
-          soluciones para tu día a día.
+          Descubrí una tienda online diferente, donde encontrás productos para
+          el hogar, vestimenta, accesorios y mucho más. Nos apasiona acercarte
+          calidad, novedades y soluciones para tu día a día.
         </p>
         <p>
-          También ofrecemos servicios holísticos personalizados para acompañarte en tu
-          crecimiento personal.
+          También ofrecemos servicios holísticos personalizados para acompañarte
+          en tu crecimiento personal.
         </p>
       </div>
 
@@ -31,13 +31,18 @@ export const prerender = true;
         <ul>
           <li><span>Codificación Biológica</span><strong>USD 80</strong></li>
           <li><span>Carta Numerológica</span><strong>USD 80</strong></li>
-          <li><span>Tutorías individuales online para estudiantes de EUTM, Medicina y Agronomía</span><strong>USD 50<span class="per-hour"> / hora</span></strong></li>
+          <li>
+            <span
+              >Tutorías individuales online para estudiantes de EUTM, Medicina y
+              Agronomía</span
+            ><strong>USD 50<span class="per-hour"> / hora</span></strong>
+          </li>
         </ul>
       </section>
 
       <p class="cta-text">
-        ¿Tenés una duda, consulta o buscás un producto o servicio particular? Escribinos y
-        nos pondremos en contacto a la brevedad.
+        ¿Tenés una duda, consulta o buscás un producto o servicio particular?
+        Escribinos y nos pondremos en contacto a la brevedad.
       </p>
     </div>
 
@@ -47,13 +52,28 @@ export const prerender = true;
         action="https://formspree.io/f/mwvzalvq"
         method="POST"
       >
-        <input type="hidden" name="_subject" value="Nuevo mensaje desde el formulario de contacto" />
+        <input
+          type="hidden"
+          name="_subject"
+          value="Nuevo mensaje desde el formulario de contacto"
+        />
         <input type="hidden" name="_language" value="es" />
         <input type="text" name="name" placeholder="Nombre Completo" required />
-        <input type="email" name="email" placeholder="Correo electrónico" required />
-        <input type="tel" name="phone" placeholder="Número de Teléfono" required />
+        <input
+          type="email"
+          name="email"
+          placeholder="Correo electrónico"
+          required
+        />
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Número de Teléfono"
+          required
+        />
         <input type="text" name="subject" placeholder="Asunto" required />
-        <textarea name="message" placeholder="Tu Mensaje" rows="8" required></textarea>
+        <textarea name="message" placeholder="Tu Mensaje" rows="8" required
+        ></textarea>
         <button type="submit">Enviar</button>
       </form>
     </div>
@@ -62,10 +82,11 @@ export const prerender = true;
 
 <style>
   .contact-container {
-    width: min(1120px, 100%);
+    width: 100%;
+    max-width: var(--max-width-container);
     box-sizing: border-box;
     margin: clamp(2rem, 5vw, 4.5rem) auto;
-    padding: 0 clamp(1rem, 4vw, 2.5rem);
+    padding-inline: 1rem;
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
     gap: clamp(2.5rem, 7vw, 6rem);
@@ -73,7 +94,9 @@ export const prerender = true;
     color: var(--principal-text-color);
   }
 
-  .section-heading { margin-bottom: 2rem; }
+  .section-heading {
+    margin-bottom: 2rem;
+  }
   .section-kicker {
     display: block;
     color: var(--orange-color);
@@ -97,8 +120,11 @@ export const prerender = true;
     background: var(--line-color);
     margin-top: 1.2rem;
   }
-  .story-copy { max-width: 62ch; }
-  .story-copy p, .cta-text {
+  .story-copy {
+    max-width: 62ch;
+  }
+  .story-copy p,
+  .cta-text {
     font-size: clamp(1rem, 1.4vw, 1.08rem);
     line-height: 1.8;
     margin: 0 0 1.35rem;
@@ -108,8 +134,15 @@ export const prerender = true;
     padding-top: 1.5rem;
     border-top: 1px solid rgba(35, 41, 70, 0.16);
   }
-  .services-list h2 { font-size: 1.15rem; margin: 0 0 1rem; }
-  .services-list ul { list-style: none; padding: 0; margin: 0; }
+  .services-list h2 {
+    font-size: 1.15rem;
+    margin: 0 0 1rem;
+  }
+  .services-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
   .services-list li {
     display: flex;
     align-items: baseline;
@@ -119,9 +152,17 @@ export const prerender = true;
     border-bottom: 1px solid rgba(35, 41, 70, 0.1);
     line-height: 1.5;
   }
-  .services-list li strong { white-space: nowrap; color: var(--orange-color); }
-  .per-hour { font-size: 0.78em; font-weight: 600; }
-  .cta-text { margin-top: 2rem; }
+  .services-list li strong {
+    white-space: nowrap;
+    color: var(--orange-color);
+  }
+  .per-hour {
+    font-size: 0.78em;
+    font-weight: 600;
+  }
+  .cta-text {
+    margin-top: 2rem;
+  }
 
   .contact-details {
     display: flex;
@@ -258,7 +299,9 @@ export const prerender = true;
       margin-top: 0;
     }
 
-    .services-list li { align-items: flex-start; }
+    .services-list li {
+      align-items: flex-start;
+    }
   }
 
   @media screen and (min-width: 1000px) {
