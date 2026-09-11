@@ -598,17 +598,19 @@ const { id, name, img, price, categories, paymentLink, description, colors, enOf
   }
 
   .checkStockBtn {
-    width: fit-content;
-    min-width: 200px;
+    width: 190px;
+    min-width: 0;
     max-width: 100%;
     border: 1px solid #d4d4d4;
     background: #fafafa;
     color: #333;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0.01em;
     border-radius: 999px;
-    padding: 9px 20px;
+    padding: 10px 16px;
+    line-height: 1.25;
+    white-space: nowrap;
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -654,8 +656,11 @@ const { id, name, img, price, categories, paymentLink, description, colors, enOf
 
   .checkStockStatus {
     margin: 0;
-    font-size: 0.85rem;
+    max-width: 240px;
+    font-size: 0.82rem;
+    line-height: 1.4;
     color: #5a5a5a;
+    letter-spacing: 0.01em;
   }
 
   .checkStockStatus.is-error {
@@ -723,14 +728,15 @@ const { id, name, img, price, categories, paymentLink, description, colors, enOf
 
     .priceRow {
       display: grid;
-      grid-template-columns: auto auto minmax(210px, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       align-items: center;
       gap: 10px;
     }
 
     .priceRow :global(.number-control) {
-      width: 92px;
+      width: min(100%, 100px);
       height: 44px;
+      justify-self: center;
     }
 
     .priceRow :global(.number-control .control-btn) {
@@ -747,10 +753,16 @@ const { id, name, img, price, categories, paymentLink, description, colors, enOf
       margin-right: 0;
     }
 
+    .price-block {
+      width: 100%;
+    }
+
     .buyBtn {
       width: 100%;
-      min-width: 210px;
+      min-width: 0;
       height: 44px;
+      padding-inline: 8px;
+      white-space: nowrap;
       flex: initial;
     }
 
@@ -763,6 +775,10 @@ const { id, name, img, price, categories, paymentLink, description, colors, enOf
 
     .checkStockStatus {
       font-size: 0.82rem;
+    }
+
+    .checkStockBtn {
+      width: 190px;
     }
   }
 </style>

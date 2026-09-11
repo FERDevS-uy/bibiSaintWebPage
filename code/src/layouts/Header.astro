@@ -793,7 +793,10 @@ const isAbout = pathname.includes("/about");
     }
     .itemsBox .categoryList {
       flex: 1;
-      justify-content: space-between;
+      /* The server can stream category items one at a time. A fixed gap keeps
+         already-painted links in place while later links arrive. */
+      justify-content: flex-start;
+      gap: 1.25rem;
     }
     .itemsBox ul.mainNav {
       margin-left: 0;
