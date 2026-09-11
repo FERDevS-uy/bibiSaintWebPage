@@ -258,6 +258,8 @@ async function readProductsByIds(
 
 /** Persiste con service role (solo server). */
 export class SupabaseProductRepository implements ProductRepository {
+  constructor(private readonly context = "catalog") {}
+
   async readByIds(ids: string[]): Promise<Map<string, SyncExistingProduct>> {
     return readProductsByIds(getSupabaseAdmin(), ids);
   }
@@ -314,7 +316,11 @@ export class SupabaseProductRepository implements ProductRepository {
         .upsert(toUpsert, { onConflict: "id", ignoreDuplicates: false });
 
       if (error) {
-        console.error(`Martina: error en batch ${i / BATCH_SIZE + 1}:`, error.message);
+        console.error(
+          `[providers-sync] provider=${this.context} upsert_batch=${i / BATCH_SIZE + 1} ` +
+            `size=${toUpsert.length} error=${error.message}`,
+          error,
+        );
         errors += toUpsert.length;
       } else {
         upserted += toUpsert.length;

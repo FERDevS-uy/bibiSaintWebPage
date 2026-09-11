@@ -234,50 +234,96 @@ export async function fetchJson(
   }
 }
 
-export async function martinaFetch(url: string, timeoutMs = 30000): Promise<any> {
-  if (!isNode) {
-    return fetchJson(url, timeoutMs, MARTINA_HEADERS);
-  }
+export async function martinaFetch(
+  url: string,
+  timeoutMs = 30000,
+  headers: Record<string, string> = MARTINA_HEADERS,
+): Promise<any> {
+  const maxAttempts = 3;
+  let lastError: unknown;
 
-  const https = await import("node:https");
-  let isMartinaHost = false;
-  try {
-    isMartinaHost = new URL(url).host === MARTINA_HOST;
-  } catch {
-    isMartinaHost = false;
-  }
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      if (!isNode) {
+        return await fetchJson(url, timeoutMs, headers);
+      }
 
-  return new Promise((resolve, reject) => {
-    const req = https.get(
-      url,
-      {
-        rejectUnauthorized: isMartinaHost && isDevRuntime ? false : undefined,
-        headers: MARTINA_HEADERS,
-        timeout: timeoutMs,
-      },
-      (res) => {
-        const chunks: Buffer[] = [];
-        res.on("data", (chunk: Buffer) => chunks.push(chunk));
-        res.on("end", () => {
-          const body = Buffer.concat(chunks).toString("utf-8");
-          if (!res.statusCode || res.statusCode >= 400) {
-            reject(new Error(`HTTP ${res.statusCode}: ${body.slice(0, 200)}`));
-            return;
-          }
-          try {
-            resolve(JSON.parse(body));
-          } catch (e: any) {
-            reject(new Error(`JSON parse error: ${e?.message}`));
-          }
+      const https = await import("node:https");
+      const dns = await import("node:dns");
+      let isMartinaHost = false;
+      try {
+        isMartinaHost = new URL(url).host === MARTINA_HOST;
+      } catch {
+        isMartinaHost = false;
+      }
+
+      // Some local resolvers fail getaddrinfo for Martina while DNS A records
+      // remain resolvable through c-ares. Keep this workaround dev-only;
+      // Cloudflare uses the platform fetch path above.
+      const lookup = isMartinaHost && isDevRuntime
+        ? ((hostname: string, options: unknown, callback: (error: Error | null, address?: string, family?: number) => void) => {
+            dns.resolve(hostname, (error, addresses) => {
+              if (!error && addresses?.length) {
+                callback(null, addresses[0], 4);
+                return;
+              }
+              dns.lookup(hostname, options as any, callback as any);
+            });
+          }) as any
+        : undefined;
+
+      return await new Promise((resolve, reject) => {
+        const req = https.get(
+          url,
+          {
+            rejectUnauthorized: isMartinaHost && isDevRuntime ? false : undefined,
+            headers,
+            ...(lookup ? { lookup } : {}),
+            timeout: timeoutMs,
+          },
+          (res) => {
+            const chunks: Buffer[] = [];
+            res.on("data", (chunk: Buffer) => chunks.push(chunk));
+            res.on("end", () => {
+              const body = Buffer.concat(chunks).toString("utf-8");
+              if (!res.statusCode || res.statusCode >= 400) {
+                reject(new Error(`HTTP ${res.statusCode}: ${body.slice(0, 200)}`));
+                return;
+              }
+              try {
+                resolve(JSON.parse(body));
+              } catch (e: any) {
+                reject(new Error(`JSON parse error: ${e?.message}`));
+              }
+            });
+          },
+        );
+        req.on("error", reject);
+        req.on("timeout", () => {
+          req.destroy();
+          reject(new Error(`Timeout after ${timeoutMs}ms`));
         });
-      },
-    );
-    req.on("error", reject);
-    req.on("timeout", () => {
-      req.destroy();
-      reject(new Error(`Timeout after ${timeoutMs}ms`));
-    });
-  });
+      });
+    } catch (error: any) {
+      lastError = error;
+      const code = String(error?.code || "");
+      const message = String(error?.message || error);
+      const retryable =
+        code === "ENOTFOUND" ||
+        code === "EAI_AGAIN" ||
+        code === "ECONNRESET" ||
+        code === "ETIMEDOUT" ||
+        message.includes("fetch failed");
+      if (!retryable || attempt === maxAttempts) throw error;
+      console.warn(
+        `[martina-fetch] transient failure attempt=${attempt}/${maxAttempts} ` +
+          `code=${code || "unknown"} error=${message}`,
+      );
+      await new Promise((resolve) => setTimeout(resolve, attempt * 500));
+    }
+  }
+
+  throw lastError instanceof Error ? lastError : new Error(String(lastError || "Martina request failed"));
 }
 
 export interface ProductRow {

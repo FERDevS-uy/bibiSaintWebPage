@@ -13,11 +13,13 @@ interface SyncResult {
   error?: string;
 }
 
+type ProviderSyncFn = () => Promise<{ products: ProductRow[]; count: number }>;
+
 // Persiste el valor calculado por el proveedor (en_oferta/original_price),
 // NO el en_oferta previo del producto, y resetea ofertas vencidas.
-const upsertProducts = (products: ProductRow[]): Promise<{ upserted: number; errors: number }> => {
+const upsertProducts = (provider: string, products: ProductRow[]): Promise<{ upserted: number; errors: number }> => {
   if (products.length === 0) return Promise.resolve({ upserted: 0, errors: 0 });
-  return new SupabaseProductRepository().upsert(products);
+  return new SupabaseProductRepository(provider).upsert(products);
 };
 
 export async function syncAllProviders(): Promise<{
@@ -25,66 +27,53 @@ export async function syncAllProviders(): Promise<{
   totalUpserted: number;
   totalErrors: number;
 }> {
-  const results: SyncResult[] = [];
-  let totalUpserted = 0;
-  let totalErrors = 0;
+  const runId = crypto.randomUUID();
+  const startedAt = Date.now();
+  const providers: Array<[string, ProviderSyncFn]> = [
+    ["Martina", syncMartina],
+    ["Kai Deco", syncKaiDeco],
+    ["Alondra", syncAlondra],
+  ];
 
-  // Martina
-  try {
-    const { products, count } = await syncMartina();
-    const { upserted, errors } = await upsertProducts(products);
-    results.push({
-      provider: "Martina",
-      status: errors > 0 && upserted === 0 ? "error" : "ok",
-      count: upserted,
-      error: errors > 0 ? `${errors} errores en upsert` : undefined,
-    });
-    totalUpserted += upserted;
-    totalErrors += errors;
-    console.log(`Martina: ${upserted} upserted, ${errors} errors`);
-  } catch (e: any) {
-    results.push({ provider: "Martina", status: "error", count: 0, error: e?.message || "Error desconocido" });
-    totalErrors++;
-    console.error("Martina sync failed:", e?.message || e);
-  }
+  console.info(`[providers-sync] run=${runId} start providers=${providers.length}`);
 
-  // Kai Deco
-  try {
-    const { products, count } = await syncKaiDeco();
-    const { upserted, errors } = await upsertProducts(products);
-    results.push({
-      provider: "Kai Deco",
-      status: errors > 0 && upserted === 0 ? "error" : "ok",
-      count: upserted,
-      error: errors > 0 ? `${errors} errores en upsert` : undefined,
-    });
-    totalUpserted += upserted;
-    totalErrors += errors;
-    console.log(`Kai Deco: ${upserted} upserted, ${errors} errors`);
-  } catch (e: any) {
-    results.push({ provider: "Kai Deco", status: "error", count: 0, error: e?.message || "Error desconocido" });
-    totalErrors++;
-    console.error("Kai Deco sync failed:", e?.message || e);
-  }
+  const results = await Promise.all(
+    providers.map(async ([provider, sync]) => {
+      const providerStartedAt = Date.now();
+      console.info(`[providers-sync] run=${runId} provider=${provider} start`);
 
-  // Alondra
-  try {
-    const { products, count } = await syncAlondra();
-    const { upserted, errors } = await upsertProducts(products);
-    results.push({
-      provider: "Alondra",
-      status: errors > 0 && upserted === 0 ? "error" : "ok",
-      count: upserted,
-      error: errors > 0 ? `${errors} errores en upsert` : undefined,
-    });
-    totalUpserted += upserted;
-    totalErrors += errors;
-    console.log(`Alondra: ${upserted} upserted, ${errors} errors`);
-  } catch (e: any) {
-    results.push({ provider: "Alondra", status: "error", count: 0, error: e?.message || "Error desconocido" });
-    totalErrors++;
-    console.error("Alondra sync failed:", e?.message || e);
-  }
+      try {
+        const { products, count } = await sync();
+        const { upserted, errors } = await upsertProducts(provider, products);
+        const result: SyncResult = {
+          provider,
+          status: errors > 0 && upserted === 0 ? "error" : "ok",
+          count: upserted,
+          error: errors > 0 ? `${errors} errores en upsert` : undefined,
+        };
+        console.info(
+          `[providers-sync] run=${runId} provider=${provider} done ` +
+            `fetched=${count} upserted=${upserted} errors=${errors} ` +
+            `duration_ms=${Date.now() - providerStartedAt}`,
+        );
+        return { result, errors };
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error || "Error desconocido");
+        console.error(
+          `[providers-sync] run=${runId} provider=${provider} failed ` +
+            `duration_ms=${Date.now() - providerStartedAt} error=${message}`,
+          error,
+        );
+        return {
+          result: { provider, status: "error", count: 0, error: message } satisfies SyncResult,
+          errors: 1,
+        };
+      }
+    }),
+  );
+
+  const totalUpserted = results.reduce((total, entry) => total + entry.result.count, 0);
+  const totalErrors = results.reduce((total, entry) => total + entry.errors, 0);
 
   if (totalUpserted > 0) {
     invalidateAllProductCaches();
@@ -95,6 +84,10 @@ export async function syncAllProviders(): Promise<{
     }
   }
 
-  return { results, totalUpserted, totalErrors };
-}
+  console.info(
+    `[providers-sync] run=${runId} done upserted=${totalUpserted} ` +
+      `errors=${totalErrors} duration_ms=${Date.now() - startedAt}`,
+  );
 
+  return { results: results.map((entry) => entry.result), totalUpserted, totalErrors };
+}

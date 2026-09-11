@@ -74,7 +74,7 @@ function groupMartinaImagesByColor(
 }
 
 export async function fetchMartinaConfig(country: string = "598"): Promise<any> {
-  return martinaFetch(`${MARTINA_CONFIG_URL}?countryId=${country}`, 20000);
+  return martinaFetch(`${MARTINA_CONFIG_URL}?countryId=${country}`, 20000, FETCH_HEADERS);
 }
 
 async function fetchMartinaCodes(country: string): Promise<string[]> {
@@ -121,7 +121,7 @@ async function fetchStoreProductForCode(
 ): Promise<any[]> {
   const url = `${MARTINA_STORE_PRODUCT_BASE}?countryId=${country}&code=${encodeURIComponent(code)}`;
   try {
-    const data = await martinaFetch(url, 30000);
+    const data = await martinaFetch(url, 30000, FETCH_HEADERS);
     return normalizeMartinaPayloadToArray(data);
   } catch (e: any) {
     console.warn(`Martina: error code=${code}:`, e?.message || e);
@@ -141,7 +141,7 @@ async function fetchStoreProductByProductLine(
     String(category || ""),
   )}`;
   try {
-    const data = await martinaFetch(url, 30000);
+    const data = await martinaFetch(url, 30000, FETCH_HEADERS);
     return normalizeMartinaPayloadToArray(data);
   } catch (e: any) {
     console.warn(`Martina: error productLine=${productLineId}:`, e?.message || e);
@@ -158,7 +158,7 @@ async function fetchStoreProductByProductId(
     String(productId),
   )}&code=${encodeURIComponent(String(code))}&countryId=${encodeURIComponent(String(country))}`;
   try {
-    const data = await martinaFetch(url, 30000);
+    const data = await martinaFetch(url, 30000, FETCH_HEADERS);
     return normalizeMartinaPayloadToArray(data);
   } catch (e: any) {
     console.warn(`Martina: error productId=${productId}:`, e?.message || e);
