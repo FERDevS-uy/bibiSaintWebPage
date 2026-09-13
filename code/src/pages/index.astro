@@ -8,8 +8,16 @@ import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
 import { catalogReadEnv } from "@server/catalog/http";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
+import type { CatalogCacheEnv } from "@server/catalog/edgeCache";
 
-const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+type RuntimeCatalogEnv = {
+  CATALOG_READ_MODEL?: string;
+  ENABLE_CSV_FALLBACK?: string;
+  CATALOG_KV?: CatalogCacheEnv["CATALOG_KV"];
+};
+
+const runtimeEnv = (Astro.locals as { runtime?: { env?: RuntimeCatalogEnv } }).runtime?.env;
+const env = { ...catalogReadEnv(runtimeEnv), CATALOG_KV: runtimeEnv?.CATALOG_KV };
 const telemetry = createCatalogQueryTelemetry("home");
 
 const featured = await loadFeaturedProducts(env, getSupabase, { telemetry });

@@ -9,8 +9,12 @@ import InstruccionesBar from "@components/InstruccionesBar.astro";
 import TopBar from "@components/TopBar.astro";
 import NavigationProgress from "@components/NavigationProgress.astro";
 import { ViewTransitions } from "astro:transitions";
+import type { CatalogCacheEnv } from "@server/catalog/edgeCache";
 
-const categories = await getHeaderCategories();
+const runtimeEnv = (Astro.locals as {
+  runtime?: { env?: { CATALOG_KV?: CatalogCacheEnv["CATALOG_KV"] } };
+}).runtime?.env;
+const categories = await getHeaderCategories({ kv: runtimeEnv?.CATALOG_KV });
 const isDev = import.meta.env.tienda_DEV === "true";
 const url_href = Astro.url.href.endsWith("/")
   ? Astro.url.href.slice(0, -1)

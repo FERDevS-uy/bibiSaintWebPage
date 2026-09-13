@@ -12,7 +12,7 @@
 export interface CatalogCacheEnv {
   CATALOG_KV?: {
     get: (key: string) => Promise<string | null>;
-    put: (key: string, value: string) => Promise<void>;
+    put: (key: string, value: string, options?: { expirationTtl?: number }) => Promise<void>;
     delete: (key: string) => Promise<void>;
   };
   CATALOG_READ_MODEL?: string;
@@ -21,6 +21,7 @@ export interface CatalogCacheEnv {
 }
 
 export type CatalogRouteType = "products" | "categories" | "related" | "search";
+export type CatalogKvCacheName = "featured" | "navigation";
 
 export interface CacheHeaderOptions {
   maxAge?: number;
@@ -312,6 +313,43 @@ export function buildVersionedCacheKey(url: string | URL, version: string): stri
   const u = new URL(url.toString());
   u.searchParams.set("v", version);
   return u.toString();
+}
+
+/**
+ * Clave para payloads SSR de bajo cambio. No se usa para `/api/catalog/*`,
+ * que sigue siendo responsabilidad exclusiva de `caches.default`.
+ */
+export function buildCatalogKvCacheKey(name: CatalogKvCacheName, version: string): string {
+  return `catalog:${name}:v${version}`;
+}
+
+export async function getCatalogKvCache<T>(
+  kv: CatalogCacheEnv["CATALOG_KV"] | null | undefined,
+  name: CatalogKvCacheName,
+  version: string,
+): Promise<T | null> {
+  if (!kv || typeof kv.get !== "function") return null;
+  try {
+    const value = await kv.get(buildCatalogKvCacheKey(name, version));
+    return value ? JSON.parse(value) as T : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function putCatalogKvCache<T>(
+  kv: CatalogCacheEnv["CATALOG_KV"] | null | undefined,
+  name: CatalogKvCacheName,
+  version: string,
+  value: T,
+  expirationTtl = 600,
+): Promise<void> {
+  if (!kv || typeof kv.put !== "function") return;
+  try {
+    await kv.put(buildCatalogKvCacheKey(name, version), JSON.stringify(value), { expirationTtl });
+  } catch {
+    // El caché KV es best-effort: la fuente canónica sigue disponible.
+  }
 }
 
 export interface WithEdgeCacheOptions {

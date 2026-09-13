@@ -11,12 +11,19 @@ import { getSupabase } from "@server/supabase";
 import { catalogReadEnv } from "@server/catalog/http";
 import { CatalogError } from "@server/catalog/contracts";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
+import type { CatalogCacheEnv } from "@server/catalog/edgeCache";
 import "../../../style.css";
 
 const CANT_PRODUCTOS = config.postPerPage;
 const { id, subcat, pag } = Astro.params;
 
-const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+type RuntimeCatalogEnv = {
+  CATALOG_READ_MODEL?: string;
+  ENABLE_CSV_FALLBACK?: string;
+  CATALOG_KV?: CatalogCacheEnv["CATALOG_KV"];
+};
+const runtimeEnv = (Astro.locals as { runtime?: { env?: RuntimeCatalogEnv } }).runtime?.env;
+const env = { ...catalogReadEnv(runtimeEnv), CATALOG_KV: runtimeEnv?.CATALOG_KV };
 const telemetry = createCatalogQueryTelemetry("subcategory-page");
 
 const pageNum = Number(pag);
@@ -30,7 +37,7 @@ let subCats: Awaited<ReturnType<typeof getSidebarCategories>>;
 let res: Awaited<ReturnType<typeof loadCatalogPage>>;
 try {
   [subCats, res] = await Promise.all([
-    getSidebarCategories(id ?? ""),
+    getSidebarCategories(id ?? "", { kv: runtimeEnv?.CATALOG_KV }),
     loadCatalogPage(
       { category: id, subcategory: subcat, sort: "nombre", pageSize: CANT_PRODUCTOS, cursor, page: pageNum },
       env,

@@ -29,6 +29,12 @@ import {
 } from "@utils/loadProducts";
 import { normalizeOfferOriginalPrice, parsePrice } from "@utils/price";
 import { getDisplaySubcategories } from "@utils/categoryNormalization";
+import {
+  getCatalogKvCache,
+  putCatalogKvCache,
+  resolveCatalogVersion,
+  type CatalogCacheEnv,
+} from "./edgeCache.ts";
 import type Product from "../../types/product";
 
 // ---------------------------------------------------------------------------
@@ -100,7 +106,11 @@ let featuredCache: FeaturedCacheEntry | null = null;
 // ---------------------------------------------------------------------------
 
 /** ¿Está activo el read model? Las páginas preguntan a la facade, no al flag. */
-type CatalogFacadeEnv = { CATALOG_READ_MODEL?: string; ENABLE_CSV_FALLBACK?: string };
+type CatalogFacadeEnv = {
+  CATALOG_READ_MODEL?: string;
+  ENABLE_CSV_FALLBACK?: string;
+  CATALOG_KV?: CatalogCacheEnv["CATALOG_KV"];
+};
 
 export function isReadModel(env: CatalogFacadeEnv): boolean {
   return resolveCatalogReadPath(env) === "readmodel";
@@ -362,10 +372,17 @@ export async function loadFeaturedProducts(
   supabase: SupabaseSource<{ from: (table: string) => any }>,
   options?: CatalogFacadeOptions,
 ): Promise<FeaturedProductsResult> {
-  const cacheKey = `${isReadModel(env) ? "readmodel" : "legacy"}:${resolveCsvFallback(env) ? "csv-on" : "csv-off"}`;
+  const version = await resolveCatalogVersion({ kv: env.CATALOG_KV });
+  const cacheKey = `${isReadModel(env) ? "readmodel" : "legacy"}:${resolveCsvFallback(env) ? "csv-on" : "csv-off"}:v${version}`;
   const now = Date.now();
   if (featuredCache && featuredCache.key === cacheKey && featuredCache.expiresAt > now) {
     return featuredCache.value;
+  }
+
+  const cached = await getCatalogKvCache<FeaturedProductsResult>(env.CATALOG_KV, "featured", version);
+  if (cached) {
+    featuredCache = { key: cacheKey, value: cached, expiresAt: now + FEATURED_CACHE_TTL_MS };
+    return cached;
   }
 
   if (isReadModel(env)) {
@@ -396,6 +413,7 @@ export async function loadFeaturedProducts(
       value: result,
       expiresAt: now + FEATURED_CACHE_TTL_MS,
     };
+    await putCatalogKvCache(env.CATALOG_KV, "featured", version, result);
     return result;
   }
 
@@ -413,6 +431,7 @@ export async function loadFeaturedProducts(
     value: result,
     expiresAt: now + FEATURED_CACHE_TTL_MS,
   };
+  await putCatalogKvCache(env.CATALOG_KV, "featured", version, result);
   return result;
 }
 
