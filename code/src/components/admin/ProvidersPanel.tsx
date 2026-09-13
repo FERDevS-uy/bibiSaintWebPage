@@ -11,9 +11,31 @@ interface SyncResult {
 }
 
 interface SyncResponse {
-  results: SyncResult[];
+  accepted?: boolean;
+  message?: string;
+  results?: SyncResult[];
   totalUpserted: number;
   totalErrors: number;
+}
+
+interface ProviderPreviewResult {
+  provider: string;
+  status: "ok" | "error";
+  total: number;
+  newProducts: number;
+  priceChanges: number;
+  unchanged: number;
+  error?: string;
+}
+
+interface ProviderPreviewResponse {
+  results: ProviderPreviewResult[];
+  totalProducts: number;
+  totalNew: number;
+  totalPriceChanges: number;
+  totalUnchanged: number;
+  token: string;
+  expiresAt: number;
 }
 
 interface MartinaPlanItem {
@@ -83,12 +105,19 @@ export default function ProvidersPanel() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SyncResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [syncNotice, setSyncNotice] = useState<string | null>(null);
+  const [previewingSync, setPreviewingSync] = useState(false);
+  const [syncPreview, setSyncPreview] =
+    useState<ProviderPreviewResponse | null>(null);
+  const [syncConfirmOpen, setSyncConfirmOpen] = useState(false);
 
   // Flujo Martina: preview obligatorio → apply
   const [previewing, setPreviewing] = useState(false);
   const [applying, setApplying] = useState(false);
   const [preview, setPreview] = useState<MartinaPreviewResponse | null>(null);
-  const [applyResult, setApplyResult] = useState<MartinaApplyResponse | null>(null,);
+  const [applyResult, setApplyResult] = useState<MartinaApplyResponse | null>(
+    null,
+  );
   const [martinaError, setMartinaError] = useState<string | null>(null);
 
   // Márgenes de ganancia por proveedor
@@ -186,9 +215,11 @@ export default function ProvidersPanel() {
     }
   };
 
-  const handleSync = async () => {
+  const handleConfirmSync = async () => {
+    if (!syncPreview?.token) return;
     setLoading(true);
     setError(null);
+    setSyncNotice(null);
     setResult(null);
 
     try {
@@ -196,19 +227,54 @@ export default function ProvidersPanel() {
       const resp = await fetch("/api/admin/providers/sync", {
         method: "POST",
         headers: {
+          "content-type": "application/json",
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
+        body: JSON.stringify({ token: syncPreview.token }),
       });
       if (!resp.ok) {
         const body = await resp.json().catch(() => null);
         throw new Error(body?.error || `Error del servidor (${resp.status})`);
       }
       const data: SyncResponse = await resp.json();
-      setResult(data);
+      if (data.accepted) {
+        setSyncNotice(
+          data.message ||
+            "La sincronización comenzó y continuará en segundo plano.",
+        );
+      } else {
+        setResult(data);
+      }
+      setSyncPreview(null);
     } catch (e: any) {
       setError(e?.message || "Error al sincronizar");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSync = async () => {
+    setPreviewingSync(true);
+    setError(null);
+    setSyncNotice(null);
+    setResult(null);
+    try {
+      const token = await getAccessToken();
+      const resp = await fetch("/api/admin/providers/preview", {
+        method: "POST",
+        headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+      });
+      const body: ProviderPreviewResponse & { error?: string } = await resp
+        .json()
+        .catch(() => null);
+      if (!resp.ok)
+        throw new Error(body?.error || `Error del servidor (${resp.status})`);
+      setSyncPreview(body);
+      setSyncConfirmOpen(true);
+    } catch (e: any) {
+      setError(e?.message || "No se pudo preparar la sincronización");
+    } finally {
+      setPreviewingSync(false);
     }
   };
 
@@ -294,6 +360,19 @@ export default function ProvidersPanel() {
         }
         .provider-workflow-card { padding: 1.25rem; margin-top: 1.5rem; }
         .provider-workflow-card .provider-workflow-card { margin-top: 0; box-shadow: none; border: 0; padding: 0; }
+        .sync-preview-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.65rem; margin: 1rem 0 1.15rem; }
+        .sync-preview-stat { padding: 0.8rem 0.65rem; border: 1px solid var(--admin-border); border-radius: var(--admin-radius); background: var(--admin-border-light); text-align: center; }
+        .sync-preview-stat-value { display: block; font-size: 1.35rem; font-weight: 800; line-height: 1.1; color: var(--admin-text); }
+        .sync-preview-stat-label { display: block; margin-top: 0.3rem; color: var(--admin-text-secondary); font-size: 0.72rem; }
+        .sync-preview-providers { display: flex; flex-direction: column; gap: 0.45rem; }
+        .sync-preview-provider { display: flex; align-items: center; justify-content: space-between; gap: 0.65rem; padding: 0.55rem 0.7rem; border-radius: var(--admin-radius-sm); background: var(--admin-border-light); font-size: 0.78rem; }
+        .sync-preview-provider-meta { color: var(--admin-text-secondary); text-align: right; }
+        .sync-preview-provider-status { display: inline-flex; align-items: center; gap: 0.35rem; }
+        .sync-preview-provider-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--admin-success); }
+        .sync-preview-provider-dot.error { background: var(--admin-danger); }
+        .sync-preview-note { margin: 0.9rem 0 0; color: var(--admin-text-secondary); font-size: 0.76rem; line-height: 1.45; }
+        .sync-preview-footer { display: flex; justify-content: flex-end; gap: 0.65rem; width: 100%; }
+        @media (max-width: 520px) { .sync-preview-summary { gap: 0.4rem; } .sync-preview-stat { padding-inline: 0.35rem; } .sync-preview-stat-value { font-size: 1.15rem; } }
         @media (max-width: 640px) {
           .provider-action-card { align-items: stretch; flex-direction: column; }
           .provider-action-card .admin-btn { width: 100%; }
@@ -302,44 +381,227 @@ export default function ProvidersPanel() {
       <div className="providers-hero" style={headerStyle}>
         <div>
           <h1 style={pageTitle}>Proveedores</h1>
-          <p style={pageSub}>Sincronizar productos desde proveedores externos</p>
+          <p style={pageSub}>
+            Sincronizar productos desde proveedores externos
+          </p>
         </div>
       </div>
 
-      <section className="provider-action-card" aria-label="Sincronización general">
+      <section
+        className="provider-action-card"
+        aria-label="Sincronización general"
+      >
         <div className="provider-action-copy">
           <span className="provider-action-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="23 4 23 10 17 10" /><polyline points="1 20 1 14 7 14" />
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="23 4 23 10 17 10" />
+              <polyline points="1 20 1 14 7 14" />
               <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
             </svg>
           </span>
           <div>
-            <strong style={{ display: "block", fontSize: "0.95rem" }}>Sincronización general</strong>
-            <span style={{ color: "var(--admin-text-secondary)", fontSize: "0.8rem", }}>Importa productos de Martina, Kai Deco y Alondra en una sola operación.</span>
+            <strong style={{ display: "block", fontSize: "0.95rem" }}>
+              Sincronización general
+            </strong>
+            <span
+              style={{
+                color: "var(--admin-text-secondary)",
+                fontSize: "0.8rem",
+              }}
+            >
+              Importa productos de Martina, Kai Deco y Alondra en una sola
+              operación.
+            </span>
           </div>
         </div>
-        <button onClick={handleSync} disabled={loading} className="admin-btn admin-btn-primary" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", flexShrink: 0, }}>
-          {loading ? ( <span className="admin-spinner" style={{ width: 14, height: 14, border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "#fff", borderRadius: "50%", animation: "adminSpin 0.6s linear infinite", }} />
+        <button
+          onClick={handleSync}
+          disabled={loading || previewingSync}
+          className="admin-btn admin-btn-primary"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.4rem",
+            flexShrink: 0,
+          }}
+        >
+          {previewingSync || loading ? (
+            <span
+              className="admin-spinner"
+              style={{
+                width: 14,
+                height: 14,
+                border: "2px solid rgba(255,255,255,0.3)",
+                borderTopColor: "#fff",
+                borderRadius: "50%",
+                animation: "adminSpin 0.6s linear infinite",
+              }}
+            />
           ) : null}
-          {loading ? "Sincronizando..." : "Sincronizar todos"}
+          {previewingSync
+            ? "Preparando resumen..."
+            : loading
+              ? "Sincronizando..."
+              : "Sincronizar todos"}
         </button>
       </section>
 
       {loading && (
-        <div style={{ padding: "2rem 0", textAlign: "center", color: "var(--admin-text-secondary)", }}>
-          <div className="admin-skeleton" style={{ height: 14, width: "60%", margin: "0 auto 0.5rem" }} />
-          <div className="admin-skeleton" style={{ height: 14, width: "40%", margin: "0 auto" }} />
+        <div
+          style={{
+            padding: "2rem 0",
+            textAlign: "center",
+            color: "var(--admin-text-secondary)",
+          }}
+        >
+          <div
+            className="admin-skeleton"
+            style={{ height: 14, width: "60%", margin: "0 auto 0.5rem" }}
+          />
+          <div
+            className="admin-skeleton"
+            style={{ height: 14, width: "40%", margin: "0 auto" }}
+          />
         </div>
       )}
 
-      <Modal open={!!error} onClose={() => setError(null)} type="error" title="Error de sincronización">
+      <Modal
+        open={!!error}
+        onClose={() => setError(null)}
+        type="error"
+        title="Error de sincronización"
+      >
         {error}
       </Modal>
 
+      <Modal
+        open={syncConfirmOpen && !!syncPreview}
+        onClose={() => setSyncConfirmOpen(false)}
+        type="info"
+        title="Confirmar sincronización"
+        footer={
+          <div className="sync-preview-footer">
+            <button
+              className="admin-btn admin-btn-secondary admin-modal-btn"
+              onClick={() => setSyncConfirmOpen(false)}
+            >
+              Cancelar
+            </button>
+            <button
+              className="admin-btn admin-btn-primary"
+              disabled={
+                loading ||
+                !syncPreview ||
+                syncPreview.totalNew + syncPreview.totalPriceChanges === 0
+              }
+              onClick={() => {
+                setSyncConfirmOpen(false);
+                void handleConfirmSync();
+              }}
+            >
+              Confirmar y sincronizar
+            </button>
+          </div>
+        }
+      >
+        {syncPreview && (
+          <>
+            <p
+              style={{
+                margin: 0,
+                color: "var(--admin-text-secondary)",
+                fontSize: "0.86rem",
+                lineHeight: 1.45,
+              }}
+            >
+              Revisamos los proveedores. Si confirmás, se aplicarán únicamente
+              estos cambios:
+            </p>
+            <div
+              className="sync-preview-summary"
+              aria-label="Resumen de cambios"
+            >
+              <div className="sync-preview-stat">
+                <span className="sync-preview-stat-value">
+                  {syncPreview.totalNew + syncPreview.totalPriceChanges}
+                </span>
+                <span className="sync-preview-stat-label">
+                  cambios a aplicar
+                </span>
+              </div>
+              <div className="sync-preview-stat">
+                <span
+                  className="sync-preview-stat-value"
+                  style={{ color: "var(--admin-success)" }}
+                >
+                  {syncPreview.totalNew}
+                </span>
+                <span className="sync-preview-stat-label">
+                  productos nuevos
+                </span>
+              </div>
+              <div className="sync-preview-stat">
+                <span
+                  className="sync-preview-stat-value"
+                  style={{ color: "var(--admin-warning-text)" }}
+                >
+                  {syncPreview.totalPriceChanges}
+                </span>
+                <span className="sync-preview-stat-label">
+                  cambios de precio
+                </span>
+              </div>
+            </div>
+            <div className="sync-preview-providers">
+              {syncPreview.results.map((provider) => (
+                <div className="sync-preview-provider" key={provider.provider}>
+                  <span className="sync-preview-provider-status">
+                    <span
+                      className={`sync-preview-provider-dot${provider.status === "error" ? " error" : ""}`}
+                    />
+                    {provider.provider}
+                  </span>
+                  <span className="sync-preview-provider-meta">
+                    {provider.status === "ok"
+                      ? `${provider.newProducts} nuevos · ${provider.priceChanges} precios`
+                      : "No se pudo cargar. Intentá más tarde."}
+                  </span>
+                </div>
+              ))}
+            </div>
+            {syncPreview.results.some(
+              (provider) => provider.status === "error",
+            ) && (
+              <p className="sync-preview-note">
+                Los proveedores con error no se aplicarán. Podés intentar
+                nuevamente más tarde sin afectar a los demás.
+              </p>
+            )}
+            {syncPreview.totalNew + syncPreview.totalPriceChanges === 0 && (
+              <p className="sync-preview-note">
+                No hay cambios para aplicar. Los productos ya están
+                actualizados.
+              </p>
+            )}
+          </>
+        )}
+      </Modal>
+
       {result && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-          {result.results.map((r) => (
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
+        >
+          {(result.results ?? []).map((r) => (
             <div
               key={r.provider}
               style={{
@@ -355,11 +617,23 @@ export default function ProvidersPanel() {
               <div>
                 <strong>{r.provider}</strong>
                 {r.status === "ok" ? (
-                  <span style={{ color: "var(--admin-success)", marginLeft: "0.5rem", fontSize: "0.85rem", }}>
+                  <span
+                    style={{
+                      color: "var(--admin-success)",
+                      marginLeft: "0.5rem",
+                      fontSize: "0.85rem",
+                    }}
+                  >
                     {r.count} productos sincronizados
                   </span>
                 ) : (
-                  <span style={{ color: "var(--admin-danger)", marginLeft: "0.5rem", fontSize: "0.85rem", }}>
+                  <span
+                    style={{
+                      color: "var(--admin-danger)",
+                      marginLeft: "0.5rem",
+                      fontSize: "0.85rem",
+                    }}
+                  >
                     Error: {r.error}
                   </span>
                 )}
@@ -369,7 +643,10 @@ export default function ProvidersPanel() {
                   width: 10,
                   height: 10,
                   borderRadius: "50%",
-                  background: r.status === "ok" ? "var(--admin-success)" : "var(--admin-danger)",
+                  background:
+                    r.status === "ok"
+                      ? "var(--admin-success)"
+                      : "var(--admin-danger)",
                   flexShrink: 0,
                 }}
               />
@@ -391,30 +668,65 @@ export default function ProvidersPanel() {
         </div>
       )}
 
+      {syncNotice && (
+        <div
+          style={{
+            padding: "1rem 1.25rem",
+            borderRadius: "var(--admin-radius)",
+            background: "var(--admin-surface)",
+            color: "var(--admin-text-secondary)",
+            boxShadow: "var(--admin-shadow)",
+          }}
+        >
+          {syncNotice}
+        </div>
+      )}
+
       {!loading && !result && !error && (
         <div style={emptyState}>
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--admin-text-secondary)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.4 }}>
+          <svg
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--admin-text-secondary)"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ opacity: 0.4 }}
+          >
             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
             <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
             <line x1="12" y1="22.08" x2="12" y2="12" />
           </svg>
-          <p style={{ margin: "0.5rem 0 0", color: "var(--admin-text-secondary)", fontSize: "0.9rem", }}>
-            Presiona "Sincronizar todos" para importar productos de Martina, Kai Deco y Alondra.
+          <p
+            style={{
+              margin: "0.5rem 0 0",
+              color: "var(--admin-text-secondary)",
+              fontSize: "0.9rem",
+            }}
+          >
+            Presiona "Sincronizar todos" para importar productos de Martina, Kai
+            Deco y Alondra.
           </p>
         </div>
       )}
 
       {/* ---- Martina: campaña + preview/apply ---- */}
-      <section className="provider-workflow-card"
+      <section
+        className="provider-workflow-card"
         style={{
           marginTop: "1.5rem",
         }}
       >
         <div style={headerStyle}>
           <div>
-            <h2 style={{ ...pageTitle, fontSize: "1.3rem", margin: 0 }}>Martina di Trento — Campaña</h2>
+            <h2 style={{ ...pageTitle, fontSize: "1.3rem", margin: 0 }}>
+              Martina di Trento — Campaña
+            </h2>
             <p style={pageSub}>
-              Flujo seguro: generar preview (solo lectura) → revisar → aplicar cambios.
+              Flujo seguro: generar preview (solo lectura) → revisar → aplicar
+              cambios.
             </p>
           </div>
           <button
@@ -438,17 +750,26 @@ export default function ProvidersPanel() {
               color: "#8a6d1a",
             }}
           >
-            La escritura está deshabilitada:{" "} <code>MARTINA_SYNC_APPLY_ENABLED</code> no es
-            <code>"true"</code>. Podés generar y revisar el preview, pero no aplicar cambios.
+            La escritura está deshabilitada:{" "}
+            <code>MARTINA_SYNC_APPLY_ENABLED</code> no es
+            <code>"true"</code>. Podés generar y revisar el preview, pero no
+            aplicar cambios.
           </div>
         )}
 
-        <Modal open={!!martinaError} onClose={() => setMartinaError(null)} type="error" title="Error Martina">
+        <Modal
+          open={!!martinaError}
+          onClose={() => setMartinaError(null)}
+          type="error"
+          title="Error Martina"
+        >
           {martinaError}
         </Modal>
 
         {preview?.ok && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
+          >
             <div
               style={{
                 background: "var(--admin-surface)",
@@ -458,23 +779,51 @@ export default function ProvidersPanel() {
               }}
             >
               <strong>Campaña {preview.campaign?.code}</strong>
-              <div style={{ fontSize: "0.85rem", color: "var(--admin-text-secondary)", marginTop: "0.25rem", }}>
+              <div
+                style={{
+                  fontSize: "0.85rem",
+                  color: "var(--admin-text-secondary)",
+                  marginTop: "0.25rem",
+                }}
+              >
                 {preview.campaign?.validFrom} → {preview.campaign?.validTill}
                 {preview.campaign?.vigente === false && (
-                  <span style={{ color: "#8a6d1a", marginLeft: "0.5rem" }}>(no vigente)</span>
+                  <span style={{ color: "#8a6d1a", marginLeft: "0.5rem" }}>
+                    (no vigente)
+                  </span>
                 )}
               </div>
-              <div style={{ display: "flex", gap: "1rem", marginTop: "0.75rem", flexWrap: "wrap", }}>
-                <span style={{ color: "var(--admin-success)" }}>▲ {preview.summary?.create ?? 0} crear</span>
-                <span style={{ color: "var(--admin-primary, #e67e22)" }}>● {preview.summary?.update ?? 0} actualizar</span>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "1rem",
+                  marginTop: "0.75rem",
+                  flexWrap: "wrap",
+                }}
+              >
+                <span style={{ color: "var(--admin-success)" }}>
+                  ▲ {preview.summary?.create ?? 0} crear
+                </span>
+                <span style={{ color: "var(--admin-primary, #e67e22)" }}>
+                  ● {preview.summary?.update ?? 0} actualizar
+                </span>
                 <span style={{ color: "var(--admin-text-secondary)" }}>
-                  = {preview.summary?.unchanged ?? 0} sin cambios</span>
+                  = {preview.summary?.unchanged ?? 0} sin cambios
+                </span>
               </div>
-              {preview.changedCount !== undefined && preview.changedCount > (preview.plan?.length ?? 0) && (
-                <div style={{ fontSize: "0.8rem", color: "var(--admin-text-secondary)", marginTop: "0.5rem", }}>
-                  Mostrando {preview.plan?.length ?? 0} de{" "} {preview.changedCount} cambios.
-                </div>
-              )}
+              {preview.changedCount !== undefined &&
+                preview.changedCount > (preview.plan?.length ?? 0) && (
+                  <div
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "var(--admin-text-secondary)",
+                      marginTop: "0.5rem",
+                    }}
+                  >
+                    Mostrando {preview.plan?.length ?? 0} de{" "}
+                    {preview.changedCount} cambios.
+                  </div>
+                )}
             </div>
 
             {preview.plan && preview.plan.length > 0 && (
@@ -488,9 +837,20 @@ export default function ProvidersPanel() {
                   overflowY: "auto",
                 }}
               >
-                <table style={{ width: "100%", fontSize: "0.82rem", borderCollapse: "collapse", }}>
+                <table
+                  style={{
+                    width: "100%",
+                    fontSize: "0.82rem",
+                    borderCollapse: "collapse",
+                  }}
+                >
                   <thead>
-                    <tr style={{ textAlign: "left", color: "var(--admin-text-secondary)", }}>
+                    <tr
+                      style={{
+                        textAlign: "left",
+                        color: "var(--admin-text-secondary)",
+                      }}
+                    >
                       <th style={thStyle}>Acción</th>
                       <th style={thStyle}>Producto</th>
                       <th style={thStyle}>Precio</th>
@@ -500,24 +860,41 @@ export default function ProvidersPanel() {
                   </thead>
                   <tbody>
                     {preview.plan.map((item) => (
-                      <tr key={item.id} style={{ borderTop: "1px solid var(--admin-border, #f1f2f4)", }}>
+                      <tr
+                        key={item.id}
+                        style={{
+                          borderTop: "1px solid var(--admin-border, #f1f2f4)",
+                        }}
+                      >
                         <td style={tdStyle}>
                           <span
                             style={{
                               fontWeight: 700,
-                              color: item.action === "create" ? "var(--admin-success)" : item.action === "update" ? "var(--admin-primary, #e67e22)" : "var(--admin-text-secondary)",
+                              color:
+                                item.action === "create"
+                                  ? "var(--admin-success)"
+                                  : item.action === "update"
+                                    ? "var(--admin-primary, #e67e22)"
+                                    : "var(--admin-text-secondary)",
                             }}
                           >
                             {ACTION_LABEL[item.action]}
                           </span>
                         </td>
                         <td style={tdStyle}>
-                          {item.name}{" "} <span style={{ color: "var(--admin-text-secondary)" }}>({item.id})</span>
+                          {item.name}{" "}
+                          <span
+                            style={{ color: "var(--admin-text-secondary)" }}
+                          >
+                            ({item.id})
+                          </span>
                         </td>
                         <td style={tdStyle}>${item.price}</td>
                         <td style={tdStyle}>
-                          {item.originalPrice ? ( <s>${item.originalPrice}</s>
-                          ) : ( "—"
+                          {item.originalPrice ? (
+                            <s>${item.originalPrice}</s>
+                          ) : (
+                            "—"
                           )}
                         </td>
                         <td style={tdStyle}>{item.enOferta ? "Sí" : "No"}</td>
@@ -528,21 +905,36 @@ export default function ProvidersPanel() {
               </div>
             )}
 
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap", }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+                flexWrap: "wrap",
+              }}
+            >
               <button
                 onClick={handleMartinaApply}
                 disabled={!preview.writeEnabled || applying || previewing}
                 className="admin-btn admin-btn-primary"
-                title={preview.writeEnabled ? "Aplicar los cambios del preview" : "Escritura deshabilitada"}
+                title={
+                  preview.writeEnabled
+                    ? "Aplicar los cambios del preview"
+                    : "Escritura deshabilitada"
+                }
               >
                 {applying ? "Aplicando..." : "Aplicar cambios"}
               </button>
 
               {applyResult?.ok && (
-                <span style={{ color: "var(--admin-success)", fontSize: "0.85rem" }}>
+                <span
+                  style={{ color: "var(--admin-success)", fontSize: "0.85rem" }}
+                >
                   ✓ Aplicado: {applyResult.upserted} productos
-                  {(applyResult.errors ?? 0) > 0 && `, ${applyResult.errors} errores`}
-                  {applyResult.summary && ` (${applyResult.summary.create} crear, ${applyResult.summary.update} actualizar)`}
+                  {(applyResult.errors ?? 0) > 0 &&
+                    `, ${applyResult.errors} errores`}
+                  {applyResult.summary &&
+                    ` (${applyResult.summary.create} crear, ${applyResult.summary.update} actualizar)`}
                 </span>
               )}
             </div>
@@ -570,7 +962,7 @@ export default function ProvidersPanel() {
               edita porque su API ya devuelve precios aumentados. Los cambios se
               guardan en Supabase.
             </p>
-    </div>
+          </div>
         </div>
 
         {marginsLoading && (
@@ -605,7 +997,7 @@ export default function ProvidersPanel() {
           MARGIN_PROVIDERS.map((p) => {
             const value = Number(
               String(marginsDraft[p.key] ?? "").replace(",", "."),
-  );
+            );
             const pct = Number.isFinite(value)
               ? Math.round((value - 1) * 100)
               : 0;
@@ -645,7 +1037,7 @@ export default function ProvidersPanel() {
                       ...prev,
                       [p.key]: e.target.value,
                     }))
-}
+                  }
                   style={{
                     width: 110,
                     padding: "0.45rem 0.6rem",

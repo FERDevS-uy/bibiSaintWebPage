@@ -4,7 +4,10 @@ export function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export function normalizeCategoryName(value: string, fallback = "General"): string {
+export function normalizeCategoryName(
+  value: string,
+  fallback = "General",
+): string {
   return toTitleCase(value.trim()) || fallback;
 }
 
@@ -18,7 +21,8 @@ export function formatPriceNumber(n: number): string {
   const absValue = Math.abs(n);
   const baseInteger = Math.trunc(absValue);
   const decimalPart = absValue - baseInteger;
-  const roundedInteger = decimalPart + 1e-9 >= 0.6 ? baseInteger + 1 : baseInteger;
+  const roundedInteger =
+    decimalPart + 1e-9 >= 0.6 ? baseInteger + 1 : baseInteger;
   const integerPart = n < 0 ? -roundedInteger : roundedInteger;
   return integerPart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
@@ -50,7 +54,9 @@ export function parsePrice(value: string | number, multiplier = 1): string {
     if (decimals === 3) {
       // 2.699 -> separador de miles (aplicar multiplier)
       const n = parseFloat(normalized.replace(/,/g, ""));
-      return formatPriceNumber(n * (Number.isFinite(multiplier) ? multiplier : 1));
+      return formatPriceNumber(
+        n * (Number.isFinite(multiplier) ? multiplier : 1),
+      );
     }
     normalized = normalized.replace(/,/g, ".");
     if (normalized.endsWith(".00")) normalized = normalized.slice(0, -3);
@@ -60,7 +66,9 @@ export function parsePrice(value: string | number, multiplier = 1): string {
     if (decimals === 3) {
       // 2.699 -> separador de miles (aplicar multiplier)
       const n = parseFloat(normalized.replace(/\./g, ""));
-      return formatPriceNumber(n * (Number.isFinite(multiplier) ? multiplier : 1));
+      return formatPriceNumber(
+        n * (Number.isFinite(multiplier) ? multiplier : 1),
+      );
     }
     if (normalized.endsWith(".00")) normalized = normalized.slice(0, -3);
   }
@@ -110,7 +118,10 @@ export function cleanDescription(html: string): string {
     .trim();
 
   text = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-  text = text.replace(/(?:\.\s+)([a-z])/g, (_, letter) => ". " + letter.toUpperCase());
+  text = text.replace(
+    /(?:\.\s+)([a-z])/g,
+    (_, letter) => ". " + letter.toUpperCase(),
+  );
 
   return text;
 }
@@ -133,21 +144,30 @@ export function getUniqueColors(text: string): string[] {
   };
   const matched: string[] = [];
   Object.entries(dictionary).forEach(([baseColor, variations]) => {
-    const found = variations.some((v) => new RegExp(`\\b${v}\\b`, "i").test(lower));
+    const found = variations.some((v) =>
+      new RegExp(`\\b${v}\\b`, "i").test(lower),
+    );
     if (found) matched.push(baseColor);
   });
   return [...new Set(matched)];
 }
 
 export function appendColorsToName(name: string, colors: string[]): string {
-  const uniqueColors = [...new Set(colors.map((c) => c.trim()).filter(Boolean))];
+  const uniqueColors = [
+    ...new Set(colors.map((c) => c.trim()).filter(Boolean)),
+  ];
   if (uniqueColors.length === 0) return name;
-  const suffix = uniqueColors.map((c) => c.charAt(0).toUpperCase() + c.slice(1)).join(" ");
+  const suffix = uniqueColors
+    .map((c) => c.charAt(0).toUpperCase() + c.slice(1))
+    .join(" ");
   if (name.toLowerCase().includes(suffix.toLowerCase())) return name;
   return `${name} ${suffix}`.trim();
 }
 
-export function inferSubcategory(productName: string, categoria: string): string {
+export function inferSubcategory(
+  productName: string,
+  categoria: string,
+): string {
   const lower = (productName || "").toLowerCase();
 
   if (categoria === "Infantil") {
@@ -156,16 +176,19 @@ export function inferSubcategory(productName: string, categoria: string): string
     if (/\b(lunchera|lonchera)\b/.test(lower)) return "Luncheras";
     if (/\b(pote|recipiente)\b/.test(lower)) return "Potes";
     if (/\b(paraguas|sombrilla)\b/.test(lower)) return "Paraguas";
-    if (/\b(cubiertos|cuchar|tenedor|cuchillo)\b/.test(lower)) return "Cubiertos";
+    if (/\b(cubiertos|cuchar|tenedor|cuchillo)\b/.test(lower))
+      return "Cubiertos";
     if (/\b(bata|batita)\b/.test(lower)) return "Batas";
   }
 
   if (categoria === "Cama") {
     if (/\b(sábana|sabana|sabanas|sábana)\b/.test(lower)) return "Sábanas";
-    if (/\b(acolchad|acolchado|n[oó]rdico|acolchad[oa]s)\b/.test(lower)) return "Acolchados";
+    if (/\b(acolchad|acolchado|n[oó]rdico|acolchad[oa]s)\b/.test(lower))
+      return "Acolchados";
     if (/\b(colcha|colchas)\b/.test(lower)) return "Colchas";
     if (/\b(frazada|fraza|franela)\b/.test(lower)) return "Frazadas";
-    if (/\b(protector|protectores|funda|almohad)\b/.test(lower)) return "Protectores";
+    if (/\b(protector|protectores|funda|almohad)\b/.test(lower))
+      return "Protectores";
   }
 
   if (categoria === "Baño" || categoria === "BAÑO") {
@@ -176,11 +199,16 @@ export function inferSubcategory(productName: string, categoria: string): string
 
   if (categoria === "Ropa") {
     if (/\b(gorro|gorros)\b/.test(lower)) return "Gorros";
-    if (/\b(buzo|buzos|sweater|sudadera|cardigan|chaqueta|campera)\b/.test(lower)) return "Buzos";
-    if (/\b(playera|remera|camiseta|t[- ]?shirt|polo)\b/.test(lower)) return "Playeras";
+    if (
+      /\b(buzo|buzos|sweater|sudadera|cardigan|chaqueta|campera)\b/.test(lower)
+    )
+      return "Buzos";
+    if (/\b(playera|remera|camiseta|t[- ]?shirt|polo)\b/.test(lower))
+      return "Playeras";
     if (/\b(media|medias|calcetin|calcetines)\b/.test(lower)) return "Medias";
     if (/\b(cuello|bufanda|pañuelo)\b/.test(lower)) return "Cuellos";
-    if (/\b(pantalon|pants|jean|jeans|pantalones)\b/.test(lower)) return "Pantalones";
+    if (/\b(pantalon|pants|jean|jeans|pantalones)\b/.test(lower))
+      return "Pantalones";
     if (/\b(camisa|camisas|blusa)\b/.test(lower)) return "Camisas";
     if (/\b(vestido|vestidos)\b/.test(lower)) return "Vestidos";
     if (/\b(falda|faldas)\b/.test(lower)) return "Faldas";
@@ -191,7 +219,12 @@ export function inferSubcategory(productName: string, categoria: string): string
     if (/\b(almohad|almohada|almohadas)\b/.test(lower)) return "Almohadas";
     if (/\b(coj[ií]n|cojin|cojines)\b/.test(lower)) return "Cojines";
     if (/\b(cama|somier|colch[oó]n)\b/.test(lower)) return "Cama";
-    if (/\b(utensili|espatula|cuchar|cuchara|tenedor|vajilla|vajill?a)\b/.test(lower)) return "Utensilios";
+    if (
+      /\b(utensili|espatula|cuchar|cuchara|tenedor|vajilla|vajill?a)\b/.test(
+        lower,
+      )
+    )
+      return "Utensilios";
     if (/\b(l[áa]mpara|lampara|luz)\b/.test(lower)) return "Lámparas";
     if (/\b(silla|sillas|taburete)\b/.test(lower)) return "Sillas";
     if (/\b(estanter|estante|biblioteca)\b/.test(lower)) return "Estantes";
@@ -239,7 +272,9 @@ export async function martinaFetch(
   timeoutMs = 30000,
   headers: Record<string, string> = MARTINA_HEADERS,
 ): Promise<any> {
-  const maxAttempts = 3;
+  // Provider sync is manually retried from the admin panel. Retrying here
+  // keeps the request open for too long when Martina is unavailable.
+  const maxAttempts = 1;
   let lastError: unknown;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -260,23 +295,33 @@ export async function martinaFetch(
       // Some local resolvers fail getaddrinfo for Martina while DNS A records
       // remain resolvable through c-ares. Keep this workaround dev-only;
       // Cloudflare uses the platform fetch path above.
-      const lookup = isMartinaHost && isDevRuntime
-        ? ((hostname: string, options: unknown, callback: (error: Error | null, address?: string, family?: number) => void) => {
-            dns.resolve(hostname, (error, addresses) => {
-              if (!error && addresses?.length) {
-                callback(null, addresses[0], 4);
-                return;
-              }
-              dns.lookup(hostname, options as any, callback as any);
-            });
-          }) as any
-        : undefined;
+      const lookup =
+        isMartinaHost && isDevRuntime
+          ? (((
+              hostname: string,
+              options: unknown,
+              callback: (
+                error: Error | null,
+                address?: string,
+                family?: number,
+              ) => void,
+            ) => {
+              dns.resolve(hostname, (error, addresses) => {
+                if (!error && addresses?.length) {
+                  callback(null, addresses[0], 4);
+                  return;
+                }
+                dns.lookup(hostname, options as any, callback as any);
+              });
+            }) as any)
+          : undefined;
 
       return await new Promise((resolve, reject) => {
         const req = https.get(
           url,
           {
-            rejectUnauthorized: isMartinaHost && isDevRuntime ? false : undefined,
+            rejectUnauthorized:
+              isMartinaHost && isDevRuntime ? false : undefined,
             headers,
             ...(lookup ? { lookup } : {}),
             timeout: timeoutMs,
@@ -287,7 +332,9 @@ export async function martinaFetch(
             res.on("end", () => {
               const body = Buffer.concat(chunks).toString("utf-8");
               if (!res.statusCode || res.statusCode >= 400) {
-                reject(new Error(`HTTP ${res.statusCode}: ${body.slice(0, 200)}`));
+                reject(
+                  new Error(`HTTP ${res.statusCode}: ${body.slice(0, 200)}`),
+                );
                 return;
               }
               try {
@@ -323,7 +370,9 @@ export async function martinaFetch(
     }
   }
 
-  throw lastError instanceof Error ? lastError : new Error(String(lastError || "Martina request failed"));
+  throw lastError instanceof Error
+    ? lastError
+    : new Error(String(lastError || "Martina request failed"));
 }
 
 export interface ProductRow {
@@ -332,7 +381,11 @@ export interface ProductRow {
   description: string;
   price: string;
   img: string[];
-  categories: { name: string; count: number; subcategories: Array<{ name: string; count: number }> };
+  categories: {
+    name: string;
+    count: number;
+    subcategories: Array<{ name: string; count: number }>;
+  };
   payment_link: Array<{ id: string; url: string }>;
   relacionados: string[];
   en_oferta: boolean;
@@ -340,7 +393,13 @@ export interface ProductRow {
   original_price?: string | null;
   /** Precio manual temporal cargado por el admin (Nuvex) cuando el proveedor no expone precio. */
   temporary_price?: string | null;
-  colors?: Array<{ id: number; hex: string; name: string; images: string[]; sizes?: string[] }>;
+  colors?: Array<{
+    id: number;
+    hex: string;
+    name: string;
+    images: string[];
+    sizes?: string[];
+  }>;
   source: string;
   active: boolean;
   auto_update_price: boolean;

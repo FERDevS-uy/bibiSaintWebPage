@@ -1,11 +1,21 @@
-import { delay, normalizeText, cleanDescription, martinaFetch, normalizeCategoryName, type ProductRow } from "./utils";
+import {
+  delay,
+  normalizeText,
+  cleanDescription,
+  martinaFetch,
+  normalizeCategoryName,
+  type ProductRow,
+} from "./utils";
 import { normalizeProductPrice } from "./martinaNormalizer";
 import { normalizeSizes } from "../../utils/sizes";
 import { parseCampaign } from "./martinaCampaign";
 
-const MARTINA_STORE_PRODUCT_BASE = "https://pol21.martinaditrento.com/mdt-services/resources/store/product";
-const MARTINA_CONFIG_URL = "https://pol21.martinaditrento.com/mdt-services/resources/ecommerce/config";
-const MARTINA_IMAGE_BASE = "https://pol21.martinaditrento.com/images/products/md/";
+const MARTINA_STORE_PRODUCT_BASE =
+  "https://pol21.martinaditrento.com/mdt-services/resources/store/product";
+const MARTINA_CONFIG_URL =
+  "https://pol21.martinaditrento.com/mdt-services/resources/ecommerce/config";
+const MARTINA_IMAGE_BASE =
+  "https://pol21.martinaditrento.com/images/products/md/";
 
 const FETCH_HEADERS = {
   accept: "application/json, text/plain, */*",
@@ -73,8 +83,14 @@ function groupMartinaImagesByColor(
   return grouped;
 }
 
-export async function fetchMartinaConfig(country: string = "598"): Promise<any> {
-  return martinaFetch(`${MARTINA_CONFIG_URL}?countryId=${country}`, 20000, FETCH_HEADERS);
+export async function fetchMartinaConfig(
+  country: string = "598",
+): Promise<any> {
+  return martinaFetch(
+    `${MARTINA_CONFIG_URL}?countryId=${country}`,
+    20000,
+    FETCH_HEADERS,
+  );
 }
 
 async function fetchMartinaCodes(country: string): Promise<string[]> {
@@ -111,7 +127,9 @@ async function fetchMartinaCodes(country: string): Promise<string[]> {
     return Array.from(found);
   } catch (e: any) {
     console.warn("Martina: no se pudo obtener config:", e?.message || e);
-    return [];
+    throw new Error(
+      "Martina no está disponible. Intentá nuevamente más tarde.",
+    );
   }
 }
 
@@ -144,7 +162,10 @@ async function fetchStoreProductByProductLine(
     const data = await martinaFetch(url, 30000, FETCH_HEADERS);
     return normalizeMartinaPayloadToArray(data);
   } catch (e: any) {
-    console.warn(`Martina: error productLine=${productLineId}:`, e?.message || e);
+    console.warn(
+      `Martina: error productLine=${productLineId}:`,
+      e?.message || e,
+    );
     return [];
   }
 }
@@ -184,8 +205,13 @@ export interface MartinaColorDetail {
 }
 
 /** Extrae colores + talles de las entries de store/product (formato cliente). */
-export function extractMartinaColorDetails(entries: any[]): MartinaColorDetail[] {
-  const colorMap = new Map<number, { id: number; hex: string; name: string; rawSizes: Set<string> }>();
+export function extractMartinaColorDetails(
+  entries: any[],
+): MartinaColorDetail[] {
+  const colorMap = new Map<
+    number,
+    { id: number; hex: string; name: string; rawSizes: Set<string> }
+  >();
 
   entries.forEach((entry) => {
     const tipoVentas = entry?.variation?.variationValues ?? [];
@@ -239,7 +265,9 @@ function detectCodeFromEntry(entry: any): string | null {
 
 /** Elige la entry más informativa para precio: prefiere la que trae descuento (price1 > price). */
 function pickPricingEntry(entries: any[]): any {
-  const withPrice = entries.filter((e) => e && e.price != null && String(e.price) !== "");
+  const withPrice = entries.filter(
+    (e) => e && e.price != null && String(e.price) !== "",
+  );
   if (withPrice.length === 0) return entries[0] || null;
   const discounted = withPrice.find((e) => {
     const p = parseFloat(String(e?.price ?? ""));
@@ -249,17 +277,15 @@ function pickPricingEntry(entries: any[]): any {
   return discounted || withPrice[0];
 }
 
-export async function syncMartina(campaignCode?: string): Promise<{ products: ProductRow[]; count: number }> {
+export async function syncMartina(
+  campaignCode?: string,
+): Promise<{ products: ProductRow[]; count: number }> {
   console.log("Martina: iniciando sync...");
 
   const countryId = "598";
   let codes: string[] = [];
 
-  try {
-    codes = await fetchMartinaCodes(countryId);
-  } catch {
-    codes = [];
-  }
+  codes = await fetchMartinaCodes(countryId);
 
   let resolvedCampaignCode = campaignCode ?? "";
   if (!resolvedCampaignCode) {
@@ -267,21 +293,28 @@ export async function syncMartina(campaignCode?: string): Promise<{ products: Pr
       const configRaw = await fetchMartinaConfig(countryId);
       resolvedCampaignCode = parseCampaign(configRaw).code;
     } catch (e: any) {
-      console.warn("Martina: no se pudo resolver la campaña vigente:", e?.message || e);
+      console.warn(
+        "Martina: no se pudo resolver la campaña vigente:",
+        e?.message || e,
+      );
     }
   }
 
   const allFetchedItems: any[] = [];
 
   if (codes.length > 0) {
-    console.log(`Martina: ${codes.length} codes detectados: ${codes.join(", ")}`);
+    console.log(
+      `Martina: ${codes.length} codes detectados: ${codes.join(", ")}`,
+    );
     const concurrency = 3;
     const batches: string[][] = [];
     for (let i = 0; i < codes.length; i += concurrency) {
       batches.push(codes.slice(i, i + concurrency));
     }
     for (const batch of batches) {
-      const results = await Promise.all(batch.map((code) => fetchStoreProductForCode(countryId, code)));
+      const results = await Promise.all(
+        batch.map((code) => fetchStoreProductForCode(countryId, code)),
+      );
       results.forEach((arr, idx) => {
         if (!Array.isArray(arr)) return;
         const code = batch[idx];
@@ -298,7 +331,9 @@ export async function syncMartina(campaignCode?: string): Promise<{ products: Pr
     console.log("Martina: sin codes, usando catálogo por productLine");
     const codeToUse = resolvedCampaignCode || "202605";
     if (!resolvedCampaignCode) {
-      console.warn("Martina: usando code de respaldo 202605 (campaña no resuelta)");
+      console.warn(
+        "Martina: usando code de respaldo 202605 (campaña no resuelta)",
+      );
     }
     const productLines = [
       { productLineId: "3325", category: "HOMBRE" },
@@ -309,7 +344,12 @@ export async function syncMartina(campaignCode?: string): Promise<{ products: Pr
 
     for (const pl of productLines) {
       try {
-        const arr = await fetchStoreProductByProductLine(countryId, codeToUse, pl.productLineId, pl.category);
+        const arr = await fetchStoreProductByProductLine(
+          countryId,
+          codeToUse,
+          pl.productLineId,
+          pl.category,
+        );
         if (!Array.isArray(arr)) continue;
         for (const it of arr) {
           if (it && typeof it === "object") {
@@ -318,14 +358,25 @@ export async function syncMartina(campaignCode?: string): Promise<{ products: Pr
             if (!hasImages && providerId) {
               let detail = detailByProductId.get(providerId);
               if (detail === undefined) {
-                const detailArr = await fetchStoreProductByProductId(countryId, codeToUse, providerId);
+                const detailArr = await fetchStoreProductByProductId(
+                  countryId,
+                  codeToUse,
+                  providerId,
+                );
                 detail =
-                  detailArr.find((d: any) => String(d?.id ?? d?.productId ?? "") === providerId) ||
+                  detailArr.find(
+                    (d: any) =>
+                      String(d?.id ?? d?.productId ?? "") === providerId,
+                  ) ||
                   detailArr[0] ||
                   null;
                 detailByProductId.set(providerId, detail);
               }
-              if (detail && Array.isArray(detail.images) && detail.images.length > 0) {
+              if (
+                detail &&
+                Array.isArray(detail.images) &&
+                detail.images.length > 0
+              ) {
                 it.images = detail.images;
               }
               if (detail && detail.mainImage) {
@@ -364,7 +415,9 @@ export async function syncMartina(campaignCode?: string): Promise<{ products: Pr
     const first = entries[0];
     const name = normalizeText(first?.name || "");
     const description = cleanDescription(
-      [first?.description, first?.description2, first?.description3].filter(Boolean).join(" "),
+      [first?.description, first?.description2, first?.description3]
+        .filter(Boolean)
+        .join(" "),
     );
     const pricing = pickPricingEntry(entries);
     const { price, originalPrice, enOferta } = normalizeProductPrice(
@@ -373,12 +426,26 @@ export async function syncMartina(campaignCode?: string): Promise<{ products: Pr
     );
 
     const categoryName = normalizeCategoryName(
-      String(first?.productLine?.parent?.name || first?.productLine?.name || "Ropa"),
+      String(
+        first?.productLine?.parent?.name || first?.productLine?.name || "Ropa",
+      ),
       "Ropa",
     );
-    const subcategoria = normalizeCategoryName(String(first?.productLine?.name || ""), "");
+    const subcategoria = normalizeCategoryName(
+      String(first?.productLine?.name || ""),
+      "",
+    );
 
-    const colorById = new Map<number, { id: number; hex: string; name: string; sizes: string[]; images: string[] }>();
+    const colorById = new Map<
+      number,
+      {
+        id: number;
+        hex: string;
+        name: string;
+        sizes: string[];
+        images: string[];
+      }
+    >();
     entries.forEach((entry) => {
       const colorNodes = extractMartinaColorNodes(entry?.variation);
       const imagesByColor = groupMartinaImagesByColor(
@@ -388,7 +455,10 @@ export async function syncMartina(campaignCode?: string): Promise<{ products: Pr
       colorNodes.forEach((c) => {
         if (!Number.isFinite(c.id)) return;
         if (!colorById.has(c.id)) {
-          colorById.set(c.id, { ...c, images: imagesByColor[String(c.id)] || [] });
+          colorById.set(c.id, {
+            ...c,
+            images: imagesByColor[String(c.id)] || [],
+          });
         } else {
           const existing = colorById.get(c.id)!;
           const merged = new Set([...existing.sizes, ...c.sizes]);
@@ -408,7 +478,9 @@ export async function syncMartina(campaignCode?: string): Promise<{ products: Pr
     const colors = Array.from(colorById.values());
 
     if (colors.length === 0) {
-      console.log(`Martina: omitiendo producto sin colores (posible descontinuado): code=${code}, id=${first?.id}`);
+      console.log(
+        `Martina: omitiendo producto sin colores (posible descontinuado): code=${code}, id=${first?.id}`,
+      );
       return;
     }
 
@@ -463,5 +535,10 @@ export async function syncMartina(campaignCode?: string): Promise<{ products: Pr
   });
 
   console.log(`Martina: ${products.length} productos listos para upsert`);
+  if (products.length === 0) {
+    throw new Error(
+      "Martina no devolvió productos. Intentá nuevamente más tarde.",
+    );
+  }
   return { products, count: products.length };
 }
