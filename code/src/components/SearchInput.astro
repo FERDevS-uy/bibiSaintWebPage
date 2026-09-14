@@ -281,6 +281,7 @@
 
 <script>
   // @ts-nocheck
+  import { productImageSrc } from "@utils/productImage";
   import { formatPrice, parsePrice } from "@utils/price";
   const BASE_URL = document.documentElement.dataset.basePath || "";
 
@@ -291,20 +292,6 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
-  }
-
-  function sanitizeImageUrl(value) {
-    const fallback = `${BASE_URL || ""}/assets/no-image.png`;
-    const raw = String(value ?? "").trim();
-    if (!raw) return fallback;
-
-    try {
-      const parsed = new URL(raw, window.location.origin);
-      if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return fallback;
-      return parsed.href;
-    } catch {
-      return fallback;
-    }
   }
 
   /** @type {AbortController | null} */
@@ -418,7 +405,7 @@
 
         resultContainer.innerHTML = results
           .map((/** @type {any} */ item) => {
-            const src = sanitizeImageUrl(Array.isArray(item.img) && item.img.length ? item.img[0] : "");
+            const src = escapeHtml(productImageSrc(Array.isArray(item.img) && item.img.length ? item.img[0] : ""));
             const price = escapeHtml(formatPrice(parsePrice(item.price || "")));
             const name = escapeHtml(item.name || "");
             const safeId = encodeURIComponent(String(item.id || ""));
@@ -426,7 +413,7 @@
           <li class="searchResultItem">
               <a href="${BASE_URL}/producto/${safeId}">
               <div class="searchResultImage">
-                <img src="${src}" alt="${name}" />
+                <img data-product-image src="${src}" alt="${name}" />
               </div>
               <div class="searchResultInfo">
                 <span class="searchResultName">${name}</span>

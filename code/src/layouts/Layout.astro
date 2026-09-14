@@ -1,4 +1,5 @@
 ---
+import ProductImageRuntime from "@components/ProductImageRuntime.astro";
 import GlobalStyles from "./GlobalStyles.astro";
 import { config } from "src/config";
 import { detectBasePath, withBasePath } from "@utils/basePath";
@@ -69,6 +70,7 @@ const {
     <meta property="og:image" content={pageImage} />
     <meta property="og:url" content={url_href} />
 
+    <ProductImageRuntime />
     <ViewTransitions />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

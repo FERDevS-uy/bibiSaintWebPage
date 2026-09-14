@@ -1,5 +1,6 @@
 ---
 import type Product from "../types/product";
+import { productImageSrc } from "@utils/productImage";
 import { withBasePath } from "@utils/basePath";
 import AddToCartButton from "./AddToCartButton.astro";
 import getColors from "@utils/getColors";
@@ -28,7 +29,7 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
 
 <article class={`producto_card${tall ? " producto_card--tall" : ""}`} data-colors={colors} data-name={p.name} data-price={p.price} data-subcategory={p.categories.subcategories?.map((subcategory) => subcategory.name).join("|")}>
   <a href={withBasePath(`/producto/${p.id}`, pathname)} class="card-img-link" title={p.name}>
-    <img src={p.img[0]} alt={p.name} loading="lazy" class={tall ? "producto_card__img--tall" : undefined} />
+    <img src={productImageSrc(p.img[0])} alt={p.name} loading="lazy" data-product-image class={tall ? "producto_card__img--tall" : undefined} />
   </a>
 
   <div class="card-info">

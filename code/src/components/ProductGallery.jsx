@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import ProductImage from "./ProductImage.jsx";
 import { isTallBoot } from "../utils/isTallBoot";
 import "../styles/components/ProductGallery.css";
 
@@ -7,15 +8,18 @@ import "../styles/components/ProductGallery.css";
  * - Imagen principal + miniaturas clickeables.
  * - La imagen principal es eager/high porque es contenido above-the-fold y LCP;
  *   solo las miniaturas usan lazy loading.
- * - Si TODAS las imagenes fallan al cargar, muestra un mensaje indicando
- *   que el producto puede no estar en venta.
+ * - An image failure is not evidence of product availability.
  */
-export default function ProductGallery({ images = [], name = "", description = "", id = "" }) {
+export default function ProductGallery({
+  images = [],
+  name = "",
+  description = "",
+  id = "",
+}) {
   const initial = Array.isArray(images) ? images.filter(Boolean) : [];
   const [safeImages, setSafeImages] = useState(initial);
   const [activeIndex, setActiveIndex] = useState(0);
   const [brokenSet, setBrokenSet] = useState(() => new Set());
-  const mainImgRef = useRef(null);
 
   // Escucha cambio de color para sustituir el set de imagenes en vivo.
   useEffect(() => {
@@ -53,9 +57,13 @@ export default function ProductGallery({ images = [], name = "", description = "
   if (safeImages.length === 0 || allBroken) {
     return (
       <div className="gallery">
-        <div className="mainImg gallery-unavailable" role="img" aria-label="Producto sin imagenes">
+        <div
+          className="mainImg gallery-unavailable"
+          role="img"
+          aria-label="Producto sin imagenes"
+        >
           <span className="gallery-unavailable-text">
-            Este producto no esta disponible actualmente.
+            No se pudieron cargar las imágenes. Intenta recargar la página.
           </span>
         </div>
       </div>
@@ -67,8 +75,8 @@ export default function ProductGallery({ images = [], name = "", description = "
 
   return (
     <div className="gallery">
-      <img
-        ref={mainImgRef}
+      <ProductImage
+        key={activeSrc}
         className={`mainImg${tall ? " mainImg--tall" : ""}`}
         src={activeSrc}
         alt={name}
@@ -82,7 +90,7 @@ export default function ProductGallery({ images = [], name = "", description = "
         <div className="thumbs">
           {safeImages.map((src, i) =>
             brokenSet.has(i) ? null : (
-              <img
+              <ProductImage
                 key={`${src}-${i}`}
                 src={src}
                 alt=""
