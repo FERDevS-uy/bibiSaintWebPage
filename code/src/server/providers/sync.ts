@@ -5,8 +5,12 @@ import {
   PREVIEW_TTL_MS,
   SupabaseProductRepository,
   getPreviewSecret,
+  prepareMartinaPlan,
+  type SyncPlan,
+  type SyncPlanItem,
   type SyncExistingProduct,
 } from "./martinaSync";
+import type { MartinaCampaign } from "./martinaCampaign";
 import type { ProductRow } from "./utils";
 import { invalidateAllProductCaches } from "../products";
 import { bumpCatalogVersion } from "../catalog/edgeCache";
@@ -19,7 +23,7 @@ interface SyncResult {
   error?: string;
 }
 
-type ProviderSyncFn = () => Promise<{ products: ProductRow[]; count: number }>;
+type ProviderSyncFn = () => Promise<{ products: ProductRow[]; count: number; campaign?: MartinaCampaign; takeDetailLookup?: () => boolean }>;
 
 export interface ProviderPreviewResult {
   provider: string;
@@ -28,6 +32,10 @@ export interface ProviderPreviewResult {
   newProducts: number;
   priceChanges: number;
   unchanged: number;
+  deactivations?: number;
+  availabilityChanges?: number;
+  unknown?: number;
+  stockPlan?: SyncPlanItem[];
   error?: string;
 }
 
@@ -37,6 +45,9 @@ export interface ProviderPreviewResponse {
   totalNew: number;
   totalPriceChanges: number;
   totalUnchanged: number;
+  totalDeactivations: number;
+  totalAvailabilityChanges: number;
+  totalUnknown: number;
   token: string;
   expiresAt: number;
 }
@@ -181,12 +192,29 @@ function normalizedProducts(products: ProductRow[]) {
 async function analyzeProviderProducts(
   provider: string,
   products: ProductRow[],
+  campaign?: MartinaCampaign,
+  takeDetailLookup?: () => boolean,
 ): Promise<{
   newProducts: number;
   priceChanges: number;
   unchanged: number;
   fingerprint: string;
+  deactivations?: number;
+  availabilityChanges?: number;
+  unknown?: number;
+  stockPlan?: SyncPlanItem[];
+  plan?: SyncPlan;
 }> {
+  if (provider === "Martina") {
+    if (!campaign || !takeDetailLookup) throw new Error("Falta snapshot de Martina");
+    const plan = await prepareMartinaPlan({ products, campaign, takeDetailLookup });
+    return { newProducts: plan.summary.create, priceChanges: plan.summary.priceChanges,
+      availabilityChanges: plan.summary.availabilityChanges,
+      deactivations: plan.summary.deactivate, unknown: plan.summary.unknown,
+      unchanged: plan.summary.unchanged, fingerprint: plan.hash, plan,
+      stockPlan: plan.items.filter((item) => item.action === "deactivate" || item.action === "unknown" || item.action === "update"),
+    };
+  }
   const existing: Map<string, SyncExistingProduct> = products.length
     ? await new SupabaseProductRepository(provider).readByIds(
         products.map((product) => product.id),
@@ -243,9 +271,9 @@ export async function previewAllProviders(): Promise<ProviderPreviewResponse> {
         `[providers-preview] run=${runId} provider=${provider} start`,
       );
       try {
-        const { products } = await sync();
-        const { newProducts, priceChanges, unchanged, fingerprint } =
-          await analyzeProviderProducts(provider, products);
+        const { products, campaign, takeDetailLookup } = await sync();
+        const { newProducts, priceChanges, unchanged, fingerprint, deactivations, availabilityChanges, unknown, stockPlan } =
+          await analyzeProviderProducts(provider, products, campaign, takeDetailLookup);
         const result: ProviderPreviewResult = {
           provider,
           status: "ok",
@@ -253,6 +281,10 @@ export async function previewAllProviders(): Promise<ProviderPreviewResponse> {
           newProducts,
           priceChanges,
           unchanged,
+          deactivations,
+          availabilityChanges,
+          unknown,
+          stockPlan,
         };
         console.info(
           `[providers-preview] run=${runId} provider=${provider} done ` +
@@ -285,7 +317,7 @@ export async function previewAllProviders(): Promise<ProviderPreviewResponse> {
     }),
   );
 
-  const results = previewEntries.map((entry) => entry.result);
+  const results: ProviderPreviewResult[] = previewEntries.map((entry) => entry.result);
   const expiresAt = Date.now() + PREVIEW_TTL_MS;
   const token = await signPreviewPayload({
     exp: expiresAt,
@@ -303,6 +335,9 @@ export async function previewAllProviders(): Promise<ProviderPreviewResponse> {
       0,
     ),
     totalUnchanged: results.reduce((sum, result) => sum + result.unchanged, 0),
+    totalDeactivations: results.reduce((sum, result) => sum + (result.deactivations ?? 0), 0),
+    totalAvailabilityChanges: results.reduce((sum, result) => sum + (result.availabilityChanges ?? 0), 0),
+    totalUnknown: results.reduce((sum, result) => sum + (result.unknown ?? 0), 0),
     token,
     expiresAt,
   };
@@ -351,14 +386,16 @@ export async function syncAllProviders(
       console.info(`[providers-sync] run=${runId} provider=${provider} start`);
 
       try {
-        const { products, count } = await sync();
-        const analysis = await analyzeProviderProducts(provider, products);
-        if (analysis.fingerprint !== approvedSnapshots.get(provider)) {
+        const { products, count, campaign, takeDetailLookup } = await sync();
+        const analysis = await analyzeProviderProducts(provider, products, campaign, takeDetailLookup);
+        if (analysis.fingerprint !== approvedSnapshots.get(provider) || Date.now() >= preview.exp) {
           throw new Error(
             "Los datos cambiaron desde el resumen. Generá uno nuevo antes de sincronizar.",
           );
         }
-        const { upserted, errors } = await upsertProducts(provider, products);
+        const { upserted, errors } = analysis.plan
+          ? await new SupabaseProductRepository(provider).applyMartinaPlan(analysis.plan)
+          : await upsertProducts(provider, products);
         const result: SyncResult = {
           provider,
           status: errors > 0 && upserted === 0 ? "error" : "ok",

@@ -5,10 +5,11 @@ import {
   martinaFetch,
   normalizeCategoryName,
   type ProductRow,
-} from "./utils";
-import { normalizeProductPrice } from "./martinaNormalizer";
-import { normalizeSizes } from "../../utils/sizes";
-import { parseCampaign } from "./martinaCampaign";
+} from "./utils.ts";
+import { normalizeProductPrice } from "./martinaNormalizer.ts";
+import { normalizeSizes } from "../../utils/sizes.ts";
+import { parseCampaign, isVigente, type MartinaCampaign } from "./martinaCampaign.ts";
+import { evaluateMartinaAvailability, parseMartinaProducts } from "./martinaAvailability.ts";
 
 const MARTINA_STORE_PRODUCT_BASE =
   "https://pol21.martinaditrento.com/mdt-services/resources/store/product";
@@ -23,22 +24,37 @@ const FETCH_HEADERS = {
 };
 
 function normalizeMartinaPayloadToArray(data: any): any[] {
-  if (!data) return [];
-  if (Array.isArray(data)) return data;
-  if (Array.isArray(data.data)) return data.data;
-  if (Array.isArray(data.products)) return data.products;
-  if (Array.isArray(data.result)) return data.result;
+  return parseMartinaProducts(data);
+}
 
-  const walkFindArray = (o: any): any[] | null => {
-    if (!o || typeof o !== "object") return null;
-    if (Array.isArray(o) && o.length > 0 && typeof o[0] === "object") return o;
-    for (const k of Object.keys(o)) {
-      const res = walkFindArray(o[k]);
-      if (res) return res;
+function normalizeMartinaCatalogPayloadToArray(data: unknown): any[] {
+  const products = parseMartinaProducts(data);
+  if (products.some((product) => {
+    const entry = product as Record<string, unknown> | null;
+    return entry?.error || entry?.success === false;
+  })) {
+    throw new Error("Catálogo Martina incompleto o inválido; no se puede reconciliar stock.");
+  }
+  if (!Array.isArray(data)) {
+    const envelope = data as Record<string, unknown>;
+    const collectionKeys = ["data", "products", "result"].filter((key) => key in envelope);
+    if (
+      collectionKeys.length !== 1 ||
+      Object.keys(envelope).some((key) => ![...collectionKeys, "success", "error", "status", "errors"].includes(key)) ||
+      ("success" in envelope && envelope.success !== true) ||
+      ("error" in envelope && envelope.error !== null && envelope.error !== false) ||
+      ("status" in envelope && envelope.status !== "ok") ||
+      ("errors" in envelope && (
+        envelope.errors === null ||
+        typeof envelope.errors !== "object" ||
+        Object.getPrototypeOf(envelope.errors) !== Object.prototype ||
+        Object.keys(envelope.errors).length !== 0
+      ))
+    ) {
+      throw new Error("Catálogo Martina incompleto o inválido; no se puede reconciliar stock.");
     }
-    return null;
-  };
-  return walkFindArray(data) || [];
+  }
+  return products;
 }
 
 function extractMartinaColorNodes(
@@ -93,46 +109,6 @@ export async function fetchMartinaConfig(
   );
 }
 
-async function fetchMartinaCodes(country: string): Promise<string[]> {
-  try {
-    const data = await fetchMartinaConfig(country);
-    const payload = data && data.data ? data.data : data || {};
-    const found: Set<string> = new Set();
-    const walk = (obj: any) => {
-      if (!obj || typeof obj !== "object") return;
-      if (Array.isArray(obj)) {
-        const sample = obj.find((it: any) => it && (it.code || it.codigo));
-        if (sample && (sample.code || sample.codigo)) {
-          obj.forEach((it: any) => {
-            const c = it.code || it.codigo || (it.id && String(it.id));
-            if (c) found.add(String(c));
-          });
-          return;
-        }
-        for (const item of obj) walk(item);
-        return;
-      }
-      for (const k of Object.keys(obj)) {
-        const val = obj[k];
-        if (k.toLowerCase().includes("campaign") && Array.isArray(val)) {
-          val.forEach((it: any) => {
-            const c = it.code || it.codigo || (it.id && String(it.id));
-            if (c) found.add(String(c));
-          });
-        }
-        walk(val);
-      }
-    };
-    walk(payload);
-    return Array.from(found);
-  } catch (e: any) {
-    console.warn("Martina: no se pudo obtener config:", e?.message || e);
-    throw new Error(
-      "Martina no está disponible. Intentá nuevamente más tarde.",
-    );
-  }
-}
-
 async function fetchStoreProductForCode(
   country: string,
   code: string,
@@ -140,10 +116,10 @@ async function fetchStoreProductForCode(
   const url = `${MARTINA_STORE_PRODUCT_BASE}?countryId=${country}&code=${encodeURIComponent(code)}`;
   try {
     const data = await martinaFetch(url, 30000, FETCH_HEADERS);
-    return normalizeMartinaPayloadToArray(data);
+    return normalizeMartinaCatalogPayloadToArray(data);
   } catch (e: any) {
     console.warn(`Martina: error code=${code}:`, e?.message || e);
-    return [];
+    throw e;
   }
 }
 
@@ -160,13 +136,13 @@ async function fetchStoreProductByProductLine(
   )}`;
   try {
     const data = await martinaFetch(url, 30000, FETCH_HEADERS);
-    return normalizeMartinaPayloadToArray(data);
+    return normalizeMartinaCatalogPayloadToArray(data);
   } catch (e: any) {
     console.warn(
       `Martina: error productLine=${productLineId}:`,
       e?.message || e,
     );
-    return [];
+    throw e;
   }
 }
 
@@ -180,10 +156,14 @@ async function fetchStoreProductByProductId(
   )}&code=${encodeURIComponent(String(code))}&countryId=${encodeURIComponent(String(country))}`;
   try {
     const data = await martinaFetch(url, 30000, FETCH_HEADERS);
-    return normalizeMartinaPayloadToArray(data);
+    const entries = normalizeMartinaPayloadToArray(data);
+    if (entries.some((entry) => String(entry?.id ?? entry?.productId) !== String(productId)) || evaluateMartinaAvailability(entries) === "unknown") {
+      throw new Error("Respuesta de producto Martina inválida");
+    }
+    return entries;
   } catch (e: any) {
     console.warn(`Martina: error productId=${productId}:`, e?.message || e);
-    return [];
+    throw e;
   }
 }
 
@@ -278,27 +258,27 @@ function pickPricingEntry(entries: any[]): any {
 }
 
 export async function syncMartina(
-  campaignCode?: string,
-): Promise<{ products: ProductRow[]; count: number }> {
+  campaignInput?: string | MartinaCampaign,
+  now = new Date(),
+  categoryOverride = "Ropa",
+): Promise<{ products: ProductRow[]; count: number; campaign: MartinaCampaign; takeDetailLookup: () => boolean }> {
   console.log("Martina: iniciando sync...");
+  let detailLookups = 0;
+  const takeDetailLookup = () => {
+    if (detailLookups >= 20) return false;
+    detailLookups++;
+    return true;
+  };
 
   const countryId = "598";
-  let codes: string[] = [];
-
-  codes = await fetchMartinaCodes(countryId);
-
-  let resolvedCampaignCode = campaignCode ?? "";
-  if (!resolvedCampaignCode) {
-    try {
-      const configRaw = await fetchMartinaConfig(countryId);
-      resolvedCampaignCode = parseCampaign(configRaw).code;
-    } catch (e: any) {
-      console.warn(
-        "Martina: no se pudo resolver la campaña vigente:",
-        e?.message || e,
-      );
-    }
+  const campaign = typeof campaignInput === "object"
+    ? campaignInput
+    : parseCampaign(await fetchMartinaConfig(countryId));
+  if (!isVigente(campaign, now) || (typeof campaignInput === "string" && campaignInput !== campaign.code)) {
+    throw new Error("Campaña Martina no vigente. Genere una nueva vista previa.");
   }
+  const resolvedCampaignCode = campaign.code;
+  const codes = [resolvedCampaignCode];
 
   const allFetchedItems: any[] = [];
 
@@ -329,12 +309,7 @@ export async function syncMartina(
 
   if (allFetchedItems.length === 0) {
     console.log("Martina: sin codes, usando catálogo por productLine");
-    const codeToUse = resolvedCampaignCode || "202605";
-    if (!resolvedCampaignCode) {
-      console.warn(
-        "Martina: usando code de respaldo 202605 (campaña no resuelta)",
-      );
-    }
+    const codeToUse = resolvedCampaignCode;
     const productLines = [
       { productLineId: "3325", category: "HOMBRE" },
       { productLineId: "3324", category: "MUJER" },
@@ -350,19 +325,21 @@ export async function syncMartina(
           pl.productLineId,
           pl.category,
         );
-        if (!Array.isArray(arr)) continue;
-        for (const it of arr) {
+        if (arr.some((entry) => !/^\d+$/.test(String(entry?.id ?? entry?.productId ?? "")) || evaluateMartinaAvailability([entry]) === "unknown")) {
+          throw new Error("Línea de catálogo Martina incompleta o inválida");
+        }
+        for (const it of [...arr].sort((left, right) => String(left.id ?? left.productId).localeCompare(String(right.id ?? right.productId)))) {
           if (it && typeof it === "object") {
             const providerId = String(it.id ?? it.productId ?? "").trim();
             const hasImages = Array.isArray(it.images) && it.images.length > 0;
-            if (!hasImages && providerId) {
+            if (!hasImages && providerId && (detailByProductId.has(providerId) || takeDetailLookup())) {
               let detail = detailByProductId.get(providerId);
               if (detail === undefined) {
                 const detailArr = await fetchStoreProductByProductId(
                   countryId,
                   codeToUse,
                   providerId,
-                );
+                ).catch(() => []);
                 detail =
                   detailArr.find(
                     (d: any) =>
@@ -392,17 +369,24 @@ export async function syncMartina(
         }
       } catch (err: any) {
         console.warn("Martina: error en productLine", pl, err?.message || err);
+        throw err;
       }
       await delay(150 + Math.floor(Math.random() * 200));
     }
+  }
+
+  if (allFetchedItems.length === 0) {
+    throw new Error("Catálogo Martina vacío sin evidencia de exhaustividad; no se puede reconciliar stock.");
   }
 
   console.log(`Martina: ${allFetchedItems.length} items recuperados`);
 
   const byCode = new Map<string, any[]>();
   allFetchedItems.forEach((p: any) => {
-    const code = String(p?.code ?? p?.id ?? "").trim();
-    if (!code) return;
+    const code = String(p?.id ?? p?.productId ?? "").trim();
+    if (!/^\d+$/.test(code) || evaluateMartinaAvailability([p]) === "unknown") {
+      throw new Error("Catálogo Martina incompleto o inválido; no se puede reconciliar stock.");
+    }
     if (!byCode.has(code)) byCode.set(code, []);
     byCode.get(code)!.push(p);
   });
@@ -425,12 +409,10 @@ export async function syncMartina(
       pricing?.price1 ?? "",
     );
 
-    const categoryName = normalizeCategoryName(
-      String(
-        first?.productLine?.parent?.name || first?.productLine?.name || "Ropa",
-      ),
-      "Ropa",
-    );
+    // Martina es un proveedor de indumentaria. Sus líneas internas (por
+    // ejemplo, “Complemento”) no son categorías públicas: todas pertenecen a
+    // la categoría existente Ropa y la línea solo puede ser una subcategoría.
+    const categoryName = normalizeCategoryName(categoryOverride, "Ropa");
     const subcategoria = normalizeCategoryName(
       String(first?.productLine?.name || ""),
       "",
@@ -450,7 +432,7 @@ export async function syncMartina(
       const colorNodes = extractMartinaColorNodes(entry?.variation);
       const imagesByColor = groupMartinaImagesByColor(
         Array.isArray(entry?.images) ? entry.images : [],
-        code,
+        detectCodeFromEntry(entry) || code,
       );
       colorNodes.forEach((c) => {
         if (!Number.isFinite(c.id)) return;
@@ -477,13 +459,6 @@ export async function syncMartina(
 
     const colors = Array.from(colorById.values());
 
-    if (colors.length === 0) {
-      console.log(
-        `Martina: omitiendo producto sin colores (posible descontinuado): code=${code}, id=${first?.id}`,
-      );
-      return;
-    }
-
     const allImages: string[] = [];
     const seenImg = new Set<string>();
     colors.forEach((c) => {
@@ -504,6 +479,7 @@ export async function syncMartina(
       hex: c.hex,
       name: c.name,
       images: c.images,
+      sizes: c.sizes,
     }));
 
     const subcategorias =
@@ -528,17 +504,12 @@ export async function syncMartina(
       original_price: originalPrice,
       colors: colorsData,
       source: "scraper",
-      active: true,
+      active: evaluateMartinaAvailability(entries) === "available",
       auto_update_price: false,
       external_id: providerId,
     });
   });
 
   console.log(`Martina: ${products.length} productos listos para upsert`);
-  if (products.length === 0) {
-    throw new Error(
-      "Martina no devolvió productos. Intentá nuevamente más tarde.",
-    );
-  }
-  return { products, count: products.length };
+  return { products, count: products.length, campaign, takeDetailLookup };
 }

@@ -23,7 +23,7 @@ import { encodeOrderTokenV2, encodeOrderTokenV3 } from "../src/utils/orderToken"
  *  - endpoint rest/v1/products de Supabase -> links de proveedor (ids = baseId
  *    con prefijo, tal como los usa la query `.in("id", baseIds)` del cliente).
  *  - endpoint /api/martina/product-price -> { price, inStock: true } (badge ok)
- *  - endpoint alondra-ecommerce-be.sitios.uy/api/products -> { price, in_stock: false } (badge error)
+ *  - endpoint /api/alondra/product -> { price, in_stock: false } (badge error)
  *  - endpoint kaideco.uy/products/{handle}.js -> Shopify-style con variant available (badge ok)
  *  - productos.json -> 404 (tolerado, nunca rompe)
  */
@@ -91,7 +91,7 @@ async function registerProviderRoutes(page: Page) {
       body: JSON.stringify({ price: "100", inStock: true, colors: [] }),
     })
   );
-  await page.route("**/alondra-ecommerce-be.sitios.uy/api/products/*", (route) =>
+  await page.route("**/api/alondra/product?productId=*", (route) =>
     route.fulfill({
       status: 200,
       contentType: "application/json",

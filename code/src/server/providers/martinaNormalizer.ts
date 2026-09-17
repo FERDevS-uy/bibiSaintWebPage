@@ -6,7 +6,7 @@
 // Sin descuento => original_price = null y en_oferta = false (se evita dejar
 // ofertas fantasma si el producto antes estaba en oferta).
 
-import { parsePrice } from "./utils";
+import { parsePrice } from "./utils.ts";
 
 export interface NormalizedPrice {
   /** Precio vigente formateado (ej: "1.599"). */

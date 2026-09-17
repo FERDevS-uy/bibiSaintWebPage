@@ -114,7 +114,7 @@ export async function fetchMartinaLive(productId: string) {
     return {
       provider: "martina" as const,
       price: "",
-      inStock: false,
+      inStock: null,
       colors: [] as Array<{ id: number; hex: string; name: string; sizes: string[]; rawSizes: string[] }>,
       sizes: [] as string[],
     };
@@ -270,8 +270,6 @@ export async function fetchNuvexLive(providerUrl: string) {
   }
 }
 
-const ALONDRA_API_BASE = "https://alondra-ecommerce-be.sitios.uy/api";
-
 function parseAlondraInStock(product: any): boolean | null {
   if (typeof product?.listed === "boolean") return product.listed;
   if (typeof product?.in_stock === "boolean") return product.in_stock;
@@ -294,7 +292,7 @@ export async function fetchAlondraLive(productId: string) {
   const timeout = window.setTimeout(() => controller.abort(), 7000);
 
   try {
-    const endpoint = `${ALONDRA_API_BASE}/products/${encodeURIComponent(alondraId)}`;
+    const endpoint = `/api/alondra/product?productId=${encodeURIComponent(alondraId)}`;
     const response = await fetch(endpoint, {
       cache: "no-store",
       signal: controller.signal,

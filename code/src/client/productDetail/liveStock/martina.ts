@@ -12,6 +12,11 @@ export async function fetchMartinaLive(productId: string): Promise<ProviderResul
 }
 
 export async function handleMartina(data: ProviderResult, context: LiveStockContext): Promise<void> {
+  const colors = data?.colors ?? [];
+  if (typeof data?.inStock !== "boolean" || (data.inStock && colors.length === 0)) {
+    setStatus("No se pudo verificar la disponibilidad. Intente nuevamente.", "error");
+    return;
+  }
   const { checkStockBtn, statusEl, stockBadge, priceEl, originalPriceEl, setSizeRequirement, renderNormalizedSizes, renderColors, applyColorSelection, colorsBlock, sizesSelector, sizeFeedback } = context;
   const availableSizesByColor = context.state.availableSizesByColor;
 
@@ -38,8 +43,7 @@ export async function handleMartina(data: ProviderResult, context: LiveStockCont
     priceEl.classList.remove("price--offer");
   }
 
-  // sin colores => producto sin stock disponible
-  if (!data || !data.colors || data.colors.length === 0) {
+  if (data.inStock === false) {
     stockBadge.textContent = "Sin stock";
     stockBadge.style.background = "#a33a3a";
     availableSizesByColor.clear();
@@ -60,20 +64,20 @@ export async function handleMartina(data: ProviderResult, context: LiveStockCont
   stockBadge.style.background = "#27ae60";
 
   availableSizesByColor.clear();
-  data.colors.forEach((c) => {
+  colors.forEach((c) => {
     availableSizesByColor.set(c.id, new Set(c.sizes));
   });
 
-  const allRawSizes = data.colors.flatMap((c) => c.rawSizes || []);
-  const allNormalizedSizes = data.colors.flatMap((c) => c.sizes || []);
+  const allRawSizes = colors.flatMap((c) => c.rawSizes || []);
+  const allNormalizedSizes = colors.flatMap((c) => c.sizes || []);
   const { hasExplicitNoSize } = await import("../sizeNorm.js");
   const shouldSkipSize = allNormalizedSizes.length === 0 && hasExplicitNoSize(allRawSizes);
   setSizeRequirement(!shouldSkipSize);
 
-  renderColors(data.colors);
+  renderColors(colors);
 
   // seleccionar primer color y aplicar sus talles
-  const firstColor = data.colors[0];
+  const firstColor = colors[0];
   context.state.selectedColorId = firstColor.id;
   if (!shouldSkipSize) {
     applyColorSelection(firstColor.id);

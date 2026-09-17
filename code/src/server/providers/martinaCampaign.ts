@@ -29,7 +29,7 @@ export function parseNaiveAsMontevideo(value: unknown): Date | null {
   if (!normalized) return null;
 
   const match = normalized.match(
-    /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2}))?)?/,
+    /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2}))?)?$/,
   );
   if (!match) return null;
 
@@ -43,6 +43,10 @@ export function parseNaiveAsMontevideo(value: unknown): Date | null {
     Number(second),
   );
   if (Number.isNaN(asUtc)) return null;
+  const date = new Date(asUtc);
+  if (date.getUTCFullYear() !== Number(year) || date.getUTCMonth() + 1 !== Number(month) ||
+      date.getUTCDate() !== Number(day) || date.getUTCHours() !== Number(hour) ||
+      date.getUTCMinutes() !== Number(minute) || date.getUTCSeconds() !== Number(second)) return null;
 
   // Hora local Montevideo (UTC-3) T => instante UTC = T + 3h.
   return new Date(asUtc + MONTEVIDEO_UTC_OFFSET_MS);

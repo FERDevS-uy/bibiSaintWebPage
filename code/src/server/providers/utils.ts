@@ -299,15 +299,22 @@ export async function martinaFetch(
         isMartinaHost && isDevRuntime
           ? (((
               hostname: string,
-              options: unknown,
+              options: import("node:dns").LookupOptions | number,
               callback: (
                 error: Error | null,
-                address?: string,
+                address?: string | Array<{ address: string; family: number }>,
                 family?: number,
               ) => void,
             ) => {
               dns.resolve(hostname, (error, addresses) => {
                 if (!error && addresses?.length) {
+                  if (typeof options === "object" && options?.all === true) {
+                    callback(
+                      null,
+                      addresses.map((address) => ({ address, family: 4 })),
+                    );
+                    return;
+                  }
                   callback(null, addresses[0], 4);
                   return;
                 }

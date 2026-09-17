@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import Modal from "./Modal";
 import NuvexSyncPanel from "./NuvexSyncPanel";
+import { getCategories, type CategoryOption } from "../../utils/adminApi";
 
 interface SyncResult {
   provider: string;
@@ -25,6 +26,10 @@ interface ProviderPreviewResult {
   newProducts: number;
   priceChanges: number;
   unchanged: number;
+  deactivations?: number;
+  availabilityChanges?: number;
+  unknown?: number;
+  stockPlan?: MartinaPlanItem[];
   error?: string;
 }
 
@@ -34,6 +39,9 @@ interface ProviderPreviewResponse {
   totalNew: number;
   totalPriceChanges: number;
   totalUnchanged: number;
+  totalDeactivations: number;
+  totalAvailabilityChanges: number;
+  totalUnknown: number;
   token: string;
   expiresAt: number;
 }
@@ -44,7 +52,10 @@ interface MartinaPlanItem {
   price: string;
   originalPrice: string | null;
   enOferta: boolean;
-  action: "create" | "update" | "unchanged";
+  action: "create" | "update" | "unchanged" | "deactivate" | "unknown";
+  reason: string;
+  image?: string | null;
+  needsCategoryDecision?: boolean;
 }
 
 interface MartinaPreviewResponse {
@@ -57,7 +68,7 @@ interface MartinaPreviewResponse {
     validTill: string;
     vigente: boolean;
   };
-  summary?: { create: number; update: number; unchanged: number };
+  summary?: { create: number; update: number; unchanged: number; deactivate: number; unknown: number; priceChanges: number; availabilityChanges: number };
   plan?: MartinaPlanItem[];
   totalItems?: number;
   changedCount?: number;
@@ -99,6 +110,8 @@ const ACTION_LABEL: Record<MartinaPlanItem["action"], string> = {
   create: "Crear",
   update: "Actualizar",
   unchanged: "Sin cambios",
+  deactivate: "Desactivar",
+  unknown: "Sin verificar",
 };
 
 export default function ProvidersPanel() {
@@ -119,6 +132,19 @@ export default function ProvidersPanel() {
     null,
   );
   const [martinaError, setMartinaError] = useState<string | null>(null);
+  const [martinaCategories, setMartinaCategories] = useState<CategoryOption[]>([]);
+  // Per-item destination categories (id -> existing category name), chosen
+  // only on discrepant rows. Every change regenerates the preview so the
+  // overrides travel signed inside the preview token.
+  const [martinaOverrides, setMartinaOverrides] = useState<Record<string, string>>({});
+  // Lightbox for the supplier thumbnail (display only).
+  const [lightbox, setLightbox] = useState<{ src: string; name: string } | null>(null);
+
+  useEffect(() => {
+    getCategories().then((categories) => {
+      setMartinaCategories(categories.filter((category) => category.name !== "Complemento"));
+    }).catch(() => setMartinaCategories([]));
+  }, []);
 
   // Márgenes de ganancia por proveedor
   const [marginsLoading, setMarginsLoading] = useState(true);
@@ -278,18 +304,21 @@ export default function ProvidersPanel() {
     }
   };
 
-  const handleMartinaPreview = async () => {
+  const handleMartinaPreview = async (overrides: Record<string, string> = {}) => {
     setPreviewing(true);
     setMartinaError(null);
     setApplyResult(null);
+    setMartinaOverrides(overrides);
 
     try {
       const token = await getAccessToken();
       const resp = await fetch("/api/admin/providers/martina/preview", {
         method: "POST",
         headers: {
+          "content-type": "application/json",
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
+        body: JSON.stringify({ overrides }),
       });
       const body: MartinaPreviewResponse = await resp.json();
       if (!resp.ok || !body.ok) {
@@ -302,6 +331,13 @@ export default function ProvidersPanel() {
     } finally {
       setPreviewing(false);
     }
+  };
+
+  const handleMartinaOverrideChange = (id: string, category: string) => {
+    const next = { ...martinaOverrides };
+    if (category) next[id] = category;
+    else delete next[id];
+    void handleMartinaPreview(next);
   };
 
   const handleMartinaApply = async () => {
@@ -331,6 +367,10 @@ export default function ProvidersPanel() {
       setApplying(false);
     }
   };
+
+  // The assign column is shown only when at least one row needs a decision;
+  // per-row selects render only on discrepant rows.
+  const showMartinaAssign = preview?.plan?.some((item) => item.needsCategoryDecision) ?? false;
 
   return (
     <div style={wrap}>
@@ -502,7 +542,7 @@ export default function ProvidersPanel() {
               disabled={
                 loading ||
                 !syncPreview ||
-                syncPreview.totalNew + syncPreview.totalPriceChanges === 0
+                syncPreview.totalNew + syncPreview.totalPriceChanges + syncPreview.totalDeactivations === 0
               }
               onClick={() => {
                 setSyncConfirmOpen(false);
@@ -533,10 +573,10 @@ export default function ProvidersPanel() {
             >
               <div className="sync-preview-stat">
                 <span className="sync-preview-stat-value">
-                  {syncPreview.totalNew + syncPreview.totalPriceChanges}
+                  {syncPreview.totalNew + syncPreview.totalPriceChanges + syncPreview.totalDeactivations}
                 </span>
                 <span className="sync-preview-stat-label">
-                  cambios a aplicar
+                  cambios por tipo
                 </span>
               </div>
               <div className="sync-preview-stat">
@@ -573,12 +613,26 @@ export default function ProvidersPanel() {
                   </span>
                   <span className="sync-preview-provider-meta">
                     {provider.status === "ok"
-                      ? `${provider.newProducts} nuevos · ${provider.priceChanges} precios`
+                      ? `${provider.newProducts} nuevos · ${provider.priceChanges} precios${provider.provider === "Martina" ? ` · ${provider.deactivations ?? 0} bajas por stock · ${provider.unknown ?? 0} sin verificar` : ""}`
                       : "No se pudo cargar. Intentá más tarde."}
                   </span>
                 </div>
               ))}
             </div>
+            {syncPreview.results.filter((provider) => provider.stockPlan?.length).map((provider) => (
+              <div key={`${provider.provider}-stock`} style={{ maxHeight: 320, overflow: "auto" }}>
+                <table style={{ width: "100%", fontSize: "0.82rem", borderCollapse: "collapse", overflowWrap: "anywhere" }}>
+                  <caption>Precios y disponibilidad de {provider.provider}</caption>
+                  <thead><tr><th style={thStyle}>Acción</th><th style={thStyle}>Producto</th><th style={thStyle}>Motivo</th></tr></thead>
+                  <tbody>{provider.stockPlan?.map((item) => (
+                    <tr key={item.id}><td style={tdStyle}>{ACTION_LABEL[item.action]}</td><td style={tdStyle}>{item.name} ({item.id})</td><td style={tdStyle}>{item.reason}</td></tr>
+                  ))}</tbody>
+                </table>
+              </div>
+            ))}
+            {syncPreview.totalUnknown > 0 && (
+              <p className="sync-preview-note">{syncPreview.totalUnknown} productos sin verificar. Se conservarán sin cambios; su disponibilidad no está confirmada.</p>
+            )}
             {syncPreview.results.some(
               (provider) => provider.status === "error",
             ) && (
@@ -587,10 +641,9 @@ export default function ProvidersPanel() {
                 nuevamente más tarde sin afectar a los demás.
               </p>
             )}
-            {syncPreview.totalNew + syncPreview.totalPriceChanges === 0 && (
+            {syncPreview.totalNew + syncPreview.totalPriceChanges + syncPreview.totalDeactivations === 0 && (
               <p className="sync-preview-note">
-                No hay cambios para aplicar. Los productos ya están
-                actualizados.
+                No hay cambios confirmados para aplicar.
               </p>
             )}
           </>
@@ -730,7 +783,7 @@ export default function ProvidersPanel() {
             </p>
           </div>
           <button
-            onClick={handleMartinaPreview}
+            onClick={() => handleMartinaPreview({})}
             disabled={previewing || applying}
             className="admin-btn admin-btn-secondary"
           >
@@ -764,6 +817,21 @@ export default function ProvidersPanel() {
           title="Error Martina"
         >
           {martinaError}
+        </Modal>
+
+        <Modal
+          open={!!lightbox}
+          onClose={() => setLightbox(null)}
+          type="info"
+          title={lightbox?.name ?? "Foto del producto"}
+        >
+          {lightbox && (
+            <img
+              src={lightbox.src}
+              alt={lightbox.name}
+              style={{ display: "block", width: "100%", maxWidth: "90vw", maxHeight: "70vh", objectFit: "contain", borderRadius: 8 }}
+            />
+          )}
         </Modal>
 
         {preview?.ok && (
@@ -808,9 +876,15 @@ export default function ProvidersPanel() {
                   ● {preview.summary?.update ?? 0} actualizar
                 </span>
                 <span style={{ color: "var(--admin-text-secondary)" }}>
+                  {preview.summary?.priceChanges ?? 0} precios
+                </span>
+                <span style={{ color: "var(--admin-text-secondary)" }}>
                   = {preview.summary?.unchanged ?? 0} sin cambios
                 </span>
+                <span style={{ color: "var(--admin-danger)" }}>{preview.summary?.deactivate ?? 0} bajas por stock</span>
+                <span style={{ color: "var(--admin-text-secondary)" }}>{preview.summary?.unknown ?? 0} sin verificar</span>
               </div>
+              {(preview.summary?.unknown ?? 0) > 0 && <p>Los productos sin verificar se conservarán sin cambios. Su disponibilidad no está confirmada.</p>}
               {preview.changedCount !== undefined &&
                 preview.changedCount > (preview.plan?.length ?? 0) && (
                   <div
@@ -834,7 +908,8 @@ export default function ProvidersPanel() {
                   padding: "0.5rem 1.25rem",
                   boxShadow: "var(--admin-shadow)",
                   maxHeight: 320,
-                  overflowY: "auto",
+                  overflow: "auto",
+                  overflowWrap: "anywhere",
                 }}
               >
                 <table
@@ -851,8 +926,10 @@ export default function ProvidersPanel() {
                         color: "var(--admin-text-secondary)",
                       }}
                     >
+                      <th style={thStyle}>Foto</th>
                       <th style={thStyle}>Acción</th>
                       <th style={thStyle}>Producto</th>
+                      {showMartinaAssign && <th style={thStyle}>Asignar cat</th>}
                       <th style={thStyle}>Precio</th>
                       <th style={thStyle}>Antes</th>
                       <th style={thStyle}>Oferta</th>
@@ -866,6 +943,36 @@ export default function ProvidersPanel() {
                           borderTop: "1px solid var(--admin-border, #f1f2f4)",
                         }}
                       >
+                        <td style={tdStyle}>
+                          {item.image ? (
+                            <button
+                              type="button"
+                              onClick={() => setLightbox({ src: item.image!, name: item.name })}
+                              aria-label={`Ampliar foto de ${item.name}`}
+                              title="Ampliar foto"
+                              style={{
+                                padding: 0,
+                                border: "1px solid var(--admin-border, #e5e7eb)",
+                                borderRadius: 8,
+                                overflow: "hidden",
+                                cursor: "zoom-in",
+                                background: "transparent",
+                                width: 48,
+                                height: 48,
+                              }}
+                            >
+                              <img
+                                src={item.image}
+                                alt=""
+                                width={48}
+                                height={48}
+                                style={{ display: "block", width: 48, height: 48, objectFit: "cover" }}
+                              />
+                            </button>
+                          ) : (
+                            <span style={{ color: "var(--admin-text-secondary)" }}>—</span>
+                          )}
+                        </td>
                         <td style={tdStyle}>
                           <span
                             style={{
@@ -888,7 +995,27 @@ export default function ProvidersPanel() {
                           >
                             ({item.id})
                           </span>
+                          <div>{item.reason}</div>
                         </td>
+                        {showMartinaAssign && (
+                          <td style={tdStyle}>
+                            {item.needsCategoryDecision ? (
+                              <select
+                                className="admin-input"
+                                aria-label={`Asignar categoría a ${item.name}`}
+                                value={martinaOverrides[item.id] ?? ""}
+                                onChange={(event) => handleMartinaOverrideChange(item.id, event.target.value)}
+                                disabled={previewing || applying}
+                                style={{ maxWidth: 160 }}
+                              >
+                                <option value="">Elegir…</option>
+                                {martinaCategories.map((category) => (
+                                  <option key={category.name} value={category.name}>{category.name}</option>
+                                ))}
+                              </select>
+                            ) : null}
+                          </td>
+                        )}
                         <td style={tdStyle}>${item.price}</td>
                         <td style={tdStyle}>
                           {item.originalPrice ? (
