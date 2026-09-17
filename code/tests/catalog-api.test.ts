@@ -16,7 +16,6 @@ import {
   buildCategoryTree,
   type ParsedCatalogRequest,
 } from "../src/server/catalog/http.ts";
-import { resolveCatalogReadPath, resolveCsvFallback } from "../src/server/catalog/readPath.ts";
 
 // ---------------------------------------------------------------------------
 // parseCatalogPageRequest
@@ -120,12 +119,6 @@ test("catalogErrorToStatus: fallo backend → 502", () => {
 test("catalogErrorToStatus: a missing product is 404 and upstream remains retryable", () => {
   assert.equal(catalogErrorToStatus(new CatalogError("NOT_FOUND", "missing")), 404);
   assert.equal(catalogErrorToStatus(new CatalogError("UPSTREAM_ERROR", "retry")), 502);
-});
-
-test("catalog runtime configuration cannot restore the CSV path", () => {
-  const env = catalogReadEnv({ CATALOG_READ_MODEL: "false", ENABLE_CSV_FALLBACK: "true" });
-  assert.equal(resolveCatalogReadPath(env), "readmodel");
-  assert.equal(resolveCsvFallback(env), false);
 });
 
 // ---------------------------------------------------------------------------

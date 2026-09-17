@@ -5,20 +5,10 @@ import { normalizeOfferOriginalPrice } from "../src/utils/price.ts";
 import { toCardProduct } from "../src/server/catalog/mappers.ts";
 import { runCatalogQuery } from "../src/server/catalog/queries.ts";
 
-/** Explicit mock-chain type for the Supabase query builder used below. */
-type SupabaseMockChain = {
-  from: () => SupabaseMockChain;
-  select: (cols: string, opts?: unknown) => SupabaseMockChain;
-  eq: () => SupabaseMockChain;
-  ilike: () => SupabaseMockChain;
-  order: () => SupabaseMockChain;
-  or: () => SupabaseMockChain;
-  limit: () => Promise<{ data: unknown; error: null; count: number | null }>;
-  single: () => Promise<{ data: { version: string }; error: null }>;
-};
+const ENV = { CATALOG_READ_MODEL: "true" };
 
 function makeSupabaseMock(rows: unknown[], version = "v1") {
-  const chain = {} as SupabaseMockChain;
+  const chain: Record<string, any> = {};
   let countWithRows = false;
 
   chain.from = () => chain;
@@ -93,6 +83,7 @@ test("runCatalogQuery normalizes read-model originalPrice and enOferta", async (
 
   const result = await runCatalogQuery(
     { sort: "nombre", pageSize: 10 },
+    ENV,
     makeSupabaseMock(rows),
   );
 

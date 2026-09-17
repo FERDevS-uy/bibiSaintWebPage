@@ -8,7 +8,6 @@
 // Errores: 400 (parámetros inválidos), 409 (cursor incompatible), 502 (backend).
 
 import type { APIRoute } from "astro";
-import { recordRetiredCatalogConfig } from "@server/catalog/legacyTelemetry";
 import { getSupabase } from "@server/supabase";
 import { CatalogError } from "@server/catalog/contracts";
 import { runCatalogQuery } from "@server/catalog/queries";

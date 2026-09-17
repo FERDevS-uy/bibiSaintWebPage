@@ -1,5 +1,4 @@
 import type { APIRoute } from "astro";
-import { recordRetiredCatalogConfig } from "@server/catalog/legacyTelemetry";
 import { getSupabase } from "@server/supabase";
 import { CatalogError } from "@server/catalog/contracts";
 import {

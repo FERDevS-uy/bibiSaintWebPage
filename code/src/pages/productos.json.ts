@@ -2,7 +2,6 @@ import { getSupabase } from "@server/supabase";
 import { toCardProduct } from "@server/catalog/mappers";
 import type { CatalogCardProjection } from "@server/catalog/contracts";
 import type { APIRoute } from "astro";
-import { recordRetiredCatalogConfig } from "@server/catalog/legacyTelemetry";
 
 export const prerender = false;
 
