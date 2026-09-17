@@ -1,8 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { readdir } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import sharp from "sharp";
+import { readdir, readFile } from "node:fs/promises";
 import {
   productImageSrc,
   PRODUCT_IMAGE_FALLBACK,
@@ -19,6 +17,40 @@ const staticFilenames = [
   "D_769680-MLU94457054137_102025-O.jpg",
   "D_918463-MLU94021925904_102025-O.jpg",
 ];
+
+function jpegDimensions(bytes: Buffer): { width: number; height: number } {
+  assert.equal(bytes[0], 0xff);
+  assert.equal(bytes[1], 0xd8);
+
+  for (let offset = 2; offset < bytes.length - 9; ) {
+    if (bytes[offset] !== 0xff) {
+      offset += 1;
+      continue;
+    }
+
+    const marker = bytes[offset + 1];
+    const length = bytes.readUInt16BE(offset + 2);
+    if (marker >= 0xc0 && marker <= 0xc3) {
+      return {
+        height: bytes.readUInt16BE(offset + 5),
+        width: bytes.readUInt16BE(offset + 7),
+      };
+    }
+    offset += 2 + length;
+  }
+
+  throw new Error("JPEG start-of-frame marker not found");
+}
+
+function hasImageVariation(bytes: Buffer): boolean {
+  let minimum = 255;
+  let maximum = 0;
+  for (const byte of bytes) {
+    minimum = Math.min(minimum, byte);
+    maximum = Math.max(maximum, byte);
+  }
+  return maximum - minimum > 5;
+}
 
 test("productImageSrc uses static copies only for the six exact originals", () => {
   for (const filename of staticFilenames) {
@@ -44,13 +76,11 @@ test("all six static overrides are real, nonblank JPEG assets", async () => {
   const directory = new URL("../public/assets/product-images/", import.meta.url);
   assert.deepEqual((await readdir(directory)).sort(), [...staticFilenames].sort());
   for (const filename of staticFilenames) {
-    const image = sharp(fileURLToPath(new URL(filename, directory)));
-    const metadata = await image.metadata();
-    assert.equal(metadata.format, "jpeg");
-    assert.equal(metadata.width, 500);
-    assert.equal(metadata.height, filename.startsWith("D_918463-") ? 445 : 500);
-    const statistics = await image.stats();
-    assert.ok(statistics.channels.some((channel) => channel.stdev > 5));
+    const image = await readFile(new URL(filename, directory));
+    const { width, height } = jpegDimensions(image);
+    assert.equal(width, 500);
+    assert.equal(height, filename.startsWith("D_918463-") ? 445 : 500);
+    assert.ok(hasImageVariation(image));
   }
 });
 

@@ -8,7 +8,6 @@ import { withBasePath } from "@utils/basePath";
 import { loadCategoryProducts } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
-import { catalogReadEnv } from "@server/catalog/http";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 import type { CatalogCacheEnv } from "@server/catalog/edgeCache";
 import "../../style.css";
@@ -17,12 +16,11 @@ const CANT_PRODUCTOS = config.postPerPage;
 const { id, subcat } = Astro.params;
 
 type RuntimeCatalogEnv = {
-  CATALOG_READ_MODEL?: string;
-  ENABLE_CSV_FALLBACK?: string;
   CATALOG_KV?: CatalogCacheEnv["CATALOG_KV"];
 };
-const runtimeEnv = (Astro.locals as { runtime?: { env?: RuntimeCatalogEnv } }).runtime?.env;
-const env = { ...catalogReadEnv(runtimeEnv), CATALOG_KV: runtimeEnv?.CATALOG_KV };
+const runtimeEnv = (Astro.locals as { runtime?: { env?: RuntimeCatalogEnv } })
+  .runtime?.env;
+const env = { CATALOG_KV: runtimeEnv?.CATALOG_KV };
 const telemetry = createCatalogQueryTelemetry("subcategory");
 
 const [subCats, res] = await Promise.all([
@@ -39,7 +37,6 @@ const total = res.total;
 
 const totalPages = Math.ceil(total / CANT_PRODUCTOS);
 const baseUrl = withBasePath(`/categories/${id}/${subcat}`, Astro.url.pathname);
-
 ---
 
 <Layout

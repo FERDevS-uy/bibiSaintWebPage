@@ -13,11 +13,9 @@ import { CatalogError } from "../src/server/catalog/contracts.ts";
 import {
   parseCatalogPageRequest,
   catalogErrorToStatus,
-  catalogReadEnv,
   buildCategoryTree,
   type ParsedCatalogRequest,
 } from "../src/server/catalog/http.ts";
-import { resolveCatalogReadPath, resolveCsvFallback } from "../src/server/catalog/readPath.ts";
 
 // ---------------------------------------------------------------------------
 // parseCatalogPageRequest
@@ -116,55 +114,6 @@ test("catalogErrorToStatus: cursor incompatible → 409", () => {
 
 test("catalogErrorToStatus: fallo backend → 502", () => {
   assert.equal(catalogErrorToStatus(new CatalogError("UPSTREAM_ERROR", "x")), 502);
-});
-
-// ---------------------------------------------------------------------------
-// catalogReadEnv
-// ---------------------------------------------------------------------------
-
-test("catalogReadEnv: propaga CATALOG_READ_MODEL y ENABLE_CSV_FALLBACK desde process.env", () => {
-  const previousReadModel = process.env.CATALOG_READ_MODEL;
-  const previousCsvFallback = process.env.ENABLE_CSV_FALLBACK;
-  try {
-    process.env.CATALOG_READ_MODEL = "false";
-    process.env.ENABLE_CSV_FALLBACK = "true";
-    assert.deepEqual(catalogReadEnv(), {
-      CATALOG_READ_MODEL: "false",
-      ENABLE_CSV_FALLBACK: "true",
-    });
-  } finally {
-    if (previousReadModel === undefined) delete process.env.CATALOG_READ_MODEL;
-    else process.env.CATALOG_READ_MODEL = previousReadModel;
-    if (previousCsvFallback === undefined) delete process.env.ENABLE_CSV_FALLBACK;
-    else process.env.ENABLE_CSV_FALLBACK = previousCsvFallback;
-  }
-});
-
-test("catalogReadEnv: prioriza env runtime sobre import.meta/process.env", () => {
-  const previousReadModel = process.env.CATALOG_READ_MODEL;
-  const previousCsvFallback = process.env.ENABLE_CSV_FALLBACK;
-  try {
-    process.env.CATALOG_READ_MODEL = "true";
-    process.env.ENABLE_CSV_FALLBACK = "false";
-    assert.deepEqual(
-      catalogReadEnv({ CATALOG_READ_MODEL: "false", ENABLE_CSV_FALLBACK: "true" }),
-      {
-        CATALOG_READ_MODEL: "false",
-        ENABLE_CSV_FALLBACK: "true",
-      },
-    );
-  } finally {
-    if (previousReadModel === undefined) delete process.env.CATALOG_READ_MODEL;
-    else process.env.CATALOG_READ_MODEL = previousReadModel;
-    if (previousCsvFallback === undefined) delete process.env.ENABLE_CSV_FALLBACK;
-    else process.env.ENABLE_CSV_FALLBACK = previousCsvFallback;
-  }
-});
-
-test("catalog runtime configuration enables CSV only with the explicit operator flag", () => {
-  const env = catalogReadEnv({ CATALOG_READ_MODEL: "false", ENABLE_CSV_FALLBACK: "true" });
-  assert.equal(resolveCatalogReadPath(env), "readmodel");
-  assert.equal(resolveCsvFallback(env), true);
 });
 
 test("catalogErrorToStatus: a missing product is 404 and upstream remains retryable", () => {

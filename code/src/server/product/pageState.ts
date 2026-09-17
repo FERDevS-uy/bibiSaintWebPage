@@ -3,15 +3,11 @@ import type Product from "../../types/product";
 import {
   getDisplayCategoryName,
   getDisplaySubcategories,
-  productMatchesCategory,
-  productMatchesSubcategory,
 } from "@utils/categoryNormalization";
 import { loadRelatedProducts } from "@server/catalog/facade";
 import { fetchCategoryProducts, fetchProductById } from "@server/products";
 import { toCardProduct } from "@server/catalog/mappers";
-import { loadProducts } from "@utils/loadProducts";
 import { getSupabase } from "@server/supabase";
-import { catalogReadEnv } from "@server/catalog/http";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 import {
   formatPrice,
@@ -47,10 +43,7 @@ export async function getProductPageState(
   const { id } = astro.params;
   if (!id) return null;
 
-  const env = catalogReadEnv(
-    (astro.locals as { runtime?: { env?: Record<string, string | undefined> } })
-      .runtime?.env,
-  );
+  const env = {};
   const telemetry = createCatalogQueryTelemetry("product");
   const product = await fetchProductById(id);
   if (!product) return null;
@@ -147,29 +140,6 @@ export async function getProductPageState(
             ).products;
           }
         }
-      }
-      // Martina products are stored as `MUJER` in the source table but are
-      // displayed under the normalized `Ropa` taxonomy, so the SQL category
-      // filter cannot match them. Reuse the normalization helpers as a final
-      // bounded fallback before giving up.
-      if (relatedProducts.length === 0) {
-        const allProducts = await loadProducts();
-        const sameSubcategory = leafSubcategory
-          ? allProducts.filter((candidate) =>
-              productMatchesSubcategory(
-                candidate,
-                displayCategoryName,
-                leafSubcategory,
-              ),
-            )
-          : [];
-        relatedProducts = (
-          sameSubcategory.length > 0
-            ? sameSubcategory
-            : allProducts.filter((candidate) =>
-                productMatchesCategory(candidate, displayCategoryName),
-              )
-        ).slice(0, 12);
       }
       const selectedRelatedProducts = relatedProducts
         .filter((candidate) => candidate.id !== product.id)

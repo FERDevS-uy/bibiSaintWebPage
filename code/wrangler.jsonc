@@ -28,18 +28,10 @@
 			"id": "2aff9e8fa0dd402f93efce436f11124b"
 		}
 	],
-	"vars": {
-		"CATALOG_READ_MODEL": "true",
-		"ENABLE_CSV_FALLBACK": "false"
-	},
 	"env": {
 		"dev": {
 			"name": "bibisaintwebpage-dev",
 			"main": "./dist/_worker.js/index.js",
-			"vars": {
-				"CATALOG_READ_MODEL": "true",
-				"ENABLE_CSV_FALLBACK": "false"
-			},
 			"assets": {
 				"directory": "./dist",
 				"binding": "ASSETS"

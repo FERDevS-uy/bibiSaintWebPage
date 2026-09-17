@@ -10,7 +10,6 @@ Stack principal:
 - Astro 5 SSR con Cloudflare Workers
 - React Islands
 - Supabase (PostgreSQL + Auth)
-- Soporte CSV para fallback de catálogo
 
 ## Dónde trabajar
 
@@ -23,9 +22,7 @@ Stack principal:
 
 - SSR real (no static por defecto): `output: "server"` con `@astrojs/cloudflare`.
 - Páginas dinámicas (producto/categorías/búsquedas/ofertas/paginación) se renderizan en SSR.
-- Lectura dual de catálogo en `src/utils/loadProducts.ts`:
-  - Intenta Supabase primero cuando `PUBLIC_USE_SUPABASE === "true"`.
-  - Fallback a CSV cuando falla la fuente principal.
+- El catálogo público se lee exclusivamente desde el read model de Supabase.
 
 ## Admin (React + Supabase Auth)
 

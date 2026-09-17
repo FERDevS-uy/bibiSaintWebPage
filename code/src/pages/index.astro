@@ -6,18 +6,16 @@ import { ProductListHydrator } from "@stores/ProductListHydrator";
 import { loadFeaturedProducts } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
-import { catalogReadEnv } from "@server/catalog/http";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 import type { CatalogCacheEnv } from "@server/catalog/edgeCache";
 
 type RuntimeCatalogEnv = {
-  CATALOG_READ_MODEL?: string;
-  ENABLE_CSV_FALLBACK?: string;
   CATALOG_KV?: CatalogCacheEnv["CATALOG_KV"];
 };
 
-const runtimeEnv = (Astro.locals as { runtime?: { env?: RuntimeCatalogEnv } }).runtime?.env;
-const env = { ...catalogReadEnv(runtimeEnv), CATALOG_KV: runtimeEnv?.CATALOG_KV };
+const runtimeEnv = (Astro.locals as { runtime?: { env?: RuntimeCatalogEnv } })
+  .runtime?.env;
+const env = { CATALOG_KV: runtimeEnv?.CATALOG_KV };
 const telemetry = createCatalogQueryTelemetry("home");
 
 const featured = await loadFeaturedProducts(env, getSupabase, { telemetry });
@@ -25,7 +23,9 @@ const novedades = featured.novedades.map(toCardProduct);
 const destacados = featured.destacados.map(toCardProduct);
 const ofertas = featured.ofertas.map(toCardProduct);
 
-const hydratorProducts = [...new Set([...novedades, ...destacados, ...ofertas])].map(p => ({
+const hydratorProducts = [
+  ...new Set([...novedades, ...destacados, ...ofertas]),
+].map((p) => ({
   id: p.id,
   name: p.name,
   price: p.price,

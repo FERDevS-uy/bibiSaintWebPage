@@ -68,12 +68,12 @@ La búsqueda SHALL ejecutarse en el origen de datos sobre texto normalizado, SHA
 - **THEN** la API aplica la política definida para prefijo/mínimo y nunca ejecuta una búsqueda ilimitada
 
 ### Requirement: Fallback seguro y acotado
-Un fallo del modelo de lectura SHALL producir un error observable o un fallback explícitamente limitado. El fallback CSV SHALL estar deshabilitado por defecto en producción mediante `ENABLE_CSV_FALLBACK=false` y SHALL NOT activarse automáticamente por un fallo puntual de Supabase. Ningún fallback SHALL descargar ni recorrer el catálogo completo dentro de una petición pública de producción.
+Un fallo del modelo de lectura SHALL producir un error observable o un estado degradado acotado. No existe fallback CSV ni una exploración completa del catálogo dentro de una petición pública de producción.
 
 #### Scenario: Read model no disponible
 - **WHEN** el modelo de lectura no puede consultarse
 - **THEN** la API responde con error temporal o utiliza una fuente alternativa paginada y limitada, sin ejecutar un scan completo en JavaScript
 
-#### Scenario: Fallback CSV explícito
-- **WHEN** un operador activa `ENABLE_CSV_FALLBACK=true` en un entorno autorizado
-- **THEN** la ruta de recuperación queda disponible con límites y observabilidad explícitos, sin cambiar el valor por defecto de producción
+#### Scenario: Read model unavailable
+- **WHEN** el modelo de lectura no está disponible
+- **THEN** la ruta devuelve un error temporal observable o un estado degradado acotado, sin cargar CSV.

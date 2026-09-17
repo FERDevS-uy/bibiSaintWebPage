@@ -32,7 +32,9 @@ export interface ParsedCatalogRequest extends CatalogPageRequest {
  */
 export function parseCatalogPageRequest(url: URL): ParsedCatalogRequest {
   const params = url.searchParams;
-  const request: ParsedCatalogRequest = { sort: params.get("sort") ?? "nombre" };
+  const request: ParsedCatalogRequest = {
+    sort: params.get("sort") ?? "nombre",
+  };
 
   const category = params.get("category");
   if (category) request.category = category;
@@ -90,29 +92,6 @@ export function catalogErrorToStatus(err: CatalogError): number {
   }
 }
 
-/**
- * Lee las banderas de lectura del entorno. Los valores runtime y process.env
- * definidos tienen precedencia; import.meta.env queda como fallback de build.
- * Devuelve `{ CATALOG_READ_MODEL, ENABLE_CSV_FALLBACK }` listo para la facade.
- */
-type CatalogRuntimeEnv = Record<string, string | undefined> | undefined;
-
-export function catalogReadEnv(
-  runtimeEnv?: CatalogRuntimeEnv,
-): { CATALOG_READ_MODEL?: string; ENABLE_CSV_FALLBACK?: string } {
-  const metaEnv = (import.meta as unknown as { env?: Record<string, string | undefined> }).env;
-  const processEnv = typeof process !== "undefined" ? process.env : undefined;
-  const catalogReadModel =
-    runtimeEnv?.CATALOG_READ_MODEL ??
-    processEnv?.CATALOG_READ_MODEL ??
-    metaEnv?.CATALOG_READ_MODEL;
-  const csvFallback =
-    runtimeEnv?.ENABLE_CSV_FALLBACK ??
-    processEnv?.ENABLE_CSV_FALLBACK ??
-    metaEnv?.ENABLE_CSV_FALLBACK;
-  return { CATALOG_READ_MODEL: catalogReadModel, ENABLE_CSV_FALLBACK: csvFallback };
-}
-
 // ---------------------------------------------------------------------------
 // Categorías / subcategorías (endpoint categories.ts)
 // ---------------------------------------------------------------------------
@@ -158,7 +137,10 @@ export function buildCategoryTree(
 ): CatalogCategoryNode[] {
   const countMap = new Map<string, number>();
   for (const c of counts) {
-    countMap.set(`${c.category_name}\u0000${c.subcategory_name}`, c.product_count);
+    countMap.set(
+      `${c.category_name}\u0000${c.subcategory_name}`,
+      c.product_count,
+    );
   }
   const getCount = (cat: string, sub: string | null): number =>
     countMap.get(`${cat}\u0000${sub ?? ""}`) ?? 0;
@@ -166,7 +148,9 @@ export function buildCategoryTree(
   const nodes: CatalogCategoryNode[] = [];
   const nodeByCat = new Map<string, CatalogCategoryNode>();
 
-  const sorted = [...taxonomy].sort((a, b) => a.display_order - b.display_order);
+  const sorted = [...taxonomy].sort(
+    (a, b) => a.display_order - b.display_order,
+  );
 
   for (const entry of sorted) {
     if (!entry.visible) continue;
@@ -222,4 +206,3 @@ export {
   type EdgeCacheMetrics,
   type WithEdgeCacheOptions,
 } from "./edgeCache.ts";
-

@@ -11,7 +11,11 @@
 // coincide con el ORDER BY. En PostgREST la tupla `(a, b) > (x, y)` se expresa
 // como la forma lógica expandida: `a > x OR (a = x AND b > y)`.
 
-import type { CatalogCardProjection, CatalogPageRequest, CursorDirection } from "./contracts.ts";
+import type {
+  CatalogCardProjection,
+  CatalogPageRequest,
+  CursorDirection,
+} from "./contracts.ts";
 import {
   CatalogError,
   encodeCursor,
@@ -21,7 +25,6 @@ import {
   assertCursorCompatible,
   type CursorPayload,
 } from "./contracts.ts";
-import { resolveCatalogReadPath } from "./readPath.ts";
 import { resolveSubcategoryFilter } from "../../utils/categoryNormalization.ts";
 import { normalizeOfferOriginalPrice } from "../../utils/price.ts";
 import {
@@ -98,13 +101,16 @@ export function buildFilterRecord(
   const record: Record<string, string | undefined> = {};
   if (request.category !== undefined) record.category = request.category;
   if (request.subcategory !== undefined) {
-    const filter = resolveSubcategoryFilter(request.category ?? "", request.subcategory);
-    record.subcategory = filter.kind === "group"
-      ? `group:${filter.value}`
-      : filter.value;
+    const filter = resolveSubcategoryFilter(
+      request.category ?? "",
+      request.subcategory,
+    );
+    record.subcategory =
+      filter.kind === "group" ? `group:${filter.value}` : filter.value;
   }
   if (request.query !== undefined) record.query = request.query;
-  if (request.enOferta !== undefined) record.enOferta = String(request.enOferta);
+  if (request.enOferta !== undefined)
+    record.enOferta = String(request.enOferta);
   return record;
 }
 
@@ -151,7 +157,11 @@ export function decodeCursorForOrder(
     return { sortValue: sortName, priceValue: price, productId: payload.p };
   }
   if (orderBy === "ingested_at DESC, product_id ASC") {
-    return { sortValue: payload.s, ingestedAt: payload.s, productId: payload.p };
+    return {
+      sortValue: payload.s,
+      ingestedAt: payload.s,
+      productId: payload.p,
+    };
   }
   return { sortValue: payload.s, productId: payload.p };
 }
@@ -280,7 +290,7 @@ function rowToProjection(row: CatalogRow): CatalogCardProjection {
  */
 export async function runCatalogQuery(
   request: CatalogPageRequest,
-  env: { CATALOG_READ_MODEL?: string },
+  env: object,
   supabase: {
     from: (table: string) => any;
   },
@@ -293,10 +303,6 @@ export async function runCatalogQuery(
   total: number;
   previousCursor: string | null;
 }> {
-  if (resolveCatalogReadPath(env) !== "readmodel") {
-    throw new CatalogError("UPSTREAM_ERROR", "El read model de catálogo no está habilitado");
-  }
-
   const req = request as CatalogQueryRequest;
   const limit = clampPageSize(request.pageSize);
   const requestedPage = Math.max(1, Math.floor(req.page ?? 1));
@@ -313,12 +319,23 @@ export async function runCatalogQuery(
     "catalog_version",
     async () => {
       try {
-        const { data, error } = await supabase.from("catalog_version").select("version").eq("id", 1).single();
-        if (error) throw new CatalogError("UPSTREAM_ERROR", "Error al leer la versión del catálogo");
+        const { data, error } = await supabase
+          .from("catalog_version")
+          .select("version")
+          .eq("id", 1)
+          .single();
+        if (error)
+          throw new CatalogError(
+            "UPSTREAM_ERROR",
+            "Error al leer la versión del catálogo",
+          );
         return String(data?.version ?? 0);
       } catch (err) {
         if (err instanceof CatalogError) throw err;
-        throw new CatalogError("UPSTREAM_ERROR", "Error inesperado al leer la versión del catálogo");
+        throw new CatalogError(
+          "UPSTREAM_ERROR",
+          "Error inesperado al leer la versión del catálogo",
+        );
       }
     },
   );
@@ -347,29 +364,48 @@ export async function runCatalogQuery(
     query = query.eq("active", true);
     if (req.category) query = query.eq("category", req.category);
     if (req.subcategory) {
-      const filter = resolveSubcategoryFilter(req.category ?? "", req.subcategory);
-      query = filter.kind === "group"
-        ? query.or(`subcategory.eq."${filter.value}",subcategory.like."${filter.value} - %"`)
-        : query.eq("subcategory", filter.value);
+      const filter = resolveSubcategoryFilter(
+        req.category ?? "",
+        req.subcategory,
+      );
+      query =
+        filter.kind === "group"
+          ? query.or(
+              `subcategory.eq."${filter.value}",subcategory.like."${filter.value} - %"`,
+            )
+          : query.eq("subcategory", filter.value);
     }
     if (req.query) query = query.ilike("name", `%${escapeLike(req.query)}%`);
     if (req.enOferta === true) query = query.eq("en_oferta", true);
     return query;
   };
 
-  const buildRowsQuery = (cursor: DecodedCursor | null, countWithRows: boolean) => {
+  const buildRowsQuery = (
+    cursor: DecodedCursor | null,
+    countWithRows: boolean,
+  ) => {
     let query = applyFilters(
-      supabase.from("catalog_products").select(SELECT_COLUMNS, countWithRows ? { count: "exact" } : undefined),
+      supabase
+        .from("catalog_products")
+        .select(SELECT_COLUMNS, countWithRows ? { count: "exact" } : undefined),
     );
     const reverse = cursorDirection === "before" && cursor !== null;
     if (orderBy === "numeric_price ASC, sort_name ASC, product_id ASC") {
-      query = query.order("numeric_price", { ascending: reverse ? false : true }).order("sort_name", { ascending: reverse ? false : true }).order("product_id", { ascending: reverse ? false : true });
+      query = query
+        .order("numeric_price", { ascending: reverse ? false : true })
+        .order("sort_name", { ascending: reverse ? false : true })
+        .order("product_id", { ascending: reverse ? false : true });
     } else if (orderBy === "ingested_at DESC, product_id ASC") {
-      query = query.order("ingested_at", { ascending: reverse ? true : false }).order("product_id", { ascending: reverse ? false : true });
+      query = query
+        .order("ingested_at", { ascending: reverse ? true : false })
+        .order("product_id", { ascending: reverse ? false : true });
     } else {
-      query = query.order("sort_name", { ascending: reverse ? false : true }).order("product_id", { ascending: reverse ? false : true });
+      query = query
+        .order("sort_name", { ascending: reverse ? false : true })
+        .order("product_id", { ascending: reverse ? false : true });
     }
-    if (cursor) query = query.or(buildCursorCondition(cursor, cursorDirection).orFilter);
+    if (cursor)
+      query = query.or(buildCursorCondition(cursor, cursorDirection).orFilter);
     return query;
   };
 
@@ -385,22 +421,42 @@ export async function runCatalogQuery(
       const countResult = await observeCatalogQuery<CatalogQueryResponse>(
         options?.telemetry,
         "catalog_products_count",
-        () => applyFilters(supabase.from("catalog_products").select("product_id", { count: "exact", head: true })),
+        () =>
+          applyFilters(
+            supabase
+              .from("catalog_products")
+              .select("product_id", { count: "exact", head: true }),
+          ),
       );
-      if (countResult.error) throw new CatalogError("UPSTREAM_ERROR", "Error upstream al contar el catálogo");
+      if (countResult.error)
+        throw new CatalogError(
+          "UPSTREAM_ERROR",
+          "Error upstream al contar el catálogo",
+        );
       return Number(countResult.count ?? 0);
     } catch (err) {
       if (err instanceof CatalogError) throw err;
-      throw new CatalogError("UPSTREAM_ERROR", "Error inesperado al contar el catálogo");
+      throw new CatalogError(
+        "UPSTREAM_ERROR",
+        "Error inesperado al contar el catálogo",
+      );
     }
   };
 
   const cursorFromRow = (row: CatalogRow): DecodedCursor => {
     if (orderBy === "numeric_price ASC, sort_name ASC, product_id ASC") {
-      return { sortValue: row.sort_name, priceValue: Number(row.price), productId: row.id };
+      return {
+        sortValue: row.sort_name,
+        priceValue: Number(row.price),
+        productId: row.id,
+      };
     }
     if (orderBy === "ingested_at DESC, product_id ASC") {
-      return { sortValue: String(row.ingestedAt ?? ""), ingestedAt: String(row.ingestedAt ?? ""), productId: row.id };
+      return {
+        sortValue: String(row.ingestedAt ?? ""),
+        ingestedAt: String(row.ingestedAt ?? ""),
+        productId: row.id,
+      };
     }
     return { sortValue: row.sort_name, productId: row.id };
   };
@@ -409,11 +465,22 @@ export async function runCatalogQuery(
     version = await versionPromise;
     for (let page = 1; page < requestedPage; page += 1) {
       const result = await readRows(decoded, false);
-      if (result.error) throw new CatalogError("UPSTREAM_ERROR", "Error upstream al consultar el catálogo");
+      if (result.error)
+        throw new CatalogError(
+          "UPSTREAM_ERROR",
+          "Error upstream al consultar el catálogo",
+        );
       const rows = (result.data ?? []) as CatalogRow[];
       const visibleRows = rows.slice(0, limit);
       if (visibleRows.length === 0) {
-        return { items: [], nextCursor: null, previousCursor: null, hasMore: false, version, total: includeTotal ? await readTotal() : 0 };
+        return {
+          items: [],
+          nextCursor: null,
+          previousCursor: null,
+          hasMore: false,
+          version,
+          total: includeTotal ? await readTotal() : 0,
+        };
       }
       decoded = cursorFromRow(visibleRows[visibleRows.length - 1]);
     }
@@ -424,46 +491,84 @@ export async function runCatalogQuery(
   let rowsResult: CatalogQueryResponse;
   let total = 0;
   if (includeTotal && (request.cursor || bootstrapCursor)) {
-    const [resolvedRows, resolvedTotal] = await Promise.all([rowsPromise, readTotal()]);
+    const [resolvedRows, resolvedTotal] = await Promise.all([
+      rowsPromise,
+      readTotal(),
+    ]);
     rowsResult = resolvedRows;
     total = resolvedTotal;
   } else {
-    const [resolvedRows, resolvedVersion] = await Promise.all([rowsPromise, versionPromise]);
+    const [resolvedRows, resolvedVersion] = await Promise.all([
+      rowsPromise,
+      versionPromise,
+    ]);
     rowsResult = resolvedRows;
     version = resolvedVersion;
     if (includeTotal) total = Number(rowsResult.count ?? 0);
   }
 
-  if (rowsResult.error) throw new CatalogError("UPSTREAM_ERROR", "Error upstream al consultar el catálogo");
+  if (rowsResult.error)
+    throw new CatalogError(
+      "UPSTREAM_ERROR",
+      "Error upstream al consultar el catálogo",
+    );
   const all = (rowsResult.data ?? []) as CatalogRow[];
   const hasMore = all.length > limit;
   const directionalPage = hasMore ? all.slice(0, limit) : all;
-  const page = cursorDirection === "before" ? [...directionalPage].reverse() : directionalPage;
+  const page =
+    cursorDirection === "before"
+      ? [...directionalPage].reverse()
+      : directionalPage;
   if (!includeTotal) total = page.length;
 
   let nextCursor: string | null = null;
   if (page.length > 0) {
     const last = page[page.length - 1];
-    const s = orderBy === "numeric_price ASC, sort_name ASC, product_id ASC"
-      ? encodePriceSort(Number(last.price), last.sort_name)
-      : orderBy === "ingested_at DESC, product_id ASC"
-        ? String(last.ingestedAt ?? "")
-        : last.sort_name;
-    nextCursor = encodeCursor({ s, p: last.id, f: filterFingerprint(filters), v: version, d: "after" });
+    const s =
+      orderBy === "numeric_price ASC, sort_name ASC, product_id ASC"
+        ? encodePriceSort(Number(last.price), last.sort_name)
+        : orderBy === "ingested_at DESC, product_id ASC"
+          ? String(last.ingestedAt ?? "")
+          : last.sort_name;
+    nextCursor = encodeCursor({
+      s,
+      p: last.id,
+      f: filterFingerprint(filters),
+      v: version,
+      d: "after",
+    });
   }
 
   let previousCursor: string | null = null;
-  if (request.cursor && page.length > 0 && (cursorDirection === "after" || hasMore)) {
+  if (
+    request.cursor &&
+    page.length > 0 &&
+    (cursorDirection === "after" || hasMore)
+  ) {
     const first = page[0];
-    const s = orderBy === "numeric_price ASC, sort_name ASC, product_id ASC"
-      ? encodePriceSort(Number(first.price), first.sort_name)
-      : orderBy === "ingested_at DESC, product_id ASC"
-        ? String(first.ingestedAt ?? "")
-        : first.sort_name;
-    previousCursor = encodeCursor({ s, p: first.id, f: filterFingerprint(filters), v: version, d: "before" });
+    const s =
+      orderBy === "numeric_price ASC, sort_name ASC, product_id ASC"
+        ? encodePriceSort(Number(first.price), first.sort_name)
+        : orderBy === "ingested_at DESC, product_id ASC"
+          ? String(first.ingestedAt ?? "")
+          : first.sort_name;
+    previousCursor = encodeCursor({
+      s,
+      p: first.id,
+      f: filterFingerprint(filters),
+      v: version,
+      d: "before",
+    });
   }
 
-  return { items: page.map(rowToProjection), nextCursor: hasMore || cursorDirection === "before" ? nextCursor : null, previousCursor, hasMore, version, total };
+  return {
+    items: page.map(rowToProjection),
+    nextCursor: hasMore || cursorDirection === "before" ? nextCursor : null,
+    previousCursor,
+    hasMore,
+    version,
+    total,
+  };
 }
 function escapeLike(value: string): string {
   return value.replace(/[\\%_]/g, (char) => `\\${char}`);

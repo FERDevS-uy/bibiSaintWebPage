@@ -4,8 +4,7 @@
 //
 // Adaptador de búsqueda (Fase 5): delega 100% en la facade `searchProducts`,
 // que resuelve la ruta (readmodel RPC `catalog_search_products` | legacy
-// loadProducts + filtro name/description) y devuelve el MISMO tipo en ambos
-// modos. Este endpoint solo adapta la proyección a la forma de la UI
+// y adapta la proyección a la forma de la UI
 // (agrega `img` como array) y mantiene el contrato `{ items }` que consume
 // ListarProductos.jsx.
 //
@@ -15,7 +14,6 @@
 import type { APIRoute } from "astro";
 import { getSupabase } from "@server/supabase";
 import {
-  catalogReadEnv,
   withEdgeCache,
   getCatalogCacheHeaders,
   catalogErrorToStatus,
@@ -45,7 +43,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
       const limit = clampLimit(url.searchParams.get("limit"), 10);
 
       try {
-        const env = catalogReadEnv((locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+        const env = {};
         const sort = url.searchParams.get("sort") ?? "nombre";
         const cursor = url.searchParams.get("cursor") || undefined;
         const supabase = getSupabase();

@@ -12,11 +12,9 @@ import { getSupabase } from "@server/supabase";
 import { CatalogError } from "@server/catalog/contracts";
 import { runCatalogQuery } from "@server/catalog/queries";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
-import { loadCatalogPage, isReadModel } from "@server/catalog/facade";
 import {
   parseCatalogPageRequest,
   catalogErrorToStatus,
-  catalogReadEnv,
   withEdgeCache,
   getCatalogCacheHeaders,
 } from "@server/catalog/http";
@@ -31,24 +29,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
       try {
         const url = new URL(request.url);
         const parsed = parseCatalogPageRequest(url);
-        const env = catalogReadEnv((locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
-        if (!isReadModel(env)) {
-          const result = await loadCatalogPage(parsed, env, getSupabase, { telemetry });
-          return new Response(
-            JSON.stringify({
-              items: result.items,
-              nextCursor: result.nextCursor,
-              previousCursor: result.previousCursor,
-              hasMore: result.hasMore,
-              catalogVersion: null,
-            }),
-            {
-              status: 200,
-              headers: getCatalogCacheHeaders("products"),
-            },
-          );
-        }
-
+        const env = {};
         const supabase = getSupabase();
         const result = await runCatalogQuery(parsed, env, supabase, {
           includeTotal: false,
