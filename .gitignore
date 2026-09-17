@@ -19,3 +19,14 @@ DESIGN.md
 /*.png
 /*.png/
 .pnpm-store/
+
+# Local editor, agent and Worker state
+.DS_Store
+**/.DS_Store
+.atl/
+.codegraph/
+.copilot/
+Library/
+code/.wrangler/
+code/.opencode/*.bak
+code/rangler.jsonc
