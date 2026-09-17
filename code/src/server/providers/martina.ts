@@ -114,7 +114,7 @@ async function fetchStoreProductForCode(
   country: string,
   code: string,
 ): Promise<any[]> {
-  const url = `${MARTINA_STORE_PRODUCT_BASE}?countryId=${country}&code=${encodeURIComponent(code)}`;
+  const url = `${MARTINA_STORE_PRODUCT_BASE}?countryId=${encodeURIComponent(country)}&code=${encodeURIComponent(code)}&sellerCode=${encodeURIComponent(MARTINA_SELLER_CODE)}`;
   try {
     const data = await martinaFetch(url, 30000, FETCH_HEADERS);
     return normalizeMartinaCatalogPayloadToArray(data);
@@ -132,7 +132,7 @@ async function fetchStoreProductByProductLine(
 ): Promise<any[]> {
   const url = `${MARTINA_STORE_PRODUCT_BASE}?countryId=${country}&code=${encodeURIComponent(
     String(code),
-  )}&productLineId=${encodeURIComponent(String(productLineId))}&category=${encodeURIComponent(
+  )}&productLineId=${encodeURIComponent(String(productLineId))}&sellerCode=${encodeURIComponent(MARTINA_SELLER_CODE)}&category=${encodeURIComponent(
     String(category || ""),
   )}`;
   try {
@@ -154,7 +154,7 @@ async function fetchStoreProductByProductId(
 ): Promise<any[]> {
   const url = `${MARTINA_STORE_PRODUCT_BASE}?productId=${encodeURIComponent(
     String(productId),
-  )}&code=${encodeURIComponent(String(code))}&countryId=${encodeURIComponent(String(country))}`;
+  )}&code=${encodeURIComponent(String(code))}&countryId=${encodeURIComponent(String(country))}&sellerCode=${encodeURIComponent(MARTINA_SELLER_CODE)}`;
   try {
     const data = await martinaFetch(url, 30000, FETCH_HEADERS);
     const entries = normalizeMartinaPayloadToArray(data);

@@ -303,6 +303,11 @@ test("one campaign snapshot groups distinct IDs and keeps raw selectable sizes",
   );
   const configRequest = requests.find((url) => url.pathname.endsWith("config"));
   assert.equal(configRequest?.searchParams.get("sellerCode"), "U20371400");
+  assert.ok(
+    requests
+      .filter((url) => url.pathname.endsWith("product"))
+      .every((url) => url.searchParams.get("sellerCode") === "U20371400"),
+  );
 });
 
 test("partial collection failure fails preview closed with zero writes", async () => {

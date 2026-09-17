@@ -38,6 +38,7 @@ Disabled/unmanaged: no project or session TDD configuration was found. Runner: `
 
 ## Tasks
 - [x] MCD-1 Add seller context to Martina config discovery and regression-test the URL.
+- [x] MCD-7 Add seller context to every Martina catalog request used by preview.
 - [x] MCD-2 Permit Martina-only price/stock lookup before campaign activation without weakening preview validation.
 - [x] MCD-3 Permit read-only preview before campaign activation without permitting apply.
 - [x] MCD-4 Preserve valid Martina parent categories and compare category names semantically.
@@ -54,6 +55,8 @@ Disabled/unmanaged: no project or session TDD configuration was found. Runner: `
 - MCD-4 test validation: a stored `MUJER → ROPA INTERIOR` product with Martina parent `MUJER → ROPA INTERIOR` remains unchanged despite casing.
 - MCD-5 test validation: an existing internal `Carteras` product remains unchanged when Martina reports `Complemento → Accesorios`; category overrides for existing Martina products are rejected.
 - MCD-6 test validation: a new `Complemento → Accesorios` product requires a decision, accepts only a current `Ropa > Mujer/Hombre` subcategory, and rejects a non-existent destination; new `MUJER`/`HOMBRE` products need no decision. The UI and preview/apply APIs obtain the allowed destinations from the current internal taxonomy and revalidate them on apply. Focused test suite passed 73/73.
+- Follow-up discovery: the working browser request includes `sellerCode=U20371400` on `store/product`, while the code previously included it only on `ecommerce/config`. The preview's catalog calls therefore lacked the required seller context.
+- MCD-7 test validation: all product catalog request shapes (campaign, product line, and product detail) now include `sellerCode=U20371400`; the focused suite passed 73/73.
 
 ## Next Step
-No implementation remains in the authorized scope. Validate the admin preview in the browser when remote/local runtime access is explicitly authorized.
+Commit the MCD-7 follow-up, then deploy only with explicit Cloudflare-session authorization.
