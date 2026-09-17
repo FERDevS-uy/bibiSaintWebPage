@@ -1,4 +1,5 @@
 import { defineMiddleware } from "astro/middleware";
+import { withHomeEdgeCache } from "@server/home/edgeCache";
 
 const DEFAULT_WINDOW_MS = 60_000;
 const DEFAULT_MAX_REQUESTS = 180;
@@ -58,6 +59,16 @@ function getIp(request: Request): string {
   return "unknown";
 }
 
+async function renderResponse(ctx: any, next: () => Promise<Response>): Promise<Response> {
+  const response = await withHomeEdgeCache({
+    request: ctx.request,
+    url: ctx.url,
+    locals: ctx.locals,
+    next,
+  });
+  return withSecurityHeaders(response);
+}
+
 export const onRequest = defineMiddleware(async (ctx, next) => {
   const path = ctx.url.pathname;
   if (path.startsWith("/_astro") || path.startsWith("/assets")) {
@@ -79,7 +90,7 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
   const entry = hits.get(hitKey);
   if (!entry || now > entry.resetAt) {
     hits.set(hitKey, { count: 1, resetAt: now + policy.windowMs });
-    return withSecurityHeaders(await next());
+    return renderResponse(ctx, next);
   }
 
   entry.count++;
@@ -90,5 +101,5 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
     }));
   }
 
-  return withSecurityHeaders(await next());
+  return renderResponse(ctx, next);
 });
