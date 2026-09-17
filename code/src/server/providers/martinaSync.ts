@@ -11,6 +11,7 @@ import { isVigente, type MartinaCampaign } from "./martinaCampaign";
 import type { ProductRow } from "./utils";
 import { isMartinaManaged, martinaChanges, readActiveMartinaProducts, verifyAbsentMartinaProducts, type MartinaObservation } from "./martinaReconciliation";
 import type { MartinaAvailability } from "./martinaAvailability";
+import { getDisplayCategoryName, getDisplaySubcategories } from "../../utils/categoryNormalization";
 
 // ---------------------------------------------------------------------------
 // Env server-only (fail-closed)
@@ -163,6 +164,8 @@ function planThumbnail(product: ProductRow): string | null {
 
 const MAX_OVERRIDE_VALUE_LENGTH = 120;
 const MAX_OVERRIDES = 200;
+export const MARTINA_ALLOWED_SOURCE_CATEGORIES = ["Mujer", "Hombre"] as const;
+export interface MartinaCategoryOverride { category: string; subcategory: string; }
 
 /**
  * Fail-closed validation of the per-item category map (id -> existing
@@ -170,25 +173,31 @@ const MAX_OVERRIDES = 200;
  * caller resolves the taxonomy, values must exist in it.
  */
 export function validateCategoryOverrides(
-  categoryOverrides: Record<string, string>,
-  existingCategories?: string[],
-): Record<string, string> {
+  categoryOverrides: Record<string, MartinaCategoryOverride>,
+  assignableSubcategories?: string[],
+): Record<string, MartinaCategoryOverride> {
   if (!categoryOverrides || typeof categoryOverrides !== "object" || Array.isArray(categoryOverrides)) {
     throw new Error("Mapa de categorías por ítem inválido.");
   }
   const entries = Object.entries(categoryOverrides);
   if (entries.length > MAX_OVERRIDES) throw new Error("Demasiadas categorías por ítem.");
-  const validated: Record<string, string> = {};
-  for (const [id, name] of entries) {
-    if (typeof id !== "string" || !id.trim() || typeof name !== "string" || !name.trim()) {
-      throw new Error("Cada categoría por ítem debe ser un nombre no vacío.");
+  const validated: Record<string, MartinaCategoryOverride> = {};
+  for (const [id, destination] of entries) {
+    if (typeof id !== "string" || !id.trim() || !destination || typeof destination !== "object" || Array.isArray(destination)) {
+      throw new Error("Cada categoría por ítem debe incluir categoría y subcategoría.");
     }
-    const value = name.trim();
-    if (value.length > MAX_OVERRIDE_VALUE_LENGTH) throw new Error(`Categoría por ítem demasiado larga: ${id}.`);
-    if (existingCategories !== undefined && !existingCategories.includes(value)) {
-      throw new Error(`La categoría "${value}" no existe en la taxonomía.`);
+    const category = String((destination as MartinaCategoryOverride).category ?? "").trim();
+    const subcategory = String((destination as MartinaCategoryOverride).subcategory ?? "").trim();
+    if (!category || !subcategory || category.length > MAX_OVERRIDE_VALUE_LENGTH || subcategory.length > MAX_OVERRIDE_VALUE_LENGTH) {
+      throw new Error("Cada categoría por ítem debe incluir categoría y subcategoría válidas.");
     }
-    validated[id.trim()] = value;
+    if (category !== "Ropa" || !/^(Mujer|Hombre)(?:\s*-\s*.+)?$/i.test(subcategory)) {
+      throw new Error("Martina solo permite subcategorías existentes de Mujer u Hombre.");
+    }
+    if (assignableSubcategories !== undefined && !assignableSubcategories.includes(subcategory)) {
+      throw new Error(`La subcategoría "${subcategory}" no existe en la taxonomía de Martina.`);
+    }
+    validated[id.trim()] = { category, subcategory };
   }
   return validated;
 }
@@ -199,15 +208,16 @@ export async function buildPlan(
   campaignCode: string,
   observations = new Map<string, MartinaObservation>(),
   campaignEvidence: unknown = campaignCode,
-  categoryOverrides: Record<string, string> = {},
-  existingCategories?: string[],
+  categoryOverrides: Record<string, MartinaCategoryOverride> = {},
+  knownSourceCategories?: string[],
+  assignableSubcategories?: string[],
 ): Promise<SyncPlan> {
   // Per-item category overrides (signed in the preview token, revalidated in
   // apply). Shape-validated here so preview and apply share one fail-closed
   // path. Taxonomy membership is enforced only when the caller resolves the
   // taxonomy; otherwise the admin UI restricts choices to getCategories
   // options and the signature binding prevents tampering.
-  const overrides = validateCategoryOverrides(categoryOverrides, existingCategories);
+  const overrides = validateCategoryOverrides(categoryOverrides, assignableSubcategories);
   const mutations: SyncPlan["mutations"] = [];
   const items: SyncPlanItem[] = products.map((p) => {
     const prev = existing.get(p.id);
@@ -217,13 +227,11 @@ export async function buildPlan(
     let action: SyncActionType = p.active && p.price ? "create" : "unchanged";
     let reason = p.active ? "Disponible en catálogo" : "Sin variaciones seleccionables";
     const baseChanges = prev ? martinaChanges(p, prev) : { ...p };
-    // A row needs a per-item category decision when its supplier category
-    // differs from the existing taxonomy: a pending category reclassification
-    // on update, or a create whose supplier category is not in the taxonomy
-    // (only computable when the caller passes existingCategories).
+    // Only a new item outside the permitted Martina clothing taxonomy needs
+    // a decision. Existing products always retain the internal category.
     const needsCategoryDecision = Boolean(prev
       ? "categories" in baseChanges
-      : p.active && p.price && existingCategories !== undefined && !existingCategories.includes(p.categories?.name ?? ""));
+      : p.active && p.price && knownSourceCategories !== undefined && !knownSourceCategories.includes(p.categories?.name ?? ""));
     const override = overrides[p.id];
     if (override !== undefined && !needsCategoryDecision) {
       throw new Error(`La categoría de ${p.id} no admite decisión por ítem: no es una fila discrepante.`);
@@ -232,7 +240,7 @@ export async function buildPlan(
     // replaced, supplier subcategories preserved); without an override the
     // supplier value flows through unchanged.
     const effective: ProductRow = override !== undefined
-      ? { ...p, categories: { ...p.categories, name: override } }
+      ? { ...p, categories: { name: override.category, count: 0, subcategories: [{ name: override.subcategory, count: 0 }] } }
       : p;
     const changes = prev ? martinaChanges(effective, prev) : { ...effective };
     if (prev && !isMartinaManaged(prev)) {
@@ -297,7 +305,7 @@ export interface PreviewTokenPayload {
   exp: number;
   campaignCode: string;
   planHash: string;
-  categoryOverrides?: Record<string, string>;
+  categoryOverrides?: Record<string, MartinaCategoryOverride>;
 }
 
 export async function signPreview(
@@ -339,7 +347,7 @@ export async function verifyPreview(
         (typeof parsed.categoryOverrides !== "object" ||
           Array.isArray(parsed.categoryOverrides) ||
           Object.entries(parsed.categoryOverrides).some(
-            ([id, name]) => typeof id !== "string" || !id.trim() || typeof name !== "string" || !name.trim(),
+          ([id, value]) => typeof id !== "string" || !id.trim() || !value || typeof value !== "object" || Array.isArray(value),
           )))
     ) {
       return null;
@@ -530,18 +538,41 @@ export interface MartinaSyncData {
   takeDetailLookup: () => boolean;
 }
 
-/** Consulta la campaña vigente (ecommerce/config) y el catálogo de Martina. */
-export async function collectMartinaData(countryId = "598"): Promise<MartinaSyncData> {
-  if (countryId !== "598") throw new Error("País Martina inválido");
-  return syncMartina(undefined, new Date());
+/** Returns only the existing display subcategories that belong to Ropa > Mujer/Hombre. */
+export async function getMartinaAssignableSubcategories(): Promise<string[]> {
+  const { data, error } = await getSupabaseAdmin().from("products").select("id,name,categories,img");
+  if (error) throw new Error(`No se pudo leer la taxonomía: ${error.message}`);
+  const subcategories = new Set<string>();
+  for (const row of data ?? []) {
+    const product = {
+      id: row.id ?? "",
+      name: row.name ?? "",
+      categories: row.categories ?? {},
+      img: Array.isArray(row.img) ? row.img : [],
+    } as any;
+    if (getDisplayCategoryName(product) !== "Ropa") continue;
+    for (const subcategory of getDisplaySubcategories(product)) {
+      if (/^(Mujer|Hombre)(?:\s*-\s*.+)?$/i.test(subcategory)) subcategories.add(subcategory);
+    }
+  }
+  return [...subcategories].sort((left, right) => left.localeCompare(right));
 }
 
-export async function prepareMartinaPlan(data: MartinaSyncData, repository = new SupabaseProductRepository("Martina"), categoryOverrides: Record<string, string> = {}, existingCategories?: string[]): Promise<SyncPlan> {
+/** Consulta la campaña y el catálogo de Martina. Apply exige que siga vigente; preview es solo lectura. */
+export async function collectMartinaData(
+  countryId = "598",
+  requireVigente = true,
+): Promise<MartinaSyncData> {
+  if (countryId !== "598") throw new Error("País Martina inválido");
+  return syncMartina(undefined, new Date(), "Ropa", requireVigente);
+}
+
+export async function prepareMartinaPlan(data: MartinaSyncData, repository = new SupabaseProductRepository("Martina"), categoryOverrides: Record<string, MartinaCategoryOverride> = {}, knownSourceCategories?: string[], assignableSubcategories?: string[]): Promise<SyncPlan> {
   const existing = await repository.readActiveMartina();
   const incoming = await repository.readByIds(data.products.map((product) => product.id));
   for (const [id, product] of incoming) existing.set(id, product);
   const observations = await verifyAbsentMartinaProducts(data.products, existing, data.campaign.code, fetchMartinaProductById, data.takeDetailLookup);
-  return buildPlan(data.products, existing, data.campaign.code, observations, data.campaign, categoryOverrides, existingCategories);
+  return buildPlan(data.products, existing, data.campaign.code, observations, data.campaign, categoryOverrides, knownSourceCategories, assignableSubcategories);
 }
 
 export interface PreviewResult {
@@ -561,9 +592,9 @@ export interface PreviewResult {
 }
 
 /** Genera un preview read-only con el estado administrativo completo. */
-export async function generatePreview(categoryOverrides: Record<string, string> = {}, existingCategories?: string[]): Promise<PreviewResult> {
-  const data = await collectMartinaData("598");
-  const plan = await prepareMartinaPlan(data, new SupabaseProductRepository("Martina"), categoryOverrides, existingCategories);
+export async function generatePreview(categoryOverrides: Record<string, MartinaCategoryOverride> = {}, knownSourceCategories?: string[], assignableSubcategories?: string[]): Promise<PreviewResult> {
+  const data = await collectMartinaData("598", false);
+  const plan = await prepareMartinaPlan(data, new SupabaseProductRepository("Martina"), categoryOverrides, knownSourceCategories, assignableSubcategories);
 
   const now = new Date();
   const expiresAt = now.getTime() + PREVIEW_TTL_MS;
@@ -594,7 +625,7 @@ export type ApplyResult =
   | { ok: false; status: number; error: string };
 
 /** Aplica un preview válido: revalida contra Martina antes de persistir. */
-export async function applyMartinaSync(token: string, existingCategories?: string[]): Promise<ApplyResult> {
+export async function applyMartinaSync(token: string, knownSourceCategories?: string[], assignableSubcategories?: string[]): Promise<ApplyResult> {
   if (!isWriteEnabled()) {
     return {
       ok: false,
@@ -619,7 +650,7 @@ export async function applyMartinaSync(token: string, existingCategories?: strin
   // fail closed with 409 below.
   let plan: SyncPlan;
   try {
-    plan = await prepareMartinaPlan(data, repository, payload.categoryOverrides ?? {}, existingCategories);
+    plan = await prepareMartinaPlan(data, repository, payload.categoryOverrides ?? {}, knownSourceCategories, assignableSubcategories);
   } catch {
     return {
       ok: false,

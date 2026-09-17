@@ -4,7 +4,7 @@
 //  - Resuelve la campaña vigente desde ecommerce/config en el servidor.
 //  - No toca Supabase: únicamente consulta a Martina.
 import { fetchMartinaConfig, fetchMartinaProductById, extractMartinaColorDetails } from "@server/providers/martina";
-import { parseCampaign, isVigente } from "@server/providers/martinaCampaign";
+import { parseCampaign } from "@server/providers/martinaCampaign";
 import { normalizeProductPrice } from "@server/providers/martinaNormalizer";
 import { normalizeSizes } from "@utils/sizes";
 import { evaluateMartinaAvailability } from "@server/providers/martinaAvailability";
@@ -28,7 +28,6 @@ export async function GET({ request }: { request: Request }) {
   try {
     const configRaw = await fetchMartinaConfig("598");
     const campaign = parseCampaign(configRaw);
-    if (!isVigente(campaign, new Date())) throw new Error("Campaña Martina no vigente");
 
     const entries = await fetchMartinaProductById(numeric, campaign.code, "598");
     const availability = evaluateMartinaAvailability(entries);

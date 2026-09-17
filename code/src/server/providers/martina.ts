@@ -17,6 +17,7 @@ const MARTINA_CONFIG_URL =
   "https://pol21.martinaditrento.com/mdt-services/resources/ecommerce/config";
 const MARTINA_IMAGE_BASE =
   "https://pol21.martinaditrento.com/images/products/md/";
+const MARTINA_SELLER_CODE = "U20371400";
 
 const FETCH_HEADERS = {
   accept: "application/json, text/plain, */*",
@@ -103,7 +104,7 @@ export async function fetchMartinaConfig(
   country: string = "598",
 ): Promise<any> {
   return martinaFetch(
-    `${MARTINA_CONFIG_URL}?countryId=${country}`,
+    `${MARTINA_CONFIG_URL}?countryId=${encodeURIComponent(country)}&sellerCode=${encodeURIComponent(MARTINA_SELLER_CODE)}`,
     20000,
     FETCH_HEADERS,
   );
@@ -261,6 +262,7 @@ export async function syncMartina(
   campaignInput?: string | MartinaCampaign,
   now = new Date(),
   categoryOverride = "Ropa",
+  requireVigente = true,
 ): Promise<{ products: ProductRow[]; count: number; campaign: MartinaCampaign; takeDetailLookup: () => boolean }> {
   console.log("Martina: iniciando sync...");
   let detailLookups = 0;
@@ -274,7 +276,10 @@ export async function syncMartina(
   const campaign = typeof campaignInput === "object"
     ? campaignInput
     : parseCampaign(await fetchMartinaConfig(countryId));
-  if (!isVigente(campaign, now) || (typeof campaignInput === "string" && campaignInput !== campaign.code)) {
+  if (
+    (requireVigente && !isVigente(campaign, now)) ||
+    (typeof campaignInput === "string" && campaignInput !== campaign.code)
+  ) {
     throw new Error("Campaña Martina no vigente. Genere una nueva vista previa.");
   }
   const resolvedCampaignCode = campaign.code;
@@ -409,10 +414,14 @@ export async function syncMartina(
       pricing?.price1 ?? "",
     );
 
-    // Martina es un proveedor de indumentaria. Sus líneas internas (por
-    // ejemplo, “Complemento”) no son categorías públicas: todas pertenecen a
-    // la categoría existente Ropa y la línea solo puede ser una subcategoría.
-    const categoryName = normalizeCategoryName(categoryOverride, "Ropa");
+    const supplierParentCategory = normalizeCategoryName(
+      String(first?.productLine?.parent?.name || ""),
+      "",
+    );
+    // Keep an external parent for new products outside Martina's clothing
+    // taxonomy so the preview can require a human placement. Existing rows
+    // keep their curated internal category during reconciliation.
+    const categoryName = supplierParentCategory || normalizeCategoryName(categoryOverride, "Ropa");
     const subcategoria = normalizeCategoryName(
       String(first?.productLine?.name || ""),
       "",

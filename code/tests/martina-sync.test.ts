@@ -117,6 +117,18 @@ test("live endpoint preserves valid empty response and raw size availability", a
   }
 });
 
+test("live endpoint queries a discovered campaign before its activation", async () => {
+  config.data.validFrom = "2098-01-01";
+  targeted = [entry("1", ["42"])];
+
+  const response = await GET({
+    request: new Request("http://fixture/api?productId=mdt-1"),
+  });
+
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).price, "100");
+});
+
 test("transport, malformed payload and wrong identity never become false stock", async () => {
   for (const value of [new Error("fixture timeout"), [{}], [entry("9")]]) {
     targeted = value;
@@ -129,42 +141,42 @@ test("transport, malformed payload and wrong identity never become false stock",
   }
 });
 
-test("Martina flags supplier Complemento as discrepant with image and applies only the chosen per-item category", async () => {
-  const wrongCategory = { name: "Complemento", count: 0, subcategories: [] };
-  fixtures.client = memoryClient([existing("1", { categories: wrongCategory })]);
+test("Martina preserves a recognized parent category without a manual decision", async () => {
+  fixtures.client = memoryClient([existing("1", {
+    categories: {
+      name: "MUJER",
+      count: 0,
+      subcategories: [{ name: "ROPA INTERIOR", count: 0 }],
+    },
+  })]);
   catalog = [{
     ...entry("1"),
-    productLine: { parent: { name: "Complemento" }, name: "Accesorios" },
-    images: ["100_10_1.jpg"],
+    productLine: { parent: { name: "MUJER" }, name: "ROPA INTERIOR" },
   }];
 
-  const collected = await syncMartina();
-  assert.deepEqual(collected.products[0].categories, {
-    name: "Ropa",
-    count: 0,
-    subcategories: [{ name: "Accesorios", count: 0 }],
-  });
-
-  // Without a per-item choice the row is flagged discrepant and exposes its
-  // photo for the decision; no destination is forced by this path.
   const preview = await generatePreview();
-  assert.equal(preview.summary.update, 1);
-  assert.equal(preview.plan[0].reason, "Reclasificar categoría");
-  assert.equal(preview.plan[0].needsCategoryDecision, true);
-  assert.equal(preview.plan[0].image, "https://pol21.martinaditrento.com/images/products/md/100_10_1.jpg");
-  assert.deepEqual(fixtures.client.writes, []);
 
-  // The admin picks Ropa for this row: signed into the token, applied after revalidation.
-  const chosen = await generatePreview({ "mdt-1": "Ropa" });
-  assert.equal((await applyMartinaSync(chosen.token)).ok, true);
-  assert.deepEqual(fixtures.client.rows.get("mdt-1").categories, collected.products[0].categories);
-  assert.deepEqual(fixtures.client.writes, [{
-    type: "update",
-    changes: { categories: collected.products[0].categories },
-  }]);
+  assert.equal(preview.plan[0].action, "unchanged");
+  assert.equal(preview.plan[0].needsCategoryDecision, false);
 });
 
-test("per-item override applies a chosen existing category keeping supplier subcategories", async () => {
+test("Martina preserves an existing internal category when its external parent is Complemento", async () => {
+  const assignedCategory = { name: "Carteras", count: 0, subcategories: [] };
+  fixtures.client = memoryClient([existing("1", { categories: assignedCategory })]);
+  catalog = [{
+    ...entry("1"),
+    productLine: { parent: { name: "Complemento" }, name: "Accesorios" },
+    images: ["100_10_1.jpg"],
+  }];
+
+  const preview = await generatePreview();
+  assert.equal(preview.summary.unchanged, 1);
+  assert.equal(preview.plan[0].needsCategoryDecision, false);
+  assert.deepEqual(fixtures.client.writes, []);
+  assert.deepEqual(fixtures.client.rows.get("mdt-1").categories, assignedCategory);
+});
+
+test("category overrides are rejected for an already categorized Martina product", async () => {
   const wrongCategory = { name: "Complemento", count: 0, subcategories: [] };
   fixtures.client = memoryClient([existing("1", { categories: wrongCategory })]);
   catalog = [{
@@ -173,14 +185,50 @@ test("per-item override applies a chosen existing category keeping supplier subc
     images: ["100_10_1.jpg"],
   }];
 
-  const preview = await generatePreview({ "mdt-1": "Calzado" });
-  assert.equal(preview.plan[0].needsCategoryDecision, true);
-  assert.equal((await applyMartinaSync(preview.token)).ok, true);
-  assert.deepEqual(fixtures.client.rows.get("mdt-1").categories, {
-    name: "Calzado",
-    count: 0,
-    subcategories: [{ name: "Accesorios", count: 0 }],
-  });
+  await assert.rejects(
+    generatePreview({ "mdt-1": { category: "Ropa", subcategory: "Mujer - Ropa Interior" } }),
+    /no admite decisión por ítem/,
+  );
+  assert.deepEqual(fixtures.client.rows.get("mdt-1").categories, wrongCategory);
+});
+
+test("new Martina products already under Mujer or Hombre need no category decision", async () => {
+  fixtures.client = memoryClient([]);
+  catalog = [{
+    ...entry("1"),
+    productLine: { parent: { name: "MUJER" }, name: "ROPA INTERIOR" },
+  }];
+
+  const preview = await generatePreview({}, ["Mujer", "Hombre"], ["Mujer - Ropa Interior"]);
+  assert.equal(preview.plan[0].action, "create");
+  assert.equal(preview.plan[0].needsCategoryDecision, false);
+});
+
+test("new Martina products outside Mujer/Hombre require an existing Mujer/Hombre subcategory", async () => {
+  fixtures.client = memoryClient([]);
+  catalog = [{
+    ...entry("1"),
+    productLine: { parent: { name: "Complemento" }, name: "Accesorios" },
+  }];
+
+  const pending = await generatePreview({}, ["Mujer", "Hombre"], ["Mujer - Ropa Interior"]);
+  assert.equal(pending.plan[0].action, "create");
+  assert.equal(pending.plan[0].needsCategoryDecision, true);
+
+  const selected = await generatePreview(
+    { "mdt-1": { category: "Ropa", subcategory: "Mujer - Ropa Interior" } },
+    ["Mujer", "Hombre"],
+    ["Mujer - Ropa Interior"],
+  );
+  assert.equal(selected.plan[0].needsCategoryDecision, true);
+  await assert.rejects(
+    generatePreview(
+      { "mdt-1": { category: "Ropa", subcategory: "Hombre - No Existe" } },
+      ["Mujer", "Hombre"],
+      ["Mujer - Ropa Interior"],
+    ),
+    /no existe en la taxonomía de Martina/,
+  );
 });
 
 test("tampered per-item override token is rejected before fetch or writes", async () => {
@@ -190,7 +238,7 @@ test("tampered per-item override token is rejected before fetch or writes", asyn
     ...entry("1"),
     productLine: { parent: { name: "Complemento" }, name: "Accesorios" },
   }];
-  const preview = await generatePreview({ "mdt-1": "Ropa" });
+  const preview = await generatePreview();
   const [body, signature] = preview.token.split(".");
   const tampered = `${body}.${signature[0] === "A" ? "B" : "A"}${signature.slice(1)}`;
   requests = [];
@@ -210,12 +258,12 @@ test("override on a non-discrepant row is rejected without writes", async () => 
   assert.equal(base.plan[0].needsCategoryDecision, false);
   // A signed token carrying an override for an unchanged row: preview
   // generation and apply both fail closed.
-  await assert.rejects(generatePreview({ "mdt-1": "Ropa" }), /discrepante/);
+  await assert.rejects(generatePreview({ "mdt-1": { category: "Ropa", subcategory: "Mujer - Ropa Interior" } }), /discrepante/);
   const token = await signPreview({
     exp: base.expiresAt,
     campaignCode: base.campaign.code,
     planHash: base.hash,
-    categoryOverrides: { "mdt-1": "Ropa" },
+    categoryOverrides: { "mdt-1": { category: "Ropa", subcategory: "Mujer - Ropa Interior" } },
   }, process.env.SYNC_PREVIEW_SECRET!);
   const result = await applyMartinaSync(token);
   assert.equal(result.ok, false);
@@ -253,6 +301,8 @@ test("one campaign snapshot groups distinct IDs and keeps raw selectable sizes",
       .filter((url) => url.pathname.endsWith("product"))
       .every((url) => url.searchParams.get("code") === "202609"),
   );
+  const configRequest = requests.find((url) => url.pathname.endsWith("config"));
+  assert.equal(configRequest?.searchParams.get("sellerCode"), "U20371400");
 });
 
 test("partial collection failure fails preview closed with zero writes", async () => {
@@ -902,6 +952,13 @@ test("campaign parser rejects impossible dates and sync rejects expired campaign
     syncMartina(undefined, new Date("2026-09-14")),
     /no vigente/,
   );
+});
+
+test("preview reads a future campaign but apply remains blocked", async () => {
+  config.data.validFrom = "2098-01-01";
+  const preview = await generatePreview();
+  assert.equal(preview.campaign.vigente, false);
+  await assert.rejects(applyMartinaSync(preview.token), /no vigente/);
 });
 
 test("stock client returns unknown on HTTP and network errors without replacing last result", async () => {

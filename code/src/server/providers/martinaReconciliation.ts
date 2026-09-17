@@ -48,11 +48,8 @@ export function martinaChanges(
   if (!isMartinaManaged(previous) || previous.active !== true) return {};
   if (!product.active) return { active: false };
   const changes: Record<string, unknown> = {};
-  if (
-    JSON.stringify(previous.categories ?? null) !== JSON.stringify(product.categories)
-  ) {
-    changes.categories = product.categories;
-  }
+  // The internal category is a curated business decision. Martina's parent
+  // and line metadata must never reassign an existing product.
   if (
     previous.auto_update_price === true &&
     !previous.temporary_price &&

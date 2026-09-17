@@ -5,7 +5,7 @@
 //  - NUNCA escribe; lee el estado administrativo completo.
 import { hasTrustedOrigin } from "@server/security/origin";
 import { verifyAdmin } from "@server/auth";
-import { generatePreview } from "@server/providers/martinaSync";
+import { generatePreview, getMartinaAssignableSubcategories, MARTINA_ALLOWED_SOURCE_CATEGORIES, type MartinaCategoryOverride } from "@server/providers/martinaSync";
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -26,9 +26,9 @@ export async function POST({ request }: { request: Request }) {
   // Per-item category map (id -> existing category name). The global
   // "category" selector was superseded by the per-item assign control: the
   // map travels signed inside the preview token and apply revalidates it.
-  // Taxonomy membership is enforced by the UI options (getCategories); the
-  // server shape-validates and scopes every override to discrepant rows.
-  let categoryOverrides: Record<string, string> = {};
+  // The server also validates the destination against the current Ropa >
+  // Mujer/Hombre subcategories and scopes every override to a new discrepant row.
+  let categoryOverrides: Record<string, MartinaCategoryOverride> = {};
   try {
     const body = await request.json();
     if (body?.overrides !== undefined) {
@@ -42,7 +42,8 @@ export async function POST({ request }: { request: Request }) {
   }
 
   try {
-    const preview = await generatePreview(categoryOverrides);
+    const assignableSubcategories = await getMartinaAssignableSubcategories();
+    const preview = await generatePreview(categoryOverrides, [...MARTINA_ALLOWED_SOURCE_CATEGORIES], assignableSubcategories);
 
     const changed = preview.plan.filter((item) => item.action !== "unchanged");
     const plan = changed;

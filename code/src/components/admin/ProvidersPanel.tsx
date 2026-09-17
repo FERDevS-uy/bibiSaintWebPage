@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import Modal from "./Modal";
 import NuvexSyncPanel from "./NuvexSyncPanel";
-import { getCategories, type CategoryOption } from "../../utils/adminApi";
+import { getCategories } from "../../utils/adminApi";
 
 interface SyncResult {
   provider: string;
@@ -79,6 +79,11 @@ interface MartinaPreviewResponse {
   expiresAt?: number;
 }
 
+interface MartinaCategoryOverride {
+  category: "Ropa";
+  subcategory: string;
+}
+
 interface MartinaApplyResponse {
   ok: boolean;
   error?: string;
@@ -132,18 +137,24 @@ export default function ProvidersPanel() {
     null,
   );
   const [martinaError, setMartinaError] = useState<string | null>(null);
-  const [martinaCategories, setMartinaCategories] = useState<CategoryOption[]>([]);
-  // Per-item destination categories (id -> existing category name), chosen
-  // only on discrepant rows. Every change regenerates the preview so the
-  // overrides travel signed inside the preview token.
-  const [martinaOverrides, setMartinaOverrides] = useState<Record<string, string>>({});
+  const [martinaSubcategories, setMartinaSubcategories] = useState<string[]>([]);
+  // Only existing Ropa > Mujer/Hombre subcategories are eligible. Every
+  // change regenerates the preview so the destination travels signed inside
+  // the preview token.
+  const [martinaOverrides, setMartinaOverrides] = useState<Record<string, MartinaCategoryOverride>>({});
   // Lightbox for the supplier thumbnail (display only).
   const [lightbox, setLightbox] = useState<{ src: string; name: string } | null>(null);
 
   useEffect(() => {
     getCategories().then((categories) => {
-      setMartinaCategories(categories.filter((category) => category.name !== "Complemento"));
-    }).catch(() => setMartinaCategories([]));
+      const ropa = categories.find((category) => category.name === "Ropa");
+      setMartinaSubcategories(
+        [...new Set((ropa?.subcategories ?? [])
+          .map((subcategory) => subcategory.name)
+          .filter((name) => /^(Mujer|Hombre)(?:\s*-\s*.+)?$/i.test(name)))]
+          .sort((left, right) => left.localeCompare(right)),
+      );
+    }).catch(() => setMartinaSubcategories([]));
   }, []);
 
   // Márgenes de ganancia por proveedor
@@ -304,7 +315,7 @@ export default function ProvidersPanel() {
     }
   };
 
-  const handleMartinaPreview = async (overrides: Record<string, string> = {}) => {
+  const handleMartinaPreview = async (overrides: Record<string, MartinaCategoryOverride> = {}) => {
     setPreviewing(true);
     setMartinaError(null);
     setApplyResult(null);
@@ -333,9 +344,9 @@ export default function ProvidersPanel() {
     }
   };
 
-  const handleMartinaOverrideChange = (id: string, category: string) => {
+  const handleMartinaOverrideChange = (id: string, subcategory: string) => {
     const next = { ...martinaOverrides };
-    if (category) next[id] = category;
+    if (subcategory) next[id] = { category: "Ropa", subcategory };
     else delete next[id];
     void handleMartinaPreview(next);
   };
@@ -1002,15 +1013,15 @@ export default function ProvidersPanel() {
                             {item.needsCategoryDecision ? (
                               <select
                                 className="admin-input"
-                                aria-label={`Asignar categoría a ${item.name}`}
-                                value={martinaOverrides[item.id] ?? ""}
+                                aria-label={`Asignar subcategoría a ${item.name}`}
+                                value={martinaOverrides[item.id]?.subcategory ?? ""}
                                 onChange={(event) => handleMartinaOverrideChange(item.id, event.target.value)}
                                 disabled={previewing || applying}
                                 style={{ maxWidth: 160 }}
                               >
                                 <option value="">Elegir…</option>
-                                {martinaCategories.map((category) => (
-                                  <option key={category.name} value={category.name}>{category.name}</option>
+                                {martinaSubcategories.map((subcategory) => (
+                                  <option key={subcategory} value={subcategory}>{subcategory}</option>
                                 ))}
                               </select>
                             ) : null}
