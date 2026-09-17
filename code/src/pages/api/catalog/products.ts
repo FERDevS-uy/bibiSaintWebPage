@@ -16,7 +16,6 @@ import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 import {
   parseCatalogPageRequest,
   catalogErrorToStatus,
-  catalogReadEnv,
   withEdgeCache,
   getCatalogCacheHeaders,
 } from "@server/catalog/http";
@@ -31,10 +30,9 @@ export const GET: APIRoute = async ({ request, locals }) => {
       try {
         const url = new URL(request.url);
         const parsed = parseCatalogPageRequest(url);
-        const env = catalogReadEnv((locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
-        if (env.ENABLE_CSV_FALLBACK === "true") recordRetiredCatalogConfig("catalog");
+        const env = {};
         const supabase = getSupabase();
-        const result = await runCatalogQuery(parsed, supabase, {
+        const result = await runCatalogQuery(parsed, env, supabase, {
           includeTotal: false,
           telemetry,
         });
@@ -43,6 +41,7 @@ export const GET: APIRoute = async ({ request, locals }) => {
           JSON.stringify({
             items: result.items,
             nextCursor: result.nextCursor,
+            previousCursor: result.previousCursor,
             hasMore: result.hasMore,
             catalogVersion: result.version || catalogVersion,
           }),

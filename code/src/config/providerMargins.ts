@@ -19,7 +19,7 @@ export const DEFAULT_PROVIDER_MARKUP: Record<
   nuvex: 1.4,
   // Kai Deco is editable from the admin panel. Alondra's API already returns
   // increased prices, so its factor is permanently enforced as 1 at runtime.
-  kaideco: 1,
+  kaideco: 1.2,
   alondra: 1,
 };
 

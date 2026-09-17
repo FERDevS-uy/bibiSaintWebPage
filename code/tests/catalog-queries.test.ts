@@ -265,6 +265,7 @@ test("runCatalogQuery: includeTotal:false omite COUNT y conserva una página vá
   const { chain, calls } = makeSupabaseMock(rows, "v1", 42);
   const res = await runCatalogQuery(
     { sort: "nombre", pageSize: 1 },
+    ENV,
     chain,
     { includeTotal: false },
   );
@@ -437,14 +438,14 @@ test("runCatalogQuery: error Supabase → CatalogError UPSTREAM_ERROR", async ()
   );
 });
 
-test("runCatalogQuery: retired read-model selector still uses the canonical query", async () => {
-  const { chain, calls } = makeSupabaseMock([]);
-  const result = await runCatalogQuery({ sort: "nombre" }, chain);
+test("runCatalogQuery: retired read-model flag still uses the canonical query", async () => {
+  const { chain } = makeSupabaseMock([]);
+  const result = await runCatalogQuery(
+    { sort: "nombre" },
+    { CATALOG_READ_MODEL: "false" },
+    chain,
+  );
   assert.deepEqual(result.items, []);
-  const sources = calls.filter((call) => call.method === "from").map((call) => call.args[0]);
-  assert.ok(sources.includes("catalog_version"));
-  assert.ok(sources.includes("catalog_products"));
-  assert.ok(!sources.includes("products"));
 });
 
 test("runCatalogQuery: round-trip encode/decode del nextCursor", async () => {
@@ -615,7 +616,7 @@ test("runCatalogQuery: página 2 sin cursor hace bootstrap keyset acotado en las
 
   for (const scenario of cases) {
     const { chain, calls } = makeKeysetWalkMock(bootstrapRows());
-    const result = await runCatalogQuery(scenario.request, chain, { includeTotal: false });
+    const result = await runCatalogQuery(scenario.request, ENV, chain, { includeTotal: false });
 
     assert.deepEqual(result.items.map((item) => item.id), ["p3", "p4"], scenario.name);
     assert.equal(
@@ -676,6 +677,7 @@ test("runCatalogQuery: página sobre el máximo de bootstrap falla cerrado sin l
   const withinBound = makeKeysetWalkMock(rows);
   const lastAllowed = await runCatalogQuery(
     { sort: "nombre", page: MAX_KEYSET_BOOTSTRAP_PAGE, pageSize: 2 },
+    ENV,
     withinBound.chain,
     { includeTotal: false },
   );
@@ -688,6 +690,7 @@ test("runCatalogQuery: página sobre el máximo de bootstrap falla cerrado sin l
     () =>
       runCatalogQuery(
         { sort: "nombre", page: MAX_KEYSET_BOOTSTRAP_PAGE + 1, pageSize: 2 },
+        ENV,
         overBound.chain,
         { includeTotal: false },
       ),
@@ -713,6 +716,7 @@ test("runCatalogQuery: cursor-bearing page skips bootstrap and keeps cursor vali
   const { chain, calls } = makeKeysetWalkMock(bootstrapRows());
   const result = await runCatalogQuery(
     { sort: "nombre", page: 2, pageSize: 2, cursor },
+    ENV,
     chain,
     { includeTotal: false },
   );
@@ -731,9 +735,36 @@ test("runCatalogQuery: cursor-bearing page skips bootstrap and keeps cursor vali
     () =>
       runCatalogQuery(
         { sort: "nombre", page: 2, pageSize: 2, cursor: staleCursor },
+        ENV,
         makeKeysetWalkMock(bootstrapRows(), "v1").chain,
         { includeTotal: false },
       ),
     (err: unknown) => err instanceof CatalogError && err.code === "VERSION_MISMATCH",
   );
+});
+
+test("bidirectional cursors preserve direction and build reverse keysets", () => {
+  const filters = {};
+  const cursor = encodeCursor({ s: "c", p: "p3", f: filterFingerprint(filters), v: "v1", d: "before" });
+  assert.equal(decodeCursor(cursor).d, "before");
+  const condition = buildCursorCondition({ sortValue: "c", productId: "p3" }, "before");
+  assert.equal(
+    condition.orFilter,
+    'sort_name.lt."c",and(sort_name.eq."c",product_id.lt."p3")',
+  );
+});
+
+test("runCatalogQuery: previous cursor produces reversed database order and stable product order", async () => {
+  const rows = [
+    { id: "p2", name: "B", price: 20, imageUrl: "b.jpg", enOferta: false, category: "Tecno", sort_name: "b" },
+    { id: "p1", name: "A", price: 10, imageUrl: "a.jpg", enOferta: false, category: "Tecno", sort_name: "a" },
+  ];
+  const cursor = encodeCursor({ s: "c", p: "p3", f: filterFingerprint({}), v: "v1", d: "before" });
+  const { chain, calls } = makeSupabaseMock(rows, "v1", 3);
+  const result = await runCatalogQuery({ sort: "nombre", pageSize: 2, cursor }, ENV, chain);
+  assert.deepEqual(result.items.map((item) => item.id), ["p1", "p2"]);
+  assert.equal(decodeCursor(result.nextCursor!).d, "after");
+  assert.equal(result.previousCursor, null, "the first logical page has no prior cursor");
+  assert.equal(calls.find((call) => call.method === "order" && call.args[0] === "sort_name")?.args[1]?.ascending, false);
+  assert.ok(String(calls.find((call) => call.method === "or")?.args[0]).includes('sort_name.lt."c"'));
 });

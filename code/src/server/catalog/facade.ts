@@ -1,49 +1,60 @@
-// Canonical Worker catalog facade. Runtime reads only the bounded Supabase read model.
 import type { CatalogCardProjection, CatalogPageRequest } from "./contracts.ts";
-import { CatalogError } from "./contracts.ts";
-import { runCatalogQuery } from "./queries.ts";
-import { observeCatalogQuery, type CatalogQueryTelemetry } from "./queryTelemetry.ts";
-import { recordRetiredCatalogConfig } from "./legacyTelemetry.ts";
 import { normalizeOfferOriginalPrice } from "@utils/price";
+import { runCatalogQuery } from "./queries.ts";
+import {
+  observeCatalogQuery,
+  type CatalogQueryTelemetry,
+} from "./queryTelemetry.ts";
+import {
+  getCatalogKvCache,
+  putCatalogKvCache,
+  resolveCatalogVersion,
+  type CatalogCacheEnv,
+} from "./edgeCache.ts";
 
 export interface CatalogPageFacadeRequest extends CatalogPageRequest {
   enOferta?: boolean;
   page?: number;
 }
-
 export interface CatalogPageResult {
   items: CatalogCardProjection[];
   nextCursor: string | null;
+  previousCursor: string | null;
   hasMore: boolean;
   total: number;
   page: number;
+  version: string;
 }
-
 export interface FeaturedProductsResult {
   novedades: CatalogCardProjection[];
   destacados: CatalogCardProjection[];
   ofertas: CatalogCardProjection[];
 }
-
 export interface CategoryProductsResult {
   items: CatalogCardProjection[];
   nextCursor: string | null;
   total: number;
 }
-
 export interface SearchProductsResult {
   items: CatalogCardProjection[];
   nextCursor: null;
   hasMore: false;
+  version?: string;
+  total?: number;
 }
-
 export interface CatalogFacadeOptions {
   telemetry?: CatalogQueryTelemetry;
 }
-
-type CatalogFacadeEnv = { CATALOG_READ_MODEL?: string; ENABLE_CSV_FALLBACK?: string };
 type SupabaseSource<T> = T | (() => T);
-interface SearchSupabase { rpc: (...args: any[]) => PromiseLike<{ data: unknown; error: unknown }>; }
+type CatalogFacadeEnv = { CATALOG_KV?: CatalogCacheEnv["CATALOG_KV"] };
+interface SearchSupabase {
+  rpc: (...args: any[]) => PromiseLike<{ data: unknown; error: unknown }>;
+}
+interface FeaturedCacheEntry {
+  key: string;
+  value: FeaturedProductsResult;
+  expiresAt: number;
+}
 interface SearchRow {
   product_id: string;
   name: string;
@@ -66,40 +77,18 @@ interface RelatedRow {
 }
 
 const FEATURED_CACHE_TTL_MS = 20_000;
-let featuredCache: { value: FeaturedProductsResult; expiresAt: number } | null = null;
-
-/** Compatibility helper for pages that used the former selector. It is always canonical. */
-export function isReadModel(_env: CatalogFacadeEnv): boolean {
-  return true;
-}
-
+let featuredCache: FeaturedCacheEntry | null = null;
 function resolveSupabase<T>(source: SupabaseSource<T>): T {
   return typeof source === "function" ? (source as () => T)() : source;
 }
-
-function observeRetiredConfig(env: CatalogFacadeEnv, consumer: "catalog" | "search" | "product"): void {
-  if (env.ENABLE_CSV_FALLBACK === "true") recordRetiredCatalogConfig(consumer);
-}
-
-function toProjection(row: RelatedRow): CatalogCardProjection {
-  const price = Number(row.price);
-  const originalPrice = normalizeOfferOriginalPrice(row.originalPrice, price);
-  return {
-    id: row.id,
-    name: row.name,
-    price,
-    originalPrice: originalPrice ?? undefined,
-    imageUrl: row.imageUrl,
-    enOferta: Boolean(row.enOferta) && originalPrice !== null,
-    category: row.category,
-    subcategory: row.subcategory || undefined,
-  };
-}
-
-function buildOffers(items: CatalogCardProjection[]): CatalogCardProjection[] {
+function buildOfertas(items: CatalogCardProjection[]): CatalogCardProjection[] {
   const offers = items.filter((item) => item.enOferta);
-  if (offers.length >= 4) return offers.slice(0, 8);
-  return [...offers, ...items.filter((item) => !item.enOferta).slice(0, 8 - offers.length)];
+  return offers.length >= 4
+    ? offers.slice(0, 8)
+    : [
+        ...offers,
+        ...items.filter((item) => !item.enOferta).slice(0, 8 - offers.length),
+      ];
 }
 
 export async function loadCatalogPage(
@@ -108,44 +97,89 @@ export async function loadCatalogPage(
   supabase: SupabaseSource<{ from: (table: string) => any }>,
   options?: CatalogFacadeOptions,
 ): Promise<CatalogPageResult> {
-  observeRetiredConfig(env, "catalog");
-  const result = await runCatalogQuery(request, resolveSupabase(supabase), { telemetry: options?.telemetry });
-  return { items: result.items, nextCursor: result.nextCursor, hasMore: result.hasMore, total: result.total, page: 1 };
+  const result = await runCatalogQuery(
+    request,
+    env,
+    resolveSupabase(supabase),
+    { telemetry: options?.telemetry },
+  );
+  return {
+    items: result.items,
+    nextCursor: result.nextCursor,
+    previousCursor: result.previousCursor,
+    hasMore: result.hasMore,
+    total: result.total,
+    page: 1,
+    version: result.version,
+  };
 }
 
 export async function loadCategoryProducts(
-  options: { category: string; subcategory?: string; page: number; pageSize: number },
+  options: {
+    category: string;
+    subcategory?: string;
+    page: number;
+    pageSize: number;
+  },
   env: CatalogFacadeEnv,
   supabase: SupabaseSource<{ from: (table: string) => any }>,
   facadeOptions?: CatalogFacadeOptions,
 ): Promise<CategoryProductsResult> {
-  observeRetiredConfig(env, "catalog");
   const result = await runCatalogQuery(
-    { category: options.category, subcategory: options.subcategory, sort: "nombre", pageSize: options.pageSize },
+    {
+      category: options.category,
+      subcategory: options.subcategory,
+      sort: "nombre",
+      pageSize: options.pageSize,
+    },
+    env,
     resolveSupabase(supabase),
     { telemetry: facadeOptions?.telemetry },
   );
-  return { items: result.items, nextCursor: result.nextCursor, total: result.total };
+  return {
+    items: result.items,
+    nextCursor: result.nextCursor,
+    total: result.total,
+  };
 }
 
 export async function searchProducts(
   query: string,
   limit: number,
-  env: CatalogFacadeEnv,
+  _env: CatalogFacadeEnv,
   supabase: SupabaseSource<SearchSupabase>,
   options?: CatalogFacadeOptions,
 ): Promise<SearchProductsResult> {
-  observeRetiredConfig(env, "search");
-  const { data, error } = await observeCatalogQuery<{ data: unknown; error: unknown }>(
+  const { data, error } = await observeCatalogQuery<{
+    data: unknown;
+    error: unknown;
+  }>(
     options?.telemetry,
     "catalog_search",
-    async () => await resolveSupabase(supabase).rpc("catalog_search_products", { p_query: query, p_limit: limit }),
+    async () =>
+      await resolveSupabase(supabase).rpc("catalog_search_products", {
+        p_query: query,
+        p_limit: limit,
+      }),
   );
-  if (error) throw new CatalogError("UPSTREAM_ERROR", "Error de búsqueda en el read model");
-  const items = ((data ?? []) as SearchRow[]).map((row) => toProjection({
-    id: row.product_id, name: row.name, price: row.numeric_price, originalPrice: row.original_price,
-    imageUrl: row.image_url, enOferta: row.en_oferta, category: row.category, subcategory: row.subcategory,
-  }));
+  if (error) throw new Error("Error de búsqueda en el read model");
+  const items = ((data ?? []) as SearchRow[]).map((row) => {
+    const price = Number(row.numeric_price);
+    const originalPrice = normalizeOfferOriginalPrice(
+      row.original_price,
+      price,
+    );
+    return {
+      id: row.product_id,
+      name: row.name,
+      price,
+      originalPrice: originalPrice ?? undefined,
+      imageUrl: row.image_url,
+      enOferta: Boolean(row.en_oferta) && originalPrice !== null,
+      category: row.category,
+      subcategory: row.subcategory || undefined,
+    };
+  });
   return { items, nextCursor: null, hasMore: false };
 }
 
@@ -154,35 +188,88 @@ export async function loadFeaturedProducts(
   supabase: SupabaseSource<{ from: (table: string) => any }>,
   options?: CatalogFacadeOptions,
 ): Promise<FeaturedProductsResult> {
-  observeRetiredConfig(env, "catalog");
+  const version = await resolveCatalogVersion({ kv: env.CATALOG_KV });
+  const key = `readmodel:v${version}`;
   const now = Date.now();
-  if (featuredCache && featuredCache.expiresAt > now) return featuredCache.value;
+  if (featuredCache?.key === key && featuredCache.expiresAt > now)
+    return featuredCache.value;
+  const cached = await getCatalogKvCache<FeaturedProductsResult>(
+    env.CATALOG_KV,
+    "featured",
+    version,
+  );
+  if (cached) {
+    featuredCache = {
+      key,
+      value: cached,
+      expiresAt: now + FEATURED_CACHE_TTL_MS,
+    };
+    return cached;
+  }
   const client = resolveSupabase(supabase);
   const [recent, all] = await Promise.all([
-    runCatalogQuery({ sort: "recientes", pageSize: 8 }, client, { includeTotal: false, telemetry: options?.telemetry }),
-    runCatalogQuery({ sort: "nombre", pageSize: 16 }, client, { includeTotal: false, telemetry: options?.telemetry }),
+    runCatalogQuery({ sort: "recientes", pageSize: 8 }, env, client, {
+      includeTotal: false,
+      telemetry: options?.telemetry,
+    }),
+    runCatalogQuery({ sort: "nombre", pageSize: 16 }, env, client, {
+      includeTotal: false,
+      telemetry: options?.telemetry,
+    }),
   ]);
-  const value = { novedades: recent.items.slice(0, 8), destacados: all.items.slice(0, 8), ofertas: buildOffers(all.items) };
-  featuredCache = { value, expiresAt: now + FEATURED_CACHE_TTL_MS };
+  const value = {
+    novedades: recent.items.slice(0, 8),
+    destacados: all.items.slice(0, 8),
+    ofertas: buildOfertas(all.items),
+  };
+  featuredCache = { key, value, expiresAt: now + FEATURED_CACHE_TTL_MS };
+  await putCatalogKvCache(env.CATALOG_KV, "featured", version, value);
   return value;
 }
 
 export async function loadRelatedProducts(
   relatedIds: string[],
-  env: CatalogFacadeEnv,
+  _env: CatalogFacadeEnv,
   supabase: SupabaseSource<{ from: (table: string) => any }>,
   options?: CatalogFacadeOptions,
 ): Promise<CatalogCardProjection[]> {
-  if (relatedIds.length === 0) return [];
-  observeRetiredConfig(env, "product");
-  const { data, error } = await observeCatalogQuery<{ data: unknown; error: unknown }>(
+  if (!relatedIds.length) return [];
+  const { data, error } = await observeCatalogQuery<{
+    data: unknown;
+    error: unknown;
+  }>(
     options?.telemetry,
     "catalog_related_products",
-    async () => await resolveSupabase(supabase).from("catalog_products")
-      .select("id:product_id, name, price:numeric_price, originalPrice:original_price, imageUrl:image_url, enOferta:en_oferta, category, subcategory")
-      .in("product_id", relatedIds).eq("active", true).limit(10),
+    async () =>
+      await resolveSupabase(supabase)
+        .from("catalog_products")
+        .select(
+          "id:product_id, name, price:numeric_price, originalPrice:original_price, imageUrl:image_url, enOferta:en_oferta, category, subcategory",
+        )
+        .in("product_id", relatedIds)
+        .eq("active", true)
+        .limit(10),
   );
-  if (error) throw new CatalogError("UPSTREAM_ERROR", "Error upstream al resolver productos relacionados");
-  const byId = new Map(((data ?? []) as RelatedRow[]).map((row) => [row.id, toProjection(row)]));
-  return relatedIds.map((id) => byId.get(id)).filter((item): item is CatalogCardProjection => Boolean(item));
+  if (error) return [];
+  const byId = new Map(
+    ((data ?? []) as RelatedRow[]).map((row) => [row.id, row]),
+  );
+  return relatedIds.flatMap((id) => {
+    const row = byId.get(id);
+    if (!row) return [];
+    const price = Number(row.price);
+    const originalPrice = normalizeOfferOriginalPrice(row.originalPrice, price);
+    return [
+      {
+        id: row.id,
+        name: row.name,
+        price,
+        originalPrice: originalPrice ?? undefined,
+        imageUrl: row.imageUrl,
+        enOferta: Boolean(row.enOferta) && originalPrice !== null,
+        category: row.category,
+        subcategory: row.subcategory || undefined,
+      },
+    ];
+  });
 }

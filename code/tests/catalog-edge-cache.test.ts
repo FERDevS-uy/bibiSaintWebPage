@@ -9,6 +9,9 @@ import {
   bumpCatalogVersion,
   invalidateEdgeCatalogVersion,
   buildVersionedCacheKey,
+  buildCatalogKvCacheKey,
+  getCatalogKvCache,
+  putCatalogKvCache,
   getCatalogCacheHeaders,
   logCatalogCacheTelemetry,
   getEdgeCacheMetrics,
@@ -170,6 +173,42 @@ test("buildVersionedCacheKey: añade parámetro v=<version> preservando query pa
     "new",
   );
   assert.equal(key3, "https://example.com/api/catalog/products?v=new&category=Ropa");
+});
+
+test("catalog KV SSR: hit y miss usan claves versionadas de featured y navegación", async () => {
+  const kvStore = new Map<string, string>();
+  const mockKv = {
+    get: async (key: string) => kvStore.get(key) ?? null,
+    put: async (key: string, value: string) => { kvStore.set(key, value); },
+    delete: async (key: string) => { kvStore.delete(key); },
+  };
+
+  await putCatalogKvCache(mockKv, "featured", "42", { novedades: ["p1"] });
+  await putCatalogKvCache(mockKv, "navigation", "42", [{ name: "Ropa" }]);
+
+  assert.equal(buildCatalogKvCacheKey("featured", "42"), "catalog:featured:v42");
+  assert.equal(buildCatalogKvCacheKey("navigation", "42"), "catalog:navigation:v42");
+  assert.deepEqual(await getCatalogKvCache(mockKv, "featured", "42"), { novedades: ["p1"] });
+  assert.deepEqual(await getCatalogKvCache(mockKv, "navigation", "42"), [{ name: "Ropa" }]);
+  assert.equal(await getCatalogKvCache(mockKv, "featured", "43"), null);
+});
+
+test("catalog KV SSR: un cambio de versión invalida lógicamente featured y navegación", async () => {
+  const kvStore = new Map<string, string>();
+  const mockKv = {
+    get: async (key: string) => kvStore.get(key) ?? null,
+    put: async (key: string, value: string) => { kvStore.set(key, value); },
+    delete: async (key: string) => { kvStore.delete(key); },
+  };
+
+  await putCatalogKvCache(mockKv, "featured", "7", { version: 7 });
+  await putCatalogKvCache(mockKv, "navigation", "7", { version: 7 });
+  await bumpCatalogVersion({ kv: mockKv, newVersion: "8" });
+
+  assert.equal(kvStore.get("catalog:version"), "8");
+  assert.equal(await getCatalogKvCache(mockKv, "featured", "8"), null);
+  assert.equal(await getCatalogKvCache(mockKv, "navigation", "8"), null);
+  assert.deepEqual(await getCatalogKvCache(mockKv, "featured", "7"), { version: 7 });
 });
 
 // ---------------------------------------------------------------------------

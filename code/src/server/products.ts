@@ -1,9 +1,9 @@
 import type Product from "../types/product";
 import type Category from "../types/categoryList";
 import { getSupabase } from "./supabase";
-import { invalidateProductsCache } from "../utils/loadProducts";
 import { resetCachedCatalogVersion } from "./catalog/edgeCache";
 import { normalizeOfferOriginalPrice } from "../utils/price";
+import { CatalogError } from "./catalog/contracts";
 
 /** TTL de cachés de categoría/counts (5 min, alineado con la caché de productos). */
 const CATEGORY_CACHE_TTL = 300_000;
@@ -13,14 +13,16 @@ interface CacheEntry<T> {
   expires: number;
 }
 
-const categoryProductsCache = new Map<string, CacheEntry<{ products: Product[]; total: number }>>();
+const categoryProductsCache = new Map<
+  string,
+  CacheEntry<{ products: Product[]; total: number }>
+>();
 let categoryCountsCache: CacheEntry<Category[]> | null = null;
 
 /** Invalida todas las cachés de productos (listado + categoría + counts + edge catalog version). Per-isolate, best-effort. */
 export function invalidateAllProductCaches(): void {
   categoryProductsCache.clear();
   categoryCountsCache = null;
-  invalidateProductsCache();
   resetCachedCatalogVersion();
 }
 
@@ -35,13 +37,22 @@ interface SupabaseProductRow {
   relacionados: string[];
   en_oferta: boolean;
   original_price: string | null;
-  colors: Array<{ id: number; hex: string; name: string; images: string[]; sizes?: string[] }>;
+  colors: Array<{
+    id: number;
+    hex: string;
+    name: string;
+    images: string[];
+    sizes?: string[];
+  }>;
   created_at?: string | null;
   updated_at?: string | null;
 }
 
 function rowToProduct(row: SupabaseProductRow): Product {
-  const normalizedOriginalPrice = normalizeOfferOriginalPrice(row.original_price, row.price);
+  const normalizedOriginalPrice = normalizeOfferOriginalPrice(
+    row.original_price,
+    row.price,
+  );
   return {
     id: row.id,
     name: row.name,
@@ -52,7 +63,8 @@ function rowToProduct(row: SupabaseProductRow): Product {
     paymentLink: Array.isArray(row.payment_link) ? row.payment_link : [],
     relacionados: Array.isArray(row.relacionados) ? row.relacionados : [],
     enOferta: Boolean(row.en_oferta) && normalizedOriginalPrice !== null,
-    originalPrice: normalizedOriginalPrice === null ? null : String(normalizedOriginalPrice),
+    originalPrice:
+      normalizedOriginalPrice === null ? null : String(normalizedOriginalPrice),
     colors: Array.isArray(row.colors) ? row.colors : [],
     createdAt: row.created_at ?? undefined,
     updatedAt: row.updated_at ?? undefined,
@@ -73,7 +85,9 @@ export async function fetchProducts(): Promise<Product[]> {
     return [];
   }
 
-  return (data ?? []).map((row) => rowToProduct(row as unknown as SupabaseProductRow));
+  return (data ?? []).map((row) =>
+    rowToProduct(row as unknown as SupabaseProductRow),
+  );
 }
 
 export async function fetchCategoryProducts(options: {
@@ -99,7 +113,9 @@ export async function fetchCategoryProducts(options: {
     .eq("categories->>name", options.category);
 
   if (options.subcategory) {
-    query = query.contains("categories", { subcategories: [{ name: options.subcategory }] });
+    query = query.contains("categories", {
+      subcategories: [{ name: options.subcategory }],
+    });
   }
 
   const { data, count, error } = await query
@@ -112,7 +128,9 @@ export async function fetchCategoryProducts(options: {
   }
 
   const result = {
-    products: (data ?? []).map((row) => rowToProduct(row as unknown as SupabaseProductRow)),
+    products: (data ?? []).map((row) =>
+      rowToProduct(row as unknown as SupabaseProductRow),
+    ),
     total: count ?? 0,
   };
 
@@ -144,10 +162,12 @@ export async function fetchCategoryCounts(): Promise<Category[]> {
   const counts: Category[] = (data ?? []).map((row: any) => ({
     name: row.name ?? row.category_name ?? "",
     count: Number(row.count ?? row.product_count ?? 0),
-    subcategories: Array.isArray(row.subcategories) ? row.subcategories.map((s: any) => ({
-      name: typeof s === "string" ? s : (s.name ?? ""),
-      count: Number(s.count ?? 0),
-    })) : [],
+    subcategories: Array.isArray(row.subcategories)
+      ? row.subcategories.map((s: any) => ({
+          name: typeof s === "string" ? s : (s.name ?? ""),
+          count: Number(s.count ?? 0),
+        }))
+      : [],
   }));
 
   // Solo se cachean resultados exitosos con datos.
@@ -161,9 +181,14 @@ export async function fetchCategoryCounts(): Promise<Category[]> {
   return counts;
 }
 
-export async function fetchProductById(id: string): Promise<Product | null> {
-  const supabase = getSupabase();
+export type ProductLookupResult =
+  { kind: "found"; product: Product } | { kind: "not_found" };
 
+/** Distinguishes an authoritative absence from a retryable provider failure. */
+export async function fetchProductByIdResult(
+  id: string,
+): Promise<ProductLookupResult> {
+  const supabase = getSupabase();
   const { data, error } = await supabase
     .from("products")
     .select("*")
@@ -171,17 +196,30 @@ export async function fetchProductById(id: string): Promise<Product | null> {
     .eq("active", true)
     .single();
 
-  if (error || !data) {
-    if (error?.code !== "PGRST116") {
-      console.error(`Supabase fetchProductById(${id}) error:`, error);
-    }
-    return null;
+  if (error) {
+    if (error.code === "PGRST116") return { kind: "not_found" };
+    console.error(`Supabase fetchProductById(${id}) error:`, error);
+    throw new CatalogError(
+      "UPSTREAM_ERROR",
+      "Product source is temporarily unavailable",
+    );
   }
-
-  return rowToProduct(data as unknown as SupabaseProductRow);
+  if (!data) return { kind: "not_found" };
+  return {
+    kind: "found",
+    product: rowToProduct(data as unknown as SupabaseProductRow),
+  };
 }
 
-export async function fetchRelatedProducts(relatedIds: string[]): Promise<Product[]> {
+/** Backward-compatible lookup for legacy consumers that already treat absence as null. */
+export async function fetchProductById(id: string): Promise<Product | null> {
+  const result = await fetchProductByIdResult(id);
+  return result.kind === "found" ? result.product : null;
+}
+
+export async function fetchRelatedProducts(
+  relatedIds: string[],
+): Promise<Product[]> {
   if (relatedIds.length === 0) return [];
 
   const supabase = getSupabase();
@@ -197,5 +235,7 @@ export async function fetchRelatedProducts(relatedIds: string[]): Promise<Produc
     return [];
   }
 
-  return (data ?? []).map((row) => rowToProduct(row as unknown as SupabaseProductRow));
+  return (data ?? []).map((row) =>
+    rowToProduct(row as unknown as SupabaseProductRow),
+  );
 }

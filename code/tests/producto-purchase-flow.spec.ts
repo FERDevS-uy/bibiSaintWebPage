@@ -11,14 +11,15 @@
  *  7. Verificar toast + contador carrito
  *  8. Ir a carrito y validar item agregado
  *
- * Productos de prueba (CSV):
+ * Productos de prueba del catálogo:
  *  - 197: Juego Sabana King Size (Nuvex, múltiples colores, sin talles)
  *  - 198: Juego Sabana King Size 150H (Nuvex, colores, sin talles)
  *  - 409: Acolchado Pluma (Nuvex, 6 colores, sin talles)
  *  - 410: Producto Martina (mdt-*, con talles inferidos de imágenes)
  *  - kai-*: Productos Kai (talles desde Shopify API)
  *
- * Config: ENABLE_CSV_FALLBACK=true para que los productos CSV estén disponibles
+ * Configuración: el entorno de prueba debe disponer de estos productos en el
+ * read model de Supabase.
  */
 
 import { test, expect, type Page } from "@playwright/test";

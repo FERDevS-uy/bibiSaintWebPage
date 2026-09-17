@@ -4,9 +4,10 @@
 //  - Resuelve la campaña vigente desde ecommerce/config en el servidor.
 //  - No toca Supabase: únicamente consulta a Martina.
 import { fetchMartinaConfig, fetchMartinaProductById, extractMartinaColorDetails } from "@server/providers/martina";
-import { parseCampaign } from "@server/providers/martinaCampaign";
+import { parseCampaign, isVigente } from "@server/providers/martinaCampaign";
 import { normalizeProductPrice } from "@server/providers/martinaNormalizer";
 import { normalizeSizes } from "@utils/sizes";
+import { evaluateMartinaAvailability } from "@server/providers/martinaAvailability";
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -27,8 +28,11 @@ export async function GET({ request }: { request: Request }) {
   try {
     const configRaw = await fetchMartinaConfig("598");
     const campaign = parseCampaign(configRaw);
+    if (!isVigente(campaign, new Date())) throw new Error("Campaña Martina no vigente");
 
     const entries = await fetchMartinaProductById(numeric, campaign.code, "598");
+    const availability = evaluateMartinaAvailability(entries);
+    if (availability === "unknown") throw new Error("Disponibilidad de Martina desconocida");
 
     if (entries.length === 0) {
       return json({
@@ -50,7 +54,7 @@ export async function GET({ request }: { request: Request }) {
 
     const colors = extractMartinaColorDetails(entries);
     const allSizes = normalizeSizes(colors.flatMap((c) => c.rawSizes));
-    const inStock = colors.some((c) => c.sizes.length > 0);
+    const inStock = availability === "available";
 
     return json({
       price,

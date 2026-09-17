@@ -12,15 +12,18 @@
 export interface CatalogCacheEnv {
   CATALOG_KV?: {
     get: (key: string) => Promise<string | null>;
-    put: (key: string, value: string) => Promise<void>;
+    put: (
+      key: string,
+      value: string,
+      options?: { expirationTtl?: number },
+    ) => Promise<void>;
     delete: (key: string) => Promise<void>;
   };
-  CATALOG_READ_MODEL?: string;
-  ENABLE_CSV_FALLBACK?: string;
   [key: string]: unknown;
 }
 
 export type CatalogRouteType = "products" | "categories" | "related" | "search";
+export type CatalogKvCacheName = "featured" | "navigation";
 
 export interface CacheHeaderOptions {
   maxAge?: number;
@@ -91,12 +94,19 @@ export function logCatalogCacheTelemetry(event: EdgeCacheTelemetryEvent): void {
     edgeCacheMetrics.totalPayloadBytes += event.payloadBytes;
   }
 
-  const route = String(event.route ?? "unknown").replace(/[\r\n\t]+/g, " ").trim();
-  const version = event.version ? String(event.version).replace(/[\r\n\t]+/g, " ").trim() : "none";
+  const route = String(event.route ?? "unknown")
+    .replace(/[\r\n\t]+/g, " ")
+    .trim();
+  const version = event.version
+    ? String(event.version)
+        .replace(/[\r\n\t]+/g, " ")
+        .trim()
+    : "none";
   const hitStr = event.hit ? "true" : "false";
   const statusStr = String(event.status ?? 200);
   const durationStr = Math.round(event.durationMs).toString();
-  const bytesStr = typeof event.payloadBytes === "number" ? String(event.payloadBytes) : "0";
+  const bytesStr =
+    typeof event.payloadBytes === "number" ? String(event.payloadBytes) : "0";
 
   console.info(
     `[catalog:edge-cache] route=${route} hit=${hitStr} version=${version} status=${statusStr} latency_ms=${durationStr} payload_bytes=${bytesStr}`,
@@ -132,7 +142,7 @@ export function getCatalogCacheHeaders(
   return {
     "content-type": "application/json",
     "cache-control": `public, max-age=${maxAge}, s-maxage=${sMaxAge}, stale-while-revalidate=${swr}`,
-    "vary": "Accept-Encoding",
+    vary: "Accept-Encoding",
   };
 }
 
@@ -239,7 +249,12 @@ export async function bumpCatalogVersion(options?: {
     }
   }
 
-  if (!version && supabaseAdmin && typeof supabaseAdmin.rpc === "function" && options?.rebuildReadModel !== false) {
+  if (
+    !version &&
+    supabaseAdmin &&
+    typeof supabaseAdmin.rpc === "function" &&
+    options?.rebuildReadModel !== false
+  ) {
     try {
       const { data, error } = await supabaseAdmin.rpc("catalog_rebuild");
       if (!error && data != null) {
@@ -308,10 +323,55 @@ export async function invalidateEdgeCatalogVersion(options?: {
 /**
  * Construye la URL de clave de caché que incluye el tag de versión ?v=<version>.
  */
-export function buildVersionedCacheKey(url: string | URL, version: string): string {
+export function buildVersionedCacheKey(
+  url: string | URL,
+  version: string,
+): string {
   const u = new URL(url.toString());
   u.searchParams.set("v", version);
   return u.toString();
+}
+
+/**
+ * Clave para payloads SSR de bajo cambio. No se usa para `/api/catalog/*`,
+ * que sigue siendo responsabilidad exclusiva de `caches.default`.
+ */
+export function buildCatalogKvCacheKey(
+  name: CatalogKvCacheName,
+  version: string,
+): string {
+  return `catalog:${name}:v${version}`;
+}
+
+export async function getCatalogKvCache<T>(
+  kv: CatalogCacheEnv["CATALOG_KV"] | null | undefined,
+  name: CatalogKvCacheName,
+  version: string,
+): Promise<T | null> {
+  if (!kv || typeof kv.get !== "function") return null;
+  try {
+    const value = await kv.get(buildCatalogKvCacheKey(name, version));
+    return value ? (JSON.parse(value) as T) : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function putCatalogKvCache<T>(
+  kv: CatalogCacheEnv["CATALOG_KV"] | null | undefined,
+  name: CatalogKvCacheName,
+  version: string,
+  value: T,
+  expirationTtl = 600,
+): Promise<void> {
+  if (!kv || typeof kv.put !== "function") return;
+  try {
+    await kv.put(buildCatalogKvCacheKey(name, version), JSON.stringify(value), {
+      expirationTtl,
+    });
+  } catch {
+    // El caché KV es best-effort: la fuente canónica sigue disponible.
+  }
 }
 
 export interface WithEdgeCacheOptions {
@@ -328,12 +388,17 @@ export interface WithEdgeCacheOptions {
  * - En caso de cache miss: ejecuta el handler, aplica cabeceras de caché y almacena la respuesta.
  * - En entornos sin caches.default (Node.js/tests): ejecuta el handler directamente.
  */
-export async function withEdgeCache(options: WithEdgeCacheOptions): Promise<Response> {
+export async function withEdgeCache(
+  options: WithEdgeCacheOptions,
+): Promise<Response> {
   const startTime = performance.now();
   const { route, request, locals, customHeaders, handler } = options;
 
   const kv = locals?.runtime?.env?.CATALOG_KV;
-  const version = await resolveCatalogVersion({ kv, env: locals?.runtime?.env });
+  const version = await resolveCatalogVersion({
+    kv,
+    env: locals?.runtime?.env,
+  });
 
   if (request.method !== "GET") {
     return handler(version);
@@ -342,7 +407,8 @@ export async function withEdgeCache(options: WithEdgeCacheOptions): Promise<Resp
   const cacheKey = buildVersionedCacheKey(request.url, version);
 
   const cachesObj = typeof caches !== "undefined" ? caches : undefined;
-  const edgeCache = cachesObj && "default" in cachesObj ? (cachesObj as any).default : null;
+  const edgeCache =
+    cachesObj && "default" in cachesObj ? (cachesObj as any).default : null;
 
   if (edgeCache && typeof edgeCache.match === "function") {
     try {
@@ -350,7 +416,8 @@ export async function withEdgeCache(options: WithEdgeCacheOptions): Promise<Resp
       const matched = await edgeCache.match(matchRequest);
       if (matched) {
         const durationMs = performance.now() - startTime;
-        const responseBytes = Number(matched.headers.get("content-length")) || 0;
+        const responseBytes =
+          Number(matched.headers.get("content-length")) || 0;
         logCatalogCacheTelemetry({
           route,
           hit: true,

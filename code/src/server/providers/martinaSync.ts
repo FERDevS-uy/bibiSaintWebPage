@@ -6,9 +6,11 @@
 //  - Orquestación: collectMartinaData / generatePreview / applyMartinaSync.
 
 import { getSupabase, getSupabaseAdmin } from "../supabase";
-import { fetchMartinaConfig, syncMartina } from "./martina";
-import { parseCampaign, isVigente, type MartinaCampaign } from "./martinaCampaign";
+import { syncMartina, fetchMartinaProductById } from "./martina";
+import { isVigente, type MartinaCampaign } from "./martinaCampaign";
 import type { ProductRow } from "./utils";
+import { isMartinaManaged, martinaChanges, readActiveMartinaProducts, verifyAbsentMartinaProducts, type MartinaObservation } from "./martinaReconciliation";
+import type { MartinaAvailability } from "./martinaAvailability";
 
 // ---------------------------------------------------------------------------
 // Env server-only (fail-closed)
@@ -78,7 +80,7 @@ async function hmacVerify(data: string, signature: Uint8Array, secret: string): 
     false,
     ["verify"],
   );
-  return crypto.subtle.verify("HMAC", key, signature, new TextEncoder().encode(data));
+  return crypto.subtle.verify("HMAC", key, signature as BufferSource, new TextEncoder().encode(data));
 }
 
 async function sha256Hex(data: string): Promise<string> {
@@ -90,7 +92,7 @@ async function sha256Hex(data: string): Promise<string> {
 // SyncPlanner (función pura)
 // ---------------------------------------------------------------------------
 
-export type SyncActionType = "create" | "update" | "unchanged";
+export type SyncActionType = "create" | "update" | "unchanged" | "deactivate" | "unknown";
 
 export interface SyncPlanItem {
   id: string;
@@ -99,12 +101,24 @@ export interface SyncPlanItem {
   originalPrice: string | null;
   enOferta: boolean;
   action: SyncActionType;
+  availability: MartinaAvailability;
+  reason: string;
+  priceChanged: boolean;
+  availabilityChanged: boolean;
+  /** First supplier image (display only, never persisted as blob). Null when the supplier exposes no photo. */
+  image?: string | null;
+  /** True when the row category differs from the existing taxonomy and needs a per-item decision. */
+  needsCategoryDecision?: boolean;
 }
 
 export interface SyncPlanSummary {
   create: number;
   update: number;
   unchanged: number;
+  deactivate: number;
+  unknown: number;
+  priceChanges: number;
+  availabilityChanges: number;
 }
 
 export interface SyncPlan {
@@ -112,6 +126,7 @@ export interface SyncPlan {
   items: SyncPlanItem[];
   summary: SyncPlanSummary;
   hash: string;
+  mutations: Array<{ id: string; previous?: SyncExistingProduct; changes: Record<string, unknown> }>;
 }
 
 /**
@@ -133,32 +148,145 @@ export async function planHash(
   return sha256Hex(JSON.stringify({ campaignCode, items: normalized }));
 }
 
+/** First supplier image for display: products[].img[0], else colors[0].images[0], else null. */
+function planThumbnailFromColors(colors: ProductRow["colors"]): string | null {
+  const first = Array.isArray(colors) ? colors[0] : undefined;
+  const image = first && Array.isArray(first.images) ? first.images[0] : undefined;
+  return typeof image === "string" && image ? image : null;
+}
+
+function planThumbnail(product: ProductRow): string | null {
+  const direct = Array.isArray(product.img) ? product.img[0] : undefined;
+  if (typeof direct === "string" && direct) return direct;
+  return planThumbnailFromColors(product.colors);
+}
+
+const MAX_OVERRIDE_VALUE_LENGTH = 120;
+const MAX_OVERRIDES = 200;
+
+/**
+ * Fail-closed validation of the per-item category map (id -> existing
+ * category name). Always enforces shape (non-empty ids and names); when the
+ * caller resolves the taxonomy, values must exist in it.
+ */
+export function validateCategoryOverrides(
+  categoryOverrides: Record<string, string>,
+  existingCategories?: string[],
+): Record<string, string> {
+  if (!categoryOverrides || typeof categoryOverrides !== "object" || Array.isArray(categoryOverrides)) {
+    throw new Error("Mapa de categorías por ítem inválido.");
+  }
+  const entries = Object.entries(categoryOverrides);
+  if (entries.length > MAX_OVERRIDES) throw new Error("Demasiadas categorías por ítem.");
+  const validated: Record<string, string> = {};
+  for (const [id, name] of entries) {
+    if (typeof id !== "string" || !id.trim() || typeof name !== "string" || !name.trim()) {
+      throw new Error("Cada categoría por ítem debe ser un nombre no vacío.");
+    }
+    const value = name.trim();
+    if (value.length > MAX_OVERRIDE_VALUE_LENGTH) throw new Error(`Categoría por ítem demasiado larga: ${id}.`);
+    if (existingCategories !== undefined && !existingCategories.includes(value)) {
+      throw new Error(`La categoría "${value}" no existe en la taxonomía.`);
+    }
+    validated[id.trim()] = value;
+  }
+  return validated;
+}
+
 export async function buildPlan(
   products: ProductRow[],
   existing: Map<string, SyncExistingProduct>,
   campaignCode: string,
+  observations = new Map<string, MartinaObservation>(),
+  campaignEvidence: unknown = campaignCode,
+  categoryOverrides: Record<string, string> = {},
+  existingCategories?: string[],
 ): Promise<SyncPlan> {
+  // Per-item category overrides (signed in the preview token, revalidated in
+  // apply). Shape-validated here so preview and apply share one fail-closed
+  // path. Taxonomy membership is enforced only when the caller resolves the
+  // taxonomy; otherwise the admin UI restricts choices to getCategories
+  // options and the signature binding prevents tampering.
+  const overrides = validateCategoryOverrides(categoryOverrides, existingCategories);
+  const mutations: SyncPlan["mutations"] = [];
   const items: SyncPlanItem[] = products.map((p) => {
     const prev = existing.get(p.id);
     const originalPrice = p.original_price ?? null;
     const enOferta = Boolean(p.en_oferta);
-
-    let action: SyncActionType = "create";
-    if (prev) {
-      const changed =
-        prev.price !== p.price ||
-        prev.original_price !== originalPrice ||
-        prev.en_oferta !== enOferta;
-      action = changed ? "update" : "unchanged";
+    const availability = p.active ? "available" : "unavailable";
+    let action: SyncActionType = p.active && p.price ? "create" : "unchanged";
+    let reason = p.active ? "Disponible en catálogo" : "Sin variaciones seleccionables";
+    const baseChanges = prev ? martinaChanges(p, prev) : { ...p };
+    // A row needs a per-item category decision when its supplier category
+    // differs from the existing taxonomy: a pending category reclassification
+    // on update, or a create whose supplier category is not in the taxonomy
+    // (only computable when the caller passes existingCategories).
+    const needsCategoryDecision = Boolean(prev
+      ? "categories" in baseChanges
+      : p.active && p.price && existingCategories !== undefined && !existingCategories.includes(p.categories?.name ?? ""));
+    const override = overrides[p.id];
+    if (override !== undefined && !needsCategoryDecision) {
+      throw new Error(`La categoría de ${p.id} no admite decisión por ítem: no es una fila discrepante.`);
     }
-
-    return { id: p.id, name: p.name, price: p.price, originalPrice, enOferta, action };
+    // The effective product carries the chosen destination category (name
+    // replaced, supplier subcategories preserved); without an override the
+    // supplier value flows through unchanged.
+    const effective: ProductRow = override !== undefined
+      ? { ...p, categories: { ...p.categories, name: override } }
+      : p;
+    const changes = prev ? martinaChanges(effective, prev) : { ...effective };
+    if (prev && !isMartinaManaged(prev)) {
+      action = "unknown";
+      reason = "Producto no gestionado por Martina: se conserva";
+    } else if (prev) {
+      action = Object.keys(changes).length ? (changes.active === false ? "deactivate" : "update") : "unchanged";
+      if (!prev.active) reason = "Inactivo: se conserva sin reactivar";
+    }
+    const priceChanged = action === "update" && ["price", "original_price", "en_oferta"].some((field) => field in changes);
+    const availabilityChanged = action === "deactivate";
+    if (action === "update") {
+      reason = "Cambiar precio";
+      if ("categories" in changes) {
+        reason = priceChanged ? "Cambiar precio y reclasificar categoría" : "Reclasificar categoría";
+      }
+    }
+    if (action === "create" || action === "update" || action === "deactivate") mutations.push({ id: p.id, previous: prev, changes });
+    return { id: p.id, name: prev?.name ?? p.name, price: String(changes.price ?? prev?.price ?? p.price),
+      originalPrice: prev && !("original_price" in changes) ? prev.original_price : originalPrice,
+      enOferta: prev && !("en_oferta" in changes) ? prev.en_oferta : enOferta,
+      action, availability, reason, priceChanged, availabilityChanged,
+      image: planThumbnail(p), needsCategoryDecision };
   });
-
-  const summary: SyncPlanSummary = { create: 0, update: 0, unchanged: 0 };
-  for (const item of items) summary[item.action]++;
-
-  return { campaignCode, items, summary, hash: await planHash(products, campaignCode) };
+  for (const [id, observation] of observations) {
+    const prev = existing.get(id);
+    if (!prev || products.some((product) => product.id === id) || !isMartinaManaged(prev) || prev.active !== true) continue;
+    const action = observation.availability === "unavailable" ? "deactivate" : observation.availability === "unknown" ? "unknown" : "unchanged";
+    items.push({ id, name: prev.name ?? id, price: prev.price, originalPrice: prev.original_price, enOferta: prev.en_oferta, action, availability: observation.availability, reason: observation.reason, priceChanged: false, availabilityChanged: action === "deactivate", image: planThumbnailFromColors(prev.colors), needsCategoryDecision: false });
+    if (action === "deactivate") mutations.push({ id, previous: prev, changes: { active: false } });
+  }
+  items.sort((left, right) => left.id.localeCompare(right.id));
+  mutations.sort((left, right) => left.id.localeCompare(right.id));
+  const summary: SyncPlanSummary = { create: 0, update: 0, unchanged: 0, deactivate: 0, unknown: 0, priceChanges: 0, availabilityChanges: 0 };
+  for (const item of items) {
+    summary[item.action]++;
+    if (item.priceChanged) summary.priceChanges++;
+    if (item.availabilityChanged) summary.availabilityChanges++;
+  }
+  const hash = await sha256Hex(JSON.stringify({ campaign: campaignEvidence, items,
+    // The overrides map is hashed explicitly so any unsigned/tampered
+    // per-item destination invalidates the plan in apply (409 fail-closed).
+    categoryOverrides: Object.fromEntries(Object.entries(overrides).sort(([left], [right]) => left.localeCompare(right))),
+    products: [...products].sort((left, right) => left.id.localeCompare(right.id))
+      .map((product) => existing.has(product.id) ? { ...product, colors: undefined } : product),
+    existing: [...existing.entries()].sort(([left], [right]) => left.localeCompare(right))
+      .map(([id, previous]) => [id, { ...previous, colors: undefined }]),
+    observations: [...observations.entries()].sort(([left], [right]) => left.localeCompare(right))
+      .map(([id, observation]) => [id, { availability: observation.availability, reason: observation.reason }]),
+    mutations: mutations.map((mutation) => ({ ...mutation,
+      previous: mutation.previous ? { ...mutation.previous, colors: undefined } : undefined,
+    })),
+  }));
+  return { campaignCode, items, summary, hash, mutations };
 }
 
 // ---------------------------------------------------------------------------
@@ -169,6 +297,7 @@ export interface PreviewTokenPayload {
   exp: number;
   campaignCode: string;
   planHash: string;
+  categoryOverrides?: Record<string, string>;
 }
 
 export async function signPreview(
@@ -179,6 +308,9 @@ export async function signPreview(
     exp: payload.exp,
     campaignCode: payload.campaignCode,
     planHash: payload.planHash,
+    categoryOverrides: payload.categoryOverrides
+      ? Object.fromEntries(Object.entries(payload.categoryOverrides).sort(([left], [right]) => left.localeCompare(right)))
+      : undefined,
   });
   const payloadB64 = toBase64Url(new TextEncoder().encode(body));
   const signature = await hmacSign(payloadB64, secret);
@@ -202,7 +334,13 @@ export async function verifyPreview(
       !parsed ||
       typeof parsed.exp !== "number" ||
       typeof parsed.campaignCode !== "string" ||
-      typeof parsed.planHash !== "string"
+      typeof parsed.planHash !== "string" ||
+      (parsed.categoryOverrides !== undefined &&
+        (typeof parsed.categoryOverrides !== "object" ||
+          Array.isArray(parsed.categoryOverrides) ||
+          Object.entries(parsed.categoryOverrides).some(
+            ([id, name]) => typeof id !== "string" || !id.trim() || typeof name !== "string" || !name.trim(),
+          )))
     ) {
       return null;
     }
@@ -222,6 +360,14 @@ export interface SyncExistingProduct {
   price: string;
   en_oferta: boolean;
   original_price: string | null;
+  name?: string;
+  colors?: ProductRow["colors"];
+  active?: boolean;
+  source?: string;
+  external_id?: string;
+  auto_update_price?: boolean;
+  temporary_price?: string | null;
+  categories?: ProductRow["categories"];
 }
 
 export interface ProductRepository {
@@ -241,11 +387,12 @@ async function readProductsByIds(
     const chunk = ids.slice(i, i + CHUNK);
     const { data, error } = await client
       .from("products")
-      .select("id, price, en_oferta, original_price")
+      .select("id,name,price,en_oferta,original_price,colors,active,source,external_id,auto_update_price,temporary_price,categories")
       .in("id", chunk);
     if (error) throw new Error(`readByIds: ${error.message}`);
     for (const row of data ?? []) {
       map.set(row.id, {
+        ...row,
         id: row.id,
         price: String(row.price ?? ""),
         en_oferta: Boolean(row.en_oferta),
@@ -258,14 +405,44 @@ async function readProductsByIds(
 
 /** Persiste con service role (solo server). */
 export class SupabaseProductRepository implements ProductRepository {
+  constructor(private readonly context = "catalog") {}
+
   async readByIds(ids: string[]): Promise<Map<string, SyncExistingProduct>> {
     return readProductsByIds(getSupabaseAdmin(), ids);
+  }
+
+  async readActiveMartina(): Promise<Map<string, SyncExistingProduct>> {
+    return readActiveMartinaProducts(getSupabaseAdmin());
+  }
+
+  async applyMartinaPlan(plan: SyncPlan): Promise<{ upserted: number; errors: number }> {
+    const client: SupabaseLike = getSupabaseAdmin();
+    let upserted = 0;
+    for (const mutation of plan.mutations) {
+      let query;
+      if (!mutation.previous) {
+        query = client.from("products").insert(mutation.changes);
+      } else {
+        const previous = mutation.previous;
+        query = client.from("products").update(mutation.changes).eq("id", mutation.id);
+        for (const field of ["active", "source", "external_id", "price", "original_price", "en_oferta", "auto_update_price", "temporary_price", "categories"] as const) {
+          const value = previous[field];
+          query = value == null ? query.is(field, null) : query.eq(field, typeof value === "object" ? JSON.stringify(value) : value);
+        }
+      }
+      const { data, error } = await query.select("id");
+      if (error || data?.length !== 1) {
+        return { upserted, errors: plan.mutations.length - upserted };
+      }
+      upserted++;
+    }
+    return { upserted, errors: 0 };
   }
 
   async upsert(products: ProductRow[]): Promise<{ upserted: number; errors: number }> {
     if (products.length === 0) return { upserted: 0, errors: 0 };
 
-    const supabase = getSupabaseAdmin();
+    const supabase: SupabaseLike = getSupabaseAdmin();
     let upserted = 0;
     let errors = 0;
 
@@ -314,7 +491,11 @@ export class SupabaseProductRepository implements ProductRepository {
         .upsert(toUpsert, { onConflict: "id", ignoreDuplicates: false });
 
       if (error) {
-        console.error(`Martina: error en batch ${i / BATCH_SIZE + 1}:`, error.message);
+        console.error(
+          `[providers-sync] provider=${this.context} upsert_batch=${i / BATCH_SIZE + 1} ` +
+            `size=${toUpsert.length} error=${error.message}`,
+          error,
+        );
         errors += toUpsert.length;
       } else {
         upserted += toUpsert.length;
@@ -346,14 +527,21 @@ export class DryRunProductRepository implements ProductRepository {
 export interface MartinaSyncData {
   campaign: MartinaCampaign;
   products: ProductRow[];
+  takeDetailLookup: () => boolean;
 }
 
 /** Consulta la campaña vigente (ecommerce/config) y el catálogo de Martina. */
 export async function collectMartinaData(countryId = "598"): Promise<MartinaSyncData> {
-  const configRaw = await fetchMartinaConfig(countryId);
-  const campaign = parseCampaign(configRaw);
-  const { products } = await syncMartina(campaign.code);
-  return { campaign, products };
+  if (countryId !== "598") throw new Error("País Martina inválido");
+  return syncMartina(undefined, new Date());
+}
+
+export async function prepareMartinaPlan(data: MartinaSyncData, repository = new SupabaseProductRepository("Martina"), categoryOverrides: Record<string, string> = {}, existingCategories?: string[]): Promise<SyncPlan> {
+  const existing = await repository.readActiveMartina();
+  const incoming = await repository.readByIds(data.products.map((product) => product.id));
+  for (const [id, product] of incoming) existing.set(id, product);
+  const observations = await verifyAbsentMartinaProducts(data.products, existing, data.campaign.code, fetchMartinaProductById, data.takeDetailLookup);
+  return buildPlan(data.products, existing, data.campaign.code, observations, data.campaign, categoryOverrides, existingCategories);
 }
 
 export interface PreviewResult {
@@ -372,17 +560,15 @@ export interface PreviewResult {
   expiresAt: number;
 }
 
-/** Genera un preview read-only: NO escribe y NO usa service role. */
-export async function generatePreview(): Promise<PreviewResult> {
-  const data = await collectMartinaData();
-  const repository = new DryRunProductRepository();
-  const existing = await repository.readByIds(data.products.map((p) => p.id));
-  const plan = await buildPlan(data.products, existing, data.campaign.code);
+/** Genera un preview read-only con el estado administrativo completo. */
+export async function generatePreview(categoryOverrides: Record<string, string> = {}, existingCategories?: string[]): Promise<PreviewResult> {
+  const data = await collectMartinaData("598");
+  const plan = await prepareMartinaPlan(data, new SupabaseProductRepository("Martina"), categoryOverrides, existingCategories);
 
   const now = new Date();
   const expiresAt = now.getTime() + PREVIEW_TTL_MS;
   const token = await signPreview(
-    { exp: expiresAt, campaignCode: data.campaign.code, planHash: plan.hash },
+    { exp: expiresAt, campaignCode: data.campaign.code, planHash: plan.hash, categoryOverrides },
     getPreviewSecret(),
   );
 
@@ -408,7 +594,7 @@ export type ApplyResult =
   | { ok: false; status: number; error: string };
 
 /** Aplica un preview válido: revalida contra Martina antes de persistir. */
-export async function applyMartinaSync(token: string): Promise<ApplyResult> {
+export async function applyMartinaSync(token: string, existingCategories?: string[]): Promise<ApplyResult> {
   if (!isWriteEnabled()) {
     return {
       ok: false,
@@ -426,9 +612,22 @@ export async function applyMartinaSync(token: string): Promise<ApplyResult> {
     };
   }
 
-  const data = await collectMartinaData();
-  const rehash = await planHash(data.products, data.campaign.code);
-  if (rehash !== payload.planHash) {
+  const data = await collectMartinaData("598");
+  const repository = new SupabaseProductRepository("Martina");
+  // The plan is rebuilt WITH the signed overrides: unknown ids, shape
+  // violations, non-discrepant targets or taxonomy mismatches throw here and
+  // fail closed with 409 below.
+  let plan: SyncPlan;
+  try {
+    plan = await prepareMartinaPlan(data, repository, payload.categoryOverrides ?? {}, existingCategories);
+  } catch {
+    return {
+      ok: false,
+      status: 409,
+      error: "Las categorías por ítem del preview son inválidas. Generá un preview nuevo.",
+    };
+  }
+  if (plan.hash !== payload.planHash || data.campaign.code !== payload.campaignCode || Date.now() >= payload.exp) {
     return {
       ok: false,
       status: 409,
@@ -436,10 +635,7 @@ export async function applyMartinaSync(token: string): Promise<ApplyResult> {
     };
   }
 
-  const repository = new SupabaseProductRepository();
-  const existing = await repository.readByIds(data.products.map((p) => p.id));
-  const plan = await buildPlan(data.products, existing, data.campaign.code);
-  const result = await repository.upsert(data.products);
+  const result = await repository.applyMartinaPlan(plan);
 
   return {
     ok: true,

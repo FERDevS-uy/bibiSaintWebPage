@@ -2,12 +2,10 @@
 // Preview read-only de la sincronización Martina:
 //  - Autentica admin + origen confiable.
 //  - Consulta campaña + catálogo y genera un plan firmado (create/update/unchanged).
-//  - NUNCA escribe y NO usa service role (DryRunProductRepository).
+//  - NUNCA escribe; lee el estado administrativo completo.
 import { hasTrustedOrigin } from "@server/security/origin";
 import { verifyAdmin } from "@server/auth";
 import { generatePreview } from "@server/providers/martinaSync";
-
-const MAX_PLAN_ITEMS = 200;
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -25,14 +23,30 @@ export async function POST({ request }: { request: Request }) {
     return json({ ok: false, error: "No autorizado" }, 401);
   }
 
+  // Per-item category map (id -> existing category name). The global
+  // "category" selector was superseded by the per-item assign control: the
+  // map travels signed inside the preview token and apply revalidates it.
+  // Taxonomy membership is enforced by the UI options (getCategories); the
+  // server shape-validates and scopes every override to discrepant rows.
+  let categoryOverrides: Record<string, string> = {};
   try {
-    const preview = await generatePreview();
+    const body = await request.json();
+    if (body?.overrides !== undefined) {
+      if (body.overrides === null || typeof body.overrides !== "object" || Array.isArray(body.overrides)) {
+        return json({ ok: false, error: "Mapa de categorías por ítem inválido" }, 400);
+      }
+      categoryOverrides = body.overrides;
+    }
+  } catch {
+    // An empty body means no per-item decisions yet.
+  }
 
-    // Plan compacto: priorizamos acciones con cambios y limitamos el detalle
-    // para no mandar el catálogo completo (resumen + detalle).
+  try {
+    const preview = await generatePreview(categoryOverrides);
+
     const changed = preview.plan.filter((item) => item.action !== "unchanged");
-    const plan = changed.slice(0, MAX_PLAN_ITEMS);
-    const truncated = changed.length > MAX_PLAN_ITEMS;
+    const plan = changed;
+    const truncated = false;
 
     return json({
       ok: true,

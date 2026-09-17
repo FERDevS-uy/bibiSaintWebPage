@@ -7,9 +7,10 @@ interface ModalProps {
   title?: string;
   children: React.ReactNode;
   showFooter?: boolean;
+  footer?: React.ReactNode;
 }
 
-export default function Modal({ open, onClose, type = "info", title, children, showFooter = true }: ModalProps) {
+export default function Modal({ open, onClose, type = "info", title, children, showFooter = true, footer }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
 
@@ -94,9 +95,11 @@ export default function Modal({ open, onClose, type = "info", title, children, s
         <div className="admin-modal-body">{children}</div>
         {showFooter && (
           <div className="admin-modal-footer">
-            <button className="admin-btn admin-btn-primary admin-modal-btn" onClick={onClose}>
-              Aceptar
-            </button>
+            {footer ?? (
+              <button className="admin-btn admin-btn-primary admin-modal-btn" onClick={onClose}>
+                Aceptar
+              </button>
+            )}
           </div>
         )}
       </div>

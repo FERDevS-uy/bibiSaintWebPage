@@ -19,3 +19,18 @@ DESIGN.md
 /*.png
 /*.png/
 .pnpm-store/
+
+# Local editor, agent and Worker state
+.DS_Store
+**/.DS_Store
+.atl/
+.codegraph/
+.copilot/
+Library/
+code/.wrangler/
+code/.opencode/*.bak
+code/rangler.jsonc
+
+# Closed local ODD/SDD recovery records
+odd/archive/
+odd/tasks/security-remediation.md

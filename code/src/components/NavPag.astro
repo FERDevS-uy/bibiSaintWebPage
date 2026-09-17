@@ -81,7 +81,9 @@ const isLastPage = actualPage >= totalPages;
       if (!href) return;
       const url = new URL(href, window.location.origin);
       currentParams.forEach((value, key) => {
-        if (!url.searchParams.has(key)) {
+        // The destination owns its cursor. Reusing the active one would make
+        // back/forward links display a URL that does not match its products.
+        if (key !== "cursor" && !url.searchParams.has(key)) {
           url.searchParams.set(key, value);
         }
       });

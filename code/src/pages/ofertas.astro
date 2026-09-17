@@ -6,10 +6,9 @@ import { withBasePath } from "@utils/basePath";
 import { loadCatalogPage } from "@server/catalog/facade";
 import { toCardProduct } from "@server/catalog/mappers";
 import { getSupabase } from "@server/supabase";
-import { catalogReadEnv } from "@server/catalog/http";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
 
-const env = catalogReadEnv((Astro.locals as { runtime?: { env?: Record<string, string | undefined> } }).runtime?.env);
+const env = {};
 const telemetry = createCatalogQueryTelemetry("offers");
 
 // Top de ofertas: universo enOferta=true ordenado por precio (mismo universo
@@ -33,7 +32,10 @@ const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
   <section class="offersHeader">
     <span class="offersBadge">Precio bajo asegurado</span>
     <h1>Ofertas destacadas</h1>
-    <p>Top 50 productos más baratos del catálogo, ordenados de menor a mayor precio.</p>
+    <p>
+      Top 50 productos más baratos del catálogo, ordenados de menor a mayor
+      precio.
+    </p>
     <div class="offersMeta">
       <span>{topBaratos.length} productos</span>
       <span>{totalPages} páginas</span>
@@ -58,8 +60,16 @@ const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
     border-radius: 16px;
     border: 1px solid rgba(35, 41, 70, 0.1);
     background:
-      radial-gradient(circle at 20% 0%, rgba(210, 232, 255, 0.6), transparent 40%),
-      radial-gradient(circle at 80% 100%, rgba(255, 222, 186, 0.6), transparent 38%),
+      radial-gradient(
+        circle at 20% 0%,
+        rgba(210, 232, 255, 0.6),
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 80% 100%,
+        rgba(255, 222, 186, 0.6),
+        transparent 38%
+      ),
       #ffffff;
     box-shadow: 0 8px 24px rgba(35, 41, 70, 0.08);
   }

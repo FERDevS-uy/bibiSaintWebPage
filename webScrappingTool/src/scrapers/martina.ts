@@ -1,7 +1,6 @@
 import axios from 'axios';
 import fs from 'fs/promises';
 import path from 'path';
-import https from 'https';
 import { normalizeText, cleanDescription, toTitleCase } from '../utils/text';
 import { parsePrice } from '../utils/price';
 import { delay } from '../utils/delay';
@@ -10,8 +9,6 @@ import { Product } from '../utils/product';
 const MARTINA_STORE_PRODUCT_BASE = 'https://pol21.martinaditrento.com/mdt-services/resources/store/product';
 const MARTINA_CONFIG_URL = 'https://pol21.martinaditrento.com/mdt-services/resources/ecommerce/config';
 const MARTINA_IMAGE_BASE = 'https://pol21.martinaditrento.com/images/products/md/';
-
-const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 
 function getMartinaColors(variation: any): string[] {
   if (!variation) return [];
@@ -102,7 +99,6 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
       try {
         const { data } = await axios.get(`${MARTINA_CONFIG_URL}?countryId=${country}`, {
           headers,
-          httpsAgent,
           timeout: 20000,
         });
         const payload = data && data.data ? data.data : data || {};
@@ -147,7 +143,7 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
       const url = `${MARTINA_STORE_PRODUCT_BASE}?countryId=${country}&code=${encodeURIComponent(code)}`;
       console.log(url);
       try {
-        const { data } = await axios.get(url, { headers, httpsAgent, timeout: 30000 });
+        const { data } = await axios.get(url, { headers, timeout: 30000 });
         return normalizeMartinaPayloadToArray(data);
       } catch (e: any) {
         console.warn(`Error consultando store/product code=${code}:`, e.message || e);
@@ -168,7 +164,7 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
         String(category || ''),
       )}`;
       try {
-        const { data } = await axios.get(url, { headers, httpsAgent, timeout: 30000 });
+        const { data } = await axios.get(url, { headers, timeout: 30000 });
         return normalizeMartinaPayloadToArray(data);
       } catch (e: any) {
         console.warn(`Error consultando store/product by productLine=${productLineId} category=${category}:`, e.message || e);
@@ -185,7 +181,7 @@ export async function scrapMartinaDiTrento(): Promise<Product[]> {
         String(productId),
       )}&code=${encodeURIComponent(String(code))}&countryId=${encodeURIComponent(String(country))}`;
       try {
-        const { data } = await axios.get(url, { headers, httpsAgent, timeout: 30000 });
+        const { data } = await axios.get(url, { headers, timeout: 30000 });
         return normalizeMartinaPayloadToArray(data);
       } catch (e: any) {
         console.warn(`Error consultando store/product productId=${productId}:`, e.message || e);

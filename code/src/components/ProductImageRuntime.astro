@@ -1,0 +1,68 @@
+---
+import { PRODUCT_IMAGE_FALLBACK } from "../utils/productImage";
+---
+
+<!-- Install before body parsing: React hydration and page-load are deliberately not required. -->
+<script is:inline define:vars={{ fallback: PRODUCT_IMAGE_FALLBACK }}>
+  if (!window.__bibiImageEventsInstalled) {
+    window.__bibiImageEventsInstalled = true;
+    function finishImage(image) {
+      image.dataset.imageState = "loaded";
+      image
+        .closest(".carousel-img-wrapper")
+        ?.setAttribute("data-image-state", "loaded");
+    }
+    function failImage(image) {
+      if (image.dataset.fallbackApplied === "true") return;
+      image.dataset.fallbackApplied = "true";
+      image.classList.add("is-fallback");
+      image.src = fallback;
+      finishImage(image);
+    }
+    function recoverCompletedImages() {
+      document.querySelectorAll("img[data-product-image]").forEach((image) => {
+        if (image.complete) {
+          if (image.naturalWidth === 0) failImage(image);
+          else finishImage(image);
+        }
+      });
+    }
+    document.addEventListener("astro:page-load", recoverCompletedImages);
+    recoverCompletedImages();
+    document.addEventListener(
+      "error",
+      (event) => {
+        const image = event.target;
+        if (
+          image instanceof HTMLImageElement &&
+          image.hasAttribute("data-product-image")
+        )
+          failImage(image);
+      },
+      true,
+    );
+    document.addEventListener(
+      "load",
+      (event) => {
+        const image = event.target;
+        if (
+          image instanceof HTMLImageElement &&
+          image.hasAttribute("data-product-image")
+        )
+          finishImage(image);
+      },
+      true,
+    );
+  }
+</script>
+<style is:global>
+  img[data-product-image] {
+    /* The photo is never hidden behind a JS-controlled opacity gate. */
+    color: transparent;
+    background-color: #f3f4f6;
+  }
+  img[data-product-image].is-fallback {
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+</style>

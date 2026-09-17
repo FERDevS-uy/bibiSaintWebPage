@@ -35,33 +35,32 @@ export interface CatalogQueryTelemetry {
   readonly requestId: string;
 }
 
-export type CatalogRuntimeEventName =
-  | "catalog_degraded"
-  | "catalog_legacy_decision"
-  | "catalog_csv_load_attempt"
-  | "catalog_retired_config";
-export type CatalogRuntimeConsumer = "header" | "sidebar" | "catalog" | "search" | "product";
+export type CatalogRuntimeEventName = "catalog_degraded";
+export type CatalogRuntimeConsumer =
+  "header" | "sidebar" | "catalog" | "search" | "product";
 
 export interface CatalogRuntimeEvent {
   event: CatalogRuntimeEventName;
   consumer: CatalogRuntimeConsumer;
   source: "supabase_read_model";
   outcome: "degraded" | "blocked";
-  errorClass: "timeout" | "upstream" | "empty" | "retired_config";
+  errorClass: "timeout" | "upstream" | "empty";
   requestId: string;
 }
 
 /** Best-effort, data-free runtime telemetry for Release A retirement gates. */
 export function recordCatalogRuntimeEvent(event: CatalogRuntimeEvent): void {
   try {
-    console.warn(JSON.stringify({
-      event: event.event,
-      consumer: sanitizeLabel(event.consumer),
-      source: event.source,
-      outcome: event.outcome,
-      error_class: event.errorClass,
-      request_id: sanitizeLabel(event.requestId),
-    }));
+    console.warn(
+      JSON.stringify({
+        event: event.event,
+        consumer: sanitizeLabel(event.consumer),
+        source: event.source,
+        outcome: event.outcome,
+        error_class: event.errorClass,
+        request_id: sanitizeLabel(event.requestId),
+      }),
+    );
   } catch {
     // Observability must not affect the response path.
   }
@@ -128,5 +127,7 @@ function emitCatalogQueryTelemetry(event: CatalogQueryTelemetryEvent): void {
 }
 
 function sanitizeLabel(value: string): string {
-  return String(value).replace(/[\r\n\t]+/g, " ").slice(0, 128);
+  return String(value)
+    .replace(/[\r\n\t]+/g, " ")
+    .slice(0, 128);
 }

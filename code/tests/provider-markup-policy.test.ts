@@ -21,6 +21,7 @@ test("resolveProviderMarkups: Alondra permanece en 1 aunque la DB tenga un overr
 
   assert.equal(markups.alondra, 1);
   assert.equal(markups.nuvex, 1.4);
+  assert.equal(markups.kaideco, 1.2);
 });
 
 test("buildEditableMarkupRows: rechaza Alondra y permite proveedores soportados", () => {

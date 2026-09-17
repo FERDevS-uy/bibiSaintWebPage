@@ -54,6 +54,14 @@ context: |
   - Debug mode: `pnpm exec playwright test --debug` (step through code)
   - UI mode: `pnpm exec playwright test --ui` (visual test editor, no agent needed)
   - @bibi-qa writes tests, but runs them via CLI to validate
+  - **Detected capabilities** (sdd-init hybrid mode):
+    - Project `code/`: Playwright E2E + Node unit tests (baseline-percentiles, catalog-*)
+    - Project `webScrappingTool/`: No test runner configured
+
+  **Strict TDD**: false
+  - No workspace-level test command covers all in-scope projects
+  - webScrappingTool has no test command (pnpm test → exit 1)
+  - strict_tdd disabled until test infrastructure added to webScrappingTool
 
 rules:
   proposal:

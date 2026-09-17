@@ -7,7 +7,6 @@ export const prerender = true;
 
 <Layout pageTitle=`${config.pageTitle} - Pedido`>
   <section class="pedido-container">
-
     <div class="pedido-header">
       <h1>Pedido recibido</h1>
       <div class="pedido-separator"></div>
@@ -15,37 +14,63 @@ export const prerender = true;
     </div>
 
     <div id="result__container"></div>
-
   </section>
 </Layout>
 
 <style>
   .pedido-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px 60px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
     font-family: "Poppins", "Poppins Fallback", Arial, sans-serif;
     color: #222;
+    min-height: 58vh;
+  }
+
+  .pedido-header {
+    position: relative;
+    padding: 28px 32px 26px;
+    margin-bottom: 28px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fff8f6 0%, #fff 72%);
+    box-shadow: 0 12px 30px rgba(42, 20, 18, 0.08);
+    overflow: hidden;
+  }
+
+  .pedido-header::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -70px;
+    top: -86px;
+    border-radius: 50%;
+    background: rgba(211, 47, 47, 0.08);
   }
 
   .pedido-header h1 {
-    font-size: 2.2rem;
+    position: relative;
+    z-index: 1;
+    font-size: clamp(1.8rem, 4vw, 2.65rem);
     font-weight: 800;
-    margin: 0 0 8px;
-    color: #000;
+    letter-spacing: -0.03em;
+    margin: 0 0 10px;
+    color: #241a19;
   }
 
   .pedido-separator {
-    width: 90px;
-    height: 7px;
-    background-color: #d32f2f;
-    border-radius: 4px;
-    margin-bottom: 8px;
+    width: 64px;
+    height: 5px;
+    background: #d32f2f;
+    border-radius: 999px;
+    margin-bottom: 12px;
   }
 
   .pedido-header p {
+    position: relative;
+    z-index: 1;
     font-size: 1rem;
-    color: #666;
+    color: #6c5b58;
     margin: 0 0 32px;
   }
 
@@ -54,10 +79,10 @@ export const prerender = true;
     display: flex;
     flex-direction: column;
     gap: 0;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
+    border: 1px solid #eadfdd;
+    border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    box-shadow: 0 10px 28px rgba(42, 20, 18, 0.07);
   }
 
   :global(.pedido-list-header) {
@@ -65,13 +90,13 @@ export const prerender = true;
     grid-template-columns: 90px 1fr 80px 110px;
     gap: 12px;
     padding: 12px 20px;
-    background: #f7f7f7;
-    border-bottom: 2px solid #d32f2f;
+    background: #3b2927;
+    border-bottom: 3px solid #d32f2f;
     font-weight: 700;
     font-size: 0.82rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #444;
+    color: #fff;
   }
 
   :global(.pedido-item) {
@@ -79,8 +104,8 @@ export const prerender = true;
     grid-template-columns: 90px 1fr 80px 110px;
     gap: 12px;
     align-items: center;
-    padding: 16px 20px;
-    border-bottom: 1px solid #eee;
+    padding: 18px 20px;
+    border-bottom: 1px solid #f0e7e4;
     transition: background 0.15s;
   }
 
@@ -89,15 +114,15 @@ export const prerender = true;
   }
 
   :global(.pedido-item:hover) {
-    background: #fafafa;
+    background: #fff8f6;
   }
 
   :global(.pedido-item img) {
     width: 80px;
     height: 80px;
     object-fit: contain;
-    border-radius: 8px;
-    background: #f5f5f5;
+    border-radius: 12px;
+    background: #fff8f6;
     display: block;
   }
 
@@ -149,6 +174,10 @@ export const prerender = true;
 
   :global(.pedido-check-row) {
     margin-top: 4px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   :global(.pedido-check-btn) {
@@ -247,6 +276,13 @@ export const prerender = true;
     width: 44px;
     height: 44px;
     color: #222;
+    text-align: center;
+  }
+
+  :global(.pedido-qty-wrap) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   :global(.pedido-subtotal) {
@@ -264,10 +300,10 @@ export const prerender = true;
   }
 
   :global(.pedido-total-inner) {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    background: #3b2927;
+    border: 1px solid #3b2927;
+    border-radius: 18px;
+    box-shadow: 0 12px 26px rgba(42, 20, 18, 0.14);
     padding: 24px 32px;
     min-width: 280px;
     display: flex;
@@ -280,32 +316,35 @@ export const prerender = true;
     justify-content: space-between;
     align-items: center;
     font-size: 1rem;
-    color: #555;
+    color: #f6e9e6;
   }
 
   :global(.pedido-total-row.main) {
     font-size: 1.4rem;
     font-weight: 800;
-    color: #111;
-    border-top: 2px solid #d32f2f;
+    color: #fff;
+    border-top: 2px solid #ef6a65;
     padding-top: 12px;
     margin-top: 4px;
   }
 
   :global(.pedido-total-row.main span:last-child) {
-    color: #d32f2f;
+    color: #ffaaa4;
   }
 
   :global(.pedido-total-note) {
     font-size: 0.78rem;
     font-weight: 500;
-    color: #8a6d3b;
+    color: #ffd2a5;
     line-height: 1.4;
   }
 
   /* ------- Error / empty ------- */
   :global(.pedido-message) {
-    padding: 48px 0;
+    padding: 52px 24px;
+    border: 1px dashed #e0c8c3;
+    border-radius: 16px;
+    background: #fff8f6;
     text-align: center;
     font-size: 1.05rem;
     color: #c11010;
@@ -314,9 +353,20 @@ export const prerender = true;
 
   /* ------- Mobile ------- */
   @media (max-width: 680px) {
-    .pedido-header h1 { font-size: 1.7rem; }
+    .pedido-container {
+      padding: 28px 14px 56px;
+    }
+    .pedido-header {
+      padding: 24px 20px 22px;
+      border-radius: 16px;
+    }
+    .pedido-header h1 {
+      font-size: 1.7rem;
+    }
 
-    :global(.pedido-list-header) { display: none; }
+    :global(.pedido-list-header) {
+      display: none;
+    }
 
     :global(.pedido-item) {
       grid-template-columns: 70px 1fr;
@@ -331,7 +381,9 @@ export const prerender = true;
       grid-row: 1 / 3;
     }
 
-    :global(.pedido-item-info) { grid-column: 2; }
+    :global(.pedido-item-info) {
+      grid-column: 2;
+    }
 
     :global(.pedido-item .pedido-qty-wrap) {
       grid-column: 2;
@@ -357,7 +409,11 @@ export const prerender = true;
 
 <script>
   import { parsePrice, formatPrice } from "@utils/price";
-  import { decodeOrderTokenV2, decodeOrderTokenV3, isOrderTokenV3 } from "@utils/orderToken";
+  import {
+    decodeOrderTokenV2,
+    decodeOrderTokenV3,
+    isOrderTokenV3,
+  } from "@utils/orderToken";
   import {
     providerFrom,
     fetchMartinaLive,
@@ -368,11 +424,12 @@ export const prerender = true;
   // Base64URL encode/decode inline
   function base64UrlEncode(bytes) {
     let binary = "";
-    for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+    for (let i = 0; i < bytes.length; i++)
+      binary += String.fromCharCode(bytes[i]);
     const b64 = btoa(binary);
     return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
   }
-  
+
   function base64UrlDecode(b64url) {
     let b64 = b64url.replace(/-/g, "+").replace(/_/g, "/");
     const pad = b64.length % 4;
@@ -382,18 +439,18 @@ export const prerender = true;
     for (let i = 0; i < binary.length; i++) out[i] = binary.charCodeAt(i);
     return out;
   }
-  
+
   // PRNG xorshift32 inline
   function makePRNG(seed) {
-    let x = (seed >>> 0) || 123456789;
+    let x = seed >>> 0 || 123456789;
     return function next() {
-      x ^= (x << 13);
-      x ^= (x >>> 17);
-      x ^= (x << 5);
-      return (x >>> 0);
+      x ^= x << 13;
+      x ^= x >>> 17;
+      x ^= x << 5;
+      return x >>> 0;
     };
   }
-  
+
   function seedFromPassword(pw) {
     let h = 2166136261 >>> 0;
     for (let i = 0; i < pw.length; i++) {
@@ -403,7 +460,7 @@ export const prerender = true;
     h = (h ^ (h >>> 16)) >>> 0;
     return h || 123456789;
   }
-  
+
   // Decrypt inline
   function decryptIDs(token, password) {
     const data = base64UrlDecode(token);
@@ -418,26 +475,49 @@ export const prerender = true;
     const json = new TextDecoder().decode(out);
     return JSON.parse(json);
   }
-  
+
   // Price parsing (canonical imports from @utils/price)
 
   // Normaliza talles para variantes (XS..XXXL, GG/XG, 0..5, 40..50)
   function normalizeSize(rawSize) {
     const map = {
-      "0": "XS", "1": "S", "2": "M", "3": "L", "4": "XL", "5": "XXL",
-      "40": "S", "42": "M", "44": "L", "46": "XL", "48": "XXL", "50": "XXXL",
-      "XS": "XS", "P": "S", "S": "S", "M": "M",
-      "G": "L", "GG": "XL", "XG": "XL",
-      "L": "L", "XL": "XL", "XXL": "XXL", "XXXL": "XXXL"
+      "0": "XS",
+      "1": "S",
+      "2": "M",
+      "3": "L",
+      "4": "XL",
+      "5": "XXL",
+      "40": "S",
+      "42": "M",
+      "44": "L",
+      "46": "XL",
+      "48": "XXL",
+      "50": "XXXL",
+      XS: "XS",
+      P: "S",
+      S: "S",
+      M: "M",
+      G: "L",
+      GG: "XL",
+      XG: "XL",
+      L: "L",
+      XL: "XL",
+      XXL: "XXL",
+      XXXL: "XXXL",
     };
-    const token = String(rawSize || "").toUpperCase().replace(/\s+/g, "").trim();
+    const token = String(rawSize || "")
+      .toUpperCase()
+      .replace(/\s+/g, "")
+      .trim();
     if (!token) return null;
     if (map[token]) return map[token];
     const parts = token.split("/");
     for (const part of parts) {
       if (map[part]) return map[part];
     }
-    const matches = token.match(/(XXXL|XXL|XL|XS|S|M|L|50|48|46|44|42|40|[0-5])/g);
+    const matches = token.match(
+      /(XXXL|XXL|XL|XS|S|M|L|50|48|46|44|42|40|[0-5])/g,
+    );
     if (matches) {
       for (const m of matches) {
         if (map[m]) return map[m];
@@ -452,21 +532,31 @@ export const prerender = true;
     if (!rest) return { baseId: base, variantToken: null, colorId: null };
     let variant = null;
     let colorId = null;
-    rest.split("_").map((p) => p.trim()).filter(Boolean).forEach((part) => {
-      const m = part.match(/^c(\d+)$/i);
-      if (m) {
-        const cid = Number(m[1]);
-        if (Number.isFinite(cid)) colorId = cid;
-        return;
-      }
-      if (!variant) variant = part;
-    });
+    rest
+      .split("_")
+      .map((p) => p.trim())
+      .filter(Boolean)
+      .forEach((part) => {
+        const m = part.match(/^c(\d+)$/i);
+        if (m) {
+          const cid = Number(m[1]);
+          if (Number.isFinite(cid)) colorId = cid;
+          return;
+        }
+        if (!variant) variant = part;
+      });
     return { baseId: base, variantToken: variant, colorId };
   }
 
   function isMeasurement(str) {
-    const upper = String(str || "").toUpperCase().trim();
-    return /(\d+\s*[Xx]\s*\d+)/.test(upper) || /(\d+\s*(CM|MM|M|L|LT|PZA|PZAS|UN|U))/i.test(upper) || /^[A-Z]-\d+$/i.test(upper);
+    const upper = String(str || "")
+      .toUpperCase()
+      .trim();
+    return (
+      /(\d+\s*[Xx]\s*\d+)/.test(upper) ||
+      /(\d+\s*(CM|MM|M|L|LT|PZA|PZAS|UN|U))/i.test(upper) ||
+      /^[A-Z]-\d+$/i.test(upper)
+    );
   }
 
   function variantBadgeText(variantToken) {
@@ -480,9 +570,17 @@ export const prerender = true;
   }
 
   function escapeHtml(str) {
-    return String(str ?? "").replace(/[&<>"']/g, (c) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-    }[c]));
+    return String(str ?? "").replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[c],
+    );
   }
 
   function safeImageSrc(value) {
@@ -490,6 +588,36 @@ export const prerender = true;
     if (/["'<>\s\\`]/u.test(raw)) return "";
     if (/^(https?:)?(\/\/|\/)/u.test(raw)) return escapeHtml(raw);
     return "";
+  }
+
+  function colorHexFromName(name) {
+    const normalized = String(name || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+    const colors = {
+      "azul marino": "#001f3f",
+      azul: "#2563eb",
+      celeste: "#7dd3fc",
+      rojo: "#dc2626",
+      bordo: "#7f1d1d",
+      verde: "#16a34a",
+      amarillo: "#eab308",
+      rosa: "#ec4899",
+      fucsia: "#d946ef",
+      violeta: "#7c3aed",
+      morado: "#7c3aed",
+      naranja: "#f97316",
+      blanco: "#ffffff",
+      negro: "#111111",
+      gris: "#6b7280",
+      beige: "#d6c3a5",
+      natural: "#d6c3a5",
+      marron: "#78350f",
+      camel: "#b7791f",
+    };
+    return colors[normalized] || null;
   }
 
   const PEDIDO_IMG_FALLBACK =
@@ -506,13 +634,17 @@ export const prerender = true;
     // references until a real ORDER_KV namespace is provisioned.
     if (orderRef !== null) {
       const el = document.getElementById("result__container");
-      if (el) el.innerHTML = '<p class="pedido-message">Este pedido ya no está disponible; solicita que lo reenvíen.</p>';
+      if (el)
+        el.innerHTML =
+          '<p class="pedido-message">Este pedido ya no está disponible; solicita que lo reenvíen.</p>';
       return;
     }
 
     if (!hasCompactToken && !tokenId) {
       const el = document.getElementById("result__container");
-      if (el) el.innerHTML = '<p class="pedido-message">No hay id de pedido. Generá uno desde el carrito.</p>';
+      if (el)
+        el.innerHTML =
+          '<p class="pedido-message">No hay id de pedido. Generá uno desde el carrito.</p>';
       return;
     }
 
@@ -530,33 +662,48 @@ export const prerender = true;
         // Parse items from decrypted array
         // Soporta payload JSON ({id, cantidad, selectedColorId, selectedColorName, price})
         // y formato legacy "id-cantidad".
-        items = decrypted.map((item) => {
-          const trimmed = String(item || "").trim();
-          if (!trimmed) return null;
-          if (trimmed.startsWith("{")) {
-            try {
-              const parsed = JSON.parse(trimmed);
-              const idVal = String(parsed?.id ?? "").trim();
-              const cantVal = Number(parsed?.cantidad);
-              if (!idVal || Number.isNaN(cantVal)) return null;
-              const cId = Number(parsed?.selectedColorId);
-              const rawPrice = parsed?.price;
-              return {
-                id: idVal,
-                cantidad: cantVal,
-                selectedColorId: Number.isFinite(cId) ? cId : null,
-                selectedColorName: parsed?.selectedColorName ? String(parsed.selectedColorName) : null,
-                price: typeof rawPrice === "string" && rawPrice.trim() ? rawPrice.trim() : null,
-              };
-            } catch { return null; }
-          }
-          const lastDash = trimmed.lastIndexOf("-");
-          if (lastDash === -1) return null;
-          const id = trimmed.slice(0, lastDash).trim();
-          const cant = Number(trimmed.slice(lastDash + 1).trim());
-          if (!id || Number.isNaN(cant)) return null;
-          return { id, cantidad: cant, selectedColorId: null, selectedColorName: null, price: null };
-        }).filter(Boolean);
+        items = decrypted
+          .map((item) => {
+            const trimmed = String(item || "").trim();
+            if (!trimmed) return null;
+            if (trimmed.startsWith("{")) {
+              try {
+                const parsed = JSON.parse(trimmed);
+                const idVal = String(parsed?.id ?? "").trim();
+                const cantVal = Number(parsed?.cantidad);
+                if (!idVal || Number.isNaN(cantVal)) return null;
+                const cId = Number(parsed?.selectedColorId);
+                const rawPrice = parsed?.price;
+                return {
+                  id: idVal,
+                  cantidad: cantVal,
+                  selectedColorId: Number.isFinite(cId) ? cId : null,
+                  selectedColorName: parsed?.selectedColorName
+                    ? String(parsed.selectedColorName)
+                    : null,
+                  price:
+                    typeof rawPrice === "string" && rawPrice.trim()
+                      ? rawPrice.trim()
+                      : null,
+                };
+              } catch {
+                return null;
+              }
+            }
+            const lastDash = trimmed.lastIndexOf("-");
+            if (lastDash === -1) return null;
+            const id = trimmed.slice(0, lastDash).trim();
+            const cant = Number(trimmed.slice(lastDash + 1).trim());
+            if (!id || Number.isNaN(cant)) return null;
+            return {
+              id,
+              cantidad: cant,
+              selectedColorId: null,
+              selectedColorName: null,
+              price: null,
+            };
+          })
+          .filter(Boolean);
       }
 
       if (items.length === 0) throw new Error("El pedido no tiene productos");
@@ -565,8 +712,14 @@ export const prerender = true;
       // Degradado: si el archivo no existe o falla, el render continúa con los datos del token.
       let productos = [];
       try {
-        const runtimeBasePath = (document.documentElement.dataset.basePath || "").replace(/\/+$/, "");
-        const urls = [`${runtimeBasePath}/productos.json`, "/productos.json", "productos.json"];
+        const runtimeBasePath = (
+          document.documentElement.dataset.basePath || ""
+        ).replace(/\/+$/, "");
+        const urls = [
+          `${runtimeBasePath}/productos.json`,
+          "/productos.json",
+          "productos.json",
+        ];
         for (const url of urls) {
           try {
             const res = await fetch(url);
@@ -577,34 +730,45 @@ export const prerender = true;
                 break;
               }
             }
-          } catch (e) { }
+          } catch (e) {}
         }
-      } catch (e) { /* enriquecimiento opcional: nunca rompe el render */ }
+      } catch (e) {
+        /* enriquecimiento opcional: nunca rompe el render */
+      }
 
       // Build pedido list - busca por baseId (sin variante)
       const foundItems = items.map((item) => {
         const parsed = parseTokenId(item.id);
         const prod = productos.find((p) => p.id === parsed.baseId);
-        const colorId = item.selectedColorId !== null ? item.selectedColorId : parsed.colorId;
+        const colorId =
+          item.selectedColorId !== null ? item.selectedColorId : parsed.colorId;
         let colorName = item.selectedColorName;
         let colorHex = null;
-        if (prod && Array.isArray(prod.colors) && colorId !== null && colorId !== undefined) {
-          const c = prod.colors.find((c) => c.id === colorId);
+        if (
+          prod &&
+          Array.isArray(prod.colors) &&
+          colorId !== null &&
+          colorId !== undefined
+        ) {
+          const c = prod.colors.find((c) => String(c.id) === String(colorId));
           if (c) {
             if (!colorName) colorName = c.name;
             colorHex = c.hex || null;
           }
         }
+        if (!colorHex && colorName) colorHex = colorHexFromName(colorName);
 
         // Precio: prioridad al token (fuente única de verdad). Fallback al catálogo.
         let currentUnitPrice = null;
         if (item.price !== null && item.price !== undefined) {
           const tokenPrice = parsePrice(item.price);
-          if (Number.isFinite(tokenPrice) && tokenPrice > 0) currentUnitPrice = tokenPrice;
+          if (Number.isFinite(tokenPrice) && tokenPrice > 0)
+            currentUnitPrice = tokenPrice;
         }
         if (currentUnitPrice === null && prod) {
           const catalogPrice = parsePrice(prod.price);
-          if (Number.isFinite(catalogPrice) && catalogPrice > 0) currentUnitPrice = catalogPrice;
+          if (Number.isFinite(catalogPrice) && catalogPrice > 0)
+            currentUnitPrice = catalogPrice;
         }
 
         return {
@@ -627,52 +791,70 @@ export const prerender = true;
       if (!container) return;
 
       if (pedidos.length === 0) {
-        container.innerHTML = '<p class="pedido-message">No se encontraron los productos del pedido en el catálogo.</p>';
+        container.innerHTML =
+          '<p class="pedido-message">No se encontraron los productos del pedido en el catálogo.</p>';
         return;
       }
 
       const pricedItems = pedidos.filter((p) => !p.priceUnavailable);
-      const priceMissingCount = pedidos.filter((p) => p.priceUnavailable).length;
+      const priceMissingCount = pedidos.filter(
+        (p) => p.priceUnavailable,
+      ).length;
       const allUnavailable = pricedItems.length === 0;
       const partialPrices = priceMissingCount > 0 && pricedItems.length > 0;
       // Total: solo suma items con precio válido. Si NINGUNO lo tiene, se muestra "—", nunca $0.
-      const total = pricedItems.reduce((s, p) => s + p.currentUnitPrice * p.cantidad, 0);
+      const total = pricedItems.reduce(
+        (s, p) => s + p.currentUnitPrice * p.cantidad,
+        0,
+      );
       const totalValueHtml = allUnavailable
         ? `<span title="Precio no disponible">—</span>`
         : `<span>$<span>${formatPrice(total)}</span></span>`;
       const totalNoteHtml = partialPrices
         ? `<small class="pedido-total-note">(precios parciales: ${priceMissingCount} producto${priceMissingCount > 1 ? "s" : ""} sin precio)</small>`
         : "";
-      const warningHtml = priceMissingCount > 0
-        ? `<p style="color:#b42318;font-size:0.85rem;font-weight:600;margin:0 0 12px;padding:10px 16px;background:#fff2f0;border-radius:8px;">${priceMissingCount} producto${priceMissingCount > 1 ? "s" : ""} del pedido no tiene precio disponible (el catálogo no respondió).</p>`
-        : "";
-      const initialBadge = pedidos.length <= 5 ? "Verificando…" : "Sin verificar";
-      const itemsHtml = pedidos.map((p, i) => {
-        const img = Array.isArray(p.img) ? p.img[0] : p.img;
-        const badgeClass = p.variantBadgeText && p.variantBadgeText.startsWith("Talle ") ? "pedido-size-badge" : "pedido-variant-badge";
-        const variantBadge = p.variantBadgeText ? `<span class="${badgeClass}">${escapeHtml(p.variantBadgeText)}</span>` : "";
-        const hasColor = p.selectedColorName || p.selectedColorHex;
-        const colorBadge = hasColor
-          ? `<span class="pedido-color-badge"><span class="pedido-color-swatch" style="background:${escapeHtml(p.selectedColorHex || '#cccccc')}"></span>${escapeHtml(p.selectedColorName || ("ID " + p.selectedColorId))}</span>`
+      const warningHtml =
+        priceMissingCount > 0
+          ? `<p style="color:#b42318;font-size:0.85rem;font-weight:600;margin:0 0 12px;padding:10px 16px;background:#fff2f0;border-radius:8px;">${priceMissingCount} producto${priceMissingCount > 1 ? "s" : ""} del pedido no tiene precio disponible (el catálogo no respondió).</p>`
           : "";
-        const priceHtml = p.priceUnavailable
-          ? `<span class="pedido-item-price">Precio no disponible</span>`
-          : `<span class="pedido-item-price">$<span>${formatPrice(p.currentUnitPrice)}</span> c/u</span>`;
-        const subtotalHtml = p.priceUnavailable
-          ? `<span class="pedido-subtotal">—</span>`
-          : `<span class="pedido-subtotal">$<span>${formatPrice(p.currentUnitPrice * p.cantidad)}</span></span>`;
-        const itemName = p.name || p.baseId || p.requestedId;
-        return `<div class="pedido-item" data-row-key="${i}" data-cantidad="${p.cantidad}" data-unit-price="${p.currentUnitPrice ?? ""}" data-base-id="${escapeHtml(p.baseId)}" data-provider-link="${escapeHtml(p.providerLink || "")}"><img src="${safeImageSrc(img) || PEDIDO_IMG_FALLBACK}" alt="${escapeHtml(itemName)}" loading="lazy" /><div class="pedido-item-info"><span class="pedido-item-name">${escapeHtml(itemName)}</span>${variantBadge}${colorBadge}${priceHtml}<div class="pedido-check-row"><button type="button" class="pedido-check-btn">Verificar stock</button><span class="pedido-stock-badge pending">${initialBadge}</span></div><p class="pedido-check-status"></p></div><div class="pedido-qty-wrap"><span class="pedido-qty">${p.cantidad}</span></div>${subtotalHtml}</div>`;
-      }).join("");
+      const initialBadge =
+        pedidos.length <= 5 ? "Verificando…" : "Sin verificar";
+      const itemsHtml = pedidos
+        .map((p, i) => {
+          const img = Array.isArray(p.img) ? p.img[0] : p.img;
+          const badgeClass =
+            p.variantBadgeText && p.variantBadgeText.startsWith("Talle ")
+              ? "pedido-size-badge"
+              : "pedido-variant-badge";
+          const variantBadge = p.variantBadgeText
+            ? `<span class="${badgeClass}">${escapeHtml(p.variantBadgeText)}</span>`
+            : "";
+          const hasColor = p.selectedColorName || p.selectedColorHex;
+          const colorBadge = hasColor
+            ? `<span class="pedido-color-badge"><span class="pedido-color-swatch" style="background:${escapeHtml(p.selectedColorHex || "#cccccc")}"></span>${escapeHtml(p.selectedColorName || "ID " + p.selectedColorId)}</span>`
+            : "";
+          const priceHtml = p.priceUnavailable
+            ? `<span class="pedido-item-price">Precio no disponible</span>`
+            : `<span class="pedido-item-price">$<span>${formatPrice(p.currentUnitPrice)}</span> c/u</span>`;
+          const subtotalHtml = p.priceUnavailable
+            ? `<span class="pedido-subtotal">—</span>`
+            : `<span class="pedido-subtotal">$<span>${formatPrice(p.currentUnitPrice * p.cantidad)}</span></span>`;
+          const itemName = p.name || p.baseId || p.requestedId;
+          return `<div class="pedido-item" data-row-key="${i}" data-cantidad="${p.cantidad}" data-unit-price="${p.currentUnitPrice ?? ""}" data-base-id="${escapeHtml(p.baseId)}" data-provider-link="${escapeHtml(p.providerLink || "")}"><img src="${safeImageSrc(img) || PEDIDO_IMG_FALLBACK}" alt="${escapeHtml(itemName)}" loading="lazy" /><div class="pedido-item-info"><span class="pedido-item-name">${escapeHtml(itemName)}</span>${variantBadge}${colorBadge}${priceHtml}<div class="pedido-check-row"><button type="button" class="pedido-check-btn">Verificar stock</button><span class="pedido-stock-badge pending">${initialBadge}</span></div><p class="pedido-check-status"></p></div><div class="pedido-qty-wrap"><span class="pedido-qty">${p.cantidad}</span></div>${subtotalHtml}</div>`;
+        })
+        .join("");
 
-      const verifyAllHtml = pedidos.length > 5
-        ? `<div style="margin-top:12px;text-align:right"><button type="button" id="pedidoVerifyAll" class="pedido-check-btn">Verificar todo</button></div>`
-        : "";
+      const verifyAllHtml =
+        pedidos.length > 5
+          ? `<div style="margin-top:12px;text-align:right"><button type="button" id="pedidoVerifyAll" class="pedido-check-btn">Verificar todo</button></div>`
+          : "";
 
       container.innerHTML = `${warningHtml}<div class="pedido-list"><div class="pedido-list-header"><span></span><span>Producto</span><span style="text-align:center">Cant.</span><span style="text-align:right">Subtotal</span></div>${itemsHtml}</div><div class="pedido-total-box"><div class="pedido-total-inner"><div class="pedido-total-row"><span>${pedidos.length} productos</span><span>${pedidos.reduce((s, p) => s + p.cantidad, 0)} unidades</span></div><div class="pedido-total-row main"><span>Total</span>${totalValueHtml}</div>${totalNoteHtml}</div></div>${verifyAllHtml}`;
 
       // --- Verificación de stock por proveedor ---
-      const itemEls = Array.from(container.querySelectorAll<HTMLElement>(".pedido-item"));
+      const itemEls = Array.from(
+        container.querySelectorAll<HTMLElement>(".pedido-item"),
+      );
 
       // Resolver links de proveedor desde Supabase (anon, client-side).
       // Si falla o no hay link para Kai/Nuvex → badge pending, nunca bloquear.
@@ -693,23 +875,37 @@ export const prerender = true;
             .select("id, provider_link")
             .in("id", uniqueIds);
           if (!error) return rowsToMap(data);
-        } catch { }
+        } catch {}
         try {
-          const supabaseUrl = ((import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.SUPABASE_URL || "") + "").replace(/\/+$/, "");
-          const anonKey = (import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_ANON_KEY || "") + "";
+          const supabaseUrl = (
+            (import.meta.env.PUBLIC_SUPABASE_URL ||
+              import.meta.env.SUPABASE_URL ||
+              "") + ""
+          ).replace(/\/+$/, "");
+          const anonKey =
+            (import.meta.env.PUBLIC_SUPABASE_ANON_KEY ||
+              import.meta.env.SUPABASE_ANON_KEY ||
+              "") + "";
           const query = new URLSearchParams({
             select: "id,provider_link",
             id: `in.(${uniqueIds.join(",")})`,
           });
-          const response = await fetch(`${supabaseUrl}/rest/v1/products?${query.toString()}`, {
-            headers: anonKey ? { apikey: anonKey, Authorization: `Bearer ${anonKey}` } : undefined,
-          });
+          const response = await fetch(
+            `${supabaseUrl}/rest/v1/products?${query.toString()}`,
+            {
+              headers: anonKey
+                ? { apikey: anonKey, Authorization: `Bearer ${anonKey}` }
+                : undefined,
+            },
+          );
           if (response.ok) return rowsToMap(await response.json());
-        } catch { }
+        } catch {}
         return new Map();
       };
 
-      const linkMap = await resolveProviderLinks(itemEls.map((el) => el.dataset.baseId || ""));
+      const linkMap = await resolveProviderLinks(
+        itemEls.map((el) => el.dataset.baseId || ""),
+      );
       itemEls.forEach((el) => {
         const baseId = el.dataset.baseId || "";
         const link = linkMap.get(baseId) || el.dataset.providerLink || "";
@@ -730,7 +926,9 @@ export const prerender = true;
         };
         const setStatus = (text, tone) => {
           statusEl.textContent = text;
-          statusEl.className = tone ? `pedido-check-status ${tone}` : "pedido-check-status";
+          statusEl.className = tone
+            ? `pedido-check-status ${tone}`
+            : "pedido-check-status";
         };
 
         const provider = providerFrom(baseId, providerLink);
@@ -774,7 +972,10 @@ export const prerender = true;
           }
         } catch {
           setBadge("pending", "Sin verificación");
-          setStatus("No se pudo verificar ahora. Se mantiene la información del catálogo.", "");
+          setStatus(
+            "No se pudo verificar ahora. Se mantiene la información del catálogo.",
+            "",
+          );
         } finally {
           btnEl.disabled = false;
         }
@@ -782,7 +983,9 @@ export const prerender = true;
 
       // Botón manual por item (siempre disponible para re-verificar)
       itemEls.forEach((el) => {
-        el.querySelector(".pedido-check-btn")?.addEventListener("click", () => verifyItemStock(el));
+        el.querySelector(".pedido-check-btn")?.addEventListener("click", () =>
+          verifyItemStock(el),
+        );
       });
 
       // Auto-check secuencial solo si hay ≤5 items; si hay más, botón global "Verificar todo"
@@ -807,7 +1010,11 @@ export const prerender = true;
       }
     } catch (err) {
       const el = document.getElementById("result__container");
-      if (el) el.innerHTML = '<p class="pedido-message">Error: ' + escapeHtml(err.message) + '</p>';
+      if (el)
+        el.innerHTML =
+          '<p class="pedido-message">Error: ' +
+          escapeHtml(err.message) +
+          "</p>";
     }
   });
 </script>

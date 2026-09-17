@@ -9,7 +9,8 @@ const { default: instagramSVG } = await import("@assets/instagram.svg?raw");
 const { default: whatsappSVG } = await import("@assets/whatsapp.svg?raw");
 const { default: mercadoPagoSVG } = await import("@assets/mercadoPago.svg?raw");
 const { default: bankSVG } = await import("@assets/bank.svg?raw");
-const globeSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
+const globeSVG =
+  '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
 
 interface Props {
   categories: CategoryList[];
@@ -25,7 +26,23 @@ const { categories, basePath = "" } = Astro.props;
 
       <div class="detail-item">
         <div class="icon-wrapper mobile">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="contact-svg"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="contact-svg"
+            ><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line
+              x1="12"
+              y1="18"
+              x2="12.01"
+              y2="18"></line></svg
+          >
         </div>
         <div class="detail-text">
           <p>Telefono: +598 91 361 706</p>
@@ -35,10 +52,26 @@ const { categories, basePath = "" } = Astro.props;
 
       <div class="detail-item">
         <div class="icon-wrapper pin">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="contact-svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="contact-svg"
+            ><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+            ></path><circle cx="12" cy="10" r="3"></circle></svg
+          >
         </div>
         <div class="detail-text">
-          <span>Dirección: Baltasar Brum 1154, 60000 Paysandú, Departamento de Paysandú, Uruguay</span>
+          <span
+            >Dirección: Baltasar Brum 1154, 60000 Paysandú, Departamento de
+            Paysandú, Uruguay</span
+          >
         </div>
       </div>
     </div>
@@ -46,7 +79,13 @@ const { categories, basePath = "" } = Astro.props;
     <hr class="separator" />
 
     <div class="social_medias">
-      <img src={logo.src} alt="logo blanco" width="200" height="100" class="logo" />
+      <img
+        src={logo.src}
+        alt="logo blanco"
+        width="200"
+        height="100"
+        class="logo"
+      />
 
       <ul class="social-icons-list">
         <li>
@@ -80,10 +119,7 @@ const { categories, basePath = "" } = Astro.props;
           </a>
         </li>
         <li>
-          <a
-            href="#"
-            title="Website"
-          >
+          <a href="#" title="Website">
             <Fragment set:html={globeSVG} />
           </a>
         </li>
@@ -94,9 +130,15 @@ const { categories, basePath = "" } = Astro.props;
   <div class="footerContainer desktop">
     <div class="col1">
       <a href={withBasePath("/", basePath)}>
-        <img class="logo" src={logo.src} alt="logo blanco" width="200" height="100" />
+        <img
+          class="logo"
+          src={logo.src}
+          alt="logo blanco"
+          width="200"
+          height="100"
+        />
       </a>
-      <p>Bibi's - Donde cada </p>
+      <p>Bibi's - Donde cada</p>
       <p>elección tiene alma</p>
     </div>
 
@@ -109,14 +151,12 @@ const { categories, basePath = "" } = Astro.props;
             categories
               .map((cat) => (
                 <li>
-                  <a
-                    href={withBasePath(`/categories/${cat.name}`, basePath)}
-                  >
+                  <a href={withBasePath(`/categories/${cat.name}`, basePath)}>
                     {cat.name}
                   </a>
                 </li>
               ))
-              .slice(0, 5)
+              .slice(0, 6)
         }
       </ul>
     </ul>
@@ -166,10 +206,7 @@ const { categories, basePath = "" } = Astro.props;
           </a>
         </li>
         <li>
-          <a
-            href="#"
-            title="Website"
-          >
+          <a href="#" title="Website">
             <Fragment set:html={globeSVG} />
           </a>
         </li>
@@ -362,7 +399,9 @@ const { categories, basePath = "" } = Astro.props;
     border: 1.5px solid #ffffff !important;
     color: #ffffff;
     background: transparent;
-    transition: background-color 0.2s, transform 0.2s;
+    transition:
+      background-color 0.2s,
+      transform 0.2s;
   }
 
   .footerContainer.mobile .social-icons-list li a:hover {
@@ -400,12 +439,14 @@ const { categories, basePath = "" } = Astro.props;
   .footerContainer.desktop {
     display: none;
 
-    width: 100%;
-    max-width: var(--max-width-container);
+    width: calc(100% - 2rem);
+    max-width: 1130px;
     margin: 0 auto;
-    padding: 10px 0;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 2rem;
+    padding: 10px 1rem;
+    box-sizing: border-box;
+    grid-template-columns: 1.35fr 0.8fr 1fr 1fr;
+    column-gap: clamp(1rem, 3vw, 2rem);
+    align-items: start;
   }
 
   .footerContainer.desktop > * {
@@ -416,13 +457,13 @@ const { categories, basePath = "" } = Astro.props;
   .col1 p {
     text-wrap: wrap;
     text-align: center;
-    width: 100%;
+    min-width: 0;
   }
 
   .col1 {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 0.2rem;
   }
 
@@ -434,7 +475,17 @@ const { categories, basePath = "" } = Astro.props;
   }
 
   .cats-list li {
+    flex: 0 0 1.5rem;
     margin-bottom: 0.2rem;
+  }
+
+  .cats-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: 5.1rem;
+    column-gap: 1rem;
   }
 
   .payments-list {
@@ -449,16 +500,27 @@ const { categories, basePath = "" } = Astro.props;
     gap: 0.5rem;
     align-items: flex-start;
     justify-content: flex-start;
+    text-align: left;
+    box-sizing: border-box;
+    padding-left: clamp(0.5rem, 1.5vw, 1rem);
+  }
+
+  .col3 {
+    box-sizing: border-box;
+    padding-left: 0.5rem;
   }
 
   @media screen and (min-width: 1000px) {
-    .footerContainer.desktop { display: grid; }
+    .footerContainer.desktop {
+      display: grid;
+    }
   }
 </style>
 
 <style is:global>
   /* Achicar redes sociales globales del footer */
-  .social-icons-list svg, .payments-list svg {
+  .social-icons-list svg,
+  .payments-list svg {
     width: 22px;
     height: 22px;
   }

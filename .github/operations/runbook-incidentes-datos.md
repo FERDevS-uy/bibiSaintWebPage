@@ -17,18 +17,18 @@ Aplicar cuando falle scraping, falte catalogo o exista inconsistencia grave de p
 ## Paso 1 - Diagnostico rapido
 
 - [ ] Revisar ultimo workflow de deploy y sus logs.
-- [ ] Validar integridad del CSV activo.
+- [ ] Validar integridad del read model activo.
 - [ ] Revisar cantidad total de productos vs baseline.
 - [ ] Revisar cobertura por proveedor.
-- [ ] Verificar que productos.json responde y contiene datos esperados.
+- [ ] Verificar que las APIs públicas de catálogo responden y contienen datos esperados.
 
 ## Paso 2 - Decision operativa
 
-## Si el CSV nuevo esta corrupto o incompleto
+## Si la sincronización al read model está corrupta o incompleta
 
-- [ ] No usar CSV nuevo.
-- [ ] Restaurar snapshot previo.
-- [ ] Rebuild + deploy con snapshot restaurado.
+- [ ] No promover datos inconsistentes.
+- [ ] Restaurar el snapshot previo del read model.
+- [ ] Rebuild + deploy con el read model restaurado.
 
 ## Si el CSV esta bien pero hay error de app
 

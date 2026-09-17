@@ -1,182 +1,43 @@
-# Bibi Saint — Harness de Orquestación v4
+# Bibi Saint — Harness local
 
-Objetivo: **calidad con mínimo coste de contexto y mínimo número de subagentes**.
+Objetivo: mantener una capa local simple, sin contratos de pipeline legacy.
 
-## Regla principal
+## Rol del directorio
 
-No existe una ruta obligatoria única. El `coordinator` selecciona la **ruta mínima suficiente**.
+- Este repo aporta skills y documentacion de dominio.
+- El runtime de agentes/perfiles/modelos se resuelve en la capa global.
 
-```text
-PRE_DIAGNOSED: implementer → qa → reviewer
-FAST_KNOWN:     implementer → qa
-FAST_LOCATE:    locator → implementer → qa
-NORMAL:         locator → diagnostic → implementer → qa → reviewer
-COMPLEX:        locator → diagnostic → expert → implementer → qa → reviewer
-```
+## Fases SDD de Gentle AI
 
-Ramas:
+Flujo operativo: `preflight/init → explore → research` (opcional) `→ propose → spec + design → tasks → apply → verify → archive`.
 
-```text
-DB/RLS:      locator → diagnostic → dba → implementer → qa → reviewer
-Scrapers:    locator → diagnostic → provider-scraper → implementer → qa → reviewer
-Security:    security (read-only)
-```
+- `preflight/init`: prepara el contexto e inicializa el cambio.
+- `explore`: aclara el problema, el alcance y las alternativas.
+- `research` (opcional): reúne evidencia técnica o externa cuando hace falta.
+- `propose`: formaliza la intención, el alcance y el enfoque.
+- `spec + design`: define requisitos verificables y la solución técnica.
+- `tasks`: descompone la solución en tareas ejecutables.
+- `apply`: implementa las tareas aprobadas.
+- `verify`: comprueba la implementación contra requisitos y evidencia.
+- `archive`: sincroniza y cierra el cambio completado.
 
-Un contrato PRE_DIAGNOSED completo puede saltar locator/diagnostic incluso en una rama especializada; en ese caso conservar `qa → reviewer` si no es trivial.
+El dispatcher/status nativo es la autoridad del estado y del artifact store; los agentes no deben saltarse fases ni inferir el estado a partir de la prosa.
 
-## Presupuestos reales
+## Regla de ejecucion
 
-Los límites efectivos viven en `opencode.json` mediante `steps`.
+1. Hacer el cambio minimo necesario.
+2. Verificar con comandos proporcionales al riesgo.
+3. Preservar worktree sucio no relacionado.
+4. No usar operaciones destructivas de git.
 
-| Agente | Steps | Propósito |
-|---|---:|---|
-| coordinator | 5 | clasificar/rutear |
-| locator | 4 | ubicar targets |
-| diagnostic | 7 | causa + contrato |
-| expert | 8 | resolver escalación |
-| implementer | 14 | editar + verificar |
-| qa | 7 | evidencia mecánica |
-| reviewer | 6 | firma semántica final |
-| dba | 10 | DB excepcional |
-| security | 8 | auditoría |
-| provider-scraper | 9 | proveedor excepcional |
+## Control de seguridad y git
 
-Si un agente no progresa dentro del presupuesto, termina o escala. Nunca exploración indefinida.
+- Sin secretos en commits ni logs.
+- `git commit` y `git push` solo por pedido explicito del usuario.
+- No tocar configuraciones globales de OpenCode/Gentle desde esta capa.
 
-## Contratos
+## Verificacion sugerida
 
-### DIRECT EXECUTION CONTRACT
-
-Para FAST_KNOWN / FAST_LOCATE:
-
-```text
-DIRECT EXECUTION CONTRACT
-Goal:
-Targets:
-Exact requested change:
-Do not touch:
-Acceptance criteria:
-Verification:
-Preserve worktree: YES | NO
-Reviewer required: YES | NO
-```
-
-### LOCATOR HANDOFF
-
-```text
-LOCATOR HANDOFF
-Status: FOUND | NOT_FOUND | BLOCKED
-Targets:
-- path:lines — symbol — motivo breve
-Worktree conflicts:
-Constraints:
-Unknowns:
-Stop reason:
-```
-
-### DIAGNOSTIC HANDOFF
-
-```text
-DIAGNOSTIC HANDOFF
-Decision: DIRECT | ESCALATE_TO_EXPERT
-Goal:
-Cause:
-Evidence:
-Confidence: HIGH | MEDIUM | LOW
-Risk: LOW | MEDIUM | HIGH
-Regression surface:
-Authorized files:
-Minimal change:
-Do not touch:
-Acceptance criteria:
-Verification:
-Reviewer required: YES | NO
-Escalation reason: none | ...
-```
-
-### EXPERT IMPLEMENTATION CONTRACT
-
-Ver `agents/expert.md`.
-
-### IMPLEMENTATION REPORT
-
-```text
-IMPLEMENTATION REPORT
-Status: DONE | BLOCKED | FAILED
-Changed files:
-Change summary:
-Verification:
-Worktree preserved: YES | NO | N/A
-Contract deviations: none | ...
-Remaining risk: none | ...
-```
-
-### QA REPORT
-
-```text
-QA REPORT
-Verdict: PASS | FAIL | BLOCKED
-Write set: OK | VIOLATION
-Criteria:
-Commands:
-UI evidence: N/A | details
-Failures: none | ...
-Next action: DONE | FIX_REQUIRED | BLOCKED_SETUP
-```
-
-### REVIEW REPORT
-
-```text
-REVIEW REPORT
-Verdict: APPROVE | BLOCK | BLOCKED_EVIDENCE
-Contract coverage: COMPLETE | INCOMPLETE
-Findings:
-QA evidence accepted: YES | NO + reason
-Next action: DONE | IMPLEMENTER_FIX | NEED_EVIDENCE
-```
-
-## Cuándo se puede saltar fases
-
-- Si el usuario ya entrega diagnóstico + write set + acceptance + verify → **no Locator ni Diagnostic**.
-- Si el cambio es mecánico y el target es conocido → **no Locator ni Diagnostic ni Reviewer**.
-- Si solo falta localizar un cambio mecánico → **Locator sí; Diagnostic no**.
-- Si la causa es incierta → Diagnostic obligatorio.
-- Expert solo por `ESCALATE_TO_EXPERT`.
-- Reviewer obligatorio en NORMAL/COMPLEX y cambios no triviales PRE_DIAGNOSED.
-
-## QA proporcional
-
-QA no ejecuta una matriz gigante por defecto.
-
-- No visual: write set + criterios + comandos especificados.
-- Visual: viewport/screenshot/interacción cuando corresponda.
-- SSR/datos/fallbacks: solo modos enumerados por el contrato.
-- Build completo solo cuando el contrato lo requiere o el cambio realmente lo justifica.
-
-## Control de ciclos
-
-1. Un solo agente edita a la vez.
-2. QA/Reviewer son read-only.
-3. Máximo 2 ciclos `implementer → qa/reviewer`.
-4. El segundo bloqueo escala al usuario con evidencia.
-5. Retry sin evidencia nueva: prohibido.
-
-## Eficiencia de contexto
-
-- No repetir el prompt entero en cada handoff.
-- Locator: máximo 200 palabras.
-- Diagnostic: ~350 palabras salvo necesidad real.
-- QA: ~300 palabras.
-- Reviewer: máximo 3 findings.
-- Pasar paths/símbolos/criterios, no grandes dumps de código.
-- El reviewer inspecciona diff/targets; no vuelve a investigar el proyecto.
-
-## Git / worktree
-
-- Preservar cambios preexistentes cuando el usuario lo pida o el worktree esté sucio.
-- Sin commit salvo autorización explícita.
-- Sin push salvo orden explícita e inequívoca.
-- Nunca force push/reset hard/clean destructivo.
-
-**Version**: 4.0
-**Effective**: 2026-09-03
+- Cambios de docs/config local: verificar consistencia de rutas y referencias.
+- Cambios de app: ejecutar tests/comandos relevantes en `code/`.
+- Cambios de proveedores o DB: aplicar checklist de skills `bibi-providers` y `bibi-database`.

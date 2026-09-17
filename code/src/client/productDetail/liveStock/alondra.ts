@@ -13,7 +13,7 @@ export async function fetchAlondraLive(productId: string): Promise<ProviderResul
     };
   }
 
-  const endpoint = `https://alondra-ecommerce-be.sitios.uy/api/products/${encodeURIComponent(alondraId)}`;
+  const endpoint = `/api/alondra/product?productId=${encodeURIComponent(alondraId)}`;
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 7000);
 

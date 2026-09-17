@@ -1,14 +1,12 @@
 ---
 // Búsqueda SSR (Fase 5 — scalable-catalog-read-pipeline).
 // Primera carga con resultados server-side (no vacía): la facade resuelve la
-// ruta (readmodel RPC | legacy loadProducts) y los items se pasan a
+// read model RPC y los items se pasan a
 // ListarProductos como `initialItems`, que los renderiza en el HTML inicial y
 // NO re-fetcha en el primer mount (evita doble fetch). El cliente continúa con
 // su lógica actual (searchurlchange → fetch incremental).
 import Layout from "@layouts/Layout.astro";
 import ListarProductos from "@components/ListarProductos.jsx";
-import { searchProducts } from "@server/catalog/facade";
-import { catalogReadEnv } from "@server/catalog/http";
 import { runCatalogQuery } from "@server/catalog/queries";
 import { getSupabase } from "@server/supabase";
 import { createCatalogQueryTelemetry } from "@server/catalog/queryTelemetry";
@@ -26,17 +24,12 @@ let initialVersion: string | null = null;
 let initialTotal: number | null = null;
 if (q) {
   try {
-    const env = catalogReadEnv(
-      (Astro.locals as { runtime?: { env?: Record<string, string | undefined> } })
-        .runtime?.env,
+    const result = await runCatalogQuery(
+      { query: q, sort, cursor, pageSize: PAGE_SIZE },
+      {},
+      getSupabase(),
+      { telemetry },
     );
-    const result = env.CATALOG_READ_MODEL === "true"
-       ? await runCatalogQuery(
-         { query: q, sort, cursor, pageSize: PAGE_SIZE },
-         getSupabase(),
-         { telemetry },
-       )
-       : await searchProducts(q, PAGE_SIZE, env, getSupabase, { telemetry });
     initialItems = result.items.map((p) => ({
       id: p.id,
       name: p.name,

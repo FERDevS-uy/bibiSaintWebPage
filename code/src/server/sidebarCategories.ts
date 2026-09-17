@@ -3,33 +3,52 @@ import type { subCategory } from "../types/categoryList";
 import { toTitleCase } from "../utils/categoryNormalization";
 import { fetchCategoryCounts } from "./products";
 import { recordCatalogRuntimeEvent } from "@server/catalog/queryTelemetry";
+import {
+  getCatalogKvCache,
+  putCatalogKvCache,
+  resolveCatalogVersion,
+  type CatalogCacheEnv,
+} from "@server/catalog/edgeCache";
 
 const SIDEBAR_CACHE_TTL_MS = 30_000;
 const sidebarCache = new Map<string, { expiresAt: number; value: subCategory[] }>();
 const HEADER_CACHE_TTL_MS = 30_000;
-let headerCache: { expiresAt: number; value: Category[] } | null = null;
-let headerInFlight: Promise<Category[]> | null = null;
+let headerCache: { version: string; expiresAt: number; value: Category[] } | null = null;
+let headerInFlight: { version: string; value: Promise<Category[]> } | null = null;
 
-async function rpcHeaderCategories(): Promise<Category[]> {
+interface NavigationCacheOptions {
+  kv?: CatalogCacheEnv["CATALOG_KV"];
+}
+
+async function rpcHeaderCategories(options?: NavigationCacheOptions): Promise<Category[]> {
+  const version = await resolveCatalogVersion({ kv: options?.kv });
   const now = Date.now();
-  if (headerCache && headerCache.expiresAt > now) {
+  if (headerCache && headerCache.version === version && headerCache.expiresAt > now) {
     return headerCache.value;
   }
-  if (headerInFlight) return headerInFlight;
+  if (headerInFlight?.version === version) return headerInFlight.value;
 
-  headerInFlight = (async () => {
+  const value = (async () => {
+    const cached = await getCatalogKvCache<Category[]>(options?.kv, "navigation", version);
+    if (cached) {
+      headerCache = { version, value: cached, expiresAt: Date.now() + HEADER_CACHE_TTL_MS };
+      return cached;
+    }
     const categories = transformRpcCategories(await fetchCategoryCounts());
     headerCache = {
+      version,
       value: categories,
       expiresAt: Date.now() + HEADER_CACHE_TTL_MS,
     };
+    await putCatalogKvCache(options?.kv, "navigation", version, categories);
     return categories;
   })();
+  headerInFlight = { version, value };
 
   try {
-    return await headerInFlight;
+    return await value;
   } finally {
-    headerInFlight = null;
+    if (headerInFlight?.value === value) headerInFlight = null;
   }
 }
 
@@ -39,11 +58,15 @@ async function rpcHeaderCategories(): Promise<Category[]> {
  * transformada para conservar la jerarquía visual de Ropa. A failure returns
  * an empty, non-cached navigation state instead of scanning CSV.
  */
-export async function getSidebarCategories(categoryFather: string): Promise<subCategory[]> {
+export async function getSidebarCategories(
+  categoryFather: string,
+  options?: NavigationCacheOptions,
+): Promise<subCategory[]> {
   const normalized = (categoryFather ?? "").trim();
   if (!normalized) return [];
 
-  const key = normalized.toLowerCase();
+  const version = await resolveCatalogVersion({ kv: options?.kv });
+  const key = `${version}:${normalized.toLowerCase()}`;
   const now = Date.now();
   const cached = sidebarCache.get(key);
   if (cached && cached.expiresAt > now) {
@@ -53,8 +76,8 @@ export async function getSidebarCategories(categoryFather: string): Promise<subC
   // La RPC devuelve conteos agregados y el transform conserva las rutas visuales
   // de Ropa ("Hombre - Buzos", etc.) sin volver a cargar todo el catálogo.
   try {
-    const categories = await rpcHeaderCategories();
-    const category = categories.find((c) => c.name.toLowerCase() === key);
+    const categories = await rpcHeaderCategories(options);
+    const category = categories.find((c) => c.name.toLowerCase() === normalized.toLowerCase());
     if (category) {
       const value = category.subcategories
         .map((s) => ({ ...s, name: toTitleCase(s.name.trim()) }))
@@ -89,14 +112,15 @@ export async function getSidebarCategories(categoryFather: string): Promise<subC
  * prefijos "Mujer - X"/"Hombre - X", Tecno sin inferencia regex).
  * Si Supabase falla devuelve vacío para no descargar el catálogo completo en SSR.
  */
-export async function getHeaderCategories(): Promise<Category[]> {
+export async function getHeaderCategories(options?: NavigationCacheOptions): Promise<Category[]> {
   const now = Date.now();
-  if (headerCache && headerCache.expiresAt > now) {
+  const version = await resolveCatalogVersion({ kv: options?.kv });
+  if (headerCache && headerCache.version === version && headerCache.expiresAt > now) {
     return headerCache.value;
   }
 
   try {
-    const categories = await rpcHeaderCategories();
+    const categories = await rpcHeaderCategories(options);
     if (categories.length > 0) return categories;
     recordCatalogRuntimeEvent({
       event: "catalog_degraded",
