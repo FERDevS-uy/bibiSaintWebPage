@@ -4,7 +4,7 @@ Usar esta lista dentro de los primeros 15 minutos luego de deploy.
 
 ## 1) Disponibilidad y rutas
 
-- [ ] El sitio abre correctamente en GitHub Pages.
+- [ ] El sitio abre correctamente en el Worker de Cloudflare correspondiente.
 - [ ] Home carga sin errores visuales criticos.
 - [ ] Una categoria abre y pagina correctamente.
 - [ ] Una subcategoria abre y pagina correctamente.

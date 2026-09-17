@@ -1,20 +1,19 @@
 # Checklist Predeploy
 
-Usar esta lista antes de publicar en GitHub Pages.
+Usar esta lista antes de publicar en Cloudflare Workers.
 
-## 1) Datos (CSV y scraping)
+## 1) Datos (read model y scraping)
 
-- [ ] Existe snapshot/backup del catalogo vigente.
-- [ ] El CSV nuevo fue generado en staging (no en lugar del activo).
-- [ ] El CSV nuevo tiene encabezados esperados.
-- [ ] No hay IDs duplicados.
-- [ ] No faltan campos criticos: id, name, precio, imagen, categorias.
+- [ ] Existe snapshot/backup del catálogo vigente.
+- [ ] La sincronización al read model terminó correctamente antes del deploy.
+- [ ] No hay IDs duplicados en el read model.
+- [ ] No faltan campos críticos: id, name, precio, imagen, categorías.
 - [ ] La cantidad total de productos no cae de forma anomala vs baseline.
 - [ ] La cantidad por proveedor no cae de forma anomala vs baseline.
 
 ## 2) Integridad tecnica
 
-- [ ] Parseo CSV sin errores.
+- [ ] Consulta al read model sin errores.
 - [ ] Formato de precio consistente.
 - [ ] URLs de imagen con formato valido.
 - [ ] Subcategorias y categorias coherentes.
@@ -36,12 +35,12 @@ Usar esta lista antes de publicar en GitHub Pages.
 
 ## No-Go
 
-- [ ] Error de parseo CSV o duplicados de ID.
+- [ ] Error de sincronización/read model o duplicados de ID.
 - [ ] Caida de cobertura de datos por debajo del umbral del equipo.
 - [ ] Build fallida o filtros/paginacion rotos.
 
 ## 5) Si es No-Go
 
-- [ ] No promover CSV nuevo.
-- [ ] Mantener dataset activo anterior.
+- [ ] No promover el deploy ni la sincronización fallida.
+- [ ] Mantener el último estado consistente del read model.
 - [ ] Registrar incidente con causa y proveedor afectado.

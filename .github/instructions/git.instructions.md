@@ -1,3 +1,7 @@
+---
+applyTo: "**"
+---
+
 # Bibi Saint — Instrucciones de Git (GitHub Copilot)
 
 ## Reglas críticas

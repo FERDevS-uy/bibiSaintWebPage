@@ -1,6 +1,6 @@
-# Operacion Produccion
+# Operación de producción
 
-Este directorio contiene guias operativas para mantener estable el e-commerce estatico (Astro + GitHub Pages + CSV + scraping).
+Este directorio contiene guías operativas para mantener estable el e-commerce SSR (Astro + Cloudflare Workers + read model de Supabase + scraping).
 
 ## Archivos
 
@@ -12,6 +12,6 @@ Este directorio contiene guias operativas para mantener estable el e-commerce es
 
 1. Ejecutar checklist-predeploy.md.
 2. Tomar decision Go/No-Go.
-3. Si es Go, desplegar.
+3. Si es Go, desplegar a Cloudflare Workers.
 4. Ejecutar checklist-postdeploy.md.
 5. Si hay incidente, seguir runbook-incidentes-datos.md.
