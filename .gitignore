@@ -30,3 +30,7 @@ Library/
 code/.wrangler/
 code/.opencode/*.bak
 code/rangler.jsonc
+
+# Closed local ODD/SDD recovery records
+odd/archive/
+odd/tasks/security-remediation.md
