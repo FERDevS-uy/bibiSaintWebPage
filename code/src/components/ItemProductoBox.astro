@@ -50,6 +50,7 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
   .producto_card {
     --radius: 8px;
     width: calc(50% - 0.5rem); /* 2 productos por fila en móvil por defecto */
+    height: 100%;
     background: #fff;
     border-radius: var(--radius);
     box-shadow:
@@ -86,12 +87,13 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
   .card-img-link {
     display: block;
     width: 100%;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
   }
 
   img {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    height: 100%;
     object-fit: cover;
     object-position: top;
     display: block;
@@ -138,6 +140,11 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
     align-items: center;
     gap: 1px;
     line-height: 1.15;
+    min-height: 2.2rem;
+  }
+
+  :global(#products-list-grid) {
+    align-items: stretch;
   }
 
   .p-price-original {
