@@ -1,32 +1,10 @@
-import { normalizeText, cleanDescription, parsePrice, getUniqueColors, appendColorsToName, inferSubcategory, fetchJson, type ProductRow } from "./utils";
+import { normalizeText, cleanDescription, parsePrice, getUniqueColors, appendColorsToName, inferSubcategory, type ProductRow } from "./utils";
 import { getProviderMarkup } from "./markupSettings";
-
-const KAI_JSON_URL = "https://kaideco.uy/products.json?limit=250";
+import { fetchKaiDecoCatalog } from "./kaidecoPagination";
 
 export async function syncKaiDeco(): Promise<{ products: ProductRow[]; count: number }> {
   console.log("Kai Deco: iniciando sync...");
-
-  const headers = {
-    "User-Agent":
-      "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
-    Accept: "application/json, text/javascript, */*; q=0.01",
-    "Accept-Language": "es-ES,es;q=0.9",
-    Referer: "https://kaideco.uy/",
-    "X-Requested-With": "XMLHttpRequest",
-  };
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 25000);
-  let data: any;
-  try {
-    const resp = await fetch(KAI_JSON_URL, { headers, signal: controller.signal });
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    data = await resp.json();
-  } finally {
-    clearTimeout(timeout);
-  }
-
-  const products: any[] = data?.products ?? [];
+  const products = await fetchKaiDecoCatalog();
   console.log(`Kai Deco: ${products.length} productos encontrados`);
 
   // Markup configurable (default 1.2); nunca tumba el sync si la DB falla.

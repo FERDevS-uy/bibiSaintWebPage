@@ -320,9 +320,10 @@ export default function ListarProductos({
   };
 
   return (
-    <section
-      className={`listaProductos${emptyList && !loading && !error ? " centerBox" : ""}`}
-    >
+    <section>
+      <div
+        className={`listaProductos${emptyList && !loading && !error ? " centerBox" : ""}`}
+      >
       {loading && (
         <div className="search-loading" role="status" aria-live="polite">
           <span className="search-loading__spinner" aria-hidden="true" />
@@ -352,7 +353,7 @@ export default function ListarProductos({
 
       {!loading && !error && !emptyList && (
         <>
-          <ul>
+          <ul id="products-list-grid">
             {items.map((prod, idx) => (
               <ItemProductoBox producto={prod} key={`${prod.id}-${idx}`} />
             ))}
@@ -371,30 +372,33 @@ export default function ListarProductos({
         </>
       )}
 
+      </div>
+
       {/* estilos INLINE tal como los tenías en el .astro */}
       <style>
         {`
         section {
-          max-width: var(--max-width-container);
-          margin: auto;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
           margin-bottom: 5em;
-          padding-top: 1.5rem;
+          padding-top: 12px;
         }
 
-        .listaProductos ul {
+        #products-list-grid {
           display: flex;
           flex-wrap: wrap;
           width: 100%;
           max-width: 1000px;
           margin-inline: auto;
-          padding: 0 0.4rem;
-          gap: 1rem;
-          justify-content: center;
           align-items: stretch;
+          justify-content: center;
+          padding: 0;
           list-style: none;
+          gap: 1rem;
         }
 
-        .listaProductos ul > li {
+        #products-list-grid > li {
           list-style: none;
         }
 

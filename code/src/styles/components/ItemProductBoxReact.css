@@ -18,8 +18,8 @@
   cursor: pointer;
   position: relative;
   padding: 0;
+  height: 100%;
   margin-bottom: 0;
-  align-items: initial;
 }
 
 @media (hover: hover) {
@@ -41,13 +41,14 @@
 .listaProductos .card-img-link {
   display: block;
   width: 100%;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   text-decoration: none;
 }
 
 .listaProductos .card-img-link img {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   object-fit: cover;
   object-position: top;
   display: block;
@@ -92,8 +93,7 @@
   align-items: center;
   gap: 1px;
   line-height: 1.15;
-  min-height: 2.3em;
-  justify-content: center;
+  min-height: 2.2rem;
 }
 
 .listaProductos .p-price-original {
@@ -144,6 +144,20 @@
   }
 }
 
+/* Same base action behavior as the category-card Astro component. */
+.listaProductos .addToCart {
+  background-color: var(--principal-background-color-dark);
+  border-radius: 50%;
+  border: none;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 /* Botón "AÑADIR AL CARRITO" (variante full) */
 .listaProductos .addToCartFull {
   width: 100%;
@@ -176,6 +190,19 @@
   background-color: #388e3c;
   border-color: #388e3c;
   cursor: default;
+}
+
+/* Keep the same mandatory-size state used by category cards. */
+.listaProductos .addToCartNeedsSize {
+  background-color: #f9a825;
+  border-color: #f9a825;
+  color: #1a1a1a !important;
+}
+
+.listaProductos .addToCartNeedsSize:hover {
+  background-color: #f57f17;
+  border-color: #f57f17;
+  color: #ffffff !important;
 }
 
 /* Toolbar de ordenamiento */
