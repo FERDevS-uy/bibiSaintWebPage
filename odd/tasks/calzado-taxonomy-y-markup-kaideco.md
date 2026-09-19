@@ -33,6 +33,11 @@ Calzado necesita un nivel visual padre → hija sin una reescritura amplia del m
   - Criterio de aceptación: el botón flotante `+` abre la creación desde `/admin`, pero no se muestra dentro de `/admin/productos/nuevo` ni al editar un producto.
   - Evidencia: `AdminLayout` condiciona el FAB a las rutas exactas `/admin` y `/admin/`; por lo tanto no puede renderizarse en creación, edición ni proveedores.
   - Checks: `pnpm test:unit` (232/232) y `pnpm build` exitosos.
+- [x] CTK-5 — Mostrar la jerarquía de subcategorías al crear productos desde el admin.
+  - Problema verificado: el endpoint admin arma el selector solo con subcategorías ya asignadas a productos; por eso omite hojas de Calzado configuradas pero aún vacías.
+  - Criterio de aceptación: para Ropa y Calzado, el formulario permite elegir categoría → grupo → subcategoría y conserva el valor almacenado como `Grupo - Hoja`.
+  - Resolución: el endpoint integra `catalog_taxonomy` para incluir hojas visibles aunque tengan cero productos; el formulario muestra `Categoría → Grupo → Subcategoría` para Ropa y Calzado, y persiste `Grupo - Hoja`.
+  - Checks: `pnpm test:unit` (233/233), `pnpm build` y verificación interactiva de Calzado → Botas → sus cinco hojas en el formulario.
 
 ## Progreso y siguiente paso
 - Preparar el commit y push autorizados. El deploy sigue pendiente de autorización explícita; luego verificar visualmente el menú desplegado y una consulta live de Kai Deco.

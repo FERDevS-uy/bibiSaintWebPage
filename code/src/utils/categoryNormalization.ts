@@ -28,6 +28,39 @@ const MARTINA_HOST = "martinaditrento.com";
  */
 export const LEGACY_CATEGORIES = new Set(["ropa", "tecno"]);
 
+const HIERARCHICAL_CATEGORY_GROUPS: Record<string, string[]> = {
+  Ropa: ["Mujer", "Hombre"],
+  Calzado: ["Botas", "Botines", "Suecos", "Zapatos Cerrados", "Sandalias", "Deportivos", "Accesorios"],
+};
+
+export interface SubcategoryGroup {
+  name: string;
+  subcategories: string[];
+}
+
+/** Splits persisted "Group - Leaf" labels for the admin's hierarchical picker. */
+export function getSubcategoryGroups(
+  categoryName: string,
+  subcategories: string[],
+): SubcategoryGroup[] {
+  const orderedGroups = HIERARCHICAL_CATEGORY_GROUPS[categoryName];
+  if (!orderedGroups) return [];
+
+  const groups = new Map(orderedGroups.map((name) => [name, [] as string[]]));
+  for (const subcategory of subcategories) {
+    const separator = subcategory.indexOf(" - ");
+    if (separator < 1) continue;
+
+    const group = subcategory.slice(0, separator);
+    const leaf = subcategory.slice(separator + 3);
+    if (groups.has(group) && leaf) groups.get(group)!.push(leaf);
+  }
+
+  return orderedGroups
+    .map((name) => ({ name, subcategories: groups.get(name)! }))
+    .filter((group) => group.subcategories.length > 0);
+}
+
 export function toTitleCase(value: string): string {
   return value
     .toLowerCase()

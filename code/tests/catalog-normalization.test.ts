@@ -7,6 +7,7 @@ import type Product from "../src/types/product.ts";
 import {
   getDisplayCategoryName,
   getDisplaySubcategories,
+  getSubcategoryGroups,
   productMatchesCategory,
   productMatchesSubcategory,
   resolveSubcategoryFilter,
@@ -164,5 +165,21 @@ test("subcategory groups: Calzado parents include their prefixed children", () =
   assert.equal(
     productMatchesSubcategory(product("boot", "Boot", "Calzado", ["Botas - Texanas"]), "Calzado", "Botas"),
     true,
+  );
+});
+
+test("getSubcategoryGroups: keeps Calzado parent order for the admin picker", () => {
+  assert.deepEqual(
+    getSubcategoryGroups("Calzado", [
+      "Botines - Botines Chelsea",
+      "Botas - Texanas",
+      "Botas - Botas Altas",
+      "Zapatos Cerrados - Mocasines",
+    ]),
+    [
+      { name: "Botas", subcategories: ["Texanas", "Botas Altas"] },
+      { name: "Botines", subcategories: ["Botines Chelsea"] },
+      { name: "Zapatos Cerrados", subcategories: ["Mocasines"] },
+    ],
   );
 });

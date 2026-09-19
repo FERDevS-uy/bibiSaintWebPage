@@ -16,11 +16,19 @@ export const GET: APIRoute = async ({ request }) => {
 
   try {
     const supabase = getSupabaseAdmin();
-    const { data, error } = await supabase
-      .from("products")
-      .select("categories, img, id, name");
+    const [{ data, error }, { data: taxonomy, error: taxonomyError }] = await Promise.all([
+      supabase
+        .from("products")
+        .select("categories, img, id, name"),
+      supabase
+        .from("catalog_taxonomy")
+        .select("category_name, subcategory_name, display_order")
+        .eq("visible", true)
+        .order("display_order", { ascending: true }),
+    ]);
 
     if (error) throw error;
+    if (taxonomyError) throw taxonomyError;
 
     const catMap = new Map<string, Map<string, number>>();
     for (const row of data ?? []) {
@@ -42,13 +50,30 @@ export const GET: APIRoute = async ({ request }) => {
       }
     }
 
+    const taxonomyByCategory = new Map<string, string[]>();
+    for (const entry of taxonomy ?? []) {
+      const subcategory = entry.subcategory_name?.trim();
+      if (!subcategory) continue;
+      if (!taxonomyByCategory.has(entry.category_name)) taxonomyByCategory.set(entry.category_name, []);
+      taxonomyByCategory.get(entry.category_name)!.push(subcategory);
+      if (!catMap.has(entry.category_name)) catMap.set(entry.category_name, new Map());
+    }
+
     const categories = Array.from(catMap.entries())
       .map(([name, subMap]) => ({
         name,
         count: Array.from(subMap.values()).reduce((a, b) => a + b, 0),
-        subcategories: Array.from(subMap.entries())
-          .map(([n, c]) => ({ name: n, count: c }))
-          .sort((a, b) => a.name.localeCompare(b.name)),
+        subcategories: (() => {
+          const configured = taxonomyByCategory.get(name) ?? [];
+          const configuredNames = new Set(configured);
+          return [
+            ...configured.map((subcategory) => ({ name: subcategory, count: subMap.get(subcategory) ?? 0 })),
+            ...Array.from(subMap.entries())
+              .filter(([subcategory]) => !configuredNames.has(subcategory))
+              .map(([subcategory, count]) => ({ name: subcategory, count }))
+              .sort((a, b) => a.name.localeCompare(b.name)),
+          ];
+        })(),
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
 

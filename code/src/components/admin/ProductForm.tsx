@@ -5,6 +5,7 @@ import ImageGallery from "./ImageGallery";
 import ColorVariants from "./ColorVariants";
 import RelatedProducts from "./RelatedProducts";
 import Modal from "./Modal";
+import { getSubcategoryGroups } from "../../utils/categoryNormalization";
 
 export default function ProductForm({ productId }: { productId?: string }) {
   const {
@@ -20,6 +21,17 @@ export default function ProductForm({ productId }: { productId?: string }) {
     updateField, handlePriceChange, handlePriceBlur, handleSubmit,
     nameInputRef, priceInputRef,
   } = useProductForm(productId);
+  const [selectedSubcategoryGroup, setSelectedSubcategoryGroup] = React.useState("");
+  const subcategoryGroups = getSubcategoryGroups(form.category, availableSubcategories);
+  const usesHierarchicalSubcategories = subcategoryGroups.length > 0;
+
+  React.useEffect(() => {
+    const separator = form.subcategory.indexOf(" - ");
+    if (separator > 0) setSelectedSubcategoryGroup(form.subcategory.slice(0, separator));
+  }, [form.subcategory]);
+
+  const selectedGroupLeaves =
+    subcategoryGroups.find((group) => group.name === selectedSubcategoryGroup)?.subcategories ?? [];
 
   if (loading) {
     return (
@@ -133,7 +145,11 @@ export default function ProductForm({ productId }: { productId?: string }) {
             <select
               id="product-category"
               value={form.category}
-              onChange={(e) => { updateField("category", e.target.value); updateField("subcategory", ""); }}
+              onChange={(e) => {
+                updateField("category", e.target.value);
+                updateField("subcategory", "");
+                setSelectedSubcategoryGroup("");
+              }}
               required
               aria-required="true"
               className="admin-input"
@@ -144,19 +160,42 @@ export default function ProductForm({ productId }: { productId?: string }) {
               ))}
             </select>
           </Field>
+          {usesHierarchicalSubcategories && (
+            <Field label="Grupo" htmlFor="product-subcategory-group" error={null}>
+              <select
+                id="product-subcategory-group"
+                value={selectedSubcategoryGroup}
+                onChange={(e) => {
+                  setSelectedSubcategoryGroup(e.target.value);
+                  updateField("subcategory", "");
+                }}
+                className="admin-input"
+              >
+                <option value="">-- Seleccionar --</option>
+                {subcategoryGroups.map((group) => (
+                  <option key={group.name} value={group.name}>{group.name}</option>
+                ))}
+              </select>
+            </Field>
+          )}
           <Field label="Subcategoría" htmlFor="product-subcategory" error={null}>
             <select
               id="product-subcategory"
               value={form.subcategory}
               onChange={(e) => updateField("subcategory", e.target.value)}
               className="admin-input"
-              disabled={!form.category || availableSubcategories.length === 0}
+              disabled={!form.category || (usesHierarchicalSubcategories ? !selectedSubcategoryGroup : availableSubcategories.length === 0)}
             >
               <option value="">
                 {form.category ? "-- Seleccionar --" : "-- Primero elegí categoría --"}
               </option>
-              {availableSubcategories.map((s) => (
-                <option key={s} value={s}>{s}</option>
+              {(usesHierarchicalSubcategories ? selectedGroupLeaves : availableSubcategories).map((s) => (
+                <option
+                  key={s}
+                  value={usesHierarchicalSubcategories ? `${selectedSubcategoryGroup} - ${s}` : s}
+                >
+                  {s}
+                </option>
               ))}
             </select>
           </Field>
