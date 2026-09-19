@@ -24,6 +24,15 @@ interface TreeNode {
 const pathname = Astro.url.pathname;
 const treeNodes: TreeNode[] = [];
 const parentMap = new Map<string, TreeNode>();
+const calzadoParents = new Set([
+  "Botas",
+  "Botines",
+  "Suecos",
+  "Zapatos Cerrados",
+  "Sandalias",
+  "Deportivos",
+  "Accesorios",
+]);
 
 arrayCategorys.forEach((subcat) => {
   const sepIdx = subcat.name.indexOf(" - ");
@@ -31,12 +40,11 @@ arrayCategorys.forEach((subcat) => {
     const parentName = subcat.name.slice(0, sepIdx);
     const childLabel = subcat.name.slice(sepIdx + 3);
 
-    // Solo crear nodo padre (acordeón) si el prefijo existe como subcategoría
-    // independiente (ej. "Mujer"/"Hombre" en Ropa). Si no existe, el prefijo
-    // no es una categoría real y su link matchearía 0 productos.
+    // Ropa incluye sus padres como subcategorías independientes. Calzado usa
+    // una taxonomía explícita de padres, aunque los productos solo guarden la hoja.
     const parentExists = arrayCategorys.some(
       (s) => s.name.toLowerCase() === parentName.toLowerCase()
-    );
+    ) || (categoryFather === "Calzado" && calzadoParents.has(parentName));
 
     if (parentExists) {
       if (!parentMap.has(parentName)) {

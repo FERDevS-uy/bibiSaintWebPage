@@ -154,3 +154,15 @@ test("subcategory groups: only Ropa gender parents include exact and prefixed ch
   assert.equal(productMatchesSubcategory(product("other", "Other", "Ropa", ["Mujer - Remeras"]), "Ropa", "Hombre"), false);
   assert.equal(productMatchesSubcategory(product("concrete", "Concrete", "Ropa", ["Hombre - Remeras"]), "Ropa", "Hombre - Remeras"), true);
 });
+
+test("subcategory groups: Calzado parents include their prefixed children", () => {
+  assert.deepEqual(resolveSubcategoryFilter("Calzado", "Botas"), {
+    kind: "group",
+    category: "Calzado",
+    value: "Botas",
+  });
+  assert.equal(
+    productMatchesSubcategory(product("boot", "Boot", "Calzado", ["Botas - Texanas"]), "Calzado", "Botas"),
+    true,
+  );
+});

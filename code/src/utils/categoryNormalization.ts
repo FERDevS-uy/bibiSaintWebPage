@@ -136,13 +136,13 @@ export function productMatchesSubcategory(
 }
 
 /**
- * The public category tree has two gender groups under Ropa. Only those
- * explicit group routes expand to prefixed children; every other subcategory
+ * The public category tree has explicit group routes under Ropa and Calzado.
+ * Only those routes expand to prefixed children; every other subcategory
  * remains an exact match (for example, "Hombre - Remeras").
  */
 export type SubcategoryFilter =
   | { kind: "exact"; category: string; value: string }
-  | { kind: "group"; category: "Ropa"; value: "Hombre" | "Mujer" };
+  | { kind: "group"; category: string; value: string };
 
 export function resolveSubcategoryFilter(
   categoryName: string,
@@ -155,6 +155,12 @@ export function resolveSubcategoryFilter(
     (value === "Hombre" || value === "Mujer")
   ) {
     return { kind: "group", category: "Ropa", value };
+  }
+  if (
+    category === "Calzado" &&
+    ["Botas", "Botines", "Suecos", "Zapatos Cerrados", "Sandalias", "Deportivos", "Accesorios"].includes(value)
+  ) {
+    return { kind: "group", category: "Calzado", value };
   }
   return { kind: "exact", category, value };
 }

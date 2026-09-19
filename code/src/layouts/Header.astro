@@ -30,7 +30,12 @@ function slugify(value: string): string {
 }
 
 function getGroupedSubcategories(category: CategoryList): GroupedSubcategory[] {
-  if (category.name !== "Ropa") return [];
+  const groupOrderByCategory: Record<string, string[]> = {
+    Ropa: ["Mujer", "Hombre"],
+    Calzado: ["Botas", "Botines", "Suecos", "Zapatos Cerrados", "Sandalias", "Deportivos", "Accesorios"],
+  };
+  const expectedGroups = groupOrderByCategory[category.name];
+  if (!expectedGroups) return [];
 
   const groups = new Map<string, string[]>();
 
@@ -39,7 +44,7 @@ function getGroupedSubcategories(category: CategoryList): GroupedSubcategory[] {
     if (!rawName) return;
 
     const [first, ...rest] = rawName.split(" - ");
-    const groupName = first === "Mujer" || first === "Hombre" ? first : "Otros";
+    const groupName = expectedGroups.includes(first) ? first : "Otros";
 
     if (!groups.has(groupName)) groups.set(groupName, []);
 
@@ -49,7 +54,7 @@ function getGroupedSubcategories(category: CategoryList): GroupedSubcategory[] {
     }
   });
 
-  ["Mujer", "Hombre"].forEach((groupName) => {
+  expectedGroups.forEach((groupName) => {
     if (!groups.has(groupName)) groups.set(groupName, []);
   });
 
@@ -57,13 +62,13 @@ function getGroupedSubcategories(category: CategoryList): GroupedSubcategory[] {
     .map(([group, items]) => ({ group, items }))
     .filter((entry) => entry.group !== "Otros" || entry.items.length > 0)
     .sort((a, b) => {
-      const order = ["Mujer", "Hombre", "Otros"];
+      const order = [...expectedGroups, "Otros"];
       return order.indexOf(a.group) - order.indexOf(b.group);
     });
 }
 
 // Sort categories according to requested order
-const categoryOrder = ["Cama", "Ropa", "Baño", "Infantil", "Hogar"];
+const categoryOrder = ["Cama", "Ropa", "Baño", "Infantil", "Hogar", "Calzado"];
 const sortedCategories = categories.sort((a, b) => {
   const indexA = categoryOrder.indexOf(a.name);
   const indexB = categoryOrder.indexOf(b.name);
@@ -194,7 +199,7 @@ const isAbout = pathname.includes("/about");
                         Ver todos
                       </a>
                     </li>
-                    {c.name !== "Ropa" &&
+                    {getGroupedSubcategories(c).length === 0 &&
                       c.subcategories.map((sub) => (
                         <li>
                           <a
@@ -210,7 +215,7 @@ const isAbout = pathname.includes("/about");
                         </li>
                       ))}
 
-                    {c.name === "Ropa" &&
+                    {getGroupedSubcategories(c).length > 0 &&
                       getGroupedSubcategories(c).map((groupData) => {
                         const groupSlug = slugify(groupData.group);
                         const nestedId = `submenu-${c.name.replace(/[^a-zA-Z0-9]/g, "-")}-${groupSlug}`;
@@ -230,7 +235,7 @@ const isAbout = pathname.includes("/about");
                                   : undefined
                               }
                             >
-                              {groupData.group}
+                              <span class="submenu-label">{groupData.group}</span>
                               {groupData.items.length > 0 && (
                                 <span class="submenu-indicator">›</span>
                               )}
@@ -899,6 +904,18 @@ const isAbout = pathname.includes("/about");
     .submenu-indicator {
       font-size: 1rem;
       margin-left: 5px;
+      flex: 0 0 auto;
+    }
+    .has-submenu-level2 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .submenu-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .subcategoryList {
