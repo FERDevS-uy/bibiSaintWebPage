@@ -34,3 +34,10 @@ code/rangler.jsonc
 # Closed local ODD/SDD recovery records
 odd/archive/
 odd/tasks/security-remediation.md
+
+# HyperFrames local skills, captures, and video projects
+/.agents/skills/hyperframes*/
+capture-bibis/
+videos/
+/.agents/skills/media-use*/
+/.agents/skills/product-launch-video*/
