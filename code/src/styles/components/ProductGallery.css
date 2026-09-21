@@ -17,12 +17,18 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
-/* Botas largas/caña alta: usar contain para no recortar la suela. */
-.gallery .mainImg--tall {
-  object-fit: contain;
-  object-position: center;
+/* Calzado común: llenar la galería y apoyar el producto abajo. */
+.gallery .mainImg--footwear {
+  object-fit: cover;
+  object-position: center bottom;
 }
 
+.gallery .thumb--footwear {
+  object-fit: cover !important;
+  object-position: center bottom !important;
+}
+
+.gallery .mainImg--tall,
 .gallery .thumb--tall {
   object-fit: contain !important;
   object-position: center !important;
@@ -40,6 +46,11 @@
     width: 100%;
     object-fit: cover;
     object-position: top;
+  }
+
+  .gallery .mainImg--footwear {
+    object-fit: cover;
+    object-position: center bottom;
   }
 
   .gallery .mainImg--tall {

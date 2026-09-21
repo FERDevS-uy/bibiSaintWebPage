@@ -1,7 +1,7 @@
 ---
 import type Product from "../types/product";
 import { withBasePath } from "@utils/basePath";
-import { isTallBoot } from "@utils/isTallBoot";
+import { isFootwearProduct, isTallBoot } from "@utils/isTallBoot";
 import { formatPrice, normalizeOfferOriginalPrice, parsePrice } from "@utils/price";
 
 interface Props {
@@ -32,12 +32,19 @@ const PRODUCT_IMG_FALLBACK =
 
   <div class="related__track" role="list">
     {products.map((p, index) => {
-      const tall = isTallBoot(p.name, p.description, p.id);
+      const tallBoot = isTallBoot(p.name, p.description, p.id);
+      const bottomFootwear = !tallBoot && isFootwearProduct(
+        p.name,
+        p.description,
+        p.id,
+        p.categories?.name,
+        p.categories?.subcategories?.map((subcategory) => subcategory.name),
+      );
       const priceValue = parsePrice(p.price);
       const validOriginalPrice = normalizeOfferOriginalPrice(p.originalPrice, priceValue);
       return (
         <article
-          class={`related__item${tall ? " related__item--tall" : ""}`}
+          class={`related__item${bottomFootwear ? " related__item--footwear" : ""}${tallBoot ? " related__item--tall" : ""}`}
           role="listitem"
           data-index={index}
         >
@@ -48,7 +55,7 @@ const PRODUCT_IMG_FALLBACK =
             tabindex="0"
           >
             <div
-              class={`related__img-wrap${tall ? " related__img-wrap--tall" : ""}`}
+              class={`related__img-wrap${bottomFootwear ? " related__img-wrap--footwear" : ""}${tallBoot ? " related__img-wrap--tall" : ""}`}
             >
               <img
                 src={p.img[0]}
@@ -56,7 +63,7 @@ const PRODUCT_IMG_FALLBACK =
                 loading={index < 3 ? "eager" : "lazy"}
                 fetchpriority={index === 0 ? "high" : "auto"}
                 decoding="async"
-                class={`related__img${tall ? " related__img--tall" : ""}`}
+                class={`related__img${bottomFootwear ? " related__img--footwear" : tallBoot ? " related__img--tall" : ""}`}
                 data-fallback-src={PRODUCT_IMG_FALLBACK}
                 onerror="this.onerror=null; this.src=this.dataset.fallbackSrc || ''"
               />
@@ -169,11 +176,11 @@ const PRODUCT_IMG_FALLBACK =
     transition: box-shadow 0.35s ease, border-color 0.35s ease;
   }
 
-  .related__item--tall {
+  .related__item--footwear {
     background: transparent;
   }
 
-  .related__img-wrap--tall {
+  .related__img-wrap--footwear {
     background: #fcfcfc;
   }
 
@@ -193,6 +200,11 @@ const PRODUCT_IMG_FALLBACK =
 
   .related__item:hover .related__img:not(.related__img--tall) {
     transform: scale(1.03);
+  }
+
+  .related__img--footwear {
+    object-fit: cover !important;
+    object-position: center bottom !important;
   }
 
   .related__img--tall {

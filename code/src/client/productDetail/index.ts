@@ -2,7 +2,7 @@
 
 import type { ProductDetailState } from "./state.js";
 import { createInitialState, bindDOMElements } from "./state.js";
-import { normalizeSize, normalizeSizes, hasExplicitNoSize, CANONICAL_ORDER } from "./sizeNorm.js";
+import { normalizeSize, normalizeSizes, hasExplicitNoSize, CANONICAL_ORDER, presentSizes, type SizePresentation } from "./sizeNorm.js";
 import { cleanColorLabel, extractNuvexSizeFromColorName, extractDescriptionSizes, applyColorSelection, renderColors } from "./colorSelection.js";
 import { renderNormalizedSizes, markUnavailableSizes, applySelectedColorAvailability, inferSizesFromFallback } from "./sizesAvailability.js";
 import { handleAddToCart, bindAddToCartListener } from "./productCart.js";
@@ -65,6 +65,7 @@ export async function initProductDetail(): Promise<void> {
     colorSelectionDisabled,
     requiresSizeSelection,
   } = state;
+  const sizePresentation: SizePresentation = sizesBlock?.dataset.sizePresentation === "numeric" ? "numeric" : "apparel";
 
   // Sincronizar disponibilidad del botón con badge de stock
   const syncAddToCartAvailability = () => {
@@ -124,9 +125,7 @@ export async function initProductDetail(): Promise<void> {
       try {
         const parsedSizes = JSON.parse(sw.dataset.colorSizes || "[]");
         if (Array.isArray(parsedSizes)) {
-          parsedSizes
-            .map((sizeToken) => normalizeSize(String(sizeToken || "")))
-            .filter((size): size is string => Boolean(size))
+          presentSizes(parsedSizes.map((sizeToken) => String(sizeToken || "")), sizePresentation)
             .forEach((size) => {
               if (!state.availableSizesByColor.has(cid)) {
                 state.availableSizesByColor.set(cid, new Set<string>());
@@ -197,6 +196,7 @@ export async function initProductDetail(): Promise<void> {
       descriptionSource,
       sizesSelector,
       requiresSizeSelection: state.requiresSizeSelection,
+      presentation: sizePresentation,
       setSizeRequirement: (req) => setSizeRequirement(state, req, sizesBlock, sizesSelector, sizeFeedback),
       renderNormalizedSizesForFallback: (sizes) => renderNormalizedSizes(sizesSelector, sizes, state),
       applySelectedColorAvailability: applySelectedColorAvailabilityWrapper,

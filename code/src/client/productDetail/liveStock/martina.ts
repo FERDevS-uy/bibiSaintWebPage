@@ -3,6 +3,7 @@
 import { fetchMartinaProductPrice } from "../../martinaVerification.js";
 import { normalizeOfferOriginalPrice } from "../../../utils/price.js";
 import { applyMarkupToPrice, getRuntimeMarkup } from "./providerUtils.js";
+import { presentSizes } from "../sizeNorm.js";
 import type { LiveStockContext, ProviderResult } from "./types.js";
 
 export async function fetchMartinaLive(productId: string): Promise<ProviderResult> {
@@ -19,6 +20,7 @@ export async function handleMartina(data: ProviderResult, context: LiveStockCont
   }
   const { checkStockBtn, statusEl, stockBadge, priceEl, originalPriceEl, setSizeRequirement, renderNormalizedSizes, renderColors, applyColorSelection, colorsBlock, sizesSelector, sizeFeedback } = context;
   const availableSizesByColor = context.state.availableSizesByColor;
+  const sizePresentation = context.sizesSelector?.closest("#sizesBlock")?.getAttribute("data-size-presentation") === "numeric" ? "numeric" : "apparel";
 
   const markup = (await getRuntimeMarkup()).martina;
   const nextPrice = applyMarkupToPrice(data?.price, markup);
@@ -65,14 +67,18 @@ export async function handleMartina(data: ProviderResult, context: LiveStockCont
 
   availableSizesByColor.clear();
   colors.forEach((c) => {
-    availableSizesByColor.set(c.id, new Set(c.sizes));
+    availableSizesByColor.set(c.id, new Set(presentSizes(c.rawSizes || c.sizes || [], sizePresentation)));
   });
 
   const allRawSizes = colors.flatMap((c) => c.rawSizes || []);
-  const allNormalizedSizes = colors.flatMap((c) => c.sizes || []);
+  const displayedSizes = presentSizes(allRawSizes, sizePresentation);
   const { hasExplicitNoSize } = await import("../sizeNorm.js");
-  const shouldSkipSize = allNormalizedSizes.length === 0 && hasExplicitNoSize(allRawSizes);
+  const shouldSkipSize = displayedSizes.length === 0 && hasExplicitNoSize(allRawSizes);
   setSizeRequirement(!shouldSkipSize);
+
+  if (sizePresentation === "numeric" && displayedSizes.length > 0) {
+    renderNormalizedSizes(displayedSizes);
+  }
 
   renderColors(colors);
 

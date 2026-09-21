@@ -57,8 +57,12 @@
   box-shadow: none;
 }
 
-/* Botas largas/caña alta: la imagen es muy vertical y se recorta la suela.
-   Usamos contain para que se vea completa y centramos. */
+/* Calzado común: llenar la tarjeta y apoyar el producto en el borde inferior. */
+.listaProductos .card-img-link img.producto_card__img--footwear {
+  object-fit: cover;
+  object-position: center bottom;
+}
+
 .listaProductos .card-img-link img.producto_card__img--tall {
   object-fit: contain;
   object-position: center;

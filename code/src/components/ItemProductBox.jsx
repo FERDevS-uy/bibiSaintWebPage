@@ -2,7 +2,7 @@ import React from "react";
 import ProductImage from "./ProductImage.jsx";
 import AddToCartButton from "./AddToCartButton.jsx";
 import { withBasePath } from "../utils/basePath";
-import { isTallBoot } from "../utils/isTallBoot";
+import { isFootwearProduct, isTallBoot } from "../utils/isTallBoot";
 import {
   formatPrice,
   normalizeOfferOriginalPrice,
@@ -12,7 +12,14 @@ import "../styles/components/ItemProductBoxReact.css";
 
 export default function ItemProductoBox({ producto: p }) {
   const image = Array.isArray(p.img) ? p.img[0] : (p.img ?? "");
-  const tall = isTallBoot(p.name, p.description, p.id);
+  const tallBoot = isTallBoot(p.name, p.description, p.id);
+  const bottomFootwear = !tallBoot && isFootwearProduct(
+    p.name,
+    p.description,
+    p.id,
+    p.categories?.name,
+    p.categories?.subcategories?.map((subcategory) => subcategory.name),
+  );
   const productHref = withBasePath(`/producto/${p.id}`);
   const priceValue = parsePrice(p.price);
   const validOriginalPrice = normalizeOfferOriginalPrice(
@@ -21,12 +28,12 @@ export default function ItemProductoBox({ producto: p }) {
   );
 
   return (
-    <article className={`producto_card${tall ? " producto_card--tall" : ""}`}>
+    <article className={`producto_card${bottomFootwear ? " producto_card--footwear" : ""}${tallBoot ? " producto_card--tall" : ""}`}>
       <a href={productHref} className="card-img-link" title={p.name}>
         <ProductImage
           src={image}
           alt={p.name}
-          className={tall ? "producto_card__img--tall" : undefined}
+          className={bottomFootwear ? "producto_card__img--footwear" : tallBoot ? "producto_card__img--tall" : undefined}
         />
       </a>
 

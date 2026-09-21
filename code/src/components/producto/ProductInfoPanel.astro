@@ -78,7 +78,15 @@ const { id, name, img, price, categories, paymentLink, description, colors, enOf
   <div class="product_layout">
     <!-- LEFT IMAGE SECTION (isla React, carga lazy) -->
     {/* Galería como isla React: carga lazy, marca producto como no disponible si fallan las imágenes */}
-    <ProductGallery images={img} name={name} description={description} id={id} client:load />
+    <ProductGallery
+      images={img}
+      name={name}
+      description={description}
+      id={id}
+      categoryName={categories?.name}
+      subcategoryNames={categories?.subcategories?.map((subcategory) => subcategory.name)}
+      client:load
+    />
     <div id="productImagesData" data-images={JSON.stringify(img)} style="display:none"></div>
 
     <!-- RIGHT INFO -->
@@ -126,7 +134,11 @@ const { id, name, img, price, categories, paymentLink, description, colors, enOf
         </div>
       </div>
 
-      <div id="sizesBlock" class={`sizes-block${isRopa ? "" : " hidden"}`}>
+      <div
+        id="sizesBlock"
+        class={`sizes-block${isRopa ? "" : " hidden"}`}
+        data-size-presentation={displayCategoryName.trim().toLowerCase() === "calzado" ? "numeric" : "apparel"}
+      >
         <strong>Talle:</strong>
         <div class="sizes" id="sizesSelector">
           <button type="button" class="size" data-size="XS">XS</button>

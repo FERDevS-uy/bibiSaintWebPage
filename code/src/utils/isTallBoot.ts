@@ -33,4 +33,37 @@ export function isTallBoot(
   );
 }
 
+/**
+ * Determina si una imagen debe usar el encuadre de Calzado. La categoría es
+ * la fuente de verdad; las palabras clave son un respaldo para registros
+ * heredados que todavía no traen esa clasificación.
+ */
+export function isFootwearProduct(
+  name?: string | null,
+  description?: string | null,
+  id?: string | null,
+  categoryName?: string | null,
+  subcategoryNames?: Array<string | null | undefined> | null,
+): boolean {
+  const category = String(categoryName ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
+
+  if (category === "calzado") return true;
+  if (isTallBoot(name, description, id)) return true;
+
+  const haystack = [name, description, ...(subcategoryNames ?? [])]
+    .filter(Boolean)
+    .join(" ")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+  return /\b(zapato|zapatilla|sandalia|botin|bota|sueco|mocasin|calzado|deportivo)\w*/.test(
+    haystack,
+  );
+}
+
 export default isTallBoot;

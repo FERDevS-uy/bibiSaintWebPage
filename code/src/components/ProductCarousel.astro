@@ -3,7 +3,7 @@ import { productImageSrc } from "@utils/productImage";
 import type Product from "../types/product";
 import { withBasePath } from "@utils/basePath";
 import AddToCartButton from "./AddToCartButton.astro";
-import { isTallBoot } from "@utils/isTallBoot";
+import { isFootwearProduct, isTallBoot } from "@utils/isTallBoot";
 import {
   formatPrice,
   normalizeOfferOriginalPrice,
@@ -40,6 +40,14 @@ const pathname = Astro.url.pathname;
     <div class="carousel-track">
       {
         products.map((p, index) => {
+          const tallBoot = isTallBoot(p.name, p.description, p.id);
+          const bottomFootwear = !tallBoot && isFootwearProduct(
+            p.name,
+            p.description,
+            p.id,
+            p.categories?.name,
+            p.categories?.subcategories?.map((subcategory) => subcategory.name),
+          );
           const priceValue = parsePrice(p.price);
           const validOriginalPrice = normalizeOfferOriginalPrice(
             p.originalPrice,
@@ -47,12 +55,12 @@ const pathname = Astro.url.pathname;
           );
           return (
             <article
-              class={`carousel-item${isTallBoot(p.name, p.description, p.id) ? " carousel-item--tall" : ""}`}
+              class={`carousel-item${bottomFootwear ? " carousel-item--footwear" : ""}${tallBoot ? " carousel-item--tall" : ""}`}
               data-index={index}
             >
               <a
                 href={withBasePath(`/producto/${p.id}`, pathname)}
-                class={`carousel-img-link${isTallBoot(p.name, p.description, p.id) ? " carousel-img-link--tall" : ""}`}
+                class={`carousel-img-link${bottomFootwear ? " carousel-img-link--footwear" : ""}${tallBoot ? " carousel-img-link--tall" : ""}`}
                 title={p.name}
               >
                 <div class="carousel-img-wrapper" data-image-state="loading">
@@ -61,7 +69,7 @@ const pathname = Astro.url.pathname;
                     src={productImageSrc(p.img[0])}
                     alt={p.name}
                     loading="lazy"
-                    class={`carousel-img${isTallBoot(p.name, p.description, p.id) ? " carousel-img--tall" : ""}`}
+                    class={`carousel-img${bottomFootwear ? " carousel-img--footwear" : tallBoot ? " carousel-img--tall" : ""}`}
                     data-product-image=""
                   />
                 </div>
@@ -225,7 +233,12 @@ const pathname = Astro.url.pathname;
     background: #f9fafb;
   }
 
-  /* Misma regla que ProductGallery/ItemProductoBox: tal-* y botas altas no se recortan */
+  /* Calzado común: llenar la tarjeta y apoyar el producto abajo. */
+  .carousel-img--footwear {
+    object-fit: cover;
+    object-position: center bottom;
+  }
+
   .carousel-img--tall {
     object-fit: contain;
     object-position: center;

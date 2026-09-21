@@ -1,7 +1,7 @@
 // Renderizado y gestión de disponibilidad de talles
 
 import type { ProductDetailState } from "./state.js";
-import { normalizeSizes, CANONICAL_ORDER } from "./sizeNorm.js";
+import { normalizeSizes, CANONICAL_ORDER, presentSizes, type SizePresentation } from "./sizeNorm.js";
 import { extractDescriptionSizes } from "./colorSelection.js";
 
 export function renderNormalizedSizes(
@@ -39,6 +39,7 @@ export function applySelectedColorAvailability(
   options: {
     sizesSelector: HTMLElement | null;
     requiresSizeSelection: boolean;
+    presentation: SizePresentation;
   }
 ): void {
   const { sizesSelector, requiresSizeSelection } = options;
@@ -68,7 +69,7 @@ export function inferSizesFromFallback(
     applySelectedColorAvailability: () => void;
   }
 ): void {
-  const { colorsSelector, descriptionSource, sizesSelector, requiresSizeSelection, setSizeRequirement, renderNormalizedSizesForFallback, applySelectedColorAvailability } = options;
+  const { colorsSelector, descriptionSource, sizesSelector, requiresSizeSelection, presentation, setSizeRequirement, renderNormalizedSizesForFallback, applySelectedColorAvailability } = options;
 
   const descriptionSizes = extractDescriptionSizes(descriptionSource);
   const colorHintSizes = new Set<string>();
@@ -76,11 +77,12 @@ export function inferSizesFromFallback(
     set.forEach((size) => colorHintSizes.add(size));
   });
 
-  const inferredSizes =
-    descriptionSizes.length > 1
+  const inferredSizes = presentation === "numeric"
+    ? presentSizes(Array.from(colorHintSizes), "numeric")
+    : descriptionSizes.length > 1
       ? descriptionSizes
       : CANONICAL_ORDER.filter((size) => colorHintSizes.has(size));
-  const hasSelectableSizes = inferredSizes.length > 1;
+  const hasSelectableSizes = presentation === "numeric" ? inferredSizes.length > 0 : inferredSizes.length > 1;
 
   setSizeRequirement(hasSelectableSizes);
   if (hasSelectableSizes) {

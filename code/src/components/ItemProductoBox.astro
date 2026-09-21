@@ -4,7 +4,7 @@ import { productImageSrc } from "@utils/productImage";
 import { withBasePath } from "@utils/basePath";
 import AddToCartButton from "./AddToCartButton.astro";
 import getColors from "@utils/getColors";
-import { isTallBoot } from "@utils/isTallBoot";
+import { isFootwearProduct, isTallBoot } from "@utils/isTallBoot";
 import { formatPrice, normalizeOfferOriginalPrice, parsePrice } from "@utils/price";
 
 export interface Props {
@@ -13,7 +13,14 @@ export interface Props {
 
 const { producto: p } = Astro.props;
 const pathname = Astro.url.pathname;
-const tall = isTallBoot(p.name, p.description, p.id);
+const tallBoot = isTallBoot(p.name, p.description, p.id);
+const bottomFootwear = !tallBoot && isFootwearProduct(
+  p.name,
+  p.description,
+  p.id,
+  p.categories?.name,
+  p.categories?.subcategories?.map((subcategory) => subcategory.name),
+);
 const priceValue = parsePrice(p.price);
 const validOriginalPrice = normalizeOfferOriginalPrice(p.originalPrice, priceValue);
 
@@ -27,9 +34,9 @@ const fallbackColorKeys = getColors(p.name).map((c) => c.trim().toLowerCase());
 const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKeys])).join(",");
 ---
 
-<article class={`producto_card${tall ? " producto_card--tall" : ""}`} data-colors={colors} data-name={p.name} data-price={p.price} data-subcategory={p.categories.subcategories?.map((subcategory) => subcategory.name).join("|")}>
+<article class={`producto_card${bottomFootwear ? " producto_card--footwear" : ""}${tallBoot ? " producto_card--tall" : ""}`} data-colors={colors} data-name={p.name} data-price={p.price} data-subcategory={p.categories.subcategories?.map((subcategory) => subcategory.name).join("|")}>
   <a href={withBasePath(`/producto/${p.id}`, pathname)} class="card-img-link" title={p.name}>
-    <img src={productImageSrc(p.img[0])} alt={p.name} loading="lazy" data-product-image class={tall ? "producto_card__img--tall" : undefined} />
+    <img src={productImageSrc(p.img[0])} alt={p.name} loading="lazy" data-product-image class={bottomFootwear ? "producto_card__img--footwear" : tallBoot ? "producto_card__img--tall" : undefined} />
   </a>
 
   <div class="card-info">
@@ -100,8 +107,13 @@ const colors = Array.from(new Set([...colorKeysFromProvider, ...fallbackColorKey
     transition: transform 0.35s ease;
   }
 
-  /* Botas largas/caña alta: la imagen es muy vertical y se recorta la suela.
-     Usamos contain para que se vea completa y centramos. */
+  /* Calzado común: llenar la tarjeta y apoyar el producto en el borde inferior. */
+  img.producto_card__img--footwear {
+    object-fit: cover !important;
+    object-position: center bottom !important;
+  }
+
+  /* Botas altas: conservar el centrado para evitar un vacío visual desparejo. */
   img.producto_card__img--tall {
     object-fit: contain !important;
     object-position: center !important;

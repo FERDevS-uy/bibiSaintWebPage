@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductImage from "./ProductImage.jsx";
-import { isTallBoot } from "../utils/isTallBoot";
+import { isFootwearProduct, isTallBoot } from "../utils/isTallBoot";
 import "../styles/components/ProductGallery.css";
 
 /**
@@ -15,6 +15,8 @@ export default function ProductGallery({
   name = "",
   description = "",
   id = "",
+  categoryName = "",
+  subcategoryNames = [],
 }) {
   const initial = Array.isArray(images) ? images.filter(Boolean) : [];
   const [safeImages, setSafeImages] = useState(initial);
@@ -71,13 +73,20 @@ export default function ProductGallery({
   }
 
   const activeSrc = safeImages[activeIndex];
-  const tall = isTallBoot(name, description, id);
+  const tallBoot = isTallBoot(name, description, id);
+  const bottomFootwear = !tallBoot && isFootwearProduct(
+    name,
+    description,
+    id,
+    categoryName,
+    subcategoryNames,
+  );
 
   return (
     <div className="gallery">
       <ProductImage
         key={activeSrc}
-        className={`mainImg${tall ? " mainImg--tall" : ""}`}
+        className={`mainImg${bottomFootwear ? " mainImg--footwear" : ""}${tallBoot ? " mainImg--tall" : ""}`}
         src={activeSrc}
         alt={name}
         loading="eager"
@@ -94,7 +103,7 @@ export default function ProductGallery({
                 key={`${src}-${i}`}
                 src={src}
                 alt=""
-                className={`thumb${i === activeIndex ? " thumb-active" : ""}${tall ? " thumb--tall" : ""}`}
+                className={`thumb${i === activeIndex ? " thumb-active" : ""}${bottomFootwear ? " thumb--footwear" : ""}${tallBoot ? " thumb--tall" : ""}`}
                 loading="lazy"
                 decoding="async"
                 onClick={() => setActiveIndex(i)}

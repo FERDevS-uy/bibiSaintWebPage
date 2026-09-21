@@ -1,6 +1,7 @@
 // Proveedor Kai (kaideco.uy)
 
 import { extractKaiRawSizes, applyMarkupToPrice, formatKaiPrice, getRuntimeMarkup } from "./providerUtils.js";
+import { presentSizes } from "../sizeNorm.js";
 import type { LiveStockContext, ProviderResult } from "./types.js";
 
 export async function fetchKaiLive(providerUrl: string): Promise<ProviderResult> {
@@ -35,12 +36,11 @@ export async function fetchKaiLive(providerUrl: string): Promise<ProviderResult>
     const firstVariant = variants[0] ?? null;
     const rawSizes = extractKaiRawSizes(product);
 
-    const { normalizeSizes } = await import("../sizeNorm.js");
     return {
       provider: "kaideco",
       price: formatKaiPrice(firstVariant?.price ?? product?.price),
       inStock: variants.length > 0 ? variants.some((variant: any) => Boolean(variant?.available)) : null,
-      sizes: normalizeSizes(rawSizes),
+      sizes: rawSizes,
     };
   } finally {
     window.clearTimeout(timeout);
@@ -50,6 +50,7 @@ export async function fetchKaiLive(providerUrl: string): Promise<ProviderResult>
 export async function handleKai(data: ProviderResult, context: LiveStockContext): Promise<void> {
   const { checkStockBtn, statusEl, stockBadge, priceEl, setSizeRequirement, renderNormalizedSizes, markUnavailableSizes, sizeFeedback } = context;
   const availableSizesByColor = context.state.availableSizesByColor;
+  const sizePresentation = context.sizesSelector?.closest("#sizesBlock")?.getAttribute("data-size-presentation") === "numeric" ? "numeric" : "apparel";
 
   const markup = (await getRuntimeMarkup()).kaideco;
   const nextPrice = applyMarkupToPrice(data?.price, markup);
@@ -65,13 +66,13 @@ export async function handleKai(data: ProviderResult, context: LiveStockContext)
     stockBadge.style.background = "#a33a3a";
   }
 
-  const normalizedSizes = Array.isArray(data?.sizes) ? data.sizes.filter(Boolean) : [];
+  const displayedSizes = presentSizes(Array.isArray(data?.sizes) ? data.sizes : [], sizePresentation);
 
-  if (normalizedSizes.length > 0) {
+  if (displayedSizes.length > 0) {
     setSizeRequirement(true);
-    renderNormalizedSizes(normalizedSizes);
+    renderNormalizedSizes(displayedSizes);
     availableSizesByColor.clear();
-    availableSizesByColor.set(-1, new Set(normalizedSizes));
+    availableSizesByColor.set(-1, new Set(displayedSizes));
     context.state.selectedColorId = -1;
     markUnavailableSizes(new Set(normalizedSizes));
   } else {

@@ -28,6 +28,8 @@ const SIZE_ALIAS_MAP: Record<string, string> = {
   XXXL: "XXXL",
 };
 
+export type SizePresentation = "apparel" | "numeric";
+
 /**
  * Normaliza un talle crudo a su forma canónica (XS, S, M, L, XL, XXL, XXXL)
  * Combina la lógica de normalizeSize (live) y normalizeLegacySize (fallback)
@@ -68,6 +70,24 @@ export function normalizeSizes(rawSizes: string[]): string[] {
   });
 
   return CANONICAL_ORDER.filter((size) => values.has(size));
+}
+
+/** Footwear keeps supplier numbers intact; apparel uses the S/M/L mapping. */
+export function presentSizes(rawSizes: string[], presentation: SizePresentation): string[] {
+  if (presentation === "apparel") return normalizeSizes(rawSizes);
+
+  const unique = Array.from(
+    new Set(rawSizes.map((size) => String(size ?? "").trim()).filter(Boolean)),
+  );
+
+  return unique.sort((left, right) => {
+    const leftNumber = Number(left.replace(",", "."));
+    const rightNumber = Number(right.replace(",", "."));
+    if (Number.isFinite(leftNumber) && Number.isFinite(rightNumber)) return leftNumber - rightNumber;
+    if (Number.isFinite(leftNumber)) return -1;
+    if (Number.isFinite(rightNumber)) return 1;
+    return left.localeCompare(right, "es");
+  });
 }
 
 /**

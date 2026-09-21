@@ -5,6 +5,8 @@ declare module "@components/ProductGallery.jsx" {
     name?: string;
     description?: string;
     id?: string;
+    categoryName?: string;
+    subcategoryNames?: string[];
   }>;
   export default ProductGallery;
 }
