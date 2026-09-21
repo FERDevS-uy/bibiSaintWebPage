@@ -12,7 +12,7 @@ export default function ProductForm({ productId }: { productId?: string }) {
     form, isEditing, loading, saving, notification, setNotification,
     priceError, availableCategories, categoriesLoading, availableSubcategories,
     newImageUrl, setNewImageUrl, showImageUrlInput, setShowImageUrlInput,
-    uploadingImage, addImage, removeImage, moveImage, handleImageUpload,
+    uploadingImage, uploadProgress, addImage, removeImage, moveImage, handleImageUpload,
     colorForm, setColorForm, showColorForm, setShowColorForm,
     editingColorIndex, setEditingColorIndex, colorSizeInput, setColorSizeInput,
     toggleColorImage, setColorMainImage, toggleColorSize, addCustomSize, removeColorSize,
@@ -217,6 +217,7 @@ export default function ProductForm({ productId }: { productId?: string }) {
         <ImageGallery
           images={form.images}
           uploadingImage={uploadingImage}
+          uploadProgress={uploadProgress}
           showUrlInput={showImageUrlInput}
           urlValue={newImageUrl}
           onAddUrl={addImage}

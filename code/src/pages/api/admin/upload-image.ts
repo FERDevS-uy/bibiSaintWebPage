@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { getSupabaseAdmin } from "../../../server/supabase";
 import { verifyAdmin } from "../../../server/auth";
+import { validateImageUploadBatch } from "../../../utils/adminImageUpload";
 
 export const POST: APIRoute = async ({ request }) => {
   if (!await verifyAdmin(request)) {
@@ -21,16 +22,9 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      return new Response(JSON.stringify({ error: "La imagen no puede superar los 5 MB" }), {
-        status: 400,
-        headers: { "content-type": "application/json" },
-      });
-    }
-
-    const ext = file.name.split(".").pop()?.toLowerCase();
-    if (!ext || !["jpg", "jpeg", "png", "webp"].includes(ext)) {
-      return new Response(JSON.stringify({ error: "Formato no soportado. Usá jpg, jpeg, png o webp" }), {
+    const { rejectedFiles } = validateImageUploadBatch([file]);
+    if (rejectedFiles.length > 0) {
+      return new Response(JSON.stringify({ error: rejectedFiles[0].reason }), {
         status: 400,
         headers: { "content-type": "application/json" },
       });

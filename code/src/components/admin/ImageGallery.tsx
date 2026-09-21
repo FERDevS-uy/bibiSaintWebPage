@@ -3,6 +3,7 @@ import React from "react";
 interface ImageGalleryProps {
   images: string[];
   uploadingImage: boolean;
+  uploadProgress: { completed: number; total: number } | null;
   showUrlInput: boolean;
   urlValue: string;
   onAddUrl: (url: string) => void;
@@ -17,6 +18,7 @@ interface ImageGalleryProps {
 const ImageGallery = React.memo(function ImageGallery({
   images,
   uploadingImage,
+  uploadProgress,
   showUrlInput,
   urlValue,
   onAddUrl,
@@ -35,22 +37,22 @@ const ImageGallery = React.memo(function ImageGallery({
             {uploadingImage ? (
               <>
                 <span style={btnSpinner} />
-                Subiendo...
+                Subiendo {uploadProgress ? `(${uploadProgress.completed}/${uploadProgress.total})` : "..."}
               </>
             ) : (
               <>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                Subir archivo
+                Subir imágenes
               </>
             )}
-            <input type="file" accept="image/jpeg,image/png,image/webp" onChange={onUpload} style={{ display: "none" }} disabled={uploadingImage} />
+            <input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={onUpload} style={{ display: "none" }} disabled={uploadingImage} />
           </label>
           <button type="button" onClick={onToggleUrlInput} className="admin-btn admin-btn-ghost">
             {showUrlInput ? "Cancelar" : "Pegar URL"}
           </button>
         </div>
         <p style={{ fontSize: "0.75rem", color: "var(--admin-text-secondary)", margin: 0, lineHeight: 1.4 }}>
-          Las imágenes de la galería están disponibles para seleccionar en cada variante de color.
+          Elegí varias imágenes a la vez: máximo 20 por producto y 1 MB por archivo. Están disponibles para seleccionar en cada variante de color.
         </p>
       </div>
 

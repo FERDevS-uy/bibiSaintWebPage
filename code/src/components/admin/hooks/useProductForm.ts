@@ -14,6 +14,7 @@ import {
   getDisplaySubcategories,
 } from "../../../utils/categoryNormalization";
 import { setPendingToast } from "../toastUtils";
+import { validateImageUploadBatch } from "../../../utils/adminImageUpload";
 
 export interface ColorEntry {
   id: number;
@@ -71,6 +72,7 @@ export function useProductForm(productId?: string) {
   const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [priceError, setPriceError] = useState<string | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ completed: number; total: number } | null>(null);
 
   const nameInputRef = useRef<HTMLInputElement>(null);
   const priceInputRef = useRef<HTMLInputElement>(null);
@@ -244,26 +246,47 @@ export function useProductForm(productId?: string) {
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    if (file.size > 5 * 1024 * 1024) {
-      notify("error", "La imagen no puede superar los 5 MB");
+    const files = Array.from(e.target.files ?? []);
+    e.target.value = "";
+    if (files.length === 0) return;
+
+    const { validFiles, rejectedFiles } = validateImageUploadBatch(files, form.images.length);
+    if (validFiles.length === 0) {
+      notify("error", rejectedFiles[0]?.reason ?? "No hay imágenes válidas para subir");
       return;
     }
-    const ext = file.name.split(".").pop()?.toLowerCase();
-    if (!ext || !["jpg", "jpeg", "png", "webp"].includes(ext)) {
-      notify("error", "Formato no soportado. Usá jpg, jpeg, png o webp");
-      return;
-    }
+
     setUploadingImage(true);
+    setUploadProgress({ completed: 0, total: validFiles.length });
+    const uploadedUrls: string[] = [];
+    let failedUploads = 0;
     try {
-      const url = await uploadImageApi(file);
-      addImage(url);
-      notify("ok", "Imagen subida correctamente");
-    } catch (e: any) {
-      notify("error", "Error al subir imagen: " + (e?.message || "Error desconocido"));
+      for (const [index, file] of validFiles.entries()) {
+        try {
+          uploadedUrls.push(await uploadImageApi(file));
+        } catch {
+          failedUploads += 1;
+        }
+        setUploadProgress({ completed: index + 1, total: validFiles.length });
+      }
+
+      if (uploadedUrls.length > 0) {
+        setForm((prev) => ({
+          ...prev,
+          images: [...prev.images, ...uploadedUrls].slice(0, 20),
+        }));
+      }
+
+      const skipped = rejectedFiles.length + failedUploads;
+      if (skipped > 0) {
+        notify("error", `${uploadedUrls.length} imagen(es) subida(s); ${skipped} no se pudieron cargar.`);
+      } else {
+        notify("ok", `${uploadedUrls.length} imagen(es) subida(s) correctamente`);
+      }
+    } finally {
+      setUploadingImage(false);
+      setUploadProgress(null);
     }
-    setUploadingImage(false);
   };
 
   const toggleColorImage = (url: string) => {
@@ -440,6 +463,7 @@ export function useProductForm(productId?: string) {
     newImageUrl, setNewImageUrl,
     showImageUrlInput, setShowImageUrlInput,
     uploadingImage,
+    uploadProgress,
     addImage,
     removeImage,
     moveImage,
