@@ -224,14 +224,20 @@ export async function buildPlan(
     const originalPrice = p.original_price ?? null;
     const enOferta = Boolean(p.en_oferta);
     const availability = p.active ? "available" : "unavailable";
-    let action: SyncActionType = p.active && p.price ? "create" : "unchanged";
-    let reason = p.active ? "Disponible en catálogo" : "Sin variaciones seleccionables";
+    const image = planThumbnail(p);
+    const canCreate = Boolean(image);
+    let action: SyncActionType = p.active && p.price && canCreate ? "create" : "unchanged";
+    let reason = p.active
+      ? p.price && !canCreate
+        ? "Sin foto del proveedor: no se creará"
+        : "Disponible en catálogo"
+      : "Sin variaciones seleccionables";
     const baseChanges = prev ? martinaChanges(p, prev) : { ...p };
     // Only a new item outside the permitted Martina clothing taxonomy needs
     // a decision. Existing products always retain the internal category.
     const needsCategoryDecision = Boolean(prev
       ? "categories" in baseChanges
-      : p.active && p.price && knownSourceCategories !== undefined && !knownSourceCategories.includes(p.categories?.name ?? ""));
+      : p.active && p.price && canCreate && knownSourceCategories !== undefined && !knownSourceCategories.includes(p.categories?.name ?? ""));
     const override = overrides[p.id];
     if (override !== undefined && !needsCategoryDecision) {
       throw new Error(`La categoría de ${p.id} no admite decisión por ítem: no es una fila discrepante.`);
@@ -263,7 +269,7 @@ export async function buildPlan(
       originalPrice: prev && !("original_price" in changes) ? prev.original_price : originalPrice,
       enOferta: prev && !("en_oferta" in changes) ? prev.en_oferta : enOferta,
       action, availability, reason, priceChanged, availabilityChanged,
-      image: planThumbnail(p), needsCategoryDecision };
+      image, needsCategoryDecision };
   });
   for (const [id, observation] of observations) {
     const prev = existing.get(id);
@@ -383,7 +389,108 @@ export interface ProductRepository {
   upsert(products: ProductRow[]): Promise<{ upserted: number; errors: number }>;
 }
 
+export interface MartinaApplyFailure {
+  id: string;
+  action: "create" | "update" | "deactivate";
+  error: string;
+}
+
+export interface MartinaApplyPlanResult {
+  upserted: number;
+  errors: number;
+  failures: MartinaApplyFailure[];
+}
+
+/** Longitud máxima de un mensaje de fallo de apply expuesto al admin. */
+export const MAX_APPLY_ERROR_LENGTH = 300;
+
+/**
+ * Patrones que nunca deben llegar al admin: tokens, secretos y credenciales
+ * que a veces viajan dentro de `error.message` de Supabase/PostgREST.
+ * Denylist acotada: el resto del mensaje se conserva para diagnóstico.
+ */
+const APPLY_ERROR_SECRET_PATTERNS: RegExp[] = [
+  /eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*/g,
+  /\bbearer\s+[A-Za-z0-9._~+/-]+=?/gi,
+  /\b(api[_-]?key|secret|password|passwd|pwd|access[_-]?token|refresh[_-]?token|service[_-]?role|private[_-]?key|sb_publishable|sb_secret)\b\s*[:=]\s*['"]?\S+['"]?/gi,
+  /\bpostgres(ql)?:\/\/\S+/gi,
+];
+
+/**
+ * Sanitiza un mensaje de error de persistencia antes de exponerlo al admin.
+ * Redacta secretos/tokens/credenciales, colapsa espacios y trunca.
+ * Nunca devuelve SQL crudo adicional ni el mensaje original sin filtrar:
+ * solo el texto ya redactado (o un fallback genérico si queda vacío).
+ */
+export function sanitizeApplyErrorMessage(raw: unknown, fallback = "La base no confirmó la mutación."): string {
+  const candidate = typeof raw === "string" ? raw : (raw as { message?: unknown } | null)?.message;
+  if (typeof candidate !== "string" || !candidate.trim()) return fallback;
+  let clean = candidate;
+  for (const pattern of APPLY_ERROR_SECRET_PATTERNS) {
+    pattern.lastIndex = 0;
+    clean = clean.replace(pattern, "[redacted]");
+  }
+  clean = clean.replace(/\s+/g, " ").trim().slice(0, MAX_APPLY_ERROR_LENGTH);
+  return clean || fallback;
+}
+
 type SupabaseLike = { from: (table: string) => any };
+
+/**
+ * Campos del guard optimista del apply: la mutación solo se aplica si la fila
+ * coincide exactamente en estos 9 campos (null via IS NULL, objetos via JSON).
+ * Ninguno es secreto (precios/categorías/flags), por eso pueden loguearse.
+ */
+const MARTINA_GUARD_FIELDS = ["active", "source", "external_id", "price", "original_price", "en_oferta", "auto_update_price", "temporary_price", "categories"] as const;
+export type MartinaGuardField = (typeof MARTINA_GUARD_FIELDS)[number];
+
+/**
+ * Serialización canónica para comparar valores JSON del guard: orden de
+ * claves insensitive y recursiva. Postgres normaliza el orden de claves al
+ * leer un jsonb, mientras que el snapshot del preview preserva el orden
+ * serializado — comparar con JSON.stringify crudo reporta falsos mismatch.
+ * La semántica replica a JSON.stringify (omite undefined/funciones/símbolos
+ * en objetos, undefined→null en arrays); los arrays preservan su orden.
+ */
+function canonicalJson(value: unknown): string {
+  if (Array.isArray(value))
+    return `[${value.map((item) => (item === undefined ? "null" : canonicalJson(item))).join(",")}]`;
+  if (typeof value === "object" && value !== null) {
+    const entries = Object.entries(value as Record<string, unknown>)
+      .filter(([, entryValue]) => entryValue !== undefined && typeof entryValue !== "function" && typeof entryValue !== "symbol")
+      .sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0));
+    return `{${entries.map(([key, entryValue]) => `${JSON.stringify(key)}:${canonicalJson(entryValue)}`).join(",")}}`;
+  }
+  return JSON.stringify(value) ?? "null";
+}
+
+function normalizeGuardValue(value: unknown): string | null {
+  if (value == null) return null;
+  return typeof value === "object" ? canonicalJson(value) : String(value);
+}
+
+/**
+ * Compara el snapshot `previous` del plan contra la fila actual y devuelve los
+ * campos del guard que derivaron. Solo nombres de campo, sin valores.
+ */
+export function guardMismatchFields(
+  previous: SyncExistingProduct,
+  current: SyncExistingProduct,
+): MartinaGuardField[] {
+  const mismatched: MartinaGuardField[] = [];
+  for (const field of MARTINA_GUARD_FIELDS) {
+    if (normalizeGuardValue(previous[field]) !== normalizeGuardValue(current[field])) {
+      mismatched.push(field);
+    }
+  }
+  return mismatched;
+}
+
+/** Trunca un valor para el log server-side (nunca viaja al cliente). */
+function truncateForLog(value: unknown, max = 120): string {
+  const text = typeof value === "object" ? canonicalJson(value) : String(value);
+  return text.length > max ? `${text.slice(0, max)}…` : text;
+}
 
 async function readProductsByIds(
   client: SupabaseLike,
@@ -423,9 +530,10 @@ export class SupabaseProductRepository implements ProductRepository {
     return readActiveMartinaProducts(getSupabaseAdmin());
   }
 
-  async applyMartinaPlan(plan: SyncPlan): Promise<{ upserted: number; errors: number }> {
+  async applyMartinaPlan(plan: SyncPlan): Promise<MartinaApplyPlanResult> {
     const client: SupabaseLike = getSupabaseAdmin();
     let upserted = 0;
+    const failures: MartinaApplyFailure[] = [];
     for (const mutation of plan.mutations) {
       let query;
       if (!mutation.previous) {
@@ -433,18 +541,55 @@ export class SupabaseProductRepository implements ProductRepository {
       } else {
         const previous = mutation.previous;
         query = client.from("products").update(mutation.changes).eq("id", mutation.id);
-        for (const field of ["active", "source", "external_id", "price", "original_price", "en_oferta", "auto_update_price", "temporary_price", "categories"] as const) {
+        for (const field of MARTINA_GUARD_FIELDS) {
           const value = previous[field];
           query = value == null ? query.is(field, null) : query.eq(field, typeof value === "object" ? JSON.stringify(value) : value);
         }
       }
       const { data, error } = await query.select("id");
       if (error || data?.length !== 1) {
-        return { upserted, errors: plan.mutations.length - upserted };
+        const action: MartinaApplyFailure["action"] = !mutation.previous
+          ? "create"
+          : mutation.changes.active === false
+            ? "deactivate"
+            : "update";
+        // Diagnóstico server-side (nunca expuesto al cliente): qué campo(s)
+        // del guard derivaron entre preview y apply. Los campos del guard no
+        // son secretos, así que sus valores pueden quedar en el log.
+        let hint = "";
+        if (mutation.previous) {
+          try {
+            const current = (await readProductsByIds(client, [mutation.id])).get(mutation.id);
+            if (!current) {
+              console.warn(`[martina-apply] guard mismatch id=${mutation.id} action=${action} shape=row-missing`);
+              hint = " La fila ya no existe en la base. Generá un preview nuevo.";
+            } else {
+              const mismatched = guardMismatchFields(mutation.previous, current);
+              if (mismatched.length > 0) {
+                const detail = mismatched
+                  .map((field) => `${field}:${truncateForLog((mutation.previous as unknown as Record<string, unknown>)[field])}→${truncateForLog((current as unknown as Record<string, unknown>)[field])}`)
+                  .join(";");
+                console.warn(`[martina-apply] guard mismatch id=${mutation.id} action=${action} fields=${mismatched.join(",")} detail=${detail}`);
+                hint = ` Guard optimista: ${mismatched.join(", ")} cambió desde el preview. Generá un preview nuevo.`;
+              } else if (!error) {
+                console.warn(`[martina-apply] guard mismatch id=${mutation.id} action=${action} shape=matched-but-not-applied`);
+              }
+            }
+          } catch (diagnosisError) {
+            console.warn(`[martina-apply] guard diagnosis failed id=${mutation.id}`, diagnosisError);
+          }
+        }
+        const base = sanitizeApplyErrorMessage(error?.message ?? "La base no confirmó la mutación.");
+        failures.push({
+          id: mutation.id,
+          action,
+          error: hint ? `${base}${hint}`.slice(0, MAX_APPLY_ERROR_LENGTH) : base,
+        });
+        continue;
       }
       upserted++;
     }
-    return { upserted, errors: 0 };
+    return { upserted, errors: failures.length, failures };
   }
 
   async upsert(products: ProductRow[]): Promise<{ upserted: number; errors: number }> {
@@ -620,9 +765,52 @@ export async function generatePreview(categoryOverrides: Record<string, MartinaC
   };
 }
 
+export type MartinaApplyConflictCause =
+  | "write-disabled"
+  | "preview-invalid"
+  | "preview-expired"
+  | "campaign-changed"
+  | "campaign-expired"
+  | "plan-changed"
+  | "overrides-invalid";
+
+export interface MartinaApplyConflict {
+  cause: MartinaApplyConflictCause;
+  error: string;
+}
+
+/**
+ * Distingue la causa del 409 del apply sin exponer secretos (sin HMAC, tokens
+ * ni SQL): preview vencido vs campaña que cambió vs hash del plan que cambió.
+ * El código de campaña no es secreto y se incluye para diagnóstico del admin.
+ */
+export function describeApplyConflict(
+  payload: Pick<PreviewTokenPayload, "exp" | "campaignCode" | "planHash">,
+  campaignCode: string,
+  planHash: string,
+  nowMs = Date.now(),
+): MartinaApplyConflict | null {
+  if (nowMs >= payload.exp) {
+    return { cause: "preview-expired", error: "El preview venció. Generá un preview nuevo." };
+  }
+  if (campaignCode !== payload.campaignCode) {
+    return {
+      cause: "campaign-changed",
+      error: `La campaña de Martina cambió (actual ${campaignCode}). Generá un preview nuevo.`,
+    };
+  }
+  if (planHash !== payload.planHash) {
+    return {
+      cause: "plan-changed",
+      error: "El catálogo cambió desde el preview (hash del plan). Generá un preview nuevo.",
+    };
+  }
+  return null;
+}
+
 export type ApplyResult =
-  | { ok: true; upserted: number; errors: number; summary: SyncPlanSummary; campaignCode: string }
-  | { ok: false; status: number; error: string };
+  | { ok: true; upserted: number; errors: number; failures: MartinaApplyFailure[]; summary: SyncPlanSummary; campaignCode: string }
+  | { ok: false; status: number; error: string; cause: MartinaApplyConflictCause };
 
 /** Aplica un preview válido: revalida contra Martina antes de persistir. */
 export async function applyMartinaSync(token: string, knownSourceCategories?: string[], assignableSubcategories?: string[]): Promise<ApplyResult> {
@@ -630,6 +818,7 @@ export async function applyMartinaSync(token: string, knownSourceCategories?: st
     return {
       ok: false,
       status: 403,
+      cause: "write-disabled",
       error: "Escritura deshabilitada: MARTINA_SYNC_APPLY_ENABLED no es \"true\".",
     };
   }
@@ -639,11 +828,27 @@ export async function applyMartinaSync(token: string, knownSourceCategories?: st
     return {
       ok: false,
       status: 403,
+      cause: "preview-invalid",
       error: "Preview inválido o vencido. Generá un preview nuevo.",
     };
   }
 
-  const data = await collectMartinaData("598");
+  let data: MartinaSyncData;
+  try {
+    data = await collectMartinaData("598");
+  } catch (collectError) {
+    const message = collectError instanceof Error ? collectError.message : String(collectError ?? "");
+    if (/no vigente/i.test(message)) {
+      console.error(`[martina-apply] campaign expired: ${message}`);
+      return {
+        ok: false,
+        status: 409,
+        cause: "campaign-expired",
+        error: "La campaña de Martina ya no está vigente. Generá un preview nuevo.",
+      };
+    }
+    throw collectError;
+  }
   const repository = new SupabaseProductRepository("Martina");
   // The plan is rebuilt WITH the signed overrides: unknown ids, shape
   // violations, non-discrepant targets or taxonomy mismatches throw here and
@@ -655,15 +860,14 @@ export async function applyMartinaSync(token: string, knownSourceCategories?: st
     return {
       ok: false,
       status: 409,
+      cause: "overrides-invalid",
       error: "Las categorías por ítem del preview son inválidas. Generá un preview nuevo.",
     };
   }
-  if (plan.hash !== payload.planHash || data.campaign.code !== payload.campaignCode || Date.now() >= payload.exp) {
-    return {
-      ok: false,
-      status: 409,
-      error: "Los datos de Martina cambiaron desde el preview. Generá un preview nuevo.",
-    };
+  const conflict = describeApplyConflict(payload, data.campaign.code, plan.hash);
+  if (conflict) {
+    console.warn(`[martina-apply] apply conflict cause=${conflict.cause} campaign=${data.campaign.code}`);
+    return { ok: false, status: 409, ...conflict };
   }
 
   const result = await repository.applyMartinaPlan(plan);
@@ -672,6 +876,7 @@ export async function applyMartinaSync(token: string, knownSourceCategories?: st
     ok: true,
     upserted: result.upserted,
     errors: result.errors,
+    failures: result.failures,
     summary: plan.summary,
     campaignCode: data.campaign.code,
   };

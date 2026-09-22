@@ -4,7 +4,7 @@
 //        + preview firmado/no vencido + revalidación contra Martina.
 import { hasTrustedOrigin } from "@server/security/origin";
 import { verifyAdmin } from "@server/auth";
-import { applyMartinaSync, getMartinaAssignableSubcategories, MARTINA_ALLOWED_SOURCE_CATEGORIES } from "@server/providers/martinaSync";
+import { applyMartinaSync, getMartinaAssignableSubcategories, MARTINA_ALLOWED_SOURCE_CATEGORIES, sanitizeApplyErrorMessage } from "@server/providers/martinaSync";
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -38,11 +38,11 @@ export async function POST({ request }: { request: Request }) {
     const assignableSubcategories = await getMartinaAssignableSubcategories();
     const result = await applyMartinaSync(token, [...MARTINA_ALLOWED_SOURCE_CATEGORIES], assignableSubcategories);
     if (!result.ok) {
-      return json({ ok: false, error: result.error }, result.status);
+      return json({ ok: false, error: result.error, cause: result.cause }, result.status);
     }
     return json(result);
   } catch (e: any) {
     console.error("martina apply error:", e?.message || e);
-    return json({ ok: false, error: e?.message || "Error interno" }, 500);
+    return json({ ok: false, error: sanitizeApplyErrorMessage(e?.message, "Error interno") }, 500);
   }
 }

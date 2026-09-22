@@ -10,6 +10,7 @@ export const fixtures: {
   client: MemoryClient;
   otherProducts: any[];
   invalidations: number;
+  writeErrors: string[];
 };
 
 export function memoryClient(initial?: any[]): MemoryClient;

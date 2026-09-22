@@ -479,10 +479,6 @@ export async function syncMartina(
       });
     });
 
-    if (allImages.length === 0 && first?.mainImage) {
-      allImages.push(`${MARTINA_IMAGE_BASE}${first.mainImage}`);
-    }
-
     const colorsData = colors.map((c) => ({
       id: c.id,
       hex: c.hex,

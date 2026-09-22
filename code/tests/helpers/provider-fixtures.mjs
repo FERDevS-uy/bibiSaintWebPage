@@ -10,6 +10,7 @@ export const fixtures = {
   client: null,
   otherProducts: [],
   invalidations: 0,
+  writeErrors: [],
 };
 globalThis.__providerFixtures = fixtures;
 globalThis.fetch = async () => {
@@ -152,10 +153,16 @@ export function memoryClient(initial = []) {
               .filter((row) => predicates.every((predicate) => predicate(row)));
             if (range) selected = selected.slice(range[0], range[1] + 1);
             if (operation?.type === "update") {
+              const writeError = fixtures.writeErrors.shift();
+              if (writeError)
+                return resolve({ data: null, error: { message: writeError } });
               for (const row of selected)
                 rows.set(row.id, { ...row, ...operation.changes });
               if (selected.length) writes.push(operation);
             } else if (operation) {
+              const writeError = fixtures.writeErrors.shift();
+              if (writeError)
+                return resolve({ data: null, error: { message: writeError } });
               const incoming = Array.isArray(operation.changes)
                 ? operation.changes
                 : [operation.changes];

@@ -89,6 +89,11 @@ interface MartinaApplyResponse {
   error?: string;
   upserted?: number;
   errors?: number;
+  failures?: Array<{
+    id: string;
+    action: "create" | "update" | "deactivate";
+    error: string;
+  }>;
   summary?: { create: number; update: number; unchanged: number };
   campaignCode?: string;
 }
@@ -1000,11 +1005,21 @@ export default function ProvidersPanel() {
                           </span>
                         </td>
                         <td style={tdStyle}>
-                          {item.name}{" "}
+                          <div>{item.name}</div>
                           <span
-                            style={{ color: "var(--admin-text-secondary)" }}
+                            style={{
+                              display: "inline-block",
+                              marginTop: 4,
+                              padding: "2px 6px",
+                              borderRadius: 4,
+                              background: "var(--admin-bg, #f3f4f6)",
+                              color: "var(--admin-text-secondary)",
+                              fontFamily: "monospace",
+                              fontSize: "0.75rem",
+                              fontWeight: 700,
+                            }}
                           >
-                            ({item.id})
+                            Ref. {item.id}
                           </span>
                           <div>{item.reason}</div>
                         </td>
@@ -1065,15 +1080,24 @@ export default function ProvidersPanel() {
               </button>
 
               {applyResult?.ok && (
-                <span
-                  style={{ color: "var(--admin-success)", fontSize: "0.85rem" }}
-                >
-                  ✓ Aplicado: {applyResult.upserted} productos
-                  {(applyResult.errors ?? 0) > 0 &&
-                    `, ${applyResult.errors} errores`}
-                  {applyResult.summary &&
-                    ` (${applyResult.summary.create} crear, ${applyResult.summary.update} actualizar)`}
-                </span>
+                <div style={{ fontSize: "0.85rem" }}>
+                  <span style={{ color: "var(--admin-success)" }}>
+                    ✓ Aplicado: {applyResult.upserted} productos
+                    {(applyResult.errors ?? 0) > 0 &&
+                      `, ${applyResult.errors} errores`}
+                    {applyResult.summary &&
+                      ` (${applyResult.summary.create} crear, ${applyResult.summary.update} actualizar)`}
+                  </span>
+                  {(applyResult.failures?.length ?? 0) > 0 && (
+                    <ul style={{ margin: "0.5rem 0 0", paddingLeft: "1.1rem", color: "var(--admin-danger)" }}>
+                      {applyResult.failures!.map((failure) => (
+                        <li key={`${failure.action}-${failure.id}`}>
+                          Ref. {failure.id} ({ACTION_LABEL[failure.action]}): {failure.error}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               )}
             </div>
           </div>

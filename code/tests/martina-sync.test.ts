@@ -13,6 +13,9 @@ const {
   SupabaseProductRepository,
   buildPlan,
   signPreview,
+  sanitizeApplyErrorMessage,
+  describeApplyConflict,
+  guardMismatchFields,
 } = await import("../src/server/providers/martinaSync.ts");
 const { previewAllProviders, syncAllProviders } =
   await import("../src/server/providers/sync.ts");
@@ -40,7 +43,7 @@ const entry = (id = "1", sizes = ["UNICO"]) => ({
   name: "Fixture",
   code: "100",
   price: "100",
-  images: [],
+  images: ["100_10_1.jpg"],
   variation: {
     id: "tipoVenta",
     variationValues: [
@@ -94,6 +97,7 @@ beforeEach(() => {
   fixtures.client = memoryClient([existing()]);
   fixtures.otherProducts = [];
   fixtures.invalidations = 0;
+  fixtures.writeErrors = [];
   fixtures.transport = async (raw: string) => {
     const url = new URL(raw);
     requests.push(url);
@@ -272,16 +276,75 @@ test("override on a non-discrepant row is rejected without writes", async () => 
   assert.deepEqual(fixtures.client.rows.get("mdt-1"), existing());
 });
 
-test("plan items carry the first supplier image and null when the supplier exposes none", async () => {
+test("plan items carry the first supplier image and skip a new product without one", async () => {
   fixtures.client = memoryClient([]);
-  catalog = [{ ...entry("1"), images: ["100_10_1.jpg", "100_10_2.jpg"] }, entry("2")];
+  catalog = [
+    { ...entry("1"), images: ["100_10_1.jpg", "100_10_2.jpg"] },
+    { ...entry("2"), images: [], mainImage: "100.jpg" },
+  ];
   const preview = await generatePreview();
-  assert.equal(preview.summary.create, 2);
+  assert.equal(preview.summary.create, 1);
+  assert.equal(preview.summary.unchanged, 1);
   const withPhoto = preview.plan.find((item) => item.id === "mdt-1");
   const withoutPhoto = preview.plan.find((item) => item.id === "mdt-2");
   assert.equal(withPhoto?.image, "https://pol21.martinaditrento.com/images/products/md/100_10_1.jpg");
   assert.equal(withoutPhoto?.image, null);
+  assert.equal(withoutPhoto?.action, "unchanged");
+  assert.equal(withoutPhoto?.reason, "Sin foto del proveedor: no se creará");
   assert.equal(withPhoto?.needsCategoryDecision, false);
+});
+
+test("apply reports each failed mutation and continues with independent rows", async () => {
+  fixtures.client = memoryClient([]);
+  catalog = [entry("1"), entry("2")];
+  fixtures.writeErrors = ["DELETE requires a WHERE clause"];
+
+  const preview = await generatePreview();
+  const result = await applyMartinaSync(preview.token);
+
+  assert.equal(result.ok, true);
+  if (!result.ok) return;
+  assert.equal(result.upserted, 1);
+  assert.equal(result.errors, 1);
+  assert.deepEqual(result.failures, [{
+    id: "mdt-1",
+    action: "create",
+    error: "DELETE requires a WHERE clause",
+  }]);
+  assert.ok(fixtures.client.rows.has("mdt-2"));
+});
+
+test("apply failures redact secrets and tokens from Supabase messages", async () => {
+  fixtures.client = memoryClient([]);
+  catalog = [entry("1"), entry("2")];
+  const jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+  fixtures.writeErrors = [`insert failed Bearer ${jwt} secret=topsecret postgres://user:pass@host/db`];
+
+  const preview = await generatePreview();
+  const result = await applyMartinaSync(preview.token);
+
+  assert.equal(result.ok, true);
+  if (!result.ok) return;
+  assert.equal(result.upserted, 1);
+  assert.equal(result.errors, 1);
+  assert.equal(result.failures.length, 1);
+  assert.equal(result.failures[0].id, "mdt-1");
+  assert.equal(result.failures[0].action, "create");
+  assert.doesNotMatch(result.failures[0].error, /topsecret/);
+  assert.doesNotMatch(result.failures[0].error, /SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c/);
+  assert.doesNotMatch(result.failures[0].error, /user:pass@host/);
+  assert.match(result.failures[0].error, /\[redacted\]/);
+  assert.ok(fixtures.client.rows.has("mdt-2"));
+});
+
+test("sanitizeApplyErrorMessage keeps diagnosis but caps length and fallbacks", async () => {
+  assert.equal(sanitizeApplyErrorMessage("DELETE requires a WHERE clause"), "DELETE requires a WHERE clause");
+  assert.equal(sanitizeApplyErrorMessage(undefined), "La base no confirmó la mutación.");
+  assert.equal(sanitizeApplyErrorMessage("   "), "La base no confirmó la mutación.");
+  assert.equal(sanitizeApplyErrorMessage(undefined, "Error interno"), "Error interno");
+  const long = sanitizeApplyErrorMessage("x".repeat(500));
+  assert.equal(long.length, 300);
+  assert.equal(sanitizeApplyErrorMessage({ message: 42 }), "La base no confirmó la mutación.");
 });
 
 test("one campaign snapshot groups distinct IDs and keeps raw selectable sizes", async () => {
@@ -710,7 +773,7 @@ for (const incomingCount of [20, 12]) {
       if (url.pathname.endsWith("config")) return campaign();
       if (url.searchParams.has("productId")) return [];
       if (url.searchParams.get("productLineId") === "3325")
-        return incomingIds.toReversed().map((id) => entry(id));
+        return incomingIds.toReversed().map((id) => ({ ...entry(id), images: [] }));
       return [];
     };
     const assertBudget = () => {
@@ -933,7 +996,15 @@ test("conditional write refuses an active baseline changed after revalidation", 
   fixtures.client.rows.get(row.id).temporary_price = "999";
   assert.deepEqual(
     await new SupabaseProductRepository("Martina").applyMartinaPlan(plan),
-    { upserted: 0, errors: 1 },
+    {
+      upserted: 0,
+      errors: 1,
+      failures: [{
+        id: "mdt-1",
+        action: "deactivate",
+        error: "La base no confirmó la mutación. Guard optimista: temporary_price cambió desde el preview. Generá un preview nuevo.",
+      }],
+    },
   );
   assert.equal(fixtures.client.writes.length, 0);
 });
@@ -963,7 +1034,13 @@ test("preview reads a future campaign but apply remains blocked", async () => {
   config.data.validFrom = "2098-01-01";
   const preview = await generatePreview();
   assert.equal(preview.campaign.vigente, false);
-  await assert.rejects(applyMartinaSync(preview.token), /no vigente/);
+  const result = await applyMartinaSync(preview.token);
+  assert.equal(result.ok, false);
+  if (result.ok) return;
+  assert.equal(result.status, 409);
+  assert.equal(result.cause, "campaign-expired");
+  assert.match(result.error, /vigente/);
+  assert.deepEqual(fixtures.client.writes, []);
 });
 
 test("stock client returns unknown on HTTP and network errors without replacing last result", async () => {
@@ -1116,4 +1193,190 @@ test("signed plan does not depend on absent lookup completion order", async () =
     new Map([...observations].reverse()),
   );
   assert.equal(first.hash, reversed.hash);
+});
+
+test("guard mismatch reports the drifted field in the log and the failure", async () => {
+  const row = existing();
+  const plan = await buildPlan(
+    [],
+    new Map([[row.id, row]]),
+    "202609",
+    new Map([[row.id, { availability: "unavailable", reason: "Fixture" }]]),
+  );
+  fixtures.client.rows.get(row.id).price = "999";
+  assert.deepEqual(guardMismatchFields(row, fixtures.client.rows.get(row.id)), ["price"]);
+  assert.deepEqual(guardMismatchFields(row, structuredClone(row)), []);
+  const warnings: string[] = [];
+  const originalWarn = console.warn;
+  console.warn = (...args: unknown[]) => {
+    warnings.push(args.map((part) => String(part)).join(" "));
+  };
+  try {
+    const result = await new SupabaseProductRepository("Martina").applyMartinaPlan(plan);
+    assert.equal(result.upserted, 0);
+    assert.equal(result.errors, 1);
+    assert.equal(result.failures[0].action, "deactivate");
+    assert.match(result.failures[0].error, /price/);
+    assert.ok(warnings.some((line) => line.includes("guard mismatch") && line.includes("price")));
+  } finally {
+    console.warn = originalWarn;
+  }
+  assert.equal(fixtures.client.writes.length, 0);
+});
+
+// --- T4: el snapshot del preview debe traer `categories` normalizado ---
+// Mock fiel a PostgREST: `select(cols)` proyecta columnas, así que si el
+// lector omite una columna el snapshot la trae como `undefined` (igual que
+// en producción), en lugar de la fila completa que devuelve memoryClient.
+function projectingClient(initial: any[] = []): any {
+  const rows: Map<string, any> = new Map(initial.map((row: any) => [row.id, structuredClone(row)]));
+  const writes: any[] = [];
+  return {
+    rows,
+    writes,
+    from() {
+      const predicates: Array<(row: any) => boolean> = [];
+      let columns: string[] | null = null;
+      let range: [number, number] | undefined;
+      let operation: { type: string; changes: any } | undefined;
+      const chain: any = {
+        select(cols: string) {
+          columns = cols.split(",").map((part: string) => part.trim());
+          return chain;
+        },
+        eq(field: string, value: any) {
+          predicates.push((row: any) =>
+            typeof row[field] === "object" && row[field] !== null
+              ? JSON.stringify(row[field]) === value
+              : row[field] === value,
+          );
+          return chain;
+        },
+        is(field: string, value: any) {
+          predicates.push((row: any) => (row[field] ?? null) === value);
+          return chain;
+        },
+        in(field: string, values: any[]) {
+          predicates.push((row: any) => values.includes(row[field]));
+          return chain;
+        },
+        like(field: string, pattern: string) {
+          predicates.push((row: any) => row[field]?.startsWith(pattern.replace(/%$/, "")));
+          return chain;
+        },
+        order() {
+          return chain;
+        },
+        range(start: number, end: number) {
+          range = [start, end];
+          return chain;
+        },
+        update(changes: any) {
+          operation = { type: "update", changes };
+          return chain;
+        },
+        then(resolve: (result: any) => void, reject: (error: any) => void) {
+          try {
+            let selected = [...rows.values()]
+              .sort((left: any, right: any) => left.id.localeCompare(right.id))
+              .filter((row: any) => predicates.every((predicate) => predicate(row)));
+            if (range) selected = selected.slice(range[0], range[1] + 1);
+            if (operation?.type === "update") {
+              for (const row of selected) rows.set(row.id, { ...row, ...operation.changes });
+              if (selected.length) writes.push(operation);
+            }
+            let out: any[] = structuredClone(selected);
+            if (columns) {
+              const picked: string[] = columns;
+              out = out.map((row: any) => Object.fromEntries(picked.map((name) => [name, row[name]])));
+            }
+            return resolve({ data: out, error: null });
+          } catch (error) {
+            return reject(error);
+          }
+        },
+      };
+      return chain;
+    },
+  };
+}
+
+test("T4 preview snapshot carries normalized categories and round-trips a deactivation", async () => {
+  const row: any = existing();
+  fixtures.client = projectingClient([row]);
+  const snapshot = await readActiveMartinaProducts(fixtures.client);
+  const previous: any = snapshot.get(row.id);
+  // Regresión T4: con el select anterior (sin categories) esto es undefined y
+  // el guard de escritura cae a IS NULL → 0 filas matchean → fallo sistemático.
+  assert.deepEqual(previous?.categories, row.categories);
+  // Paridad con readProductsByIds: price String, en_oferta Boolean,
+  // original_price String|null para los 9 campos del guard.
+  assert.equal(typeof previous?.price, "string");
+  assert.equal(previous?.en_oferta, false);
+  assert.equal(previous?.original_price, null);
+  const plan = await buildPlan(
+    [],
+    snapshot,
+    "202609",
+    new Map([[row.id, { availability: "unavailable", reason: "Fixture" }]]),
+  );
+  const result = await new SupabaseProductRepository("Martina").applyMartinaPlan(plan);
+  assert.deepEqual(result, { upserted: 1, errors: 0, failures: [] });
+  assert.equal(fixtures.client.rows.get(row.id).active, false);
+  assert.deepEqual(fixtures.client.writes, [{ type: "update", changes: { active: false } }]);
+});
+
+test("T4 guard comparison ignores JSON key order but catches real drift", () => {
+  const row: any = existing("1", {
+    categories: { name: "Ropa", count: 0, subcategories: [{ name: "Mujer", count: 2 }] },
+  });
+  const reordered: any = structuredClone(row);
+  reordered.categories = { subcategories: [{ count: 2, name: "Mujer" }], count: 0, name: "Ropa" };
+  assert.deepEqual(guardMismatchFields(row, reordered), []);
+  const drifted: any = structuredClone(row);
+  drifted.categories.subcategories[0].count = 3;
+  assert.deepEqual(guardMismatchFields(row, drifted), ["categories"]);
+});
+
+test("describeApplyConflict separates preview-expired, campaign-changed and plan-changed", () => {
+  const payload = { exp: 2000, campaignCode: "202609", planHash: "hash-1" };
+  assert.deepEqual(describeApplyConflict(payload, "202609", "hash-1", 1000), null);
+  const expired = describeApplyConflict(payload, "202609", "hash-1", 2000);
+  assert.equal(expired?.cause, "preview-expired");
+  assert.match(expired?.error ?? "", /venci/);
+  const campaign = describeApplyConflict(payload, "202610", "hash-1", 1000);
+  assert.equal(campaign?.cause, "campaign-changed");
+  assert.match(campaign?.error ?? "", /campa/);
+  assert.match(campaign?.error ?? "", /202610/);
+  const plan = describeApplyConflict(payload, "202609", "hash-2", 1000);
+  assert.equal(plan?.cause, "plan-changed");
+  assert.match(plan?.error ?? "", /hash/);
+});
+
+test("apply 409 carries a distinguishable cause without secrets", async () => {
+  const preview = await generatePreview();
+  const secret = process.env.SYNC_PREVIEW_SECRET!;
+  for (
+    const [label, token, cause, pattern] of [
+      ["campaign", await signPreview({ exp: preview.expiresAt, campaignCode: "202608", planHash: preview.hash }, secret), "campaign-changed", /campa/i],
+      ["hash", await signPreview({ exp: preview.expiresAt, campaignCode: preview.campaign.code, planHash: "different-plan" }, secret), "plan-changed", /cat.logo|hash/i],
+    ] as const
+  ) {
+    const result = await applyMartinaSync(token);
+    assert.equal(result.ok, false, label);
+    if (result.ok) continue;
+    assert.equal(result.status, 409, label);
+    assert.equal(result.cause, cause, label);
+    assert.match(result.error, pattern, label);
+    assert.doesNotMatch(result.error, /eyJ/);
+    assert.ok(!result.error.includes(token), label);
+    assert.ok(!result.error.includes(secret), label);
+  }
+  const invalid = await applyMartinaSync("bm90LXZhbGlk.c2lnbmF0dXJl");
+  assert.equal(invalid.ok, false);
+  if (!invalid.ok) {
+    assert.equal(invalid.status, 403);
+    assert.equal(invalid.cause, "preview-invalid");
+  }
+  assert.deepEqual(fixtures.client.writes, []);
 });

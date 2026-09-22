@@ -73,7 +73,7 @@ export async function readActiveMartinaProducts(client: {
     const { data, error } = await client
       .from("products")
       .select(
-        "id,name,price,en_oferta,original_price,colors,active,source,external_id,auto_update_price,temporary_price",
+        "id,name,price,en_oferta,original_price,colors,active,source,external_id,auto_update_price,temporary_price,categories",
       )
       .eq("active", true)
       .like("id", "mdt-%")
@@ -86,6 +86,7 @@ export async function readActiveMartinaProducts(client: {
         existing.set(row.id, {
           ...row,
           price: String(row.price ?? ""),
+          en_oferta: Boolean(row.en_oferta),
           original_price:
             row.original_price == null ? null : String(row.original_price),
         });
