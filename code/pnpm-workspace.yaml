@@ -5,3 +5,7 @@ allowBuilds:
   sharp: true
   workerd: true
   wrangler: true
+minimumReleaseAgeExclude:
+  - '@cloudflare/unenv-preset@2.16.2'
+  - miniflare@5.20260921.0-alpha
+  - wrangler@4.136.1

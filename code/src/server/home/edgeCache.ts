@@ -1,12 +1,7 @@
-import {
-  buildVersionedCacheKey,
-  resolveCatalogVersion,
-  type CatalogCacheEnv,
-} from "../catalog/edgeCache.ts";
-
 const HOME_CACHE_MAX_AGE_SECONDS = 60;
 const HOME_CACHE_STALE_WHILE_REVALIDATE_SECONDS = 300;
 const HOME_CACHE_CREATED_AT_HEADER = "X-Home-Edge-Cache-Created-At";
+const HOME_CACHE_KEY_PATH = "/.home-edge-cache/v2";
 
 type CacheStorageLike = {
   match: (request: Request) => Promise<Response | undefined>;
@@ -15,7 +10,7 @@ type CacheStorageLike = {
 
 type HomeCacheLocals = {
   runtime?: {
-    env?: CatalogCacheEnv;
+    env?: Record<string, unknown>;
     ctx?: { waitUntil?: (promise: Promise<unknown>) => void };
   };
 };
@@ -49,10 +44,7 @@ function withHomeCacheHeaders(
   createdAt: number,
 ): Response {
   const headers = new Headers(response.headers);
-  headers.set(
-    "cache-control",
-    `public, max-age=${HOME_CACHE_MAX_AGE_SECONDS}, s-maxage=${HOME_CACHE_MAX_AGE_SECONDS + HOME_CACHE_STALE_WHILE_REVALIDATE_SECONDS}, stale-while-revalidate=${HOME_CACHE_STALE_WHILE_REVALIDATE_SECONDS}`,
-  );
+  headers.set("cache-control", `public, max-age=${HOME_CACHE_MAX_AGE_SECONDS}`);
   headers.set("vary", "Accept-Encoding");
   headers.set("X-Home-Edge-Cache", cacheStatus);
   headers.set(HOME_CACHE_CREATED_AT_HEADER, String(createdAt));
@@ -63,8 +55,12 @@ function withHomeCacheHeaders(
   });
 }
 
-function responseFromCache(response: Response, cacheStatus: "HIT" | "STALE"): Response {
+function responseFromCache(response: Response, cacheStatus: "HIT" | "STALE", ageSeconds: number): Response {
   const headers = new Headers(response.headers);
+  const remainingFreshSeconds = cacheStatus === "HIT"
+    ? Math.max(0, Math.floor(HOME_CACHE_MAX_AGE_SECONDS - ageSeconds))
+    : 0;
+  headers.set("cache-control", `public, max-age=${remainingFreshSeconds}`);
   headers.set("X-Home-Edge-Cache", cacheStatus);
   return new Response(response.body, {
     status: response.status,
@@ -79,6 +75,7 @@ async function cacheHomeResponse(
   cacheRequest: Request | null,
   cacheStatus: "BYPASS" | "MISS",
   createdAt: number,
+  waitUntil?: (promise: Promise<unknown>) => void,
 ): Promise<Response> {
   if (response.status !== 200 || response.headers.has("set-cookie")) {
     return response;
@@ -86,14 +83,28 @@ async function cacheHomeResponse(
 
   const cacheableResponse = withHomeCacheHeaders(response, cacheStatus, createdAt);
   if (cache && cacheRequest) {
-    await cache.put(cacheRequest, cacheableResponse.clone());
+    const storedHeaders = new Headers(cacheableResponse.headers);
+    storedHeaders.set(
+      "cache-control",
+      `public, max-age=${HOME_CACHE_MAX_AGE_SECONDS + HOME_CACHE_STALE_WHILE_REVALIDATE_SECONDS}`,
+    );
+    const storedResponse = new Response(cacheableResponse.clone().body, {
+      status: cacheableResponse.status,
+      statusText: cacheableResponse.statusText,
+      headers: storedHeaders,
+    });
+    const put = cache.put(cacheRequest, storedResponse).catch(() => {
+      console.warn("[home:edge-cache] cache write failed");
+    });
+    if (waitUntil) waitUntil(put);
+    else await put;
   }
   return cacheableResponse;
 }
 
 /**
- * Caches the fully rendered public home document. The cache key includes the
- * catalog version, so catalog writes naturally move requests to a new entry.
+ * Caches anonymous home HTML independently from catalog-version lookup. The
+ * fresh/stale window bounds how long featured content can lag behind writes.
  */
 export async function withHomeEdgeCache({
   request,
@@ -106,13 +117,10 @@ export async function withHomeEdgeCache({
     return next();
   }
 
-  const version = await resolveCatalogVersion({
-    kv: locals?.runtime?.env?.CATALOG_KV,
-    env: locals?.runtime?.env,
-  });
   const cache = getEdgeCache();
-  const cacheKey = buildVersionedCacheKey(new URL("/", url.origin), version);
+  const cacheKey = new URL(HOME_CACHE_KEY_PATH, url.origin).toString();
   const cacheRequest = cache ? new Request(cacheKey, { method: "GET" }) : null;
+  const waitUntil = locals?.runtime?.ctx?.waitUntil;
 
   if (cache && cacheRequest) {
     try {
@@ -122,18 +130,21 @@ export async function withHomeEdgeCache({
         const ageSeconds = Number.isFinite(createdAt) ? (now() - createdAt) / 1_000 : Infinity;
 
         if (ageSeconds <= HOME_CACHE_MAX_AGE_SECONDS) {
-          return responseFromCache(cached, "HIT");
+          return responseFromCache(cached, "HIT", ageSeconds);
         }
 
         if (ageSeconds <= HOME_CACHE_MAX_AGE_SECONDS + HOME_CACHE_STALE_WHILE_REVALIDATE_SECONDS) {
           const refresh = next()
             .then((response) => cacheHomeResponse(response, cache, cacheRequest, "MISS", now()))
-            .catch(() => {});
-          const waitUntil = locals?.runtime?.ctx?.waitUntil;
+            .catch(() => {
+              console.warn("[home:edge-cache] background refresh failed");
+            });
           if (typeof waitUntil === "function") {
             waitUntil(refresh);
+          } else {
+            await refresh;
           }
-          return responseFromCache(cached, "STALE");
+          return responseFromCache(cached, "STALE", ageSeconds);
         }
       }
     } catch {
@@ -141,5 +152,5 @@ export async function withHomeEdgeCache({
     }
   }
 
-  return cacheHomeResponse(await next(), cache, cacheRequest, cache ? "MISS" : "BYPASS", now());
+  return cacheHomeResponse(await next(), cache, cacheRequest, cache ? "MISS" : "BYPASS", now(), waitUntil);
 }

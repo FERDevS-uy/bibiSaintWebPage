@@ -6,9 +6,8 @@
  * - Workers Static Assets sirve `dist/` y delega al worker cuando una ruta
  *   coincide con una Server Island / endpoint SSR.
  *
- * Las variables públicas (PUBLIC_*) y secretos se setean en Cloudflare Dashboard
- * (Workers & Pages → tu worker → Settings → Variables and Secrets) o vía
- * `wrangler secret put`. No las pongas acá si son sensibles.
+ * Variables públicas no sensibles se versionan acá para que Wrangler sea la
+ * fuente de verdad. Los secretos siguen en Cloudflare Dashboard o `wrangler secret put`.
  *
  * Docs: https://developers.cloudflare.com/workers/static-assets/binding/
  */
@@ -28,9 +27,19 @@
 			"id": "2aff9e8fa0dd402f93efce436f11124b"
 		}
 	],
+	"routes": [
+		{
+			"pattern": "espaciobibis.com.uy",
+			"zone_name": "espaciobibis.com.uy",
+			"custom_domain": true,
+			"enabled": true,
+			"previews_enabled": false
+		}
+	],
 	"vars": {
 		"CATALOG_READ_MODEL": "true",
-		"ENABLE_CSV_FALLBACK": "false"
+		"ENABLE_CSV_FALLBACK": "false",
+		"PUBLIC_SITE_URL": "https://espaciobibis.com.uy"
 	},
 	"env": {
 		"dev": {
@@ -49,10 +58,28 @@
 					"binding": "SESSION",
 					"id": "ad2a966d1e0c4176aa34b848b948b2fe"
 				}
-			]
+			],
+			"observability": {
+				"enabled": true,
+				"traces": {
+					"enabled": true
+				}
+			}
 		}
 	},
 	"observability": {
-		"enabled": true
+		"enabled": true,
+		"redact_query_string": true,
+		"logs": {
+			"enabled": true,
+			"head_sampling_rate": 1,
+			"persist": true,
+			"invocation_logs": true
+		},
+		"traces": {
+			"enabled": true,
+			"persist": true,
+			"head_sampling_rate": 1
+		}
 	}
 }

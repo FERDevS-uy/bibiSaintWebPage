@@ -8,10 +8,10 @@ const base = rawBase === "/" ? "" : rawBase.replace(/\/$/, "");
 const pageData = {
   site: url,
   base,
-  pageTitle: "Bibi's Ventasonline",
+  pageTitle: "Bibi's Tienda & Bienestar",
   pagesSubTitle: "Hogar & Deco",
   postPerPage: 10,
-  description: "Bibi's Ventasonline — Hogar & Deco en Paysandú, Uruguay. Encontrá sábanas, acolchados, almohadas, colchas, ropa y decoración para tu hogar con los mejores precios.",
+  description: "Bibi's Tienda & Bienestar — Hogar & Deco en Paysandú, Uruguay. Encontrá sábanas, acolchados, almohadas, colchas, ropa, calzado, botas y decoración para tu hogar con los mejores precios.",
   useSupabase: Boolean(import.meta.env.PUBLIC_USE_SUPABASE === "true"),
 };
 
