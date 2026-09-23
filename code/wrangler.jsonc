@@ -42,6 +42,9 @@
 	"env": {
 		"dev": {
 			"name": "bibisaintwebpage-dev",
+			// Keep the production custom domain from inheriting into the dev Worker.
+			"routes": [],
+			"workers_dev": true,
 			"main": "./dist/_worker.js/index.js",
 			"assets": {
 				"directory": "./dist",
