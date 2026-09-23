@@ -1,0 +1,10 @@
+-- Reclaim historical index bloat after the write-avoidance fix in
+-- 20260922164652_optimize_catalog_rebuild_write_path.sql. REINDEX TABLE
+-- CONCURRENTLY rebuilds every user index on catalog_products without blocking
+-- ordinary reads and writes, retaining the existing index definitions.
+--
+-- This statement cannot run inside an explicit transaction block.
+-- Rollback is not applicable: no data or schema definition is removed; an
+-- interrupted concurrent reindex leaves an invalid replacement index that
+-- PostgreSQL reports and can be dropped/retried safely.
+REINDEX TABLE CONCURRENTLY public.catalog_products;
