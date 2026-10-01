@@ -613,6 +613,9 @@ const { id, name, img, price, categories, paymentLink, description, colors, enOf
     width: 190px;
     min-width: 0;
     max-width: 100%;
+    box-sizing: border-box;
+    flex: none;
+    height: 40px;
     border: 1px solid #d4d4d4;
     background: #fafafa;
     color: #333;
@@ -779,9 +782,7 @@ const { id, name, img, price, categories, paymentLink, description, colors, enOf
     }
 
     .runtimeStockCheck {
-      flex-direction: row;
-      align-items: center;
-      gap: 10px;
+      align-items: flex-start;
       margin-top: 8px;
     }
 

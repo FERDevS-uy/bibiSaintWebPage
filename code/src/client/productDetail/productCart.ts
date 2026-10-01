@@ -98,5 +98,10 @@ export function bindAddToCartListener(
   const addBtn = state.addBtn;
   if (!addBtn) return;
 
-  addBtn.addEventListener("click", () => handleAddToCart(state, options));
+  addBtn.addEventListener("click", () =>
+    handleAddToCart(state, {
+      ...options,
+      requiresSizeSelection: state.requiresSizeSelection,
+    }),
+  );
 }

@@ -403,6 +403,76 @@ test.describe("Flujo completo de compra - Producto", () => {
   });
 });
 
+test.describe("Martina live availability and size-less cart flow", () => {
+  test("adds available mdt-42946 with the explicit no-size marker", async ({ page }) => {
+    await page.addInitScript(() => localStorage.removeItem("carrito"));
+    await page.route("**/api/config/provider-margins**", async (route) => {
+      await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ martina: 1 }) });
+    });
+    await page.route("**/api/martina/product-price**", async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          provider: "martina",
+          price: "1.110",
+          originalPrice: null,
+          isDiscount: false,
+          inStock: true,
+          colors: [
+            { id: 1345, hex: "#5E7288", name: "DENIM", rawSizes: ["/"], sizes: [] },
+            { id: 2, hex: "#000000", name: "NEGRO", rawSizes: ["/"], sizes: [] },
+          ],
+          sizes: [],
+          campaignCode: "202609",
+          verifiedAt: Date.now(),
+        }),
+      });
+    });
+
+    await gotoProduct(page, "mdt-42946");
+    await expect(page.locator("#stockBadge")).toHaveText(/En Stock/i, { timeout: 15_000 });
+    await expect(page.locator("#sizesBlock")).toHaveClass(/hidden/);
+    await expect(page.locator("#sizesSelector .size").first()).toBeHidden();
+    await expect(page.locator("#sizesSelector .size.selected")).toHaveCount(0);
+    await expect(page.locator("#addToCartBtn")).toBeEnabled();
+    await page.locator("#addToCartBtn").click();
+    await expect(page.locator("#addToCartBtn")).toHaveText(/AGREGADO/i);
+
+    const cart = await page.evaluate(() => JSON.parse(localStorage.getItem("carrito") || "[]"));
+    expect(cart).toHaveLength(1);
+    expect(cart[0].id).toBe("mdt-42946__c1345");
+    expect(cart[0].name).toBe("ARTEMISA BOLSO");
+  });
+
+  test("keeps explicitly out-of-stock mdt-42633 blocked", async ({ page }) => {
+    await page.addInitScript(() => localStorage.removeItem("carrito"));
+    await page.route("**/api/martina/product-price**", async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          provider: "martina",
+          price: "",
+          originalPrice: null,
+          isDiscount: false,
+          inStock: false,
+          colors: [],
+          sizes: [],
+          campaignCode: "202609",
+          verifiedAt: Date.now(),
+        }),
+      });
+    });
+
+    await gotoProduct(page, "mdt-42633");
+    await expect(page.locator("#stockBadge")).toHaveText(/Sin stock/i, { timeout: 15_000 });
+    await expect(page.locator("#addToCartBtn")).toBeDisabled();
+    const cart = await page.evaluate(() => JSON.parse(localStorage.getItem("carrito") || "[]"));
+    expect(cart).toHaveLength(0);
+  });
+});
+
 // ============ TESTS DE REGRESIÓN VISUAL (opcional) ============
 test.describe("Evidencia visual - Purchase flow", () => {
   test("Captura pantalla completa del flujo en producto 409", async ({ page }) => {
