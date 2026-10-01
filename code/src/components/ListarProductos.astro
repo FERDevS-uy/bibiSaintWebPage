@@ -42,7 +42,7 @@ const emptyList = !productos || productos.length === 0;
               aria-controls="products-sort-menu"
             >
               <span class="products-sort-mobile-title">Filtrar productos</span>
-              <span id="products-sort-current" class="products-sort-current">Más Vendidos</span>
+              <span id="products-sort-current" class="products-sort-current">Ordenar por</span>
               <svg class="products-sort-icon" viewBox="0 0 28 28" fill="none" aria-hidden="true">
                 <path d="M7 18L7 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
                 <path d="M4 14.5L7 18L10 14.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -52,7 +52,6 @@ const emptyList = !productos || productos.length === 0;
             </button>
 
             <ul id="products-sort-menu" class="products-sort-menu" role="listbox" hidden>
-              <li><button type="button" class="products-sort-option" data-sort="default">Más Vendidos</button></li>
               <li><button type="button" class="products-sort-option" data-sort="price-asc">Precio: menor a mayor</button></li>
               <li><button type="button" class="products-sort-option" data-sort="price-desc">Precio: mayor a menor</button></li>
               <li><button type="button" class="products-sort-option" data-sort="name-asc">Nombre: A - Z</button></li>
@@ -279,7 +278,7 @@ const emptyList = !productos || productos.length === 0;
   import { parsePrice } from "@utils/price";
 
   const SORT_LABELS = {
-    default: "Más Vendidos",
+    default: "Ordenar por",
     "price-asc": "Precio: menor a mayor",
     "price-desc": "Precio: mayor a menor",
     "name-asc": "Nombre: A - Z",

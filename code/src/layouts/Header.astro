@@ -440,37 +440,6 @@ const isAbout = pathname.includes("/about");
     if (e.key === "carrito") window.updateCartCount();
   });
 
-  function updateTruncatedCategoryLabels() {
-    const labels = document.querySelectorAll<HTMLElement>(
-      ".subcategory-label, .submenu-label",
-    );
-
-    labels.forEach((label) => {
-      const link = label.closest("a.subcategoryLink");
-      if (!link) return;
-
-      const overflow = label.scrollWidth - label.clientWidth;
-      const isTruncated = overflow > 1;
-      link.classList.toggle("is-truncated", isTruncated);
-
-      if (isTruncated) {
-        link.style.setProperty("--label-scroll-distance", `${-overflow}px`);
-      } else {
-        link.style.removeProperty("--label-scroll-distance");
-      }
-    });
-  }
-
-  function bindTruncatedCategoryLabelHover() {
-    document.querySelectorAll<HTMLAnchorElement>("a.subcategoryLink").forEach((link) => {
-      if (link.dataset.truncatedLabelHoverBound === "true") return;
-      link.dataset.truncatedLabelHoverBound = "true";
-      link.addEventListener("mouseenter", updateTruncatedCategoryLabels);
-    });
-  }
-
-  bindTruncatedCategoryLabelHover();
-
   function checkCategoryListWidth() {
     const categoryList = document.querySelector(".categoryList");
     const toggleBtn = document.getElementById("toggleCategoriesBtn");
@@ -494,13 +463,8 @@ const isAbout = pathname.includes("/about");
   document.addEventListener("astro:page-load", () => {
     window.updateCartCount();
     checkCategoryListWidth();
-    bindTruncatedCategoryLabelHover();
-    requestAnimationFrame(updateTruncatedCategoryLabels);
   });
-  window.addEventListener("resize", () => {
-    checkCategoryListWidth();
-    updateTruncatedCategoryLabels();
-  });
+  window.addEventListener("resize", checkCategoryListWidth);
 </script>
 
 <style>
@@ -997,20 +961,6 @@ const isAbout = pathname.includes("/about");
       white-space: nowrap;
     }
 
-    .subcategoryLink.is-truncated:hover .subcategory-label,
-    .subcategoryLink.is-truncated:hover .submenu-label {
-      animation: scroll-truncated-category-label 2s linear infinite alternate;
-    }
-
-    @keyframes scroll-truncated-category-label {
-      from {
-        transform: translateX(0);
-      }
-      to {
-        transform: translateX(var(--label-scroll-distance));
-      }
-    }
-
     .itemsBox .subcategoryList ul > li {
       border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     }
@@ -1090,7 +1040,7 @@ const isAbout = pathname.includes("/about");
   }
   /* Yellow burger lines on mobile */
   @media screen and (max-width: 999px) {
-    header .mobileSearchBtn {
+    header .navMenu .mobileSearchBtn {
       display: flex;
     }
     #astronav-menu svg line,

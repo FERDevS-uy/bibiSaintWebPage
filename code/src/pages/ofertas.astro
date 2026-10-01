@@ -32,10 +32,7 @@ const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
   <section class="offersHeader">
     <span class="offersBadge">Precio bajo asegurado</span>
     <h1>Ofertas destacadas</h1>
-    <p>
-      Top 50 productos más baratos del catálogo, ordenados de menor a mayor
-      precio.
-    </p>
+    <p>Top 50 productos más baratos del catálogo</p>
     <div class="offersMeta">
       <span>{topBaratos.length} productos</span>
       <span>{totalPages} páginas</span>
@@ -90,7 +87,7 @@ const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
 
   .offersHeader h1 {
     margin: 0.55rem 0 0;
-    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    font-size: clamp(2.2rem, 4vw, 3rem);
     color: var(--principal-text-color);
     line-height: 1.1;
   }
@@ -100,6 +97,7 @@ const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
     color: #4e577b;
     max-width: 58ch;
     font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+    white-space: nowrap;
   }
 
   .offersMeta {
@@ -124,6 +122,10 @@ const offersBaseUrl = withBasePath("/ofertas", Astro.url.pathname);
   }
 
   @media (max-width: 700px) {
+    .offersHeader p {
+      white-space: normal;
+    }
+
     .offersHeader {
       margin-top: 1rem;
       margin-bottom: 0.6rem;
