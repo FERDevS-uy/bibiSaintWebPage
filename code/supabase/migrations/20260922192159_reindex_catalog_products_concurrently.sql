@@ -1,3 +1,4 @@
+-- pg-delta: transaction=false
 -- Reclaim historical index bloat after the write-avoidance fix in
 -- 20260922164652_optimize_catalog_rebuild_write_path.sql. REINDEX TABLE
 -- CONCURRENTLY rebuilds every user index on catalog_products without blocking

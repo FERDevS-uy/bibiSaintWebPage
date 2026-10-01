@@ -1,3 +1,4 @@
+-- pg-delta: transaction=false
 -- 016_catalog_search_partial_indexes.sql
 -- Vuelve parciales (WHERE active = true) los dos GIN de búsqueda del read model.
 --
