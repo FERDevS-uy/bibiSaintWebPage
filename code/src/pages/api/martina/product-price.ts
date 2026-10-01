@@ -27,9 +27,21 @@ export async function GET({ request }: { request: Request }) {
 
   try {
     const configRaw = await fetchMartinaConfig("598");
-    const campaign = parseCampaign(configRaw);
+    const configPayload = configRaw && typeof configRaw === "object" && configRaw.data && typeof configRaw.data === "object"
+      ? configRaw.data
+      : configRaw;
+    const campaignCode = String(configPayload?.code ?? "").trim();
+    if (!/^\d{6}$/.test(campaignCode)) {
+      throw new Error("Código de campaña de Martina inválido; no se puede consultar el producto.");
+    }
+    let campaignMetadataWarning: string | null = null;
+    try {
+      parseCampaign(configRaw);
+    } catch (error) {
+      campaignMetadataWarning = error instanceof Error ? error.message : "Metadatos de campaña inválidos";
+    }
 
-    const entries = await fetchMartinaProductById(numeric, campaign.code, "598");
+    const entries = await fetchMartinaProductById(numeric, campaignCode, "598");
     const availability = evaluateMartinaAvailability(entries);
     if (availability === "unknown") throw new Error("Disponibilidad de Martina desconocida");
 
@@ -41,7 +53,8 @@ export async function GET({ request }: { request: Request }) {
         inStock: false,
         colors: [],
         sizes: [],
-        campaignCode: campaign.code,
+        campaignCode,
+        campaignMetadataWarning,
       });
     }
 
@@ -62,7 +75,8 @@ export async function GET({ request }: { request: Request }) {
       inStock,
       colors,
       sizes: allSizes,
-      campaignCode: campaign.code,
+      campaignCode,
+      campaignMetadataWarning,
     });
   } catch (e: any) {
     console.error("martina product-price error:", e?.message || e);

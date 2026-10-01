@@ -8,7 +8,7 @@ import {
 } from "./utils.ts";
 import { normalizeProductPrice } from "./martinaNormalizer.ts";
 import { normalizeSizes } from "../../utils/sizes.ts";
-import { parseCampaign, isVigente, type MartinaCampaign } from "./martinaCampaign.ts";
+import { parseCampaign, isVigente, parseNaiveAsMontevideo, type MartinaCampaign } from "./martinaCampaign.ts";
 import { evaluateMartinaAvailability, parseMartinaProducts } from "./martinaAvailability.ts";
 
 const MARTINA_STORE_PRODUCT_BASE =
@@ -102,12 +102,43 @@ function groupMartinaImagesByColor(
 
 export async function fetchMartinaConfig(
   country: string = "598",
+  now = new Date(),
 ): Promise<any> {
-  return martinaFetch(
-    `${MARTINA_CONFIG_URL}?countryId=${encodeURIComponent(country)}&sellerCode=${encodeURIComponent(MARTINA_SELLER_CODE)}`,
-    20000,
-    FETCH_HEADERS,
-  );
+  const baseUrl = `${MARTINA_CONFIG_URL}?countryId=${encodeURIComponent(country)}&sellerCode=${encodeURIComponent(MARTINA_SELLER_CODE)}`;
+  const initial = await martinaFetch(baseUrl, 20000, FETCH_HEADERS);
+  if (!(initial && typeof initial === "object" && initial.status === "error" &&
+    Object.values(initial.errors ?? {}).some((value) => String(value).includes("VARIAS CONFIGURACIONES VIGENTES")))) {
+    return initial;
+  }
+
+  const current = now.getUTCFullYear() * 12 + now.getUTCMonth();
+  const candidates = [current, current - 1, current + 1].map((month) => {
+    const year = Math.floor(month / 12);
+    const monthOfYear = ((month % 12) + 12) % 12 + 1;
+    return `${year}${String(monthOfYear).padStart(2, "0")}`;
+  });
+  const probed = await Promise.all(candidates.map(async (code) => {
+    const url = `${baseUrl}&code=${encodeURIComponent(code)}`;
+    try {
+      return { code, payload: await martinaFetch(url, 2500, FETCH_HEADERS) };
+    } catch {
+      return { code, payload: null };
+    }
+  }));
+  for (const { code, payload } of probed) {
+    const data = payload?.data;
+    const validFrom = parseNaiveAsMontevideo(data?.validFrom ?? data?.valid_from);
+    const rawValidTo = data?.validTo ?? data?.validTill ?? data?.valid_to ?? data?.valid_till;
+    const validTo = rawValidTo == null || rawValidTo === "" ? null : parseNaiveAsMontevideo(rawValidTo);
+    if (payload?.status === "ok" && data && typeof data === "object" &&
+      String(data.code) === code && String(data.countryId) === country && data.audit?.enabled === true &&
+      validFrom && validFrom.getTime() <= now.getTime() &&
+      (rawValidTo == null || rawValidTo === "" || validTo) &&
+      (!validTo || (validTo.getTime() >= validFrom.getTime() && validTo.getTime() >= now.getTime()))) {
+      return payload;
+    }
+  }
+  throw new Error("No se encontró una configuración vigente inequívoca de Martina.");
 }
 
 async function fetchStoreProductForCode(
