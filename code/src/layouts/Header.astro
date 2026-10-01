@@ -156,7 +156,7 @@ const isAbout = pathname.includes("/about");
     <label for="toggleCategories" id="toggleCategoriesBtn">
       <Fragment set:html={downSVG} />
     </label>
-    <ul class="categoryList">
+    <ul class="categoryList mainNav mainNavBottom">
       {
         sortedCategories &&
           sortedCategories.map((c) => (
@@ -209,8 +209,9 @@ const isAbout = pathname.includes("/about");
                             )}
                             data-astro-prefetch="hover"
                             class="navLink subcategoryLink"
+                            title={sub.name}
                           >
-                            {sub.name}
+                            <span class="subcategory-label">{sub.name}</span>
                           </a>
                         </li>
                       ))}
@@ -229,6 +230,7 @@ const isAbout = pathname.includes("/about");
                               )}
                               data-astro-prefetch="hover"
                               class={`navLink subcategoryLink ${groupData.items.length > 0 ? "has-submenu-level2" : ""}`}
+                              title={groupData.group}
                               data-submenu-target={
                                 groupData.items.length > 0
                                   ? nestedId
@@ -282,11 +284,17 @@ const isAbout = pathname.includes("/about");
                                         )}
                                         data-astro-prefetch="hover"
                                         class="navLink subcategoryLink"
-                                      >
-                                        {subName.replace(
+                                        title={subName.replace(
                                           `${groupData.group} - `,
                                           "",
                                         )}
+                                      >
+                                        <span class="subcategory-label">
+                                          {subName.replace(
+                                            `${groupData.group} - `,
+                                            "",
+                                          )}
+                                        </span>
                                       </a>
                                     </li>
                                   ))}
@@ -302,9 +310,6 @@ const isAbout = pathname.includes("/about");
             </li>
           ))
       }
-    </ul>
-
-    <ul class="mainNav mainNavBottom">
       <li>
         <a class={`navLink ${isHome ? "active-page" : ""}`} href={homeHref}
           >Inicio</a
@@ -435,6 +440,37 @@ const isAbout = pathname.includes("/about");
     if (e.key === "carrito") window.updateCartCount();
   });
 
+  function updateTruncatedCategoryLabels() {
+    const labels = document.querySelectorAll<HTMLElement>(
+      ".subcategory-label, .submenu-label",
+    );
+
+    labels.forEach((label) => {
+      const link = label.closest("a.subcategoryLink");
+      if (!link) return;
+
+      const overflow = label.scrollWidth - label.clientWidth;
+      const isTruncated = overflow > 1;
+      link.classList.toggle("is-truncated", isTruncated);
+
+      if (isTruncated) {
+        link.style.setProperty("--label-scroll-distance", `${-overflow}px`);
+      } else {
+        link.style.removeProperty("--label-scroll-distance");
+      }
+    });
+  }
+
+  function bindTruncatedCategoryLabelHover() {
+    document.querySelectorAll<HTMLAnchorElement>("a.subcategoryLink").forEach((link) => {
+      if (link.dataset.truncatedLabelHoverBound === "true") return;
+      link.dataset.truncatedLabelHoverBound = "true";
+      link.addEventListener("mouseenter", updateTruncatedCategoryLabels);
+    });
+  }
+
+  bindTruncatedCategoryLabelHover();
+
   function checkCategoryListWidth() {
     const categoryList = document.querySelector(".categoryList");
     const toggleBtn = document.getElementById("toggleCategoriesBtn");
@@ -458,8 +494,13 @@ const isAbout = pathname.includes("/about");
   document.addEventListener("astro:page-load", () => {
     window.updateCartCount();
     checkCategoryListWidth();
+    bindTruncatedCategoryLabelHover();
+    requestAnimationFrame(updateTruncatedCategoryLabels);
   });
-  window.addEventListener("resize", checkCategoryListWidth);
+  window.addEventListener("resize", () => {
+    checkCategoryListWidth();
+    updateTruncatedCategoryLabels();
+  });
 </script>
 
 <style>
@@ -856,10 +897,8 @@ const isAbout = pathname.includes("/about");
     }
     .itemsBox .categoryList {
       flex: 1;
-      /* The server can stream category items one at a time. A fixed gap keeps
-         already-painted links in place while later links arrive. */
-      justify-content: flex-start;
-      gap: 1.25rem;
+      justify-content: space-between;
+      gap: 0;
     }
     .itemsBox ul.mainNav {
       margin-left: 0;
@@ -891,6 +930,7 @@ const isAbout = pathname.includes("/about");
       text-overflow: ellipsis;
       font-weight: normal;
       font-size: 1rem;
+      letter-spacing: 0.03em;
       cursor: pointer;
     }
     .navLink.principal {
@@ -947,6 +987,36 @@ const isAbout = pathname.includes("/about");
       padding: 0.5rem 1rem;
       border-bottom: none;
       color: var(--text-color);
+    }
+
+    .subcategory-label {
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .subcategoryLink.is-truncated:hover .subcategory-label,
+    .subcategoryLink.is-truncated:hover .submenu-label {
+      animation: scroll-truncated-category-label 2s linear infinite alternate;
+    }
+
+    @keyframes scroll-truncated-category-label {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(var(--label-scroll-distance));
+      }
+    }
+
+    .itemsBox .subcategoryList ul > li {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .itemsBox .subcategoryList ul > li:last-child {
+      border-bottom: none;
     }
 
     .categoryItem {
