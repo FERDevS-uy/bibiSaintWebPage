@@ -314,6 +314,35 @@ const pathname = Astro.url.pathname;
     display: none;
   }
 
+  @media (max-width: 767px) {
+    :global(#index) .carousel-track {
+      padding-block: 24px 32px;
+    }
+
+    :global(#index) .carousel-item {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow:
+        0 8px 18px rgba(35, 41, 70, 0.14),
+        0 2px 5px rgba(35, 41, 70, 0.06);
+    }
+
+    :global(#index) .carousel-item.active {
+      box-shadow:
+        0 10px 22px rgba(35, 41, 70, 0.16),
+        0 3px 7px rgba(35, 41, 70, 0.07);
+    }
+
+    :global(#index) .carousel-info {
+      box-sizing: border-box;
+    }
+
+    :global(#index) .carousel-img-link {
+      border: 0;
+      box-shadow: none;
+    }
+  }
+
   /* --- DESKTOP VIEW --- */
   @media screen and (min-width: 1000px) {
     .carousel-title {
