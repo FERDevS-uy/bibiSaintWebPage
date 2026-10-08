@@ -331,55 +331,162 @@
     display: none;
   }
 
-  /* Cada fila = tarjeta flex */
   .cartTable :global(tr) {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
+    column-gap: 12px;
+    row-gap: 10px;
     padding: 14px 12px;
     border: 1px solid #eee;
     border-radius: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     position: relative;
   }
 
-  /* Botón X → esquina superior derecha */
   .cartTable :global(.tdRemove) {
     position: absolute;
-    top: 10px;
-    right: 12px;
-    left: auto;
+    top: 8px;
+    right: 8px;
     padding: 0;
+    border: 0;
   }
 
-  /* Imagen fija a la izquierda */
+  .cartTable :global(.removeBtn) {
+    width: 44px;
+    height: 44px;
+    margin: 0;
+  }
+
+  .cartTable :global(.removeBtn:focus-visible),
+  .cartTable :global(.qtyBtn:focus-visible) {
+    outline: 2px solid #d32f2f;
+    outline-offset: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
   .cartTable :global(.tdImg) {
-    flex: 0 0 90px;
-    width: 90px;
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    width: 80px;
     padding: 0;
-    border: none;
+    border: 0;
+    align-self: start;
   }
 
   .cartTable :global(.tdImg img) {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
   }
 
-  /* Descripción ocupa el resto */
   .cartTable :global(.tdDesc) {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 0;
-    padding-right: 28px;
-    /* espacio para el X */
-    border: none;
-    text-align: left;
+    display: contents;
   }
 
-  /* Ocultar celdas de cantidad/subtotal (van embebidas en tdDesc) */
+  .cartTable :global(.cartName) {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    margin-bottom: 0;
+    padding: 0 44px 0 0;
+    border: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .cartTable :global(.cartColor) {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .cartTable :global(.tdDesc > .cartMeta:has(+ .cartMetaQty)) {
+    grid-column: 2;
+    grid-row: 3;
+    min-width: 0;
+  }
+
+  .cartTable :global(.cartMeta.cartMetaQty) {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    justify-self: start;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 0;
+    border: 0;
+    margin: 0;
+  }
+
+  .cartTable :global(.cartMeta.cartMetaQty .metaLabel) {
+    padding-top: 0;
+  }
+
+  .cartTable :global(.cartMeta.cartMetaQty .qtyControls) {
+    height: 44px;
+    width: auto;
+    margin: 0;
+    border: 0;
+    border-radius: 8px;
+    background: #f3f3f3;
+    overflow: visible;
+  }
+
+  .cartTable :global(.cartMeta.cartMetaQty .qtyBtn) {
+    width: 44px;
+    height: 44px;
+  }
+
+  .cartTable :global(.cartMeta.cartMetaQty .qtyValue) {
+    min-width: 38px;
+    border: 0;
+  }
+
+  .cartTable :global(.tdDesc > .cartMeta:last-child) {
+    grid-column: 2;
+    grid-row: 4;
+    justify-self: end;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 0;
+    border: 0;
+    text-align: right;
+  }
+
+  .cartTable :global(.cartMetaQty .metaLabel),
+  .cartTable :global(.tdDesc > .cartMeta:last-child .metaLabel) {
+    color: #666;
+    font-weight: 500;
+  }
+
+  .cartTable :global(.cartMeta) {
+    min-width: 0;
+  }
+
+  .cartTable :global(.metaLabel),
+  .cartTable :global(.metaValue) {
+    display: block;
+  }
+
+  .cartTable :global(.metaLabel) {
+    margin-bottom: 3px;
+  }
+
+  .cartTable :global(.subtotalValue) {
+    color: #e67e22;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 360px) {
+    .cartTable :global(.tdDesc > .cartMeta:last-child) {
+      grid-column: 1 / -1;
+      grid-row: 5;
+      justify-self: end;
+    }
+  }
+
   .cartTable :global(.tdQty),
   .cartTable :global(.tdSubtotal) {
     display: none;
