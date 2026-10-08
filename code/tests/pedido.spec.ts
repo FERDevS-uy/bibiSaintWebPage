@@ -139,6 +139,35 @@ test.describe("Pedido (/pedido)", () => {
       .toBe(250);
   });
 
+  test("V3 muestra el swatch AVELLANA y conserva talle y ausencia de color", async ({ page }) => {
+    await page.route("**/productos.json", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify([
+          { id: "mdt-43328", name: "Blusa Farao", colors: null, price: "100" },
+        ]),
+      }),
+    );
+    await page.route("**/rest/v1/products*", (route) =>
+      route.fulfill({ status: 200, contentType: "application/json", body: "[]" }),
+    );
+
+    const token = await encodeOrderTokenV3([
+      { id: "mdt-43328__L_c452", cantidad: 1, price: "100", selectedColorId: 452, selectedColorName: "AVELLANA" },
+      { id: "mdt-id-only__L_c453", cantidad: 1, price: "100", selectedColorId: 453 },
+      { id: "mdt-no-color", cantidad: 1, price: "100" },
+    ]);
+
+    await page.goto(`/pedido?p=${token}`, { waitUntil: "domcontentloaded" });
+    await expect.poll(async () => page.locator(".pedido-item").count(), { timeout: 15_000 }).toBe(3);
+    await expect(page.locator(".pedido-color-badge")).toHaveText(["AVELLANA"]);
+    await expect(page.locator(".pedido-item").nth(0).locator(".pedido-size-badge")).toHaveText("Talle L");
+    await expect(page.locator(".pedido-color-swatch")).toHaveCount(1);
+    await expect(page.locator(".pedido-item").nth(0).locator(".pedido-color-swatch")).toHaveCSS("background-color", "rgb(213, 189, 147)");
+    await expect(page.locator(".pedido-item").nth(2).locator(".pedido-color-badge")).toHaveCount(0);
+  });
+
   test("token gzip v3: renderiza variantes, colores, decimales y total", async ({ page }) => {
     const browserErrors = captureBrowserErrors(page);
     await registerCommonRoutes(page);
