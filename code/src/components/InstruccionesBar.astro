@@ -7,17 +7,17 @@
   <div class="instrucciones-bar">
       <div class="instrucciones-inner">
         <div class="paso">
-          <span class="numero">1</span>
+          <span class="paso-heading"><span class="paso-label">Paso</span><span class="numero">1</span></span>
           <p>Añadí al carrito todos los<br /> productos que desees</p>
         </div>
 
         <div class="paso">
-          <span class="numero">2</span>
+          <span class="paso-heading"><span class="paso-label">Paso</span><span class="numero">2</span></span>
           <p>Revisá tu compra y<br /> finalizá tu pedido</p>
         </div>
 
         <div class="paso">
-          <span class="numero">3</span>
+          <span class="paso-heading"><span class="paso-label">Paso</span><span class="numero">3</span></span>
           <p>Enviá por WhatsApp<br /> tu pedido</p>
         </div>
       </div>
@@ -53,6 +53,16 @@
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.12);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  }
+
+  .paso-heading {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .paso-label {
+    display: none;
   }
 
   .numero {
@@ -108,6 +118,8 @@
     .instrucciones-bar { padding: 14px 12px; overflow: visible; }
     .instrucciones-bar .instrucciones-inner { width: 100%; padding: 0; gap: 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); align-items: stretch; }
     .instrucciones-bar .paso { min-width: 0; padding: 0 8px; background: none; box-shadow: none; border: 0; border-radius: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; }
+    .instrucciones-bar .paso-heading { flex-direction: row; flex-wrap: nowrap; gap: 6px; white-space: nowrap; }
+    .instrucciones-bar .paso-label { display: inline; order: 1; font-size: .75rem; line-height: 1; font-weight: 600; color: #fff9ed; }
     .instrucciones-bar .numero { width: 28px; height: 28px; font-size: .9rem; font-weight: 800; background: #fff9ed; color: #8e1414; }
     .instrucciones-bar .paso p { font-size: .875rem; line-height: 1.45; font-weight: 600; letter-spacing: 0; color: #fff9ed; text-shadow: none; text-align: center; overflow-wrap: normal; hyphens: none; }
     .instrucciones-bar .paso br { display: none; }
