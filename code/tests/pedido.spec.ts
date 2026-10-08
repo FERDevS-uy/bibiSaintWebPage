@@ -168,6 +168,25 @@ test.describe("Pedido (/pedido)", () => {
     await expect(page.locator(".pedido-item").nth(2).locator(".pedido-color-badge")).toHaveCount(0);
   });
 
+  test("V3 centra el total en viewport mobile y desktop", async ({ page }) => {
+    await registerCommonRoutes(page);
+    const token = await encodeOrderTokenV3([
+      { id: "mdt-centered-total", cantidad: 1, price: "100" },
+    ]);
+
+    await page.goto(`/pedido?p=${token}`, { waitUntil: "domcontentloaded" });
+    await expect.poll(async () => page.locator(".pedido-item").count(), { timeout: 15_000 }).toBe(1);
+    for (const width of [375, 1280]) {
+      await page.setViewportSize({ width, height: 900 });
+      const centers = await page.evaluate(() => {
+        const list = document.querySelector(".pedido-list")!.getBoundingClientRect();
+        const total = document.querySelector(".pedido-total-inner")!.getBoundingClientRect();
+        return { list: list.left + list.width / 2, total: total.left + total.width / 2 };
+      });
+      expect(Math.abs(centers.list - centers.total), `total should be centered at ${width}px`).toBeLessThanOrEqual(1);
+    }
+  });
+
   test("token gzip v3: renderiza variantes, colores, decimales y total", async ({ page }) => {
     const browserErrors = captureBrowserErrors(page);
     await registerCommonRoutes(page);
