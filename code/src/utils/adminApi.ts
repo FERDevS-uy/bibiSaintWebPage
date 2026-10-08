@@ -42,6 +42,18 @@ export interface CategoryOption {
   subcategories: { name: string; count: number }[];
 }
 
+export interface FeaturedProductSuggestion {
+  id: string;
+  name: string;
+  imageUrl: string;
+  visits: number;
+}
+
+export interface SelectedFeaturedProducts {
+  ids: string[];
+  products: Array<{ product_id: string; name: string; image_url: string }>;
+}
+
 async function request<T>(
   url: string,
   options?: RequestInit,
@@ -121,6 +133,22 @@ export async function getCategories(): Promise<CategoryOption[]> {
 export async function getNextId(): Promise<string> {
   const result = await request<{ nextId: string }>("/api/admin/products/next-id");
   return result.nextId;
+}
+
+export async function getFeaturedSuggestions(): Promise<FeaturedProductSuggestion[]> {
+  return request<FeaturedProductSuggestion[]>("/api/admin/featured-suggestions");
+}
+
+export async function getFeaturedProducts(): Promise<SelectedFeaturedProducts> {
+  return request<SelectedFeaturedProducts>("/api/admin/featured-products");
+}
+
+export async function saveFeaturedProducts(productIds: string[]): Promise<{ ids: string[] }> {
+  return request<{ ids: string[] }>("/api/admin/featured-products", {
+    method: "PUT",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ productIds }),
+  });
 }
 
 export async function uploadImage(file: File): Promise<string> {

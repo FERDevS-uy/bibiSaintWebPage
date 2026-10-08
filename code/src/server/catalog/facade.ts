@@ -1,5 +1,6 @@
 import type { CatalogCardProjection, CatalogPageRequest } from "./contracts.ts";
 import { normalizeOfferOriginalPrice } from "@utils/price";
+import { chooseFeaturedProducts, normalizeFeaturedProductIds, orderFeaturedProductRows } from "../featuredProducts.ts";
 import { runCatalogQuery } from "./queries.ts";
 import {
   observeCatalogQuery,
@@ -89,6 +90,48 @@ function buildOfertas(items: CatalogCardProjection[]): CatalogCardProjection[] {
         ...offers,
         ...items.filter((item) => !item.enOferta).slice(0, 8 - offers.length),
       ];
+}
+
+export async function loadEditorialFeaturedProducts(
+  supabase: { from: (table: string) => any },
+): Promise<CatalogCardProjection[]> {
+  try {
+    const { data: selection, error } = await supabase
+      .from("featured_products")
+      .select("product_ids")
+      .eq("id", 1)
+      .maybeSingle();
+    if (error) return [];
+    let ids: string[];
+    try {
+      ids = normalizeFeaturedProductIds(selection?.product_ids ?? []);
+    } catch {
+      return [];
+    }
+    if (!ids.length) return [];
+    const { data, error: catalogError } = await supabase
+      .from("catalog_products")
+      .select("id:product_id, name, price:numeric_price, originalPrice:original_price, imageUrl:image_url, enOferta:en_oferta, category, subcategory")
+      .in("product_id", ids)
+      .eq("active", true);
+    if (catalogError) return [];
+    return orderFeaturedProductRows(ids, (data ?? []) as RelatedRow[]).map((row) => {
+      const price = Number(row.price);
+      const originalPrice = normalizeOfferOriginalPrice(row.originalPrice, price);
+      return {
+        id: row.id,
+        name: row.name,
+        price,
+        originalPrice: originalPrice ?? undefined,
+        imageUrl: row.imageUrl,
+        enOferta: Boolean(row.enOferta) && originalPrice !== null,
+        category: row.category,
+        subcategory: row.subcategory || undefined,
+      };
+    });
+  } catch {
+    return [];
+  }
 }
 
 export async function loadCatalogPage(
@@ -188,6 +231,18 @@ export async function loadFeaturedProducts(
   supabase: SupabaseSource<{ from: (table: string) => any }>,
   options?: CatalogFacadeOptions,
 ): Promise<FeaturedProductsResult> {
+  const editorial = await loadEditorialFeaturedProducts(resolveSupabase(supabase));
+  if (editorial.length) {
+    const [recent, all] = await Promise.all([
+      runCatalogQuery({ sort: "recientes", pageSize: 8 }, env, resolveSupabase(supabase), { includeTotal: false, telemetry: options?.telemetry }),
+      runCatalogQuery({ sort: "nombre", pageSize: 16 }, env, resolveSupabase(supabase), { includeTotal: false, telemetry: options?.telemetry }),
+    ]);
+    return {
+      novedades: recent.items.slice(0, 8),
+      destacados: chooseFeaturedProducts(editorial, all.items.slice(0, 8)),
+      ofertas: buildOfertas(all.items),
+    };
+  }
   const version = await resolveCatalogVersion({ kv: env.CATALOG_KV });
   const key = `readmodel:v${version}`;
   const now = Date.now();
