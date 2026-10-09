@@ -29,13 +29,32 @@ export const prerender = true;
       <section class="services-list" aria-labelledby="services-title">
         <h2 id="services-title">Servicios</h2>
         <ul>
-          <li><span>Codificación Biológica</span><strong>USD 80</strong></li>
-          <li><span>Carta Numerológica</span><strong>USD 80</strong></li>
           <li>
-            <span
-              >Tutorías individuales online para estudiantes de EUTM, Medicina y
-              Agronomía</span
-            ><strong>USD 50<span class="per-hour"> / hora</span></strong>
+            <span>Codificación Biológica</span>
+            <div class="service-actions">
+              <strong>$U 3.200</strong>
+              <a class="whatsapp-link" aria-label="Consultar por Codificación Biológica" href={`https://wa.me/${59898687061}?text=${encodeURIComponent("¡Hola! Quisiera consultar por la disponibilidad de una sesión de Codificación Biológica.")}`}>Consultar</a>
+            </div>
+          </li>
+          <li>
+            <span>Carta Numerológica Integral y Evolutiva</span>
+            <div class="service-actions">
+              <strong>$U 3.200</strong>
+              <a class="whatsapp-link" aria-label="Consultar por Carta Numerológica Integral y Evolutiva" href={`https://wa.me/${59898687061}?text=${encodeURIComponent("¡Hola! Quisiera consultar por la Carta Numerológica Integral y Evolutiva y su disponibilidad.")}`}>Consultar</a>
+            </div>
+          </li>
+          <li>
+            <div class="service-description">
+              <span
+                >Tutorías individuales online para estudiantes de EUTM, Medicina,
+                Agronomía, Odontología, Profesorado Ciencias Biológicas y Licenciatura en educacion Fisica (Consultar Disponibilidad de asignaturas y cupos) </span
+              >
+              <p class="tutoring-conditions">Mínimo de 2 horas, a coordinar.</p>
+            </div>
+            <div class="service-actions">
+              <strong>$U 500<span class="per-hour"> / hora</span></strong>
+              <a class="whatsapp-link" aria-label="Consultar por tutorías individuales online" href={`https://wa.me/${59898687061}?text=${encodeURIComponent("¡Hola! Quisiera consultar por las tutorías individuales online: asignaturas disponibles, cupos y horarios.")}`}>Consultar</a>
+            </div>
           </li>
         </ul>
       </section>
@@ -44,41 +63,105 @@ export const prerender = true;
         ¿Tenés una duda, consulta o buscás un producto o servicio particular?
         Escribinos y nos pondremos en contacto a la brevedad.
       </p>
+      <a class="whatsapp-link general-whatsapp" href={`https://wa.me/${59898687061}?text=${encodeURIComponent("¡Hola! Quisiera consultar por la disponibilidad de sus productos y servicios.")}`}>Consultar por WhatsApp</a>
     </div>
 
     <div class="contact-form-wrapper">
-      <form
-        class="contact-form"
-        action="https://formspree.io/f/mwvzalvq"
-        method="POST"
-      >
-        <input
-          type="hidden"
-          name="_subject"
-          value="Nuevo mensaje desde el formulario de contacto"
-        />
-        <input type="hidden" name="_language" value="es" />
-        <input type="text" name="name" placeholder="Nombre Completo" required />
-        <input
-          type="email"
-          name="email"
-          placeholder="Correo electrónico"
-          required
-        />
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Número de Teléfono"
-          required
-        />
-        <input type="text" name="subject" placeholder="Asunto" required />
-        <textarea name="message" placeholder="Tu Mensaje" rows="8" required
-        ></textarea>
+      <form class="contact-form" action="/api/contact" method="POST" data-contact-form novalidate>
+        <p class="form-feedback" role="alert" aria-live="polite" data-form-error></p>
+        <div class="honeypot" aria-hidden="true"><label for="contact-website">No completar</label><input id="contact-website" name="website" type="text" autocomplete="off" tabindex="-1" /></div>
+        <label for="contact-name">Nombre completo</label>
+        <input id="contact-name" name="name" type="text" autocomplete="name" maxlength="120" required aria-describedby="contact-name-error" />
+        <span id="contact-name-error" class="field-error" data-error-for="name"></span>
+        <label for="contact-email">Correo electrónico (Gmail, Outlook o Hotmail)</label>
+        <input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="contact-email-error" />
+        <span id="contact-email-error" class="field-error" data-error-for="email"></span>
+        <label for="contact-phone">Celular uruguayo</label>
+        <input id="contact-phone" name="phone" type="tel" autocomplete="tel" maxlength="20" placeholder="099 123 456 o +598 99 123 456" required aria-describedby="contact-phone-error" />
+        <span id="contact-phone-error" class="field-error" data-error-for="phone"></span>
+        <label for="contact-subject">Asunto</label>
+        <input id="contact-subject" name="subject" type="text" maxlength="180" required aria-describedby="contact-subject-error" />
+        <span id="contact-subject-error" class="field-error" data-error-for="subject"></span>
+        <label for="contact-message">Mensaje</label>
+        <textarea id="contact-message" name="message" rows="8" minlength="100" maxlength="4000" required aria-describedby="contact-message-error"></textarea>
+        <span id="contact-message-error" class="field-error" data-error-for="message"></span>
         <button type="submit">Enviar</button>
       </form>
+      <dialog class="contact-success" data-success-dialog aria-labelledby="success-title">
+        <h2 id="success-title">¡Mensaje enviado!</h2>
+        <p>Gracias por escribirnos. Recibimos tu consulta.</p>
+        <button type="button" data-close-dialog autofocus>Cerrar</button>
+      </dialog>
     </div>
   </section>
 </Layout>
+
+<script>
+  import { validateContactInput } from "../utils/contactValidation";
+
+  function bindContactForm() {
+    const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+    if (!form || form.dataset.bound === "true") return;
+    form.dataset.bound = "true";
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const errorSummary = form.querySelector<HTMLElement>("[data-form-error]")!;
+    const dialog = document.querySelector<HTMLDialogElement>("[data-success-dialog]")!;
+    const close = dialog.querySelector<HTMLButtonElement>("[data-close-dialog]")!;
+    const clearErrors = () => {
+      errorSummary.textContent = "";
+      form.querySelectorAll<HTMLElement>("[data-error-for]").forEach((node) => node.textContent = "");
+      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[aria-invalid]").forEach((field) => field.removeAttribute("aria-invalid"));
+    };
+    dialog.addEventListener("close", () => button.focus());
+    close.addEventListener("click", () => dialog.close());
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (form.dataset.submitting === "true") return;
+      clearErrors();
+      const values = Object.fromEntries(new FormData(form).entries());
+      const validation = validateContactInput(values);
+      if (!validation.ok) {
+        errorSummary.textContent = "Revisá los campos señalados.";
+        for (const [key, message] of Object.entries(validation.errors)) {
+          const field = form.elements.namedItem(key) as HTMLInputElement | HTMLTextAreaElement | null;
+          const target = form.querySelector<HTMLElement>(`[data-error-for="${key}"]`);
+          if (field) field.setAttribute("aria-invalid", "true");
+          if (target) target.textContent = message ?? "";
+        }
+        const first = form.querySelector<HTMLElement>('[aria-invalid="true"]');
+        first?.focus();
+        return;
+      }
+      form.dataset.submitting = "true";
+      button.disabled = true;
+      button.textContent = "Enviando…";
+      try {
+        const response = await fetch("/api/contact", { method: "POST", credentials: "same-origin", headers: { "content-type": "application/json", accept: "application/json" }, body: JSON.stringify(values) });
+        const result = await response.json().catch(() => null);
+        if (!response.ok || result?.ok !== true) {
+          errorSummary.textContent = result?.message || "No pudimos enviar el mensaje. Revisá tu conexión e intentá nuevamente.";
+          for (const [key, message] of Object.entries(result?.errors ?? {})) {
+            const field = form.elements.namedItem(key) as HTMLInputElement | HTMLTextAreaElement | null;
+            const target = form.querySelector<HTMLElement>(`[data-error-for="${key}"]`);
+            if (field) field.setAttribute("aria-invalid", "true");
+            if (target && typeof message === "string") target.textContent = message;
+          }
+          return;
+        }
+        form.reset();
+        dialog.showModal();
+      } catch {
+        errorSummary.textContent = "No pudimos conectar. Revisá tu conexión e intentá nuevamente.";
+      } finally {
+        form.dataset.submitting = "false";
+        button.disabled = false;
+        button.textContent = "Enviar";
+      }
+    });
+  }
+  bindContactForm();
+  document.addEventListener("astro:page-load", bindContactForm);
+</script>
 
 <style>
   .contact-container {
@@ -92,6 +175,10 @@ export const prerender = true;
     gap: clamp(2.5rem, 7vw, 6rem);
     font-family: "Poppins", "Poppins Fallback", sans-serif;
     color: var(--principal-text-color);
+  }
+
+  .contact-info {
+    min-width: 0;
   }
 
   .section-heading {
@@ -144,17 +231,67 @@ export const prerender = true;
     margin: 0;
   }
   .services-list li {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
     gap: 1rem;
+    min-width: 0;
     padding: 0.8rem 0;
     border-bottom: 1px solid rgba(35, 41, 70, 0.1);
     line-height: 1.5;
   }
+  .service-description {
+    min-width: 0;
+  }
+  .tutoring-conditions {
+    margin: 0.25rem 0 0;
+    color: var(--orange-color);
+    font-size: 0.875rem;
+  }
   .services-list li strong {
     white-space: nowrap;
     color: var(--orange-color);
+  }
+  .service-actions {
+    display: flex;
+    flex: none;
+    width: 9rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  .whatsapp-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid var(--orange-color);
+    border-radius: 10px;
+    color: var(--principal-text-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25;
+    white-space: nowrap;
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  .general-whatsapp {
+    max-width: 100%;
+  }
+  .whatsapp-link:hover {
+    background: #fff0d6;
+  }
+  .whatsapp-link:focus-visible {
+    outline: 3px solid var(--orange-color);
+    outline-offset: 3px;
+  }
+  .general-whatsapp {
+    width: fit-content;
+    white-space: normal;
   }
   .per-hour {
     font-size: 0.78em;
@@ -238,8 +375,13 @@ export const prerender = true;
   .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.65rem;
   }
+  .contact-form label { font-weight: 600; }
+  .honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .field-error { color: #9b261d; font-size: 0.9rem; }
+  [aria-invalid="true"] { border-color: #9b261d; }
+  .contact-form [aria-invalid="true"]:focus-visible, .contact-form button:focus-visible, .contact-success button:focus-visible { outline: 3px solid var(--orange-color); outline-offset: 3px; }
 
   input,
   textarea {
@@ -265,6 +407,7 @@ export const prerender = true;
   }
 
   button {
+    min-height: 44px;
     background-color: #e86c1a; /* Orange from design approx */
     width: 100%;
     color: white;
@@ -283,11 +426,24 @@ export const prerender = true;
   }
 
   .form-feedback {
-    color: #164f2c;
+    color: #9b261d;
     font-size: 0.95rem;
     min-height: 1.3rem;
-    margin-top: -0.5rem;
+    margin-top: 0;
   }
+  .contact-success {
+    width: min(28rem, calc(100% - 2rem));
+    box-sizing: border-box;
+    border: 1px solid var(--line-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: #232946;
+    background: #fff0d6;
+  }
+  .contact-success::backdrop { background: rgba(35, 41, 70, 0.62); }
+  .contact-success h2 { margin-top: 0; }
+  .contact-success button { width: 100%; }
+  button:disabled { cursor: wait; opacity: 0.7; }
 
   @media (max-width: 768px) {
     .contact-container {
@@ -300,7 +456,17 @@ export const prerender = true;
     }
 
     .services-list li {
-      align-items: flex-start;
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .services-list li {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .service-actions {
+      width: min(100%, 9rem);
     }
   }
 
