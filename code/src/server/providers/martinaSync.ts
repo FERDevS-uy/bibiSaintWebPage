@@ -7,7 +7,7 @@
 
 import { getSupabase, getSupabaseAdmin } from "../supabase";
 import { syncMartina, fetchMartinaProductById } from "./martina";
-import { isVigente, type MartinaCampaign } from "./martinaCampaign";
+import { isApplyEligible, isVigente, type MartinaCampaign } from "./martinaCampaign";
 import type { ProductRow } from "./utils";
 import { isMartinaManaged, martinaChanges, readActiveMartinaProducts, verifyAbsentMartinaProducts, type MartinaObservation } from "./martinaReconciliation";
 import type { MartinaAvailability } from "./martinaAvailability";
@@ -703,7 +703,7 @@ export async function getMartinaAssignableSubcategories(): Promise<string[]> {
   return [...subcategories].sort((left, right) => left.localeCompare(right));
 }
 
-/** Consulta la campaña y el catálogo de Martina. Apply exige que siga vigente; preview es solo lectura. */
+/** Consulta campaña y catálogo; apply puede operar desde siete días antes, preview es solo lectura. */
 export async function collectMartinaData(
   countryId = "598",
   requireVigente = true,
@@ -835,7 +835,7 @@ export async function applyMartinaSync(token: string, knownSourceCategories?: st
 
   let data: MartinaSyncData;
   try {
-    data = await collectMartinaData("598");
+    data = await collectMartinaData("598", false);
   } catch (collectError) {
     const message = collectError instanceof Error ? collectError.message : String(collectError ?? "");
     if (/no vigente/i.test(message)) {
@@ -848,6 +848,14 @@ export async function applyMartinaSync(token: string, knownSourceCategories?: st
       };
     }
     throw collectError;
+  }
+  if (!isApplyEligible(data.campaign, new Date())) {
+    return {
+      ok: false,
+      status: 409,
+      cause: "campaign-expired",
+      error: "La campaña de Martina no está vigente ni dentro de la ventana de aplicación. Generá un preview nuevo.",
+    };
   }
   const repository = new SupabaseProductRepository("Martina");
   // The plan is rebuilt WITH the signed overrides: unknown ids, shape

@@ -116,3 +116,10 @@ export function parseCampaign(raw: unknown): MartinaCampaign {
 export function isVigente(campaign: MartinaCampaign, now: Date): boolean {
   return now.getTime() >= campaign.validFrom.getTime() && now.getTime() < campaign.validTill.getTime();
 }
+
+/** Apply acepta campañas activas o próximas dentro de los siete días previos; nunca campañas vencidas. */
+export function isApplyEligible(campaign: MartinaCampaign, now: Date): boolean {
+  const nowMs = now.getTime();
+  return nowMs < campaign.validTill.getTime() &&
+    campaign.validFrom.getTime() - nowMs <= 7 * 24 * 60 * 60 * 1000;
+}

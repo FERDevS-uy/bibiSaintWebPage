@@ -25,7 +25,7 @@ const {
   readActiveMartinaProducts,
   MARTINA_ABSENT_LIMIT,
 } = await import("../src/server/providers/martinaReconciliation.ts");
-const { parseCampaign } =
+const { parseCampaign, isApplyEligible } =
   await import("../src/server/providers/martinaCampaign.ts");
 const { GET } = await import("../src/pages/api/martina/product-price.ts");
 
@@ -1030,7 +1030,18 @@ test("campaign parser rejects impossible dates and sync rejects expired campaign
   );
 });
 
-test("preview reads a future campaign but apply remains blocked", async () => {
+test("Martina apply eligibility allows the seven-day boundary, active campaigns, but not earlier or expired ones", () => {
+  const now = new Date("2026-10-13T03:00:00Z");
+  const makeCampaign = (validFrom: string, validTill = "2026-10-20T03:00:00Z") => ({
+    code: "202610", countryId: "598", validFrom: new Date(validFrom), validTill: new Date(validTill), auditEnabled: true,
+  });
+  assert.equal(isApplyEligible(makeCampaign("2026-10-20T03:00:00Z"), now), true);
+  assert.equal(isApplyEligible(makeCampaign("2026-10-20T03:00:01Z"), now), false);
+  assert.equal(isApplyEligible(makeCampaign("2026-10-12T03:00:00Z"), now), true);
+  assert.equal(isApplyEligible(makeCampaign("2026-10-12T03:00:00Z", "2026-10-13T02:59:59Z"), now), false);
+});
+
+test("preview reads a future campaign but apply remains blocked beyond the seven-day window", async () => {
   config.data.validFrom = "2098-01-01";
   const preview = await generatePreview();
   assert.equal(preview.campaign.vigente, false);
