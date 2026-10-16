@@ -1,48 +1,14 @@
-# Astro Starter Kit: Basics
+# Bibi Saint storefront
 
-```sh
-npm create astro@latest -- --template basics
-```
+Astro SSR + React admin interface backed by Supabase and deployed to Cloudflare Workers.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Featured product suggestions
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The admin product page includes **✨ Obtener sugerencias**. Cloudflare Analytics is queried only after an administrator explicitly clicks this button; the browser calls the authenticated `/api/admin/featured-suggestions` route and never receives the Cloudflare credential. Configure these values in the Worker runtime (Cloudflare dashboard or `wrangler secret put`):
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+- `CLOUDFLARE_API_TOKEN`: API token with permission to read the zone analytics data.
+- `CLOUDFLARE_ZONE_ID`: zone identifier for this storefront.
 
-## 🚀 Project Structure
+The endpoint queries `httpRequestsAdaptiveGroups` for the trailing 30 days, groups product detail paths (`/producto/{id}`), and ranks them by Cloudflare's `sum.visits` metric for eyeball traffic. This is Cloudflare edge-reported traffic, not unique or verified people. Adaptive Analytics may sample traffic, and availability/query limits depend on the account, zone, token permissions, and Cloudflare retention. The application does not make live Analytics requests until an admin clicks the button. Missing credentials are reported in the admin interface.
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Admins can select up to eight products and change their display order. That editorial selection is stored separately in `featured_products` by incremental migration `017_featured_products.sql`; apply the migration before deploying this feature. The storefront uses the selected active catalog products for `¡Destacados!`; an empty or unavailable editorial selection retains the existing catalog fallback.

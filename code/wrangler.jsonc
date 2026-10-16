@@ -37,7 +37,8 @@
 	"vars": {
 		"CATALOG_READ_MODEL": "true",
 		"ENABLE_CSV_FALLBACK": "false",
-		"PUBLIC_SITE_URL": "https://espaciobibis.com.uy"
+		"PUBLIC_SITE_URL": "https://espaciobibis.com.uy",
+		"CLOUDFLARE_ZONE_ID": "e71a6c24c5b7f381ec28ebb4a69cd443"
 	},
 	"env": {
 		"dev": {

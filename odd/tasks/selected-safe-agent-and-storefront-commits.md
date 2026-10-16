@@ -19,4 +19,6 @@ Commit only the user-selected agent definitions and storefront README/config/tes
 - Focused `storefront-layout-source.test.ts`: 2/2 passed after aligning its assertions with existing source.
 - `git diff --check` for `.gitignore`: clean; test whitespace check clean.
 - Secret review of README/Wrangler diff found no credentials; Worker token is documented as a runtime secret, and zone ID is a non-secret identifier.
-- Commit identities pending.
+- Agent/ignore commit: `774e899` (`chore(agents): ignore local assets and add reviewed agents`).
+- Storefront commit: `0b3173b` (`docs(storefront): document featured product suggestions`).
+- Native review preflight was blocked pending explicit intended-untracked selection because unrelated untracked files and the pre-existing deleted task documents remain in the workspace; no review lineage was started.
