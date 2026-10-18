@@ -800,6 +800,39 @@ for (const incomingCount of [20, 12]) {
   });
 }
 
+test("manual preview reviews provider price changes while general sync and temporary prices stay protected", async () => {
+  const row = existing("1", { auto_update_price: false });
+  catalog = [{ ...entry("1"), price: "200" }];
+  fixtures.client = memoryClient([row]);
+
+  const manual = await generatePreview();
+  assert.equal(manual.summary.update, 1);
+  assert.equal(manual.summary.priceChanges, 1);
+  assert.equal(manual.plan[0].action, "update");
+  assert.equal(manual.plan[0].price, "200");
+  assert.equal(fixtures.client.writes.length, 0);
+
+  const general = await previewAllProviders();
+  assert.equal(general.totalPriceChanges, 0);
+  assert.deepEqual(general.results[0].stockPlan ?? [], []);
+  assert.equal((await syncAllProviders(general.token)).totalErrors, 0);
+  assert.equal(fixtures.client.rows.get(row.id).price, row.price);
+  assert.equal(fixtures.client.writes.length, 0);
+
+  const applied = await applyMartinaSync(manual.token);
+  assert.equal(applied.ok, true);
+  assert.deepEqual(fixtures.client.rows.get(row.id), {
+    ...row, price: "200",
+  });
+  assert.equal(fixtures.client.rows.get(row.id).auto_update_price, false);
+
+  fixtures.client = memoryClient([existing("1", { auto_update_price: false, temporary_price: "150", price: "150" })]);
+  const protectedPreview = await generatePreview();
+  assert.equal(protectedPreview.summary.update, 0);
+  assert.equal(protectedPreview.summary.priceChanges, 0);
+  assert.equal(protectedPreview.plan[0].action, "unchanged");
+});
+
 for (const changePrice of [true, false]) {
   test(`price change ${changePrice} never synchronizes colors or sizes in either flow`, async () => {
     const row = existing("1", { auto_update_price: true });
@@ -937,7 +970,7 @@ for (const flow of ["own", "general"] as const) {
       const preview = flow === "own" ? await generatePreview() : await previewAllProviders();
       const summary = "summary" in preview ? preview.summary : preview.results[0];
       assert.equal(summary.unknown, 0);
-      assert.equal(summary.priceChanges, Number(state === "present"));
+      assert.equal(summary.priceChanges, Number(state === "present") * (flow === "own" ? 2 : 1));
       assert.equal(summary.availabilityChanges, state === "present" ? 0 : 3);
       assert.equal(fixtures.client.writes.length, 0);
       assert.deepEqual([...fixtures.client.rows.values()], rows);
@@ -949,11 +982,12 @@ for (const flow of ["own", "general"] as const) {
       else assert.equal((await syncAllProviders(preview.token)).totalErrors, 0);
       assert.deepEqual(lookupIds(), expectedLookups);
       for (const row of rows) {
-        const changes = state === "present" && row.id === "mdt-41650" ? { price: "200" }
+        const changes = state === "present" && (row.id === "mdt-41650" || (flow === "own" && row.id === "mdt-41651")) ? { price: "200" }
           : state !== "present" && rows.slice(0, 3).includes(row) ? { active: false } : {};
         assert.deepEqual(fixtures.client.rows.get(row.id), { ...row, ...changes });
       }
-      assert.deepEqual(fixtures.client.writes, state === "present" ? [{ type: "update", changes: { price: "200" } }]
+      assert.deepEqual(fixtures.client.writes, state === "present"
+        ? Array.from({ length: flow === "own" ? 2 : 1 }, () => ({ type: "update", changes: { price: "200" } }))
         : rows.slice(0, 3).map(() => ({ type: "update", changes: { active: false } })));
     });
   }

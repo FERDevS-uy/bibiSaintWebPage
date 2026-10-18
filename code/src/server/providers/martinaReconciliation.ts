@@ -44,6 +44,7 @@ export async function verifyAbsentMartinaProducts(
 export function martinaChanges(
   product: ProductRow,
   previous: SyncExistingProduct,
+  allowManualPriceReview = false,
 ): Record<string, unknown> {
   if (!isMartinaManaged(previous) || previous.active !== true) return {};
   if (!product.active) return { active: false };
@@ -51,7 +52,7 @@ export function martinaChanges(
   // The internal category is a curated business decision. Martina's parent
   // and line metadata must never reassign an existing product.
   if (
-    previous.auto_update_price === true &&
+    (previous.auto_update_price === true || allowManualPriceReview) &&
     !previous.temporary_price &&
     product.price
   ) {

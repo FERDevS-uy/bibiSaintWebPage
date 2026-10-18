@@ -211,6 +211,7 @@ export async function buildPlan(
   categoryOverrides: Record<string, MartinaCategoryOverride> = {},
   knownSourceCategories?: string[],
   assignableSubcategories?: string[],
+  allowManualPriceReview = false,
 ): Promise<SyncPlan> {
   // Per-item category overrides (signed in the preview token, revalidated in
   // apply). Shape-validated here so preview and apply share one fail-closed
@@ -232,7 +233,7 @@ export async function buildPlan(
         ? "Sin foto del proveedor: no se creará"
         : "Disponible en catálogo"
       : "Sin variaciones seleccionables";
-    const baseChanges = prev ? martinaChanges(p, prev) : { ...p };
+    const baseChanges = prev ? martinaChanges(p, prev, allowManualPriceReview) : { ...p };
     // Only a new item outside the permitted Martina clothing taxonomy needs
     // a decision. Existing products always retain the internal category.
     const needsCategoryDecision = Boolean(prev
@@ -248,7 +249,7 @@ export async function buildPlan(
     const effective: ProductRow = override !== undefined
       ? { ...p, categories: { name: override.category, count: 0, subcategories: [{ name: override.subcategory, count: 0 }] } }
       : p;
-    const changes = prev ? martinaChanges(effective, prev) : { ...effective };
+    const changes = prev ? martinaChanges(effective, prev, allowManualPriceReview) : { ...effective };
     if (prev && !isMartinaManaged(prev)) {
       action = "unknown";
       reason = "Producto no gestionado por Martina: se conserva";
@@ -712,12 +713,12 @@ export async function collectMartinaData(
   return syncMartina(undefined, new Date(), "Ropa", requireVigente);
 }
 
-export async function prepareMartinaPlan(data: MartinaSyncData, repository = new SupabaseProductRepository("Martina"), categoryOverrides: Record<string, MartinaCategoryOverride> = {}, knownSourceCategories?: string[], assignableSubcategories?: string[]): Promise<SyncPlan> {
+export async function prepareMartinaPlan(data: MartinaSyncData, repository = new SupabaseProductRepository("Martina"), categoryOverrides: Record<string, MartinaCategoryOverride> = {}, knownSourceCategories?: string[], assignableSubcategories?: string[], allowManualPriceReview = false): Promise<SyncPlan> {
   const existing = await repository.readActiveMartina();
   const incoming = await repository.readByIds(data.products.map((product) => product.id));
   for (const [id, product] of incoming) existing.set(id, product);
   const observations = await verifyAbsentMartinaProducts(data.products, existing, data.campaign.code, fetchMartinaProductById, data.takeDetailLookup);
-  return buildPlan(data.products, existing, data.campaign.code, observations, data.campaign, categoryOverrides, knownSourceCategories, assignableSubcategories);
+  return buildPlan(data.products, existing, data.campaign.code, observations, data.campaign, categoryOverrides, knownSourceCategories, assignableSubcategories, allowManualPriceReview);
 }
 
 export interface PreviewResult {
@@ -739,7 +740,7 @@ export interface PreviewResult {
 /** Genera un preview read-only con el estado administrativo completo. */
 export async function generatePreview(categoryOverrides: Record<string, MartinaCategoryOverride> = {}, knownSourceCategories?: string[], assignableSubcategories?: string[]): Promise<PreviewResult> {
   const data = await collectMartinaData("598", false);
-  const plan = await prepareMartinaPlan(data, new SupabaseProductRepository("Martina"), categoryOverrides, knownSourceCategories, assignableSubcategories);
+  const plan = await prepareMartinaPlan(data, new SupabaseProductRepository("Martina"), categoryOverrides, knownSourceCategories, assignableSubcategories, true);
 
   const now = new Date();
   const expiresAt = now.getTime() + PREVIEW_TTL_MS;
@@ -863,7 +864,7 @@ export async function applyMartinaSync(token: string, knownSourceCategories?: st
   // fail closed with 409 below.
   let plan: SyncPlan;
   try {
-    plan = await prepareMartinaPlan(data, repository, payload.categoryOverrides ?? {}, knownSourceCategories, assignableSubcategories);
+    plan = await prepareMartinaPlan(data, repository, payload.categoryOverrides ?? {}, knownSourceCategories, assignableSubcategories, true);
   } catch {
     return {
       ok: false,
