@@ -29,4 +29,5 @@ Show supplier price/offer differences in the Martina admin preview even when `au
 - Rollback boundary: revert only `src/server/providers/martinaReconciliation.ts`, `src/server/providers/martinaSync.ts`, and the corresponding test in `tests/martina-sync.test.ts`; no migration or product-data change is part of this feature.
 
 ## Commit evidence
-- Pending explicit user-authorized commit.
+- Behavior work-unit commit: `51f69fd` (`fix(martina): show manual price changes in preview`).
+- Verification/task-evidence documentation commit: pending.
