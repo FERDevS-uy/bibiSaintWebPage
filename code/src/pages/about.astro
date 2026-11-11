@@ -231,12 +231,12 @@ export const prerender = true;
     margin: 0;
   }
   .services-list li {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
     min-width: 0;
-    padding: 0.8rem 0;
+    padding: 1rem 0;
     border-bottom: 1px solid rgba(35, 41, 70, 0.1);
     line-height: 1.5;
   }
@@ -255,10 +255,12 @@ export const prerender = true;
   .service-actions {
     display: flex;
     flex: none;
-    width: 9rem;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.5rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    width: fit-content;
+    max-width: 100%;
   }
   .whatsapp-link {
     display: inline-flex;
@@ -453,20 +455,6 @@ export const prerender = true;
 
     .contact-form-wrapper {
       margin-top: 0;
-    }
-
-    .services-list li {
-      grid-template-columns: minmax(0, 1fr) auto;
-    }
-  }
-
-  @media (max-width: 360px) {
-    .services-list li {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .service-actions {
-      width: min(100%, 9rem);
     }
   }
 

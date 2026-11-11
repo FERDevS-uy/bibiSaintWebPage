@@ -14,6 +14,7 @@ import {
   normalizeOfferOriginalPrice,
   parsePrice,
 } from "@utils/price";
+import { productRequiresSizeSelection } from "@utils/productSizeRequirement";
 
 export interface ProductPageState {
   product: Product;
@@ -22,7 +23,7 @@ export interface ProductPageState {
   displaySubcategories: string[];
   groupSubcategory: string;
   leafSubcategory: string;
-  isRopa: boolean;
+  requiresSizeSelection: boolean;
   disableColorSelection: boolean;
   runtimeStockCheckEnabled: boolean;
   primaryProviderLink: string;
@@ -55,7 +56,6 @@ export async function getProductPageState(
     categories,
     paymentLink,
     description,
-    colors,
     enOferta,
     originalPrice,
     relacionados: relacionadosIds,
@@ -158,7 +158,7 @@ export async function getProductPageState(
     }
   }
 
-  const isRopa = displayCategoryName === "Ropa";
+  const requiresSizeSelection = productRequiresSizeSelection(product);
   const disableColorSelection = /^tal-/i.test(String(id || ""));
   const runtimeStockCheckEnabled =
     import.meta.env.PUBLIC_ENABLE_STOCK_CHECK !== "false";
@@ -191,7 +191,7 @@ export async function getProductPageState(
     displaySubcategories,
     groupSubcategory,
     leafSubcategory,
-    isRopa,
+    requiresSizeSelection,
     disableColorSelection,
     runtimeStockCheckEnabled,
     primaryProviderLink,

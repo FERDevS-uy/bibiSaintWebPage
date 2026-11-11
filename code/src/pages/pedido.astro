@@ -847,7 +847,7 @@ export const prerender = true;
 
       const verifyAllHtml =
         pedidos.length > 5
-          ? `<div style="margin-top:12px;text-align:right"><button type="button" id="pedidoVerifyAll" class="pedido-check-btn">Verificar todo</button></div>`
+          ? `<div style="margin-top:12px;text-align:center"><button type="button" id="pedidoVerifyAll" class="pedido-check-btn">Verificar todo</button></div>`
           : "";
 
       container.innerHTML = `${warningHtml}<div class="pedido-list"><div class="pedido-list-header"><span></span><span>Producto</span><span style="text-align:center">Cant.</span><span style="text-align:right">Subtotal</span></div>${itemsHtml}</div><div class="pedido-total-box"><div class="pedido-total-inner"><div class="pedido-total-row"><span>${pedidos.length} productos</span><span>${pedidos.reduce((s, p) => s + p.cantidad, 0)} unidades</span></div><div class="pedido-total-row main"><span>Total</span>${totalValueHtml}</div>${totalNoteHtml}</div></div>${verifyAllHtml}`;

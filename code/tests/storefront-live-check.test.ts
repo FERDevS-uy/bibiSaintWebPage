@@ -17,7 +17,7 @@ test("Martina live check keeps unknown availability distinct from explicit out o
   assert.match(source, /hasExplicitNoSize\(allRawSizes\)/);
 });
 
-test("live-check button keeps fixed dimensions and status copy below it", () => {
+test("live-check button has a comfortable touch target and adapts on mobile", () => {
   const source = readFileSync(
     new URL(
       "../src/components/producto/ProductInfoPanel.astro",
@@ -28,7 +28,10 @@ test("live-check button keeps fixed dimensions and status copy below it", () => 
 
   assert.match(source, /\.checkStockBtn\s*\{[^}]*box-sizing:\s*border-box/s);
   assert.match(source, /\.checkStockBtn\s*\{[^}]*flex:\s*none/s);
-  assert.match(source, /\.checkStockBtn\s*\{[^}]*height:\s*40px/s);
+  assert.match(source, /\.checkStockBtn\s*\{[^}]*min-height:\s*44px/s);
+  assert.match(source, /\.checkStockBtn\s*\{[^}]*width:\s*auto/s);
+  assert.match(source, /\.checkStockBtn:focus-visible\s*\{/);
+  assert.match(source, /\.checkStockBtn\s*\{[^}]*width:\s*100%/s);
   assert.doesNotMatch(source, /\.checkStockBtn\s*\{[^}]*flex:\s*0\s+0\s+190px/s);
   assert.doesNotMatch(
     source,

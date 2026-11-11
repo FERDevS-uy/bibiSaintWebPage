@@ -21,11 +21,13 @@ test("About offers WhatsApp consultation links for general and named services", 
   assert.equal(links.length, 4);
 });
 
-test("About service actions keep a consistent compact, nonshrinking CTA layout", () => {
+test("About service descriptions precede a spaced, side-by-side price and CTA row", () => {
   assert.equal((about.match(/class="service-actions"/g) ?? []).length, 3);
   assert.equal((about.match(/class="whatsapp-link" aria-label="Consultar por/g) ?? []).length, 3);
-  assert.match(about, /\.services-list li\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)\s+auto/s);
-  assert.match(about, /\.service-actions\s*\{[^}]*flex-direction:\s*column/s);
+  assert.match(about, /\.services-list li\s*\{[^}]*flex-direction:\s*column/s);
+  assert.match(about, /\.services-list li\s*\{[^}]*gap:\s*0\.75rem/s);
+  assert.match(about, /\.service-actions\s*\{[^}]*flex-direction:\s*row/s);
+  assert.match(about, /\.service-actions\s*\{[^}]*flex-wrap:\s*wrap/s);
   assert.match(about, /\.service-actions\s*\{[^}]*flex:\s*none/s);
   assert.match(about, /\.whatsapp-link\s*\{[^}]*font-size:\s*0?\.875rem/s);
   assert.match(about, /\.whatsapp-link\s*\{[^}]*font-weight:\s*600/s);
@@ -34,7 +36,7 @@ test("About service actions keep a consistent compact, nonshrinking CTA layout",
   assert.match(about, /\.whatsapp-link\s*\{[^}]*box-sizing:\s*border-box/s);
 });
 
-test("About keeps tutoring conditions inside the description grid column", () => {
+test("About keeps tutoring conditions inside the description block before actions", () => {
   const tutorStart = about.lastIndexOf("<li>", about.indexOf("Tutorías individuales online"));
   const tutor = about.slice(tutorStart, about.indexOf("</li>", tutorStart));
   assert.ok(tutor.includes('<div class="service-description">'));

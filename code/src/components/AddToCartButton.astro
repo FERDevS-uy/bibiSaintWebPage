@@ -1,6 +1,7 @@
 ---
 import type Product from "../types/product";
 import { withBasePath } from "@utils/basePath";
+import { productRequiresSizeSelection } from "@utils/productSizeRequirement";
 const { default: cartSVG } = await import("../assets/add-one-cart.svg?raw");
 
 interface Props {
@@ -10,12 +11,7 @@ interface Props {
 
 const { producto: p, variant = "icon" } = Astro.props;
 const pathname = Astro.url.pathname;
-const categoryName = String(p?.categories?.name ?? "").toUpperCase();
-const requiresSizeSelection =
-  String(p?.id ?? "").toLowerCase().startsWith("mdt-") ||
-  categoryName === "ROPA" ||
-  categoryName === "MUJER" ||
-  categoryName === "HOMBRE";
+const requiresSizeSelection = productRequiresSizeSelection(p);
 ---
 
 {requiresSizeSelection ? (

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import addToCart from "@utils/addToCart";
 import { withBasePath } from "../utils/basePath";
+import { productRequiresSizeSelection } from "../utils/productSizeRequirement";
 import cartSVG from "../assets/add-one-cart.svg?raw";
 
 const checkCart = `
@@ -12,13 +13,8 @@ const checkCart = `
 
 export default function AddToCartButton({ producto: p, variant = "icon" }) {
   const [checked, setChecked] = useState(false);
-  const categoryName = String(p?.categories?.name ?? "").toUpperCase();
   const productHref = withBasePath(`/producto/${p.id}`);
-  const requiresSizeSelection =
-    String(p?.id ?? "").toLowerCase().startsWith("mdt-") ||
-    categoryName === "ROPA" ||
-    categoryName === "MUJER" ||
-    categoryName === "HOMBRE";
+  const requiresSizeSelection = productRequiresSizeSelection(p);
 
   const handleClick = async (e) => {
     e.preventDefault();
